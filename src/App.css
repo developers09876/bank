@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  margin-top: 10px;
+}
+body {
+  background-image: linear-gradient(to right, #E0EAF3, #CFDEF3);
+}
+*{
+  padding: 0px;
+  margin: opx;
+}
