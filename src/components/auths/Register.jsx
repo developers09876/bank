@@ -31,53 +31,33 @@ const Register = ({ setAuth }) => {
     return true;
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) {
       return; // Stop form submission if validation fails
     }
-    try {
-      const body = {
-        firstname,
-        lastname,
-        contactNumber,
-        address,
-        email,
-        username,
-        password,
-      };
 
-      const response = await fetch('http://localhost:8000/register', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
+    // Simulating registration success
+    toast.success('Registration successful!');
 
-      const parseRes = await response.json();
-      if (response.ok) {
-        toast.success('Registration successful!');
-        setInputs({
-          firstname: '',
-          lastname: '',
-          email: '',
-          address: '',
-          username: '',
-          password: '',
-          contactNumber: ''
-        });
-      } else {
-        toast.error(parseRes.message || 'Registration failed');
-      }
-    } catch (error) {
-      toast.error('An error occurred while registering');
-      console.log(error.message);
-    }
+    // Reset the form after registration
+    setInputs({
+      firstname: '',
+      lastname: '',
+      email: '',
+      address: '',
+      username: '',
+      password: '',
+      contactNumber: ''
+    });
+
+    // Redirect to login page
+    setTimeout(() => {
+      navigate('/login');
+    }, 2000); // Delay to show the toast message before navigation
   };
 
   return (
-    
     <div className='register-container'>
       <ToastContainer />
       <Grid container>
@@ -93,11 +73,11 @@ const Register = ({ setAuth }) => {
                 alt="Personalized loans"
               />
             </div>
-            <Button onClick={() =>navigate("/")} style={{ marginLeft: '-100px' }}>Get Started</Button>
+            <Button onClick={() => navigate("/")} style={{ marginLeft: '-100px' }}>Get Started</Button>
           </Box>
         </Grid>
         
-        <Grid item xs={12} md={6} >
+        <Grid item xs={12} md={6}>
           <form onSubmit={onSubmit} className='register-form'>
             <div className='register-form__row'>
               <div className='register-form__group'>
@@ -131,36 +111,35 @@ const Register = ({ setAuth }) => {
             </div>
 
             <div className='register-form__row'>
-            <div className='register-form__group'>
-              <label htmlFor='contactNumber' className='register-form__label'>
-                Contact Number:
-              </label>
-              <input
-                type='number'
-                name='contactNumber'
-                value={contactNumber}
-                onChange={onChange}
-                className='register-form__input'
-                placeholder='Contact Number'
-                required
-              />
+              <div className='register-form__group'>
+                <label htmlFor='contactNumber' className='register-form__label'>
+                  Contact Number:
+                </label>
+                <input
+                  type='number'
+                  name='contactNumber'
+                  value={contactNumber}
+                  onChange={onChange}
+                  className='register-form__input'
+                  placeholder='Contact Number'
+                  required
+                />
+              </div>
+              <div className='register-form__group'>
+                <label htmlFor='email' className='register-form__label'>
+                  Email:
+                </label>
+                <input
+                  type='email'
+                  name='email'
+                  value={email}
+                  onChange={onChange}
+                  className='register-form__input'
+                  placeholder='Input your email address'
+                  required
+                />
+              </div>
             </div>
-            <div className='register-form__group'>
-              <label htmlFor='email' className='register-form__label'>
-                Email:
-              </label>
-              <input
-                type='email'
-                name='email'
-                value={email}
-                onChange={onChange}
-                className='register-form__input'
-                placeholder='Input your email address'
-                required
-              />
-            </div>
-            </div>
-
 
             <div className='register-form__group'>
               <label htmlFor='address' className='register-form__label'>
@@ -177,10 +156,6 @@ const Register = ({ setAuth }) => {
               />
             </div>
 
-          
-           
-
-            
             <div className='register-form__group'>
               <label htmlFor='username' className='register-form__label'>
                 Username:
