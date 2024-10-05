@@ -13,11 +13,9 @@ import image1 from '../Images/Img 1.png';
 const Landing = () => {
   return (
     <div className=''>
-      {/* NAVBAR */}
       <Header />
       <br/>
 
-      {/* HERO SECTION */}
       <section>
         <div className='grid max-w-screen-xl px-4 pt-32 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 lg:grid-cols-12 lg:pt-28'>
           <div className='mr-auto place-self-center lg:col-span-7'>
@@ -29,7 +27,6 @@ const Landing = () => {
               decisions with our user-friendly app.
             </p>
 
-            {/* BUTTONS */}
             <div className='space-y-4 sm:flex sm:space-y-0 sm:space-x-4'>
               <button className='bg-[#47b6f2] hover:bg-[#47b6f9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
                 <Link to='/register'>Get Started</Link>
@@ -46,11 +43,9 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* FEATURED SECTION */}
       <section id='featured' className='mb-20'>
       
 <div className='max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6'>
-  {/* FEATURED TITLE */}
   <div className='flex flex-col my-20 py-1 w-1/2 mx-auto text-center'>
     <h2 className='mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900'>
       We Provide Quality Service
@@ -61,9 +56,7 @@ const Landing = () => {
     </p>
   </div>
 
-  {/* FEATURED ITEMS */}
   <div className='flex gap-10 justify-between'>
-  {/* FEATURE 1 : LOAN MGT */}
   <div className='flex flex-col w-80 p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
     <div className=''>
       <CreditScore className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl mb-2 transition-colors duration-300' />
@@ -75,7 +68,6 @@ const Landing = () => {
     </p>
   </div>
 
-  {/* FEATURE 2 : CLIENT MGT */}
   <div className='flex flex-col w-80 p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
     <div className=''>
       <PermIdentity className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl mb-2 transition-colors duration-300' />
@@ -87,7 +79,6 @@ const Landing = () => {
     </p>
   </div>
 
-  {/* FEATURE 3 : PAYMENT MGT */}
   <div className='flex flex-col w-80 p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
     <div className=''>
       <ReceiptLong className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl mb-2 transition-colors duration-300' />
@@ -104,7 +95,6 @@ const Landing = () => {
 
       </section>
 
-      {/* TESTIMONIALS SECTION */}
       <section className='bg-gray-100 py-16'>
         <div className='max-w-screen-xl px-4 py-8 mx-auto'>
           <h2 className='mb-8 text-3xl font-extrabold text-center'>What Our Clients Say</h2>
@@ -125,7 +115,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* FAQs SECTION */}
       <section className='py-16'>
         <div className='max-w-screen-xl px-4 py-8 mx-auto'>
           <h2 className='mb-8 text-3xl font-extrabold text-center'>Frequently Asked Questions</h2>
@@ -152,7 +141,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
       <Footer />
     </div>
   );

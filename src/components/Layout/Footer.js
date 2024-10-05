@@ -6,7 +6,6 @@ function Footer() {
       <footer className="bg-gray-100 text-gray-700">
         <div className="max-w-screen-xl p-4 py-10 mx-auto lg:py-16 md:px-8 lg:px-10" >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {/* Company Info */}
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900">Loan App.</h3>
               <p className="mb-4 text-sm text-gray-500">
@@ -17,7 +16,6 @@ function Footer() {
               </p>
             </div>
 
-            {/* Quick Links */}
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900 mx-8">Quick Links</h3>
               <ul className="space-y-4 text-sm text-gray-500 mx-8">
@@ -44,7 +42,6 @@ function Footer() {
               </ul>
             </div>
 
-            {/* Contact Info */}
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900">Contact Us</h3>
               <p className="text-sm text-gray-500 mb-2">
@@ -58,7 +55,6 @@ function Footer() {
               </p>
             </div>
 
-            {/* Social Media */}
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900 mx-3">Follow Us</h3>
               <ul className="flex space-x-4 mx-3">

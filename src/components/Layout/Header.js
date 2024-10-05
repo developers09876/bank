@@ -12,7 +12,6 @@ function Header() {
         </div>
         <div>
           <ul className='flex flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center'>
-            {/* HOME */}
             <li>
               <Link
                 to='/'
@@ -22,7 +21,6 @@ function Header() {
               </Link>
             </li>
 
-            {/* ABOUT */}
             <li>
               <Link
                 to='/about'
@@ -32,7 +30,6 @@ function Header() {
               </Link>
             </li>
 
-            {/* CONTACT */}
             <li>
               <Link
                 to='/contact'
