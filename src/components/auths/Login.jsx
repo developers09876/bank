@@ -14,7 +14,7 @@ import { Google as GoogleIcon } from "@mui/icons-material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carousel CSS
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -26,8 +26,8 @@ const LoginPage = () => {
 
     let tempErrors = { email: "", password: "" };
     let valid = true;
-  console.log('')
-    if (!email) {  
+
+    if (!email) {
       tempErrors.email = "Email is required";
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -47,11 +47,10 @@ const LoginPage = () => {
     return valid;
   };
 
-  // Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      // Show success toast
+      
       toast.success("Logged in successfully!", {
         position: "top-center",
         autoClose: 3000,
@@ -72,7 +71,6 @@ const LoginPage = () => {
       style={{ height: "100vh", display: "flex", alignItems: "center" }}
     >
       <Grid container>
-        {/* Left Side - Login Form */}
         <Grid item xs={12} md={6}>
           <Box
             display="flex"
@@ -82,18 +80,16 @@ const LoginPage = () => {
             height="100%"
             px={4}
           >
-            {/* Logo or Icon */}
             <Box mb={4}>
               <Typography variant="h4" fontWeight="bold">
                 Welcome back!
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                Enter to get unlimited access to data & information.
+              Welcome back! Please enter your details
               </Typography>
             </Box>
 
             <form onSubmit={handleSubmit}>
-              {/* Email Input */}
               <TextField
                 label="Email"
                 variant="outlined"
@@ -106,7 +102,6 @@ const LoginPage = () => {
                 helperText={errors.email}
               />
 
-              {/* Password Input */}
               <TextField
                 label="Password"
                 type="password"
@@ -120,7 +115,6 @@ const LoginPage = () => {
                 helperText={errors.password}
               />
 
-              {/* Remember me and Forgot password */}
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -137,7 +131,6 @@ const LoginPage = () => {
                 </Link>
               </Box>
 
-              {/* Log In Button */}
               <Button
                 variant="contained"
                 color="primary"
@@ -149,10 +142,8 @@ const LoginPage = () => {
                 Log In
               </Button>
 
-              {/* Or divider */}
               <Divider>Or, Login with</Divider>
 
-              {/* Google Sign In Button */}
               <Button
                 variant="outlined"
                 startIcon={<GoogleIcon />}
@@ -163,7 +154,6 @@ const LoginPage = () => {
                 Sign up with Google
               </Button>
 
-              {/* Register Link */}
               <Box mt={2}>
                 <Typography variant="body2">
                   Don't have an account?{" "}
@@ -173,10 +163,8 @@ const LoginPage = () => {
             </form>
           </Box>
 
-          {/* Toast Container */}
         </Grid>
 
-        {/* Right Side - Carousel */}
         <Grid item xs={false} md={6}>
           <Box
             sx={{
@@ -193,15 +181,13 @@ const LoginPage = () => {
               interval={3000}
               style={{ width: "100%", height: "100%" }}
             >
-              {/* Slide 1 */}
               <div>
                 <img
-                  src="https://buddyloan-wordpress-blog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2024/09/06171839/side1.jpg "
-                  style={{ width: "100%", height: "90vh", objectFit: "cover" }}
+                  src="https://fundingguru.com/wp-content/uploads/2024/03/business-loans-tax-implications.jpg"
+                  style={{ width: "100%", height: "90vh", objectFit: "fill" }}
                   alt="Slide 1"
                 />
               </div>
-              {/* Slide 2 */}
               <div>
                 <img
                   src="https://www.shutterstock.com/shutterstock/photos/2426984001/display_1500/stock-photo-businessman-using-laptop-in-data-management-with-a-networked-copy-space-vertical-2426984001.jpg"
@@ -209,7 +195,6 @@ const LoginPage = () => {
                   alt="Slide 2"
                 />
               </div>
-              {/* Slide 3 */}
               <div>
                 <img
                   src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2stczE5LWljZS0zNjQ5LWx5ajIwNTQtMDktaW5jb21ldGF4cmV0dXJuLmpwZw.jpg"

@@ -3,6 +3,7 @@ import './Register.scss';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -14,6 +15,7 @@ const Register = ({ setAuth }) => {
     password: '',
     contactNumber: ''
   });
+  const navigate = useNavigate();
 
   const { firstname, lastname, contactNumber, address, email, username, password } = inputs;
 
@@ -75,6 +77,7 @@ const Register = ({ setAuth }) => {
   };
 
   return (
+    
     <div className='register-container'>
       <ToastContainer />
       <Grid container>
@@ -90,13 +93,13 @@ const Register = ({ setAuth }) => {
                 alt="Personalized loans"
               />
             </div>
-            <Button style={{ marginLeft: '-100px' }}>Get Started</Button>
+            <Button onClick={() =>navigate("/")} style={{ marginLeft: '-100px' }}>Get Started</Button>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
+        
+        <Grid item xs={12} md={6} >
           <form onSubmit={onSubmit} className='register-form'>
             <div className='register-form__row'>
-              {/* First Name */}
               <div className='register-form__group'>
                 <label htmlFor='firstname' className='register-form__label'>
                   First Name:
@@ -111,7 +114,6 @@ const Register = ({ setAuth }) => {
                   required
                 />
               </div>
-              {/* Last Name */}
               <div className='register-form__group'>
                 <label htmlFor='lastname' className='register-form__label'>
                   Last Name:
@@ -128,7 +130,7 @@ const Register = ({ setAuth }) => {
               </div>
             </div>
 
-            {/* Contact Number */}
+            <div className='register-form__row'>
             <div className='register-form__group'>
               <label htmlFor='contactNumber' className='register-form__label'>
                 Contact Number:
@@ -143,8 +145,23 @@ const Register = ({ setAuth }) => {
                 required
               />
             </div>
+            <div className='register-form__group'>
+              <label htmlFor='email' className='register-form__label'>
+                Email:
+              </label>
+              <input
+                type='email'
+                name='email'
+                value={email}
+                onChange={onChange}
+                className='register-form__input'
+                placeholder='Input your email address'
+                required
+              />
+            </div>
+            </div>
 
-            {/* Address */}
+
             <div className='register-form__group'>
               <label htmlFor='address' className='register-form__label'>
                 Address:
@@ -160,23 +177,10 @@ const Register = ({ setAuth }) => {
               />
             </div>
 
-            {/* Email */}
-            <div className='register-form__group'>
-              <label htmlFor='email' className='register-form__label'>
-                Email:
-              </label>
-              <input
-                type='email'
-                name='email'
-                value={email}
-                onChange={onChange}
-                className='register-form__input'
-                placeholder='Input your email address'
-                required
-              />
-            </div>
+          
+           
 
-            {/* Username */}
+            
             <div className='register-form__group'>
               <label htmlFor='username' className='register-form__label'>
                 Username:
@@ -192,7 +196,6 @@ const Register = ({ setAuth }) => {
               />
             </div>
 
-            {/* Password */}
             <div className='register-form__group'>
               <label htmlFor='password' className='register-form__label'>
                 Password:
@@ -208,12 +211,10 @@ const Register = ({ setAuth }) => {
               />
             </div>
 
-            {/* Submit Button */}
             <button type='submit' className='register-form__submit'>
               Create Account
             </button>
 
-            {/* Sign In Redirect */}
             <div className='register-form__redirect'>
               <span className='register-form__text'>Already have an account? </span>
               <a href='/login' className='register-form__link'>

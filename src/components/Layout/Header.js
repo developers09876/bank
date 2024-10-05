@@ -12,7 +12,6 @@ function Header() {
         </div>
         <div>
           <ul className='flex flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center'>
-            {/* HOME */}
             <li>
               <Link
                 to='/'
@@ -22,7 +21,6 @@ function Header() {
               </Link>
             </li>
 
-            {/* ABOUT */}
             <li>
               <Link
                 to='/about'
@@ -32,7 +30,6 @@ function Header() {
               </Link>
             </li>
 
-            {/* CONTACT */}
             <li>
               <Link
                 to='/contact'
@@ -42,12 +39,9 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link
-                to='/login'
-                className='block py-2 pl-3 pr-4 rounded text-gray-700 lg:hover:text-white lg:hover:bg-[#47b6f2] font-light lg:text-x'
-              >
-                Login
-              </Link>
+            <button className='bg-[#47b6f2] hover:bg-[#47b6f9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+                <Link to='/login'>Login</Link>
+              </button>
             </li>
           </ul>
         </div>
