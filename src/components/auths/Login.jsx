@@ -89,7 +89,7 @@ const LoginPage = () => {
                 Welcome back!
               </Typography>
               <Typography variant="body1" color="textSecondary">
-                Enter to get unlimited access to data & information.
+              Welcome back! Please enter your details
               </Typography>
             </Box>
 
@@ -197,8 +197,8 @@ const LoginPage = () => {
               {/* Slide 1 */}
               <div>
                 <img
-                  src="https://buddyloan-wordpress-blog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2024/09/06171839/side1.jpg "
-                  style={{ width: "100%", height: "90vh", objectFit: "cover" }}
+                  src="https://fundingguru.com/wp-content/uploads/2024/03/business-loans-tax-implications.jpg"
+                  style={{ width: "100%", height: "90vh", objectFit: "fill" }}
                   alt="Slide 1"
                 />
               </div>
