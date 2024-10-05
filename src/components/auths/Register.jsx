@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-
-import { ArrowBackIosNew } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import './Register.scss';
+import { Grid, Typography, Button, Box } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -11,24 +12,28 @@ const Register = ({ setAuth }) => {
     address: '',
     username: '',
     password: '',
+    contactNumber: ''
   });
 
-  const {
-    firstname,
-    lastname,
-    contactNumber,
-    address,
-    email,
-    username,
-    password,
-  } = inputs;
+  const { firstname, lastname, contactNumber, address, email, username, password } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (!firstname || !lastname || !email || !username || !password || !contactNumber || !address) {
+      toast.error('All fields are required');
+      return false;
+    }
+    return true;
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return; // Stop form submission if validation fails
+    }
     try {
       const body = {
         firstname,
@@ -49,205 +54,175 @@ const Register = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
-
-      // if (parseRes.token) {
-      //   localStorage.setItem('token', parseRes.token);
-      //   console.log(parseRes.token);
-      //   setAuth(true);
-      // } else {
-      //   setAuth(false);
-      //   console.log('Something wrong');
-      // }
+      if (response.ok) {
+        toast.success('Registration successful!');
+        setInputs({
+          firstname: '',
+          lastname: '',
+          email: '',
+          address: '',
+          username: '',
+          password: '',
+          contactNumber: ''
+        });
+      } else {
+        toast.error(parseRes.message || 'Registration failed');
+      }
     } catch (error) {
+      toast.error('An error occurred while registering');
       console.log(error.message);
     }
   };
+
   return (
-    <div className='flex flex-col h-[750px] w-[620px] border rounded-md shadow-md  mx-auto my-20 justify-center flex-wrap border-t-4 border-t-red-500 '>
-      {/* FORM */}
-      <div className=''>
-        <div className='flex justify-between items-center  px-8 py-8'>
-          {/* GREETINGS */}
-          <div className='mt-5'>
-            <h1 className='text-xl font-semibold '>
-              Welcome to <span className='text-red-500'>Maogma</span>.
-            </h1>
-            <small className='text-gray-400'>Please enter your details</small>
-          </div>
+    <div className='register-container'>
+      <ToastContainer />
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginTop: '50px' }}>
+            Easy. Quick. Efficient.
+          </Typography>
+          <Box sx={{ display: 'Grid', alignItems: 'center', height: '80%', flexWrap: 'wrap', marginLeft: '50px' }}>
+            <div>
+              <img
+                className='image-reduced1'
+                src='https://img.freepik.com/premium-photo/professional-bill-design-money-banking-finance-commerce-market_1316704-24000.jpg?uid=R154751350&ga=GA1.1.1985983126.1725981835&semt=ais_hybrid'
+                alt="Personalized loans"
+              />
+            </div>
+            <Button style={{ marginLeft: '-100px' }}>Get Started</Button>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <form onSubmit={onSubmit} className='register-form'>
+            <div className='register-form__row'>
+              {/* First Name */}
+              <div className='register-form__group'>
+                <label htmlFor='firstname' className='register-form__label'>
+                  First Name:
+                </label>
+                <input
+                  type='text'
+                  name='firstname'
+                  value={firstname}
+                  onChange={onChange}
+                  className='register-form__input'
+                  placeholder='Enter your first name'
+                  required
+                />
+              </div>
+              {/* Last Name */}
+              <div className='register-form__group'>
+                <label htmlFor='lastname' className='register-form__label'>
+                  Last Name:
+                </label>
+                <input
+                  type='text'
+                  name='lastname'
+                  value={lastname}
+                  onChange={onChange}
+                  className='register-form__input'
+                  placeholder='Enter your last name'
+                  required
+                />
+              </div>
+            </div>
 
-          {/* BACK ARROW */}
-          {/* <div className=''>
-            <Link to='/admin'>
-              <ArrowBackIosNew />
-            </Link>
-          </div> */}
-        </div>
-        <form
-          onSubmit={(e) => {
-            onSubmit(e);
-          }}
-          className='bg-white px-8  pb-8 mb-4'
-        >
-          <div className='flex w-full gap-5'>
-            {/* FIRSTNAME */}
-            <div className='mb-4 w-full'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor='firstname'
-              >
-                First Name:
+            {/* Contact Number */}
+            <div className='register-form__group'>
+              <label htmlFor='contactNumber' className='register-form__label'>
+                Contact Number:
+              </label>
+              <input
+                type='number'
+                name='contactNumber'
+                value={contactNumber}
+                onChange={onChange}
+                className='register-form__input'
+                placeholder='Contact Number'
+                required
+              />
+            </div>
+
+            {/* Address */}
+            <div className='register-form__group'>
+              <label htmlFor='address' className='register-form__label'>
+                Address:
               </label>
               <input
                 type='text'
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                name='firstname'
-                value={firstname}
-                onChange={(e) => {
-                  onChange(e);
-                }}
-                placeholder='Enter your first name'
+                name='address'
+                value={address}
+                onChange={onChange}
+                className='register-form__input'
+                placeholder='Input your full address'
+                required
               />
             </div>
-            {/* LASTNAME */}
-            <div className='mb-4 w-full'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor='lastname'
-              >
-                Lastname:
+
+            {/* Email */}
+            <div className='register-form__group'>
+              <label htmlFor='email' className='register-form__label'>
+                Email:
+              </label>
+              <input
+                type='email'
+                name='email'
+                value={email}
+                onChange={onChange}
+                className='register-form__input'
+                placeholder='Input your email address'
+                required
+              />
+            </div>
+
+            {/* Username */}
+            <div className='register-form__group'>
+              <label htmlFor='username' className='register-form__label'>
+                Username:
               </label>
               <input
                 type='text'
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                name='lastname'
-                value={lastname}
-                onChange={(e) => {
-                  onChange(e);
-                }}
-                placeholder='Enter your last name'
+                name='username'
+                value={username}
+                onChange={onChange}
+                className='register-form__input'
+                placeholder='Choose a username'
+                required
               />
             </div>
-          </div>
 
-          {/* CONTACT NUMBER */}
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='contactNumber'
-            >
-              Contact Number
-            </label>
-            <input
-              type='number'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              name='contactNumber'
-              value={contactNumber}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Contact Number'
-            />
-          </div>
+            {/* Password */}
+            <div className='register-form__group'>
+              <label htmlFor='password' className='register-form__label'>
+                Password:
+              </label>
+              <input
+                type='password'
+                name='password'
+                value={password}
+                onChange={onChange}
+                className='register-form__input'
+                placeholder='*************'
+                required
+              />
+            </div>
 
-          {/* ADDRESS */}
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='address'
-            >
-              Address:
-            </label>
-            <input
-              type='text'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              name='address'
-              value={address}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Input your full address'
-            />
-          </div>
+            {/* Submit Button */}
+            <button type='submit' className='register-form__submit'>
+              Create Account
+            </button>
 
-          {/* EMAIL */}
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='email'
-            >
-              Email:
-            </label>
-            <input
-              type='email'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              name='email'
-              value={email}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Input your email address'
-            />
-          </div>
-
-          {/* USERNAME */}
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='username'
-            >
-              Username
-            </label>
-            <input
-              type='text'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              name='username'
-              value={username}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Choose a username you want'
-            />
-          </div>
-
-          {/* PASSWORD */}
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='password'
-            >
-              Password
-            </label>
-            <input
-              type='password'
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              name='password'
-              value={password}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='*************'
-            />
-          </div>
-          <button
-            type='submit'
-            className='w-full text-center py-3 rounded bg-red-500 text-white hover:bg-red-700 focus:outline-none my-1'
-          >
-            Create Account
-          </button>
-
-          <div className='text-center'>
-            <span className='text-xs text-gray-400 font-semibold'>
-              Don't have account?
-            </span>
-            <a
-              href='http://localhost:3000/login'
-              className='text-xs font-semibold text-red-700'
-            >
-              Sign in
-            </a>
-          </div>
-        </form>
-      </div>
+            {/* Sign In Redirect */}
+            <div className='register-form__redirect'>
+              <span className='register-form__text'>Already have an account? </span>
+              <a href='/login' className='register-form__link'>
+                Sign in
+              </a>
+            </div>
+          </form>
+        </Grid>
+      </Grid>
     </div>
   );
 };

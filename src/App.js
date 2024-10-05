@@ -32,19 +32,11 @@ function App() {
             <Routes>
               {/* LANDING */}
               <Route exact path="/" element={<Landing />}></Route>
-              <Route path="/about" element={<About/>}/>
-              <Route path="/contact" element={<ContactUs/>}/>
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<ContactUs />} />
 
               {/* REGISTER */}
-              <Route
-                exact
-                path="/register"
-                element={
-                  
-                    <Register />
-                 
-                }
-              ></Route>
+              <Route exact path="/register" element={<Register />}></Route>
 
               {/* <Route
                 exact
@@ -62,12 +54,7 @@ function App() {
               <Route
                 exact
                 path="/login"
-                element={
-                  
-                    <Login setAuth={setAuth} />
-              
-                }
-                
+                element={<Login setAuth={setAuth} />}
               ></Route>
 
               {/* LOGIN */}
