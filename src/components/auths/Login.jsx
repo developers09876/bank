@@ -22,7 +22,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-console.log('firstsss', first)
   const validate = () => {
 
     let tempErrors = { email: "", password: "" };
