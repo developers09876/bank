@@ -22,13 +22,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-
+console.log('firstsss', first)
   const validate = () => {
 
     let tempErrors = { email: "", password: "" };
     let valid = true;
-
-    if (!email) {
+  console.log('')
+    if (!email) {  
       tempErrors.email = "Email is required";
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(email)) {
