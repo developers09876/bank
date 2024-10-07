@@ -67,7 +67,7 @@ const Loans = ({ setAuth }) => {
       <Sidebar />
       <ToastContainer />
       {/* <GetAllLoans /> */}
-      <div className='flex w-full'>
+      <div className='flex ml-[20%] w-[80%]'>
         {/* Loans Information */}
         <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
           {/* HEADER */}

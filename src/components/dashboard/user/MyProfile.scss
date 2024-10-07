@@ -1,0 +1,717 @@
+.ferilimage_column {
+    width: 30%;
+    height: 60px;
+    /* float: right; */
+    margin-left: 25%;
+  }
+  .modal-content {
+    max-height: 600px; /* Adjust this value as needed */
+    overflow-y: auto;
+  }
+  .vendor_button {
+    float: left;
+    /* padding: 10px 15px; */
+    background: #ee9b1f00;
+    height: 77px;
+    border-radius: 15px;
+    border: 2px solid #ee9b1f;
+    color: #010021;
+  }
+  .vendor_dashboard {
+    font-weight: bold;
+    font-size: 15px;
+  }
+  .vendor_column {
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 5%;
+  }
+  .myhome_column {
+    width: 60%;
+    height: 43vh;
+    float: right;
+    margin: 8%;
+    margin-top: 10%;
+    border-radius: 0%;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    // margin-top: 75px;
+  }
+  .form_colum {
+    width: 90%;
+    /* height: 80vh; */
+    margin: 2%;
+  }
+  .categorytab_column {
+    width: 80%;
+    height: 10vh;
+    border: 2px solid #868680;
+    /* float: right; */
+    margin-left: -5%;
+    transition: none;
+    background-color: #ee9b1f;
+  }
+  
+  // jnnjnkjnkkj
+  .myhome_title {
+    width: 85%;
+    height: 5vh;
+    border-radius: 0%;
+    background-color: #03022b;
+    margin: 8%;
+  }
+  .vendor_view_profile {
+    background-color: #ff0000;
+    border: 1px solid #ff0000;
+    margin-top: 10px;
+  }
+  .myhome_list {
+    list-style-type: none;
+    margin-top: 5%;
+    font-weight: 600;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 17px;
+  }
+  .inputcolumn {
+    /* margin-left: -13%; */
+    border-radius: 8px;
+    width: 71%;
+    height: 35px;
+    margin-bottom: 5%;
+  }
+  
+  .imagecolumn {
+    height: 41vh;
+    width: 60%;
+  }
+  .inputHalfColumn {
+    /* margin-left: -13%; */
+    border-radius: 0%;
+    height: 32px;
+    width: 29%;
+  }
+  .packagecard_img {
+    width: 100%;
+    height: 30px;
+  }
+  .packagecard {
+    height: 50vh;
+    width: 70%;
+    margin: 2%;
+  }
+  
+  .required_column {
+    color: red;
+  }
+  // ourProfie
+  .kycRow_Container {
+    display: flex;
+    justify-content: center;
+  }
+  /* .table.hover{
+    
+    } */
+  .formrow {
+    display: flex;
+    justify-content: end;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .upgrade_buttton {
+    border-radius: 0%;
+    background-color: #03022b !important;
+    color: white;
+    border: #03022b;
+    margin-bottom: 5%;
+  }
+  
+  .upgrade_column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+  }
+  
+  .category_Card {
+    width: 60%;
+    margin: 5%;
+    height: 100%;
+  }
+  .input_value {
+    display: block !important;
+    height: 40px !important;
+    width: 70% !important;
+    border: none !important;
+    font-weight: 300 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #d3d3d3 !important;
+  }
+  .input_values {
+    display: flex !important;
+    width: 70% !important;
+    border: none !important;
+    font-weight: 300 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #d3d3d3 !important;
+  }
+  .inputs__vendr {
+    display: block !important;
+    height: 30px !important;
+    width: 90% !important;
+    border: none !important;
+    font-weight: 300 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #d3d3d3 !important;
+  }
+  .inputcolumn {
+    border-radius: 8px;
+    width: 71%;
+    height: 35px;
+    margin-bottom: 5%;
+    padding: 5px !important;
+    font-size: 1rem !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 7px !important;
+    outline: none !important;
+  }
+  .inputcolumn-ourProfile {
+    border-radius: 8px;
+    width: 90% !important;
+    height: 40px;
+    margin-bottom: 5%;
+    padding: 5px !important;
+    font-size: 1rem !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 7px !important;
+    outline: none !important;
+  }
+  .vendorpage_labelCss {
+    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight: 450;
+  }
+  .inputcolumn_drp {
+    border-radius: 8px;
+    width: 90%;
+    height: 35px;
+    border: #ced4da !important;
+  
+    margin-bottom: 5%;
+  }
+  .select-multiple {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .select-multiple .ant-select {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .select-multiple .ant-select-selector {
+    min-height: 40px;
+    height: auto !important;
+  }
+  .inputcolumn_drp_ourProfile {
+    border-radius: 8px;
+    width: 51%;
+    height: 35px;
+    border: #ced4da !important;
+  
+    margin-bottom: 5%;
+  }
+  .addFormrow {
+    display: flex;
+    justify-content: start;
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: 30%;
+  }
+  .addbutton1_column {
+    /* display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0%;
+        /* background-color: #03022b !important; */
+    /* color: white;
+        border: #03022b;
+        width:100px; */
+    background-color: #03022b;
+    color: white;
+  }
+  
+  .addbutton_column {
+    border-radius: 0%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    border: #03022b;
+  }
+  .addColumn {
+    width: 93%;
+    margin: 5%;
+    height: 60vh;
+  }
+  .note {
+    color: red;
+  }
+  // .ourProfileParentdiv {
+  // width: 60vw !important;
+  // }
+  // .AddCategoryBtn_css{
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
+  .listButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    /* font-weight: bold; */
+    border: none;
+    /* background-color: white; */
+    width: 56px;
+    font-size: 14px;
+    font-weight: bold;
+    height: 25px;
+    background-color: red !important;
+  }
+  .listTable {
+    margin: 5%;
+    border: 2px solid #ddd6d0;
+    width: 90%;
+  }
+  .table:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .data-list-table table > thead > tr > th {
+    background-color: white !important;
+    color: black !important;
+  }
+  .data-list-table tbody > tr > td {
+    background-color: #eeeeee !important;
+    border-bottom: 1px solid #cfd2cf;
+  }
+  .ant-table-tbody > tr.ant-table-row:hover > td,
+  .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+    background: #b2b2b2 !important;
+  }
+  .data-list-top {
+    background-color: #b2b2b2 !important;
+    border-radius: 8px !important;
+  }
+  .offerColumn {
+    width: 70%;
+    margin: 3%;
+    height: 64vh;
+    border: 1px solid #cfcfbf;
+  }
+  .enquiryrow {
+    margin-top: 5%;
+    margin-left: 5%;
+  }
+  .enqbutton {
+    margin-left: 40%;
+    border-radius: 0%;
+  }
+  .enquirytable {
+    background-color: white !important;
+    color: black !important;
+    /* border-top: 2px solid #ff0000; */
+    width: 100%;
+    margin-right: auto;
+    padding: 5%;
+    margin-bottom: 10%;
+  }
+  .data-list-table {
+    overflow-x: none;
+    border-radius: none;
+  }
+  .paratagenq {
+    margin-top: 3%;
+    color: red;
+    margin-left: 12%;
+  }
+  /* .packagecard{
+        width:20%;
+        height: 25vh;
+        margin: 8%;
+    } */
+  /* .packageButton{ */
+  /* border-radius: 0%; */
+  
+  /* background-color: #f72020 !important; */
+  /* color: white; */
+  /* border: rgb(237, 19, 19); */
+  /* } */
+  
+  /* .upgrades_column{
+        font-weight: bold;
+        color: red; */
+  /* display: flex;
+        justify-content: end; */
+  /* margin-left: -10%; */
+  /* margin-top: 5%; */
+  /* margin: 5%; */
+  /* margin-top: 20%; */
+  /* } */
+  
+  /* .batch_image{
+        width: 30%;
+    } */
+  
+  /* .button1:hover {
+        background-color: none !important;
+      } */
+  .ourProfile_Heading_div {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+  }
+  .packagecard {
+    height: 50vh;
+    width: 70%;
+    margin: 2%;
+    margin-top: 50px;
+  }
+  .imagecolumn {
+    height: 41vh;
+    width: 60%;
+  }
+  .prfilebutton {
+    width: 80%;
+    height: 31px;
+    margin-top: 3%;
+    margin-right: 10px;
+    /* background-color: #ff0000; */
+  }
+  
+  .prfilebutton1 {
+    background-color: #ff0000;
+    border: none;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+  }
+  .detailstable {
+    width: 90% !important;
+    margin-top: 13% !important;
+  }
+  /* .proflecard{
+    border: 2px solid #ef6363;
+    background-color: #ef6363;
+    width: 60%;
+    display: flex;
+        justify-content: center;
+        height: 40vh;
+    
+    }
+    .profilecolumCard{
+        width:60%;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        border-radius: 0%;
+        margin-top: 15%;
+    
+    } */
+  .plan_column {
+    background-color: #ce4b4b;
+    width: 87%;
+    margin: 2%;
+    height: 50px;
+  }
+  .diamond_column {
+    width: 87%;
+    margin: 2%;
+    margin-top: 3%;
+    /* height: 40vh; */
+  }
+  .hr_view {
+    margin-top: -6px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid #bfbdbd !important;
+  }
+  .planduration_column {
+    color: #6c6c66;
+    font-size: 16px;
+  }
+  .days_column {
+    font-weight: bold;
+  }
+  .daimond {
+    margin-left: 3%;
+    margin-bottom: -1%;
+  }
+  .verticalLine {
+    border-left: 1px solid rgb(156, 162, 156);
+    height: 50%;
+    position: absolute;
+    left: 70%;
+    /* margin-left: -55px; */
+    top: 10;
+  }
+  
+  .paymentcost {
+    font-weight: bold;
+  }
+  .upGrade {
+    position: relative;
+    top: 35px;
+  }
+  .profilebutton2 {
+    background-color: #ff0000;
+    border: none;
+    color: white;
+    font-weight: bold;
+    width: 65%;
+    height: 50%;
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .create-select {
+    width: 80% !important;
+    border-radius: 5px;
+    height: 37px;
+    width: 72% !important;
+  }
+  
+  @media screen and (min-width: 320px) and (max-width: 425px) {
+    .ferilimage_column {
+      margin-left: 1%;
+    }
+    .Vendor_Button_Container {
+      position: absolute;
+      justify-content: flex-end;
+      display: flex;
+    }
+    .input2 {
+      display: flex !important;
+      height: 30px !important;
+      width: 40% !important;
+      border: none !important;
+      font-weight: 300 !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border-bottom: 1px solid #d3d3d3 !important;
+    }
+  
+    .myhome_column {
+      width: 83%;
+      height: 43vh;
+      /* float: right; */
+      margin: 8%;
+      /* margin-top: 10%; */
+      /* border-radius: 0%; */
+      /* box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%); */
+    }
+    .formrow {
+      display: flex;
+      justify-content: flex-start;
+      margin-left: 5%;
+    }
+    .FormCol_Vendor {
+      margin-left: 10px;
+    }
+    .form_colum {
+      width: 90%;
+      /* height: 92vh; */
+      margin: 5%;
+    }
+    .inputcolumn {
+      margin-left: 5%;
+    }
+    .addFormrow {
+      margin-left: 4%;
+      margin-top: 8%;
+    }
+    .category_Card {
+      width: 90%;
+      height: 160vh;
+    }
+    .input {
+      margin-left: 5%;
+      width: 75%;
+    }
+    button,
+    input {
+      margin-right: 10px;
+    }
+    .addColumn {
+      width: 91%;
+      height: 75vh;
+    }
+    p {
+      margin: 2%;
+      font-size: 10px;
+      display: flex;
+          justify-content: center;
+  
+    }
+    .final-footer-ptag {
+      margin-left: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .subscribe_pdiv{
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .privacy-policy {
+     padding-left: 1px; 
+  }
+    .subscribe-div input {
+      height: 31px;
+  }
+    .footer-bg h3 {
+      display: flex;
+      justify-content: center;
+      font-size: 16px;
+  }
+  .sub-btn-div button {
+    width: auto;
+  }
+  .sub-btn-div {
+    display: flex;
+    justify-content: center;
+  }
+  .about-us-div a {
+    font-size: 15px;
+  }
+    .offerColumn {
+      width: 90%;
+      height: 98vh;
+    }
+    .enqbutton {
+      margin-left: 10%;
+      /* border-radius: 0%; */
+      width: 100%;
+    }
+    .prfilebutton1 {
+      width: 100%;
+      height: 145%;
+      margin-left: -10%;
+    }
+  }
+  
+  
+  @media screen and (min-width: 426px) and (max-width: 768px) {
+    .myhome_column {
+      width: 75%;
+    }
+    .form_colum {
+      width: 500px;
+    }
+    .category_Card {
+      width: 93%;
+      margin: 5%;
+      height: 850px;
+    }
+    .addColumn {
+      width: 93%;
+      height: 56vh;
+    }
+    .input {
+      margin-left: 18%;
+    }
+    .footer-bg h3 {
+      font-size: 14px;
+  }
+    button,
+    input {
+      overflow: visible;
+      margin-right: 10px;
+    }
+    .subscribe-div input {
+      width: 33vh;
+      height: 32px;
+      border-radius: 6px;
+      border: none;
+      padding-left: 9px;
+  }
+  .about-us-div a {
+    font-size: 13px;
+  }
+  .sub-btn-div button {
+    width: auto;
+  }
+    p {
+      margin-left: 18%;
+    }
+    .enqbutton {
+      margin-left: 30%;
+      /* border-radius: 0%; */
+      width: 65%;
+    }
+    .paratagenq {
+      margin-left: -7%;
+    }
+    .prfilebutton1 {
+      width: 92%;
+      margin-left: 1%;
+    }
+    .packagecard {
+      width: 93%;
+    }
+    .diamond_column {
+      width: 97%;
+    }
+    p {
+      margin-left: 2% !important;
+      font-size: 11px;
+  }
+    .planduration_column {
+      margin-top: 3%;
+    }
+  }
+  
+  .kyc-input {
+    width: 50% !important;
+    border-radius: 5px;
+    border: 1px solid gray !important;
+    height: 37px;
+  }
+  .button1 {
+    // background-color: #ff0000;
+    box-shadow: 0px 0px 2px 1px rgb(54, 45, 45);
+    color: white !important;
+    border-radius: 5px !important;
+    border: none !important;
+    width: 120px;
+    height: 40px;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+  
+  .button2 {
+    background-color: gray !important;
+    color: white !important;
+    border-radius: 5px !important;
+    border: none !important;
+    width: 120px;
+    box-shadow: 0px 0px 2px 1px rgb(31, 27, 27);
+    height: 40px;
+    text-transform: uppercase;
+    transition: 0.5s;
+  }
+  

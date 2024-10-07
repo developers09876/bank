@@ -4,10 +4,12 @@ import {
   PermIdentity,
   CreditScore,
   ReceiptLong,
+  Assessment,
 } from '@mui/icons-material';
 import Header from '../Layout/Header';
 import Footer from '../Layout/Footer';
 import image1 from '../Images/Img 1.png';
+import { Col, Row } from 'react-bootstrap';
 // import './Home.css'
 
 const Landing = () => {
@@ -45,53 +47,65 @@ const Landing = () => {
 
       <section id='featured' className='mb-20'>
       
-<div className='max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6'>
-  <div className='flex flex-col my-20 py-1 w-1/2 mx-auto text-center'>
-    <h2 className='mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900'>
-      We Provide Quality Service
-    </h2>
-    <p className='mb-6 font-light text-gray-500 md:text-lg'>
-      We will provide the best service to you so that you understand how
-      to use and get to know the features that we provide.
-    </p>
-  </div>
+      <div className='max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6'>
+      <div className='text-center my-20 py-1 w-1/2 mx-auto'>
+        <h2 className='mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900'>
+          We Provide Quality Service
+        </h2>
+        <p className='mb-6 font-light text-gray-500 md:text-lg'>
+          We will provide the best service to you so that you understand how
+          to use and get to know the features that we provide.
+        </p>
+      </div>
 
-  <div className='flex gap-10 justify-between'>
-  <div className='flex flex-col w-80 p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
-    <div className=''>
-      <CreditScore className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl mb-2 transition-colors duration-300' />
+      <Row className='g-4'>
+        {/* Loan Management Card */}
+        <Col md={3}>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+            <div className='mb-2'>
+              <CreditScore className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+            </div>
+            <h4 className='text-md font-semibold mb-1'>Loan Management</h4>
+            <p>We will provide management for your loan so that you can track them easily.</p>
+          </div>
+        </Col>
+
+        {/* Tax Management Card */}
+        <Col md={3}>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+            <div className='mb-2'>
+              <PermIdentity className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+            </div>
+            <h4 className='text-md font-semibold mb-1'>Tax Management</h4>
+            <p>We will provide tax management plus managers can now email their clients to notify them.</p>
+          </div>
+        </Col>
+
+        {/* Insurance Management Card */}
+        <Col md={3}>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+            <div className='mb-2'>
+              <ReceiptLong className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+            </div>
+            <h4 className='text-md font-semibold mb-1'>Insurance Management</h4>
+            <p>We will provide management for your Insurance so that you can track them easily.</p>
+          </div>
+        </Col>
+
+        {/* Cibil Score Card */}
+        <Col md={3}>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+            <div className='mb-2'>
+              <Assessment className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+            </div>
+            <h4 className='text-md font-semibold mb-1'>Cibil Score Management</h4>
+            <p>We will provide tools to help you track and manage your Cibil score easily.</p>
+          </div>
+        </Col>
+      </Row>
     </div>
-    <h4 className='text-md font-semibold mb-1'>Loan Management</h4>
-    <p>
-      We will provide management for your loan so that you can track
-      them easily.
-    </p>
-  </div>
 
-  <div className='flex flex-col w-80 p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
-    <div className=''>
-      <PermIdentity className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl mb-2 transition-colors duration-300' />
-    </div>
-    <h4 className='text-md font-semibold mb-1'>Tax Management</h4>
-    <p>
-      We will provide tax management plus managers can now email their
-      clients to notify them.
-    </p>
-  </div>
 
-  <div className='flex flex-col w-80 p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
-    <div className=''>
-      <ReceiptLong className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl mb-2 transition-colors duration-300' />
-    </div>
-    <h4 className='text-md font-semibold mb-1'>Insurance Management</h4>
-    <p>
-      We will provide management for your Insurance so that you can track
-      them easily.
-    </p>
-  </div>
-</div>
-
-</div>
 
       </section>
 

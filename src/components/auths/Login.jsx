@@ -17,6 +17,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { useNavigate } from "react-router-dom";
 
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +57,7 @@ const LoginPage = () => {
         autoClose: 3000,
       });
       setTimeout(() => {
-        navigate("/");
+        navigate("/user");
       }, 3000);
     } else {
       toast.error("Please fix the errors in the form", {
