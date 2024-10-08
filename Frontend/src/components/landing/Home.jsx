@@ -45,12 +45,16 @@ const Landing = () => {
             </p>
 
             <div className='space-y-4 sm:flex sm:space-y-0 sm:space-x-4'>
-              <button className='bg-[#47b6f2] hover:bg-[#47b6f9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
-                <Link to='/register'>Get Started</Link>
-              </button>
-              <button className='border border-black-200 rounded sm:w-auto hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-bold py-2 px-4 focus:outline-none focus:shadow-outline mr-5'>
-                <Link to='/contact'>Contact Us</Link>
-              </button>
+              <Link to='/register'>
+                <button className='bg-[#47b6f2] no-underline hover:bg-[#47b6f9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+                  Get Started
+                </button>
+              </Link>
+              <Link to='/contact'>
+                <button className='border border-black-200 no-underline rounded sm:w-auto hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-bold py-2 px-4 focus:outline-none focus:shadow-outline mr-5'>
+                  Contact Us
+                </button>
+              </Link>
             </div>
           </div>
 
