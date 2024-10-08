@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PermIdentity, CreditScore, ReceiptLong, MailOutline } from '@mui/icons-material';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   return (
-    <div className='fixed top-0 left-0 h-full w-72  px-5 py-5 bg-white border-r shadow-lg'>
+    <div className='fixed top-0 left-0 h-full w-72  px-5 py-5 bg-white border-r shadow-lg' onClick={() =>navigate("/")} style={{cursor:"pointer"}}>
       {/* LOGO */}
       <div className='my-10'>
         <h3 className='text-center text-2xl'>VILU GENIUS</h3>

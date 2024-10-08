@@ -8,7 +8,7 @@ function Dashboard() {
             <Sidebar />
             <div className='w-full h-auto mx-auto px-8 py-8 bg-gray-100 flex justify-center items-center'>
                 <div className='w-[500px] h-auto bg-white shadow-md rounded-lg p-6'>
-                    <h1 className='text-xl font-semibold mb-4'>Credit Score Gauge</h1>
+                    <h1 className='text-xl font-semibold mb-4'>Credit Score</h1>
                     <div className='flex justify-center'>
                         <CreditScoreGauge score={520} /> {/* Pass any score you like */}
                     </div>
