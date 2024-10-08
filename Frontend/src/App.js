@@ -41,6 +41,7 @@ function App() {
   const setAuth = (boolean) => {
     setIsAuthenticated(boolean);
   };
+  console.log("hh")
   return (
     <Router>
       <div className='App  '>
