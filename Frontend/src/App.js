@@ -1,20 +1,17 @@
 import './App.css';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from 'react-router-dom';
 
 import Home from './components/dashboard/pages/home/Home';
 import Login from './components/auths/Login';
 import Landing from './components/landing/Home';
-
 import Register from './components/auths/Register';
-
 import GetAllLoans from './components/dashboard/pages/loans/ClientLoans';
 import AddLoan from './components/dashboard/pages/loans/AddLoan';
 import AddBorrower from './components/dashboard/pages/borrowers/AddBorrower';
@@ -36,274 +33,67 @@ import ContactUs from './components/landing/ContactUs';
 import Dashboard from './components/dashboard/user/Dahboard';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
-  const setAuth = (boolean) => {
-    setIsAuthenticated(boolean);
-  };
-  console.log("hh")
   return (
     <Router>
-      <div className='App  '>
-        {/* <Topbar /> */}
-        <div>
-          <Fragment>
-            <Routes>
-              {/* LANDING */}
-              <Route exact path='/' element={<Landing />}></Route>
-              <Route exact path='/about' element={<About />}></Route>
-              <Route exact path='/contact' element={<ContactUs />}></Route>
+      <div className='App'>
+        <Fragment>
+          <Routes>
+            {/* LANDING */}
+            <Route exact path='/' element={<Landing />} />
+            <Route exact path='/about' element={<About />} />
+            <Route exact path='/contact' element={<ContactUs />} />
 
-              
+            {/* REGISTER */}
+            <Route exact path='/register' element={<Register />} />
 
+            <Route exact path='/addAdmin' element={<AddAdmin />} />
 
-              {/* REGISTER */}
-              <Route
-                exact
-                path='/register'
-                element={
-                  isAuthenticated ? (
-                    <Register setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/home' />
-                  )
-                }
-              ></Route>
+            {/* LOGIN */}
+            <Route exact path='/login' element={<Login />} />
 
-              <Route
-                exact
-                path='/addAdmin'
-                element={
-                  isAuthenticated ? (
-                    <AddAdmin setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/admin' />
-                  )
-                }
-              ></Route>
-              
+            {/* ADMIN */}
+            <Route exact path='/admin' element={<AdminPage />} />
+            <Route exact path='/userProfile' element={<UserDetails />} />
 
-              {/* LOGIN */}
-              <Route
-                exact
-                path='/login'
-                element={
-                  !isAuthenticated ? (
-                    <Login setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/user' />
-                  )
-                }
-              ></Route>
+            {/* HOME */}
+            <Route exact path='/home' element={<Home />} />
+            <Route exact path='/user' element={<Dashboard />} />
 
-              {/* LOGIN */}
-              <Route
-                exact
-                path='/admin'
-                element={
-                  isAuthenticated ? (
-                    <AdminPage setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/home' />
-                  )
-                }
-              ></Route>
-              <Route
-                exact
-                path='/userProfile'
-                element={
-                  isAuthenticated ? (
-                    <UserDetails setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/' />
-                  )
-                }
-              ></Route>
+            <Route exact path='/borrowers' element={<Borrowers />} />
 
-              {/* HOME */}
-              <Route
-                exact
-                path='/home'
-                element={
-                  isAuthenticated ? (
-                    <Home setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/login' />
-                  )
-                }
-              ></Route>
-               <Route
-                exact
-                path='/user'
-                element={
-                  isAuthenticated ? (
-                    <Dashboard setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/login' />
-                  )
-                }
-              ></Route>
+            {/* BORROWER */}
+            <Route exact path='/borrower/:id' element={<Borrower />} />
 
-              <Route
-                exact
-                path='/borrowers'
-                element={
-                  isAuthenticated ? (
-                    <Borrowers setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/home' />
-                  )
-                }
-              ></Route>
+            {/* EDIT BORROWER */}
+            <Route exact path='/editBorrower/:id' element={<EditBorrower />} />
 
-              {/* BORROWER */}
+            {/* ADD BORROWER */}
+            <Route exact path='/addBorrower' element={<AddBorrower />} />
 
-              <Route
-                exact
-                path='/borrower/:id'
-                element={
-                  isAuthenticated ? (
-                    <Borrower setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/borrowers' />
-                  )
-                }
-              ></Route>
+            {/* LOANS */}
+            <Route exact path='/loans' element={<GetAllLoans />} />
 
-              {/* EDIT BORROWER */}
-              <Route
-                exact
-                path='/editBorrower/:id'
-                element={
-                  isAuthenticated ? (
-                    <EditBorrower setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/borrower' />
-                  )
-                }
-              ></Route>
+            {/* ADD LOAN (BORROWER PAGE) */}
+            <Route exact path='/addLoan/:id' element={<AddLoan />} />
 
-              {/* ADD BORROWER */}
-              <Route
-                exact
-                path='/addBorrower'
-                element={
-                  isAuthenticated ? (
-                    <AddBorrower setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/borrowers' />
-                  )
-                }
-              ></Route>
+            {/* ADD LOANS (LOANS PAGE) */}
+            <Route exact path='/addLoan' element={<AddLoans />} />
 
-              {/* LOANS */}
+            {/* EDIT LOANS */}
+            <Route exact path='/editLoan/:id' element={<EditLoan />} />
 
-              <Route
-                exact
-                path='/loans'
-                element={
-                  isAuthenticated ? (
-                    <GetAllLoans setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/login' />
-                  )
-                }
-              ></Route>
-              {/* ADD LOAN (BORROWER PAGE)*/}
-              <Route
-                exact
-                path='/addLoan/:id'
-                element={
-                  isAuthenticated ? (
-                    <AddLoan setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/loans' />
-                  )
-                }
-              ></Route>
+            {/* PAYMENTS */}
+            <Route exact path='/payments' element={<Payments />} />
 
-              {/* ADD LOANS (LOANS PAGE) */}
-              <Route
-                exact
-                path='/addLoan'
-                element={
-                  isAuthenticated ? (
-                    <AddLoans setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/loans' />
-                  )
-                }
-              ></Route>
+            {/* ADD PAYMENT (BORROWER PAGE) */}
+            <Route exact path='/addPayments/:id' element={<PaymentLoansInfo />} />
 
-              {/* EDIT LOANS */}
-              <Route
-                exact
-                path='/editLoan/:id'
-                element={
-                  isAuthenticated ? (
-                    <EditLoan setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/loans' />
-                  )
-                }
-              ></Route>
+            <Route exact path='/payment/:client_id/:loan_id' element={<PaymentLoansInfo />} />
 
-              {/* PAYMENTS */}
-              {/* ALL PAYMENTS */}
-
-              <Route
-                exact
-                path='/payments'
-                element={
-                  isAuthenticated ? (
-                    <Payments setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/login' />
-                  )
-                }
-              ></Route>
-              
-
-              {/* ADD PAYMENT (BORROWER PAGE)*/}
-              <Route
-                exact
-                path='/addPayments/:id'
-                element={
-                  isAuthenticated ? (
-                    <PaymentLoansInfo setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/loans' />
-                  )
-                }
-              ></Route>
-
-              <Route
-                exact
-                path='/payment/:client_id/:loan_id'
-                element={
-                  isAuthenticated ? (
-                    <PaymentLoansInfo setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/loans' />
-                  )
-                }
-              ></Route>
-
-              {/* MESSAGES */}
-              <Route
-                exact
-                path='/emailClient'
-                element={
-                  isAuthenticated ? (
-                    <EmailPage setAuth={setAuth} />
-                  ) : (
-                    <Navigate to='/home' />
-                  )
-                }
-              ></Route>
-            </Routes>
-          </Fragment>
-        </div>
+            {/* MESSAGES */}
+            <Route exact path='/emailClient' element={<EmailPage />} />
+          </Routes>
+        </Fragment>
       </div>
     </Router>
   );

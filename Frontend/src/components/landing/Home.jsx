@@ -10,15 +10,30 @@ import Header from '../Layout/Header';
 import Footer from '../Layout/Footer';
 import image1 from '../Images/Img 1.png';
 import { Col, Row } from 'react-bootstrap';
-// import './Home.css'
+import Carousel from "react-bootstrap/Carousel";
+import './Home.css'
 
 const Landing = () => {
+  const carouselImages = [
+    {
+      id:1,
+      image:'https://flexiloans.com/wp-content/uploads/2023/08/Small-Business-Loans.png'
+    },
+    {
+      id:2,
+      image:'https://paytmblogcdn.paytm.com/wp-content/uploads/2023/09/Blog_Paytm_What-is-Tax_-Types-of-Tax-Benefits-and-Penalty-in-Tax-1.jpg'
+    },
+    {
+      id:3,
+      image:'https://i0.wp.com/www.suretiimf.com/wp-content/uploads/2020/06/New2.jpg?fit=1214%2C355&ssl=1'
+    },
+  ]
   return (
-    <div className=''>
+    <div className='home'>
       <Header />
       <br/>
 
-      <section>
+       {/* <section>
         <div className='grid max-w-screen-xl px-4 pt-32 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 lg:grid-cols-12 lg:pt-28'>
           <div className='mr-auto place-self-center lg:col-span-7'>
             <h1 className='max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl '>
@@ -43,7 +58,30 @@ const Landing = () => {
             <img src={image1} alt='Illustration of financial management' />
           </div>
         </div>
-      </section>
+      </section>  */}
+       <div className="carousel" style={{ paddingTop: "5%" }}>
+      <Row>
+        <Col md={12}>
+          <Carousel className="carousel_wh">
+            {carouselImages.map((image) => (
+              <Carousel.Item >
+                <img
+                  className="carousel_img"
+                  style={{
+                    width: "100%",
+                    height: "70vh",
+                    position: "relative",
+                    
+                  }}
+                  src={image.image}
+                  alt={`Slide `}
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </Col>
+      </Row>
+    </div>
 
       <section id='featured' className='mb-20'>
       
