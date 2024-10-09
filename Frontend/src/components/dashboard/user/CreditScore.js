@@ -28,13 +28,13 @@ const CreditScoreGauge = ({ score }) => {
             <div style={{ textAlign: 'center', marginTop: '10px' }}>
                 <strong>Credit Score: {score}</strong>
             </div>
-            <div style={{ textAlign: 'center', marginTop: '10px' }}>
+            {/* <div style={{ textAlign: 'center', marginTop: '10px' }}>
                 <span style={{ color: '#d63031' }}>Poor (300-579) </span> | 
                 <span style={{ color: '#fd9644' }}> Fair (580-669) </span> | 
                 <span style={{ color: '#ffeaa7' }}> Good (670-739) </span> | 
                 <span style={{ color: '#fdcb6e' }}> Very Good (740-799) </span> | 
                 <span style={{ color: '#00b894' }}> Excellent (800-900) </span>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   PermIdentity,
   CreditScore,
@@ -16,6 +16,7 @@ import './Home.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Landing = () => {
+  const navigate = useNavigate();
   const carouselImages = [
     {
       id:1,
@@ -313,7 +314,7 @@ const Landing = () => {
     <div className="banner text-center p-5"style={{marginLeft:"9%"}}>
       <h1>Your Credit Score & Report</h1>
       <p>Worth ₹1,200 Absolutely FREE</p>
-      <Button variant="primary">Get Free Credit Report</Button>
+      <Button variant="primary" onClick={()=>navigate('/credit')}>Get Free Credit Report</Button>
     </div>
     </Container>
      <div className="credit-products">

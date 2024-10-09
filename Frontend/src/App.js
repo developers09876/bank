@@ -31,6 +31,7 @@ import UserDetails from './components/dashboard/user/UserDetails';
 import About from './components/landing/About';
 import ContactUs from './components/landing/ContactUs';
 import Dashboard from './components/dashboard/user/Dahboard';
+import Credit from './components/landing/CreditScore';
 
 function App() {
   return (
@@ -92,6 +93,8 @@ function App() {
 
             {/* MESSAGES */}
             <Route exact path='/emailClient' element={<EmailPage />} />
+            <Route exact path='/credit' element={<Credit />} />
+
           </Routes>
         </Fragment>
       </div>
