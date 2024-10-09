@@ -69,7 +69,7 @@ const LoginPage = () => {
   
         // Redirect after successful login
         setTimeout(() => {
-          navigate('/user');
+          navigate('/');
         }, 3000);
       } catch (error) {
         console.error('Login error:', error.response?.data);
