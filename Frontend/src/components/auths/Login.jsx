@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';  // Import Axios
 
 
 const LoginPage = () => {
@@ -48,20 +49,38 @@ const LoginPage = () => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      
-      toast.success("Logged in successfully!", {
-        position: "top-center",
-        autoClose: 3000,
-      });
-      setTimeout(() => {
-        navigate("/user");
-      }, 3000);
+      try {
+        const response = await axios.post('http://localhost:5000/signup/login', {
+          email,
+          password,
+        });
+  
+        // If login is successful, store the token
+        const token = response.data.token;
+        localStorage.setItem('token', token); // Save token to localStorage
+  
+        toast.success('Logged in successfully!', {
+          position: 'top-center',
+          autoClose: 3000,
+        });
+  
+        // Redirect after successful login
+        setTimeout(() => {
+          navigate('/user');
+        }, 3000);
+      } catch (error) {
+        console.error('Login error:', error.response?.data);
+        toast.error(error.response?.data?.error || 'Login failed. Please try again.', {
+          position: 'top-center',
+          autoClose: 3000,
+        });
+      }
     } else {
-      toast.error("Please fix the errors in the form", {
-        position: "top-center",
+      toast.error('Please fix the errors in the form', {
+        position: 'top-center',
         autoClose: 3000,
       });
     }
