@@ -5,9 +5,9 @@ import { PermIdentity, CreditScore, ReceiptLong, MailOutline } from '@mui/icons-
 export default function Sidebar() {
   const navigate = useNavigate();
   return (
-    <div className='fixed top-0 left-0 h-full w-72  px-5 py-5 bg-white border-r shadow-lg' onClick={() =>navigate("/")} style={{cursor:"pointer"}}>
+    <div className='fixed top-0 left-0 h-full w-72  px-5 py-5 bg-white border-r shadow-lg' >
       {/* LOGO */}
-      <div className='my-10'>
+      <div className='my-10'onClick={() =>navigate("/")} style={{cursor:"pointer"}}>
         <h3 className='text-center text-2xl'>VILU GENIUS</h3>
         <p className='text-center text-sm'>private limited</p>
       </div>

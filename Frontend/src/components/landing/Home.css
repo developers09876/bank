@@ -4,3 +4,73 @@
 .home{
   overflow-x: hidden;
 }
+.credit-products {
+  padding: 20px;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.product-card {
+  background-color: #efefef;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  height: 188px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-card h3 {
+  /* color: #007bff; */
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.product-card p {
+  color: #333;
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+}
+
+.product-card .button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #00397f;
+  font-size: 0.8rem;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.product-card .button:hover {
+  background-color: #0056b3;
+}
+
+.product-card i {
+  font-size: 1.5rem;
+  color: #00397f;
+  margin-bottom: 10px;
+}
+.cibil-container{
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 20px;
+}

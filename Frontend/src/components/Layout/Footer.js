@@ -7,7 +7,7 @@ function Footer() {
         <div className="max-w-screen-xl p-4 py-10 mx-auto lg:py-16 md:px-8 lg:px-10" >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="mb-6 text-lg font-bold text-gray-900">Loan App.</h3>
+              <h3 className="mb-6 text-lg font-bold text-gray-900">VILU GENIUS.</h3>
               <p className="mb-4 text-sm text-gray-500">
                 Simplifying your loan and tax management with smart, easy-to-use tools.
               </p>
@@ -57,7 +57,7 @@ function Footer() {
 
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900 mx-3">Follow Us</h3>
-              <ul className="flex space-x-4 mx-3">
+              <ul className="flex space-x-4 ">
                 <li>
                   <a href="#" className="text-gray-500 hover:text-blue-500">
                     <svg
@@ -110,7 +110,7 @@ function Footer() {
 
           <div className="text-center">
             <span className="text-sm text-gray-500">
-              © 2022-2023 Loan App™. All Rights Reserved. | Terms & Conditions | Privacy Policy
+              © 2022-2023 VILU GENIUS™. All Rights Reserved. | Terms & Conditions | Privacy Policy
             </span>
           </div>
         </div>

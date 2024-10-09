@@ -5,13 +5,15 @@ import {
   CreditScore,
   ReceiptLong,
   Assessment,
+  InsightsOutlined,
 } from '@mui/icons-material';
 import Header from '../Layout/Header';
 import Footer from '../Layout/Footer';
 import image1 from '../Images/Img 1.png';
-import { Col, Row } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Carousel from "react-bootstrap/Carousel";
 import './Home.css'
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Landing = () => {
   const carouselImages = [
@@ -28,6 +30,146 @@ const Landing = () => {
       image:'https://i0.wp.com/www.suretiimf.com/wp-content/uploads/2020/06/New2.jpg?fit=1214%2C355&ssl=1'
     },
   ]
+  const creditProducts = [
+    { title: 'Personal Loan', description: 'Check Eligibility', link: '#', icon: 'icon-path' },
+    { title: 'Credit Cards', description: 'Get Best Offers', link: '#', icon: 'icon-path' },
+    // Add more cards as needed...
+  ];
+  const products = [
+    {
+      title: "CREDIT CARDS",
+      description: "From 50+ Options, Choose a card matching your lifestyle & needs",
+      buttonText: "Get Best Offers",
+      link: "#",
+      icon: "fas fa-credit-card",
+    },
+    {
+      title: "PERSONAL LOAN",
+      description: "Select the best offer curated just for you from a wide choice of Banks & NBFC's",
+      buttonText: "Check Eligibility",
+      link: "#",
+      icon: "fas fa-hand-holding-usd",
+    },
+    {
+      title: "MICRO LOANS (UNDER ₹50K)",
+      description: "Instant small ticket loans to meet your immediate cash needs",
+      buttonText: "Get Instant Loan",
+      link: "#",
+      icon: "fas fa-coins",
+    },
+    {
+      title: "BUSINESS LOAN",
+      description: "Expand your business with loans at low interest rates",
+      buttonText: "Check Eligibility",
+      link: "#",
+      icon: "fas fa-briefcase",
+    },
+    {
+      title: "TRANSFER PERSONAL LOAN",
+      description: "Get better interest rates on your existing personal loan",
+      buttonText: "Reduce Your EMI",
+      link: "#",
+      icon: "fas fa-exchange-alt",
+    },
+    {
+      title: "HOME LOAN",
+      description: "Choose from lowest interest rates available for your dream home",
+      buttonText: "Check Eligibility",
+      link: "#",
+      icon: "fas fa-home",
+    },
+    {
+      title: "LOAN AGAINST PROPERTY",
+      description: "Get liquidity against your property at best interest rates",
+      buttonText: "Check Eligibility",
+      link: "#",
+      icon: "fas fa-building",
+    },
+    {
+      title: "TRANSFER HOME LOAN",
+      description: "Get better interest rates on your existing home loan",
+      buttonText: "Reduce Your EMI",
+      link: "#",
+      icon: "fa-solid fa-handshake-simple"
+    },
+  ];
+
+  const insurance = [
+    {
+      title: "TERM INSURANCE",
+      description: "Affordable term insurance plans to secure your loved ones financially.",
+      buttonText: "Check Eligibility",
+      link: "#",
+      icon: "fas fa-file-alt",
+    },
+    {
+      title: "HEALTH INSURANCE",
+      description: "Get comprehensive health coverage to safeguard you and your family.",
+      buttonText: "Get Best Offers",
+      link: "#",
+      icon: "fas fa-heartbeat",
+    },
+    {
+      title: "LIFE INSURANCE",
+      description: "Secure your family’s future with the best life insurance plans.",
+      buttonText: "Check Plans",
+      link: "#",
+      icon: "fas fa-user-shield",
+    },
+    {
+      title: "CAR INSURANCE",
+      description: "Protect your vehicle from accidents, theft, and damage.",
+      buttonText: "Get Covered",
+      link: "#",
+      icon: "fas fa-car-crash",
+    },
+    {
+      title: "HOME INSURANCE",
+      description: "Safeguard your home and valuable possessions from unforeseen events.",
+      buttonText: "Get Protection",
+      link: "#",
+      icon: "fas fa-home",
+    },
+    {
+      title: "TRAVEL INSURANCE",
+      description: "Ensure a worry-free journey with travel insurance plans.",
+      buttonText: "Explore Options",
+      link: "#",
+      icon: "fas fa-plane",
+    },
+   
+  ];
+  const tax = [
+    {
+      title: "INCOME TAX FILING",
+      description: "Get assistance with filing your annual income tax returns accurately and on time.",
+      buttonText: "File Now",
+      link: "#",
+      icon: "fas fa-file-invoice-dollar",
+    },
+    {
+      title: "GST REGISTRATION",
+      description: "Quick and easy GST registration services for businesses of all sizes.",
+      buttonText: "Register Now",
+      link: "#",
+      icon: "fas fa-receipt",
+    },
+    {
+      title: "TAX PLANNING",
+      description: "Optimize your tax savings with expert tax planning advice.",
+      buttonText: "Start Planning",
+      link: "#",
+      icon: "fas fa-chart-line",
+    },
+    {
+      title: "TDS RETURNS FILING",
+      description: "Ensure timely and accurate TDS return filing to avoid penalties.",
+      buttonText: "File Returns",
+      link: "#",
+      icon: "fas fa-calculator",
+    },
+  ]
+  
   return (
     <div className='home'>
       <Header />
@@ -46,7 +188,7 @@ const Landing = () => {
 
             <div className='space-y-4 sm:flex sm:space-y-0 sm:space-x-4'>
               <Link to='/register'>
-                <button className='bg-[#47b6f2] no-underline hover:bg-[#47b6f9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+                <button className='bg-[#00397f] no-underline hover:bg-[#47b6f9] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
                   Get Started
                 </button>
               </Link>
@@ -86,7 +228,7 @@ const Landing = () => {
         </Col>
       </Row>
     </div>
-
+{/* 
       <section id='featured' className='mb-20'>
       
       <div className='max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6'>
@@ -101,44 +243,42 @@ const Landing = () => {
       </div>
 
       <Row className='g-4'>
-        {/* Loan Management Card */}
+       
         <Col md={3}>
-          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#00397f] hover:text-white cursor-pointer group'>
             <div className='mb-2'>
-              <CreditScore className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+              <CreditScore className='w-full text-[#00397f] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
             </div>
             <h4 className='text-md font-semibold mb-1'>Loan Management</h4>
             <p>We will provide management for your loan so that you can track them easily.</p>
           </div>
         </Col>
 
-        {/* Tax Management Card */}
+       
         <Col md={3}>
-          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#00397f] hover:text-white cursor-pointer group'>
             <div className='mb-2'>
-              <PermIdentity className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+              <PermIdentity className='w-full text-[#00397f] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
             </div>
             <h4 className='text-md font-semibold mb-1'>Tax Management</h4>
             <p>We will provide tax management plus managers can now email their clients to notify them.</p>
           </div>
         </Col>
 
-        {/* Insurance Management Card */}
         <Col md={3}>
-          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#00397f] hover:text-white cursor-pointer group'>
             <div className='mb-2'>
-              <ReceiptLong className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+              <ReceiptLong className='w-full text-[#00397f] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
             </div>
             <h4 className='text-md font-semibold mb-1'>Insurance Management</h4>
             <p>We will provide management for your Insurance so that you can track them easily.</p>
           </div>
         </Col>
 
-        {/* Cibil Score Card */}
         <Col md={3}>
-          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#47b6f2] hover:text-white cursor-pointer group'>
+          <div className='p-10 border border-black rounded-xl hover:shadow-xl hover:bg-[#00397f] hover:text-white cursor-pointer group'>
             <div className='mb-2'>
-              <Assessment className='w-full text-[#47b6f2] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
+              <Assessment className='w-full text-[#00397f] group-hover:text-white rounded-full h-full text-2xl transition-colors duration-300' />
             </div>
             <h4 className='text-md font-semibold mb-1'>Cibil Score Management</h4>
             <p>We will provide tools to help you track and manage your Cibil score easily.</p>
@@ -149,7 +289,82 @@ const Landing = () => {
 
 
 
-      </section>
+      </section> */}
+       {/* <Container>
+      <Row>
+        {creditProducts.map((product, index) => (
+          <Col key={index} md={6} className="my-3">
+            <Card>
+              <Card.Body>
+                <Card.Title>{product.title}</Card.Title>
+                <Card.Text>{product.description}</Card.Text>
+                <Button variant="primary" href={product.link}>Learn More</Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container> */}
+    <br/>
+    <Container className='cibil-container'>
+      <div>
+        <img src='https://www.godigit.com/content/dam/godigit/directportal/en/contenthm/good-credit-score.jpg' width={"500px"}></img>
+      </div>
+    <div className="banner text-center p-5"style={{marginLeft:"9%"}}>
+      <h1>Your Credit Score & Report</h1>
+      <p>Worth ₹1,200 Absolutely FREE</p>
+      <Button variant="primary">Get Free Credit Report</Button>
+    </div>
+    </Container>
+     <div className="credit-products">
+      <h2>Credit Products</h2>
+      <div className="products-container">
+        {products.map((product, index) => (
+          <div className="product-card" key={index}>
+            <i className={product.icon}></i>
+            <h3>{product.title}</h3>
+            <p>{product.description}</p>
+            <a href={product.link} className="button">
+              {product.buttonText}
+            </a>
+          </div>
+        ))}
+      </div>
+      </div>
+      <br/>
+
+      <div className="credit-products">
+      <h2>Insurance and Investment</h2>
+      <div className="products-container">
+        {insurance.map((product, index) => (
+          <div className="product-card" key={index}>
+            <i className={product.icon}></i>
+            <h3>{product.title}</h3>
+            <p>{product.description}</p>
+            <a href={product.link} className="button">
+              {product.buttonText}
+            </a>
+          </div>
+        ))}
+      </div>
+      </div>
+      <div className="credit-products">
+      <h2>Tax Services</h2>
+      <div className="products-container">
+        {tax.map((product, index) => (
+          <div className="product-card" key={index}>
+            <i className={product.icon}></i>
+            <h3>{product.title}</h3>
+            <p>{product.description}</p>
+            <a href={product.link} className="button">
+              {product.buttonText}
+            </a>
+          </div>
+        ))}
+      </div>
+      </div>
+      <br/>
+
 
       <section className='bg-gray-100 py-16'>
         <div className='max-w-screen-xl px-4 py-8 mx-auto'>
