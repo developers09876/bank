@@ -12,7 +12,6 @@ const Register = ({ setAuth }) => {
     firstname: '',
     lastname: '',
     email: '',
-    // username: '',
     password: '',
     confirmPassword: '', 
     contactNumber: ''
@@ -27,10 +26,10 @@ const Register = ({ setAuth }) => {
   };
 
   const validateForm = () => {
-    if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
-      toast.error('All fields are required');
-      return false;
-    }
+    // if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
+    //   toast.error('All fields are required');
+    //   return false;
+    // }
 
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
@@ -50,7 +49,6 @@ const Register = ({ setAuth }) => {
         lastname,
         contactNumber,
         email,
-       
         password,
         confirmPassword
       };
@@ -121,10 +119,6 @@ const Register = ({ setAuth }) => {
                 <input type='email' name='email' value={email} onChange={onChange} className='register-form__input' placeholder='Input your email address' required />
               </div>
             </div>
-            {/* <div className='register-form__group'>
-              <label htmlFor='username' className='register-form__label'>Username:</label>
-              <input type='text' name='username' value={username} onChange={onChange} className='register-form__input' placeholder='Choose a username' required />
-            </div> */}
             <div className='register-form__group'>
               <label htmlFor='password' className='register-form__label'>Password:</label>
               <input type='password' name='password' value={password} onChange={onChange} className='register-form__input' placeholder='*************' required />
