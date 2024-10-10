@@ -17,6 +17,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';  // Import Axios
+import Header from "../Layout/Header";
 
 
 const LoginPage = () => {
@@ -86,9 +87,11 @@ const LoginPage = () => {
     }
   };
   return (
+    <>
+    <Header/>
     <Container
       maxWidth="lg"
-      style={{ height: "100vh", display: "flex", alignItems: "center" }}
+      style={{ height: "90vh", display: "flex", alignItems: "center", marginTop:"5%"}}
     >
       <Grid container>
         <Grid item xs={12} md={6}>
@@ -199,26 +202,26 @@ const LoginPage = () => {
               showThumbs={false}
               showStatus={false}
               interval={3000}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "50%" }}
             >
               <div>
                 <img
                   src="https://fundingguru.com/wp-content/uploads/2024/03/business-loans-tax-implications.jpg"
-                  style={{ width: "100%", height: "90vh", objectFit: "fill" }}
+                  style={{ width: "100%", height: "70vh", objectFit: "fill" }}
                   alt="Slide 1"
                 />
               </div>
               <div>
                 <img
                   src="https://www.shutterstock.com/shutterstock/photos/2426984001/display_1500/stock-photo-businessman-using-laptop-in-data-management-with-a-networked-copy-space-vertical-2426984001.jpg"
-                  style={{ width: "100%", height: "90vh", objectFit: "cover" }}
+                  style={{ width: "100%", height: "70vh", objectFit: "cover" }}
                   alt="Slide 2"
                 />
               </div>
               <div>
                 <img
                   src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2stczE5LWljZS0zNjQ5LWx5ajIwNTQtMDktaW5jb21ldGF4cmV0dXJuLmpwZw.jpg"
-                  style={{ width: "100%", height: "90vh", objectFit: "fill" }}
+                  style={{ width: "100%", height: "70vh", objectFit: "fill" }}
                   alt="Slide 3"
                 />
               </div>
@@ -228,6 +231,7 @@ const LoginPage = () => {
       </Grid>
       <ToastContainer />
     </Container>
+    </>
   );
 };
 

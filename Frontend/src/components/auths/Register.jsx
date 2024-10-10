@@ -5,13 +5,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';  // Import Axios
+import Header from '../Layout/Header';
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     firstname: '',
     lastname: '',
     email: '',
-    username: '',
+    // username: '',
     password: '',
     confirmPassword: '', 
     contactNumber: ''
@@ -19,14 +20,14 @@ const Register = ({ setAuth }) => {
   
   const navigate = useNavigate();
 
-  const { firstname, lastname, contactNumber, email, username, password, confirmPassword } = inputs;
+  const { firstname, lastname, contactNumber, email, password, confirmPassword } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   const validateForm = () => {
-    if (!firstname || !lastname || !email || !username || !password || !confirmPassword || !contactNumber) {
+    if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
       toast.error('All fields are required');
       return false;
     }
@@ -49,7 +50,7 @@ const Register = ({ setAuth }) => {
         lastname,
         contactNumber,
         email,
-        username,
+       
         password,
         confirmPassword
       };
@@ -76,10 +77,11 @@ const Register = ({ setAuth }) => {
 
   return (
     <div className='register-container'>
+      <Header/>
       <ToastContainer />
-      <Grid container>
+      <Grid container style={{marginTop:"6%"}}>
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginTop: '50px' }}>
+          <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginTop: '60px' }}>
             Easy. Quick. Efficient.
           </Typography>
           <Box sx={{ display: 'Grid', alignItems: 'center', height: '80%', flexWrap: 'wrap', marginLeft: '50px' }}>
@@ -119,10 +121,10 @@ const Register = ({ setAuth }) => {
                 <input type='email' name='email' value={email} onChange={onChange} className='register-form__input' placeholder='Input your email address' required />
               </div>
             </div>
-            <div className='register-form__group'>
+            {/* <div className='register-form__group'>
               <label htmlFor='username' className='register-form__label'>Username:</label>
               <input type='text' name='username' value={username} onChange={onChange} className='register-form__input' placeholder='Choose a username' required />
-            </div>
+            </div> */}
             <div className='register-form__group'>
               <label htmlFor='password' className='register-form__label'>Password:</label>
               <input type='password' name='password' value={password} onChange={onChange} className='register-form__input' placeholder='*************' required />

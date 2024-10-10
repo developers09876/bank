@@ -1,5 +1,7 @@
 import React from 'react';
 import CreditScoreGauge from '../dashboard/user/CreditScore';
+import Header from '../Layout/Header';
+import Footer from '../Layout/Footer';
 // import CreditScoreGauge from './CreditScore';
 
 function Credit() {
@@ -20,6 +22,13 @@ function Credit() {
     };
 
     return (
+        <>
+        <Header/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
         <div className='min-h-screen bg-gray-100 flex justify-center items-center'>
             <div className='w-[100%] bg-white shadow-lg rounded-lg p-6'>
                 {/* Credit Score Section */}
@@ -83,6 +92,10 @@ function Credit() {
                 </div>
             </div>
         </div>
+        <br/>
+
+        <Footer/>
+        </>
     );
 }
 

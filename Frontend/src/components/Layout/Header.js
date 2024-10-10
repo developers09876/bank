@@ -86,7 +86,7 @@ function Header() {
                     src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
                     alt="Live Icon"
                     className="avatar"
-                    style={{ width: "40px", height: "40px" }} // Style the icon
+                    // style={{ width: "40px", height: "40px" }} // Style the icon
                   />
                   <div className="live-badge">100%</div>{" "}
                   {/* Badge for live status */}
