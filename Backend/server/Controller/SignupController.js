@@ -1,56 +1,54 @@
 import User from '../model/signupModel.js';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
+// Create a new user
 export const registerUser = async (req, res) => {
-  const { firstname, lastname, email, username, password, confirmPassword, contactNumber } = req.body;
-
-  // Check if all fields are filled
-  if (!firstname || !lastname || !email || !username || !password || !confirmPassword || !contactNumber) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  // Check if passwords match
-  if (password !== confirmPassword) {
-    return res.status(400).json({ error: "Passwords do not match" });
-  }
+  const { firstname, lastname, email, password, contactNumber } = req.body;
 
   try {
-    // Check if email or username already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: "Email is already in use" });
-    }
+    // Check for existing email or contact number manually (for better control)
+    const existingUser = await User.findOne({
+      $or: [{ email }, { contactNumber }]
+    });
 
-    const existingUsername = await User.findOne({ username });
-    if (existingUsername) {
-      return res.status(400).json({ error: "Username is already taken" });
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return res.status(400).json({ message: "Email is already taken." });
+      }
+      if (existingUser.contactNumber === contactNumber) {
+        return res.status(400).json({ message: "Contact number is already taken." });
+      }
     }
 
     // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
+    // Create a new user instance
     const newUser = new User({
       firstname,
       lastname,
       email,
-      username,
-      password: hashedPassword,  // Save the hashed password
-      contactNumber
+      password: hashedPassword,
+      contactNumber,
     });
 
-    // Save user to database
-    await newUser.save();
+    // Save the new user to the database
+    const savedUser = await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
+    res.status(201).json({ message: "User created successfully", user: savedUser });
+  } catch (error) {
+    // Handle MongoDB duplicate key error (E11000)
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({
+        message: `Duplicate field error: The ${field} already exists.`,
+      });
+    }
+    // Generic error handler
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
 
 //login
 export async function loginUser(req, res, next) {
