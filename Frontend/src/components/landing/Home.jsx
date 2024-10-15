@@ -100,7 +100,7 @@ const Landing = () => {
       title: "TERM INSURANCE",
       description: "Affordable term insurance plans to secure your loved ones financially.",
       buttonText: "Check Eligibility",
-      link: "#",
+      link: "/insurance",
       icon: "fas fa-file-alt",
     },
     {

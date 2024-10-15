@@ -6,6 +6,8 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  useLocation,
+  Navigate,
 } from 'react-router-dom';
 
 import Home from './components/dashboard/pages/home/Home';
@@ -32,6 +34,19 @@ import About from './components/landing/About';
 import ContactUs from './components/landing/ContactUs';
 import Dashboard from './components/dashboard/user/Dahboard';
 import Credit from './components/landing/CreditScore';
+import Insurance from './components/landing/InsuranceFrom';
+
+const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
+  const isAuthenticated = localStorage.getItem("token");
+  // const isAuthenticated = true;
+  const location = useLocation();
+
+  return isAuthenticated ? (
+    <Component />
+  ) : (
+    <Navigate to={redirectTo} replace state={{ from: location }} />
+  );
+};
 
 function App() {
   return (
@@ -43,6 +58,12 @@ function App() {
             <Route exact path='/' element={<Landing />} />
             <Route exact path='/about' element={<About />} />
             <Route exact path='/contact' element={<ContactUs />} />
+            <Route
+          path="/insurance"
+          element={
+            <ProtectedRoute Component={Insurance} redirectTo="/login" />
+          }
+        />
 
             {/* REGISTER */}
             <Route exact path='/register' element={<Register />} />
@@ -93,7 +114,12 @@ function App() {
 
             {/* MESSAGES */}
             <Route exact path='/emailClient' element={<EmailPage />} />
-            <Route exact path='/credit' element={<Credit />} />
+            <Route
+          path="/credit"
+          element={
+            <ProtectedRoute Component={Credit} redirectTo="/login" />
+          }
+        />
 
           </Routes>
         </Fragment>
