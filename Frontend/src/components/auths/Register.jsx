@@ -9,6 +9,7 @@ import Header from '../Layout/Header';
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
+    userType: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -19,17 +20,17 @@ const Register = ({ setAuth }) => {
   
   const navigate = useNavigate();
 
-  const { firstname, lastname, contactNumber, email, password, confirmPassword } = inputs;
+  const { userType, firstname, lastname, contactNumber, email, password, confirmPassword } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   const validateForm = () => {
-    if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
-      toast.error('All fields are required');
-      return false;
-    }
+    // if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
+    //   toast.error('All fields are required');
+    //   return false;
+    // }
 
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
@@ -38,6 +39,7 @@ const Register = ({ setAuth }) => {
 
     return true;
   };
+  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -45,11 +47,11 @@ const Register = ({ setAuth }) => {
 
     try {
       const body = {
+        userType,
         firstname,
         lastname,
         contactNumber,
         email,
-       
         password,
         confirmPassword
       };
@@ -97,9 +99,26 @@ const Register = ({ setAuth }) => {
 
         <Grid item xs={12} md={6}>
           <form onSubmit={onSubmit} className='register-form'>
-            <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginBottom: '30px', marginTop:'5px', fontSize:'30px' }}>
+            {/* <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginBottom: '30px', marginTop:'5px', fontSize:'30px' }}>
               Sign Up
-            </Typography>
+            </Typography> */}
+            {/* <div className='register-form__row'> */}
+    <div className='register-form__group'>
+      <label htmlFor='userType' className='register-form__label'>User Type:</label>
+      <select 
+        name='userType' 
+        value={userType} 
+        onChange={onChange} 
+        className='register-form__input' 
+        required
+        
+      >
+        <option value='' disabled>Select Type</option>
+        <option value='user'>User</option>
+        <option value='employee'>Employee</option>
+      </select>
+    </div>
+  {/* </div> */}
             <div className='register-form__row'>
               <div className='register-form__group'>
                 <label htmlFor='firstname' className='register-form__label'>First Name:</label>
@@ -120,10 +139,7 @@ const Register = ({ setAuth }) => {
                 <input type='email' name='email' value={email} onChange={onChange} className='register-form__input' placeholder='Input your email address' required />
               </div>
             </div>
-            {/* <div className='register-form__group'>
-              <label htmlFor='username' className='register-form__label'>Username:</label>
-              <input type='text' name='username' value={username} onChange={onChange} className='register-form__input' placeholder='Choose a username' required />
-            </div> */}
+            <div className='register-form__row'>
             <div className='register-form__group'>
               <label htmlFor='password' className='register-form__label'>Password:</label>
               <input type='password' name='password' value={password} onChange={onChange} className='register-form__input' placeholder='*************' required />
@@ -131,6 +147,7 @@ const Register = ({ setAuth }) => {
             <div className='register-form__group'>
               <label htmlFor='confirmPassword' className='register-form__label'>Confirm Password:</label>
               <input type='password' name='confirmPassword' value={confirmPassword} onChange={onChange} className='register-form__input' placeholder='*************' required />
+            </div>
             </div>
             <button type='submit' className='register-form__submit'>Create Account</button>
             <div className='register-form__redirect'>
