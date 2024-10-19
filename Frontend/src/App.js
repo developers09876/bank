@@ -35,6 +35,7 @@ import ContactUs from './components/landing/ContactUs';
 import Dashboard from './components/dashboard/user/Dahboard';
 import Credit from './components/landing/CreditScore';
 import Insurance from './components/landing/InsuranceFrom';
+import Carrier from './components/landing/Carrier';
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -120,7 +121,7 @@ function App() {
             <ProtectedRoute Component={Credit} redirectTo="/login" />
           }
         />
-
+         <Route path='/carrier' element={<Carrier/>}/>
           </Routes>
         </Fragment>
       </div>
