@@ -71,7 +71,7 @@ const Register = ({ setAuth }) => {
       
     } catch (error) {
       console.error('Registration error:', error);
-      const errorMessage = error.response?.data?.error || 'Something went wrong. Please try again.';
+      const errorMessage = error.response?.data?.message || 'Something went wrong. Please try again.';
       toast.error(errorMessage);
     }
   };

@@ -2,6 +2,7 @@ import User from "../model/signupModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+// Create a new user
 export const registerUser = async (req, res) => {
   const {
     userType,

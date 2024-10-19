@@ -57,6 +57,14 @@ function Header() {
             </li>
             <li>
               <Link
+                to="/carrier"
+                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+              >
+                Carrier
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/contact"
                 className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
               >

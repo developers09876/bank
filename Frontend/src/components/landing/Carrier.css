@@ -1,0 +1,68 @@
+.career-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .career-intro,
+  .job-listings,
+  .employee-testimonials,
+  .application-form {
+    margin-bottom: 30px;
+  }
+  
+  .job {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .apply-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-btn:hover {
+    background-color: #218838;
+  }
+  
+  .application-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .application-form label {
+    margin-bottom: 5px;
+  }
+  
+  .application-form input,
+  select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  .submit-button1 {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: 2px solid #4CAF50; /* Green border */
+    padding: 5px 10px; /* Smaller padding */
+    font-size: 14px; /* Smaller font size */
+    border-radius: 3px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    width: 200px; /* Button width adjusts to content */
+    display: inline-block; /* Ensures button doesn't stretch */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  }
+  
+  .submit-button1:hover {
+    background-color: white; /* Change background on hover */
+    color: #4CAF50; /* Change text color on hover */
+  }
+  
+  
