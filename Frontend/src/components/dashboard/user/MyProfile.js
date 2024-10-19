@@ -415,7 +415,7 @@ function TabsVendor() {
                           name="templeName"
                           {...register("templeName", { required: true })}
                           required="required"
-                          placeholder="Temple Name"
+                          placeholder="Name"
                         />
                         {errors.templeName && (
                           <p className="text-danger">Name is required</p>
@@ -758,7 +758,7 @@ function TabsVendor() {
                 </Row>
               </div>
               <div>
-                <p className="ourProfile_Heading_div">Professional Details</p>
+                {/* <p className="ourProfile_Heading_div">Professional Details</p>
 
                 <Row>
                   <Col xs={12} md={4} lg={6}>
@@ -800,12 +800,10 @@ function TabsVendor() {
                             setPoojaTypeValue(e);
                           }}
                         >
-                          {/* {typeDetails?.map((option) => ( */}
                           <Option value="auspicious">Auspicious</Option>
                           <Option value="inaspicious">Inauspicious</Option>
                           <Option value="both">Both</Option>
 
-                          {/* ))} */}
                         </Select>
                       </div>
                     </div>
@@ -911,7 +909,7 @@ function TabsVendor() {
                       </div>
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
               </div>
               <div className="upgrade_column mb-3">
                 <Button className="button1" type="submit">

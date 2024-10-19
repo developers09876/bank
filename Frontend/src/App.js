@@ -35,6 +35,9 @@ import ContactUs from './components/landing/ContactUs';
 import Dashboard from './components/dashboard/user/Dahboard';
 import Credit from './components/landing/CreditScore';
 import Insurance from './components/landing/InsuranceFrom';
+import RoleForm from './components/landing/Gayu';
+import AdminDashboard from './components/dashboard/admin/dashboard';
+import UserList from './components/dashboard/admin/UserList';
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -75,6 +78,8 @@ function App() {
 
             {/* ADMIN */}
             <Route exact path='/admin' element={<AdminPage />} />
+            <Route path ='/admindashboard' element={<AdminDashboard/>}/>
+            <Route path = '/userlist' element={<UserList/>}/>
             <Route exact path='/userProfile' element={<UserDetails />} />
 
             {/* HOME */}
@@ -120,6 +125,7 @@ function App() {
             <ProtectedRoute Component={Credit} redirectTo="/login" />
           }
         />
+        <Route path='/gayu' element={<RoleForm/>}/>
 
           </Routes>
         </Fragment>

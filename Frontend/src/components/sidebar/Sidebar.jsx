@@ -17,7 +17,7 @@ export default function Sidebar() {
       {/* MENU */}
       <div className='my-10'>
         <ul>
-        <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
+        <li className='text-sm font-medium no-underline text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
             <PermIdentity />
             <Link to='/user' className='ml-2.5'>
               Dashboard
@@ -25,29 +25,35 @@ export default function Sidebar() {
           </li>
           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
             <PermIdentity />
-            <Link to='/userProfile' className='ml-2.5'>
+            <Link to='/userProfile' className='ml-2.5 no-underline'>
               My Profile
             </Link>
           </li>
 
           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
             <CreditScore />
-            <Link to='/loans' className='ml-2.5'>
+            <Link to='/loans' className='ml-2.5 no-underline'>
               Loans
             </Link>
           </li>
 
-          <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
+          {/* <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
             <ReceiptLong />
-            <Link to='/payments' className='ml-2.5'>
+            <Link to='/payments' className='ml-2.5 no-underline'>
               Payments
             </Link>
           </li>
 
           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
             <MailOutline />
-            <Link to='/emailClient' className='ml-2.5'>
+            <Link to='/emailClient' className='ml-2.5 no-underline'>
               Email
+            </Link>
+          </li> */}
+          <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
+            <ReceiptLong />
+            <Link to='/payments' className='ml-2.5 no-underline'>
+              Insurance
             </Link>
           </li>
         </ul>

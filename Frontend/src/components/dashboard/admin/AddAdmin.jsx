@@ -4,7 +4,9 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from '../../sidebar/Sidebar';
+import Sidebar from './Sidebar';
+import { Col, Row } from 'react-bootstrap';
+
 
 const AddAdmin = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -86,14 +88,14 @@ const AddAdmin = ({ setAuth }) => {
       <Sidebar />
       <ToastContainer />
 
-      <div className='w-full h-[900px] border bg-white shadow-md rounded'>
+      <div className='w-full  ml-72 border bg-white shadow-md rounded'>
         <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
           {/* HEADER */}
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
             {/* TITLE */}
             <div>
               <h3 className='text-lg font-medium leading-6 text-white'>
-                Add New Admin
+                Add New Employee
               </h3>
               <p className='mt-1 max-w-2xl text-sm text-white'>
                 Register all the required fields.
@@ -123,6 +125,8 @@ const AddAdmin = ({ setAuth }) => {
             }}
             className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500 '
           >
+            <Row>
+              <Col lg={6} md={6}>
             {/* FIRST NAME */}
             <label htmlFor='firstname'>First Name: </label>
             <input
@@ -136,7 +140,10 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='First Name'
               required
             />
+            </Col>
             {/* LAST NAME */}
+            <Col lg={6} md={6}>
+
             <label htmlFor='lastname'>Last Name: </label>
             <input
               type='text'
@@ -149,6 +156,9 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='Last Name'
               required
             />
+            </Col>
+              <Col lg={6} md={6}>
+
             {/* CONTACT NUMBER */}
             <label htmlFor='contactNumber'>Contact Number: </label>
             <input
@@ -162,6 +172,9 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='Contact Number'
               required
             />
+            </Col>
+            <Col lg={6} md={6}>
+
             {/* ADDRESS */}
             <label htmlFor='address'>Address: </label>
             <input
@@ -175,7 +188,10 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='Address'
               required
             />
+            </Col>
             {/* EMAIL ADDRESS */}
+            <Col lg={6} md={6}>
+
             <label htmlFor='email'>Email Address: </label>
             <input
               type='email'
@@ -188,7 +204,10 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='Email'
               required
             />
+            </Col>
             {/* PASSWORD */}
+            <Col lg={6} md={6}>
+
             <label htmlFor='password'>Password: </label>
             <input
               type='password'
@@ -201,6 +220,9 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='**********'
               required
             />
+            </Col>
+            <Col lg={6} md={6}>
+
             {/* USERNAME */}
             <label htmlFor='username'>Username: </label>
             <input
@@ -214,6 +236,8 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='Username'
               required
             />
+            </Col>
+            </Row>
 
             {/* BUTTONS */}
             <button

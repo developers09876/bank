@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
+import Sidebar from './Sidebar';
 
-const Admins = ({ setAuth }) => {
+const UserList = ({ setAuth }) => {
   const [admins, setAdmins] = useState([]);
 
   const getAdmins = async () => {
@@ -63,16 +64,17 @@ const Admins = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='w-full border bg-white shadow-md rounded mt-5  border-t-4 border-t-red-500'>
+    <div className='w-full ml-72 border bg-white shadow-md rounded mt-5  border-t-4 border-t-red-500'>
+        <Sidebar/>
       <ToastContainer />
       <div className='py-5 px-5'>
         {/* TITLE */}
         <div className='flex items-center justify-between border-b-2'>
           <h3 className='text-lg font-medium  text-gray   px-1 '>
-            Manage Employees
+            Manage Users
           </h3>
           <button className='border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5'>
-            <Link to='/addAdmin' className='no-underline' style={{color:"white"}}>Add Employee</Link>
+            <Link to='/addAdmin' className='no-underline' style={{color:"white"}}>Add User</Link>
           </button>
         </div>
         {/* INFO */}
@@ -95,7 +97,7 @@ const Admins = ({ setAuth }) => {
                 <tr className='border px-4 py-2 bg-red-50'>
                   <td></td>
                   <td></td>
-                  <td className='px-4 py-2 bg-red-50'>No Employee Data</td>
+                  <td className='px-4 py-2 bg-red-50'>No User Data</td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -136,4 +138,4 @@ const Admins = ({ setAuth }) => {
   );
 };
 
-export default Admins;
+export default UserList;

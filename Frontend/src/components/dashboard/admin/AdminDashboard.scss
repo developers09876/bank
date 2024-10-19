@@ -1,0 +1,37 @@
+.dashboard-container {
+    padding: 2rem;
+    background-color: #f8f9fa;
+  }
+  
+  .dashboard-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #343a40;
+  }
+  
+  .stat-card {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    width: 70%;
+    padding: 20px;
+    margin: 10px;
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  
+    .card-title {
+      font-size: 1.2rem;
+      color: #495057;
+    }
+  
+    .card-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+  }
+  
