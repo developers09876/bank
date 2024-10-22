@@ -36,6 +36,13 @@ import Dashboard from './components/dashboard/user/Dahboard';
 import Credit from './components/landing/CreditScore';
 import Insurance from './components/landing/InsuranceFrom';
 import Carrier from './components/landing/Carrier';
+import AdminDashboard from './components/dashboard/admin/dashboard';
+import UserList from './components/dashboard/admin/UserList';
+import TaxForm from './components/landing/TaxForm';
+import LoanPage from './components/landing/LoanPage';
+import InsuranceCards from './components/landing/InsurancePage';
+import TaxCards from './components/landing/TaxPage';
+import LoanForm from './components/landing/LoanForm';
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -60,11 +67,22 @@ function App() {
             <Route exact path='/about' element={<About />} />
             <Route exact path='/contact' element={<ContactUs />} />
             <Route
-          path="/insurance"
-          element={
-            <ProtectedRoute Component={Insurance} redirectTo="/login" />
+          path="/insuranceform"
+          element={<Insurance/>}/>
+         <Route
+          path="/taxform"
+          element={<TaxForm/>
           }
         />
+         <Route
+          path="/loan"
+          element={<LoanPage/>}/>
+          
+            
+        <Route path='/insurancepage' element={<InsuranceCards/>}/>
+        <Route path='/taxpage' element={<TaxCards/>}/>
+        <Route path='/loanform' element={<LoanForm/>}/>
+
 
             {/* REGISTER */}
             <Route exact path='/register' element={<Register />} />

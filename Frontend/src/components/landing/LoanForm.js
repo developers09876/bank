@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 
-function Insurance() {
+function LoanForm() {
   const [typeValue, setTypeValue] = useState();
   const [serviceType, setServiceType] = useState([]);
   const [selectYear, setSelectYear] = useState();
@@ -339,9 +339,8 @@ console.log('step1', Premium)
   };
   return (
     <div>
-      <Header/>
-      <br/>
-
+        <Header/>
+        <br/>
         <Container style={{marginTop:"5%"}}>
       <Col xs={12} md={12} lg={12}>
         <div
@@ -351,7 +350,7 @@ console.log('step1', Premium)
           <div style={{ paddingLeft: "10px" }}>
             <center>
               {" "}
-              <h4 className="pages-title mt-3 mb-5"> Insurance Policy</h4>
+              <h4 className="pages-title mt-3 mb-5"> Loan Form</h4>
             </center>
 
             <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -829,7 +828,7 @@ console.log('step1', Premium)
              
               <div className="upgrade_column mb-3">
                 <Button className="button1" type="submit">
-                  Updade
+                  Submit
                 </Button>
               </div>
             </form>
@@ -838,12 +837,13 @@ console.log('step1', Premium)
         {/* </Card> */}
       </Col>
       </Container>
-      <br/>
-      <br/>
-<Footer/>
       <ToastContainer/>
+      <br/>
+      <br/>
+
+      <Footer/>
     </div>
   );
 }
 
-export default Insurance;
+export default LoanForm;

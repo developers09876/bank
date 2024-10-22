@@ -76,7 +76,7 @@ const Landing = () => {
       title: "HOME LOAN",
       description: "Choose from lowest interest rates available for your dream home",
       buttonText: "Check Eligibility",
-      link: "#",
+      link: "/loan",
       icon: "fas fa-home",
     },
     {
@@ -100,7 +100,7 @@ const Landing = () => {
       title: "TERM INSURANCE",
       description: "Affordable term insurance plans to secure your loved ones financially.",
       buttonText: "Check Eligibility",
-      link: "/insurance",
+      link: "/insurancepage",
       icon: "fas fa-file-alt",
     },
     {
@@ -145,7 +145,7 @@ const Landing = () => {
       title: "INCOME TAX FILING",
       description: "Get assistance with filing your annual income tax returns accurately and on time.",
       buttonText: "File Now",
-      link: "#",
+      link: "/taxpage",
       icon: "fas fa-file-invoice-dollar",
     },
     {
