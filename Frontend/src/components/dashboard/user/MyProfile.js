@@ -35,6 +35,7 @@ function TabsVendor() {
   const [IyerName, setIyerName] = useState();
   const id = localStorage.getItem("vendor_id");
   const [poojaType, setPoojaTypeValue] = useState();
+  const [marry, setMarry] = useState();
   console.log("pooja", poojaType);
 
 
@@ -82,9 +83,16 @@ function TabsVendor() {
     { language: "Male", value: "Male" },
     { language: "Female", value: "Female" },
     { language: "Other", value: "Other" },
-
-
   ];
+
+const maritalstatus = [
+  {
+    name:"Single", value:"Single"
+  },
+  {
+    name:"Married", value:"Married"
+  },
+]
   useEffect(() => {
     getCountry();
   }, []);
@@ -369,10 +377,10 @@ function TabsVendor() {
                           className="inputcolumn-ourProfile"
                           type="text"
                           value={IyerName}
-                          name="priestName"
+                          name="FullName"
                           {...register("priestName", { required: true })}
                           required="required"
-                          placeholder="Priest Name"
+                          placeholder="Full Name"
                           onChange={(e) => setIyerName(e.target.value)}
                         />
                         {errors.priestName && (
@@ -381,24 +389,33 @@ function TabsVendor() {
                       </div>
                     </div>
                   </Col>
+            
                   <Col xs={12} md={4} lg={6}>
                     <div>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Marital Status
-                        </label>
+                        <label className="vendorpage_labelCss"> Marital Status</label>
                       </div>
                       <div>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="templeName"
-                          {...register("templeName", { required: true })}
-                          required="required"
-                          placeholder="Name"
-                        />
-                        {errors.templeName && (
-                          <p className="text-danger">Name is required</p>
+                        <Select
+                          className="inputcolumn_drp"
+                          
+                          allowClear
+                          value={marry}
+                          onChange={(e) => {
+                            setMarry(e);
+                          }}
+                          placeholder="Select a Type"
+                          style={{ width: "90%" }}
+                          maxTagCount="responsive"
+                        >
+                          {maritalstatus?.map((option) => (
+                            <Option value={option.value}>{option.name}</Option>
+                          ))}
+                        </Select>
+                        {errors.maritalstatus && (
+                          <p className="error-text-color-Profile">
+                            Marital status is required
+                          </p>
                         )}
                       </div>
                     </div>

@@ -1,0 +1,400 @@
+.nav-brand {
+    background-color: rgba(161, 38, 38, 0.637);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar {
+    --mdb-navbar-box-shadow: 0px;
+  }
+  
+  .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+    justify-content: flex-end;
+  }
+  
+  .feril-logo-txt {
+    margin-left: 5vh;
+  }
+  
+  
+  .feril-logo-txt b {
+    font-size: 27px;
+    font-weight: bolder;
+    // font-family: 'Helvetica', sans-serif; 
+    color: #000204;
+  }
+  
+  
+  .feril_logo {
+    height: 150px;
+    width: 170px;
+    cursor: pointer;
+  
+    position: relative;
+    top: 3px;
+  
+   
+    
+  }
+  
+  .nav_items a {
+    text-decoration: none;
+    color: #202124;
+    font-size: 20px;
+    // font-family: "Jost,sans-serif";
+    // font-weight: 400;
+  }
+  
+  .nav_items {
+    display: flex;
+    justify-content: space-between;
+    width: 450px;
+    margin-left: 100px;
+  }
+  
+  
+  .navbartitle {
+    background-image: linear-gradient(to right,
+        #ff0000,
+        #ff0000 50%,
+        #ff0000 50%);
+  
+    font-size: 16px;
+    font-weight: bold;
+    background-size: 200% 100%;
+    background-position: -100%;
+    display: inline-block;
+    padding: 5px 0;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .title-page {
+    margin-left: -30px;
+  }
+  
+  .navbartitle:before {
+    content: "";
+    background: #ff0000;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .navbartitle:hover {
+    background-position: 0;
+  }
+  
+  .navbartitle:hover::before {
+    width: 100%;
+  }
+  
+  .navMenus {
+    font-size: 1.6rem;
+    color: red !important;
+  }
+  
+  .navbar-light .navbar-toggler-icon {
+    /* background-image: none; */
+    color: black;
+  }
+  
+  .navbar-toggler {
+    padding: var(--bs-navbar-toggler-padding-y) var(--bs-navbar-toggler-padding-x);
+    font-size: var(--bs-navbar-toggler-font-size);
+    line-height: 1;
+    color: rgb(192 48 48 / 55%);
+    border: var(--bs-border-width) solid var(--bs-navbar-toggler-border-color);
+    border-radius: var(--bs-navbar-toggler-border-radius);
+    transition: var(--bs-navbar-toggler-transition);
+    background-image: var(--bs-navbar-toggler-icon-bg);
+    background-repeat: no-repeat;
+    margin-left: -5px;
+  }
+  
+  .navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background-image: var(--bs-navbar-toggler-icon-bg);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 100%;
+  }
+  
+  .icon-styles {
+    color: gray !important;
+  }
+  
+  @media only screen and (max-width: 425px) {
+    .navMenus {
+      font-size: 1rem;
+    }
+  
+  }
+  
+  .feril_icon {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+  }
+  
+  @media only screen and (max-width: 425px) {
+    .feril_icon {
+      height: 30px;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+  
+  .dashboards__headerNavs--container .navMenu {
+    cursor: pointer;
+    font-size: 1.8rem;
+    color: grey;
+  }
+  
+  @media only screen and (max-width: 425px) {
+    .dashboards__headerNavs--container .navMenu {
+  
+      font-size: 1.5rem;
+    }
+  
+    .feril_logo {
+      height: 44px;
+      width: 100px;
+  
+    }
+  }
+  
+  .loginbutton:hover:after {
+    left: 100%;
+  }
+  
+  
+  .registerbutton {
+    border-radius: 15px !important;
+    background-color: #ff0000 !important;
+    color: white !important;
+    --bs-btn-border-color: none !important;
+    box-shadow: 1px black;
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.493),
+      0 5px 10px 0 rgba(0, 0, 0, 0.19) inset;
+  }
+  
+  
+  .registerbutton:hover {
+    box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24),
+      0 5px 10px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 3px 4px 0 rgba(158, 158, 158, 0.24),
+      0 2px 5px 0 rgba(255, 255, 255, 0.979) inset;
+  
+  }
+  
+  // NAVBAR2 STYLES
+  .icon-styles {
+    color: gray !important;
+  }
+  
+  
+  
+  
+  .button_grp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  .navbar {
+    width: 100%;
+    position: fixed;
+    height: 75px;
+    z-index: 10;
+    background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0) 50%);
+  
+  
+    &.scrolled {
+      background: white;
+    }
+  }
+  
+  .navbar_container {
+    display: flex;
+    // padding: 10px 30px;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    width: 100%;
+    align-items: center;
+  
+    .right {
+      display: flex;
+      align-items: center;
+  
+      img {
+        height: 30px;
+        width: 30px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+  
+      .icon {
+        margin: 0 15px;
+        cursor: pointer;
+      }
+  
+      span {
+        cursor: pointer;
+      }
+  
+      .profile {
+        .options {
+          display: none;
+          background-color: var(--primary-color);
+        }
+  
+        span {
+          padding: 10px;
+  
+          &:hover {
+            color: red;
+          }
+        }
+  
+        &:hover {
+          .options {
+            display: flex;
+            flex-direction: column; 
+            position: absolute;
+            right: 0.25rem;
+            border-radius: 0.5rem;
+          }
+        }
+      }
+  
+      .search {
+        position: relative;
+  
+  
+  
+  
+        .options {
+          position: absolute;
+          right: 2rem;
+          top: 0rem;
+          border-radius: 0.5rem;
+          align-items: center;
+  
+        }
+      }
+    }
+  }
+  
+  .navbar-light .navbar-toggler-icon {
+    /* background-image: none; */
+  
+    color: black;
+  }
+  
+  .navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background-image: var(--bs-navbar-toggler-icon-bg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+  }
+  
+  
+  
+  
+  .navbarLogin {
+    display: inline-flex;
+    // height: 40px;
+    // width: 150px;
+    padding: 2px 15px 2px 15px;
+    // border: 2px solid #ff0000;
+    background-color: #E2EAF8;
+  
+    margin: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 5px;
+  
+    // box-shadow: 0 5px 5px 0 grey, 0 3px 5px 0 rgb(0 0 0 / 85%) inset;
+  }
+  
+  // .navbarSignupTitle {
+  //   display: inline-flex;
+  
+  //   padding: 6px 15px;
+  
+  //   margin: 2px ;
+  
+  //   background-color: #ff0000;
+  //   box-shadow: 0 5px 5px 0 grey, 0 3px 5px 0 rgb(0 0 0 / 85%) inset;
+  
+  //   text-decoration: none;
+  //   font-size: 14px;
+  //   font-weight: bold;
+  //   align-items: center;
+  //   justify-content: center;
+  //   overflow: hidden;
+  //   border-radius: 3px 30px 5px 3px;
+  // }
+  
+  #button-2 {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  #button-2 a {
+    position: relative;
+    transition: all .35s ease-Out;
+    color: #1967d2;
+  }
+  
+  
+  // #slide {
+  //   width: 100%; 
+  //   height: 100%;
+  //   left: -200px;
+  //   background: #1967d2;
+  //   box-shadow: 0 5px 5px 0 rgb(30, 132, 234 );
+  //   position: absolute;
+  //   transition: all .35s ease-Out;
+  //   bottom: 0;
+  // }
+  
+  #button-2:hover #slide {
+    left: 0;
+  }
+  
+  .navbarLogin:hover{
+    // color: rgb(245, 245, 245);
+    background-color: #1967d2;
+  }
+  
+  #button-2:hover a {
+    color: rgb(245, 245, 245);
+    // background-color: #1967d2;
+  }
+  
+  

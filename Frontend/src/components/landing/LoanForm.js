@@ -5,10 +5,11 @@ import { Row, Col, Button, Container } from "react-bootstrap";
 import "../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
+import axios from "axios";
 
 function LoanForm() {
   const [typeValue, setTypeValue] = useState();
@@ -40,7 +41,7 @@ function LoanForm() {
   console.log("pooja", poojaType);
 
   const [Premium, setPremium] = useState();
-console.log('step1', Premium)
+  console.log("step1", Premium);
 
   const typeDetails = [
     { name: "Inside Temple", value: "inside" },
@@ -107,8 +108,6 @@ console.log('step1', Premium)
     { language: "Male", value: "Male" },
     { language: "Female", value: "Female" },
     { language: "Other", value: "Other" },
-
-
   ];
   useEffect(() => {
     getCountry();
@@ -137,11 +136,11 @@ console.log('step1', Premium)
     }
   }, [data?.district]);
 
-//   useEffect(() => {
-//     if (data?.city) {
-//       getArea(data?.city);
-//     }
-//   }, [data?.city]);
+  //   useEffect(() => {
+  //     if (data?.city) {
+  //       getArea(data?.city);
+  //     }
+  //   }, [data?.city]);
 
   const {
     register,
@@ -210,22 +209,22 @@ console.log('step1', Premium)
     // });
   };
 
-//   const getArea = async (id) => {
-//     await Api.get(
-//       `${process.env.REACT_APP_DEV_BASE_URL}/area/getArea/${id}`
-//     ).then((res) => {
-//       const area_name = res.data;
-//       setareaList(area_name);
-//       const areaDetails = res.data.find(
-//         (stateObj) => stateObj.area_id === parseInt(data?.area)
-//       );
-//       if (areaDetails) {
-//         setSelectedArea(areaDetails.area_name);
-//       } else {
-//         console.log("Area not found");
-//       }
-//     });
-//   };
+  //   const getArea = async (id) => {
+  //     await Api.get(
+  //       `${process.env.REACT_APP_DEV_BASE_URL}/area/getArea/${id}`
+  //     ).then((res) => {
+  //       const area_name = res.data;
+  //       setareaList(area_name);
+  //       const areaDetails = res.data.find(
+  //         (stateObj) => stateObj.area_id === parseInt(data?.area)
+  //       );
+  //       if (areaDetails) {
+  //         setSelectedArea(areaDetails.area_name);
+  //       } else {
+  //         console.log("Area not found");
+  //       }
+  //     });
+  //   };
 
   const [selectImage, setSelectImage] = useState(null);
 
@@ -244,50 +243,82 @@ console.log('step1', Premium)
     }
   };
 
-//   useEffect(() => {
-//     getValue();
-//     // getByUser();
-//   }, []);
+  //   useEffect(() => {
+  //     getValue();
+  //     // getByUser();
+  //   }, []);
 
-//   const getValue = async () => {
-//     try {
-//     //   const res = await Api.get(`/vendor/getOne/${id}`);
-//       const data = res.data[0];
-//       setData(res.data[0]);
-//       setSelectImage(data.imageUrl);
-//       setLanguageDetails(JSON.parse(data.language) || []);
-//       setStateValue(data.state);
-//       setDistrictValue(data.district);
-//       setCityValue(data.city);
-//       setselectArea(data.area);
-//       setTypeValue(data.type);
-//       setServiceType(JSON.parse(data.serviceType) || []);
-//       setSelectYear(data.yearofEstablish);
+  //   const getValue = async () => {
+  //     try {
+  //     //   const res = await Api.get(`/vendor/getOne/${id}`);
+  //       const data = res.data[0];
+  //       setData(res.data[0]);
+  //       setSelectImage(data.imageUrl);
+  //       setLanguageDetails(JSON.parse(data.language) || []);
+  //       setStateValue(data.state);
+  //       setDistrictValue(data.district);
+  //       setCityValue(data.city);
+  //       setselectArea(data.area);
+  //       setTypeValue(data.type);
+  //       setServiceType(JSON.parse(data.serviceType) || []);
+  //       setSelectYear(data.yearofEstablish);
 
-//       reset({
-//         priestName: data.priestName,
-//         templeName: data.templeName,
-//         aadharNumber: data.aadharNumber,
-//         mobileNumber: data.mobileNumber,
-//         AlternateNumber: data.alternateNumber,
-//         yearofExperience: data.yearofExperience,
-//         poojaCounts: data.poojaCounts,
-//         pincode: data.pincode,
-//         address: data.address,
-//       });
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//     }
-//   };
+  //       reset({
+  //         priestName: data.priestName,
+  //         templeName: data.templeName,
+  //         aadharNumber: data.aadharNumber,
+  //         mobileNumber: data.mobileNumber,
+  //         AlternateNumber: data.alternateNumber,
+  //         yearofExperience: data.yearofExperience,
+  //         poojaCounts: data.poojaCounts,
+  //         pincode: data.pincode,
+  //         address: data.address,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-//   const getByUser = async () => {
-//     await Api.get(`/vendor/getOne/${id}`).then((res) => {
-//       setIyerName(res?.data[0]?.vendor_name);
-//       setIyerPhone(res?.data[0]?.phone_number);
-//     });
-//   };
+  //   const getByUser = async () => {
+  //     await Api.get(`/vendor/getOne/${id}`).then((res) => {
+  //       setIyerName(res?.data[0]?.vendor_name);
+  //       setIyerPhone(res?.data[0]?.phone_number);
+  //     });
+  //   };
 
   const isUpdating = data != undefined && data?.address > "";
+
+  const onSubmit = async (data) => {
+    console.log("Form Data:", data);
+  
+    try {
+      const formData = new FormData();
+  
+      // Append regular fields to formData
+      for (const [key, value] of Object.entries(data)) {
+        if (value instanceof FileList) {
+          // Append each file in the FileList
+          Array.from(value).forEach((file) => formData.append(key, file));
+        } else {
+          // Append non-file fields directly
+          formData.append(key, value);
+        }
+      }
+  
+      // Send the POST request with FormData
+      const response = await axios.post("http://localhost:5000/loanform/createloan", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  
+  
 
   const handleFormSubmit = async () => {
     const Details = {
@@ -339,98 +370,121 @@ console.log('step1', Premium)
   };
   return (
     <div>
-        <Header/>
-        <br/>
-        <Container style={{marginTop:"5%"}}>
-      <Col xs={12} md={12} lg={12}>
-        <div
-          className="ourProfileParentdiv"
-          style={{ backgroundColor: "white", padding: "10px 20px" }}
-        >
-          <div style={{ paddingLeft: "10px" }}>
-            <center>
-              {" "}
-              <h4 className="pages-title mt-3 mb-5"> Loan Form</h4>
-            </center>
+      <Header />
+      <br />
+      <Container style={{ marginTop: "5%" }}>
+        <Col xs={12} md={12} lg={12}>
+          <div
+            className="ourProfileParentdiv"
+            style={{ backgroundColor: "white", padding: "10px 20px" }}
+          >
+            <div style={{ paddingLeft: "10px" }}>
+              <center>
+                {" "}
+                <h4 className="pages-title mt-3 mb-5"> Loan Form</h4>
+              </center>
 
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
-              <div>
-                <p className="ourProfile_Heading_div">Personal Details</p>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div>
+                  <p className="ourProfile_Heading_div">Personal Details</p>
 
-                <Row>
-  {/* Full Name */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Full Name</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="text"
-        name="fullName"
-        {...register("fullName", { required: true })}
-        placeholder="Full Name"
-      />
-      {errors.fullName && <p className="text-danger">Full Name is required</p>}
-    </div>
-  </Col>
+                  <Row>
+                    {/* Full Name */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Full Name</label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="fullName"
+                          {...register("fullName", { required: true })}
+                          placeholder="Full Name"
+                        />
+                        {errors.fullName && (
+                          <p className="text-danger">Full Name is required</p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Date of Birth */}
-  <Col xs={12} md={6} lg={4}>
-  <div>
-    <label className="vendorpage_labelCss">Date of Birth</label>
-    <input
-      className="inputcolumn-ourProfile"
-      type="date"
-      name="dob"
-      max={new Date().toISOString().split("T")[0]}  // Prevent future dates
-      {...register("dob", { required: true })}
-    />
-    {errors.dob && <p className="text-danger">Date of Birth is required</p>}
-  </div>
-</Col>
+                    {/* Date of Birth */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Date of Birth
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="date"
+                          name="dob"
+                          max={new Date().toISOString().split("T")[0]} // Prevent future dates
+                          {...register("dob", { required: true })}
+                        />
+                        {errors.dob && (
+                          <p className="text-danger">
+                            Date of Birth is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
+                    {/* Gender */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Gender</label>
+                        <Controller
+                          name="gender"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Gender"
+                            >
+                              <Option value="Male">Male</Option>
+                              <Option value="Female">Female</Option>
+                              <Option value="Other">Other</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.gender && (
+                          <p className="text-danger">Gender is required</p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Gender */}
-  <Col xs={12} md={6} lg={4}>
-          <div>
-            <label className="vendorpage_labelCss">Gender</label>
-            <Controller
-              name="gender"
-              control={control}
-              defaultValue=""
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select {...field} className="inputcolumn_drp" placeholder="Select Gender">
-                  <Option value="Male">Male</Option>
-                  <Option value="Female">Female</Option>
-                  <Option value="Other">Other</Option>
-                </Select>
-              )}
-            />
-            {errors.gender && <p className="text-danger">Gender is required</p>}
-          </div>
-        </Col>
-
-  {/* Marital Status */}
-  <Col xs={12} md={6} lg={4}>
-          <div>
-            <label className="vendorpage_labelCss">Marital Status</label>
-            <Controller
-              name="MaritalStatus"
-              control={control}
-              defaultValue=""
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select {...field} className="inputcolumn_drp" placeholder="Select Gender">
-                  <Option value="Single">Single</Option>
-                  <Option value="Married">Married</Option>
-                  <Option value="Divorced">Divorced</Option>
-                </Select>
-              )}
-            />
-            {errors.MaritalStatus && <p className="text-danger">Marital Status is required</p>}
-          </div>
-        </Col>
-  {/* <Col xs={12} md={6} lg={4}>
+                    {/* Marital Status */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Marital Status
+                        </label>
+                        <Controller
+                          name="MaritalStatus"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Gender"
+                            >
+                              <Option value="Single">Single</Option>
+                              <Option value="Married">Married</Option>
+                              <Option value="Divorced">Divorced</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.MaritalStatus && (
+                          <p className="text-danger">
+                            Marital Status is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+                    {/* <Col xs={12} md={6} lg={4}>
     <div>
       <label className="vendorpage_labelCss">Marital Status</label>
       <Select
@@ -449,399 +503,482 @@ console.log('step1', Premium)
     </div>
   </Col> */}
 
-  {/* Nationality */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Nationality</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="text"
-        name="nationality"
-        {...register("nationality", { required: true })}
-        placeholder="Nationality"
-      />
-      {errors.nationality && (
-        <p className="text-danger">Nationality is required</p>
-      )}
-    </div>
-  </Col>
+                    {/* Nationality */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Nationality
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="nationality"
+                          {...register("nationality", { required: true })}
+                          placeholder="Nationality"
+                        />
+                        {errors.nationality && (
+                          <p className="text-danger">Nationality is required</p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* PAN */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">PAN Number</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="text"
-        name="pan"
-        {...register("pan", { required: true })}
-        placeholder="PAN Number"
-      />
-      {errors.pan && <p className="text-danger">PAN is required</p>}
-    </div>
-  </Col>
+                    {/* PAN */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          PAN Number
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="pan"
+                          {...register("pan", { required: true })}
+                          placeholder="PAN Number"
+                        />
+                        {errors.pan && (
+                          <p className="text-danger">PAN is required</p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Aadhaar Number */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Aadhaar Number</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="number"
-        name="aadhaar"
-        {...register("aadhaar", { required: true })}
-        placeholder="Aadhaar Number"
-      />
-      {errors.aadhaar && (
-        <p className="text-danger">Aadhaar Number is required</p>
-      )}
-    </div>
-  </Col>
+                    {/* Aadhaar Number */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Aadhaar Number
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          name="aadhaar"
+                          {...register("aadhaar", { required: true })}
+                          placeholder="Aadhaar Number"
+                        />
+                        {errors.aadhaar && (
+                          <p className="text-danger">
+                            Aadhaar Number is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Contact Information */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Contact Information</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="tel"
-        name="contact"
-        {...register("contact", { required: true })}
-        placeholder="Phone Number"
-      />
-      {errors.contact && (
-        <p className="text-danger">Phone Number is required</p>
-      )}
-    </div>
-  </Col>
+                    {/* Contact Information */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Contact Information
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="tel"
+                          name="contact"
+                          {...register("contact", { required: true })}
+                          placeholder="Phone Number"
+                        />
+                        {errors.contact && (
+                          <p className="text-danger">
+                            Phone Number is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Residential Address */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Residential Address</label>
-      <textarea
-        className="inputcolumn-ourProfile"
-        name="address"
-        {...register("address", { required: true })}
-        placeholder="Residential Address"
-      />
-      {errors.address && (
-        <p className="text-danger">Address is required</p>
-      )}
-    </div>
-  </Col>
+                    {/* Residential Address */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Residential Address
+                        </label>
+                        <textarea
+                          className="inputcolumn-ourProfile"
+                          name="address"
+                          {...register("address", { required: true })}
+                          placeholder="Residential Address"
+                        />
+                        {errors.address && (
+                          <p className="text-danger">Address is required</p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Occupation */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Occupation</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="text"
-        name="occupation"
-        {...register("occupation", { required: true })}
-        placeholder="Occupation"
-      />
-      {errors.occupation && (
-        <p className="text-danger">Occupation is required</p>
-      )}
-    </div>
-  </Col>
+                    {/* Occupation */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Proof of Identity
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          {...register("identityProof", { required: true })}
+                          placeholder="Passport, Driver’s License, Aadhaar, Voter ID, etc."
+                        />
+                        {errors.identityProof && (
+                          <p className="text-danger">
+                            Proof of Identity is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Annual Income */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Annual Income</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="number"
-        name="income"
-        {...register("income", { required: true })}
-        placeholder="Annual Income"
-      />
-      {errors.income && (
-        <p className="text-danger">Annual Income is required</p>
-      )}
-    </div>
-  </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Proof of Address
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          {...register("addressProof", { required: false })}
+                          placeholder="Utility Bills, Rental Agreement, Aadhaar, etc."
+                        />
+                        {errors.addressProof && (
+                          <p className="text-danger">
+                            Proof of Address is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Bank Account Details */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Bank Account Details</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="text"
-        name="bankAccount"
-        {...register("bankAccount", { required: true })}
-        placeholder="Account Number"
-      />
-      {errors.bankAccount && (
-        <p className="text-danger">Bank Account is required</p>
-      )}
-    </div>
-  </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Income Details
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          {...register("incomeDetails", { required: true })}
+                          placeholder="Salary, Business Income, Other Sources"
+                        />
+                        {errors.incomeDetails && (
+                          <p className="text-danger">
+                            Income Details are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
-  {/* Policy Type */}
-  <Col xs={12} md={6} lg={4}>
-          <div>
-            <label className="vendorpage_labelCss">Policy Type</label>
-            <Controller
-              name="PolicyType"
-              control={control}
-              defaultValue=""
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select {...field} className="inputcolumn_drp" placeholder="Select Gender">
-                  <Option value="Single">Life Insurance</Option>
-                  <Option value="Health Insurance">Health Insurance</Option>
-                  <Option value="Vehicle">Vehicle Insurance</Option>
-                </Select>
-              )}
-            />
-            {errors.PolicyType && <p className="text-danger">Policy Type is required</p>}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Employer’s Name and Address
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          {...register("employerDetails", { required: true })}
+                          placeholder="For salaried individuals"
+                        />
+                        {errors.employerDetails && (
+                          <p className="text-danger">
+                            Employer's Name and Address are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Employment Status
+                        </label>
+                        <Controller
+                          name="employmentStatus"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Status"
+                            >
+                              <Option value="Employed">Employed</Option>
+                              <Option value="Self-employed">
+                                Self-employed
+                              </Option>
+                              <Option value="Business Owner">
+                                Business Owner
+                              </Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.employmentStatus && (
+                          <p className="text-danger">
+                            Employment Status is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Bank Account Details
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          {...register("bankAccountDetails", {
+                            required: true,
+                          })}
+                          placeholder="Account Number, IFSC Code"
+                        />
+                        {errors.bankAccountDetails && (
+                          <p className="text-danger">
+                            Bank Account Details are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Annual Income
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          {...register("annualIncome", { required: true })}
+                          placeholder="Annual Income"
+                        />
+                        {errors.annualIncome && (
+                          <p className="text-danger">
+                            Annual Income is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Details of Existing Loans
+                        </label>
+                        <textarea
+                          className="inputcolumn-ourProfile"
+                          {...register("existingLoans")}
+                          placeholder="If any"
+                        />
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Credit Score
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          {...register("creditScore", { required: true })}
+                          placeholder="Credit Score"
+                        />
+                        {errors.creditScore && (
+                          <p className="text-danger">
+                            Credit Score is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Property Details
+                        </label>
+                        <textarea
+                          className="inputcolumn-ourProfile"
+                          {...register("propertyDetails", { required: true })}
+                          placeholder="Address, Type, Size, and Value of the Property"
+                        />
+                        {errors.propertyDetails && (
+                          <p className="text-danger">
+                            Property Details are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Purpose of the Loan
+                        </label>
+                        <Controller
+                          name="loanPurpose"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Purpose"
+                            >
+                              <Option value="Purchase">Purchase</Option>
+                              <Option value="Construction">Construction</Option>
+                              <Option value="Renovation">Renovation</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.loanPurpose && (
+                          <p className="text-danger">
+                            Purpose of the Loan is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Loan Amount Requested
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          {...register("loanAmount", { required: true })}
+                          placeholder="Loan Amount Requested"
+                        />
+                        {errors.loanAmount && (
+                          <p className="text-danger">
+                            Loan Amount Requested is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Down Payment Amount
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          {...register("downPayment", { required: true })}
+                          placeholder="Down Payment Amount"
+                        />
+                        {errors.downPayment && (
+                          <p className="text-danger">
+                            Down Payment Amount is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Proof of Property Ownership or Agreement to Sell
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          {...register("propertyOwnershipProof", {
+                            required: true,
+                          })}
+                        />
+                        {errors.propertyOwnershipProof && (
+                          <p className="text-danger">
+                            Proof of Property Ownership is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Signature Specimen
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept="image/*"
+                          {...register("signature", { required: true })}
+                        />
+                        {errors.signature && (
+                          <p className="text-danger">
+                            Signature Specimen is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Photographs (Passport size)
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept="image/*"
+                          {...register("photographs", { required: true })}
+                        />
+                        {errors.photographs && (
+                          <p className="text-danger">
+                            Photographs are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Proof of Financial Liabilities or Assets
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          {...register("financialProof")}
+                          placeholder="Optional"
+                        />
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Documentation for Co-applicants/Guarantors
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          {...register("coApplicantDocs")}
+                          placeholder="If applicable"
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+
+                <div className="upgrade_column mb-3">
+                  <Button className="button1" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
+          {/* </Card> */}
         </Col>
-  {/* <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Policy Type</label>
-      <Select
-        className="inputcolumn_drp"
-        placeholder="Select Policy Type"
-        {...register("policyType", { required: true })}
-        options={[
-          { value: "life", label: "Life Insurance" },
-          { value: "health", label: "Health Insurance" },
-          { value: "vehicle", label: "Vehicle Insurance" }
-        ]}
-      />
-      {errors.policyType && (
-        <p className="text-danger">Policy Type is required</p>
-      )}
-    </div>
-  </Col> */}
-
-  {/* Policy Term */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Policy Term</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="number"
-        name="policyTerm"
-        {...register("policyTerm", { required: true })}
-        placeholder="Policy Term (years)"
-      />
-      {errors.policyTerm && (
-        <p className="text-danger">Policy Term is required</p>
-      )}
-    </div>
-  </Col>
-
-  {/* Sum Assured */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Sum Assured</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="number"
-        name="sumAssured"
-        {...register("sumAssured", { required: true })}
-        placeholder="Sum Assured"
-      />
-      {errors.sumAssured && (
-        <p className="text-danger">Sum Assured is required</p>
-      )}
-    </div>
-  </Col>
-   {/* Medical History */}
-   <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Medical History</label>
-      <textarea
-        className="inputcolumn-ourProfile"
-        {...register("medicalHistory", { required: true })}
-        placeholder="Enter existing illnesses or conditions"
-      />
-      {errors.medicalHistory && <p className="text-danger">Medical History is required</p>}
-    </div>
-  </Col>
-
-  {/* Family Medical History */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Family Medical History</label>
-      <textarea
-        className="inputcolumn-ourProfile"
-        {...register("familyMedicalHistory", { required: true })}
-        placeholder="Enter family medical history"
-      />
-      {errors.familyMedicalHistory && (
-        <p className="text-danger">Family Medical History is required</p>
-      )}
-    </div>
-  </Col>
-
-  {/* Lifestyle Information */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Lifestyle Information</label>
-      <textarea
-        className="inputcolumn-ourProfile"
-        {...register("lifestyle", { required: true })}
-        placeholder="Smoking, Alcohol Consumption, etc."
-      />
-      {errors.lifestyle && <p className="text-danger">Lifestyle information is required</p>}
-    </div>
-  </Col>
-
-  {/* Previous Insurance Policies */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Previous Insurance Policies</label>
-      <textarea
-        className="inputcolumn-ourProfile"
-        {...register("previousPolicies")}
-        placeholder="Details of previous policies (if any)"
-      />
-    </div>
-  </Col>
-
-  {/* Premium Payment Frequency */}
-  <Col xs={12} md={6} lg={4}>
-          <div>
-            <label className="vendorpage_labelCss">Premium Payment Frequency</label>
-            <Controller
-              name="paymentFrequency"
-              control={control}
-              defaultValue="" // Default value for controlled input
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select
-                  {...field} // Spread the field props here
-                  className="inputcolumn_drp"
-                  placeholder="Select Frequency"
-                >
-                  <Option value="Monthly">Monthly</Option>
-                  <Option value="Quarterly">Quarterly</Option>
-                  <Option value="Annually">Annually</Option>
-                </Select>
-              )}
-            />
-            {errors.paymentFrequency && (
-              <p className="text-danger">Payment frequency is required</p>
-            )}
-          </div>
-        </Col>
-
-  {/* Proof of Identity */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Proof of Identity</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="file"
-        {...register("identityProof", { required: true })}
-      />
-      {errors.identityProof && (
-        <p className="text-danger">Identity proof is required</p>
-      )}
-    </div>
-  </Col>
-
-  {/* Proof of Address */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Proof of Address</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="file"
-        {...register("addressProof", { required: true })}
-      />
-      {errors.addressProof && (
-        <p className="text-danger">Address proof is required</p>
-      )}
-    </div>
-  </Col>
-
-  {/* Age Proof */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Age Proof</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="file"
-        {...register("ageProof", { required: true })}
-      />
-      {errors.ageProof && (
-        <p className="text-danger">Age proof is required</p>
-      )}
-    </div>
-  </Col>
-
-  {/* Photographs */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Photographs</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="file"
-        accept="image/*"
-        {...register("photograph", { required: true })}
-      />
-      {errors.photograph && <p className="text-danger">Photograph is required</p>}
-    </div>
-  </Col>
-
-  {/* Signature Specimen */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Signature Specimen</label>
-      <input
-        className="inputcolumn-ourProfile"
-        type="file"
-        accept="image/*"
-        {...register("signature", { required: true })}
-      />
-      {errors.signature && <p className="text-danger">Signature is required</p>}
-    </div>
-  </Col>
-
-  {/* Beneficiary Details */}
-  <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Beneficiary Details</label>
-      <textarea
-        className="inputcolumn-ourProfile"
-        {...register("beneficiaryDetails", { required: true })}
-        placeholder="Enter beneficiary details"
-      />
-      {errors.beneficiaryDetails && (
-        <p className="text-danger">Beneficiary details are required</p>
-      )}
-    </div>
-  </Col>
-</Row>
-
-                
-              </div>
-             
-              <div className="upgrade_column mb-3">
-                <Button className="button1" type="submit">
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </div>
-        </div>
-        {/* </Card> */}
-      </Col>
       </Container>
-      <ToastContainer/>
-      <br/>
-      <br/>
+      <ToastContainer />
+      <br />
+      <br />
 
-      <Footer/>
+      <Footer />
     </div>
   );
 }

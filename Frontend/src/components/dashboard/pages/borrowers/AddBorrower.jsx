@@ -1,7 +1,7 @@
 import { Logout } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -9,9 +9,11 @@ app.use(
   })
 );
 import signup from "./server/Router/SignupRouter.js"
+import loanform from "./server/Router/LoanApplicationRouter.js"
 
 
 app.use("/signup",signup);
+app.use("/loanform",loanform)
 
 
 

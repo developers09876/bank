@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 import { DeleteForever, Edit, Update, Logout } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';

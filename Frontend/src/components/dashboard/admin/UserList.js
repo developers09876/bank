@@ -64,7 +64,7 @@ const UserList = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='w-full ml-72 border bg-white shadow-md rounded mt-5  border-t-4 border-t-red-500'>
+    <div className='w-full  border bg-white shadow-md rounded mt-5  border-t-4 border-t-red-500'>
         <Sidebar/>
       <ToastContainer />
       <div className='py-5 px-5'>

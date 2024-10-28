@@ -10,7 +10,7 @@ import {
   Publish,
   Logout,
 } from '@mui/icons-material';
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 import LoanInfo from '../loans/Loan';
 
 export default function Borrower({ setAuth }) {

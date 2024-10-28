@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Logout } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
 
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 import OneLoan from './OneLoan';
 
 const EditLoan = ({ setAuth }) => {

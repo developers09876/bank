@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   LocationOnOutlined,
   MailOutline,
   PermIdentity,
   PhoneAndroid,
   Logout,
-} from '@mui/icons-material';
-import Sidebar from '../../sidebar/Sidebar';
-import TabsProfile from './ProfileTabs';
+} from "@mui/icons-material";
+import Sidebar from "./Sidebar";
+import TabsProfile from "./ProfileTabs";
 
 export default function UserDetails({ setAuth }) {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [contactnumber, setContactNumber] = useState();
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
 
   const getAdmin = async () => {
     try {
       const response = await fetch(`http://localhost:8000/profile`, {
-        method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        method: "GET",
+        headers: { Authorization: localStorage.getItem("token") },
       });
 
       const parseRes = await response.json();
       console.log(parseRes);
 
-      setName(parseRes.firstname + ' ' + parseRes.lastname);
+      setName(parseRes.firstname + " " + parseRes.lastname);
       setContactNumber(parseRes.contactnumber);
       setAddress(parseRes.address);
       setEmail(parseRes.email);
@@ -42,7 +42,7 @@ export default function UserDetails({ setAuth }) {
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className="fixed top-0 left-0 "style={{width:"100px"}}>
+      <div className="fixed top-0 left-0 " style={{ width: "100px" }}>
         <Sidebar />
       </div>
 
@@ -75,10 +75,10 @@ export default function UserDetails({ setAuth }) {
               </Link>
             </button>
             <span className="ml-10 text-lg font-medium leading-6 text-white">
-              {new Date().toLocaleString('en-US', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
+              {new Date().toLocaleString("en-US", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
               })}
             </span>
           </div>
@@ -90,18 +90,16 @@ export default function UserDetails({ setAuth }) {
             <div className="py-5 px-5">
               <h3 className="text-xl mb-5 border-b-2">Account Details</h3>
               <div className="flex flex-col items-center">
-              <div className="relative w-32 h-32">
-  <img
-    src="https://cdn3.iconfinder.com/data/icons/red-icons-1/512/Male-profile-icon-512.png"
-    alt="profile"
-    className="w-32 h-32 rounded-full border-4 border-red-500"
-  />
-  <div className="absolute bottom-0 left-0 right-0 h-10 bg-black bg-opacity-50 rounded-b-full flex items-center justify-center text-white text-sm font-bold">
-    Your Text
-  </div>
-</div>
-
-
+                <div className="relative w-32 h-32">
+                  <img
+                    src="https://cdn3.iconfinder.com/data/icons/red-icons-1/512/Male-profile-icon-512.png"
+                    alt="profile"
+                    className="w-32 h-32 rounded-full border-4 border-red-500"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 h-10 bg-black bg-opacity-50 rounded-b-full flex items-center justify-center text-white text-sm font-bold">
+                    Your Text
+                  </div>
+                </div>
 
                 <div className="mt-5">
                   <div className="flex items-center my-5">
