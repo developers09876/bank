@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { DeleteForever } from '@mui/icons-material';
 import Sidebar from './Sidebar';
 import { Button } from 'antd';
 
 const EmployeeList = ({ setAuth }) => {
   const [employees, setEmployees] = useState([]);
 
-  // Function to fetch all users and filter for employees
   const getEmployees = async () => {
     try {
       const response = await fetch('http://localhost:5000/signup/getall', {
