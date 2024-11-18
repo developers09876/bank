@@ -28,7 +28,6 @@ function Sidebar({ collapsed }) {
   };
   const role = localStorage.getItem("username");
 
-
   return (
     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
@@ -36,10 +35,10 @@ function Sidebar({ collapsed }) {
           <div className="Nav-Icon2">
             <CgProfile />
           </div>
-          
+
           <div className="name-tag">{role}</div>
         </NavLink>
-       
+
         {/* <NavLink
           to="/professional/professionalprofile"
           ClassName="main-nav-style"
@@ -76,20 +75,15 @@ function Sidebar({ collapsed }) {
           </NavLink>
         </SubMenu> */}
 
-        
-
         <NavLink to="/employee/tax" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Tax Application Review
-
         </NavLink>
-        
+
         <NavLink to="/employee/insurance" ClassName="main-nav-style">
           {/* <MdMenuBook className="Nav-Icon" /> */}
-          Insurance  Review
-
+          Insurance Review
         </NavLink>
- 
       </Menu>
     </div>
   );
