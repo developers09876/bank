@@ -96,7 +96,6 @@ function Sidebar({ collapsed }) {
   return (
     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
-      
         {/* <NavLink
           to="/professional/professionalprofile"
           ClassName="main-nav-style"
@@ -110,23 +109,26 @@ function Sidebar({ collapsed }) {
         > */}
 
         {/* </SubMenu> */}
-        <NavLink to="/user" ClassName="main-nav-style">
+        <NavLink
+          to="/user"
+          ClassName="main-nav-style"
+          style={{ marginTop: "50px" }}
+        >
           {/* <MdAreaChart className="Nav-Icon" /> */}
           My Profile
         </NavLink>
         <NavLink to="/user/loanstatus" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
-        Loan 
+          Loan
         </NavLink>
         <NavLink to="/user" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
-        Insurance
+          Insurance
         </NavLink>
         <NavLink to="/user" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
-        Tax
+          Tax
         </NavLink>
- 
       </Menu>
     </div>
   );

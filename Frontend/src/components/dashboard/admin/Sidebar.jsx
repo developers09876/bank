@@ -1,8 +1,8 @@
 // import React, { useState } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
-// import { 
-//   PermIdentity,Home , CreditScore, ReceiptLong, MailOutline, 
-//   AttachMoney, ExpandMore 
+// import {
+//   PermIdentity,Home , CreditScore, ReceiptLong, MailOutline,
+//   AttachMoney, ExpandMore
 // } from '@mui/icons-material';
 
 // export default function Sidebar() {
@@ -27,9 +27,9 @@
 //         <ul>
 //         <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
 //             <Home />
-//             <Link 
-//               to='/admindashboard' 
-//               className='ml-2.5 no-underline' 
+//             <Link
+//               to='/admindashboard'
+//               className='ml-2.5 no-underline'
 //               style={{ color: 'black' }} // Ensuring black color
 //             >
 //               Dashboard
@@ -37,9 +37,9 @@
 //           </li>
 //           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
 //             <PermIdentity />
-//             <Link 
-//               to='/admin' 
-//               className='ml-2.5 no-underline' 
+//             <Link
+//               to='/admin'
+//               className='ml-2.5 no-underline'
 //               style={{ color: 'black' }} // Ensuring black color
 //             >
 //               Employee List
@@ -47,9 +47,9 @@
 //           </li>
 //           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
 //             <PermIdentity />
-//             <Link 
-//               to='/userlist' 
-//               className='ml-2.5 no-underline' 
+//             <Link
+//               to='/userlist'
+//               className='ml-2.5 no-underline'
 //               style={{ color: 'black' }} // Ensuring black color
 //             >
 //               User List
@@ -57,7 +57,7 @@
 //           </li>
 
 //           {/* Transaction List Dropdown */}
-//           <li 
+//           <li
 //             className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out flex justify-between items-center cursor-pointer'
 //             onClick={toggleTransactions}
 //           >
@@ -89,7 +89,6 @@
 //     </div>
 //   );
 // }
-
 
 import React from "react";
 import { NavLink } from "react-router-dom";
@@ -125,7 +124,6 @@ function Sidebar({ collapsed }) {
   return (
     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
-      
         {/* <NavLink
           to="/professional/professionalprofile"
           ClassName="main-nav-style"
@@ -139,29 +137,27 @@ function Sidebar({ collapsed }) {
         > */}
 
         {/* </SubMenu> */}
-        <NavLink to="/admin" ClassName="main-nav-style">
+        <NavLink
+          to="/admin"
+          ClassName="main-nav-style"
+          style={{ marginTop: "50px" }}
+        >
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Dashboard
         </NavLink>
 
-
-        
-
         <NavLink to="/admin/userlist" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           UserList
-
         </NavLink>
         <NavLink to="/admin/employeelist" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           EmployeeList
-
         </NavLink>
-        
+
         <SubMenu
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"
-          
         >
           <NavLink to="/professional/jobs">
             {/* <MdRequestPage className="Nav-Icon" /> */}
@@ -176,8 +172,6 @@ function Sidebar({ collapsed }) {
             Tax Management
           </NavLink>
         </SubMenu>
-      
- 
       </Menu>
     </div>
   );
