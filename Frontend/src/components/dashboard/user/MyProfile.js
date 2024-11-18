@@ -35,76 +35,64 @@ function TabsVendor() {
   const [IyerName, setIyerName] = useState();
   const id = localStorage.getItem("vendor_id");
   const [poojaType, setPoojaTypeValue] = useState();
+  const [marry, setMarry] = useState();
   console.log("pooja", poojaType);
 
-  const typeDetails = [
-    { name: "Inside Temple", value: "inside" },
-    { name: "Outside Temple", value: "outside" },
-    { name: "Both", value: "both" },
-  ];
-  const year = [
-    { name: "1990", value: "1990" },
-    { name: "1991", value: "1991" },
-    { name: "1992", value: "1992" },
-    { name: "1993", value: "1993" },
-    { name: "1994", value: "1994" },
-    { name: "1995", value: "1995" },
-    { name: "1996", value: "1996" },
-    { name: "1997", value: "1997" },
-    { name: "1998", value: "1998" },
-    { name: "1999", value: "1999" },
-    { name: "2000", value: "2000" },
-    { name: "2001", value: "2001" },
-    { name: "2002", value: "2002" },
-    { name: "2003", value: "2003" },
-    { name: "2004", value: "2004" },
-    { name: "2005", value: "2005" },
-    { name: "2006", value: "2006" },
-    { name: "2007", value: "2007" },
-    { name: "2008", value: "2008" },
-    { name: "2009", value: "2009" },
-    { name: "2010", value: "2010" },
-    { name: "2011", value: "2011" },
-    { name: "2012", value: "2012" },
-    { name: "2013", value: "2013" },
-    { name: "2014", value: "2014" },
-    { name: "2015", value: "2015" },
-    { name: "2016", value: "2016" },
-    { name: "2017", value: "2017" },
-    { name: "2018", value: "2018" },
-    { name: "2019", value: "2019" },
-    { name: "2020", value: "2020" },
-    { name: "2021", value: "2021" },
-    { name: "2022", value: "2022" },
-    { name: "2023", value: "2023" },
-    { name: "2024", value: "2024" },
-  ];
 
-  const serviceTypes = [
-    { name: "Marriage Astrology", value: "Marriageastrology" },
-    { name: "House Warming", value: "HouseWarming" },
-    { name: "Ganesh Puja", value: "GaneshPuja" },
-    { name: "Satyanarayana Vrat", value: "SatyanarayanaVrat" },
-    { name: "Namkaran Ceremony", value: "NamkaranCeremony" },
-    { name: "Rudrabhishek", value: "Rudrabhishek" },
-    { name: "Annaprasan", value: "Annaprasan" },
-    { name: "Navagraha Puja", value: "NavagrahaPuja" },
-    { name: "Shanti Puja", value: "ShantiPuja" },
-    { name: "Chandi Homa", value: "ChandiHoma" },
-    { name: "Vastu Puja", value: "VastuPuja" },
-    { name: "Durga Puja", value: "DurgaPuja" },
-    { name: "Pitrupaksha", value: "Pitrupaksha" },
-    { name: "Kaal Sarp Dosh Puja", value: "KaalSarpDoshPuja" },
-    { name: "Sankat Mochan Hanuman Puja", value: "SankatMochanHanumanPuja" },
-  ];
+  // const year = [
+  //   { name: "1990", value: "1990" },
+  //   { name: "1991", value: "1991" },
+  //   { name: "1992", value: "1992" },
+  //   { name: "1993", value: "1993" },
+  //   { name: "1994", value: "1994" },
+  //   { name: "1995", value: "1995" },
+  //   { name: "1996", value: "1996" },
+  //   { name: "1997", value: "1997" },
+  //   { name: "1998", value: "1998" },
+  //   { name: "1999", value: "1999" },
+  //   { name: "2000", value: "2000" },
+  //   { name: "2001", value: "2001" },
+  //   { name: "2002", value: "2002" },
+  //   { name: "2003", value: "2003" },
+  //   { name: "2004", value: "2004" },
+  //   { name: "2005", value: "2005" },
+  //   { name: "2006", value: "2006" },
+  //   { name: "2007", value: "2007" },
+  //   { name: "2008", value: "2008" },
+  //   { name: "2009", value: "2009" },
+  //   { name: "2010", value: "2010" },
+  //   { name: "2011", value: "2011" },
+  //   { name: "2012", value: "2012" },
+  //   { name: "2013", value: "2013" },
+  //   { name: "2014", value: "2014" },
+  //   { name: "2015", value: "2015" },
+  //   { name: "2016", value: "2016" },
+  //   { name: "2017", value: "2017" },
+  //   { name: "2018", value: "2018" },
+  //   { name: "2019", value: "2019" },
+  //   { name: "2020", value: "2020" },
+  //   { name: "2021", value: "2021" },
+  //   { name: "2022", value: "2022" },
+  //   { name: "2023", value: "2023" },
+  //   { name: "2024", value: "2024" },
+  // ];
+
+ 
 
   const languageList = [
     { language: "Male", value: "Male" },
     { language: "Female", value: "Female" },
     { language: "Other", value: "Other" },
-
-
   ];
+
+const maritalstatus = [
+  {
+    name:"Single", value:"Single"
+  },
+  {
+    name:"Married", value:"Married"
+  },
+]
   useEffect(() => {
     getCountry();
   }, []);
@@ -285,7 +273,7 @@ function TabsVendor() {
 
   const handleFormSubmit = async () => {
     const Details = {
-      vendorName: IyerName,
+      userName: IyerName,
       templeName: getValues().templeName,
       aadharNumber: getValues().aadharNumber,
       mobileNumber: IyerPhone,
@@ -389,10 +377,10 @@ function TabsVendor() {
                           className="inputcolumn-ourProfile"
                           type="text"
                           value={IyerName}
-                          name="priestName"
+                          name="FullName"
                           {...register("priestName", { required: true })}
                           required="required"
-                          placeholder="Priest Name"
+                          placeholder="Full Name"
                           onChange={(e) => setIyerName(e.target.value)}
                         />
                         {errors.priestName && (
@@ -401,24 +389,33 @@ function TabsVendor() {
                       </div>
                     </div>
                   </Col>
+            
                   <Col xs={12} md={4} lg={6}>
                     <div>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Marital Status
-                        </label>
+                        <label className="vendorpage_labelCss"> Marital Status</label>
                       </div>
                       <div>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="templeName"
-                          {...register("templeName", { required: true })}
-                          required="required"
-                          placeholder="Name"
-                        />
-                        {errors.templeName && (
-                          <p className="text-danger">Name is required</p>
+                        <Select
+                          className="inputcolumn_drp"
+                          
+                          allowClear
+                          value={marry}
+                          onChange={(e) => {
+                            setMarry(e);
+                          }}
+                          placeholder="Select a Type"
+                          style={{ width: "90%" }}
+                          maxTagCount="responsive"
+                        >
+                          {maritalstatus?.map((option) => (
+                            <Option value={option.value}>{option.name}</Option>
+                          ))}
+                        </Select>
+                        {errors.maritalstatus && (
+                          <p className="error-text-color-Profile">
+                            Marital status is required
+                          </p>
                         )}
                       </div>
                     </div>

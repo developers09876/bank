@@ -8,22 +8,16 @@ function Header() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
-  // Effect to check if user is logged in on component mount
+ 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
-      setIsLoggedIn(true); // Set logged-in state if username is found
+      setIsLoggedIn(true); 
     }
   }, []);
-
-  const handleLoginSuccess = (name) => {
-    localStorage.setItem("username", name); // Store username in localStorage
-    setIsLoggedIn(true); // Update state on successful login
-  };
-
   const handleLogout = () => {
-    setIsLoggedIn(false); // Update state on logout
-    localStorage.removeItem("username"); // Clear username from localStorage
+    setIsLoggedIn(false); 
+    localStorage.removeItem("username"); 
     navigate("/login");
   };
 
@@ -77,7 +71,7 @@ function Header() {
                   <Link
                     to="/login"
                     className="no-underline text-white"
-                    onClick={() => handleLoginSuccess("User Name")}
+                   
                   >
                     Login
                   </Link>

@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
-import './Register.scss';
-import { Grid, Typography, Button, Box } from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';  // Import Axios
-import Header from '../Layout/Header';
+import React, { useState } from "react";
+import "./Register.scss";
+import { Grid, Typography, Button, Box } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios
+import Header from "../Layout/Header";
+import { Col, Row } from "react-bootstrap";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
-    userType: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: '', 
-    contactNumber: ''
+    userType: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    contactNumber: "",
   });
-  
+
   const navigate = useNavigate();
 
-  const { userType, firstname, lastname, contactNumber, email, password, confirmPassword } = inputs;
+  const {
+    userType,
+    firstname,
+    lastname,
+    contactNumber,
+    email,
+    password,
+    confirmPassword,
+  } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -33,13 +42,12 @@ const Register = ({ setAuth }) => {
     // }
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
       return false;
     }
 
     return true;
   };
-  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -53,106 +61,220 @@ const Register = ({ setAuth }) => {
         contactNumber,
         email,
         password,
-        confirmPassword
+        confirmPassword,
       };
 
-      const response = await axios.post('http://localhost:5000/signup/register', body);
+      const response = await axios.post(
+        "http://localhost:5000/signup/register",
+        body
+      );
 
-    
-      toast.success('Registration successful!', {
+      toast.success("Registration successful!", {
         autoClose: 2000, // Toast will be shown for 2 seconds
       });
-  
+
       // Delay the navigation to allow toast to display
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 2000); // Navigate after 2 seconds
-      
-      
     } catch (error) {
-      console.error('Registration error:', error);
-      const errorMessage = error.response?.data?.message || 'Something went wrong. Please try again.';
+      console.error("Registration error:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Something went wrong. Please try again.";
       toast.error(errorMessage);
     }
   };
 
   return (
-    <div className='register-container'>
-      <Header/>
+    <div className="register-container">
+      <Header />
       <ToastContainer />
-      <Grid container style={{marginTop:"6%"}}>
+      <Grid container style={{ marginTop: "6%" }}>
         <Grid item xs={12} md={6}>
-          <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginTop: '60px' }}>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            style={{ textAlign: "center", marginTop: "60px" }}
+          >
             Easy. Quick. Efficient.
           </Typography>
-          <Box sx={{ display: 'Grid', alignItems: 'center', height: '80%', flexWrap: 'wrap', marginLeft: '50px' }}>
+          <Box
+            sx={{
+              display: "Grid",
+              alignItems: "center",
+              height: "80%",
+              flexWrap: "wrap",
+              marginLeft: "50px",
+            }}
+          >
             <div>
               <img
-                className='image-reduced1'
-                src='https://img.freepik.com/premium-photo/professional-bill-design-money-banking-finance-commerce-market_1316704-24000.jpg?uid=R154751350&ga=GA1.1.1985983126.1725981835&semt=ais_hybrid'
+                className="image-reduced1"
+                src="https://img.freepik.com/premium-photo/professional-bill-design-money-banking-finance-commerce-market_1316704-24000.jpg?uid=R154751350&ga=GA1.1.1985983126.1725981835&semt=ais_hybrid"
                 alt="Personalized loans"
               />
             </div>
-            <Button onClick={() => navigate("/")} style={{ marginLeft: '-100px' }}>Get Started</Button>
+            <Button
+              onClick={() => navigate("/")}
+              style={{ marginLeft: "-100px" }}
+            >
+              Get Started
+            </Button>
           </Box>
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <form onSubmit={onSubmit} className='register-form'>
+          <form onSubmit={onSubmit} className="register-form">
             {/* <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginBottom: '30px', marginTop:'5px', fontSize:'30px' }}>
               Sign Up
             </Typography> */}
             {/* <div className='register-form__row'> */}
-    <div className='register-form__group'>
-      <label htmlFor='userType' className='register-form__label'>User Type:</label>
-      <select 
-        name='userType' 
-        value={userType} 
-        onChange={onChange} 
-        className='register-form__input' 
-        required
-        
-      >
-        <option value='' disabled>Select Type</option>
-        <option value='user'>User</option>
-        <option value='employee'>Employee</option>
-      </select>
-    </div>
-  {/* </div> */}
-            <div className='register-form__row'>
-              <div className='register-form__group'>
-                <label htmlFor='firstname' className='register-form__label'>First Name:</label>
-                <input type='text' name='firstname' value={firstname} onChange={onChange} className='register-form__input' placeholder='Enter your first name' required />
+            <div className="register-form__group">
+              <label className="register-form__label">User Type:</label>
+              
+
+              <div className="register-form__radio-group" style={{paddingLeft:"20px",fontSize:"18px"}}>
+              <Row>
+              <Col md={2}>
+                <label className="register-form__radio-label">
+                  
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="user"
+                    checked={userType === "user"}
+                    onChange={onChange}
+                    className="register-form__radio-input"
+                    required
+                  />
+                  &nbsp;
+                  User
+                </label>
+                </Col>
+                <Col md={4}>
+                <label className="register-form__radio-label">
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="employee"
+                    checked={userType === "employee"}
+                    onChange={onChange}
+                    className="register-form__radio-input"
+                    required
+                  />
+                  &nbsp;
+                  Employee
+                </label>
+                </Col>
+                </Row>
               </div>
-              <div className='register-form__group'>
-                <label htmlFor='lastname' className='register-form__label'>Last Name:</label>
-                <input type='text' name='lastname' value={lastname} onChange={onChange} className='register-form__input' placeholder='Enter your last name' required />
+            </div>
+
+            {/* </div> */}
+            <div className="register-form__row">
+              <div className="register-form__group">
+                <label htmlFor="firstname" className="register-form__label">
+                  First Name:
+                </label>
+                <input
+                  type="text"
+                  name="firstname"
+                  value={firstname}
+                  onChange={onChange}
+                  className="register-form__input"
+                  placeholder="Enter your first name"
+                  required
+                />
+              </div>
+              <div className="register-form__group">
+                <label htmlFor="lastname" className="register-form__label">
+                  Last Name:
+                </label>
+                <input
+                  type="text"
+                  name="lastname"
+                  value={lastname}
+                  onChange={onChange}
+                  className="register-form__input"
+                  placeholder="Enter your last name"
+                  required
+                />
               </div>
             </div>
-            <div className='register-form__row'>
-              <div className='register-form__group'>
-                <label htmlFor='contactNumber' className='register-form__label'>Contact Number:</label>
-                <input type='number' name='contactNumber' value={contactNumber} onChange={onChange} className='register-form__input' placeholder='Contact Number' required />
+            <div className="register-form__row">
+              <div className="register-form__group">
+                <label htmlFor="contactNumber" className="register-form__label">
+                  Contact Number:
+                </label>
+                <input
+                  type="number"
+                  name="contactNumber"
+                  value={contactNumber}
+                  onChange={onChange}
+                  className="register-form__input"
+                  placeholder="Contact Number"
+                  required
+                />
               </div>
-              <div className='register-form__group'>
-                <label htmlFor='email' className='register-form__label'>Email:</label>
-                <input type='email' name='email' value={email} onChange={onChange} className='register-form__input' placeholder='Input your email address' required />
+              <div className="register-form__group">
+                <label htmlFor="email" className="register-form__label">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={onChange}
+                  className="register-form__input"
+                  placeholder="Input your email address"
+                  required
+                />
               </div>
             </div>
-            <div className='register-form__row'>
-            <div className='register-form__group'>
-              <label htmlFor='password' className='register-form__label'>Password:</label>
-              <input type='password' name='password' value={password} onChange={onChange} className='register-form__input' placeholder='*************' required />
+            <div className="register-form__row">
+              <div className="register-form__group">
+                <label htmlFor="password" className="register-form__label">
+                  Password:
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={onChange}
+                  className="register-form__input"
+                  placeholder="*************"
+                  required
+                />
+              </div>
+              <div className="register-form__group">
+                <label
+                  htmlFor="confirmPassword"
+                  className="register-form__label"
+                >
+                  Confirm Password:
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={onChange}
+                  className="register-form__input"
+                  placeholder="*************"
+                  required
+                />
+              </div>
             </div>
-            <div className='register-form__group'>
-              <label htmlFor='confirmPassword' className='register-form__label'>Confirm Password:</label>
-              <input type='password' name='confirmPassword' value={confirmPassword} onChange={onChange} className='register-form__input' placeholder='*************' required />
-            </div>
-            </div>
-            <button type='submit' className='register-form__submit'>Create Account</button>
-            <div className='register-form__redirect'>
-              <span className='register-form__text'>Already have an account? </span>
-              <a href='/login' className='register-form__link'>Sign in</a>
+            <button type="submit" className="register-form__submit">
+              Create Account
+            </button>
+            <div className="register-form__redirect">
+              <span className="register-form__text">
+                Already have an account?{" "}
+              </span>
+              <a href="/login" className="register-form__link">
+                Sign in
+              </a>
             </div>
           </form>
         </Grid>

@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
 
-import Sidebar from '../../user/Sidebar';
+import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
+import Sidebar from './Sidebar';
 
-const Borrowers = ({ setAuth }) => {
-  const [clients, setClients] = useState([]);
+const EmployeeList = ({ setAuth }) => {
+  const [admins, setAdmins] = useState([]);
 
-  const getClients = async () => {
+  const getAdmins = async () => {
     try {
-      const response = await fetch('http://localhost:8000/allClients', {
+      const response = await fetch('http://localhost:8000/allAdmins', {
         method: 'GET',
         headers: { Authorization: localStorage.getItem('token') },
       });
 
       const parseRes = await response.json();
 
-      setClients(parseRes);
+      setAdmins(parseRes);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(clients);
+  console.log(admins);
 
-  // Delete CLIENT Function
+  // Delete ADMIN Function
   const deleteNotif = () => {
     toast.promise(
       new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ const Borrowers = ({ setAuth }) => {
         }, 2000);
       }),
       {
-        pending: 'Deleting Client...',
+        pending: 'Deleting Admin...',
         success: 'Deleted Succesfully!',
         error: 'Error!',
       },
@@ -44,15 +44,15 @@ const Borrowers = ({ setAuth }) => {
     );
   };
 
-  async function deleteClient(id) {
+  async function deleteAdmin(id) {
     try {
-      await fetch(`http://localhost:8000/clients/${id}`, {
+      await fetch(`http://localhost:8000/admins/${id}`, {
         method: 'DELETE',
         headers: { Authorization: localStorage.getItem('token') },
       });
       deleteNotif();
       setTimeout(() => {
-        setClients(clients.filter((loan) => loan.id !== id));
+        setAdmins(admins.filter((admin) => admin.id !== id));
       }, 2000);
     } catch (error) {
       console.log(error.message);
@@ -60,54 +60,25 @@ const Borrowers = ({ setAuth }) => {
   }
 
   useEffect(() => {
-    getClients();
+    getAdmins();
   }, []);
 
   return (
-    <div className='text-gray-900 h-[900px] flex'>
-      <Sidebar />
+    <div className='w-full  border bg-white shadow-md rounded mt-5  border-t-4 border-t-red-500'>
+        <Sidebar/>
       <ToastContainer />
-      {/* Clients */}
-      <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
-        {/* HEADER */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
-          <div>
-            <h3 className='text-lg font-medium leading-6 text-white'>
-              Borrowers
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-white'>
-              All clients registered
-            </p>
-          </div>
-
-          {/* BUTTON */}
-
-          <div className='text-white'>
-            <button
-              className=''
-              onClick={(e) => {
-                setAuth(false);
-              }}
-            >
-              <Link to='/login'>
-                <Logout />
-              </Link>
-            </button>
-          </div>
-        </div>
-
+      <div className='py-5 px-5'>
         {/* TITLE */}
-        <div className='flex items-center justify-between border-y-2 mt-5'>
-          <h3 className='text-lg font-medium leading-6 text-gray my-2  px-1 py-2 '>
-            Borrowers' List
+        <div className='flex items-center justify-between border-b-2'>
+          <h3 className='text-lg font-medium  text-gray   px-1 '>
+            Manage Employees
           </h3>
-          <button className='border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-auto mt-2 mr-5'>
-            <Link to='/addBorrower'>Add Borrower</Link>
+          <button className='border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5'>
+            <Link to='/addAdmin' className='no-underline' style={{color:"white"}}>Add Employee</Link>
           </button>
         </div>
-
         {/* INFO */}
-        <div className='w-full h-[640px] px-4   mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md border-t-4 border-t-red-500 '>
+        <div className='w-full  px-4   mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md '>
           <table className='table-fixed text-center mb-2'>
             <thead className=' mt-5'>
               <tr className=' mt-10'>
@@ -122,42 +93,37 @@ const Borrowers = ({ setAuth }) => {
               </tr>
             </thead>
             <tbody>
-              {clients.length <= 0 ? (
+              {admins.length <= 0 ? (
                 <tr className='border px-4 py-2 bg-red-50'>
                   <td></td>
                   <td></td>
-                  <td className='px-4 py-2 bg-red-50'>No Client Data</td>
+                  <td className='px-4 py-2 bg-red-50'>No Employee Data</td>
                   <td></td>
                   <td></td>
                 </tr>
               ) : (
-                clients.map((client, index) => {
+                admins.map((admin, index) => {
                   return (
                     <tr key={index}>
                       <td className='border px-4 py-2 bg-gray-50'>
-                        {client.id}
+                        {admin.id}
                       </td>
                       <td className='border px-4 py-2 '>
-                        {client.firstname + ' ' + client.lastname}{' '}
+                        {admin.firstname + ' ' + admin.lastname}{' '}
                       </td>
                       <td className='border px-4 py-2 bg-gray-50'>
-                        {client.contactnumber}
+                        {admin.contactnumber}
                       </td>
-                      <td className='border px-4 py-2'>{client.address}</td>
+                      <td className='border px-4 py-2'>{admin.address}</td>
                       <td className='border px-4 py-2 bg-gray-50'>
-                        {client.email}
+                        {admin.email}
                       </td>
                       <td className='border px-4 py-2'>
                         <button
                           className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
-                          onClick={() => deleteClient(client.id)}
+                          onClick={() => deleteAdmin(admin.id)}
                         >
                           <DeleteForever className='text-lg' />
-                        </button>
-                        <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
-                          <Link to={`/Borrower/${client.id}`}>
-                            <VisibilityOutlined className='text-sm' />
-                          </Link>
                         </button>
                       </td>
                     </tr>
@@ -172,4 +138,4 @@ const Borrowers = ({ setAuth }) => {
   );
 };
 
-export default Borrowers;
+export default EmployeeList;

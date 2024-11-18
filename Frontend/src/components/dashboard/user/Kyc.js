@@ -87,7 +87,7 @@ function Kycvendor() {
       <Container>
         <div
           className="ourProfileParentdiv"
-          style={{ backgroundColor: "white", padding: "10px 20px" }}
+          style={{ backgroundColor: "white", padding: "10px 20px",width:"80%",marginLeft:"150px"}}
         >
           <center>
             <h4 className="pages-title mt-3">KYC Complaince</h4>

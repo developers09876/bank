@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Logout } from '@mui/icons-material';
 
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 import AddPayments from './AddPayments';
 
 const PaymentLoansInfo = ({ setAuth }) => {

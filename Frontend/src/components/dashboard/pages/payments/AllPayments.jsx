@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { DeleteForever, Logout } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
 
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 
 const Payments = ({ setAuth }) => {
   const [payments, setPayments] = useState([]);

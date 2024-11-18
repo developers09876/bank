@@ -1,6 +1,6 @@
 import React from 'react';
 import CreditScoreGauge from './CreditScore';
-import Sidebar from '../../sidebar/Sidebar';
+import Sidebar from './Sidebar';
 
 function Dashboard() {
     // Sample score value

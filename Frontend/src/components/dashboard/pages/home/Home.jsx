@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 import BotWidget from './bottom/BotWidget';
 import TopWidget from './top/TopWidget';
 import { Link } from 'react-router-dom';

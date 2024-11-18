@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 import GetBorrowers from './GetBorrowers';
 import { Link } from 'react-router-dom';
 import { Logout } from '@mui/icons-material';

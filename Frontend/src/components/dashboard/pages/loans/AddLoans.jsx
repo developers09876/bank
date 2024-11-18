@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Logout } from '@mui/icons-material';
 import { ToastContainer, toast } from 'react-toastify';
 
-import Sidebar from '../../../sidebar/Sidebar';
+import Sidebar from '../../user/Sidebar';
 
 const AddLoans = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
