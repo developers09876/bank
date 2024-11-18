@@ -30,85 +30,92 @@
     }
   }
   
-  .sidebarcontent.open {
-    width: 250px;
-    // background-image: linear-gradient(#191919, #42424a);
-    // background-color: rgb(8, 56, 113);
-    // background-color: #ff0000;
   
-    border-bottom-right-radius: 10px;
-    height: 100vh;
-    position: fixed;
-    top: 0px;
-    z-index: 2;
-    // box-shadow: 4px 3px 17px -6px rgba(0, 0, 0, 0.61);
-    // -webkit-box-shadow: 4px 3px 17px -6px rgba(0, 0, 0, 0.61);
-    // -moz-box-shadow: 4px 3px 17px -6px rgba(0, 0, 0, 0.61);
-    letter-spacing: 0.5px;
-    text-transform: capitalize;
-  }
-  
-  .sidebarcontent.open .nav-list {
-    display: block !important;
-    top: 100px !important;
-    position: relative !important;
-    overflow: auto !important;
-    height: calc(100vh - 7px) !important;
-    overflow-y: scroll !important;
-    padding: 10px 0px 40% 0px !important;
-  }
-  
-  .sidebarcontent.open .nav-list::-webkit-scrollbar-thumb {
-    background-color: rgb(179, 178, 178) !important;
-    border-radius: 5px !important;
-  }
-  /* .sidebarcontent.open .nav-list ::-webkit-scrollbar-track {
+.sidebarcontent.open {
+  width: 250px;
+  // background-image: linear-gradient(#191919, #42424a);
+  // background-color: rgb(8, 56, 113);
+  // background-color: #ff0000;
+
+  border-bottom-right-radius: 10px;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  z-index: 2;
+  // box-shadow: 4px 3px 17px -6px rgba(0, 0, 0, 0.61);
+  // -webkit-box-shadow: 4px 3px 17px -6px rgba(0, 0, 0, 0.61);
+  // -moz-box-shadow: 4px 3px 17px -6px rgba(0, 0, 0, 0.61);
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+}
+
+.sidebarcontent.open .nav-list {
+  display: block !important;
+  top: 70px !important;
+  position: relative !important;
+  overflow: auto !important;
+  height: calc(100vh - 7px) !important;
+  overflow-y: scroll !important;
+  padding: 10px 0px 40% 0px !important;
+}
+
+.sidebarcontent.open .nav-list::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 178, 178) !important;
+  border-radius: 5px !important;
+}
+
+/* .sidebarcontent.open .nav-list ::-webkit-scrollbar-track {
     -webkit-box-shadow: none !important;
     background-color: transparent;
   } */
-  .sidebarcontent.open .nav-list::-webkit-scrollbar {
-    width: 5px !important;
-    background-color: transparent !important;
-  }
-  
-  .sidebarcontent.open a {
-    display: block;
-    color: rgb(25, 25, 25);
-  
-    font-size: 16px;
-    padding: 26px 7px 16px 20px;
-    margin: 10px 10px;
-    text-decoration: none !important;
-    margin-bottom: 3px;
-    width: -webkit-fill-available;
-  }
-  .sidebarcontent.open a:hover,
-  .sidebarcontent.open a:focus-visible {
-    display: block;
-    font-size: 16px;
-    padding: 26px 7px 16px 20px !important;
-    margin: 0px 10px;
-    margin-bottom: 3px;
-    color: rgb(168, 166, 166);
-    text-decoration: none !important;
-    // background-color: white;
-    box-shadow: 0 4px 0px 0 rgb(255, 0, 0);
-    border-radius: 8px !important;
-    width: -webkit-fill-available;
-  }
-  .sidebarcontent.open a:focus:not(:focus-visible) {
-    display: block;
-    font-size: 16px;
-    padding: 16px 7px 16px 20px !important;
-    margin-bottom: 3px;
-    color: rgb(168, 166, 166);
-    text-decoration: none !important;
-    // background-color: #fff;
-    box-shadow: 0 4px 0px 0 rgb(255, 0, 0);
-  
-    border-radius: 8px !important;
-    width: -webkit-fill-available;
-  }
+.sidebarcontent.open .nav-list::-webkit-scrollbar {
+  width: 5px !important;
+  background-color: transparent !important;
+}
+
+.sidebarcontent.open a {
+  display: block;
+  color: rgb(6, 6, 6);
+
+  font-size: 16px;
+  padding: 16px 7px 16px 20px;
+  margin: 0px 10px;
+  text-decoration: none !important;
+  margin-bottom: 3px;
+margin-top: 10px;
+  width: -webkit-fill-available;
+}
+
+.sidebarcontent.open a:hover,
+.sidebarcontent.open a:focus-visible {
+  display: block;
+  font-size: 16px;
+  padding: 16px 7px 16px 20px !important;
+  margin: 0px 10px;
+  margin-bottom: 3px;
+  margin-top: 10px;
+  color: rgb(168, 166, 166);
+  text-decoration: none !important;
+  // background-color: white;
+  box-shadow: 0 4px 0px 0 rgb(255 191 0);
+  border-radius: 8px !important;
+  width: -webkit-fill-available;
+}
+
+.sidebarcontent.open a:focus:not(:focus-visible) {
+  display: block;
+  font-size: 16px;
+  padding: 16px 7px 16px 20px !important;
+  margin-bottom: 3px;
+  color: rgb(168, 166, 166);
+  text-decoration: none !important;
+  // background-color: #fff;
+  box-shadow: 0 4px 0px 0 rgb(255 191 0);
+
+  border-radius: 8px !important;
+  width: -webkit-fill-available;
+}
+
   
   .Nav-Icon {
     font-size: 20px;
