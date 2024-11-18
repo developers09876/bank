@@ -84,7 +84,7 @@ function App() {
             {/* REGISTER */}
             <Route exact path="/register" element={<Register />} />
 
-            <Route exact path="/addAdmin" element={<AddAdmin />} />
+            {/* <Route exact path="/addAdmin" element={<AddAdmin />} /> */}
 
             {/* LOGIN */}
             <Route exact path="/login" element={<Login />} />
@@ -93,7 +93,7 @@ function App() {
             {/* <Route exact path="/admin" element={<AdminPage />} />
             <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/userlist" element={<UserList />} />*/}
-            <Route exact path="/userProfile" element={<UserDetails />} /> 
+            <Route exact path="/userProfile" element={<UserDetails />} />
 
             {/* HOME */}
             <Route exact path="/home" element={<Home />} />
@@ -146,17 +146,17 @@ function App() {
             <Route path="/employee" element={<EmployeeDashboard />}>
               {EmployeeRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}  
+              ))}
             </Route>
             <Route path="/admin" element={<Admin />}>
               {AdminRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}  
+              ))}
             </Route>
             <Route path="/user" element={<User />}>
               {UserRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}  
+              ))}
             </Route>
           </Routes>
         </Fragment>
