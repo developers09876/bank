@@ -70,9 +70,15 @@ const EmployeeList = ({ setAuth }) => {
       <div className="py-5 px-5">
         {/* TITLE */}
         <div className="flex items-center justify-between border-b-2">
-          <h3 className="text-lg font-medium text-gray px-1">Manage Employees</h3>
+          <h3 className="text-lg font-medium  text-gray   px-1 ">
+            Manage Employees
+          </h3>
           <button className="border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5">
-            <Link to="/addAdmin" className="no-underline" style={{ color: 'white' }}>
+            <Link
+              to="/admin/addAdmin"
+              className="no-underline"
+              style={{ color: "white" }}
+            >
               Add Employee
             </Link>
           </button>

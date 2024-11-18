@@ -123,7 +123,7 @@ function Sidebar({ collapsed }) {
         <NavLink
           to="/admin"
           ClassName="main-nav-style"
-          style={{ marginTop: "50px" }}
+          style={{ marginTop: "70px" }}
         >
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Dashboard

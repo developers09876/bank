@@ -1,31 +1,31 @@
-import { Logout } from '@mui/icons-material';
-import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Logout } from "@mui/icons-material";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Sidebar from './Sidebar';
-import { Col, Row } from 'react-bootstrap';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sidebar from "./Sidebar";
+import { Col, Container, Row } from "react-bootstrap";
 
 const AddAdmin = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    address: '',
-    username: '',
-    password: '',
+    userType: "employee",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    contactNumber: "",
   });
 
   const {
+    userType,
     firstname,
     lastname,
     contactNumber,
-    address,
     email,
-    username,
     password,
+    confirmPassword,
   } = inputs;
 
   const onChange = (e) => {
@@ -40,9 +40,9 @@ const AddAdmin = ({ setAuth }) => {
         }, 1000);
       }),
       {
-        pending: 'Adding New Admin...',
-        success: 'Added Succesfully!',
-        error: 'Error!',
+        pending: "Adding New Admin...",
+        success: "Added Succesfully!",
+        error: "Error!",
       },
       {
         autoClose: 1000,
@@ -55,19 +55,19 @@ const AddAdmin = ({ setAuth }) => {
     e.preventDefault();
     try {
       const body = {
+        userType,
         firstname,
         lastname,
         contactNumber,
-        address,
         email,
-        username,
         password,
+        confirmPassword,
       };
 
-      const response = await fetch('http://localhost:8000/addAdmin', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/signup/register", {
+        method: "POST",
         headers: {
-          'Content-type': 'application/json',
+          "Content-type": "application/json",
         },
         body: JSON.stringify(body),
       });
@@ -84,174 +84,185 @@ const AddAdmin = ({ setAuth }) => {
   };
 
   return (
-    <div className='flex h-[900px] '>
+    <div className="flex h-[900px] ">
       <Sidebar />
       <ToastContainer />
 
-      <div className='w-full  ml-72 border bg-white shadow-md rounded'>
-        <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
-          {/* HEADER */}
-          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
-            {/* TITLE */}
-            <div>
-              <h3 className='text-lg font-medium leading-6 text-white'>
-                Add New Employee
-              </h3>
-              <p className='mt-1 max-w-2xl text-sm text-white'>
-                Register all the required fields.
-              </p>
+      <div className="w-full   border bg-white shadow-md rounded">
+        <Container>
+          <div className="w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded ">
+            {/* HEADER */}
+            <div className="flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md ">
+              {/* TITLE */}
+              <div>
+                <h3 className="text-lg font-medium leading-6 text-white">
+                  Add New Employee
+                </h3>
+                <p className="mt-1 max-w-2xl text-sm text-white">
+                  Register all the required fields.
+                </p>
+              </div>
+              <ToastContainer />
+
+              {/* BUTTON */}
+
+              <div className="text-white">
+                <button
+                  className=""
+                  onClick={(e) => {
+                    setAuth(false);
+                  }}
+                >
+                  <Link to="/login">
+                    <Logout />
+                  </Link>
+                </button>
+              </div>
             </div>
-            <ToastContainer />
 
-            {/* BUTTON */}
-
-            <div className='text-white'>
-              <button
-                className=''
-                onClick={(e) => {
-                  setAuth(false);
-                }}
-              >
-                <Link to='/login'>
-                  <Logout />
-                </Link>
-              </button>
-            </div>
-          </div>
-
-          <form
-            onSubmit={(e) => {
-              onSubmit(e);
-            }}
-            className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500 '
-          >
-            <Row>
-              <Col lg={6} md={6}>
-            {/* FIRST NAME */}
-            <label htmlFor='firstname'>First Name: </label>
-            <input
-              type='text'
-              className='block border border-grey-500 w-full p-3 rounded mb-4'
-              name='firstname'
-              value={firstname}
-              onChange={(e) => {
-                onChange(e);
+            <form
+              onSubmit={(e) => {
+                onSubmit(e);
               }}
-              placeholder='First Name'
-              required
-            />
-            </Col>
-            {/* LAST NAME */}
-            <Col lg={6} md={6}>
-
-            <label htmlFor='lastname'>Last Name: </label>
-            <input
-              type='text'
-              className='block border border-grey-500 w-full p-3 rounded mb-4'
-              name='lastname'
-              value={lastname}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Last Name'
-              required
-            />
-            </Col>
-              <Col lg={6} md={6}>
-
-            {/* CONTACT NUMBER */}
-            <label htmlFor='contactNumber'>Contact Number: </label>
-            <input
-              type='number'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
-              name='contactNumber'
-              value={contactNumber}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Contact Number'
-              required
-            />
-            </Col>
-            <Col lg={6} md={6}>
-
-            {/* ADDRESS */}
-            <label htmlFor='address'>Address: </label>
-            <input
-              type='text'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
-              name='address'
-              value={address}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Address'
-              required
-            />
-            </Col>
-            {/* EMAIL ADDRESS */}
-            <Col lg={6} md={6}>
-
-            <label htmlFor='email'>Email Address: </label>
-            <input
-              type='email'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
-              name='email'
-              value={email}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Email'
-              required
-            />
-            </Col>
-            {/* PASSWORD */}
-            <Col lg={6} md={6}>
-
-            <label htmlFor='password'>Password: </label>
-            <input
-              type='password'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
-              name='password'
-              value={password}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='**********'
-              required
-            />
-            </Col>
-            <Col lg={6} md={6}>
-
-            {/* USERNAME */}
-            <label htmlFor='username'>Username: </label>
-            <input
-              type='text'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
-              name='username'
-              value={username}
-              onChange={(e) => {
-                onChange(e);
-              }}
-              placeholder='Username'
-              required
-            />
-            </Col>
-            </Row>
-
-            {/* BUTTONS */}
-            <button
-              type='submit'
-              className=' bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
+              className="mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500 "
             >
-              Save
-            </button>
+              <Row>
+                <Col lg={6} md={6}>
+                  {/* FIRST NAME */}
+                  <label htmlFor="firstname">First Name: </label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="firstname"
+                    value={firstname}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="First Name"
+                    required
+                  />
+                </Col>
+                {/* LAST NAME */}
+                <Col lg={6} md={6}>
+                  <label htmlFor="lastname">Last Name: </label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="lastname"
+                    value={lastname}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="Last Name"
+                    required
+                  />
+                </Col>
+                <Col lg={6} md={6}>
+                  {/* CONTACT NUMBER */}
+                  <label htmlFor="contactNumber">Contact Number: </label>
+                  <input
+                    type="number"
+                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    name="contactNumber"
+                    value={contactNumber}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="Contact Number"
+                    required
+                  />
+                </Col>
+                <Col lg={6} md={6}>
+                  {/* ADDRESS */}
+                  {/* <label htmlFor="address">Address: </label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    name="address"
+                    value={address}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="Address"
+                    required
+                  /> */}
+                  <label htmlFor="email">Email Address: </label>
+                  <input
+                    type="email"
+                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    name="email"
+                    value={email}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="Email"
+                    required
+                  />
+                </Col>
+                {/* EMAIL ADDRESS */}
+                <Col lg={6} md={6}>
+                  <label htmlFor="password">Password: </label>
+                  <input
+                    type="password"
+                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    name="password"
+                    value={password}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="**********"
+                    required
+                  />
+                </Col>
+                {/* PASSWORD */}
+                <Col lg={6} md={6}>
+                  <label
+                    htmlFor="confirmPassword"
+                    className="register-form__label"
+                  >
+                    Confirm Password:
+                  </label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={confirmPassword}
+                    onChange={onChange}
+                    className="register-form__input"
+                    placeholder="*************"
+                    required
+                  />
+                </Col>
+                <Col lg={6} md={6}>
+                  {/* USERNAME
+                  <label htmlFor="username">Username: </label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    name="username"
+                    value={username}
+                    onChange={(e) => {
+                      onChange(e);
+                    }}
+                    placeholder="Username"
+                    required
+                  /> */}
+                </Col>
+              </Row>
 
-            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10'>
-              <Link to='/admin'>Cancel</Link>
-            </button>
-          </form>
-        </div>
+              {/* BUTTONS */}
+              <button
+                type="submit"
+                className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6"
+              >
+                Save
+              </button>
+
+              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10">
+                <Link to="/admin">Cancel</Link>
+              </button>
+            </form>
+          </div>
+        </Container>
       </div>
     </div>
   );

@@ -101,11 +101,15 @@ function App() {
             {/* REGISTER */}
             <Route exact path="/register" element={<Register />} />
 
-            <Route exact path="/addAdmin" element={<AddAdmin />} />
+            {/* <Route exact path="/addAdmin" element={<AddAdmin />} /> */}
 
             {/* LOGIN */}
             <Route exact path="/login" element={<Login />} />
 
+            {/* ADMIN */}
+            {/* <Route exact path="/admin" element={<AdminPage />} />
+            <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route path="/userlist" element={<UserList />} />*/}
             <Route exact path="/userProfile" element={<UserDetails />} />
 
             {/* HOME */}
