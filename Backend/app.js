@@ -8,14 +8,12 @@ app.use(
     limit: "25mb",
   })
 );
-import signup from "./server/Router/SignupRouter.js"
-import loanform from "./server/Router/LoanApplicationRouter.js"
+import signup from "./server/Router/SignupRouter.js";
+import loanform from "./server/Router/LoanApplicationRouter.js";
+import employeeSignup from "./server/Router/EmployeeRouter.js";
 
-
-app.use("/signup",signup);
-app.use("/loanform",loanform)
-
-
-
+app.use("/signup", signup);
+app.use("/employeesignup", employeeSignup);
+app.use("/loanform", loanform);
 
 export default app;
