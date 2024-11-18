@@ -88,7 +88,6 @@ const columns = [
 
 const handleView = (record) => {
   alert(`Viewing details for ${record.loanID}`);
-  // You could also navigate to another page or display a modal with more details.
 };
 
 const LoanStatusTable = ({ collapsed }) => {
