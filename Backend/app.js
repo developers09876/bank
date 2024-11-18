@@ -1,5 +1,7 @@
 import express, { json } from "express";
 import cors from "cors";
+import signup from "./server/Router/SignupRouter.js"
+import insuranceRoutes from './server/Router/insuranceRoutes.js';
 
 const app = express();
 app.use(cors());
@@ -8,10 +10,10 @@ app.use(
     limit: "25mb",
   })
 );
-import signup from "./server/Router/SignupRouter.js"
-
 
 app.use("/signup",signup);
+
+app.use('/insurance', insuranceRoutes);
 
 
 

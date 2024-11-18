@@ -36,6 +36,7 @@ import Dashboard from './components/dashboard/user/Dahboard';
 import Credit from './components/landing/CreditScore';
 import Insurance from './components/landing/InsuranceFrom';
 import Carrier from './components/landing/Carrier';
+import AdminDashboard from './components/dashboard/admin/dashboard'
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -77,7 +78,7 @@ function App() {
             {/* ADMIN */}
             <Route exact path='/admin' element={<AdminPage />} />
             <Route path ='/admindashboard' element={<AdminDashboard/>}/>
-            <Route path = '/userlist' element={<UserList/>}/>
+            {/* <Route path = '/userlist' element={<UserList/>}/> */}
             <Route exact path='/userProfile' element={<UserDetails />} />
 
             {/* HOME */}
