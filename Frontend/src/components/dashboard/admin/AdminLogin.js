@@ -26,6 +26,10 @@ function Login() {
       .then((response) => {
         console.log("response", response);
         if (response.data.message) {
+          // Store role, token, and email in localStorage
+          localStorage.setItem("token", response.data.token); // Assuming token is returned
+          localStorage.setItem("role", response.data.admin.role); // Assuming role is returned
+          localStorage.setItem("email", email);
           toast.success(response.data.message, {
             onClose: () => navigate("/admin"),
           });

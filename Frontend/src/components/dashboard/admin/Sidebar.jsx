@@ -154,7 +154,7 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           EmployeeList
         </NavLink>
-
+<NavLink to="/jobpost" className="main-nav-style">Job Post</NavLink>
         <SubMenu
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"

@@ -52,16 +52,21 @@ import User from "./components/dashboard/user/Index";
 import { UserRoutes } from "./components/dashboard/user/UserRoutes";
 import AdminLogin from "./components/dashboard/admin/AdminLogin"
 
-const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
-  const isAuthenticated = localStorage.getItem("token");
+const ProtectedRoute = ({ component : Component, allowedRoles = [], redirectTo = "/login" }) => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
   // const isAuthenticated = true;
   const location = useLocation();
 
-  return isAuthenticated ? (
-    <Component />
-  ) : (
-    <Navigate to={redirectTo} replace state={{ from: location }} />
-  );
+  if (!token) {
+    // If authenticated and role is admin, navigate to admin-specific route
+    return <Navigate to={redirectTo} replace state={{ from: location }} />;
+  }
+  if (allowedRoles.length && !allowedRoles.includes(role)) {
+    // User role not authorized, redirect to default page
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  return <Component />;
 };
 
 function App() {
@@ -150,7 +155,13 @@ function App() {
               ))}  
             </Route>
             <Route path="/adminlogin" element={<AdminLogin />} />
-            <Route path="/admin" element={<Admin />}>
+            <Route path="/admin" element={
+    <ProtectedRoute
+      component={Admin}
+      allowedRoles={["admin"]}
+      redirectTo="/adminlogin"
+    />
+  }>
               {AdminRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
               ))}  
