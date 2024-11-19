@@ -18,12 +18,16 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import Header from "../Layout/Header";
+import OTPInput from "react-otp-input";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [step, setstep] = useState("first");
 
   const navigate = useNavigate();
   const validate = () => {
@@ -62,60 +66,80 @@ const LoginPage = () => {
     setIsLoggedIn(true); // Update state on successful login
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validate()) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/signup/login",
-          {
-            email,
-            password,
-          }
-        );
+  const handleFormSubmit = async (e) => {
 
-        // If login is successful, store the token
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        localStorage.setItem("username", response.data.user.firstname);
+    setstep("second");
 
-        toast.success("Logged in successfully!", {
-          position: "top-center",
-          autoClose: 3000,
-        });
-        console.log("first", response);
+    // if (validate()) {
+    //   try {
+    //     const response = await axios.post(
+    //       "http://localhost:5000/signup/login",
+    //       {
+    //         email,
+    //         password,
+    //       }
+    //     );
 
-        const userType = response.data.user.userType;
-        if (userType === "employee") {
-          setTimeout(() => {
-            navigate("/employee");
-          }, 3000);
-        } else if (userType === "user") {
-          setTimeout(() => {
-            navigate("/user");
-          }, 3000);
-        }
-        // Redirect after successful login
-        // setTimeout(() => {
-        //   navigate('/');
-        // }, 3000);
-      } catch (error) {
-        console.error("Login error:", error.response?.data);
-        toast.error(
-          error.response?.data?.error || "Login failed. Please try again.",
-          {
-            position: "top-center",
-            autoClose: 3000,
-          }
-        );
-      }
-    } else {
-      toast.error("Please fix the errors in the form", {
-        position: "top-center",
-        autoClose: 3000,
-      });
-    }
+    //     // If login is successful, store the token
+    //     const token = response.data.token;
+    //     localStorage.setItem("token", token);
+    //     localStorage.setItem("username", response.data.user.firstname);
+
+    //     toast.success("Logged in successfully!", {
+    //       position: "top-center",
+    //       autoClose: 3000,
+    //     });
+    //     console.log("first", response);
+
+    //     const userType = response.data.user.userType;
+    //     if (userType === "employee") {
+    //       setTimeout(() => {
+    //         navigate("/employee");
+    //       }, 3000);
+    //     } else if (userType === "user") {
+    //       setTimeout(() => {
+    //         navigate("/user");
+    //       }, 3000);
+    //     }
+    //     // Redirect after successful login
+    //     // setTimeout(() => {
+    //     //   navigate('/');
+    //     // }, 3000);
+    //   } catch (error) {
+    //     console.error("Login error:", error.response?.data);
+    //     toast.error(
+    //       error.response?.data?.error || "Login failed. Please try again.",
+    //       {
+    //         position: "top-center",
+    //         autoClose: 3000,
+    //       }
+    //     );
+    //   }
+    // } else {
+    //   toast.error("Please fix the errors in the form", {
+    //     position: "top-center",
+    //     autoClose: 3000,
+    //   });
+    // }
   };
+  const [OTP, setOTP] = useState("");
+  const onSubmit = (data) => {
+    handleFormSubmit();
+    console.log("formState", getValues());
+  };
+  function handleChange(OTP) {
+    setOTP(OTP);
+  }
+  const onSubmit1 = (data) => {
+    // checkCode();
+    console.log('OTP', OTP)
+  };
+  const {
+    register,
+    handleSubmit,
+    getValues,
+   
+  } = useForm();
   return (
     <>
       <Header />
@@ -146,33 +170,34 @@ const LoginPage = () => {
                   Welcome back! Please enter your details
                 </Typography>
               </Box>
+              {step === "first" ? (
 
-              <form onSubmit={handleSubmit}>
+              <form>
                 <TextField
                   label="Email"
                   variant="outlined"
                   fullWidth
-                  required
+                  // required
                   margin="normal"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   error={!!errors.email}
                   helperText={errors.email}
                 />
-
+                {/* <h6 style={{textAlign:'center'}}>Or</h6> */}
                 <TextField
-                  label="Password"
-                  type="password"
+                  label="Phone Number"
+                  type="tel"
                   variant="outlined"
                   fullWidth
-                  required
+                  // required
                   margin="normal"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  error={!!errors.password}
-                  helperText={errors.password}
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  error={!!errors.mobile}
+                  helperText={errors.mobile}
                 />
-
+{/* 
                 <Box
                   display="flex"
                   justifyContent="space-between"
@@ -187,7 +212,7 @@ const LoginPage = () => {
                   <Link href="#" variant="body2">
                     Forgot your password?
                   </Link>
-                </Box>
+                </Box> */}
 
                 <Button
                   variant="contained"
@@ -196,9 +221,9 @@ const LoginPage = () => {
                   size="large"
                   type="submit"
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={() => handleLoginSuccess()}
+                  onClick={handleSubmit(onSubmit)}
                 >
-                  Log In
+                  Send OTP
                 </Button>
 
                 <Divider>Or, Login with</Divider>
@@ -220,6 +245,36 @@ const LoginPage = () => {
                   </Typography>
                 </Box>
               </form>
+            ) : (
+              <div>
+                <label className="forget_label">Enter OTP</label>
+                <div className="otp">
+                  {/* <OTPInput
+                    onChange={handleChange}
+                    value={OTP}
+                    inputStyle="inputStyle"
+                    numInputs={4}
+                    separator={<span> </span>}
+                  /> */}
+                  <input 
+                    value={OTP}
+
+                    onChange={handleChange}
+                    />
+                </div>
+                <p className="resend-otp" 
+                // onClick={handleSubmit(onSubmit1)}
+                >
+                  Resend OTP
+                </p>
+                <Button
+                  className="forget_button mt-3 justify-content-center"
+                  onClick={handleSubmit(onSubmit1)}
+                >
+                  Submit
+                </Button>
+              </div>
+            )}
             </Box>
           </Grid>
 
