@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { Table, Button } from 'antd';
 import Sidebar from './Sidebar';
-import { Button } from 'antd';
 
 const EmployeeList = ({ setAuth }) => {
   const [employees, setEmployees] = useState([]);
@@ -63,6 +63,48 @@ const EmployeeList = ({ setAuth }) => {
     getEmployees();
   }, []);
 
+  // Ant Design Table columns
+  const columns = [
+    {
+      title: 'Full Name',
+      dataIndex: 'fullname',
+      key: 'fullname',
+      render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
+    },
+    {
+      title: 'Contact Number',
+      dataIndex: 'contactNumber',
+      key: 'contactNumber',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, employee) => (
+        <div>
+          <Button
+            type="primary"
+            style={{color:'black'}}
+            onClick={() => console.log(`Viewing employee: ${employee._id}`)}
+          >
+            View
+          </Button>
+          {/* <Button
+            type="danger"
+            className="ml-2"
+            onClick={() => deleteEmployee(employee._id)}
+          >
+            Delete
+          </Button> */}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className="w-full border bg-white shadow-md rounded mt-5 border-t-4 border-t-red-500">
       <Sidebar />
@@ -70,59 +112,21 @@ const EmployeeList = ({ setAuth }) => {
       <div className="py-5 px-5">
         {/* TITLE */}
         <div className="flex items-center justify-between border-b-2">
-          <h3 className="text-lg font-medium  text-gray   px-1 ">
-            Manage Employees
-          </h3>
+          <h3 className="text-lg font-medium text-gray px-1">Manage Employees</h3>
           <button className="border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5">
-            <Link
-              to="/admin/addAdmin"
-              className="no-underline"
-              style={{ color: "white" }}
-            >
+            <Link to="/admin/addAdmin" className="no-underline" style={{ color: 'white' }}>
               Add Employee
             </Link>
           </button>
         </div>
         {/* INFO */}
-        <div className="w-full px-4 mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md">
-          <table className="table-fixed text-center mb-2">
-            <thead>
-              <tr>
-                <th className="w-1/4 px-1 py-2 text-gray-600">Full Name</th>
-                <th className="w-1/4 px-1 py-2 text-gray-600">Contact Number</th>
-                <th className="w-1/4 px-1 py-2 text-gray-600">Email</th>
-                <th className="w-1/1 px-1 py-2 text-gray-600">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees.length <= 0 ? (
-                <tr className="border px-4 py-2 bg-red-50">
-                  <td></td>
-                  <td></td>
-                  <td className="px-4 py-2 bg-red-50">No Employee Data</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              ) : (
-                employees.map((employee, index) => (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{employee.firstname + ' ' + employee.lastname}</td>
-                    <td className="border px-4 py-2 bg-gray-50">{employee.contactNumber}</td>
-                    <td className="border px-4 py-2 bg-gray-50">{employee.email}</td>
-                    <td className="border px-4 py-2">
-                      {/* <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm"
-                        onClick={() => deleteEmployee(employee._id)}
-                      >
-                        <DeleteForever className="text-lg" />
-                      </button> */}
-                      <Button>View</Button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+        <div className="w-full px-4 mt-5">
+          <Table
+            columns={columns}
+            dataSource={employees}
+            rowKey="_id"
+            pagination={{ pageSize: 5 }}
+          />
         </div>
       </div>
     </div>
