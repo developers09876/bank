@@ -16,7 +16,7 @@ const AdminDashboard = () => {
     revenue: '$50,000',
     invoices: 45,
   };
-
+  
   return (
     <div className="dashboard-container">
       <Sidebar />

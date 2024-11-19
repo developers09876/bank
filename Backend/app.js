@@ -12,7 +12,9 @@ app.use(
 );
 import loanform from "./server/Router/LoanApplicationRouter.js";
 import employeeSignup from "./server/Router/EmployeeRouter.js";
+import Adminlogin from "./server/Router/Adminroutes.js";
 
+app.use("/admin", Adminlogin);
 app.use("/signup", signup);
 app.use("/employeesignup", employeeSignup);
 app.use("/loanform", loanform);
