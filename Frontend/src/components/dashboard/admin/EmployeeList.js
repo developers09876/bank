@@ -24,40 +24,8 @@ const EmployeeList = ({ setAuth }) => {
     }
   };
 
-  // Delete Notification Function
-  const deleteNotif = () => {
-    toast.promise(
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      }),
-      {
-        pending: 'Deleting Employee...',
-        success: 'Deleted Successfully!',
-        error: 'Error!',
-      },
-      {
-        autoClose: 2000,
-      }
-    );
-  };
 
-  // Delete Employee Function
-  const deleteEmployee = async (id) => {
-    try {
-      await fetch(`http://localhost:5000/admins/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('token') },
-      });
-      deleteNotif();
-      setTimeout(() => {
-        setEmployees(employees.filter((employee) => employee._id !== id));
-      }, 2000);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+ 
 
   useEffect(() => {
     getEmployees();

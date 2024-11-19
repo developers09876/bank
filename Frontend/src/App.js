@@ -50,6 +50,7 @@ import Admin from "./components/dashboard/admin";
 import { AdminRoutes } from "./components/dashboard/admin/AdminRoutes";
 import User from "./components/dashboard/user/Index";
 import { UserRoutes } from "./components/dashboard/user/UserRoutes";
+import ErrorMessage from "./components/Layout/ErrorMessage";
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -71,6 +72,7 @@ function App() {
             {/* LANDING */}
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/about" element={<About />} />
+            <Route path="*" element={<ErrorMessage/>}/>
             <Route exact path="/contact" element={<ContactUs />} />
             <Route path="/insuranceform" element={<Insurance />} />
             <Route path="/taxform" element={<TaxForm />} />
