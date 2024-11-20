@@ -66,7 +66,6 @@ const LoginPage = () => {
   };
 
   const handleFormSubmit = async (e) => {
-
     try {
       const response = await axios.post(
         "http://localhost:5000/nodemailer/forgetpassword",
@@ -75,15 +74,15 @@ const LoginPage = () => {
         }
       );
 
-      // localStorage.setItem("username", response.data.user.firstname);
+      localStorage.setItem("userType", response.data.data.userType);
 
       toast.success("OTP sent successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
-      console.log("first", response);
-      setstep("second");
 
+      // console.log("first", response);
+      setstep("second");
     } catch (error) {
       console.error("Login error:", error.response?.data);
       toast.error(
@@ -94,10 +93,9 @@ const LoginPage = () => {
         }
       );
     }
-
   };
   const [OTP, setOTP] = useState("");
-  console.log('OTP', OTP)
+  console.log("OTP", OTP);
 
   const onSubmit = (data) => {
     handleFormSubmit();
@@ -106,24 +104,43 @@ const LoginPage = () => {
 
   const onSubmit1 = async (data) => {
     // checkCode();
-    console.log('OTP', OTP)
-    const code =OTP;
+    console.log("OTP", OTP);
+    const code = OTP;
     try {
       const response = await axios.post(
         "http://localhost:5000/nodemailer/checkverification",
         {
-          email,code
+          email,
+          code,
         }
       );
-
+      console.log("response", response);
+      localStorage.setItem("token", response.data.data.token);
 
       toast.success("Verification successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
-      console.log("first", response);
-      // setstep("second");
+      const userType = localStorage.getItem("userType");
+      const token = localStorage.getItem("token");
 
+      console.log("userType", userType);
+      // if (userType === "employee") {
+      //   navigate("/employee");
+      // } else if (userType === "user") {
+      //   navigate("/user");
+      // }
+
+      setTimeout(() => {
+        if (userType === "employee") {
+          navigate("/employee");
+        } else if (userType === "user") {
+          navigate("/user");
+        }
+      }, 3000);
+
+      // console.log("first", response);
+      // setstep("second");
     } catch (error) {
       console.error("Login error:", error.response?.data);
       toast.error(
@@ -135,12 +152,7 @@ const LoginPage = () => {
       );
     }
   };
-  const {
-    register,
-    handleSubmit,
-    getValues,
-
-  } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
   return (
     <>
       <Header />
@@ -172,7 +184,6 @@ const LoginPage = () => {
                 </Typography>
               </Box>
               {step === "first" ? (
-
                 <form>
                   <TextField
                     label="Email"
@@ -263,8 +274,9 @@ const LoginPage = () => {
                       onChange={(e) => setOTP(e.target.value)}
                     />
                   </div>
-                  <p className="resend-otp"
-                  // onClick={handleSubmit(onSubmit1)}
+                  <p
+                    className="resend-otp"
+                    // onClick={handleSubmit(onSubmit1)}
                   >
                     Resend OTP
                   </p>
