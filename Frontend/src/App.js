@@ -53,8 +53,9 @@ import { UserRoutes } from "./components/dashboard/user/UserRoutes";
 import AdminLogin from "./components/dashboard/admin/AdminLogin"
 import ErrorMessage from "./components/Layout/ErrorMessage";
 
-const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
-  const isAuthenticated = localStorage.getItem("token");
+const ProtectedRoute = ({ component: Component, allowedRoles = [],redirectTo = "/login" }) => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
   // const isAuthenticated = true;
   const location = useLocation();
 

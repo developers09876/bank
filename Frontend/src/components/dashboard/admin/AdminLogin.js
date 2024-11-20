@@ -46,7 +46,7 @@ function Login() {
   return (
     <div className="adminlogin">
       <ToastContainer />
-      <div className="container">
+      <div className="container-admin">
         <div className="header">
           <div className="text">Login</div>
           <div className="underline"></div>
