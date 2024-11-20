@@ -1,6 +1,6 @@
 // src/AdminDashboard.js
 import React from 'react';
-import { Card, Col, Row, Button , Container} from 'react-bootstrap'; // Or use Ant Design's Card and Row
+import { Card, Col, Row, Button, Container } from 'react-bootstrap'; // Or use Ant Design's Card and Row
 import { useNavigate } from "react-router-dom";
 import './AdminDashboard.scss'; // Custom SCSS styles
 import { FaUsers, FaMoneyBillWave, FaFileInvoice, FaChartLine } from 'react-icons/fa'; // Icons
@@ -84,7 +84,7 @@ const AdminDashboard = () => {
         </Row>
       </div>
 
-      <h1 style={{ textAlign: "center", marginTop: "50px" }}>
+      {/* <h1 style={{ textAlign: "center", marginTop: "50px" }}>
         Admin Dashboard
       </h1>
       <Container
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </div>
   );
 };
