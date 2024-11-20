@@ -50,7 +50,6 @@ import Admin from "./components/dashboard/admin";
 import { AdminRoutes } from "./components/dashboard/admin/AdminRoutes";
 import User from "./components/dashboard/user/Index";
 import { UserRoutes } from "./components/dashboard/user/UserRoutes";
-import ErrorMessage from "./components/Layout/ErrorMessage";
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
@@ -178,12 +177,7 @@ function App() {
                 <Route key={index} path={path} element={Ele} />
               ))}
             </Route>
-
-            {/* Admin route */}
-            <Route
-              path="/admin"
-              element={<Admin/>} 
-            >
+            <Route path="/admin" element={<Admin />}>
               {AdminRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
               ))}
