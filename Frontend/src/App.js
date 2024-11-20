@@ -50,9 +50,12 @@ import Admin from "./components/dashboard/admin";
 import { AdminRoutes } from "./components/dashboard/admin/AdminRoutes";
 import User from "./components/dashboard/user/Index";
 import { UserRoutes } from "./components/dashboard/user/UserRoutes";
+import AdminLogin from "./components/dashboard/admin/AdminLogin"
+import ErrorMessage from "./components/Layout/ErrorMessage";
 
 const ProtectedRoute = ({ Component, redirectTo = "/login" }) => {
   const isAuthenticated = localStorage.getItem("token");
+  // const isAuthenticated = true;
   const location = useLocation();
 
   return isAuthenticated ? (
@@ -71,38 +74,20 @@ function App() {
             {/* LANDING */}
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/about" element={<About />} />
-            <Route path="*" element={<ErrorMessage/>}/>
             <Route exact path="/contact" element={<ContactUs />} />
+            <Route path="*" element={<ErrorMessage/>}/>
             <Route path="/insuranceform" element={<Insurance />} />
             <Route path="/taxform" element={<TaxForm />} />
-            <Route
-              path="/loan"
-              element={
-                <ProtectedRoute Component={LoanPage} redirectTo="/login" />
-              }
-            />
+            <Route path="/loan" element={<LoanPage />} />
 
-            <Route
-              path="/insurancepage"
-              element={
-                <ProtectedRoute
-                  Component={InsuranceCards}
-                  redirectTo="/login"
-                />
-              }
-            />
-            <Route
-              path="/taxpage"
-              element={
-                <ProtectedRoute Component={TaxCards} redirectTo="/login" />
-              }
-            />
+            <Route path="/insurancepage" element={<InsuranceCards />} />
+            <Route path="/taxpage" element={<TaxCards />} />
             <Route path="/loanform" element={<LoanForm />} />
 
             {/* REGISTER */}
             <Route exact path="/register" element={<Register />} />
 
-            {/* <Route exact path="/addAdmin" element={<AddAdmin />} /> */}
+            <Route exact path="/addAdmin" element={<AddAdmin />} />
 
             {/* LOGIN */}
             <Route exact path="/login" element={<Login />} />
@@ -111,10 +96,11 @@ function App() {
             {/* <Route exact path="/admin" element={<AdminPage />} />
             <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/userlist" element={<UserList />} />*/}
-            <Route exact path="/userProfile" element={<UserDetails />} />
+            <Route exact path="/userProfile" element={<UserDetails />} /> 
 
             {/* HOME */}
             <Route exact path="/home" element={<Home />} />
+            {/* <Route exact path="/user" element={<Dashboard />} /> */}
 
             <Route exact path="/borrowers" element={<Borrowers />} />
 
@@ -142,6 +128,7 @@ function App() {
             {/* PAYMENTS */}
             <Route exact path="/payments" element={<Payments />} />
 
+            {/* ADD PAYMENT (BORROWER PAGE) */}
             <Route
               exact
               path="/addPayments/:id"
@@ -156,41 +143,24 @@ function App() {
 
             {/* MESSAGES */}
             <Route exact path="/emailClient" element={<EmailPage />} />
-            <Route
-              path="/credit"
-              element={
-                <ProtectedRoute Component={Credit} redirectTo="/login" />
-              }
-            />
+            <Route path="/credit" element={<Credit />} />
             <Route path="/loanreview" element={<LoanDashboard />} />
             <Route path="/carrier" element={<Carrier />} />
-            <Route
-              path="/employee"
-              element={
-                <ProtectedRoute
-                  Component={EmployeeDashboard}
-                  redirectTo="/login"
-                />
-              }
-            >
+            <Route path="/employee" element={<EmployeeDashboard />}>
               {EmployeeRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}
+              ))}  
             </Route>
+            <Route path="/adminlogin" element={<AdminLogin />} />
             <Route path="/admin" element={<Admin />}>
               {AdminRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}
+              ))}  
             </Route>
-
-            {/* User route */}
-            <Route
-              path="/user"
-              element={<ProtectedRoute Component={User} redirectTo="/login" />}
-            >
+            <Route path="/user" element={<User />}>
               {UserRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}
+              ))}  
             </Route>
           </Routes>
         </Fragment>
