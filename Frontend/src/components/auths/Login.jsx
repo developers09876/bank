@@ -18,12 +18,16 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import Header from "../Layout/Header";
+import OTPInput from "react-otp-input";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [step, setstep] = useState("first");
 
   const navigate = useNavigate();
   const validate = () => {
@@ -58,64 +62,85 @@ const LoginPage = () => {
   }, []);
 
   const handleLoginSuccess = () => {
-    // Store username in localStorage
     setIsLoggedIn(true); // Update state on successful login
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validate()) {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/signup/login",
-          {
-            email,
-            password,
-          }
-        );
+  const handleFormSubmit = async (e) => {
 
-        // If login is successful, store the token
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        localStorage.setItem("username", response.data.user.firstname);
-
-        toast.success("Logged in successfully!", {
-          position: "top-center",
-          autoClose: 3000,
-        });
-        console.log("first", response);
-
-        const userType = response.data.user.userType;
-        if (userType === "employee") {
-          setTimeout(() => {
-            navigate("/employee");
-          }, 3000);
-        } else if (userType === "user") {
-          setTimeout(() => {
-            navigate("/user");
-          }, 3000);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/nodemailer/forgetpassword",
+        {
+          email,
         }
-        // Redirect after successful login
-        // setTimeout(() => {
-        //   navigate('/');
-        // }, 3000);
-      } catch (error) {
-        console.error("Login error:", error.response?.data);
-        toast.error(
-          error.response?.data?.error || "Login failed. Please try again.",
-          {
-            position: "top-center",
-            autoClose: 3000,
-          }
-        );
-      }
-    } else {
-      toast.error("Please fix the errors in the form", {
+      );
+
+      // localStorage.setItem("username", response.data.user.firstname);
+
+      toast.success("OTP sent successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
+      console.log("first", response);
+      setstep("second");
+
+    } catch (error) {
+      console.error("Login error:", error.response?.data);
+      toast.error(
+        error.response?.data?.error || "Login failed. Please try again.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
+    }
+
+  };
+  const [OTP, setOTP] = useState("");
+  console.log('OTP', OTP)
+
+  const onSubmit = (data) => {
+    handleFormSubmit();
+    console.log("formState", getValues());
+  };
+
+  const onSubmit1 = async (data) => {
+    // checkCode();
+    console.log('OTP', OTP)
+    const code =OTP;
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/nodemailer/checkverification",
+        {
+          email,code
+        }
+      );
+
+
+      toast.success("Verification successfully!", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      console.log("first", response);
+      // setstep("second");
+
+    } catch (error) {
+      console.error("Login error:", error.response?.data);
+      toast.error(
+        error.response?.data?.error || "Login failed. Please try again.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
     }
   };
+  const {
+    register,
+    handleSubmit,
+    getValues,
+
+  } = useForm();
   return (
     <>
       <Header />
@@ -146,33 +171,34 @@ const LoginPage = () => {
                   Welcome back! Please enter your details
                 </Typography>
               </Box>
+              {step === "first" ? (
 
-              <form onSubmit={handleSubmit}>
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  margin="normal"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  error={!!errors.email}
-                  helperText={errors.email}
-                />
-
-                <TextField
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  margin="normal"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  error={!!errors.password}
-                  helperText={errors.password}
-                />
-
+                <form>
+                  <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    // required
+                    margin="normal"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={!!errors.email}
+                    helperText={errors.email}
+                  />
+                  {/* <h6 style={{textAlign:'center'}}>Or</h6> */}
+                  <TextField
+                    label="Phone Number"
+                    type="tel"
+                    variant="outlined"
+                    fullWidth
+                    // required
+                    margin="normal"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    error={!!errors.mobile}
+                    helperText={errors.mobile}
+                  />
+                  {/* 
                 <Box
                   display="flex"
                   justifyContent="space-between"
@@ -187,39 +213,69 @@ const LoginPage = () => {
                   <Link href="#" variant="body2">
                     Forgot your password?
                   </Link>
-                </Box>
+                </Box> */}
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => handleLoginSuccess()}
-                >
-                  Log In
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Send OTP
+                  </Button>
 
-                <Divider>Or, Login with</Divider>
+                  <Divider>Or, Login with</Divider>
 
-                <Button
-                  variant="outlined"
-                  startIcon={<GoogleIcon />}
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 2 }}
-                >
-                  Sign up with Google
-                </Button>
+                  <Button
+                    variant="outlined"
+                    startIcon={<GoogleIcon />}
+                    fullWidth
+                    size="large"
+                    sx={{ mt: 2 }}
+                  >
+                    Sign up with Google
+                  </Button>
 
-                <Box mt={2}>
-                  <Typography variant="body2">
-                    Don't have an account?{" "}
-                    <Link href="/register">Register here</Link>
-                  </Typography>
-                </Box>
-              </form>
+                  <Box mt={2}>
+                    <Typography variant="body2">
+                      Don't have an account?{" "}
+                      <Link href="/register">Register here</Link>
+                    </Typography>
+                  </Box>
+                </form>
+              ) : (
+                <div>
+                  <label className="forget_label">Enter OTP</label>
+                  <div className="otp">
+                    {/* <OTPInput
+                    onChange={handleChange}
+                    value={OTP}
+                    inputStyle="inputStyle"
+                    numInputs={4}
+                    separator={<span> </span>}
+                  /> */}
+                    <input
+                      value={OTP}
+                      type="text"
+                      onChange={(e) => setOTP(e.target.value)}
+                    />
+                  </div>
+                  <p className="resend-otp"
+                  // onClick={handleSubmit(onSubmit1)}
+                  >
+                    Resend OTP
+                  </p>
+                  <Button
+                    className="forget_button mt-3 justify-content-center"
+                    onClick={handleSubmit(onSubmit1)}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              )}
             </Box>
           </Grid>
 

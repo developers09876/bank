@@ -5,6 +5,7 @@ import insuranceRoutes from "./server/Router/insuranceRoutes.js";
 
 const app = express();
 app.use(cors());
+
 app.use(
   json({
     limit: "25mb",
@@ -13,10 +14,12 @@ app.use(
 import loanform from "./server/Router/LoanApplicationRouter.js";
 import employeeSignup from "./server/Router/EmployeeRouter.js";
 import Adminlogin from "./server/Router/Adminroutes.js";
+import nodemailer from "./server/Router/NodeMailerRouter.js";
 
 app.use("/admin", Adminlogin);
 app.use("/signup", signup);
 app.use("/employeesignup", employeeSignup);
 app.use("/loanform", loanform);
+app.use("/nodemailer", nodemailer);
 
 export default app;
