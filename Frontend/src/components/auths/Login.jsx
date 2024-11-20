@@ -18,9 +18,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import Header from "../Layout/Header";
-import OTPInput from "react-otp-input";
 import { useForm } from "react-hook-form";
-
+import OtpInput from 'react-otp-input';
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -30,29 +29,52 @@ const LoginPage = () => {
   const [step, setstep] = useState("first");
 
   const navigate = useNavigate();
-  const validate = () => {
-    let tempErrors = { email: "", password: "" };
-    let valid = true;
+  // const validate = () => {
+  //   let tempErrors = { email: "", password: "" };
+  //   let valid = true;
 
-    if (!email) {
-      tempErrors.email = "Email is required";
-      valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      tempErrors.email = "Email is not valid";
-      valid = false;
-    }
+  //   if (!email) {
+  //     tempErrors.email = "Email is required";
+  //     valid = false;
+  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
+  //     tempErrors.email = "Email is not valid";
+  //     valid = false;
+  //   }
 
-    if (!password) {
-      tempErrors.password = "Password is required";
-      valid = false;
-    } else if (password.length < 6) {
-      tempErrors.password = "Password must be at least 6 characters";
-      valid = false;
-    }
+  //   if (!password) {
+  //     tempErrors.password = "Password is required";
+  //     valid = false;
+  //   } else if (password.length < 6) {
+  //     tempErrors.password = "Password must be at least 6 characters";
+  //     valid = false;
+  //   }
 
-    setErrors(tempErrors);
-    return valid;
-  };
+  //   setErrors(tempErrors);
+  //   return valid;
+  // };
+
+  // const validate = () => {
+  //   let tempErrors = { email: "", mobile: "" };
+  //   let valid = true;
+
+  //   if (!email && !mobile) {
+  //     tempErrors.email = "Email or Phone Number is required";
+  //     tempErrors.mobile = "Email or Phone Number is required";
+  //     valid = false;
+  //   } else {
+  //     if (email && !/\S+@\S+\.\S+/.test(email)) {
+  //       tempErrors.email = "Email is not valid";
+  //       valid = false;
+  //     }
+  //     if (mobile && !/^\d{10}$/.test(mobile)) {
+  //       tempErrors.mobile = "Phone Number must be 10 digits";
+  //       valid = false;
+  //     }
+  //   }
+
+  //   setErrors(tempErrors);
+  //   return valid;
+  // };
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -66,6 +88,13 @@ const LoginPage = () => {
   };
 
   const handleFormSubmit = async (e) => {
+    // e.preventDefault();
+
+    // if (!validate()) {
+    //   return; // Stop submission if validation fails
+    // }
+
+
     try {
       const response = await axios.post(
         "http://localhost:5000/nodemailer/forgetpassword",
@@ -94,8 +123,7 @@ const LoginPage = () => {
       );
     }
   };
-  const [OTP, setOTP] = useState("");
-  console.log("OTP", OTP);
+  const [otp, setOtp] = useState('');
 
   const onSubmit = (data) => {
     handleFormSubmit();
@@ -104,8 +132,8 @@ const LoginPage = () => {
 
   const onSubmit1 = async (data) => {
     // checkCode();
-    console.log("OTP", OTP);
-    const code = OTP;
+    console.log("OTP", otp);
+    const code = otp;
     try {
       const response = await axios.post(
         "http://localhost:5000/nodemailer/checkverification",
@@ -189,7 +217,7 @@ const LoginPage = () => {
                     label="Email"
                     variant="outlined"
                     fullWidth
-                    // required
+                    required
                     margin="normal"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -261,22 +289,33 @@ const LoginPage = () => {
                 <div>
                   <label className="forget_label">Enter OTP</label>
                   <div className="otp">
-                    {/* <OTPInput
-                    onChange={handleChange}
-                    value={OTP}
-                    inputStyle="inputStyle"
-                    numInputs={4}
-                    separator={<span> </span>}
-                  /> */}
-                    <input
+                   
+                    {/* <input
                       value={OTP}
                       type="text"
                       onChange={(e) => setOTP(e.target.value)}
+                    /> */}
+                    <OtpInput
+                      value={otp}
+                      onChange={setOtp}
+                      numInputs={4}
+                      renderSeparator={<span>-</span>}
+                      renderInput={(props) => <input {...props} />}
+                      inputStyle={{
+                        width: "3rem",
+                        height: "3rem",
+                        margin: "0 0.5rem",
+                        fontSize: "1.5rem",
+                        borderRadius: "8px",
+                        border: "1px solid #ccc",
+                        textAlign: "center",
+                      }}
                     />
+                    
                   </div>
                   <p
                     className="resend-otp"
-                    // onClick={handleSubmit(onSubmit1)}
+                  // onClick={handleSubmit(onSubmit1)}
                   >
                     Resend OTP
                   </p>
