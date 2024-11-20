@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
+import { DeleteForever } from '@mui/icons-material';
 
 const Admins = ({ setAuth }) => {
   const [admins, setAdmins] = useState([]);

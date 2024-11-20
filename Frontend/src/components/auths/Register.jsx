@@ -10,7 +10,7 @@ import { Col, Row } from "react-bootstrap";
 
 const Register = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
-    userType: "",
+    userType: "user",
     firstname: "",
     lastname: "",
     email: "",
@@ -130,46 +130,7 @@ const Register = ({ setAuth }) => {
               Sign Up
             </Typography> */}
             {/* <div className='register-form__row'> */}
-            <div className="register-form__group">
-              <label className="register-form__label">User Type:</label>
-              
-
-              <div className="register-form__radio-group" style={{paddingLeft:"20px",fontSize:"18px"}}>
-              <Row>
-              <Col md={2}>
-                <label className="register-form__radio-label">
-                  
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="user"
-                    checked={userType === "user"}
-                    onChange={onChange}
-                    className="register-form__radio-input"
-                    required
-                  />
-                  &nbsp;
-                  User
-                </label>
-                </Col>
-                <Col md={4}>
-                <label className="register-form__radio-label">
-                  <input
-                    type="radio"
-                    name="userType"
-                    value="employee"
-                    checked={userType === "employee"}
-                    onChange={onChange}
-                    className="register-form__radio-input"
-                    required
-                  />
-                  &nbsp;
-                  Employee
-                </label>
-                </Col>
-                </Row>
-              </div>
-            </div>
+           
 
             {/* </div> */}
             <div className="register-form__row">
