@@ -77,7 +77,6 @@ function Insurance() {
     { name: "2024", value: "2024" },
   ];
 
- 
 
   const languageList = [
     { language: "Male", value: "Male" },
@@ -86,11 +85,6 @@ function Insurance() {
 
 
   ];
-
-
-
-
-
 
   const {
     register,
