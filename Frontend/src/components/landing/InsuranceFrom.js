@@ -34,18 +34,11 @@ function Insurance() {
   const [data, setData] = useState();
   const [IyerPhone, setIyerPhone] = useState();
   const [IyerName, setIyerName] = useState();
-  const id = localStorage.getItem("vendor_id");
   const [poojaType, setPoojaTypeValue] = useState();
   console.log("pooja", poojaType);
 
   const [Premium, setPremium] = useState();
-console.log('step1', Premium)
 
-  const typeDetails = [
-    { name: "Inside Temple", value: "inside" },
-    { name: "Outside Temple", value: "outside" },
-    { name: "Both", value: "both" },
-  ];
   const year = [
     { name: "1990", value: "1990" },
     { name: "1991", value: "1991" },
@@ -84,23 +77,7 @@ console.log('step1', Premium)
     { name: "2024", value: "2024" },
   ];
 
-  const serviceTypes = [
-    { name: "Marriage Astrology", value: "Marriageastrology" },
-    { name: "House Warming", value: "HouseWarming" },
-    { name: "Ganesh Puja", value: "GaneshPuja" },
-    { name: "Satyanarayana Vrat", value: "SatyanarayanaVrat" },
-    { name: "Namkaran Ceremony", value: "NamkaranCeremony" },
-    { name: "Rudrabhishek", value: "Rudrabhishek" },
-    { name: "Annaprasan", value: "Annaprasan" },
-    { name: "Navagraha Puja", value: "NavagrahaPuja" },
-    { name: "Shanti Puja", value: "ShantiPuja" },
-    { name: "Chandi Homa", value: "ChandiHoma" },
-    { name: "Vastu Puja", value: "VastuPuja" },
-    { name: "Durga Puja", value: "DurgaPuja" },
-    { name: "Pitrupaksha", value: "Pitrupaksha" },
-    { name: "Kaal Sarp Dosh Puja", value: "KaalSarpDoshPuja" },
-    { name: "Sankat Mochan Hanuman Puja", value: "SankatMochanHanumanPuja" },
-  ];
+ 
 
   const languageList = [
     { language: "Male", value: "Male" },
@@ -109,38 +86,11 @@ console.log('step1', Premium)
 
 
   ];
-  useEffect(() => {
-    getCountry();
-  }, []);
-  useEffect(() => {
-    if (data?.country) {
-      getCountry();
-    }
-  }, [data?.country]);
 
-  useEffect(() => {
-    if (data?.country) {
-      getState(data.country);
-    }
-  }, [data?.country]);
 
-  useEffect(() => {
-    if (data?.state) {
-      getDistrict(data.state);
-    }
-  }, [data?.state]);
 
-  useEffect(() => {
-    if (data?.district) {
-      getCity(data.district);
-    }
-  }, [data?.district]);
 
-//   useEffect(() => {
-//     if (data?.city) {
-//       getArea(data?.city);
-//     }
-//   }, [data?.city]);
+
 
   const {
     register,
@@ -151,80 +101,6 @@ console.log('step1', Premium)
     formState: { errors },
   } = useForm();
 
-  const getCountry = () => {
-    // Api.get(`/country/getAll`).then((res) => {
-    //   setCountry(res.data);
-    //   const countryDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.country)
-    //   );
-    //   if (countryDetails) {
-    //     setCountryValue(countryDetails.country);
-    //   } else {
-    //     console.log("Country not found");
-    //   }
-    // });
-  };
-
-  const getState = (country_id) => {
-    // Api.get(`/state/getState/${country_id}`).then((res) => {
-    //   setstateList(res.data);
-    //   const stateDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.state)
-    //   );
-    //   if (stateDetails) {
-    //     setSelectedState(stateDetails.state);
-    //   } else {
-    //     console.log("State not found");
-    //   }
-    // });
-  };
-
-  const getDistrict = (state_id) => {
-    setStateValue(state_id);
-    // Api.get(`/district/getdistrict/${state_id}`).then((res) => {
-    //   setdistrictList(res.data);
-    //   const districtDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.district)
-    //   );
-    //   if (districtDetails) {
-    //     setSelectedDistrict(districtDetails.district);
-    //   } else {
-    //     console.log("District not found");
-    //   }
-    // });
-  };
-
-  const getCity = (districtId) => {
-    setDistrictValue(districtId);
-    // Api.get(`/city/getCity/${districtId}`).then((res) => {
-    //   setCityList(res.data);
-    //   const cityDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.city)
-    //   );
-    //   if (cityDetails) {
-    //     setSelectedCity(cityDetails.city);
-    //   } else {
-    //     console.log("City not found");
-    //   }
-    // });
-  };
-
-//   const getArea = async (id) => {
-//     await Api.get(
-//       `${process.env.REACT_APP_DEV_BASE_URL}/area/getArea/${id}`
-//     ).then((res) => {
-//       const area_name = res.data;
-//       setareaList(area_name);
-//       const areaDetails = res.data.find(
-//         (stateObj) => stateObj.area_id === parseInt(data?.area)
-//       );
-//       if (areaDetails) {
-//         setSelectedArea(areaDetails.area_name);
-//       } else {
-//         console.log("Area not found");
-//       }
-//     });
-//   };
 
   const [selectImage, setSelectImage] = useState(null);
 
@@ -243,50 +119,7 @@ console.log('step1', Premium)
     }
   };
 
-//   useEffect(() => {
-//     getValue();
-//     // getByUser();
-//   }, []);
 
-//   const getValue = async () => {
-//     try {
-//     //   const res = await Api.get(`/vendor/getOne/${id}`);
-//       const data = res.data[0];
-//       setData(res.data[0]);
-//       setSelectImage(data.imageUrl);
-//       setLanguageDetails(JSON.parse(data.language) || []);
-//       setStateValue(data.state);
-//       setDistrictValue(data.district);
-//       setCityValue(data.city);
-//       setselectArea(data.area);
-//       setTypeValue(data.type);
-//       setServiceType(JSON.parse(data.serviceType) || []);
-//       setSelectYear(data.yearofEstablish);
-
-//       reset({
-//         priestName: data.priestName,
-//         templeName: data.templeName,
-//         aadharNumber: data.aadharNumber,
-//         mobileNumber: data.mobileNumber,
-//         AlternateNumber: data.alternateNumber,
-//         yearofExperience: data.yearofExperience,
-//         poojaCounts: data.poojaCounts,
-//         pincode: data.pincode,
-//         address: data.address,
-//       });
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//     }
-//   };
-
-//   const getByUser = async () => {
-//     await Api.get(`/vendor/getOne/${id}`).then((res) => {
-//       setIyerName(res?.data[0]?.vendor_name);
-//       setIyerPhone(res?.data[0]?.phone_number);
-//     });
-//   };
-
-  const isUpdating = data != undefined && data?.address > "";
 
   const handleFormSubmit = async () => {
     const Details = {
