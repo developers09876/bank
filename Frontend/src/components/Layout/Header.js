@@ -10,14 +10,14 @@ function Header() {
 
  
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
+    const storedUsername = localStorage.getItem("token");
     if (storedUsername) {
       setIsLoggedIn(true); 
     }
   }, []);
   const handleLogout = () => {
     setIsLoggedIn(false); 
-    localStorage.removeItem("username"); 
+    localStorage.removeItem("token"); 
     navigate("/login");
   };
 
