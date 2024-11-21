@@ -15,10 +15,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-// import { useNavigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios"; // Import Axios
+import axios from "axios"; 
 import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
 import OtpInput from 'react-otp-input';
@@ -33,31 +32,7 @@ const LoginPage = () => {
   const [step, setstep] = useState("first");
 
   const navigate = useNavigate();
-  // const validate = () => {
-  //   let tempErrors = { email: "", password: "" };
-  //   let valid = true;
-
-  //   if (!email) {
-  //     tempErrors.email = "Email is required";
-  //     valid = false;
-  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
-  //     tempErrors.email = "Email is not valid";
-  //     valid = false;
-  //   }
-
-  //   if (!password) {
-  //     tempErrors.password = "Password is required";
-  //     valid = false;
-  //   } else if (password.length < 6) {
-  //     tempErrors.password = "Password must be at least 6 characters";
-  //     valid = false;
-  //   }
-
-  //   setErrors(tempErrors);
-  //   return valid;
-  // };
-
-  // Validate inputs
+  
   const validateInputs = () => {
     let tempErrors = { email: "", mobile: "" };
     let isValid = true;
@@ -84,17 +59,17 @@ const LoginPage = () => {
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
-      setIsLoggedIn(true); // Set logged-in state if username is found
+      setIsLoggedIn(true);
     }
   }, []);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); // Update state on successful login
+    setIsLoggedIn(true); 
   };
 
   const handleFormSubmit = async (e) => {
     if (!validateInputs()) {
-      return; // Stop submission if validation fails
+      return; 
     }
 
 
@@ -115,7 +90,6 @@ const LoginPage = () => {
         autoClose: 3000,
       });
 
-      // console.log("first", response);
       setstep("second");
     } catch (error) {
       console.error("Login error:", error.response?.data);
@@ -155,15 +129,10 @@ const LoginPage = () => {
         autoClose: 3000,
       });
       const userType = localStorage.getItem("userType");
-      // console.log('userTypegigdciyegf', userType)
       const token = localStorage.getItem("token");
 
       console.log("userType", userType);
-      // if (userType === "employee") {
-      //   navigate("/employee");
-      // } else if (userType === "user") {
-      //   navigate("/user");
-      // }
+      
 
       setTimeout(() => {
         if (userType === "employee") {
@@ -245,7 +214,7 @@ const LoginPage = () => {
                     type="tel"
                     variant="outlined"
                     fullWidth
-                    // required
+                    required
                     margin="normal"
                     value={mobile}
                     onChange={(e) => {
@@ -270,8 +239,6 @@ const LoginPage = () => {
                     Send OTP
                   </Button>
 
-                  {/* <Divider>Or, Login with</Divider> */}
-
                   {/* <Button
                     variant="outlined"
                     startIcon={<GoogleIcon />}
@@ -292,7 +259,6 @@ const LoginPage = () => {
               ) : (
                 <div style={{textAlign:'center'}}>
                    <Box mb={4} >
-                   {/* <div style={{textAlign:'center', justifyContent:'center'}}><MdVerifiedUser color="#00397f" size={60} /></div> */}
                    <div style={{textAlign:'center', justifyContent:'center',display:"flex", color:'#00397f', fontSize:'60px'}}>
                    <MdVerified />
                    </div><br/>
@@ -303,7 +269,6 @@ const LoginPage = () => {
                   Enter the 4 digit verification code that was sent to your Email or PhoneNumber
                 </Typography>
               </Box>
-                  {/* <label className="forget_label" >Enter OTP</label> */}
                   <div className="otp" style={{textAlign:'center',justifyContent:'center',display:"flex"}}>
                   
                     <OtpInput
