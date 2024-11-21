@@ -1,16 +1,13 @@
 // src/AdminDashboard.js
-import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap"; // Or use Ant Design's Card and Row
-import "./AdminDashboard.scss"; // Custom SCSS styles
-import {
-  FaUsers,
-  FaMoneyBillWave,
-  FaFileInvoice,
-  FaChartLine,
-} from "react-icons/fa"; // Icons
-import Sidebar from "./Sidebar";
+import React from 'react';
+import { Card, Col, Row, Button, } from 'react-bootstrap'; // Or use Ant Design's Card and Row
+import { useNavigate } from "react-router-dom";
+import './AdminDashboard.scss'; // Custom SCSS styles
+import { FaUsers, FaMoneyBillWave, FaFileInvoice, FaChartLine } from 'react-icons/fa'; // Icons
+import Sidebar from './Sidebar';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const stats = {
     totalUsers: 1200,
     loans: {
@@ -21,13 +18,26 @@ const AdminDashboard = () => {
     revenue: "$50,000",
     invoices: 45,
   };
-  
+
+  const handleLogout = () => {
+    // Remove user session data
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("email");
+
+    // Redirect to login page
+    navigate("/adminlogin");
+  };
+
   return (
     <div>
-      {/* <Sidebar /> */}
-      {/* <div className="main-content">
+      <Sidebar />
+       <div className="main-content">
         <header className="dashboard-header">
           <h1 className="dashboard-title">Admin Dashboard</h1>
+          <Button className="logout-button" variant="danger" onClick={handleLogout}>
+            Logout
+          </Button>
         </header>
         <Row className="stat-row">
           <Col md={6} lg={6}>
@@ -72,9 +82,9 @@ const AdminDashboard = () => {
             </Card>
           </Col>
         </Row>
-      </div> */}
+      </div>
 
-      <h1 style={{ textAlign: "center", marginTop: "50px" }}>
+      {/* <h1 style={{ textAlign: "center", marginTop: "50px" }}>
         Admin Dashboard
       </h1>
       <Container
@@ -129,7 +139,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </div>
   );
 };

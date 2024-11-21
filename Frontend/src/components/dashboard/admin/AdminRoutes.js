@@ -1,4 +1,5 @@
 import AddAdmin from "./AddAdmin";
+import CreateJobForm from "./createJobform";
 import AdminDashboard from "./dashboard";
 import EmployeeList from "./EmployeeList";
 import UserList from "./UserList";
@@ -8,6 +9,7 @@ export const AdminRoutes = [
   { path: "userlist", element: <UserList /> },
   { path: "employeelist", element: <EmployeeList /> },
   { path: "/admin/addAdmin", element: <AddAdmin /> },
+  { path: "createjobform", element: <CreateJobForm />},
 
   // { path: "insurance", element: <InsuranceReview /> },
 ];
