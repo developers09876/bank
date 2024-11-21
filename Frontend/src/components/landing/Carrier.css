@@ -1,126 +1,68 @@
 .career-container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
-
-.career-intro,
-.job-listings,
-.employee-testimonials,
-.application-form {
-  margin-bottom: 30px;
-}
-
-.job {
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-}
-
-.apply-btn {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.apply-btn:hover {
-  background-color: #218838;
-}
-
-.application-form form {
-  display: flex;
-  flex-direction: column;
-}
-
-.application-form label {
-  margin-bottom: 5px;
-}
-
-.application-form input,
-select {
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-.submit-button1 {
-  background-color: #4CAF50; /* Green background */
-  color: white; /* White text */
-  border: 2px solid #4CAF50; /* Green border */
-  padding: 5px 10px; /* Smaller padding */
-  font-size: 14px; /* Smaller font size */
-  border-radius: 3px; /* Slightly rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  width: 200px; /* Button width adjusts to content */
-  display: inline-block; /* Ensures button doesn't stretch */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-}
-
-.submit-button1:hover {
-  background-color: white; /* Change background on hover */
-  color: #4CAF50; /* Change text color on hover */
-}
-/* Modal Styling */
-.modal {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.6);
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 1000;
-}
-
-.modal-content {
-background: white;
-padding: 20px;
-width: 500px;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-position: relative;
-}
-
-.close-btn {
-position: absolute;
-top: 10px;
-right: 10px;
-background: none;
-border: none;
-font-size: 18px;
-cursor: pointer;
-}
-
-.application-form label {
-display: block;
-margin: 10px 0 5px;
-}
-
-.application-form input,
-.application-form select {
-width: 100%;
-padding: 8px;
-margin-bottom: 10px;
-border: 1px solid #ccc;
-border-radius: 4px;
-}
-
-.submit-button1 {
-background-color: #007bff;
-color: white;
-border: none;
-padding: 10px 15px;
-border-radius: 4px;
-cursor: pointer;
-transition: background-color 0.3s;
-}
-
-.submit-button1:hover {
-background-color: #0056b3;
-}
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .career-intro,
+  .job-listings,
+  .employee-testimonials,
+  .application-form {
+    margin-bottom: 30px;
+  }
+  
+  .job {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .apply-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-btn:hover {
+    background-color: #218838;
+  }
+  
+  .application-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .application-form label {
+    margin-bottom: 5px;
+  }
+  
+  .application-form input,
+  select {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  .submit-button1 {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: 2px solid #4CAF50; /* Green border */
+    padding: 5px 10px; /* Smaller padding */
+    font-size: 14px; /* Smaller font size */
+    border-radius: 3px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    width: 200px; /* Button width adjusts to content */
+    display: inline-block; /* Ensures button doesn't stretch */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  }
+  
+  .submit-button1:hover {
+    background-color: white; /* Change background on hover */
+    color: #4CAF50; /* Change text color on hover */
+  }
+  
+  
