@@ -3,6 +3,7 @@ import Header from '../Layout/Header';
 import { Col, Row } from 'antd';
 import './Carrier.css';
 import img1 from '../Images/group-1000002437.png'
+import Footer from '../Layout/Footer';
 
 function Carrier() {
   const [selectedJob, setSelectedJob] = useState(null);
@@ -102,6 +103,7 @@ function Carrier() {
           </blockquote>
         </section>
       </div>
+      <Footer/>
     </div>
   );
 }

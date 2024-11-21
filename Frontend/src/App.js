@@ -3,10 +3,8 @@ import React, { Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
-  useLocation,
   Navigate,
 } from "react-router-dom";
 
@@ -50,127 +48,147 @@ import Admin from "./components/dashboard/admin";
 import { AdminRoutes } from "./components/dashboard/admin/AdminRoutes";
 import User from "./components/dashboard/user/Index";
 import { UserRoutes } from "./components/dashboard/user/UserRoutes";
-import AdminLogin from "./components/dashboard/admin/AdminLogin"
+import AdminLogin from "./components/dashboard/admin/AdminLogin";
 import ErrorMessage from "./components/Layout/ErrorMessage";
 
-const ProtectedRoute = ({ component: Component, allowedRoles = [],redirectTo = "/login" }) => {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
-  // const isAuthenticated = true;
-  const location = useLocation();
-
-  if (!token) {
-    // If authenticated and role is admin, navigate to admin-specific route
-    return <Navigate to={redirectTo} replace state={{ from: location }} />;
+const ProtectedRoute = ({ Component }) => {
+  const token=localStorage.getItem("token")
+  console.log('token', token);
+  if (token) {
+    return <Component />;
+  } else {
+    return <Navigate to="/login" />;
   }
-  if (allowedRoles.length && !allowedRoles.includes(role)) {
-    // User role not authorized, redirect to default page
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
-  return <Component />;
 };
+
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Fragment>
-          <Routes>
-            {/* LANDING */}
-            <Route exact path="/" element={<Landing />} />
-            <Route exact path="/about" element={<About />} />
-            <Route exact path="/contact" element={<ContactUs />} />
-            <Route path="*" element={<ErrorMessage/>}/>
-            <Route path="/insuranceform" element={<Insurance />} />
-            <Route path="/taxform" element={<TaxForm />} />
-            <Route path="/loan" element={<LoanPage />} />
+    <div className="App">
+      <Fragment>
+        <Routes>
+          {/* LANDING */}
+          <Route exact path="/" element={<Landing />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/contact" element={<ContactUs />} />
+          <Route path="*" element={<ErrorMessage />} />
+          <Route path="/insuranceform" element={<Insurance />} />
+          <Route path="/taxform" element={<TaxForm />} />
+          <Route
+            path="/loan"
+            element={<ProtectedRoute Component={LoanPage} />}
+          />
 
-            <Route path="/insurancepage" element={<InsuranceCards />} />
-            <Route path="/taxpage" element={<TaxCards />} />
-            <Route path="/loanform" element={<LoanForm />} />
+          <Route
+              path="/insurancepage"
+              element={
+                <ProtectedRoute
+                  Component={InsuranceCards}
+                  
+                />
+              }
+            /> 
+          <Route
+              path="/taxpage"
+              element={
+                <ProtectedRoute Component={TaxCards} />
+              }
+            />
+          <Route path="/loanform" element={<LoanForm />} />
 
-            {/* REGISTER */}
-            <Route exact path="/register" element={<Register />} />
+          {/* REGISTER */}
+          <Route exact path="/register" element={<Register />} />
 
-            <Route exact path="/addAdmin" element={<AddAdmin />} />
+          <Route exact path="/addAdmin" element={<AddAdmin />} />
 
-            {/* LOGIN */}
-            <Route exact path="/login" element={<Login />} />
+          {/* LOGIN */}
+          <Route exact path="/login" element={<Login />} />
 
-            {/* ADMIN */}
-            {/* <Route exact path="/admin" element={<AdminPage />} />
+          {/* ADMIN */}
+          {/* <Route exact path="/admin" element={<AdminPage />} />
             <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/userlist" element={<UserList />} />*/}
-            <Route exact path="/userProfile" element={<UserDetails />} /> 
+          <Route exact path="/userProfile" element={<UserDetails />} />
 
-            {/* HOME */}
-            <Route exact path="/home" element={<Home />} />
-            {/* <Route exact path="/user" element={<Dashboard />} /> */}
+          {/* HOME */}
+          <Route exact path="/home" element={<Home />} />
+          {/* <Route exact path="/user" element={<Dashboard />} /> */}
 
-            <Route exact path="/borrowers" element={<Borrowers />} />
+          <Route exact path="/borrowers" element={<Borrowers />} />
 
-            {/* BORROWER */}
-            <Route exact path="/borrower/:id" element={<Borrower />} />
+          {/* BORROWER */}
+          <Route exact path="/borrower/:id" element={<Borrower />} />
 
-            {/* EDIT BORROWER */}
-            <Route exact path="/editBorrower/:id" element={<EditBorrower />} />
+          {/* EDIT BORROWER */}
+          <Route exact path="/editBorrower/:id" element={<EditBorrower />} />
 
-            {/* ADD BORROWER */}
-            <Route exact path="/addBorrower" element={<AddBorrower />} />
+          {/* ADD BORROWER */}
+          <Route exact path="/addBorrower" element={<AddBorrower />} />
 
-            {/* LOANS */}
-            <Route exact path="/loans" element={<GetAllLoans />} />
+          {/* LOANS */}
+          <Route exact path="/loans" element={<GetAllLoans />} />
 
-            {/* ADD LOAN (BORROWER PAGE) */}
-            <Route exact path="/addLoan/:id" element={<AddLoan />} />
+          {/* ADD LOAN (BORROWER PAGE) */}
+          <Route exact path="/addLoan/:id" element={<AddLoan />} />
 
-            {/* ADD LOANS (LOANS PAGE) */}
-            <Route exact path="/addLoan" element={<AddLoans />} />
+          {/* ADD LOANS (LOANS PAGE) */}
+          <Route exact path="/addLoan" element={<AddLoans />} />
 
-            {/* EDIT LOANS */}
-            <Route exact path="/editLoan/:id" element={<EditLoan />} />
+          {/* EDIT LOANS */}
+          <Route exact path="/editLoan/:id" element={<EditLoan />} />
 
-            {/* PAYMENTS */}
-            <Route exact path="/payments" element={<Payments />} />
+          {/* PAYMENTS */}
+          <Route exact path="/payments" element={<Payments />} />
 
-            {/* ADD PAYMENT (BORROWER PAGE) */}
-            <Route
-              exact
-              path="/addPayments/:id"
-              element={<PaymentLoansInfo />}
+          {/* ADD PAYMENT (BORROWER PAGE) */}
+          <Route exact path="/addPayments/:id" element={<PaymentLoansInfo />} />
+
+          <Route
+            exact
+            path="/payment/:client_id/:loan_id"
+            element={<PaymentLoansInfo />}
+          />
+
+          {/* MESSAGES */}
+          <Route exact path="/emailClient" element={<EmailPage />} />
+          <Route
+              path="/credit"
+              element={
+                <ProtectedRoute Component={Credit}/>
+              }
             />
-
-            <Route
-              exact
-              path="/payment/:client_id/:loan_id"
-              element={<PaymentLoansInfo />}
-            />
-
-            {/* MESSAGES */}
-            <Route exact path="/emailClient" element={<EmailPage />} />
-            <Route path="/credit" element={<Credit />} />
-            <Route path="/loanreview" element={<LoanDashboard />} />
-            <Route path="/carrier" element={<Carrier />} />
-            <Route path="/employee" element={<EmployeeDashboard />}>
+          <Route path="/loanreview" element={<LoanDashboard />} />
+          <Route path="/carrier" element={<Carrier />} />
+          <Route
+              path="/employee"
+              element={
+                <ProtectedRoute
+                  Component={EmployeeDashboard}
+                  
+                />
+              }
+            >
               {EmployeeRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}  
+              ))}
             </Route>
-            <Route path="/adminlogin" element={<AdminLogin />} />
-            <Route path="/admin" element={<Admin />}>
-              {AdminRoutes.map(({ path, element: Ele }, index) => (
-                <Route key={index} path={path} element={Ele} />
-              ))}  
-            </Route>
-            <Route path="/user" element={<User />}>
+          <Route path="/adminlogin" element={<AdminLogin />} />
+          <Route path="/admin" element={<Admin />}>
+            {AdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+          <Route
+              path="/user"
+              element={<ProtectedRoute Component={User} />}
+            >
               {UserRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />
-              ))}  
+              ))}
             </Route>
-          </Routes>
-        </Fragment>
-      </div>
-    </Router>
+        </Routes>
+      </Fragment>
+    </div>
   );
 }
 
