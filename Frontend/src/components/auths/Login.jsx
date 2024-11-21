@@ -16,10 +16,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import Axios
+
+import axios from "axios"; 
 import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
 import OtpInput from 'react-otp-input';
+import { MdVerified  } from "react-icons/md";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -29,70 +32,46 @@ const LoginPage = () => {
   const [step, setstep] = useState("first");
 
   const navigate = useNavigate();
-  // const validate = () => {
-  //   let tempErrors = { email: "", password: "" };
-  //   let valid = true;
+  
+  const validateInputs = () => {
+    let tempErrors = { email: "", mobile: "" };
+    let isValid = true;
 
-  //   if (!email) {
-  //     tempErrors.email = "Email is required";
-  //     valid = false;
-  //   } else if (!/\S+@\S+\.\S+/.test(email)) {
-  //     tempErrors.email = "Email is not valid";
-  //     valid = false;
-  //   }
+    if (!email && !mobile) {
+      tempErrors.email = "Either Email or Phone Number is required.";
+      tempErrors.mobile = "Either Email or Phone Number is required.";
+      isValid = false;
+    } else {
+      if (email && !/\S+@\S+\.\S+/.test(email)) {
+        tempErrors.email = "Invalid email format.";
+        isValid = false;
+      }
+      if (mobile && !/^\d{10}$/.test(mobile)) {
+        tempErrors.mobile = "Phone Number must be 10 digits.";
+        isValid = false;
+      }
+    }
 
-  //   if (!password) {
-  //     tempErrors.password = "Password is required";
-  //     valid = false;
-  //   } else if (password.length < 6) {
-  //     tempErrors.password = "Password must be at least 6 characters";
-  //     valid = false;
-  //   }
-
-  //   setErrors(tempErrors);
-  //   return valid;
-  // };
-
-  // const validate = () => {
-  //   let tempErrors = { email: "", mobile: "" };
-  //   let valid = true;
-
-  //   if (!email && !mobile) {
-  //     tempErrors.email = "Email or Phone Number is required";
-  //     tempErrors.mobile = "Email or Phone Number is required";
-  //     valid = false;
-  //   } else {
-  //     if (email && !/\S+@\S+\.\S+/.test(email)) {
-  //       tempErrors.email = "Email is not valid";
-  //       valid = false;
-  //     }
-  //     if (mobile && !/^\d{10}$/.test(mobile)) {
-  //       tempErrors.mobile = "Phone Number must be 10 digits";
-  //       valid = false;
-  //     }
-  //   }
-
-  //   setErrors(tempErrors);
-  //   return valid;
-  // };
-
+    setErrors(tempErrors);
+    return isValid;
+  };
+  
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
-      setIsLoggedIn(true); // Set logged-in state if username is found
+      setIsLoggedIn(true);
     }
   }, []);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); // Update state on successful login
+    setIsLoggedIn(true); 
   };
 
   const handleFormSubmit = async (e) => {
-    // e.preventDefault();
+    if (!validateInputs()) {
+      return; 
+    }
 
-    // if (!validate()) {
-    //   return; // Stop submission if validation fails
-    // }
 
 
     try {
@@ -112,7 +91,6 @@ const LoginPage = () => {
         autoClose: 3000,
       });
 
-      // console.log("first", response);
       setstep("second");
     } catch (error) {
       console.error("Login error:", error.response?.data);
@@ -147,7 +125,7 @@ const LoginPage = () => {
       console.log("response", response);
       localStorage.setItem("token", response.data.data.token);
 
-      toast.success("Verification successfully!", {
+      toast.success("Verification successfull!", {
         position: "top-center",
         autoClose: 3000,
       });
@@ -155,11 +133,7 @@ const LoginPage = () => {
       const token = localStorage.getItem("token");
 
       console.log("userType", userType);
-      // if (userType === "employee") {
-      //   navigate("/employee");
-      // } else if (userType === "user") {
-      //   navigate("/user");
-      // }
+      
 
       setTimeout(() => {
         if (userType === "employee") {
@@ -190,7 +164,7 @@ const LoginPage = () => {
       <Container
         maxWidth="lg"
         style={{
-          height: "90vh",
+          height: "88vh",
           display: "flex",
           alignItems: "center",
           marginTop: "5%",
@@ -203,10 +177,14 @@ const LoginPage = () => {
               flexDirection="column"
               justifyContent="center"
               alignItems="center"
-              height="100%"
+              height="95%"
               px={4}
             >
-              <Box mb={4}>
+              
+              {step === "first" ? (
+                
+                <form>
+                  <Box mb={4}>
                 <Typography variant="h4" fontWeight="bold">
                   Welcome back!
                 </Typography>
@@ -214,8 +192,7 @@ const LoginPage = () => {
                   Welcome back! Please enter your details
                 </Typography>
               </Box>
-              {step === "first" ? (
-                <form>
+                  
                   <TextField
                     label="Email"
                     variant="outlined"
@@ -223,39 +200,33 @@ const LoginPage = () => {
                     required
                     margin="normal"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (e.target.value) setErrors({ email: "", mobile: "" });
+                    }}
+                    // onChange={(e) => setEmail(e.target.value)}
                     error={!!errors.email}
                     helperText={errors.email}
                   />
-                  {/* <h6 style={{textAlign:'center'}}>Or</h6> */}
+                  <Divider>Or</Divider>
+
                   <TextField
                     label="Phone Number"
                     type="tel"
                     variant="outlined"
                     fullWidth
-                    // required
+                    required
                     margin="normal"
                     value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
+                    onChange={(e) => {
+                      setMobile(e.target.value);
+                      if (e.target.value) setErrors({ email: "", mobile: "" });
+                    }}
+                    // onChange={(e) => setMobile(e.target.value)}
                     error={!!errors.mobile}
                     helperText={errors.mobile}
                   />
-                  {/* 
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  width="100%"
-                  mt={1}
-                >
-                  <Box display="flex" alignItems="center">
-                    <Checkbox />
-                    <Typography>Remember me</Typography>
-                  </Box>
-                  <Link href="#" variant="body2">
-                    Forgot your password?
-                  </Link>
-                </Box> */}
+                 
 
                   <Button
                     variant="contained"
@@ -269,9 +240,7 @@ const LoginPage = () => {
                     Send OTP
                   </Button>
 
-                  <Divider>Or, Login with</Divider>
-
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     startIcon={<GoogleIcon />}
                     fullWidth
@@ -279,7 +248,7 @@ const LoginPage = () => {
                     sx={{ mt: 2 }}
                   >
                     Sign up with Google
-                  </Button>
+                  </Button> */}
 
                   <Box mt={2}>
                     <Typography variant="body2">
@@ -289,15 +258,20 @@ const LoginPage = () => {
                   </Box>
                 </form>
               ) : (
-                <div>
-                  <label className="forget_label">Enter OTP</label>
-                  <div className="otp">
-                   
-                    {/* <input
-                      value={OTP}
-                      type="text"
-                      onChange={(e) => setOTP(e.target.value)}
-                    /> */}
+                <div style={{textAlign:'center'}}>
+                   <Box mb={4} >
+                   <div style={{textAlign:'center', justifyContent:'center',display:"flex", color:'#00397f', fontSize:'60px'}}>
+                   <MdVerified />
+                   </div><br/>
+                <Typography variant="h4" fontWeight="bold" >
+                  Verification Code 
+                </Typography>
+                <Typography variant="body1" color="textSecondary" >
+                  Enter the 4 digit verification code that was sent to your Email or PhoneNumber
+                </Typography>
+              </Box>
+                  <div className="otp" style={{textAlign:'center',justifyContent:'center',display:"flex"}}>
+                  
                     <OtpInput
                       value={otp}
                       onChange={setOtp}
@@ -306,6 +280,7 @@ const LoginPage = () => {
                       renderInput={(props) => <input {...props} />}
                       inputStyle={{
                         width: "3rem",
+                        justifyContent:'center',
                         height: "3rem",
                         margin: "0 0.5rem",
                         fontSize: "1.5rem",
@@ -325,8 +300,9 @@ const LoginPage = () => {
                   <Button
                     className="forget_button mt-3 justify-content-center"
                     onClick={handleSubmit(onSubmit1)}
+                    style={{backgroundColor:'#00397f', color:'white'}}
                   >
-                    Submit
+                    Verify OTP
                   </Button>
                 </div>
               )}
@@ -338,7 +314,7 @@ const LoginPage = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                height: "100%",
+                height: "95%",
               }}
             >
               <Carousel
@@ -352,7 +328,7 @@ const LoginPage = () => {
                 <div>
                   <img
                     src="https://fundingguru.com/wp-content/uploads/2024/03/business-loans-tax-implications.jpg"
-                    style={{ width: "100%", height: "70vh", objectFit: "fill" }}
+                    style={{ width: "100%", height: "65vh", objectFit: "fill" }}
                     alt="Slide 1"
                   />
                 </div>
@@ -361,7 +337,7 @@ const LoginPage = () => {
                     src="https://www.shutterstock.com/shutterstock/photos/2426984001/display_1500/stock-photo-businessman-using-laptop-in-data-management-with-a-networked-copy-space-vertical-2426984001.jpg"
                     style={{
                       width: "100%",
-                      height: "70vh",
+                      height: "65vh",
                       objectFit: "cover",
                     }}
                     alt="Slide 2"
@@ -370,7 +346,7 @@ const LoginPage = () => {
                 <div>
                   <img
                     src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2stczE5LWljZS0zNjQ5LWx5ajIwNTQtMDktaW5jb21ldGF4cmV0dXJuLmpwZw.jpg"
-                    style={{ width: "100%", height: "70vh", objectFit: "fill" }}
+                    style={{ width: "100%", height: "65vh", objectFit: "fill" }}
                     alt="Slide 3"
                   />
                 </div>

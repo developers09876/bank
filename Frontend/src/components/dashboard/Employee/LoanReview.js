@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Input, Space, Pagination, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { Container } from 'react-bootstrap';
 
 const LoanDashboard = ({ collapsed }) => {
   const [searchText, setSearchText] = useState('');
@@ -44,7 +45,7 @@ const LoanDashboard = ({ collapsed }) => {
       key: 'action',
       render: (text, record) => (
         <Space>
-          <Button type="primary" style={{color:"black"}}>View</Button>
+          <Button type="primary" style={{ color: "black" }}>View</Button>
         </Space>
       ),
     }
@@ -69,37 +70,42 @@ const LoanDashboard = ({ collapsed }) => {
   };
 
   return (
-    <div>
-      {/* <Sidebar/> */}
-      <div className={collapsed === true ? "main-content.open" : "main-content"}>
-        <Space style={{ marginBottom: 16 }} className="filter-actions">
-          <Input
-            placeholder="Search"
-            value={searchText}
-            onChange={handleSearch}
-            style={{ width: 200 }}
-            prefix={<SearchOutlined />}
+    <div >
+      <div
+        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
+      >
+        {/* <Sidebar/> */}
+        <div className={collapsed === true ? "main-content.open" : "main-content"}
+        >
+          <Space style={{ marginBottom: 16 }} className="filter-actions">
+            <Input
+              placeholder="Search"
+              value={searchText}
+              onChange={handleSearch}
+              style={{ width: 200 }}
+              prefix={<SearchOutlined />}
+            />
+          </Space>
+
+          <Table
+            dataSource={getPaginatedData()}
+            columns={columns}
+            pagination={false}
+            className="loan-table"
           />
-        </Space>
 
-        <Table
-          dataSource={getPaginatedData()}
-          columns={columns}
-          pagination={false}
-          className="loan-table"
-        />
-
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={searchText ? filteredData.length : data.length}
-          onChange={(page, pageSize) => {
-            setCurrentPage(page);
-            setPageSize(pageSize);
-          }}
-          className="pagination-control"
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={searchText ? filteredData.length : data.length}
+            onChange={(page, pageSize) => {
+              setCurrentPage(page);
+              setPageSize(pageSize);
+            }}
+            className="pagination-control"
           // showSizeChanger
-        />
+          />
+        </div>
       </div>
     </div>
   );

@@ -79,7 +79,7 @@ const columns = [
     title: 'Action',
     key: 'action',
     render: (_, record) => (
-      <Button type="primary" style={{color:"black"}} onClick={() => handleView(record)}>
+      <Button type="primary" style={{ color: "black" }} onClick={() => handleView(record)}>
         View
       </Button>
     ),
@@ -92,12 +92,18 @@ const handleView = (record) => {
 
 const LoanStatusTable = ({ collapsed }) => {
   return (
-    <div className={collapsed === true ? "main-content.open" : "main-content"}>
-      <Table 
-        columns={columns} 
-        dataSource={loanData} 
-        pagination={{ pageSize: 5 }} 
-      />
+    <div>
+      <div
+        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
+      >
+        <div className={collapsed === true ? "main-content.open" : "main-content"}>
+          <Table
+            columns={columns}
+            dataSource={loanData}
+            pagination={{ pageSize: 5 }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
