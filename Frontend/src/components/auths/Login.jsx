@@ -104,6 +104,8 @@ const LoginPage = () => {
       );
 
       localStorage.setItem("userType", response.data.data.userType);
+      localStorage.setItem("id", response.data.data._id);
+
 
       toast.success("OTP sent successfully!", {
         position: "top-center",

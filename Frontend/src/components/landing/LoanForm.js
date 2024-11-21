@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import axios from "axios";
+import Api from "../../Api";
 
 function LoanForm() {
   const [typeValue, setTypeValue] = useState();
@@ -290,10 +291,10 @@ function LoanForm() {
 
   const onSubmit = async (data) => {
     console.log("Form Data:", data);
-  
+
     try {
       const formData = new FormData();
-  
+
       // Append regular fields to formData
       for (const [key, value] of Object.entries(data)) {
         if (value instanceof FileList) {
@@ -304,70 +305,104 @@ function LoanForm() {
           formData.append(key, value);
         }
       }
-  
+
       // Send the POST request with FormData
-      const response = await axios.post("http://localhost:5000/loanform/createloan", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-  
+      const response = await axios.post(
+        "http://localhost:5000/loanform/createloan",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
-  
-  
+  const userid = localStorage.getItem("id")
+  console.log('userid', userid)
 
-  const handleFormSubmit = async () => {
-    const Details = {
-      vendorName: IyerName,
-      templeName: getValues().templeName,
-      aadharNumber: getValues().aadharNumber,
-      mobileNumber: IyerPhone,
-      alternateNumber: getValues().AlternateNumber,
-      address: getValues().address,
-      pincode: getValues().pincode,
-      language: languageDetails,
-      country: countryId,
-      state: stateValue,
-      district: districtValue,
-      city: cityvalue,
-      area: selectArea,
-      type: typeValue,
-      yearofExperience: getValues().yearofExperience,
-      poojaCounts: getValues().poojaCounts,
-      yearofEstablish: selectYear,
-      serviceType: serviceType,
-      image: "",
-      countryName: countryValue,
-      districtName: selectedState,
-      stateName: selectedDistrict,
-      cityName: selectedCity,
-      areaName: selectedArea,
-      poojaType: poojaType,
+  const handleFormSubmit = async (data) => {
+    const uploadFile = async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "darshan");
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const cloudinaryData = await response.json();
+        return cloudinaryData.secure_url;
+      } catch (error) {
+        console.error("File upload failed", error);
+        return null;
+      }
     };
 
-    const data = new FormData();
-    data.append("file", selectImage);
-    data.append("upload_preset", "darshan");
+    const identityProofUrl = data.identityProof[0]
+      ? await uploadFile(data.identityProof[0])
+      : null;
+    const addressProofUrl = data.addressProof[0]
+      ? await uploadFile(data.addressProof[0])
+      : null;
+    const photographsUrl = data.photographs[0]
+      ? await uploadFile(data.photographs[0])
+      : null;
+    const propertyOwnershipProofUrl = data.propertyOwnershipProof[0]
+      ? await uploadFile(data.propertyOwnershipProof[0])
+      : null;
+    const signatureUrl = data.signature[0]
+      ? await uploadFile(data.signature[0])
+      : null;
+    const Details = {
+      // userid:userid,
+      fullName: data.fullName,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.MaritalStatus,
+      nationality: data.nationality,
+      pan: data.pan,
+      aadhaar: data.aadhaar,
+      contact: data.contact,
+      address: data.address,
+      annualIncome: data.annualIncome,
+      bankAccountDetails: data.bankAccountDetails,
+      creditScore: data.creditScore,
+      downPayment: data.downPayment,
+      employerDetails: data.employerDetails,
+      employmentStatus: data.employmentStatus,
+      existingLoans: data.existingLoans,
+      incomeDetails: data.incomeDetails,
+      loanAmount: data.loanAmount,
+      loanPurpose: data.loanPurpose,
+      propertyDetails: data.propertyDetails,
+      identityProof: identityProofUrl,
+      addressProof: addressProofUrl,
+      photographs: photographsUrl,
+      propertyOwnershipProof: propertyOwnershipProofUrl,
+      signature: signatureUrl,
+    };
 
-    // const response = await fetch(
-    //   "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
-    //   {
-    //     method: "POST",
-    //     body: data,
-    //   }
-    // );
-    // const cloudinaryData = await response.json();
-    // Details.image = cloudinaryData.secure_url;
-
-    // await Api.put(`/vendor/update/${id}`, Details).then((resp) => {
-    //   console.log(resp, "respppppp");
-    //   toast.success("Form updated successfully")
-    // });
+    try {
+      const response = await axios.post(
+        `localhost:5000/loanform/loanapplications`,
+        Details
+      );
+      console.log(response, "Form submitted successfully");
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Form submission failed", error);
+      toast.error("An error occurred while submitting the form");
+    }
   };
+
   return (
     <div>
       <Header />
@@ -384,7 +419,7 @@ function LoanForm() {
                 <h4 className="pages-title mt-3 mb-5"> Loan Form</h4>
               </center>
 
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
                   <p className="ourProfile_Heading_div">Personal Details</p>
 
