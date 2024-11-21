@@ -6,8 +6,8 @@ import { HiUserCircle } from "react-icons/hi";
 import Sidebar from "./Sidebar";
 import Imageh1 from "../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 
-import '../HeaderNavbar.scss';
-import '../Sidebar.scss';
+import "../HeaderNavbar.scss";
+import "../Sidebar.scss";
 
 const User = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -28,6 +28,13 @@ const User = () => {
 
   const toggleSidebar = () => setCollapsed((prev) => !prev);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userType");
+
+    navigate("/login");
+  };
+
   return (
     <div>
       <header className="dashboards__headerNavs">
@@ -36,15 +43,16 @@ const User = () => {
             {collapsed ? <AiOutlineClose /> : <GiHamburgerMenu />}
           </span>
           <span className="navName" onClick={() => navigate("/")}>
-          <img
-            src={Imageh1}
-            alt="logo-img"
-            style={{ width: "100px", height: "95px"}}
-          />
+            <img
+              src={Imageh1}
+              alt="logo-img"
+              style={{ width: "100px", height: "95px" }}
+            />
           </span>
-          <HiUserCircle
-            style={{ fontSize: 40, cursor: "pointer", color: "grey" }}
-          />
+
+          <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </header>
       <Sidebar collapsed={collapsed} />
