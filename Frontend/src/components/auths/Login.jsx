@@ -168,7 +168,8 @@ const LoginPage = () => {
       setTimeout(() => {
         if (userType === "employee") {
           navigate("/employee");
-        } else if (userType === "user") {
+        } 
+         if (userType === "user") {
           navigate("/user");
         }
       }, 3000);

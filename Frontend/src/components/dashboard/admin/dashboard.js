@@ -19,15 +19,7 @@ const AdminDashboard = () => {
     invoices: 45,
   };
 
-  const handleLogout = () => {
-    // Remove user session data
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("email");
-
-    // Redirect to login page
-    navigate("/adminlogin");
-  };
+ 
 
   return (
     <div>
@@ -35,9 +27,7 @@ const AdminDashboard = () => {
        <div className="main-content">
         <header className="dashboard-header">
           <h1 className="dashboard-title">Admin Dashboard</h1>
-          <Button className="logout-button" variant="danger" onClick={handleLogout}>
-            Logout
-          </Button>
+         
         </header>
         <Row className="stat-row">
           <Col md={6} lg={6}>

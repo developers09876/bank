@@ -3,9 +3,9 @@ import Header from '../Layout/Header';
 import { Col, Row } from 'antd';
 import './Carrier.css';
 import img1 from '../Images/group-1000002437.png'
-import Footer from '../Layout/Footer';
 
 function Carrier() {
+  const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
 
   const jobListings = [
@@ -16,11 +16,23 @@ function Carrier() {
       type: 'Full-Time',
       description: 'Help customers through the loan application process and provide guidance on financial products.',
     },
+    {
+      title: 'Marketing Specialist',
+      department: 'Marketing',
+      location: 'In-Office',
+      type: 'Part-Time',
+      description: 'Create and manage marketing campaigns to drive customer engagement and growth.',
+    },
     // Add more jobs as needed
   ];
 
   const handleApplyClick = (job) => {
     setSelectedJob(job);
+    setShowForm(true);
+  };
+  const handleCloseForm = () => {
+    setShowForm(false); // Hide the form when closing
+    setSelectedJob(null);
   };
 
   return (
@@ -73,28 +85,46 @@ function Carrier() {
           ))}
         </section>
 
-        {selectedJob && (
-          <section className="application-form">
-            <h2>Apply for {selectedJob.title}</h2>
-            <form action="/submit-application" method="POST" enctype="multipart/form-data">
-              <label htmlFor="name">Full Name:</label>
-              <input type="text" id="name" name="name" required />
+        {showForm && selectedJob &&  (
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close-btn" onClick={handleCloseForm}>
+              &times;
+            </button>
+            <section className="application-form">
+              <h2>Apply for {selectedJob.title}</h2>
+              <form
+                action="/submit-application"
+                method="POST"
+                encType="multipart/form-data"
+              >
+                <label htmlFor="name">Full Name:</label>
+                <input type="text" id="name" name="name" required />
 
-              <label htmlFor="email">Email Address:</label>
-              <input type="email" id="email" name="email" required />
+                <label htmlFor="email">Email Address:</label>
+                <input type="email" id="email" name="email" required />
 
-              <label htmlFor="position">Position Applying For:</label>
-              <select id="position" name="position" value={selectedJob.title}>
-                <option value={selectedJob.title}>{selectedJob.title}</option>
-              </select>
+                <label htmlFor="position">Position Applying For:</label>
+                <select id="position" name="position" defaultValue={jobListings.title}>
+                  <option value={selectedJob.title}>{selectedJob.title}</option>
+                </select>
+                <label htmlFor="resume">Upload Resume:</label>
+                <input
+                  type="file"
+                  id="resume"
+                  name="resume"
+                  accept=".pdf, .doc"
+                  required
+                />
 
-              <label htmlFor="resume">Upload Resume:</label>
-              <input type="file" id="resume" name="resume" accept=".pdf, .doc" required />
-
-              <button type="submit" class="submit-button1">Submit Application</button>
-            </form>
-          </section>
-        )}
+                <button type="submit" className="submit-button1">
+                  Submit Application
+                </button>
+              </form>
+            </section>
+          </div>
+        </div>
+      )}
 
         <section className="employee-testimonials">
           <h2>Why Our Employees Love Working Here</h2>
@@ -103,7 +133,6 @@ function Carrier() {
           </blockquote>
         </section>
       </div>
-      <Footer/>
     </div>
   );
 }

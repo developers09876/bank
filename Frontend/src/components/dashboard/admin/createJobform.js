@@ -8,7 +8,7 @@ import "primereact/resources/primereact.min.css";
 import Api from "../../../Api";
 import { useNavigate } from "react-router-dom";
 import { MultiSelect } from "primereact/multiselect";
-import Sidebar from './Sidebar';
+import Sidebar from "./Sidebar";
 
 function CreateJobForm() {
   const [Experience, setExperience] = useState();
@@ -29,7 +29,7 @@ function CreateJobForm() {
   const [qualificationValue, setQualificationValue] = useState();
   const [selectExperience, setSelectExperiene] = useState();
   const email = localStorage.getItem("email");
-  const companyName = localStorage.getItem("companyName")
+  const companyName = localStorage.getItem("companyName");
 
   const [review, setReview] = useState({
     jobTitle: "",
@@ -64,7 +64,7 @@ function CreateJobForm() {
   const jobid = localStorage.getItem("id");
   const handleCreateFormSubmit = async () => {
     const createFormDetails = {
-      employerId:jobid,
+      employerId: jobid,
       jobId: jobid,
       jobTitle: review.jobTitle,
       jobRole: getValues().jobRole,
@@ -181,7 +181,7 @@ function CreateJobForm() {
     });
   return (
     <div>
-        <Sidebar />
+      <Sidebar />
       <Container>
         <Row style={{ marginLeft: "5%" }}>
           <form onSubmit={handleSubmit(handleCreateFormSubmit)}>
@@ -208,7 +208,7 @@ function CreateJobForm() {
                 )}
               </Col>
               <Col lg={4}>
-                <label>Job Role </label>
+                <label>Department </label>
                 <br />
                 <input
                   {...register("jobRole", { required: true })}
@@ -219,6 +219,22 @@ function CreateJobForm() {
                 )}
               </Col>
               <Col lg={4}>
+                <label>Location</label>
+                <br />
+                <input
+                  className="Create-input"
+                  value={locationValue}
+                  options={locationList}
+                  {...register("location", { required: true })}
+                  optionLabel={"locationName"}
+                  optionValue={"_id"}
+                  onChange={onLocation}
+                />
+                {errors.location && (
+                  <p className="text-danger">Location is required</p>
+                )}
+              </Col>
+              {/* <Col lg={4}>
                 <label>Skills </label>
                 <br />
                 <MultiSelect
@@ -235,15 +251,12 @@ function CreateJobForm() {
                   style={{ width: "100%" }}
                   placeholder="Please select a Qualification"
                 ></MultiSelect>
-                {/* {skill.length > 0
-                  ? null
-                  : */}
                 {errors.skill && (
                   <p className="text-danger">Skill is required</p>
                 )}
-              </Col>
+              </Col> */}
             </Row>
-            <Row className="mt-4">
+            {/* <Row className="mt-4">
               <Col lg={4}>
                 <label>Experience</label>
                 <br />
@@ -303,8 +316,8 @@ function CreateJobForm() {
                   <p className="text-danger">Salary is required</p>
                 )}
               </Col>
-            </Row>
-            <Row className="mt-4">
+            </Row> */}
+            {/* <Row className="mt-4">
               <Col lg={4}>
                 <label>Location</label>
                 <br />
@@ -390,19 +403,17 @@ function CreateJobForm() {
                 />
               </Col>
           
-            </Row>
+            </Row> */}
             <Row className="mt-4">
-                 
-            <Col lg={4}>
-                <label style={{marginTop:"10px"}}>Job Type</label>
+              <Col lg={4}>
+                <label className="create-title">Job Type</label>
                 <br />
-                <Dropdown
-                  className="create-select"
+                <input
+                  className="Create-input"
                   name="jobType"
                   value={jobType}
                   options={jobtype}
                   optionLabel="name"
-                  placeholder="Select a jobType"
                   {...register("jobType", {
                     required: true,
                     onChange: (e) => {
@@ -415,6 +426,27 @@ function CreateJobForm() {
                 )}
               </Col>
               <Col lg={4}>
+                <label className="create-title">Salary Range</label>
+                <br />
+
+                <input
+                  className="Create-input"
+                  name="selectSalary"
+                  value={selectSalary}
+                  options={salarys}
+                  optionLabel="name"
+                  {...register("selectSalary", {
+                    required: true,
+                    onChange: (e) => {
+                      setSelectSalary(e.target.value);
+                    },
+                  })}
+                />
+                {errors.selectSalary && (
+                  <p className="text-danger">Salary is required</p>
+                )}
+              </Col>
+              {/* <Col lg={4}>
                 <label>Job Mode</label>
                 <br />
                 <Dropdown
@@ -434,22 +466,21 @@ function CreateJobForm() {
                 {errors.jobMode && (
                   <p className="text-danger">jobMode is required</p>
                 )}
-              </Col>
+              </Col> */}
               <Col lg={4}>
                 <label className="create-title">Job Description</label>
                 <br />
                 <input
+                  className="Create-input"
                   {...register("jobDescription", { required: true })}
                   rows={5}
                   cols={5}
-                  style={{ height: 80 }}
-                  className="profile-input"
                 />
                 {errors.jobDescription && (
                   <p className="text-danger">Description is required</p>
                 )}
               </Col>
-              <Col lg={4}>
+              {/* <Col lg={4}>
                 <label className="create-title">Company Description</label>
                 <br />
                 <input
@@ -462,7 +493,7 @@ function CreateJobForm() {
                 {errors.companyDescription && (
                   <p className="text-danger">Description is required</p>
                 )}
-              </Col>
+              </Col> */}
             </Row>
             {/* <Row className="mt-4">
               <Col lg={4}>
@@ -517,13 +548,13 @@ function CreateJobForm() {
             </Row> */}
             <div className="submitbuttons p-2">
               <button
-                className="button1 m-2 p-2"
+                className="button1"
                 type="submit"
                 // onClick={handleCreateFormSubmit}
               >
                 Submit
               </button>
-              <button className="button2 m-2 p-2" type="reset">
+              <button className="button1" type="reset">
                 Reset
               </button>
             </div>
