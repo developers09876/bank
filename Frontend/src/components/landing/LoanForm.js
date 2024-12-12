@@ -362,7 +362,7 @@ function LoanForm() {
       ? await uploadFile(data.signature[0])
       : null;
     const Details = {
-      // userid:userid,
+      userid:userid,
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
@@ -392,7 +392,7 @@ function LoanForm() {
 
     try {
       const response = await axios.post(
-        `localhost:5000/loanform/loanapplications`,
+        `http://localhost:5000/loanform/loanapplications`,
         Details
       );
       console.log(response, "Form submitted successfully");
