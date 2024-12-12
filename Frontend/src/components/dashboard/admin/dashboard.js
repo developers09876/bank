@@ -22,7 +22,7 @@ const AdminDashboard = () => {
  
 
   return (
-    <div>
+    <div style={{overflow:"hidden"}}>
       <Sidebar />
        <div className="main-content">
         <header className="dashboard-header">
