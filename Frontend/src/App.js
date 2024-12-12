@@ -2,11 +2,7 @@ import "./App.css";
 import React, { Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import {
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import Home from "./components/dashboard/pages/home/Home";
 import Login from "./components/auths/Login";
@@ -52,15 +48,14 @@ import AdminLogin from "./components/dashboard/admin/AdminLogin";
 import ErrorMessage from "./components/Layout/ErrorMessage";
 
 const ProtectedRoute = ({ Component }) => {
-  const token=localStorage.getItem("token")
-  console.log('token', token);
+  const token = localStorage.getItem("token");
+  console.log("token", token);
   if (token) {
     return <Component />;
   } else {
     return <Navigate to="/login" />;
   }
 };
-
 
 function App() {
   return (
@@ -80,20 +75,13 @@ function App() {
           />
 
           <Route
-              path="/insurancepage"
-              element={
-                <ProtectedRoute
-                  Component={InsuranceCards}
-                  
-                />
-              }
-            /> 
+            path="/insurancepage"
+            element={<ProtectedRoute Component={InsuranceCards} />}
+          />
           <Route
-              path="/taxpage"
-              element={
-                <ProtectedRoute Component={TaxCards} />
-              }
-            />
+            path="/taxpage"
+            element={<ProtectedRoute Component={TaxCards} />}
+          />
           <Route path="/loanform" element={<LoanForm />} />
 
           {/* REGISTER */}
@@ -152,37 +140,27 @@ function App() {
           {/* MESSAGES */}
           <Route exact path="/emailClient" element={<EmailPage />} />
           <Route
-              path="/credit"
-              element={
-                <ProtectedRoute Component={Credit}/>
-              }
-            />
+            path="/credit"
+            element={<ProtectedRoute Component={Credit} />}
+          />
           <Route path="/loanreview" element={<LoanDashboard />} />
           <Route path="/carrier" element={<Carrier />} />
-          <Route
-              path="/employee"
-              element={
-               <EmployeeDashboard/>
-              }
-            >
-              {EmployeeRoutes.map(({ path, element: Ele }, index) => (
-                <Route key={index} path={path} element={Ele} />
-              ))}
-            </Route>
+          <Route path="/employee" element={<EmployeeDashboard />}>
+            {EmployeeRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/admin" element={<Admin />}>
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
-          <Route
-              path="/user"
-              element={<User/>}
-            >
-              {UserRoutes.map(({ path, element: Ele }, index) => (
-                <Route key={index} path={path} element={Ele} />
-              ))}
-            </Route>
+          <Route path="/user" element={<User />}>
+            {UserRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
         </Routes>
       </Fragment>
     </div>
