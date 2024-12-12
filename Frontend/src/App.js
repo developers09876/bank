@@ -162,10 +162,7 @@ function App() {
           <Route
               path="/employee"
               element={
-                <ProtectedRoute
-                  Component={EmployeeDashboard}
-                  
-                />
+               <EmployeeDashboard/>
               }
             >
               {EmployeeRoutes.map(({ path, element: Ele }, index) => (
@@ -180,7 +177,7 @@ function App() {
           </Route>
           <Route
               path="/user"
-              element={<ProtectedRoute Component={User} />}
+              element={<User/>}
             >
               {UserRoutes.map(({ path, element: Ele }, index) => (
                 <Route key={index} path={path} element={Ele} />

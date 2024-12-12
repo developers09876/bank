@@ -30,7 +30,7 @@ const AdminDashboard = () => {
          
         </header>
         <Row className="stat-row">
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaUsers className="stat-icon" />
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaChartLine className="stat-icon" />
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaMoneyBillWave className="stat-icon" />
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaFileInvoice className="stat-icon" />

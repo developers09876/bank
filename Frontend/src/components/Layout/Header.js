@@ -15,6 +15,18 @@ function Header() {
       setIsLoggedIn(true); 
     }
   }, []);
+  const userType = localStorage.getItem("userType");
+
+  const handlenavigate = () =>
+  {
+    if (userType === "employee") {
+      navigate("/employee");
+    } 
+     if (userType === "user") {
+      navigate("/user");
+    }
+  
+  }
   const handleLogout = () => {
     setIsLoggedIn(false); 
     localStorage.removeItem("token"); 
@@ -99,12 +111,12 @@ function Header() {
                       className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded"
                       onMouseLeave={() => setDropdownVisible(false)}
                     >
-                      <Link
-                        to="#"
-                        className="block px-4 py-2 text-gray-700 no-underline hover:bg-gray-100"
+                      <button
+                        onClick={handlenavigate}
+                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
                         My Profile
-                      </Link>
+                      </button>
                       <button
                         onClick={handleLogout}
                         className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"

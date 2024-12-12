@@ -136,13 +136,10 @@ const LoginPage = () => {
       
 
       setTimeout(() => {
-        if (userType === "employee") {
-          navigate("/employee");
-        } 
-         if (userType === "user") {
-          navigate("/user");
-        }
+        const route = userType === "employee" ? "/employee" : userType === "user" ? "/user" : null;
+        if (route) navigate(route);
       }, 3000);
+      
 
       // console.log("first", response);
       // setstep("second");
