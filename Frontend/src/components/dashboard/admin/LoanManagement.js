@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Input, Space, Pagination, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { Container } from 'react-bootstrap';
 
-const LoanDashboard = ({ collapsed }) => {
+const LoanManagement = ({ collapsed }) => {
   const [searchText, setSearchText] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +44,7 @@ const LoanDashboard = ({ collapsed }) => {
       key: 'action',
       render: (text, record) => (
         <Space>
-          <Button type="primary" style={{ color: "black" }}>View</Button>
+          <Button type="primary" style={{color:"black"}}>View</Button>
         </Space>
       ),
     }
@@ -70,45 +69,73 @@ const LoanDashboard = ({ collapsed }) => {
   };
 
   return (
-    <div >
-      <div
-        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
-      >
-        {/* <Sidebar/> */}
-        <div className={collapsed === true ? "main-content.open" : "main-content"}
-        >
-          <Space style={{ marginBottom: 16 }} className="filter-actions">
-            <Input
-              placeholder="Search"
-              value={searchText}
-              onChange={handleSearch}
-              style={{ width: 200 }}
-              prefix={<SearchOutlined />}
-            />
-          </Space>
-
-          <Table
-            dataSource={getPaginatedData()}
-            columns={columns}
-            pagination={false}
-            className="loan-table"
+    <div>
+      {/* <Sidebar/> */}
+      <div className={collapsed === true ? "main-content.open" : "main-content"}>
+        <Space style={{ marginBottom: 16 }} className="filter-actions">
+          <Input
+            placeholder="Search"
+            value={searchText}
+            onChange={handleSearch}
+            style={{ width: 200 }}
+            prefix={<SearchOutlined />}
           />
+        </Space>
 
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={searchText ? filteredData.length : data.length}
-            onChange={(page, pageSize) => {
-              setCurrentPage(page);
-              setPageSize(pageSize);
-            }}
-            className="pagination-control"
+        <Table
+          dataSource={getPaginatedData()}
+          columns={columns}
+          pagination={false}
+          className="loan-table"
+        />
+
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={searchText ? filteredData.length : data.length}
+          onChange={(page, pageSize) => {
+            setCurrentPage(page);
+            setPageSize(pageSize);
+          }}
+          className="pagination-control"
           // showSizeChanger
-          />
-        </div>
+        />
       </div>
     </div>
   );
 };
 
-export default LoanDashboard;
+export default LoanManagement;
+
+
+// import { Button } from 'antd'
+// import React, { useState } from 'react'
+
+// function LoanManagement() {
+//   const [ count , setCount] = useState(0);
+//   const [ names , setNames] = useState();
+
+//   const onsubmit =(e) =>{
+//    setCount(count + 1);
+//    setNames(names)
+//   }
+//   return (
+//     <div>
+//       <br/>
+//       <br/>
+
+//       <p>sygdhv</p>
+//       <div>
+//         <form>
+//           <label>efscd</label>
+//           <input type='text'onChange={(e) =>setNames(e.target.value)}/>
+//           <Button onClick={onsubmit}>submit</Button>
+//         </form>
+//         <p>count:{count}</p>
+//         <p>submitted name:{names}</p>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default LoanManagement

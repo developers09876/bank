@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import User from "../model/signupModel.js";
+import jwt from "jsonwebtoken";
 
 export async function forgetPassword(req, res, next) {
   try {
@@ -25,7 +26,6 @@ export async function forgetPassword(req, res, next) {
     };
 
     const checkEmail = await User.findOne({ email: data.email });
-    console.log("checkmail", checkEmail);
     if (!checkEmail) {
       return res.status(404).json({ message: "Email not found" });
     }
@@ -46,7 +46,7 @@ export async function forgetPassword(req, res, next) {
         console.log("Updated user with OTP:", updateCode);
         return res.status(200).json({
           message: "OTP sent successfully",
-          id: checkEmail._id,
+          data: updateCode,
         });
       }
     });
@@ -60,16 +60,20 @@ export async function checkVerifivationCode(req, res, next) {
   try {
     const data = req.body;
     console.log("first", data);
-    // const code = JSON.parse(data.code);
-    // console.log("first", code);
+
     const checkEmail = await User.findOne({ email: data.email });
     console.log("checkEmail", checkEmail);
 
     if (checkEmail) {
       const matchVerificationCode = checkEmail.forgetPasswordCode === data.code;
+      const token = jwt.sign({ userId: checkEmail._id }, "your_jwt_secret", {
+        expiresIn: "1h",
+      });
+
       if (matchVerificationCode) {
         res.status(200).json({
           message: "verification code matched",
+          data: { checkEmail, token },
         });
       } else {
         res.status(400).json({

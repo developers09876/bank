@@ -102,13 +102,19 @@ const handleView = (record) => {
 
 const TaxDetails = ({ collapsed }) => {
   return (
-    <div className={collapsed === true ? 'main-content.open' : 'main-content'}>
-      <Table 
-        columns={columns} 
-        dataSource={taxData} 
-        pagination={{ pageSize: 5 }} 
-        style={{ height: 'auto' }} 
-      />
+    <div>
+      <div
+        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
+      >
+        <div className={collapsed === true ? 'main-content.open' : 'main-content'}>
+          <Table
+            columns={columns}
+            dataSource={taxData}
+            pagination={{ pageSize: 5 }}
+            style={{ height: 'auto' }}
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -28,6 +28,15 @@ const Admin = () => {
 
   const toggleSidebar = () => setCollapsed((prev) => !prev);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("email");
+
+
+    navigate("/adminlogin");
+  };
+
   return (
     <div>
       <header className="dashboards__headerNavs">
@@ -42,9 +51,9 @@ const Admin = () => {
             style={{ width: "100px", height: "95px"}}
           />
           </span>
-          <HiUserCircle
-            style={{ fontSize: 40, cursor: "pointer", color: "grey" }}
-          />
+            <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </header>
       <Sidebar collapsed={collapsed} />

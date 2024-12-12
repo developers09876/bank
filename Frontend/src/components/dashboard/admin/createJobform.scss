@@ -1,0 +1,150 @@
+/* .content-style{
+    background-color: rgb(228, 226, 223);
+    background-image: linear-gradient(to right, rgb(204, 183, 183) , rgb(149, 149, 134));
+} */
+
+.Create-input {
+    width: 80% !important;
+    border-radius: 5px;
+    border: 1px solid #b1c2d2;
+    height: 37px;
+    outline: none;
+  }
+  .Create-input:hover {
+    border: 1px solid #708fae;
+  }
+  .create-select {
+    width: 80% !important;
+    border-radius: 5px;
+    border: 1px soild #b1c2d2 !important;
+    height: 37px;
+    width: 80% !important;
+  }
+  .profile-input {
+    width: 80% !important;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    outline: none;
+  }
+  .profile-input:hover {
+    border: 1px solid #708fae;
+  }
+  .button-create {
+    display: flex;
+    justify-content: center;
+  }
+  .create-submit {
+    border-radius: 20px !important;
+    border: 1px solid gray;
+    color: white;
+    width: 100px;
+    height: 5vh;
+  }
+  .create-submit:hover {
+    box-shadow: 0 5px 8px 0 rgb(72, 72, 74) !important;
+  }
+  .create-cancel {
+    border-radius: 20px !important;
+    border: 1px solid gray;
+    color: white;
+    width: 100px;
+    height: 5vh;
+  }
+  .create-cancel:hover {
+    box-shadow: 0 5px 8px 0 rgb(72, 72, 74) !important;
+  }
+  .text-danger {
+    position: absolute;
+    font-size: 14px;
+  }
+  .create-cancel:hover {
+    box-shadow: 0 5px 8px 0 rgb(72, 72, 74) !important;
+  }
+  .text-danger {
+    position: absolute;
+    font-size: 14px;
+  }
+  .button-input {
+    width: 350px;
+  }
+  .interview-card {
+    padding: 10px;
+    height: 120vh !important;
+  }
+  .interviews-card {
+    margin-left: 8%;
+    height: 120vh !important;
+  }
+  .second-card-details {
+    margin-top: 5%;
+  }
+  .image-tag {
+    width: 100%;
+    padding: 20px;
+  }
+  .interivew-head {
+    display: flex;
+    justify-content: space-between;
+  }
+  .icon-tagSearch{
+    height: 39px;
+    width: 32px;
+    border-radius: 9px;
+    text-align: center;
+    margin-right: 5px;
+    color: blue;
+    background-color: #8080802b;
+  
+  
+  }
+  .inputSearchFields{
+    margin-right: 20px;
+  }
+  .icon-tag {
+    padding: 4px;
+    height: 34px;
+    width: 32px;
+    border-radius: 9px;
+    text-align: center;
+    // margin-right: 20px;
+    color: blue;
+    background-color: #8080802b;
+  }
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: black;
+    text-shadow: 0 0 0.25px currentcolor;
+    font-weight: 300;
+  }
+  .review-card-tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px;
+  }
+  .review-image-tag {
+    width: 38%;
+    margin-left: 30px;
+  }
+  .review-card1-tag {
+    padding: 15px;
+  }
+  .review-icon-style {
+    display: flex;
+    justify-content: end;
+  }
+  .review-icon {
+    text-decoration: none;
+  }
+  // .ant-table-thead > tr > th {
+  //   position: relative;
+  //   color: rgba(0, 0, 0, 0.85);
+  //   font-weight: 500;
+  //   text-align: left;
+  //   background: #c78e8e;
+  //   border-bottom: 1px solid #f0f0f0;
+  //   transition: background 0.3s ease;
+  // }
+  
+  .ViewScheduleCardContainer{
+    width:fit-content;
+  }

@@ -1,88 +1,96 @@
-// const LoanApplication = require('../model/LoanApplicationModel.js');
-import Loan from '../model/LoanApplicationModel.js';
-import multer from "multer"
+import LoanApplication from '../model/LoanApplicationModel.js';
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'), // Set upload destination
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname), // Unique file name
-});
-const upload = multer({ storage });
-
-// Create a new loan application
-export const createLoanApplication = async (req, res) => {
+export async function createLoanApplication(req, res, next) {
   try {
-    const { maritalStatus, aadhaar, address, annualIncome, bankAccountDetails, contact, creditScore, dob, downPayment, employerDetails, employmentStatus, existingLoans, fullName, gender, incomeDetails, loanAmount, loanPurpose, nationality, pan, propertyDetails } = req.body;
-
-    const documents = {
-      addressProof: req.files.addressProof[0].path,
-      coApplicantDocs: req.files.coApplicantDocs[0].path,
-      financialProof: req.files.financialProof[0].path,
-      identityProof: req.files.identityProof[0].path,
-      photographs: req.files.photographs[0].path,
-      propertyOwnershipProof: req.files.propertyOwnershipProof[0].path,
-      signature: req.files.signature[0].path,
+    const data = req.body;
+    console.log('data', data)
+    const details = {
+      userid:data.userid,
+      fullName: data.fullName,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.MaritalStatus,
+      nationality: data.nationality,
+      pan: data.pan,
+      aadhaar: data.aadhaar,
+      contact: data.contact,
+      address: data.address,
+      annualIncome: data.annualIncome,
+      bankAccountDetails: data.bankAccountDetails,
+      creditScore: data.creditScore,
+      downPayment: data.downPayment,
+      employerDetails: data.employerDetails,
+      employmentStatus: data.employmentStatus,
+      existingLoans: data.existingLoans,
+      incomeDetails: data.incomeDetails,
+      loanAmount: data.loanAmount,
+      loanPurpose: data.loanPurpose,
+      propertyDetails: data.propertyDetails,
+      identityProof: data.identityProof,
+      addressProof: data.addressProof,
+      photographs: data.photographs,
+      propertyOwnershipProof: data.propertyOwnershipProof,
+      signature: data.signature,
     };
-
-    const loanApplication = new Loan({
-      maritalStatus,
-      aadhaar,
-      address,
-      annualIncome,
-      bankAccountDetails,
-      contact,
-      creditScore,
-      dob,
-      downPayment,
-      employerDetails,
-      employmentStatus,
-      existingLoans,
-      fullName,
-      gender,
-      incomeDetails,
-      loanAmount,
-      loanPurpose,
-      nationality,
-      pan,
-      propertyDetails,
-      documents,
-    });
-
-    await loanApplication.save();
-    res.status(201).json({ message: 'Loan application created successfully', loanApplication });
+    const loanApplication = await LoanApplication.create(details);
+    if (loanApplication) {
+      res.status(201).json({
+        message: "Submitted Successfully",
+        data: loanApplication,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    next();
+  }
+}
+export const getAllLoanApplications = async (req, res) => {
+  try {
+    const applications = await LoanApplication.find();
+    res.status(200).json(applications);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Get all loan applications
-export const getAllLoanApplications = async (req, res) => {
+export const getLoanApplicationById = async (req, res) => {
   try {
-    const loanApplications = await Loan.find();
-    res.status(200).json(loanApplications);
+    const application = await LoanApplication.findById(req.params.id);
+    if (!application) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+    res.status(200).json(application);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 // Update a loan application
 export const updateLoanApplication = async (req, res) => {
   try {
-    const { id } = req.params;
-    const updatedLoanApplication = await Loan.findByIdAndUpdate(id, req.body, { new: true });
-    res.status(200).json(updatedLoanApplication);
+    const updatedApplication = await LoanApplication.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedApplication) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+    res.status(200).json(updatedApplication);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
 // Delete a loan application
 export const deleteLoanApplication = async (req, res) => {
   try {
-    const { id } = req.params;
-    await Loan.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Loan application deleted successfully' });
+    const deletedApplication = await LoanApplication.findByIdAndDelete(req.params.id);
+    if (!deletedApplication) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+    res.status(200).json({ message: 'Application deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

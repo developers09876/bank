@@ -1,9 +1,22 @@
+import { Navigate } from "react-router-dom";
 import InsuranceReview from "./InsuranceReview";
 import LoanDashboard from "./LoanReview";
 import TaxReview from "./TaxReview";
 
+const role = localStorage.getItem("userType");
+console.log('role', role)
 export const EmployeeRoutes = [
-  { path: "", element: <LoanDashboard /> },
-  { path: "tax", element: <TaxReview /> },
-  { path: "insurance", element: <InsuranceReview /> },
+  {
+    path: "/employee",
+    element: role === "employee" ? <TaxReview /> : <Navigate to="/login" />,
+  },
+  {
+    path: "/employee/tax",
+    element: role === "employee" ? <TaxReview /> : <Navigate to="/login" />,
+  },
+  {
+    path: "/employee/insurance",
+    element:
+      role === "employee" ? <InsuranceReview /> : <Navigate to="/login" />,
+  },
 ];

@@ -137,12 +137,12 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           EmployeeList
         </NavLink>
-
+<NavLink to="/admin/createjobform" className="main-nav-style">Job Post</NavLink>
         <SubMenu
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"
         >
-          <NavLink to="/professional/jobs">
+          <NavLink to="/admin/loanmanagement">
             {/* <MdRequestPage className="Nav-Icon" /> */}
             Loan Management
           </NavLink>

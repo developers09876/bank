@@ -39,15 +39,15 @@ const TaxReview = ({ collapsed }) => {
       key: 'status',
     },
     {
-        title: 'Action',
-        dataIndex: 'action',
-        key: 'action',
-        render: (text, record) => (
-          <Space>
-            <Button type="primary" style={{color:"black"}}>View</Button>
-          </Space>
-        ),
-      }
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
+      render: (text, record) => (
+        <Space>
+          <Button type="primary" style={{ color: "black" }}>View</Button>
+        </Space>
+      ),
+    }
   ];
 
   const handleSearch = (e) => {
@@ -70,36 +70,40 @@ const TaxReview = ({ collapsed }) => {
 
   return (
     <div>
-      {/* <Sidebar/> */}
-      <div className={collapsed === true ? "main-content.open" : "main-content"}>
-        <Space style={{ marginBottom: 16 }} className="filter-actions">
-          <Input
-            placeholder="Search"
-            value={searchText}
-            onChange={handleSearch}
-            style={{ width: 200 }}
-            prefix={<SearchOutlined />}
+      <div
+        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
+      >
+        {/* <Sidebar/> */}
+        <div className={collapsed === true ? "main-content.open" : "main-content"}>
+          <Space style={{ marginBottom: 16 }} className="filter-actions">
+            <Input
+              placeholder="Search"
+              value={searchText}
+              onChange={handleSearch}
+              style={{ width: 200 }}
+              prefix={<SearchOutlined />}
+            />
+          </Space>
+
+          <Table
+            dataSource={getPaginatedData()}
+            columns={columns}
+            pagination={false}
+            className="loan-table"
           />
-        </Space>
 
-        <Table
-          dataSource={getPaginatedData()}
-          columns={columns}
-          pagination={false}
-          className="loan-table"
-        />
-
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={searchText ? filteredData.length : data.length}
-          onChange={(page, pageSize) => {
-            setCurrentPage(page);
-            setPageSize(pageSize);
-          }}
-          className="pagination-control"
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={searchText ? filteredData.length : data.length}
+            onChange={(page, pageSize) => {
+              setCurrentPage(page);
+              setPageSize(pageSize);
+            }}
+            className="pagination-control"
           // showSizeChanger
-        />
+          />
+        </div>
       </div>
     </div>
   );

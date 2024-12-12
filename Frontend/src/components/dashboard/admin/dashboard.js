@@ -1,16 +1,13 @@
 // src/AdminDashboard.js
-import React from "react";
-import { Card, Col, Container, Row } from "react-bootstrap"; // Or use Ant Design's Card and Row
-import "./AdminDashboard.scss"; // Custom SCSS styles
-import {
-  FaUsers,
-  FaMoneyBillWave,
-  FaFileInvoice,
-  FaChartLine,
-} from "react-icons/fa"; // Icons
-import Sidebar from "./Sidebar";
+import React from 'react';
+import { Card, Col, Row, Button, } from 'react-bootstrap'; // Or use Ant Design's Card and Row
+import { useNavigate } from "react-router-dom";
+import './AdminDashboard.scss'; // Custom SCSS styles
+import { FaUsers, FaMoneyBillWave, FaFileInvoice, FaChartLine } from 'react-icons/fa'; // Icons
+import Sidebar from './Sidebar';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const stats = {
     totalUsers: 1200,
     loans: {
@@ -22,15 +19,18 @@ const AdminDashboard = () => {
     invoices: 45,
   };
 
+ 
+
   return (
     <div>
-      {/* <Sidebar /> */}
-      {/* <div className="main-content">
+      <Sidebar />
+       <div className="main-content">
         <header className="dashboard-header">
           <h1 className="dashboard-title">Admin Dashboard</h1>
+         
         </header>
         <Row className="stat-row">
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaUsers className="stat-icon" />
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaChartLine className="stat-icon" />
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaMoneyBillWave className="stat-icon" />
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
 
-          <Col md={6} lg={6}>
+          <Col md={5} lg={5}>
             <Card className="stat-card">
               <Card.Body>
                 <FaFileInvoice className="stat-icon" />
@@ -72,9 +72,9 @@ const AdminDashboard = () => {
             </Card>
           </Col>
         </Row>
-      </div> */}
+      </div>
 
-      <h1 style={{ textAlign: "center", marginTop: "50px" }}>
+      {/* <h1 style={{ textAlign: "center", marginTop: "50px" }}>
         Admin Dashboard
       </h1>
       <Container
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
             </Card>
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </div>
   );
 };

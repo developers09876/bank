@@ -10,14 +10,28 @@ function Header() {
 
  
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
+    const storedUsername = localStorage.getItem("token");
     if (storedUsername) {
       setIsLoggedIn(true); 
     }
   }, []);
+  const userType = localStorage.getItem("userType");
+
+  const handlenavigate = () =>
+  {
+    if (userType === "employee") {
+      navigate("/employee");
+    } 
+     if (userType === "user") {
+      navigate("/user");
+    }
+  
+  }
   const handleLogout = () => {
     setIsLoggedIn(false); 
-    localStorage.removeItem("username"); 
+    localStorage.removeItem("token"); 
+    localStorage.removeItem("userType"); 
+
     navigate("/login");
   };
 
@@ -54,7 +68,7 @@ function Header() {
                 to="/carrier"
                 className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
               >
-                Carrier
+                Career
               </Link>
             </li>
             <li>
@@ -97,12 +111,12 @@ function Header() {
                       className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded"
                       onMouseLeave={() => setDropdownVisible(false)}
                     >
-                      <Link
-                        to="#"
-                        className="block px-4 py-2 text-gray-700 no-underline hover:bg-gray-100"
+                      <button
+                        onClick={handlenavigate}
+                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
                         My Profile
-                      </Link>
+                      </button>
                       <button
                         onClick={handleLogout}
                         className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
