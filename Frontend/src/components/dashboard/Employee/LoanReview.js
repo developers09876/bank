@@ -1,60 +1,104 @@
-import React, { useState } from 'react';
-import { Table, Input, Space, Pagination, Button } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import { Container } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Table, Input, Space, Pagination, Button } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { Container } from "react-bootstrap";
 
 const LoanDashboard = ({ collapsed }) => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
   const data = [
-    { key: '1', date: '01/02/2023', appId: '256789', customer: 'Katerina Simpson', status: 'Documents Required', action: 'Doc. Upload' },
-    { key: '2', date: '01/02/2023', appId: '256790', customer: 'Willow Fuller', status: 'Approved', action: 'Continue' },
-    { key: '3', date: '01/03/2023', appId: '256791', customer: 'Stacey Hawkins', status: 'Soft Approved', action: 'Continue' },
-    { key: '4', date: '01/03/2023', appId: '256792', customer: 'Micheal Decker', status: 'Banking Incomplete', action: 'Continue' },
-    { key: '5', date: '01/03/2023', appId: '256793', customer: 'Noah Hogan', status: 'Loan Details Incomplete', action: 'Delete' },
-    { key: '6', date: '01/03/2023', appId: '256794', customer: 'James Millner', status: 'Soft Approved', action: 'Continue' }
+    {
+      key: "1",
+      date: "01/02/2023",
+      appId: "256789",
+      customer: "Katerina Simpson",
+      status: "Documents Required",
+      action: "Doc. Upload",
+    },
+    {
+      key: "2",
+      date: "01/02/2023",
+      appId: "256790",
+      customer: "Willow Fuller",
+      status: "Approved",
+      action: "Continue",
+    },
+    {
+      key: "3",
+      date: "01/03/2023",
+      appId: "256791",
+      customer: "Stacey Hawkins",
+      status: "Soft Approved",
+      action: "Continue",
+    },
+    {
+      key: "4",
+      date: "01/03/2023",
+      appId: "256792",
+      customer: "Micheal Decker",
+      status: "Banking Incomplete",
+      action: "Continue",
+    },
+    {
+      key: "5",
+      date: "01/03/2023",
+      appId: "256793",
+      customer: "Noah Hogan",
+      status: "Loan Details Incomplete",
+      action: "Delete",
+    },
+    {
+      key: "6",
+      date: "01/03/2023",
+      appId: "256794",
+      customer: "James Millner",
+      status: "Soft Approved",
+      action: "Continue",
+    },
   ];
 
   const columns = [
     {
-      title: 'Created On',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Created On",
+      dataIndex: "date",
+      key: "date",
     },
     {
-      title: 'Application ID',
-      dataIndex: 'appId',
-      key: 'appId',
+      title: "Application ID",
+      dataIndex: "appId",
+      key: "appId",
     },
     {
-      title: 'Customer Name',
-      dataIndex: 'customer',
-      key: 'customer',
+      title: "Customer Name",
+      dataIndex: "customer",
+      key: "customer",
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
     },
     {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
       render: (text, record) => (
         <Space>
-          <Button type="primary" style={{ color: "black" }}>View</Button>
+          <Button type="primary" style={{ color: "black" }}>
+            View
+          </Button>
         </Space>
       ),
-    }
+    },
   ];
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);
-    const filtered = data.filter(item =>
+    const filtered = data.filter((item) =>
       item.customer.toLowerCase().includes(searchTerm)
     );
     setFilteredData(filtered);
@@ -70,12 +114,11 @@ const LoanDashboard = ({ collapsed }) => {
   };
 
   return (
-    <div >
-      <div
-        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
-      >
+    <div>
+      <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
         {/* <Sidebar/> */}
-        <div className={collapsed === true ? "main-content.open" : "main-content"}
+        <div
+          className={collapsed === true ? "main-content.open" : "main-content"}
         >
           <Space style={{ marginBottom: 16 }} className="filter-actions">
             <Input
@@ -103,7 +146,7 @@ const LoanDashboard = ({ collapsed }) => {
               setPageSize(pageSize);
             }}
             className="pagination-control"
-          // showSizeChanger
+            // showSizeChanger
           />
         </div>
       </div>

@@ -38,7 +38,7 @@ const Admin = () => {
   };
 
   return (
-    <div>
+    <div style={{minHeight:"100vh"}}>
       <header className="dashboards__headerNavs">
         <div className="dashboards__headerNavs--container">
           <span className="navMenu p-2" onClick={toggleSidebar}>

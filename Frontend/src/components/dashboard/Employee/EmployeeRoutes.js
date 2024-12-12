@@ -3,20 +3,20 @@ import InsuranceReview from "./InsuranceReview";
 import LoanDashboard from "./LoanReview";
 import TaxReview from "./TaxReview";
 
-const role = localStorage.getItem("userType");
+const role  = () => localStorage.getItem("userType");
 console.log('role', role)
 export const EmployeeRoutes = [
   {
     path: "/employee",
-    element: role === "employee" ? <TaxReview /> : <Navigate to="/login" />,
+    element: role() === "employee" ? <TaxReview /> : <Navigate to="/login" />,
   },
   {
     path: "/employee/tax",
-    element: role === "employee" ? <TaxReview /> : <Navigate to="/login" />,
+    element: role() === "employee" ? <TaxReview /> : <Navigate to="/login" />,
   },
   {
     path: "/employee/insurance",
     element:
-      role === "employee" ? <InsuranceReview /> : <Navigate to="/login" />,
+      role() === "employee" ? <InsuranceReview /> : <Navigate to="/login" />,
   },
 ];
