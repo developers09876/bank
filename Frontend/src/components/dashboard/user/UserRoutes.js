@@ -4,23 +4,22 @@ import LoanStatusTable from "./LoanStatus";
 import TabsProfile from "./ProfileTabs";
 import TaxDetails from "./TaxDetails";
 
-const role = () =>localStorage.getItem("userType");
-console.log('role', role)
+const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
     path: "/user",
-    element: role() === "user" ? <TabsProfile /> : <Navigate to="/login" />,
+    element: <TabsProfile />,
   },
   {
     path: "/user/loanstatus",
-    element: role() === "user" ? <LoanStatusTable /> : <Navigate to="/login" />,
+    element: roles === "user" ? <LoanStatusTable /> : <Navigate to="/login" />,
   },
   {
     path: "/user/insuranceDetails",
-    element: role() === "user" ? <InsuranceDetails /> : <Navigate to="/login" />,
+    element: roles === "user" ? <InsuranceDetails /> : <Navigate to="/login" />,
   },
   {
     path: "/user/taxDetails",
-    element: role() === "user" ? <TaxDetails /> : <Navigate to="/login" />,
+    element: roles === "user" ? <TaxDetails /> : <Navigate to="/login" />,
   },
 ];
