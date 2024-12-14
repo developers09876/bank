@@ -9,14 +9,14 @@ import {
 
 const router = Router();
 
-router.post("/loanapplications", createLoanApplication);
+router.post("/createloanapplications", createLoanApplication);
 
-router.get("/loanapplications", getAllLoanApplications);
+router.get("/getall", getAllLoanApplications);
 
-router.get("/loanapplications/:id", getLoanApplicationById);
+router.get("/gatbyid/:id", getLoanApplicationById);
 
-router.put("/loanapplications/:id", updateLoanApplication);
+router.put("/updateloanapplications/:id", updateLoanApplication);
 
-router.delete("/loanapplications/:id", deleteLoanApplication);
+router.delete("/deleteloanapplications/:id", deleteLoanApplication);
 
 export default router;
