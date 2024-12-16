@@ -24,7 +24,7 @@ const LoanManagement = ({ collapsed }) => {
       const loans = await response.json();
       const loansWithStatus = loans.map((loan) => ({
         ...loan,
-        status: 0, // Default status
+        status: 0, 
       }));
       setLoan(loansWithStatus);
     } catch (error) {
@@ -46,25 +46,48 @@ const LoanManagement = ({ collapsed }) => {
     setIsModalVisible(false);
     setSelectedRecord(null);
   };
-
+  const updateStatus = async (id, newStatus) => {
+    try {
+      const response = await fetch(`http://localhost:5000/loanform/updateloanapplications/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to update loan status.");
+      }
+  
+      const updatedLoan = await response.json();
+      console.log("Status updated successfully:", updatedLoan);
+  
+      setLoan((prev) =>
+        prev.map((item) =>
+          item._id === id ? { ...item, status: newStatus } : item
+        )
+      );
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+  
   const handleApprove = () => {
-    setLoan((prev) =>
-      prev.map((item) =>
-        item._id === selectedRecord._id ? { ...item, status: 1 } : item
-      )
-    );
-    handleModalOk();
+    if (selectedRecord) {
+      updateStatus(selectedRecord._id, 1); 
+      handleModalOk();
+    }
   };
-
+  
   const handleReject = () => {
-    setLoan((prev) =>
-      prev.map((item) =>
-        item._id === selectedRecord._id ? { ...item, status: 2 } : item
-      )
-    );
-    handleModalOk();
+    if (selectedRecord) {
+      updateStatus(selectedRecord._id, 2); 
+      handleModalOk();
+    }
   };
-
+  
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);

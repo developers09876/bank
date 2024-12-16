@@ -119,7 +119,7 @@ export async function updateLoanApplication(req, res, next) {
       new: true,
     });
     res.status(200).json({
-      message: "create successfully",
+      message: "updated successfully",
       data: updateParent,
     });
   } catch (err) {
