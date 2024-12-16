@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const loanApplicationSchema = new mongoose.Schema(
   {
-    userid: {  type: String},
+    userid: { type: String },
     aadhaar: { type: String },
     address: { type: String },
     addressProof: { type: String },
@@ -31,6 +31,7 @@ const loanApplicationSchema = new mongoose.Schema(
     propertyDetails: { type: String },
     propertyOwnershipProof: { type: String },
     signature: { type: String },
+    status: { type: String, default: "0" },
   },
   {
     timestamps: true,
