@@ -17,11 +17,11 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios"; 
+import axios from "axios";
 import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
-import OtpInput from 'react-otp-input';
-import { MdVerified  } from "react-icons/md";
+import OtpInput from "react-otp-input";
+import { MdVerified } from "react-icons/md";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ const LoginPage = () => {
   const [step, setstep] = useState("first");
 
   const navigate = useNavigate();
-  
+
   const validateInputs = () => {
     let tempErrors = { email: "", mobile: "" };
     let isValid = true;
@@ -55,7 +55,7 @@ const LoginPage = () => {
     setErrors(tempErrors);
     return isValid;
   };
-  
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
@@ -64,15 +64,13 @@ const LoginPage = () => {
   }, []);
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); 
+    setIsLoggedIn(true);
   };
 
   const handleFormSubmit = async (e) => {
     if (!validateInputs()) {
-      return; 
+      return;
     }
-
-
 
     try {
       const response = await axios.post(
@@ -84,7 +82,6 @@ const LoginPage = () => {
 
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
-
 
       toast.success("OTP sent successfully!", {
         position: "top-center",
@@ -103,7 +100,7 @@ const LoginPage = () => {
       );
     }
   };
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
 
   const onSubmit = (data) => {
     handleFormSubmit();
@@ -133,19 +130,15 @@ const LoginPage = () => {
       const token = localStorage.getItem("token");
 
       console.log("userType", userType);
-      
 
       setTimeout(() => {
         const routes = {
           employee: "/employee",
           user: "/user",
         };
-      
         const route = routes[userType] || "/login";
         navigate(route);
       }, 3000);
-      
-      
 
       // console.log("first", response);
       // setstep("second");
@@ -183,19 +176,17 @@ const LoginPage = () => {
               height="95%"
               px={4}
             >
-              
               {step === "first" ? (
-                
                 <form>
                   <Box mb={4}>
-                <Typography variant="h4" fontWeight="bold">
-                  Welcome back!
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  Welcome back! Please enter your details
-                </Typography>
-              </Box>
-                  
+                    <Typography variant="h4" fontWeight="bold">
+                      Welcome back!
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      Welcome back! Please enter your details
+                    </Typography>
+                  </Box>
+
                   <TextField
                     label="Email"
                     variant="outlined"
@@ -229,7 +220,6 @@ const LoginPage = () => {
                     error={!!errors.mobile}
                     helperText={errors.mobile}
                   />
-                 
 
                   <Button
                     variant="contained"
@@ -261,20 +251,36 @@ const LoginPage = () => {
                   </Box>
                 </form>
               ) : (
-                <div style={{textAlign:'center'}}>
-                   <Box mb={4} >
-                   <div style={{textAlign:'center', justifyContent:'center',display:"flex", color:'#00397f', fontSize:'60px'}}>
-                   <MdVerified />
-                   </div><br/>
-                <Typography variant="h4" fontWeight="bold" >
-                  Verification Code 
-                </Typography>
-                <Typography variant="body1" color="textSecondary" >
-                  Enter the 4 digit verification code that was sent to your Email or PhoneNumber
-                </Typography>
-              </Box>
-                  <div className="otp" style={{textAlign:'center',justifyContent:'center',display:"flex"}}>
-                  
+                <div style={{ textAlign: "center" }}>
+                  <Box mb={4}>
+                    <div
+                      style={{
+                        textAlign: "center",
+                        justifyContent: "center",
+                        display: "flex",
+                        color: "#00397f",
+                        fontSize: "60px",
+                      }}
+                    >
+                      <MdVerified />
+                    </div>
+                    <br />
+                    <Typography variant="h4" fontWeight="bold">
+                      Verification Code
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      Enter the 4 digit verification code that was sent to your
+                      Email or PhoneNumber
+                    </Typography>
+                  </Box>
+                  <div
+                    className="otp"
+                    style={{
+                      textAlign: "center",
+                      justifyContent: "center",
+                      display: "flex",
+                    }}
+                  >
                     <OtpInput
                       value={otp}
                       onChange={setOtp}
@@ -283,7 +289,7 @@ const LoginPage = () => {
                       renderInput={(props) => <input {...props} />}
                       inputStyle={{
                         width: "3rem",
-                        justifyContent:'center',
+                        justifyContent: "center",
                         height: "3rem",
                         margin: "0 0.5rem",
                         fontSize: "1.5rem",
@@ -292,18 +298,17 @@ const LoginPage = () => {
                         textAlign: "center",
                       }}
                     />
-                    
                   </div>
                   <p
                     className="resend-otp"
-                  // onClick={handleSubmit(onSubmit1)}
+                    // onClick={handleSubmit(onSubmit1)}
                   >
                     Resend OTP
                   </p>
                   <Button
                     className="forget_button mt-3 justify-content-center"
                     onClick={handleSubmit(onSubmit1)}
-                    style={{backgroundColor:'#00397f', color:'white'}}
+                    style={{ backgroundColor: "#00397f", color: "white" }}
                   >
                     Verify OTP
                   </Button>
