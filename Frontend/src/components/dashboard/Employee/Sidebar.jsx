@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { Menu } from "antd";
 import { CgProfile } from "react-icons/cg";
 
-
 function Sidebar({ collapsed }) {
   const onClick = (e) => {
     console.log("click ", e);
@@ -32,9 +31,17 @@ function Sidebar({ collapsed }) {
           icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Freelancing"
         > */}
+        <NavLink
+          to="/employee"
+          ClassName="main-nav-style"
+          style={{ marginTop: "70px" }}
+        >
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Dashboard
+        </NavLink>
 
         {/* </SubMenu> */}
-        <NavLink to="/employee" ClassName="main-nav-style">
+        <NavLink to="/employee/loan" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Loan Application Review
         </NavLink>

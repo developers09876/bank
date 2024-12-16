@@ -289,39 +289,7 @@ function LoanForm() {
 
   const isUpdating = data != undefined && data?.address > "";
 
-  const onSubmit = async (data) => {
-    console.log("Form Data:", data);
 
-    try {
-      const formData = new FormData();
-
-      // Append regular fields to formData
-      for (const [key, value] of Object.entries(data)) {
-        if (value instanceof FileList) {
-          // Append each file in the FileList
-          Array.from(value).forEach((file) => formData.append(key, file));
-        } else {
-          // Append non-file fields directly
-          formData.append(key, value);
-        }
-      }
-
-      // Send the POST request with FormData
-      const response = await axios.post(
-        "http://localhost:5000/loanform/createloan",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
   const userid = localStorage.getItem("id")
   console.log('userid', userid)
 
@@ -392,7 +360,7 @@ function LoanForm() {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/loanform/loanapplications`,
+        `http://localhost:5000/loanform/createloanapplications`,
         Details
       );
       console.log(response, "Form submitted successfully");
