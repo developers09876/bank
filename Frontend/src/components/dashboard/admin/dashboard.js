@@ -47,9 +47,9 @@ const AdminDashboard = () => {
   // Data for the chart
   const data = {
     labels: [
-      "Mortgage Pending",
-      "Credit Pending",
-      "Lead Generated",
+      "Pending",
+      "In Process",
+      "Rejected",
       "Completed",
     ],
     datasets: [

@@ -47,15 +47,15 @@ const EmployeeDashboard = () => {
   // Data for the chart
   const data = {
     labels: [
-      "Mortgage Pending",
-      "Credit Pending",
-      "Lead Generated",
+      "Pending",
+      "In Process",
+      "Rejected",
       "Completed",
     ],
     datasets: [
       {
-        label: "Client Status",
-        data: [2, 1, 4, 3],
+        label: "Application Status",
+        data: [2, 3, 1, 4],
         backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
         borderColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
         borderWidth: 1,
@@ -97,15 +97,15 @@ const EmployeeDashboard = () => {
         </header>
 
         <Row className="admin-dashboard-content">
-          <Col md={6} className="admin-chart-container">
+          <Col md={7} className="admin-chart-container">
             <div className="admin-chart-wrapper">
               <Bar data={data} options={options} />
             </div>
           </Col>
 
-          <Col md={6}>
+          <Col md={4}>
             <Row className="admin-stats-row">
-              <Col md={6} lg={6}>
+              <Col md={12} lg={12}>
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaUsers className="admin-stat-icon" />
@@ -115,7 +115,7 @@ const EmployeeDashboard = () => {
                 </Card>
               </Col>
 
-              <Col md={6} lg={6}>
+              <Col md={12} lg={12}>
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
@@ -129,25 +129,7 @@ const EmployeeDashboard = () => {
                 </Card>
               </Col>
 
-              <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
-                  <Card.Body>
-                    <FaMoneyBillWave className="admin-stat-icon" />
-                    <Card.Title>Total Employees</Card.Title>
-                    <Card.Text>{stats.employees}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
-                  <Card.Body>
-                    <FaFileInvoice className="admin-stat-icon" />
-                    <Card.Title>Total Insurance</Card.Title>
-                    <Card.Text>Total: {stats.totalinsurance}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
+             
             </Row>
           </Col>
         </Row>
