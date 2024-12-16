@@ -1,10 +1,33 @@
-// src/AdminDashboard.js
-import React from 'react';
-import { Card, Col, Row, Button, } from 'react-bootstrap'; // Or use Ant Design's Card and Row
+import React from "react";
+import { Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import './AdminDashboard.scss'; // Custom SCSS styles
-import { FaUsers, FaMoneyBillWave, FaFileInvoice, FaChartLine } from 'react-icons/fa'; // Icons
-import Sidebar from './Sidebar';
+import "./AdminDashboard.scss"; // Custom SCSS styles
+import {
+  FaMoneyBillWave,
+  FaFileInvoice,
+  FaChartLine,
+  FaUsers,
+} from "react-icons/fa";
+import Sidebar from "./Sidebar";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -15,121 +38,120 @@ const AdminDashboard = () => {
       pending: 50,
       closed: 150,
     },
+    employees: 150,
+    totalinsurance: 2000,
     revenue: "$50,000",
     invoices: 45,
   };
 
- 
+  // Data for the chart
+  const data = {
+    labels: [
+      "Mortgage Pending",
+      "Credit Pending",
+      "Lead Generated",
+      "Completed",
+    ],
+    datasets: [
+      {
+        label: "Client Status",
+        data: [2, 1, 4, 3],
+        backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
+        borderColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Chart options
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Client Status Chart",
+        font: {
+          size: 16,
+        },
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+  };
 
   return (
-    <div style={{overflow:"hidden"}}>
+    <div className="admin-dashboard-container">
       <Sidebar />
-       <div className="main-content">
-        <header className="dashboard-header">
-          <h1 className="dashboard-title">Admin Dashboard</h1>
-         
+      <div className="admin-main-content">
+        <header className="admin-dashboard-header">
+          <h1 className="admin-dashboard-title">Admin Dashboard</h1>
         </header>
-        <Row className="stat-row">
-          <Col md={5} lg={5}>
-            <Card className="stat-card">
-              <Card.Body>
-                <FaUsers className="stat-icon" />
-                <Card.Title>Total Users</Card.Title>
-                <Card.Text>{stats.totalUsers}</Card.Text>
-              </Card.Body>
-            </Card>
+
+        <Row className="admin-dashboard-content">
+          <Col md={6} className="admin-chart-container">
+            <div className="admin-chart-wrapper">
+              <Bar data={data} options={options} />
+            </div>
           </Col>
 
-          <Col md={5} lg={5}>
-            <Card className="stat-card">
-              <Card.Body>
-                <FaChartLine className="stat-icon" />
-                <Card.Title>Total Loans</Card.Title>
-                <Card.Text>Active: {stats.loans.active}</Card.Text>
-                <Card.Text>Pending: {stats.loans.pending}</Card.Text>
-                <Card.Text>Closed: {stats.loans.closed}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
+          <Col md={6}>
+            <Row className="admin-stats-row">
+              <Col md={6} lg={6}>
+                <Card className="admin-stat-card">
+                  <Card.Body>
+                    <FaUsers className="admin-stat-icon" />
+                    <Card.Title>Total Users</Card.Title>
+                    <Card.Text>{stats.totalUsers}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
 
-          <Col md={5} lg={5}>
-            <Card className="stat-card">
-              <Card.Body>
-                <FaMoneyBillWave className="stat-icon" />
-                <Card.Title>Revenue</Card.Title>
-                <Card.Text>{stats.revenue}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
+              <Col md={6} lg={6}>
+                <Card className="admin-stat-card">
+                  <Card.Body>
+                    <FaChartLine className="admin-stat-icon" />
+                    <Card.Title>Total Loans</Card.Title>
+                    <div className="loan-details">
+                      <p>Active: {stats.loans.active}</p>
+                      <p>Pending: {stats.loans.pending}</p>
+                      <p>Closed: {stats.loans.closed}</p>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
 
-          <Col md={5} lg={5}>
-            <Card className="stat-card">
-              <Card.Body>
-                <FaFileInvoice className="stat-icon" />
-                <Card.Title>Invoices Overview</Card.Title>
-                <Card.Text>Total: {stats.invoices}</Card.Text>
-              </Card.Body>
-            </Card>
+              <Col md={6} lg={6}>
+                <Card className="admin-stat-card">
+                  <Card.Body>
+                    <FaMoneyBillWave className="admin-stat-icon" />
+                    <Card.Title>Total Employees</Card.Title>
+                    <Card.Text>{stats.employees}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+
+              <Col md={6} lg={6}>
+                <Card className="admin-stat-card">
+                  <Card.Body>
+                    <FaFileInvoice className="admin-stat-icon" />
+                    <Card.Title>Total Insurance</Card.Title>
+                    <Card.Text>Total: {stats.totalinsurance}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>
-
-      {/* <h1 style={{ textAlign: "center", marginTop: "50px" }}>
-        Admin Dashboard
-      </h1>
-      <Container
-        style={{ textAlign: "center", marginTop: "50px" }}
-        className="container"
-      >
-        <Row>
-          <Col lg={6} md={12}>
-            {" "}
-            <Card className="stat-card">
-              <Card.Body>
-                <FaUsers className="stat-icon" />
-                <Card.Title>Total Users</Card.Title>
-                <Card.Text>{stats.totalUsers}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={6} md={12}>
-            {" "}
-            <Card className="stat-card">
-              <Card.Body>
-                <FaChartLine className="stat-icon" />
-                <Card.Title>Total Loans</Card.Title>
-                <Card.Text>Active: {stats.loans.active}</Card.Text>
-                <Card.Text>Pending: {stats.loans.pending}</Card.Text>
-                <Card.Text>Closed: {stats.loans.closed}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-      <Container className="container" style={{ marginBottom: "50px" }}>
-        <Row>
-          <Col lg={6} md={12}>
-            {" "}
-            <Card className="stat-card">
-              <Card.Body>
-                <FaMoneyBillWave className="stat-icon" />
-                <Card.Title>Revenue</Card.Title>
-                <Card.Text>{stats.revenue}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={6} md={12}>
-            {" "}
-            <Card className="stat-card">
-              <Card.Body>
-                <FaFileInvoice className="stat-icon" />
-                <Card.Title>Invoices Overview</Card.Title>
-                <Card.Text>Total: {stats.invoices}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container> */}
     </div>
   );
 };
