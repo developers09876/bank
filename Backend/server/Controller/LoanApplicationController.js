@@ -66,21 +66,66 @@ export const getLoanApplicationById = async (req, res) => {
 };
 
 // Update a loan application
-export const updateLoanApplication = async (req, res) => {
+// export const updateLoanApplication = async (req, res) => {
+//   try {
+//     const updatedApplication = await LoanApplication.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true }
+//     );
+//     if (!updatedApplication) {
+//       return res.status(404).json({ message: 'Application not found' });
+//     }
+//     res.status(200).json(updatedApplication);
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
+
+export async function updateLoanApplication(req, res, next) {
   try {
-    const updatedApplication = await LoanApplication.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!updatedApplication) {
-      return res.status(404).json({ message: 'Application not found' });
-    }
-    res.status(200).json(updatedApplication);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+    const data = req.body;
+    const id = req.params.id;
+    const details = {
+      userid:data.userid,
+      fullName: data.fullName,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.MaritalStatus,
+      nationality: data.nationality,
+      pan: data.pan,
+      aadhaar: data.aadhaar,
+      contact: data.contact,
+      address: data.address,
+      annualIncome: data.annualIncome,
+      bankAccountDetails: data.bankAccountDetails,
+      creditScore: data.creditScore,
+      downPayment: data.downPayment,
+      employerDetails: data.employerDetails,
+      employmentStatus: data.employmentStatus,
+      existingLoans: data.existingLoans,
+      incomeDetails: data.incomeDetails,
+      loanAmount: data.loanAmount,
+      loanPurpose: data.loanPurpose,
+      propertyDetails: data.propertyDetails,
+      identityProof: data.identityProof,
+      addressProof: data.addressProof,
+      photographs: data.photographs,
+      propertyOwnershipProof: data.propertyOwnershipProof,
+      signature: data.signature,
+      status: data.status
+    };
+    const updateParent = await Parent.findByIdAndUpdate(id, details, {
+      new: true,
+    });
+    res.status(200).json({
+      message: "create successfully",
+      data: updateParent,
+    });
+  } catch (err) {
+    next();
   }
-};
+}
 
 // Delete a loan application
 export const deleteLoanApplication = async (req, res) => {

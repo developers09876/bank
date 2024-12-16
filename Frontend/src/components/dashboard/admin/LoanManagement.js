@@ -12,7 +12,7 @@ const LoanManagement = ({ collapsed }) => {
   const [loan, setLoan] = useState([]);
 
   useEffect(() => {
-    getAll();
+    getAll(); 
   }, []);
 
   const getAll = async () => {
@@ -24,7 +24,7 @@ const LoanManagement = ({ collapsed }) => {
       const loans = await response.json();
       const loansWithStatus = loans.map((loan) => ({
         ...loan,
-        status: "Pending", // Default status
+        status: 0, // Default status
       }));
       setLoan(loansWithStatus);
     } catch (error) {
@@ -50,7 +50,7 @@ const LoanManagement = ({ collapsed }) => {
   const handleApprove = () => {
     setLoan((prev) =>
       prev.map((item) =>
-        item._id === selectedRecord._id ? { ...item, status: "Approved" } : item
+        item._id === selectedRecord._id ? { ...item, status: 1 } : item
       )
     );
     handleModalOk();
@@ -59,7 +59,7 @@ const LoanManagement = ({ collapsed }) => {
   const handleReject = () => {
     setLoan((prev) =>
       prev.map((item) =>
-        item._id === selectedRecord._id ? { ...item, status: "Rejected" } : item
+        item._id === selectedRecord._id ? { ...item, status: 2 } : item
       )
     );
     handleModalOk();
@@ -72,7 +72,7 @@ const LoanManagement = ({ collapsed }) => {
       item.fullName.toLowerCase().includes(searchTerm)
     );
     setFilteredData(filtered);
-    setCurrentPage(1); // Reset to the first page when filtering
+    setCurrentPage(1); 
   };
 
   const getPaginatedData = () => {
@@ -166,6 +166,10 @@ const LoanManagement = ({ collapsed }) => {
           onOk={handleModalOk}
           onCancel={handleModalCancel}
           footer={null}
+          bodyStyle={{
+            maxHeight: "70vh", 
+            overflowY: "auto",
+          }}
         >
           {selectedRecord && (
             <div>

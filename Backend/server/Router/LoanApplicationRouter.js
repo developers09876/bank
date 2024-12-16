@@ -13,7 +13,7 @@ router.post("/createloanapplications", createLoanApplication);
 
 router.get("/getall", getAllLoanApplications);
 
-router.get("/gatbyid/:id", getLoanApplicationById);
+router.get("/getbyid/:id", getLoanApplicationById);
 
 router.put("/updateloanapplications/:id", updateLoanApplication);
 
