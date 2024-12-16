@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Table, Input, Space, Pagination, Button, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
-const LoanManagement = ({ collapsed }) => {
+import { useLocation } from "react-router-dom";
+const LoanStatus = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
+  const [data, setData] = useState([]);
+  console.log("data", data);
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -23,14 +26,22 @@ const LoanManagement = ({ collapsed }) => {
         headers: { Authorization: localStorage.getItem("token") },
       });
       const loans = await response.json();
-      console.log("loans", loans);
-      setLoan(loans); 
-      
-      
+      setLoan(loans); // Ensure backend provides status for each loan
     } catch (error) {
       console.log(error);
     }
   };
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (loan && state) {
+      const filterData = loan.filter((res) => String(res.status) === String(state));
+      console.log("filterData", filterData);
+      setData(filterData);
+    }
+  }, [state,loan])
+  
 
   const handleViewDetails = (record) => {
     setSelectedRecord(record);
@@ -173,7 +184,7 @@ const LoanManagement = ({ collapsed }) => {
         </Space>
 
         <Table
-          dataSource={getPaginatedData()}
+          dataSource={data}
           columns={columns}
           pagination={false}
           className="loan-table"
@@ -346,4 +357,4 @@ const LoanManagement = ({ collapsed }) => {
   );
 };
 
-export default LoanManagement;
+export default LoanStatus;

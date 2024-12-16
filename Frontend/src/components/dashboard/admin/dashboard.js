@@ -46,12 +46,7 @@ const AdminDashboard = () => {
 
   // Data for the chart
   const data = {
-    labels: [
-      "Pending",
-      "In Process",
-      "Rejected",
-      "Completed",
-    ],
+    labels: ["Pending", "In Process", "Rejected", "Completed"],
     datasets: [
       {
         label: "Client Status",
@@ -116,15 +111,14 @@ const AdminDashboard = () => {
               </Col>
 
               <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
+                <Card
+                  className="admin-stat-card"
+                  onClick={() => navigate("/admin/loancards")}
+                >
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
                     <Card.Title>Total Loans</Card.Title>
-                    <div className="loan-details">
-                      <p>Active: {stats.loans.active}</p>
-                      <p>Pending: {stats.loans.pending}</p>
-                      <p>Closed: {stats.loans.closed}</p>
-                    </div>
+                    <Card.Text>{stats.loans.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
