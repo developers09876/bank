@@ -3,7 +3,7 @@ import {
   createLoanApplication,
   getAllLoanApplications,
   getLoanApplicationById,
-  updateLoanApplication,
+  updateLoanApplicationStatus,
   deleteLoanApplication,
 } from "../Controller/LoanApplicationController.js";
 
@@ -15,7 +15,7 @@ router.get("/getall", getAllLoanApplications);
 
 router.get("/getbyid/:id", getLoanApplicationById);
 
-router.put("/updateloanapplications/:id", updateLoanApplication);
+router.put("/updateloanapplications/:id", updateLoanApplicationStatus);
 
 router.delete("/deleteloanapplications/:id", deleteLoanApplication);
 
