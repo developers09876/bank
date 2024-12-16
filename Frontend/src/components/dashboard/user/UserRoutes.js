@@ -12,14 +12,14 @@ export const UserRoutes = [
   },
   {
     path: "/user/loanstatus",
-    element: roles === "user" ? <LoanStatusTable /> : <Navigate to="/login" />,
+    element: <LoanStatusTable />,
   },
   {
     path: "/user/insuranceDetails",
-    element: roles === "user" ? <InsuranceDetails /> : <Navigate to="/login" />,
+    element: <InsuranceDetails /> ,
   },
   {
     path: "/user/taxDetails",
-    element: roles === "user" ? <TaxDetails /> : <Navigate to="/login" />,
+    element: <TaxDetails /> ,
   },
 ];

@@ -101,7 +101,7 @@ const AdminDashboard = () => {
           <Col md={6}>
             <Row className="admin-stats-row">
               <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
+                <Card className="admin-stat-card"onClick={() => navigate("/admin/userlist")}>
                   <Card.Body>
                     <FaUsers className="admin-stat-icon" />
                     <Card.Title>Total Users</Card.Title>
@@ -124,7 +124,7 @@ const AdminDashboard = () => {
               </Col>
 
               <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
+                <Card className="admin-stat-card"onClick={() => navigate("/admin/employeelist")}>
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
                     <Card.Title>Total Employees</Card.Title>

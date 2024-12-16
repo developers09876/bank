@@ -120,11 +120,7 @@ const EmployeeDashboard = () => {
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
                     <Card.Title>Total Loans</Card.Title>
-                    <div className="loan-details">
-                      <p>Active: {stats.loans.active}</p>
-                      <p>Pending: {stats.loans.pending}</p>
-                      <p>Closed: {stats.loans.closed}</p>
-                    </div>
+                     <Card.Text>{stats.loans.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
