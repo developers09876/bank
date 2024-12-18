@@ -32,9 +32,9 @@ ChartJS.register(
 const EmployeeDashboard = () => {
   const navigate = useNavigate();
   const stats = {
-    totalUsers: 1200,
+    totalUsers: 120,
     loans: {
-      active: 320,
+      active: 32,
       pending: 50,
       closed: 150,
     },
