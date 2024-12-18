@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import InsuranceReview from "./InsuranceReview";
 import TaxReview from "./TaxReview";
 import EmployeeDashboard from "./Dashboard";
+import LeadGeneration from "./LeadGeneration";
 
 const roles = localStorage.getItem("userType");
 export const EmployeeRoutes = [
@@ -21,5 +22,10 @@ export const EmployeeRoutes = [
     path: "/employee/insurance",
     element:
       roles === "employee" ? <InsuranceReview /> : <Navigate to="/login" />,
+  },
+  {
+    path: "/employee/lead",
+    element:
+      roles === "employee" ? <LeadGeneration /> : <Navigate to="/login" />,
   },
 ];

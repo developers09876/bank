@@ -73,6 +73,11 @@ function Sidebar({ collapsed }) {
           {/* <MdMenuBook className="Nav-Icon" /> */}
           Insurance Review
         </NavLink>
+        <NavLink to="/employee/lead" ClassName="main-nav-style">
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Lead
+        </NavLink>
+
       </Menu>
     </div>
   );
