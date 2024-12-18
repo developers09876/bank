@@ -75,3 +75,41 @@ h2 {
   padding: 20px;
 }
 
+/*  */
+
+
+.testimonials_cssdivcontainer{
+  background-color:  #efefef;
+}
+
+.testimonial-slider {
+  width: 60%;
+  margin: 0 auto;
+  background-color: #00397f;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.testimonial-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.testimonial-content {
+  text-align: center;
+}
+
+.testimonial-quote {
+  font-size: 24px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  font-size: 16px;
+  margin-top: 10px;
+  color: white;
+}
+.testimonial-slider_hrtag{
+  border: 2px solid white;
+}
