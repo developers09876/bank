@@ -1,6 +1,6 @@
 import { Logout } from "@mui/icons-material";
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,23 +9,29 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const AddAdmin = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
-    userType: "employee",
+    empno: "",
+    designation: "",
     firstname: "",
     lastname: "",
     email: "",
     password: "",
     confirmPassword: "",
     contactNumber: "",
+    Manager: "",
+    Branch: "",
   });
 
   const {
-    userType,
+    empno,
+    designation,
     firstname,
     lastname,
     contactNumber,
     email,
     password,
     confirmPassword,
+    Manager,
+    Branch,
   } = inputs;
 
   const onChange = (e) => {
@@ -41,27 +47,29 @@ const AddAdmin = ({ setAuth }) => {
       }),
       {
         pending: "Adding New Admin...",
-        success: "Added Succesfully!",
-        error: "Error!",
+        success: "Added Successfully!",
+        error: "Error occurred!",
       },
-      {
-        autoClose: 1000,
-      }
+      { autoClose: 1000 }
     );
   };
+
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const body = {
-        userType,
+        empno,
+        userType: designation, // Using designation as userType
         firstname,
         lastname,
         contactNumber,
         email,
         password,
         confirmPassword,
+        manager: Manager,
+        branch: Branch,
       };
 
       const response = await fetch("http://localhost:5000/signup/register", {
@@ -74,26 +82,33 @@ const AddAdmin = ({ setAuth }) => {
 
       const parseRes = await response.json();
 
-      addSuccessful();
-      setTimeout(() => {
-        navigate(-1);
-      }, 3000);
+      if (response.ok) {
+        addSuccessful();
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
+      } else {
+        toast.error(parseRes.message || "Failed to add admin!");
+      }
     } catch (error) {
-      console.log(error.message);
+      console.error("Error:", error.message);
+      toast.error("Failed to add admin!");
     }
   };
 
   return (
-    <div className="flex h-[900px] ">
+    <div className="flex h-[900px]">
       <Sidebar />
       <ToastContainer />
 
-      <div className="w-full   border bg-white shadow-md rounded">
+      <div className="w-full border bg-white shadow-md rounded">
         <Container>
-          <div className="w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded ">
+          <div className="w-full px-8 pt-6 pb-8 mb-4 bg-white rounded">
             {/* HEADER */}
-            <div className="flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md ">
-              {/* TITLE */}
+            <div
+              className="flex items-center justify-between px-4 py-5 sm:px-6 rounded shadow-md"
+              style={{ backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))" }}
+            >
               <div>
                 <h3 className="text-lg font-medium leading-6 text-white">
                   Add New Employee
@@ -102,13 +117,8 @@ const AddAdmin = ({ setAuth }) => {
                   Register all the required fields.
                 </p>
               </div>
-              <ToastContainer />
-
-              {/* BUTTON */}
-
               <div className="text-white">
                 <button
-                  className=""
                   onClick={(e) => {
                     setAuth(false);
                   }}
@@ -121,144 +131,151 @@ const AddAdmin = ({ setAuth }) => {
             </div>
 
             <form
-              onSubmit={(e) => {
-                onSubmit(e);
-              }}
-              className="mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500 "
+              onSubmit={onSubmit}
+              className="mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500"
             >
               <Row>
                 <Col lg={6} md={6}>
-                  {/* FIRST NAME */}
-                  <label htmlFor="firstname">First Name: </label>
+                  <label htmlFor="empno">Employee No:</label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="empno"
+                    value={empno}
+                    onChange={onChange}
+                    placeholder="Employee No"
+                    required
+                  />
+                </Col>
+                <Col lg={6} md={6}>
+                  <label htmlFor="designation">Designation:</label>
+                  <select
+                    name="designation"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    value={designation}
+                    onChange={onChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select Designation
+                    </option>
+                    <option value="LoanEmployee">Loan Employee</option>
+                    <option value="TaxEmployee">Tax Employee</option>
+                    <option value="InsuranceEmployee">Insurance Employee</option>
+                  </select>
+                </Col>
+                <Col lg={6} md={6}>
+                  <label htmlFor="firstname">First Name:</label>
                   <input
                     type="text"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="firstname"
                     value={firstname}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
+                    onChange={onChange}
                     placeholder="First Name"
                     required
                   />
                 </Col>
-                {/* LAST NAME */}
                 <Col lg={6} md={6}>
-                  <label htmlFor="lastname">Last Name: </label>
+                  <label htmlFor="lastname">Last Name:</label>
                   <input
                     type="text"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="lastname"
                     value={lastname}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
+                    onChange={onChange}
                     placeholder="Last Name"
                     required
                   />
                 </Col>
                 <Col lg={6} md={6}>
-                  {/* CONTACT NUMBER */}
-                  <label htmlFor="contactNumber">Contact Number: </label>
+                  <label htmlFor="contactNumber">Contact Number:</label>
                   <input
                     type="number"
-                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="contactNumber"
                     value={contactNumber}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
+                    onChange={onChange}
                     placeholder="Contact Number"
                     required
                   />
                 </Col>
                 <Col lg={6} md={6}>
-                  {/* ADDRESS */}
-                  {/* <label htmlFor="address">Address: </label>
-                  <input
-                    type="text"
-                    className="block border border-grey-500t w-full p-3 rounded mb-4"
-                    name="address"
-                    value={address}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
-                    placeholder="Address"
-                    required
-                  /> */}
-                  <label htmlFor="email">Email Address: </label>
+                  <label htmlFor="email">Email Address:</label>
                   <input
                     type="email"
-                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="email"
                     value={email}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
+                    onChange={onChange}
                     placeholder="Email"
                     required
                   />
                 </Col>
-                {/* EMAIL ADDRESS */}
                 <Col lg={6} md={6}>
-                  <label htmlFor="password">Password: </label>
+                  <label htmlFor="password">Password:</label>
                   <input
                     type="password"
-                    className="block border border-grey-500t w-full p-3 rounded mb-4"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="password"
                     value={password}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
+                    onChange={onChange}
                     placeholder="**********"
                     required
                   />
                 </Col>
-                {/* PASSWORD */}
                 <Col lg={6} md={6}>
-                  <label
-                    htmlFor="confirmPassword"
-                    className="register-form__label"
-                  >
-                    Confirm Password:
-                  </label>
+                  <label htmlFor="confirmPassword">Confirm Password:</label>
                   <input
                     type="password"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="confirmPassword"
                     value={confirmPassword}
                     onChange={onChange}
-                    className="register-form__input"
-                    placeholder="*************"
+                    placeholder="**********"
                     required
                   />
                 </Col>
                 <Col lg={6} md={6}>
-                  {/* USERNAME
-                  <label htmlFor="username">Username: </label>
+                  <label htmlFor="Manager">Reporting Manager:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500t w-full p-3 rounded mb-4"
-                    name="username"
-                    value={username}
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
-                    placeholder="Username"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="Manager"
+                    value={Manager}
+                    onChange={onChange}
+                    placeholder="Manager"
                     required
-                  /> */}
+                  />
+                </Col>
+                <Col lg={6} md={6}>
+                  <label htmlFor="Branch">Reporting Branch:</label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="Branch"
+                    value={Branch}
+                    onChange={onChange}
+                    placeholder="Branch"
+                    required
+                  />
                 </Col>
               </Row>
 
-              {/* BUTTONS */}
               <button
                 type="submit"
-                className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6"
+                className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6"
+                style={{ backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))" }}
               >
                 Save
               </button>
-
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10">
-                <Link to="/admin">Cancel</Link>
+              <button
+                type="button"
+                className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10"
+                style={{ backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))" }}
+                onClick={() => navigate("/admin")}
+              >
+                Cancel
               </button>
             </form>
           </div>
