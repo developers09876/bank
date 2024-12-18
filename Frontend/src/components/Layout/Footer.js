@@ -9,10 +9,10 @@ function Footer() {
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900">VILU GENIUS.</h3>
               <p className="mb-4 text-sm text-gray-500">
-                Simplifying your loan and tax management with smart, easy-to-use tools.
-              </p>
+              The genesis of VILU Genius private limited is traced Mr.Prakasha H,for his one decade and veterans in the retail banking industry, primarily in the housing loans and financial services and insurance industry.
               <p className="text-sm text-gray-500">
-                We aim to provide a seamless experience for managing your finances, loans, and taxes.
+              Leverage his experience and unique ideas to create a lasting, well-respected organization in the affordable home loans and other finance business. 
+              </p>
               </p>
             </div>
 
@@ -45,13 +45,16 @@ function Footer() {
             <div>
               <h3 className="mb-6 text-lg font-bold text-gray-900">Contact Us</h3>
               <p className="text-sm text-gray-500 mb-2">
-                <strong>Email:</strong> support@loanapp.com
+                <strong>Email:</strong> vilugenuis@gmail.com
               </p>
               <p className="text-sm text-gray-500 mb-2">
-                <strong>Phone:</strong> +123 456 789
+
+                <strong>Phone:</strong> +91 9620795762
+
+                                        +91 9900541268
               </p>
               <p className="text-sm text-gray-500 mb-2">
-                <strong>Address:</strong> 123 Loan St., Finance City, Chennai
+                <strong>Address:</strong> Registered address of Vilu Genius is 26832/20/3A,SOMESHWARA EXTENSION 5 BLOCK 5 599 1ST MAIN DODDABALLAPUR DODDABALLAPUR Bangalore ,Doddaballapura,Karnataka, India-561203.
               </p>
             </div>
 
@@ -108,7 +111,7 @@ function Footer() {
 
           <hr className="my-8 border-gray-200 sm:mx-auto lg:my-8" />
 
-          <div className="text-center">
+          <div className="text-center" >
             <span className="text-sm text-gray-500">
               © 2022-2023 VILU GENIUS™. All Rights Reserved. | Terms & Conditions | Privacy Policy
             </span>
