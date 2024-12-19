@@ -17,7 +17,7 @@ const EmployeeList = ({ setAuth }) => {
       const users = await response.json();
 
       // Filter only users with userType 'employee'
-      const employeeUsers = users.filter((user) => user.userType === 'employee');
+      const employeeUsers = users.filter((user) => user.userType != 'user');
       setEmployees(employeeUsers);
     } catch (error) {
       console.log(error);
@@ -34,20 +34,30 @@ const EmployeeList = ({ setAuth }) => {
   // Ant Design Table columns
   const columns = [
     {
+      title: 'Emp No',
+      dataIndex: 'empno',
+      key: 'empno',
+    },
+    {
       title: 'Full Name',
       dataIndex: 'fullname',
       key: 'fullname',
       render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
     },
     {
-      title: 'Contact Number',
-      dataIndex: 'contactNumber',
-      key: 'contactNumber',
+      title: 'Designation',
+      dataIndex: 'userType',
+      key: 'userType',
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+    },
+    {
+      title: 'Date Of Joining',
+      dataIndex: 'dateOfJoining',
+      key: 'dateOfJoining',
     },
     {
       title: 'Action',

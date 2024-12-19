@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   empno: { type: String },
   manager: { type: String },
   branch: { type: String },
+  dateOfJoining: { type: String },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
