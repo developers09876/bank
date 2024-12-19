@@ -67,8 +67,9 @@ function About() {
       <div>
         <div className='aboutus-bg'>
           <div className='aboutus-heading'>
-            <Container style={{ width: '80%' }}>
+            <Container style={{ width: '80%', display: 'block' }}>
               <h2>About Us</h2>
+              <p className='aboutus-heading-para'>“V + I + L + U (victory + is + loving + us) "Victory is Loving Us when we are Genius” <br />(when we embrace our genius, victory becomes a faithful companion,<br /> showering us with love and opportunity)</p>
             </Container>
           </div>
         </div>
@@ -85,10 +86,10 @@ function About() {
                 </Title>
                 <Text className="description" type="secondary">
                   The genesis of VILU Genius private limited is traced Mr. Prakasha H, for his one decade and veterans in the retail banking industry, primarily in the housing loans and financial services and insurance industry. Leverage his experience and unique ideas to create a lasting, well-respected organization in the affordable home loans and other finance business.
-                </Text><br />
-                <Text className='description' type='secondary' style={{ marginTop: '20px' }}>
+                </Text><p> </p>
+                <Text className='description' type='secondary' style={{ paddingTop: '20px' }}>
                   VILU Genius private limited was incorporated on January 20th, 2023, under the companies act, 2013 with an objective to provide financial consultants, management consultants, and provide advice, services, general consultancy in various fields, mainly focusing on loan consulting, auditing and accounting, book keeping bank loan services and general administrative, commercial, financial legal, economic, direct and indirect taxation and other levies, statistical, accountancy and all type of consultancy services with other related activities.
-                </Text>
+                </Text >
                 <br />
                 <Button
                   className="contactus-button mt-3"
@@ -101,14 +102,14 @@ function About() {
               {/* Right Section */}
               <Col lg={5} className="aboutus-images">
                 <Row >
-                  <Col lg={6}>
+                  <Col lg={6} className='py-1'>
                     <img
                       src="https://thegenius.co/html/loanlift/assets/images/about/about-four-imag-1.jpg"
                       alt="Team Meeting"
                       className="img-fluid img1  rounded"
                     />
                   </Col>
-                  <Col lg={6}>
+                  <Col lg={6} className='py-1'>
                     <Row >
                       <Col style={{ paddingBottom: '12px' }}>
                         <img
@@ -122,7 +123,7 @@ function About() {
                       <Col style={{ paddingTop: '12px' }}>
                         <Card
                           bordered={false}
-                          className="experience-box text-center text-white"
+                          className="experience-box text-center text-white "
                           style={{ backgroundColor: '#1a2a41' }}
                         >
                           <Title level={3} style={{ color: 'white' }}>
@@ -143,7 +144,7 @@ function About() {
                 <Col key={card.id} lg={4} md={4} sm={12} className='px-4'>
                   <Card bordered={false} className="h-100 text-center aboutus-cardDesign">
                     <Row>
-                      <Col lg={2}>
+                      <Col lg={2} style={{ padding: '0' }}>
                         <p className="aboutus-card-icon">{card.icon}</p>
                       </Col>
                       <Col lg={10}>
@@ -151,7 +152,7 @@ function About() {
                           <Title level={4} style={{ textAlign: 'left' }}>{card.title}</Title>
                         </Row>
                         <Row>
-                          <Text type="secondary" style={{ textAlign: 'left', color: '#5a5a5a' }}>{card.description}</Text>
+                          <Text type="secondary" style={{ textAlign: 'justify', color: '#5a5a5a' }}>{card.description}</Text>
                         </Row>
                       </Col>
                     </Row>
