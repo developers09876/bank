@@ -19,6 +19,7 @@ const AddAdmin = ({ setAuth }) => {
     contactNumber: "",
     Manager: "",
     Branch: "",
+    dateOfJoining: "",
   });
 
   const {
@@ -32,6 +33,7 @@ const AddAdmin = ({ setAuth }) => {
     confirmPassword,
     Manager,
     Branch,
+    dateOfJoining,
   } = inputs;
 
   const onChange = (e) => {
@@ -70,6 +72,7 @@ const AddAdmin = ({ setAuth }) => {
         confirmPassword,
         manager: Manager,
         branch: Branch,
+        dateOfJoining,
       };
 
       const response = await fetch("http://localhost:5000/signup/register", {
@@ -107,7 +110,9 @@ const AddAdmin = ({ setAuth }) => {
             {/* HEADER */}
             <div
               className="flex items-center justify-between px-4 py-5 sm:px-6 rounded shadow-md"
-              style={{ backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))" }}
+              style={{
+                backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
+              }}
             >
               <div>
                 <h3 className="text-lg font-medium leading-6 text-white">
@@ -161,7 +166,9 @@ const AddAdmin = ({ setAuth }) => {
                     </option>
                     <option value="LoanEmployee">Loan Employee</option>
                     <option value="TaxEmployee">Tax Employee</option>
-                    <option value="InsuranceEmployee">Insurance Employee</option>
+                    <option value="InsuranceEmployee">
+                      Insurance Employee
+                    </option>
                   </select>
                 </Col>
                 <Col lg={6} md={6}>
@@ -237,6 +244,17 @@ const AddAdmin = ({ setAuth }) => {
                   />
                 </Col>
                 <Col lg={6} md={6}>
+                  <label htmlFor="dateOfJoining">Date of Joining:</label>
+                  <input
+                    type="date"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="dateOfJoining"
+                    value={dateOfJoining}
+                    onChange={onChange}
+                    required
+                  />
+                </Col>
+                <Col lg={6} md={6}>
                   <label htmlFor="Manager">Reporting Manager:</label>
                   <input
                     type="text"
@@ -265,14 +283,18 @@ const AddAdmin = ({ setAuth }) => {
               <button
                 type="submit"
                 className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6"
-                style={{ backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))" }}
+                style={{
+                  backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
+                }}
               >
                 Save
               </button>
               <button
                 type="button"
                 className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10"
-                style={{ backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))" }}
+                style={{
+                  backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
+                }}
                 onClick={() => navigate("/admin")}
               >
                 Cancel
