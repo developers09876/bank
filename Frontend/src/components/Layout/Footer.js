@@ -9,7 +9,7 @@ function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             
             <div>
-              <h3 className="mb-4 text-lg font-bold text-gray-900">VILU GENIUS.</h3>
+              <h3 className="mb-4 text-lg font-bold text-gray-900">VILU GENIUS</h3>
               <p className="mb-2 text-sm text-gray-500">
                 The genesis of VILU Genius Private Limited is traced to Mr. Prakasha H for his decade of experience in the retail banking industry, primarily in housing loans and financial services.
               </p>
@@ -18,9 +18,8 @@ function Footer() {
               </p>
             </div>
 
-           
             <div>
-              <h3 className="mb-4 text-lg font-bold text-gray-900">Quick Links</h3>
+              <h3 className="mb-4 ml-4 text-lg font-bold text-gray-900">Quick Links</h3>
               <ul className="space-y-2 text-sm text-gray-500">
                 <li>
                   <a href="/register" className="hover:text-blue-500">
@@ -45,7 +44,6 @@ function Footer() {
               </ul>
             </div>
 
-          
             <div>
               <h3 className="mb-4 text-lg font-bold text-gray-900">Contact Us</h3>
               <p className="text-sm text-gray-500 mb-2">
@@ -59,35 +57,34 @@ function Footer() {
               </p>
             </div>
 
-           
-            <div >
+            <div className="text-center">
               <h3 className="mb-4 text-lg font-bold text-gray-900">Follow Us</h3>
-              <ul className="flex space-x-4 ">
+              <ul className="flex justify-center space-x-6" style={{paddingLeft:"4rem"}}>
                 <li>
                   <a href="#" className="text-gray-500 hover:text-blue-500">
-                    <FaFacebookF className="w-5 h-5" />
+                    <FaFacebookF className="w-7 h-7" />
                   </a>
                 </li>
                 <li>
                   <a href="#" className="text-gray-500 hover:text-pink-500">
-                    <FaInstagram className="w-5 h-5" />
+                    <FaInstagram className="w-7 h-7" />
                   </a>
                 </li>
                 <li>
                   <a href="#" className="text-gray-500 hover:text-green-500">
-                    <FaWhatsapp className="w-5 h-5" />
+                    <FaWhatsapp className="w-7 h-7" />
                   </a>
                 </li>
                 <li>
                   <a href="#" className="text-gray-500 hover:text-blue-400">
-                    <FaTwitter className="w-5 h-5" />
+                    <FaTwitter className="w-7 h-7" />
                   </a>
                 </li>
               </ul>
             </div>
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto" />
-          <div className="text-center">
+          <div style={{ textAlign: "center", marginTop: "25px" }}>
             <span className="text-sm text-gray-500">
               © 2022-2023 VILU GENIUS™. All Rights Reserved. | <a href="#" className="hover:text-blue-500">Terms & Conditions</a> | <a href="#" className="hover:text-blue-500">Privacy Policy</a>
             </span>
