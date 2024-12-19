@@ -34,7 +34,7 @@ function ContactUs() {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-2 text-l font-medium text-gray-900"
                     >
                       Your email
                     </label>
@@ -50,7 +50,7 @@ function ContactUs() {
                   <div>
                     <label
                       htmlFor="phone"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-2 text-l font-medium text-gray-900"
                     >
                       Phone number
                     </label>
@@ -66,7 +66,7 @@ function ContactUs() {
                   <div>
                     <label
                       htmlFor="subject"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-2 text-l font-medium text-gray-900"
                     >
                       Subject
                     </label>
@@ -82,7 +82,7 @@ function ContactUs() {
                   <div className="sm:col-span-2">
                     <label
                       htmlFor="message"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      className="block mb-2 text-l font-medium text-gray-900"
                     >
                       Your message
                     </label>
