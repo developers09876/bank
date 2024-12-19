@@ -17,7 +17,16 @@
         text-align: left;
         font-weight: bold;
         font-size: 47px;
+        display: inline;
     }
+}
+
+.aboutus-heading-para {
+    font-size: 1rem;
+    width: 70%;
+    padding-top: 20px;
+    margin-bottom: 1.5rem;
+    color: #c2c2c2;
 }
 
 .aboutus-secondcontent {
@@ -67,11 +76,15 @@
     background: none;
     font-size: 18px;
     color: #1a2a41;
+    transition: background 0.3s ease, color 0.3s ease;
 
     &:hover {
         color: white;
-        background: linear-gradient(139deg, #111e31, #052657bf);
+        background-image: linear-gradient(139deg, #111e31, #052657bf);
         border: #1a2a41;
+        color: white;
+        transition: background-image 0.3s ease, color 0.3s ease;
+
     }
 }
 
@@ -93,7 +106,7 @@
 }
 
 .experience-box {
-    padding: 2rem;
+    padding: 1rem;
     height: 158px;
     border-radius: 5px;
 }
@@ -102,7 +115,7 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: #f2f4f8;
-    padding: 20px;
+    padding: 10px;
     transition: all 0.3s ease;
 
     &:hover {
@@ -126,7 +139,8 @@
 
 .aboutus-card-icon {
     color: #5a5a5a;
-    font-size: 40px;
+    width: 100%;
+    font-size: 37px;
 }
 
 .aboutus-whywe {

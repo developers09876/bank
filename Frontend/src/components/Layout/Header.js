@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Imageh1 from "../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 import "./Header.css";
 
 function Header() {
+  const location = useLocation();
+  const [selectedKey, setSelectedKey] = useState(location.pathname);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
- 
+  const handleMenuClick = (key) => {
+    setSelectedKey(key);
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("token");
     if (storedUsername) {
-      setIsLoggedIn(true); 
+      setIsLoggedIn(true);
     }
   }, []);
   const userType = localStorage.getItem("userType");
 
-  const handlenavigate = () =>
-  {
+  const handlenavigate = () => {
     if (userType === "employee") {
       navigate("/employee");
-    } 
-     if (userType === "user") {
+    }
+    if (userType === "user") {
       navigate("/user");
     }
-  
+
   }
   const handleLogout = () => {
-    setIsLoggedIn(false); 
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("userType"); 
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+    localStorage.removeItem("userType");
 
     navigate("/login");
   };
@@ -46,46 +51,57 @@ function Header() {
           />
         </div>
         <div>
-          <ul className="flex flex-col font-medium lg:flex-row lg:space-x-6 lg:mt-0 items-center">
+          <ul
+            selectedKeys={[selectedKey]}
+            className="flex flex-col font-medium lg:flex-row lg:space-x-6 lg:mt-0 items-center">
             <li className="px-2 py-4">
               <Link
+                onClick={() => handleMenuClick("/")}
                 to="/"
-                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/" ? "bg-[#00397f] text-white" : "text-gray-700"
+                  }`}
               >
                 Home
               </Link>
             </li>
             <li>
               <Link
+                onClick={() => handleMenuClick("/about")}
                 to="/about"
-                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/about" ? "bg-[#00397f] text-white" : "text-gray-700"
+                  }`}
               >
                 About
               </Link>
             </li>
             <li>
               <Link
+                onClick={() => handleMenuClick("/carrier")}
                 to="/carrier"
-                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/carrier" ? "bg-[#00397f] text-white" : "text-gray-700"
+                  }`}
               >
                 Career
               </Link>
             </li>
             <li>
               <Link
+                onClick={() => handleMenuClick("/contact")}
                 to="/contact"
-                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/contact" ? "bg-[#00397f] text-white" : "text-gray-700"
+                  }`}
               >
                 Contact Us
               </Link>
             </li>
+
             {!isLoggedIn ? (
               <li>
                 <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3">
                   <Link
                     to="/login"
                     className="no-underline text-white"
-                   
+
                   >
                     Login
                   </Link>
@@ -96,13 +112,13 @@ function Header() {
                 <div
                   className="live-icon cursor-pointer"
                   onMouseEnter={() => setDropdownVisible(true)}
-                  //
+                //
                 >
                   <img
                     src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
                     alt="Live Icon"
                     className="avatar"
-                    // style={{ width: "40px", height: "40px" }} // Style the icon
+                  // style={{ width: "40px", height: "40px" }} // Style the icon
                   />
                   <div className="live-badge">100%</div>{" "}
                   {/* Badge for live status */}
