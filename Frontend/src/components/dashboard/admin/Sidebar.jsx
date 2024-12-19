@@ -1,10 +1,8 @@
-
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 import { Menu } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
-
 
 function Sidebar({ collapsed }) {
   const onClick = (e) => {
@@ -46,7 +44,21 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           EmployeeList
         </NavLink>
-<NavLink to="/admin/createjobform" className="main-nav-style">Job Post</NavLink>
+        {/* <NavLink to="/admin/createjobform" className="main-nav-style">Job Post</NavLink> */}
+
+        <SubMenu
+          // icon={<AiFillProject size={20} className="Nav-Icon1" />}
+          title="Career"
+        >
+          <NavLink to="/admin/createjobform">
+            {/* <MdRequestPage className="Nav-Icon" /> */}
+            create job
+          </NavLink>
+          <NavLink to="/professional/jobrequests">
+            {/* <MdSend className="Nav-Icon" /> */}
+            job request
+          </NavLink>
+        </SubMenu>
         <SubMenu
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"
