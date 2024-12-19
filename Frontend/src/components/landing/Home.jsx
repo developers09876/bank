@@ -1,59 +1,78 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   PermIdentity,
   CreditScore,
   ReceiptLong,
   Assessment,
   InsightsOutlined,
-} from '@mui/icons-material';
-import Header from '../Layout/Header';
-import Footer from '../Layout/Footer';
-import image1 from '../Images/Img 1.png';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+} from "@mui/icons-material";
+import Header from "../Layout/Header";
+import Footer from "../Layout/Footer";
+import image1 from "../Images/Img 1.png";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
-import './Home.css'
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "./Home.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Landing = () => {
   const navigate = useNavigate();
   const carouselImages = [
     {
-      id:1,
-      image:'https://flexiloans.com/wp-content/uploads/2023/08/Small-Business-Loans.png'
+      id: 1,
+      image:
+        "https://flexiloans.com/wp-content/uploads/2023/08/Small-Business-Loans.png",
     },
     {
-      id:2,
-      image:'https://paytmblogcdn.paytm.com/wp-content/uploads/2023/09/Blog_Paytm_What-is-Tax_-Types-of-Tax-Benefits-and-Penalty-in-Tax-1.jpg'
+      id: 2,
+      image:
+        "https://paytmblogcdn.paytm.com/wp-content/uploads/2023/09/Blog_Paytm_What-is-Tax_-Types-of-Tax-Benefits-and-Penalty-in-Tax-1.jpg",
     },
     {
-      id:3,
-      image:'https://i0.wp.com/www.suretiimf.com/wp-content/uploads/2020/06/New2.jpg?fit=1214%2C355&ssl=1'
+      id: 3,
+      image:
+        "https://i0.wp.com/www.suretiimf.com/wp-content/uploads/2020/06/New2.jpg?fit=1214%2C355&ssl=1",
     },
-  ]
+  ];
   const creditProducts = [
-    { title: 'Personal Loan', description: 'Check Eligibility', link: '#', icon: 'icon-path' },
-    { title: 'Credit Cards', description: 'Get Best Offers', link: '#', icon: 'icon-path' },
+    {
+      title: "Personal Loan",
+      description: "Check Eligibility",
+      link: "#",
+      icon: "icon-path",
+    },
+    {
+      title: "Credit Cards",
+      description: "Get Best Offers",
+      link: "#",
+      icon: "icon-path",
+    },
     // Add more cards as needed...
   ];
   const products = [
     {
       title: "CREDIT CARDS",
-      description: "From 50+ Options, Choose a card matching your lifestyle & needs",
+      description:
+        "From 50+ Options, Choose a card matching your lifestyle & needs",
       buttonText: "Get Best Offers",
       link: "#",
       icon: "fas fa-credit-card",
     },
     {
       title: "PERSONAL LOAN",
-      description: "Select the best offer curated just for you from a wide choice of Banks & NBFC's",
+      description:
+        "Select the best offer curated just for you from a wide choice of Banks & NBFC's",
       buttonText: "Check Eligibility",
       link: "#",
       icon: "fas fa-hand-holding-usd",
     },
     {
       title: "MICRO LOANS (UNDER ₹50K)",
-      description: "Instant small ticket loans to meet your immediate cash needs",
+      description:
+        "Instant small ticket loans to meet your immediate cash needs",
       buttonText: "Get Instant Loan",
       link: "#",
       icon: "fas fa-coins",
@@ -74,7 +93,8 @@ const Landing = () => {
     },
     {
       title: "HOME LOAN",
-      description: "Choose from lowest interest rates available for your dream home",
+      description:
+        "Choose from lowest interest rates available for your dream home",
       buttonText: "Check Eligibility",
       link: "/loan",
       icon: "fas fa-home",
@@ -91,28 +111,31 @@ const Landing = () => {
       description: "Get better interest rates on your existing home loan",
       buttonText: "Reduce Your EMI",
       link: "#",
-      icon: "fa-solid fa-handshake-simple"
+      icon: "fa-solid fa-handshake-simple",
     },
   ];
 
   const insurance = [
     {
       title: "TERM INSURANCE",
-      description: "Affordable term insurance plans to secure your loved ones financially.",
+      description:
+        "Affordable term insurance plans to secure your loved ones financially.",
       buttonText: "Check Eligibility",
       link: "/insurancepage",
       icon: "fas fa-file-alt",
     },
     {
       title: "HEALTH INSURANCE",
-      description: "Get comprehensive health coverage to safeguard you and your family.",
+      description:
+        "Get comprehensive health coverage to safeguard you and your family.",
       buttonText: "Get Best Offers",
       link: "#",
       icon: "fas fa-heartbeat",
     },
     {
       title: "LIFE INSURANCE",
-      description: "Secure your family’s future with the best life insurance plans.",
+      description:
+        "Secure your family’s future with the best life insurance plans.",
       buttonText: "Check Plans",
       link: "#",
       icon: "fas fa-user-shield",
@@ -126,7 +149,8 @@ const Landing = () => {
     },
     {
       title: "HOME INSURANCE",
-      description: "Safeguard your home and valuable possessions from unforeseen events.",
+      description:
+        "Safeguard your home and valuable possessions from unforeseen events.",
       buttonText: "Get Protection",
       link: "#",
       icon: "fas fa-home",
@@ -138,19 +162,34 @@ const Landing = () => {
       link: "#",
       icon: "fas fa-plane",
     },
-   
+  ];
+  const testimonials = [
+    {
+      quote: "This app has transformed the way I manage my loans!",
+      author: "- Jane Doe",
+    },
+    {
+      quote: "I love how easy it is to keep track of my finances.",
+      author: "- John Smith",
+    },
+    {
+      quote: "A must-have tool for any business!",
+      author: "- Sarah Lee",
+    },
   ];
   const tax = [
     {
       title: "INCOME TAX FILING",
-      description: "Get assistance with filing your annual income tax returns accurately and on time.",
+      description:
+        "Get assistance with filing your annual income tax returns accurately and on time.",
       buttonText: "File Now",
       link: "/taxpage",
       icon: "fas fa-file-invoice-dollar",
     },
     {
       title: "GST REGISTRATION",
-      description: "Quick and easy GST registration services for businesses of all sizes.",
+      description:
+        "Quick and easy GST registration services for businesses of all sizes.",
       buttonText: "Register Now",
       link: "#",
       icon: "fas fa-receipt",
@@ -164,19 +203,30 @@ const Landing = () => {
     },
     {
       title: "TDS RETURNS FILING",
-      description: "Ensure timely and accurate TDS return filing to avoid penalties.",
+      description:
+        "Ensure timely and accurate TDS return filing to avoid penalties.",
       buttonText: "File Returns",
       link: "#",
       icon: "fas fa-calculator",
     },
-  ]
-  
-  return (
-    <div className='home'>
-      <Header />
-      <br/>
+  ];
+  const settingss = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+  };
 
-       {/* <section>
+  return (
+    <div className="home">
+      <Header />
+      <br />
+
+      {/* <section>
         <div className='grid max-w-screen-xl px-4 pt-32 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 lg:grid-cols-12 lg:pt-28'>
           <div className='mr-auto place-self-center lg:col-span-7'>
             <h1 className='max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl '>
@@ -206,30 +256,29 @@ const Landing = () => {
           </div>
         </div>
       </section>  */}
-       <div className="carousel" style={{ paddingTop: "5%" }}>
-      <Row>
-        <Col md={12}>
-          <Carousel className="carousel_wh">
-            {carouselImages.map((image) => (
-              <Carousel.Item >
-                <img
-                  className="carousel_img"
-                  style={{
-                    width: "100%",
-                    height: "70vh",
-                    position: "relative",
-                    
-                  }}
-                  src={image.image}
-                  alt={`Slide `}
-                />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </Col>
-      </Row>
-    </div>
-{/* 
+      <div className="carousel" style={{ paddingTop: "5%" }}>
+        <Row>
+          <Col md={12}>
+            <Carousel className="carousel_wh">
+              {carouselImages.map((image) => (
+                <Carousel.Item>
+                  <img
+                    className="carousel_img"
+                    style={{
+                      width: "100%",
+                      height: "70vh",
+                      position: "relative",
+                    }}
+                    src={image.image}
+                    alt={`Slide `}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </Col>
+        </Row>
+      </div>
+      {/* 
       <section id='featured' className='mb-20'>
       
       <div className='max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6'>
@@ -291,7 +340,7 @@ const Landing = () => {
 
 
       </section> */}
-       {/* <Container>
+      {/* <Container>
       <Row>
         {creditProducts.map((product, index) => (
           <Col key={index} md={6} className="my-3">
@@ -306,113 +355,157 @@ const Landing = () => {
         ))}
       </Row>
     </Container> */}
-    <br/>
-    <Container className='cibil-container'>
-      <div>
-        <img src='https://www.godigit.com/content/dam/godigit/directportal/en/contenthm/good-credit-score.jpg' width={"500px"}></img>
+      <br />
+      <Container className="cibil-container">
+        <div>
+          <img
+            src="https://www.godigit.com/content/dam/godigit/directportal/en/contenthm/good-credit-score.jpg"
+            width={"500px"}
+          ></img>
+        </div>
+        <div className="banner text-center p-5" style={{ marginLeft: "9%" }}>
+          <h1>Your Credit Score & Report</h1>
+          <p>Worth ₹1,200 Absolutely FREE</p>
+          <Button variant="primary" onClick={() => navigate("/credit")}>
+            Get Free Credit Report
+          </Button>
+        </div>
+      </Container>
+      <div className="credit-products">
+        <h2>Credit Products</h2>
+        <div className="products-container">
+          {products.map((product, index) => (
+            <div className="product-card" key={index}>
+              <i className={product.icon}></i>
+              <h3>{product.title}</h3>
+              <p>{product.description}</p>
+              <a href={product.link} className="button">
+                {product.buttonText}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
-    <div className="banner text-center p-5"style={{marginLeft:"9%"}}>
-      <h1>Your Credit Score & Report</h1>
-      <p>Worth ₹1,200 Absolutely FREE</p>
-      <Button variant="primary" onClick={()=>navigate('/credit')}>Get Free Credit Report</Button>
-    </div>
-    </Container>
-     <div className="credit-products">
-      <h2>Credit Products</h2>
-      <div className="products-container">
-        {products.map((product, index) => (
-          <div className="product-card" key={index}>
-            <i className={product.icon}></i>
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <a href={product.link} className="button">
-              {product.buttonText}
-            </a>
-          </div>
-        ))}
-      </div>
-      </div>
-      <br/>
+      <br />
 
       <div className="credit-products">
-      <h2>Insurance and Investment</h2>
-      <div className="products-container">
-        {insurance.map((product, index) => (
-          <div className="product-card" key={index}>
-            <i className={product.icon}></i>
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <a href={product.link} className="button">
-              {product.buttonText}
-            </a>
-          </div>
-        ))}
-      </div>
+        <h2>Insurance and Investment</h2>
+        <div className="products-container">
+          {insurance.map((product, index) => (
+            <div className="product-card" key={index}>
+              <i className={product.icon}></i>
+              <h3>{product.title}</h3>
+              <p>{product.description}</p>
+              <a href={product.link} className="button">
+                {product.buttonText}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="credit-products">
-      <h2>Tax Services</h2>
-      <div className="products-container">
-        {tax.map((product, index) => (
-          <div className="product-card" key={index}>
-            <i className={product.icon}></i>
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <a href={product.link} className="button">
-              {product.buttonText}
-            </a>
-          </div>
-        ))}
+        <h2>Tax Services</h2>
+        <div className="products-container">
+          {tax.map((product, index) => (
+            <div className="product-card" key={index}>
+              <i className={product.icon}></i>
+              <h3>{product.title}</h3>
+              <p>{product.description}</p>
+              <a href={product.link} className="button">
+                {product.buttonText}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
-      </div>
-      <br/>
+      <br />
 
-
-      <section className='bg-gray-100 py-16'>
-        <div className='max-w-screen-xl px-4 py-8 mx-auto'>
-          <h2 className='mb-8 text-3xl font-extrabold text-center'>What Our Clients Say</h2>
-          <div className='flex flex-col items-center'>
-            <div className='max-w-md text-center bg-white shadow-md rounded-lg p-6 mb-6'>
-              <p className='italic'>"This app has transformed the way I manage my loans!"</p>
-              <p className='font-bold mt-4'>- Jane Doe</p>
-            </div>
-            <div className='max-w-md text-center bg-white shadow-md rounded-lg p-6 mb-6'>
-              <p className='italic'>"I love how easy it is to keep track of my finances."</p>
-              <p className='font-bold mt-4'>- John Smith</p>
-            </div>
-            <div className='max-w-md text-center bg-white shadow-md rounded-lg p-6'>
-              <p className='italic'>"A must-have tool for any business!"</p>
-              <p className='font-bold mt-4'>- Sarah Lee</p>
-            </div>
+      <section className="py-16">
+        <div className="max-w-screen-xl px-4 py-8 mx-auto">
+          <h2 className="mb-8 text-3xl font-extrabold text-center">
+            What Our Clients Say
+          </h2>
+          <div className="testimonial-slider ">
+            <Slider {...settingss}>
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="testimonial-slide">
+                  <div className="testimonial-content">
+                    <p className="testimonial-quote" style={{ color: "white" }}>
+                      "{testimonial.quote}"
+                    </p>
+                    <p className="testimonial-author">- {testimonial.author}</p>
+                  </div>
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
       </section>
 
-      <section className='py-16'>
-        <div className='max-w-screen-xl px-4 py-8 mx-auto'>
-          <h2 className='mb-8 text-3xl font-extrabold text-center'>Frequently Asked Questions</h2>
-          <div className='flex flex-col space-y-4'>
-            <div className='bg-gray-100 p-4 rounded-lg'>
-              <h3 className='font-semibold'>1. How does the loan management feature work?</h3>
-              <p className='text-gray-700'>
-                Our loan management feature allows you to track all your loans in one place, set reminders for payments, and receive notifications for upcoming due dates.
+      {/* <section className="py-16">
+        <div className="max-w-screen-xl px-4 py-8 mx-auto">
+          <h2 className="mb-8 text-3xl font-extrabold text-center">
+            Frequently Asked Questions
+          </h2>
+          <div className="flex flex-col space-y-4">
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <h3 className="font-semibold">
+                1. How does the loan management feature work?
+              </h3>
+              <p className="text-gray-700">
+                Our loan management feature allows you to track all your loans
+                in one place, set reminders for payments, and receive
+                notifications for upcoming due dates.
               </p>
             </div>
-            <div className='bg-gray-100 p-4 rounded-lg'>
-              <h3 className='font-semibold'>2. Can I integrate my existing client database?</h3>
-              <p className='text-gray-700'>
-                Yes, our app supports integration with various databases and can help you migrate your existing client information easily.
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <h3 className="font-semibold">
+                2. Can I integrate my existing client database?
+              </h3>
+              <p className="text-gray-700">
+                Yes, our app supports integration with various databases and can
+                help you migrate your existing client information easily.
               </p>
             </div>
-            <div className='bg-gray-100 p-4 rounded-lg'>
-              <h3 className='font-semibold'>3. Is there a mobile app available?</h3>
-              <p className='text-gray-700'>
-                Absolutely! We have a mobile app available for both iOS and Android, allowing you to manage your finances on the go.
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <h3 className="font-semibold">
+                3. Is there a mobile app available?
+              </h3>
+              <p className="text-gray-700">
+                Absolutely! We have a mobile app available for both iOS and
+                Android, allowing you to manage your finances on the go.
               </p>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      {/* <div style={{ padding: "40px 0px 40px 0px" }}>
+        <h2 className="royo-serv">MEET OUR MEMBERS</h2>
 
+        <div className="slider-container">
+          <Container>
+            <center>
+              <div className="testimonial-slider">
+                <h3 style={{ color: "white" }}>Testimonials</h3>
+                <hr className="testimonial-slider_hrtag"></hr>
+                <Slider {...settingss}>
+                  <div className="testimonial-slide">
+                    <div className="testimonial-content">
+                      <p
+                        className="testimonial-quote"
+                        style={{ color: "white" }}
+                      >
+                        hello
+                      </p>
+                      <p className="testimonial-author">hello</p>
+                    </div>
+                  </div>
+                </Slider>
+              </div>
+            </center>
+          </Container>
+        </div>
+      </div> */}
       <Footer />
     </div>
   );

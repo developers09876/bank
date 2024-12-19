@@ -23,10 +23,7 @@ const LoanManagement = ({ collapsed }) => {
         headers: { Authorization: localStorage.getItem("token") },
       });
       const loans = await response.json();
-      console.log("loans", loans);
-      setLoan(loans); 
-      
-      
+      setLoan(loans);
     } catch (error) {
       console.log(error);
     }
@@ -325,7 +322,6 @@ const LoanManagement = ({ collapsed }) => {
                   </Button>
                 )}
 
-                {/* Display "Already Approved" or "Already Rejected" */}
                 {selectedRecord && selectedRecord.status === "1" && (
                   <Button type="primary" disabled>
                     Approved
