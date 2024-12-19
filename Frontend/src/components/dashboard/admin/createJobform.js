@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { Col, Row, Container } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
 
 const CreateJobForm = () => {
-  const [formData, setFormData] = useState({
-    jobTitle: "",
-    company: "",
-    location: "",
-    jobType: "Full-Time",
-    salary: "",
-    description: "",
-    requirements: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Job Posted:", formData);
-    // Add API call here to submit the form data
+  const onSubmit = async (data) => {
+    console.log("Job Posted:", data);
+    const details = {
+      jobTitle: data.jobTitle,
+      jobType: data.jobType,
+      company: data.company,
+      location: data.location,
+      description: data.description,
+      designation: data.designation,
+      requirements: data.requirements,
+      salary: data.salary,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/job/createjob",
+        details
+      );
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Error:", error.message);
+      toast.error("An error occurred while submitting the form");
+    }
   };
 
   return (
@@ -32,7 +44,7 @@ const CreateJobForm = () => {
         >
           <div style={{ paddingLeft: "10px" }}>
             <h2>Post a Job</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Row>
                 <Col xs={12} md={6} lg={4}>
                   <div>
@@ -40,11 +52,12 @@ const CreateJobForm = () => {
                     <input
                       className="inputcolumn-ourProfile"
                       type="text"
-                      name="jobTitle"
-                      value={formData.jobTitle}
-                      onChange={handleChange}
-                      required
+                      {...register("jobTitle", { required: true })}
+                      placeholder="Job Title"
                     />
+                    {errors.jobTitle && (
+                      <p className="text-danger">Job Title is required</p>
+                    )}
                   </div>
                 </Col>
                 <Col xs={12} md={6} lg={4}>
@@ -53,33 +66,34 @@ const CreateJobForm = () => {
                     <input
                       className="inputcolumn-ourProfile"
                       type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      required
+                      {...register("company", { required: true })}
+                      placeholder="Company"
                     />
+                    {errors.company && (
+                      <p className="text-danger">Company is required</p>
+                    )}
                   </div>
                 </Col>
                 <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Role</label>
-                  <br/>
-                  <select
-                    name="designation"
-                    className="inputcolumn-ourProfile"
-                    // value={designation}
-                    // onChange={onChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Select Designation
-                    </option>
-                    <option value="LoanEmployee">Loan Employee</option>
-                    <option value="TaxEmployee">Tax Employee</option>
-                    <option value="InsuranceEmployee">
-                      Insurance Employee
-                    </option>
-                  </select>
+                  <div>
+                    <label className="vendorpage_labelCss">Role</label>
+                    <br/>
+                    <select
+                      className="inputcolumn-ourProfile"
+                      {...register("designation", { required: true })}
+                    >
+                      <option value="" disabled>
+                        Select Designation
+                      </option>
+                      <option value="LoanEmployee">Loan Employee</option>
+                      <option value="TaxEmployee">Tax Employee</option>
+                      <option value="InsuranceEmployee">
+                        Insurance Employee
+                      </option>
+                    </select>
+                    {errors.designation && (
+                      <p className="text-danger">Designation is required</p>
+                    )}
                   </div>
                 </Col>
                 <Col xs={12} md={6} lg={4}>
@@ -88,11 +102,12 @@ const CreateJobForm = () => {
                     <input
                       className="inputcolumn-ourProfile"
                       type="text"
-                      name="location"
-                      value={formData.location}
-                      onChange={handleChange}
-                      required
+                      {...register("location", { required: true })}
+                      placeholder="Location"
                     />
+                    {errors.location && (
+                      <p className="text-danger">Location is required</p>
+                    )}
                   </div>
                 </Col>
                 <Col xs={12} md={6} lg={4}>
@@ -100,9 +115,7 @@ const CreateJobForm = () => {
                     <label className="vendorpage_labelCss">Job Type</label>
                     <select
                       className="inputcolumn-ourProfile"
-                      name="jobType"
-                      value={formData.jobType}
-                      onChange={handleChange}
+                      {...register("jobType")}
                     >
                       <option value="Full-Time">Full-Time</option>
                       <option value="Part-Time">Part-Time</option>
@@ -117,10 +130,12 @@ const CreateJobForm = () => {
                     <input
                       className="inputcolumn-ourProfile"
                       type="number"
-                      name="salary"
-                      value={formData.salary}
-                      onChange={handleChange}
+                      {...register("salary", { required: true })}
+                      placeholder="Salary"
                     />
+                    {errors.salary && (
+                      <p className="text-danger">Salary is required</p>
+                    )}
                   </div>
                 </Col>
                 <Col xs={12} md={6} lg={4}>
@@ -130,11 +145,12 @@ const CreateJobForm = () => {
                     </label>
                     <textarea
                       className="inputcolumn-ourProfile"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                      required
+                      {...register("description", { required: true })}
+                      placeholder="Job Description"
                     />
+                    {errors.description && (
+                      <p className="text-danger">Description is required</p>
+                    )}
                   </div>
                 </Col>
                 <Col xs={12} md={6} lg={4}>
@@ -142,11 +158,12 @@ const CreateJobForm = () => {
                     <label className="vendorpage_labelCss">Requirements</label>
                     <textarea
                       className="inputcolumn-ourProfile"
-                      name="requirements"
-                      value={formData.requirements}
-                      onChange={handleChange}
-                      required
+                      {...register("requirements", { required: true })}
+                      placeholder="Requirements"
                     />
+                    {errors.requirements && (
+                      <p className="text-danger">Requirements are required</p>
+                    )}
                   </div>
                 </Col>
               </Row>
@@ -157,6 +174,7 @@ const CreateJobForm = () => {
           </div>
         </div>
       </Col>
+      <ToastContainer />
     </Container>
   );
 };
