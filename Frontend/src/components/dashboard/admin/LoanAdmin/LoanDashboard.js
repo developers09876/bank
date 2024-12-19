@@ -103,19 +103,6 @@ const LoanDashboard = () => {
               <Col md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
-                  onClick={() => navigate("/admin/userlist")}
-                >
-                  <Card.Body>
-                    <FaUsers className="admin-stat-icon" />
-                    <Card.Title>Total Users</Card.Title>
-                    <Card.Text>{stats.totalUsers}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col md={6} lg={6}>
-                <Card
-                  className="admin-stat-card"
                   onClick={() => navigate("/admin/loancards")}
                 >
                   <Card.Body>
@@ -135,16 +122,6 @@ const LoanDashboard = () => {
                     <FaMoneyBillWave className="admin-stat-icon" />
                     <Card.Title>Total Employees</Card.Title>
                     <Card.Text>{stats.employees}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
-                  <Card.Body>
-                    <FaFileInvoice className="admin-stat-icon" />
-                    <Card.Title>Total Insurance</Card.Title>
-                    <Card.Text>Total: {stats.totalinsurance}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
