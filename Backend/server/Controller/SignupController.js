@@ -13,6 +13,7 @@ export const registerUser = async (req, res) => {
     password,
     confirmPassword,
     contactNumber,
+    dateOfJoining,
     manager,
     branch
   } = req.body;
@@ -40,6 +41,7 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
       contactNumber,
       manager,
+      dateOfJoining,
       branch
     });
 
