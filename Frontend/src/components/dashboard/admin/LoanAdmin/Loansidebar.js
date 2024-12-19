@@ -8,9 +8,6 @@ function Sidebar({ collapsed }) {
   const onClick = (e) => {
     console.log("click ", e);
   };
-  const role = localStorage.getItem("name");
-  const id = localStorage.getItem("regid");
-
   return (
     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
@@ -28,7 +25,7 @@ function Sidebar({ collapsed }) {
 
         {/* </SubMenu> */}
         <NavLink
-          to="/admin"
+          to="/adminLoan"
           ClassName="main-nav-style"
           style={{ marginTop: "70px" }}
         >
@@ -36,14 +33,14 @@ function Sidebar({ collapsed }) {
           Dashboard
         </NavLink>
 
-        <NavLink to="/admin/employeelist" ClassName="main-nav-style">
+        <NavLink to="/adminLoan/employeelist" ClassName="main-nav-style">
           EmployeeList
         </NavLink>
-        <NavLink to="/admin/createjobform" className="main-nav-style">
+        <NavLink to="/adminLoan/createjobform" className="main-nav-style">
           Job Post
         </NavLink>
         <SubMenu title="Management">
-          <NavLink to="/admin/loanmanagement">Loan Management</NavLink>
+          <NavLink to="/adminLoan/loanmanagement">Loan Management</NavLink>
         </SubMenu>
       </Menu>
     </div>

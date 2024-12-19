@@ -127,7 +127,6 @@ const LoginPage = () => {
         autoClose: 3000,
       });
       const userType = localStorage.getItem("userType");
-      const token = localStorage.getItem("token");
 
       console.log("userType", userType);
 
@@ -135,6 +134,7 @@ const LoginPage = () => {
         const routes = {
           employee: "/employee",
           user: "/user",
+          LoanEmployee: "/adminLoan",
         };
         const route = routes[userType] || "/login";
         navigate(route);
