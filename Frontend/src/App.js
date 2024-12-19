@@ -49,6 +49,7 @@ import { UserRoutes } from "./components/dashboard/user/UserRoutes";
 import AdminLogin from "./components/dashboard/admin/AdminLogin";
 import ErrorMessage from "./components/Layout/ErrorMessage";
 import LoanAdmin from "./components/dashboard/admin/LoanAdmin/LoanAdmin";
+import TaxAdmin from "./components/dashboard/admin/TaxAdmin/TaxAdmin";
 
 const ProtectedRoute = ({ Component }) => {
   const token = localStorage.getItem("token");
@@ -164,6 +165,12 @@ function App() {
           </Route>
 
           <Route path="/adminLoan" element={<LoanAdmin />}>
+            {LoanAdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          <Route path="/adminTax" element={<TaxAdmin />}>
             {LoanAdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
