@@ -29,19 +29,10 @@ function Sidebar({ collapsed }) {
           ClassName="main-nav-style"
           style={{ marginTop: "70px" }}
         >
-          {/* <MdAreaChart className="Nav-Icon" /> */}
           Dashboard
         </NavLink>
 
-        <NavLink to="/adminLoan/employeelist" ClassName="main-nav-style">
-          EmployeeList
-        </NavLink>
-        <NavLink to="/adminLoan/createjobform" className="main-nav-style">
-          Job Post
-        </NavLink>
-        <SubMenu title="Management">
-          <NavLink to="/adminLoan/loanmanagement">Loan Management</NavLink>
-        </SubMenu>
+        <NavLink to="/adminLoan/loanmanagement">Loan Management</NavLink>
       </Menu>
     </div>
   );
