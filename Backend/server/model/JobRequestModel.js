@@ -5,7 +5,7 @@ const jobRequestSchema = new mongoose.Schema({
     name: { type: String },
     phone: { type: String },
     email: { type: String },
-    jobtitle: { type: String },
+    jobTitle: { type: String },
     resume: { type: String },
 
 });

@@ -85,18 +85,18 @@ function Carrier() {
       phone: data.phone,
       resume: data.resume,
     };
-    console.log('details', details)
+    console.log('rsssss', details.jobTitle)
     try {
       if (selectImage) {
         const uploadedResumeUrl = await uploadFile(selectImage);
         if (uploadedResumeUrl) {
-          data.resume = uploadedResumeUrl;
+          details.resume = uploadedResumeUrl;
         } else {
           alert("Resume upload failed. Please try again.");
           return;
         }
       }
-
+      data.jobTitle = selectedJob?.jobTitle;
 
       const response = await axios.post(
         'http://localhost:5000/jobrequest/createjobrequest',

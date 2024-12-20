@@ -4,13 +4,14 @@ export async function createJobRequest(req, res, next) {
   try {
     const data = req.body;
     const details = {
-      userId: data.id,
+      id: data.id,
       name: data.name,
       phone: data.phone,
       email: data.email,
       jobTitle: data.jobTitle,
       resume: data.resume,
     };
+    console.log('details', details.jobTitle)
     const jobrequest = await applyjob.create(details);
     if (jobrequest) {
       res.status(201).json({
