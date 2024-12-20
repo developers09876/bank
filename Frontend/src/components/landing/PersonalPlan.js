@@ -16,7 +16,7 @@ function PersonalPlan() {
     <div>
       <Header />
 
-      <Row className="personal-plan-container">
+      <Row className="personal-plan-container mt-5">
         <Col lg={2}></Col>
         <Col lg={20} className="personal-plan-content">
           <h1>
