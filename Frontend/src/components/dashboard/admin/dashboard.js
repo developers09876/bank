@@ -87,7 +87,9 @@ const AdminDashboard = () => {
       },
     },
   };
-
+  const handleCardClick = () => {
+    navigate("/admin/loandashboard"); // Set the desired navigation path here
+  };
   return (
     <div className="admin-dashboard-container">
       <Sidebar />
@@ -116,15 +118,12 @@ const AdminDashboard = () => {
               </Col>
 
               <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
+                <Card className="admin-stat-card" onClick={handleCardClick}
+        style={{ cursor: "pointer" }}>
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
                     <Card.Title>Total Loans</Card.Title>
-                    <div className="loan-details">
-                      <p>Active: {stats.loans.active}</p>
-                      <p>Pending: {stats.loans.pending}</p>
-                      <p>Closed: {stats.loans.closed}</p>
-                    </div>
+                    <Card.Text>{stats.loans.total}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>

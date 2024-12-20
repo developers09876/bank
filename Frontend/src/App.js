@@ -50,6 +50,7 @@ import User from "./components/dashboard/user/Index";
 import { UserRoutes } from "./components/dashboard/user/UserRoutes";
 import AdminLogin from "./components/dashboard/admin/AdminLogin";
 import ErrorMessage from "./components/Layout/ErrorMessage";
+import PersonalPlan from "./components/landing/PersonalPlan";
 
 const ProtectedRoute = ({ Component }) => {
   const token=localStorage.getItem("token")
@@ -73,6 +74,7 @@ function App() {
           <Route exact path="/contact" element={<ContactUs />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
+          <Route path="/personalplan" element={<PersonalPlan/>}/>
           <Route path="/taxform" element={<TaxForm />} />
           <Route
             path="/loan"
