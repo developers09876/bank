@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 import { Menu } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 
@@ -67,11 +66,11 @@ function Sidebar({ collapsed }) {
             {/* <MdRequestPage className="Nav-Icon" /> */}
             Loan Management
           </NavLink>
-          <NavLink to="/professional/jobrequests">
+          <NavLink to="/employeeInsurance">
             {/* <MdSend className="Nav-Icon" /> */}
             Insurance Management
           </NavLink>
-          <NavLink to="/professional/jobrequest">
+          <NavLink to="/employeeTax">
             {/* <MdSend className="Nav-Icon" /> */}
             Tax Management
           </NavLink>
