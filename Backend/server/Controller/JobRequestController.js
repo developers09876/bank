@@ -8,7 +8,7 @@ export async function createJobRequest(req, res, next) {
       name: data.name,
       phone: data.phone,
       email: data.email,
-      jobtitle: data.jobtitle,
+      jobTitle: data.jobTitle,
       resume: data.resume,
     };
     const jobrequest = await applyjob.create(details);
@@ -19,18 +19,18 @@ export async function createJobRequest(req, res, next) {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log("error", err);
     next();
   }
 }
 
 
-export async function getallJobRequests(req,res,next) {
-  try{
-      const jobs = await applyjob.find();
-      res.status(200).json(jobs);
+export async function getallJobRequests(req, res, next) {
+  try {
+    const jobs = await applyjob.find();
+    res.status(200).json(jobs);
   }
-catch (error) {
-  res.status(500).json({ message: error.message });
-}
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }

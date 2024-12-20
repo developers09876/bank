@@ -11,46 +11,110 @@ import { BsCashCoin } from "react-icons/bs";
 import { GoClockFill } from "react-icons/go";
 import { ImLocation } from "react-icons/im";
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+
+import { useForm } from 'react-hook-form';
 
 function Carrier() {
+
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [jobListings, setJobListings] = useState([]);
-  console.log('jobListings', jobListings);
-
-  const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    resume: null,
-  });
+  const [selectImage, setSelectImage] = useState(null);
+  console.log('selectImage', selectImage)
+  const userId = localStorage.getItem("id");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get('http://localhost:5000/job/getall');
         setJobListings(response?.data);
-        console.log('response', response.data)
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching job listings:', error);
-        // setError('Failed to fetch job listings. Please try again later.');
-        setLoading(false);
       }
     };
 
     fetchJobs();
   }, []);
 
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "darshan");
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const cloudinaryData = await response.json();
+      return cloudinaryData.secure_url;
+    } catch (error) {
+      console.error("File upload failed", error);
+      return null;
+    }
+  };
+
   const handleApplyClick = (job) => {
     setSelectedJob(job);
     setShowForm(true);
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    setShowForm(false);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectImage(file);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    const details = {
+      id: userId,
+      jobTitle: data.jobTitle,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      resume: data.resume,
+    };
+    console.log('details', details)
+    try {
+      if (selectImage) {
+        const uploadedResumeUrl = await uploadFile(selectImage);
+        if (uploadedResumeUrl) {
+          data.resume = uploadedResumeUrl;
+        } else {
+          alert("Resume upload failed. Please try again.");
+          return;
+        }
+      }
+
+
+      const response = await axios.post(
+        'http://localhost:5000/jobrequest/createjobrequest',
+        details
+      );
+
+      if (response.status === 201) {
+        toast.success("Job Applied successfully");
+        setShowForm(false);
+        reset();
+
+      } else {
+        alert('Failed to submit job application. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error submitting job application:', error);
+      toast.error("An error occurred while submitting the form");
+    }
   };
 
   return (
@@ -125,72 +189,89 @@ function Carrier() {
         </Row>
       </div>
 
+
       <Modal show={showForm} onHide={() => setShowForm(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Apply for {selectedJob ? selectedJob.jobTitle : ''}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleFormSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Col className='px-2 py-1' lg={24}>
-                <Form.Group controlId="name">
-                  <Form.Label>Full Name:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
-                </Form.Group>
+                <label>Full Name:</label>
+                <input
+                  type="text"
+                  {...register('name', { required: 'Full Name is required' })}
+                  className='form-control'
+                />
+                {errors.name && <p className='error-message'>{errors.name.message}</p>}
               </Col>
 
               <Col className='px-2 py-1' lg={24}>
-                <Form.Group controlId="number">
-                  <Form.Label>Phone Number:</Form.Label>
-                  <Form.Control
-                    type="number"
-                    required
-                    value={formData.number}
-                    onChange={(e) => setFormData({ ...formData, number: e.target.value })}
-                  />
-                </Form.Group>
+                <label>Phone Number:</label>
+                <input
+                  type="number"
+                  {...register('phone', {
+                    required: 'Phone Number is required',
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: 'Enter a valid 10-digit phone number',
+                    },
+                  })}
+                  className='form-control'
+                />
+                {errors.phone && <p className='error-message'>{errors.phone.message}</p>}
               </Col>
 
               <Col className='px-2 py-1' lg={24}>
-                <Form.Group controlId="email">
-                  <Form.Label>Email Address:</Form.Label>
-                  <Form.Control
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </Form.Group>
+                <label>Email Address:</label>
+                <input
+                  type="email"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                      message: 'Enter a valid email address',
+                    },
+                  })}
+                  className='form-control'
+                />
+                {errors.email && <p className='error-message'>{errors.email.message}</p>}
+              </Col>
+
+              {/* <Col className='px-2 py-1' lg={24}>
+                <label>Position Applying For:</label>
+                <input
+                  type="text"
+                  disabled
+                  value={selectedJob ? selectedJob.jobTitle : ''}
+                  className='form-control'
+                />
+              </Col> */}
+              <Col className='px-2 py-1' lg={24}>
+                <label>Position Applying For:</label>
+                <input
+                  type="text"
+                  value={selectedJob ? selectedJob.jobTitle : ''}
+                  disabled
+                  className="form-control"
+                />
+                <input
+                  type="hidden"
+                  {...register('jobTitle', { required: 'Job title is required' })}
+                  value={selectedJob ? selectedJob.jobTitle : ''}
+                />
               </Col>
 
               <Col className='px-2 py-1' lg={24}>
-                <Form.Group controlId="position">
-                  <Form.Label>Position Applying For:</Form.Label>
-                  <Form.Control
-                    as="select"
-                    disabled
-                    value={selectedJob ? selectedJob.jobTitle : ''}
-                  >
-                    <option>{selectedJob ? selectedJob.jobTitle : ''}</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-
-              <Col className='px-2 py-1' lg={24}>
-                <Form.Group controlId="resume">
-                  <Form.Label>Upload Resume:</Form.Label>
-                  <Form.Control
-                    type="file"
-                    // style={{width:'fit-content'}}
-                    required
-                    onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
-                  />
-                </Form.Group>
+                <label>Upload Resume:</label>
+                <input
+                  type="file"
+                  {...register('resume', { required: 'Resume is required' })}
+                  onChange={handleFileChange}
+                  className='form-control'
+                />
+                {errors.resume && <p className='error-message'>{errors.resume.message}</p>}
               </Col>
             </Row>
             <br />
@@ -198,7 +279,7 @@ function Carrier() {
               <Button variant="primary" type="submit">
                 Submit
               </Button></div>
-          </Form>
+          </form>
         </Modal.Body>
       </Modal>
       <div className='career-container'>
@@ -212,6 +293,6 @@ function Carrier() {
       <Footer />
     </div>
   );
-}
+};
 
 export default Carrier;
