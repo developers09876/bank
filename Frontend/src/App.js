@@ -67,7 +67,6 @@ function App() {
     <div className="App">
       <Fragment>
         <Routes>
-          {/* LANDING */}
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<ContactUs />} />
@@ -97,10 +96,6 @@ function App() {
           {/* LOGIN */}
           <Route exact path="/login" element={<Login />} />
 
-          {/* ADMIN */}
-          {/* <Route exact path="/admin" element={<AdminPage />} />
-            <Route path="/admindashboard" element={<AdminDashboard />} />
-            <Route path="/userlist" element={<UserList />} />*/}
           <Route exact path="/userProfile" element={<UserDetails />} />
 
           {/* HOME */}

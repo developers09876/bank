@@ -10,106 +10,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import axios from "axios";
-import Api from "../../Api";
 
 function LoanForm() {
-  const [typeValue, setTypeValue] = useState();
-  const [serviceType, setServiceType] = useState([]);
-  const [selectYear, setSelectYear] = useState();
-  const [languageDetails, setLanguageDetails] = useState();
-  const [countryValue, setCountryValue] = useState();
-  const [countryId, setCountryId] = useState();
-  const [country, setCountry] = useState(null);
   const [stateValue, setStateValue] = useState();
-  const [stateList, setstateList] = useState([]);
 
-  const [selectedState, setSelectedState] = useState(null);
   const [districtValue, setDistrictValue] = useState();
-  const [districtList, setdistrictList] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
-  const [cityvalue, setCityValue] = useState();
-  const [cityList, setCityList] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [selectArea, setselectArea] = useState("");
-  const [areaList, setareaList] = useState([]);
-  const [selectedArea, setSelectedArea] = useState(null);
 
   const [data, setData] = useState();
-  const [IyerPhone, setIyerPhone] = useState();
-  const [IyerName, setIyerName] = useState();
-  const id = localStorage.getItem("vendor_id");
-  const [poojaType, setPoojaTypeValue] = useState();
-  console.log("pooja", poojaType);
 
-  const [Premium, setPremium] = useState();
-  console.log("step1", Premium);
-
-  const typeDetails = [
-    { name: "Inside Temple", value: "inside" },
-    { name: "Outside Temple", value: "outside" },
-    { name: "Both", value: "both" },
-  ];
-  const year = [
-    { name: "1990", value: "1990" },
-    { name: "1991", value: "1991" },
-    { name: "1992", value: "1992" },
-    { name: "1993", value: "1993" },
-    { name: "1994", value: "1994" },
-    { name: "1995", value: "1995" },
-    { name: "1996", value: "1996" },
-    { name: "1997", value: "1997" },
-    { name: "1998", value: "1998" },
-    { name: "1999", value: "1999" },
-    { name: "2000", value: "2000" },
-    { name: "2001", value: "2001" },
-    { name: "2002", value: "2002" },
-    { name: "2003", value: "2003" },
-    { name: "2004", value: "2004" },
-    { name: "2005", value: "2005" },
-    { name: "2006", value: "2006" },
-    { name: "2007", value: "2007" },
-    { name: "2008", value: "2008" },
-    { name: "2009", value: "2009" },
-    { name: "2010", value: "2010" },
-    { name: "2011", value: "2011" },
-    { name: "2012", value: "2012" },
-    { name: "2013", value: "2013" },
-    { name: "2014", value: "2014" },
-    { name: "2015", value: "2015" },
-    { name: "2016", value: "2016" },
-    { name: "2017", value: "2017" },
-    { name: "2018", value: "2018" },
-    { name: "2019", value: "2019" },
-    { name: "2020", value: "2020" },
-    { name: "2021", value: "2021" },
-    { name: "2022", value: "2022" },
-    { name: "2023", value: "2023" },
-    { name: "2024", value: "2024" },
-  ];
-
-  const serviceTypes = [
-    { name: "Marriage Astrology", value: "Marriageastrology" },
-    { name: "House Warming", value: "HouseWarming" },
-    { name: "Ganesh Puja", value: "GaneshPuja" },
-    { name: "Satyanarayana Vrat", value: "SatyanarayanaVrat" },
-    { name: "Namkaran Ceremony", value: "NamkaranCeremony" },
-    { name: "Rudrabhishek", value: "Rudrabhishek" },
-    { name: "Annaprasan", value: "Annaprasan" },
-    { name: "Navagraha Puja", value: "NavagrahaPuja" },
-    { name: "Shanti Puja", value: "ShantiPuja" },
-    { name: "Chandi Homa", value: "ChandiHoma" },
-    { name: "Vastu Puja", value: "VastuPuja" },
-    { name: "Durga Puja", value: "DurgaPuja" },
-    { name: "Pitrupaksha", value: "Pitrupaksha" },
-    { name: "Kaal Sarp Dosh Puja", value: "KaalSarpDoshPuja" },
-    { name: "Sankat Mochan Hanuman Puja", value: "SankatMochanHanumanPuja" },
-  ];
-
-  const languageList = [
-    { language: "Male", value: "Male" },
-    { language: "Female", value: "Female" },
-    { language: "Other", value: "Other" },
-  ];
   useEffect(() => {
     getCountry();
   }, []);
@@ -137,95 +45,29 @@ function LoanForm() {
     }
   }, [data?.district]);
 
-  //   useEffect(() => {
-  //     if (data?.city) {
-  //       getArea(data?.city);
-  //     }
-  //   }, [data?.city]);
-
   const {
     register,
     getValues,
     handleSubmit,
     reset,
+    setValue,
+    watch,
+
     control,
     formState: { errors },
   } = useForm();
 
-  const getCountry = () => {
-    // Api.get(`/country/getAll`).then((res) => {
-    //   setCountry(res.data);
-    //   const countryDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.country)
-    //   );
-    //   if (countryDetails) {
-    //     setCountryValue(countryDetails.country);
-    //   } else {
-    //     console.log("Country not found");
-    //   }
-    // });
-  };
+  const getCountry = () => {};
 
-  const getState = (country_id) => {
-    // Api.get(`/state/getState/${country_id}`).then((res) => {
-    //   setstateList(res.data);
-    //   const stateDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.state)
-    //   );
-    //   if (stateDetails) {
-    //     setSelectedState(stateDetails.state);
-    //   } else {
-    //     console.log("State not found");
-    //   }
-    // });
-  };
+  const getState = (country_id) => {};
 
   const getDistrict = (state_id) => {
     setStateValue(state_id);
-    // Api.get(`/district/getdistrict/${state_id}`).then((res) => {
-    //   setdistrictList(res.data);
-    //   const districtDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.district)
-    //   );
-    //   if (districtDetails) {
-    //     setSelectedDistrict(districtDetails.district);
-    //   } else {
-    //     console.log("District not found");
-    //   }
-    // });
   };
 
   const getCity = (districtId) => {
     setDistrictValue(districtId);
-    // Api.get(`/city/getCity/${districtId}`).then((res) => {
-    //   setCityList(res.data);
-    //   const cityDetails = res.data.find(
-    //     (stateObj) => stateObj.id === parseInt(data?.city)
-    //   );
-    //   if (cityDetails) {
-    //     setSelectedCity(cityDetails.city);
-    //   } else {
-    //     console.log("City not found");
-    //   }
-    // });
   };
-
-  //   const getArea = async (id) => {
-  //     await Api.get(
-  //       `${process.env.REACT_APP_DEV_BASE_URL}/area/getArea/${id}`
-  //     ).then((res) => {
-  //       const area_name = res.data;
-  //       setareaList(area_name);
-  //       const areaDetails = res.data.find(
-  //         (stateObj) => stateObj.area_id === parseInt(data?.area)
-  //       );
-  //       if (areaDetails) {
-  //         setSelectedArea(areaDetails.area_name);
-  //       } else {
-  //         console.log("Area not found");
-  //       }
-  //     });
-  //   };
 
   const [selectImage, setSelectImage] = useState(null);
 
@@ -244,54 +86,8 @@ function LoanForm() {
     }
   };
 
-  //   useEffect(() => {
-  //     getValue();
-  //     // getByUser();
-  //   }, []);
-
-  //   const getValue = async () => {
-  //     try {
-  //     //   const res = await Api.get(`/vendor/getOne/${id}`);
-  //       const data = res.data[0];
-  //       setData(res.data[0]);
-  //       setSelectImage(data.imageUrl);
-  //       setLanguageDetails(JSON.parse(data.language) || []);
-  //       setStateValue(data.state);
-  //       setDistrictValue(data.district);
-  //       setCityValue(data.city);
-  //       setselectArea(data.area);
-  //       setTypeValue(data.type);
-  //       setServiceType(JSON.parse(data.serviceType) || []);
-  //       setSelectYear(data.yearofEstablish);
-
-  //       reset({
-  //         priestName: data.priestName,
-  //         templeName: data.templeName,
-  //         aadharNumber: data.aadharNumber,
-  //         mobileNumber: data.mobileNumber,
-  //         AlternateNumber: data.alternateNumber,
-  //         yearofExperience: data.yearofExperience,
-  //         poojaCounts: data.poojaCounts,
-  //         pincode: data.pincode,
-  //         address: data.address,
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   const getByUser = async () => {
-  //     await Api.get(`/vendor/getOne/${id}`).then((res) => {
-  //       setIyerName(res?.data[0]?.vendor_name);
-  //       setIyerPhone(res?.data[0]?.phone_number);
-  //     });
-  //   };
-
-  const isUpdating = data != undefined && data?.address > "";
-
-
-  const userid = localStorage.getItem("id")
-  console.log('userid', userid)
+  const userid = localStorage.getItem("id");
+  console.log("userid", userid);
 
   const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
@@ -330,7 +126,7 @@ function LoanForm() {
       ? await uploadFile(data.signature[0])
       : null;
     const Details = {
-      userid:userid,
+      userid: userid,
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
@@ -458,7 +254,7 @@ function LoanForm() {
                     </Col>
 
                     {/* Marital Status */}
-                    <Col xs={12} md={6} lg={4}>
+                    {/* <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
                           Marital Status
@@ -486,27 +282,40 @@ function LoanForm() {
                           </p>
                         )}
                       </div>
+                    </Col> */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Marital Status
+                        </label>
+                        <Controller
+                          name="MaritalStatus"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Marital Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("MaritalStatus", value); // Update the form state
+                              }}
+                            >
+                              <Option value="Single">Single</Option>
+                              <Option value="Married">Married</Option>
+                              <Option value="Divorced">Divorced</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.MaritalStatus && (
+                          <p className="text-danger">
+                            Marital Status is required
+                          </p>
+                        )}
+                      </div>
                     </Col>
-                    {/* <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Marital Status</label>
-      <Select
-        className="inputcolumn_drp"
-        placeholder="Select Marital Status"
-        {...register("maritalStatus", { required: true })}
-        options={[
-          { value: "single", label: "Single" },
-          { value: "married", label: "Married" },
-          { value: "divorced", label: "Divorced" }
-        ]}
-      />
-      {errors.maritalStatus && (
-        <p className="text-danger">Marital Status is required</p>
-      )}
-    </div>
-  </Col> */}
-
-                    {/* Nationality */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -963,10 +772,178 @@ function LoanForm() {
                         />
                       </div>
                     </Col>
+                    {watch("MaritalStatus") === "Married" && (
+                      <>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              Wife's / Husbans's Name
+                            </label>
+                            <Controller
+                              name="WifeName"
+                              control={control}
+                              defaultValue=""
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter Wife's Name"
+                                />
+                              )}
+                            />
+                            {errors.WifeName && (
+                              <p className="text-danger">
+                                Wife's / Husbans's Name is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              Wife's / Husbans's Occupation
+                            </label>
+                            <Controller
+                              name="WifeOccupation"
+                              control={control}
+                              defaultValue=""
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Select
+                                  {...field}
+                                  className="form-control"
+                                  placeholder="Select Occupation"
+                                  onChange={(value) => {
+                                    field.onChange(value);
+                                    setValue("WifeOccupation", value); // Update form state
+                                  }}
+                                >
+                                  <Option value="Working Person">
+                                    Working Person
+                                  </Option>
+                                  <Option value="Housewife">Housewife</Option>
+                                </Select>
+                              )}
+                            />
+                            {errors.WifeOccupation && (
+                              <p className="text-danger">
+                                Wife's / Husbans'sOccupation is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              Children Stauts
+                            </label>
+                            <Controller
+                              name="ChildrenStauts"
+                              control={control}
+                              defaultValue=""
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Select
+                                  {...field}
+                                  className="inputcolumn_drp"
+                                  placeholder="Select Children Status"
+                                  onChange={(value) => {
+                                    field.onChange(value);
+                                    setValue("ChildrenStauts", value); // Update the form state
+                                  }}
+                                >
+                                  <Option value="Yes">Yes</Option>
+                                  <Option value="No">No</Option>
+                                </Select>
+                              )}
+                            />
+                            {errors.ChildrenStauts && (
+                              <p className="text-danger">
+                                Children Status is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                        {/* Conditionally render Designation and Income fields */}
+                        {watch("WifeOccupation") === "Working Person" && (
+                          <>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Wife's / Husbans's Designation
+                                </label>
+                                <Controller
+                                  name="WifeDesignation"
+                                  control={control}
+                                  defaultValue=""
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Enter Wife's Designation"
+                                    />
+                                  )}
+                                />
+                                {errors.WifeDesignation && (
+                                  <p className="text-danger">
+                                    Wife's / Husbans'sDesignation is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Wife's / Husbans's Income
+                                </label>
+                                <Controller
+                                  name="WifeIncome"
+                                  control={control}
+                                  defaultValue=""
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="number"
+                                      className="form-control"
+                                      placeholder="Enter Wife's Income"
+                                    />
+                                  )}
+                                />
+                                {errors.WifeIncome && (
+                                  <p className="text-danger">
+                                    Wife's / Husbans's Income is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Upload Your Pay slip
+                                </label>
+                                <input
+                                  className="inputcolumn-ourProfile"
+                                  type="file"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  {...register("coApplicantDocs")}
+                                  placeholder="If applicable"
+                                />
+                              </div>
+                            </Col>
+                          </>
+                        )}
+                      </>
+                    )}
                   </Row>
                 </div>
 
-                <div className="upgrade_column mb-3">
+                <div className="upgrade_column mb-3 mt-3">
                   <Button className="button1" type="submit">
                     Submit
                   </Button>

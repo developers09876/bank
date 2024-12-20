@@ -102,10 +102,9 @@ const LoanDashboard = ({ collapsed }) => {
       item.customer.toLowerCase().includes(searchTerm)
     );
     setFilteredData(filtered);
-    setCurrentPage(1); // Reset to the first page when filtering
+    setCurrentPage(1);
   };
 
-  // Get the current page data by slicing the array based on pagination values
   const getPaginatedData = () => {
     const sourceData = searchText ? filteredData : data;
     const start = (currentPage - 1) * pageSize;
@@ -146,7 +145,6 @@ const LoanDashboard = ({ collapsed }) => {
               setPageSize(pageSize);
             }}
             className="pagination-control"
-            // showSizeChanger
           />
         </div>
       </div>
