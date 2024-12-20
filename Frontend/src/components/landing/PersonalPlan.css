@@ -6,7 +6,7 @@
   background-color: #c0edf2; /* Optional: Add a background color */
   text-align: center; /* Center text alignment */
   height: 70vh;
-  padding-top: 100px;
+  padding-top: 150px;
 }
 
 .personal-plan-content h1 {
@@ -102,7 +102,7 @@
     background-color: #0056b3;
   }
   .personal-plan-container2{
-    margin-top: 350px;
+    margin-top: 450px;
     height: 80vh;
   }
   .personal-plan-content2{
@@ -121,45 +121,112 @@ padding-top: 130px;
     text-align: center;
     padding: 40px 20px;
     background-color: #c0edf2;
-    height: 80vh;
+    height: 90vh;
   }
   
   .personal-plan-container3 h1 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: #333;
+    margin-top: 50px;
   }
   
   .personal-plan-container3 p {
     font-size: 1rem;
     color: #555;
     margin-bottom: 40px;
+    margin-top: 50px;
   }
   
   .benefit-item {
     display: flex;
-    align-items: flex-start;
-    gap: 15px; /* Space between icon and text */
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    gap: 15px;
+    /* background: #ffffff;
+    border: 1px solid #e0e0e0; */
+    border-radius: 10px; /* Rounded corners */
+    padding: 30px; /* Inner spacing */
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s; */
+  }
+  
+  .benefit-item:hover {
+    transform: translateY(-5px); /* Elevate on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
   }
   
   .benefit-icon {
-    font-size: 2rem;
+    font-size: 3.5rem; /* Larger size for emphasis */
     color: #27ae60; /* Green color for icons */
+    /* background: linear-gradient(45deg, #28a745, #a3d5ab);
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   }
   
   .benefit-content h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #333;
+    font-size: 1.5rem; /* Larger font for heading */
+    font-weight: bold; /* Bold text for emphasis */
+    color: #333333; /* Dark text color */
+    margin: 0 0 10px; /* Space below heading */
   }
   
   .benefit-content p {
-    font-size: 0.95rem;
-    color: #555;
+    font-size: 1rem; /* Slightly larger font for readability */
+    color: #555555; /* Medium text color */
+    line-height: 1.5; /* Improved line spacing */
+    margin: 0; /* Reset margin */
   }
   
+  .personal-plan-container4 {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    padding-bottom: 60px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .section-description {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .how-it-works-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+  }
+  
+  .how-it-works-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .icon-container {
+    font-size: 3rem;
+    color: #4caf50;
+    margin-bottom: 15px;
+  }
+  
+  .step-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .step-description {
+    font-size: 1rem;
+    color: #666;
+  }
+   

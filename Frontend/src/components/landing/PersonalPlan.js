@@ -8,15 +8,21 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { FaUserCheck, FaMoneyCheck, FaHeadset } from "react-icons/fa6";
+import {
+  TbCircleNumber1Filled,
+  TbCircleNumber2Filled,
+  TbCircleNumber3Filled,
+  TbCircleNumber4Filled,
+  TbCircleNumber5Filled,
+  TbCircleNumber6Filled,
+} from "react-icons/tb";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-
 function PersonalPlan() {
   return (
     <div>
       <Header />
-
-      <Row className="personal-plan-container mt-5">
+      <Row className="personal-plan-container">
         <Col lg={2}></Col>
         <Col lg={20} className="personal-plan-content">
           <h1>
@@ -190,6 +196,60 @@ function PersonalPlan() {
         </Row>
       </div>
 
+      <div className="personal-plan-container4">
+        <h1 className="section-title">How It Works?</h1>
+        <p className="section-description">
+          Follow these simple steps to make the most of our Subscription Plans
+        </p>
+        <Row gutter={[16, 32]} justify="center">
+          {[
+            {
+              icon: <TbCircleNumber1Filled />,
+              title: "Quick Registration",
+              description:
+                "Fill in your basic details in the registration form – this process takes just a couple of minutes.",
+            },
+            {
+              icon: <TbCircleNumber2Filled />,
+              title: "Check Eligibility",
+              description:
+                "Our system shows eligibility & pre-approved offers based on your details. This is not final loan approval.",
+            },
+            {
+              icon: <TbCircleNumber3Filled />,
+              title: "Buy Subscription Plan",
+              description:
+                "Purchase the plan through multiple payment options to get your pre-approved loan offer.",
+            },
+            {
+              icon: <TbCircleNumber4Filled />,
+              title: "Submit Document",
+              description:
+                "Login to the portal with your credentials and submit the required documents.",
+            },
+            {
+              icon: <TbCircleNumber5Filled />,
+              title: "Bank Verification",
+              description:
+                "NBFCs verify your profile & documents as per their rules and regulations.",
+            },
+            {
+              icon: <TbCircleNumber6Filled />,
+              title: "Bank Sanction",
+              description:
+                "The final loan sanction depends on your profile & the bank's criteria.",
+            },
+          ].map((step, index) => (
+            <Col lg={8} md={12} sm={24} key={index}>
+              <div className="how-it-works-card">
+                <div className="icon-container">{step.icon}</div>
+                <h4 className="step-title">{step.title}</h4>
+                <p className="step-description">{step.description}</p>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
       <Footer />
     </div>
   );
