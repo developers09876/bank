@@ -70,7 +70,7 @@ function LoanForm() {
   };
 
   const [selectImage, setSelectImage] = useState(null);
-
+  const [showChildDetails, setShowChildDetails] = useState(false);
   const setImage = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -352,7 +352,23 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Nominee Name
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="Nominee"
+                          {...register("Nominee", { required: true })}
+                          placeholder="Nominee"
+                        />
+                        {errors.Nominee && (
+                          <p className="text-danger">Nominee is required</p>
+                        )}
+                      </div>
+                    </Col>
                     {/* Aadhaar Number */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
@@ -838,10 +854,10 @@ function LoanForm() {
                         <Col xs={12} md={6} lg={4}>
                           <div>
                             <label className="vendorpage_labelCss">
-                              Children Stauts
+                              Children Status
                             </label>
                             <Controller
-                              name="ChildrenStauts"
+                              name="ChildrenStatus"
                               control={control}
                               defaultValue=""
                               rules={{ required: true }}
@@ -852,7 +868,8 @@ function LoanForm() {
                                   placeholder="Select Children Status"
                                   onChange={(value) => {
                                     field.onChange(value);
-                                    setValue("ChildrenStauts", value); // Update the form state
+                                    setValue("ChildrenStatus", value); // Update the form state
+                                    setShowChildDetails(value === "Yes"); // Show child details if "Yes"
                                   }}
                                 >
                                   <Option value="Yes">Yes</Option>
@@ -860,13 +877,101 @@ function LoanForm() {
                                 </Select>
                               )}
                             />
-                            {errors.ChildrenStauts && (
+                            {errors.ChildrenStatus && (
                               <p className="text-danger">
                                 Children Status is required
                               </p>
                             )}
                           </div>
                         </Col>
+
+                        {showChildDetails && (
+                          <>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Child Gender
+                                </label>
+                                <Controller
+                                  name="ChildGender"
+                                  control={control}
+                                  defaultValue=""
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <Select
+                                      {...field}
+                                      className="inputcolumn_drp"
+                                      placeholder="Select Child Gender"
+                                    >
+                                      <Option value="Male">Male</Option>
+                                      <Option value="Female">Female</Option>
+                                    </Select>
+                                  )}
+                                />
+                                {errors.ChildGender && (
+                                  <p className="text-danger">
+                                    Child Gender is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Child Name
+                                </label>
+                                <Controller
+                                  name="ChildName"
+                                  control={control}
+                                  defaultValue=""
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Enter Child Name"
+                                    />
+                                  )}
+                                />
+                                {errors.ChildName && (
+                                  <p className="text-danger">
+                                    Child Name is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Child Age
+                                </label>
+                                <Controller
+                                  name="ChildAge"
+                                  control={control}
+                                  defaultValue=""
+                                  rules={{ required: true, min: 1 }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="number"
+                                      className="form-control"
+                                      placeholder="Enter Child Age"
+                                    />
+                                  )}
+                                />
+                                {errors.ChildAge && (
+                                  <p className="text-danger">
+                                    Child Age is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+                          </>
+                        )}
+
                         {/* Conditionally render Designation and Income fields */}
                         {watch("WifeOccupation") === "Working Person" && (
                           <>
