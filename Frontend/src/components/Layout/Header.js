@@ -24,12 +24,15 @@ function Header() {
   const userType = localStorage.getItem("userType");
 
   const handlenavigate = () => {
-    if (userType === "employee") {
-      navigate("/employee");
-    }
-    if (userType === "user") {
-      navigate("/user");
-    }
+    const routes = {
+      employee: "/employee",
+      user: "/user",
+      LoanEmployee: "/adminLoan",
+      TaxEmployee:"/employeeTax",
+      InsuranceEmployee:"/employeeInsurance",
+    };
+    const route = routes[userType] || "/login";
+    navigate(route);
 
   }
   const handleLogout = () => {
