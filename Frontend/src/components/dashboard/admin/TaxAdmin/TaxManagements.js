@@ -3,7 +3,7 @@ import { Table, Input, Space, Pagination, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Container } from "react-bootstrap";
 
-const LoanDashboard = ({ collapsed }) => {
+const TaxManagements = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,9 +102,10 @@ const LoanDashboard = ({ collapsed }) => {
       item.customer.toLowerCase().includes(searchTerm)
     );
     setFilteredData(filtered);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to the first page when filtering
   };
 
+  // Get the current page data by slicing the array based on pagination values
   const getPaginatedData = () => {
     const sourceData = searchText ? filteredData : data;
     const start = (currentPage - 1) * pageSize;
@@ -145,6 +146,7 @@ const LoanDashboard = ({ collapsed }) => {
               setPageSize(pageSize);
             }}
             className="pagination-control"
+            // showSizeChanger
           />
         </div>
       </div>
@@ -152,4 +154,4 @@ const LoanDashboard = ({ collapsed }) => {
   );
 };
 
-export default LoanDashboard;
+export default TaxManagements;
