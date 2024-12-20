@@ -4,13 +4,14 @@ export async function createJobRequest(req, res, next) {
   try {
     const data = req.body;
     const details = {
-      userId: data.id,
+      id: data.id,
       name: data.name,
       phone: data.phone,
       email: data.email,
-      jobtitle: data.jobtitle,
+      jobTitle: data.jobTitle,
       resume: data.resume,
     };
+    console.log('details', details.jobTitle)
     const jobrequest = await applyjob.create(details);
     if (jobrequest) {
       res.status(201).json({
@@ -19,18 +20,18 @@ export async function createJobRequest(req, res, next) {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log("error", err);
     next();
   }
 }
 
 
-export async function getallJobRequests(req,res,next) {
-  try{
-      const jobs = await applyjob.find();
-      res.status(200).json(jobs);
+export async function getallJobRequests(req, res, next) {
+  try {
+    const jobs = await applyjob.find();
+    res.status(200).json(jobs);
   }
-catch (error) {
-  res.status(500).json({ message: error.message });
-}
+  catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }

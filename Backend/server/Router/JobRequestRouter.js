@@ -4,7 +4,7 @@ import { createJobRequest, getallJobRequests } from "../Controller/JobRequestCon
 
 const router = Router();
 
-router.post("/createjobrequest",createJobRequest);
-router.get("/getall",getallJobRequests);
+router.post("/createjobrequest", createJobRequest);
+router.get("/getall", getallJobRequests);
 
 export default router
