@@ -51,9 +51,10 @@ import ErrorMessage from "./components/Layout/ErrorMessage";
 import LoanAdmin from "./components/dashboard/admin/LoanAdmin/LoanAdmin";
 import TaxAdmin from "./components/dashboard/admin/TaxAdmin/TaxAdmin";
 import { TaxAdminRoutes } from "./components/dashboard/admin/TaxAdmin/TaxAdminRoutes";
-import InsuranceAdmin from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdmin"; 
-import {InsuranceAdminRoutes} from"./components/dashboard/admin/InsuranceAdmin/InsuranceAdminRoutes";
+import InsuranceAdmin from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdmin";
+import { InsuranceAdminRoutes } from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdminRoutes";
 
+import PersonalPlan from "./components/landing/PersonalPlan";
 
 const ProtectedRoute = ({ Component }) => {
   const token = localStorage.getItem("token");
@@ -77,6 +78,7 @@ function App() {
           <Route exact path="/contact" element={<ContactUs />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
+          <Route path="/personalplan" element={<PersonalPlan />} />
           <Route path="/taxform" element={<TaxForm />} />
           <Route
             path="/loan"

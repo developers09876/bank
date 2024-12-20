@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../../Layout/Header";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -45,8 +46,10 @@ function Login() {
 
   return (
     <div className="adminlogin">
+      <Header />
+
       <ToastContainer />
-      <div className="container-admin">
+      <div className="container-admin mt-5">
         <div className="header">
           <div className="text">Login</div>
           <div className="underline"></div>
