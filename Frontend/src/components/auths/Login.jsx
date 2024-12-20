@@ -135,6 +135,8 @@ const LoginPage = () => {
           employee: "/employee",
           user: "/user",
           LoanEmployee: "/adminLoan",
+          TaxEmployee:"/employeeTax",
+          InsuranceEmployee:"/employeeInsurance",
         };
         const route = routes[userType] || "/login";
         navigate(route);
