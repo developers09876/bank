@@ -4,6 +4,7 @@ export async function createJobRequest(req, res, next) {
   try {
     const data = req.body;
     const details = {
+      userId: data.id,
       name: data.name,
       phone: data.phone,
       email: data.email,
@@ -21,4 +22,15 @@ export async function createJobRequest(req, res, next) {
     console.log(err);
     next();
   }
+}
+
+
+export async function getallJobRequests(req,res,next) {
+  try{
+      const jobs = await applyjob.find();
+      res.status(200).json(jobs);
+  }
+catch (error) {
+  res.status(500).json({ message: error.message });
+}
 }
