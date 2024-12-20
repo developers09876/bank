@@ -33,7 +33,7 @@ const LoanAdmin = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("email");
 
-    navigate("/adminlogin");
+    navigate("/login");
   };
 
   return (

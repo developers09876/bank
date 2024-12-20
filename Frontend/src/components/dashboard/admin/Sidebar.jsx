@@ -53,7 +53,7 @@ function Sidebar({ collapsed }) {
             {/* <MdRequestPage className="Nav-Icon" /> */}
             create job
           </NavLink>
-          <NavLink to="/professional/jobrequests">
+          <NavLink to="/admin/jobrequest">
             {/* <MdSend className="Nav-Icon" /> */}
             job request
           </NavLink>

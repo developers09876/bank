@@ -1,68 +1,138 @@
 .career-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.career-intro,
+.job-listings,
+.employee-testimonials,
+.application-form {
+  margin-bottom: 30px;
+}
+
+.job {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.apply-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.apply-btn:hover {
+  background-color: #218838;
+}
+
+.application-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.application-form label {
+  margin-bottom: 5px;
+}
+
+.application-form input,
+select {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.submit-button1 {
+  background-color: #4CAF50;
+  /* Green background */
+  color: white;
+  /* White text */
+  border: 2px solid #4CAF50;
+  /* Green border */
+  padding: 5px 10px;
+  /* Smaller padding */
+  font-size: 14px;
+  /* Smaller font size */
+  border-radius: 3px;
+  /* Slightly rounded corners */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  width: 200px;
+  /* Button width adjusts to content */
+  display: inline-block;
+  /* Ensures button doesn't stretch */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Smooth transition */
+}
+
+.submit-button1:hover {
+  background-color: white;
+  color: #4CAF50;
+}
+
+.jobcards {
+  border: 1px solid #1a2a4162;
+  padding: 5px;
+  background-color: #f2f4f8;
+
+  &h5 {
+    color: #1a2a41;
   }
-  
-  .career-intro,
-  .job-listings,
-  .employee-testimonials,
-  .application-form {
-    margin-bottom: 30px;
-  }
-  
-  .job {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-  }
-  
-  .apply-btn {
-    background-color: #28a745;
+}
+
+.job-role {
+  color: #808080;
+  padding: 1px 10px;
+  font-size: small;
+}
+
+.job-mini {
+  color: #808080;
+  background-color: none;
+  font-weight: bold;
+  padding: 1px 25px;
+  border-radius: 5px;
+
+}
+
+.job-minireq {
+  background-color: #cccccc5f;
+  color: black;
+  /* font-weight: bold; */
+  padding: 3px 10px;
+  border-radius: 5px;
+
+}
+
+.applybtn {
+  border: 1px solid rgba(9, 36, 76, 1);
+  border-radius: 30px;
+  padding: 4px 20px;
+  /* background: none; */
+  font-size: 18px;
+  background-image: linear-gradient(139deg, #111e31, #052657bf);
+  color: white;
+  transition: background 0.3s ease, color 0.3s ease;
+
+  &:hover {
     color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background: none;
+
+    /* background-image: linear-gradient(139deg, #111e31, #052657bf); */
+    border: 1px solid #1a2a41;
+    color: #1a2a41;
+    /* color: white; */
+    transition: background-image 0.3s ease, color 0.3s ease;
+
   }
-  
-  .apply-btn:hover {
-    background-color: #218838;
-  }
-  
-  .application-form form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .application-form label {
-    margin-bottom: 5px;
-  }
-  
-  .application-form input,
-  select {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  .submit-button1 {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border: 2px solid #4CAF50; /* Green border */
-    padding: 5px 10px; /* Smaller padding */
-    font-size: 14px; /* Smaller font size */
-    border-radius: 3px; /* Slightly rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    width: 200px; /* Button width adjusts to content */
-    display: inline-block; /* Ensures button doesn't stretch */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-  }
-  
-  .submit-button1:hover {
-    background-color: white; /* Change background on hover */
-    color: #4CAF50; /* Change text color on hover */
-  }
-  
-  
+}
