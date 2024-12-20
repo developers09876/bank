@@ -30,8 +30,7 @@ function Header() {
     if (userType === "user") {
       navigate("/user");
     }
-
-  }
+  };
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
@@ -53,13 +52,17 @@ function Header() {
         <div>
           <ul
             selectedKeys={[selectedKey]}
-            className="flex flex-col font-medium lg:flex-row lg:space-x-6 lg:mt-0 items-center">
+            className="flex flex-col font-medium lg:flex-row lg:space-x-6 lg:mt-0 items-center"
+          >
             <li className="px-2 py-4">
               <Link
                 onClick={() => handleMenuClick("/")}
                 to="/"
-                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/" ? "bg-[#00397f] text-white" : "text-gray-700"
-                  }`}
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${
+                  selectedKey === "/"
+                    ? "bg-[#00397f] text-white"
+                    : "text-gray-700"
+                }`}
               >
                 Home
               </Link>
@@ -68,18 +71,32 @@ function Header() {
               <Link
                 onClick={() => handleMenuClick("/about")}
                 to="/about"
-                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/about" ? "bg-[#00397f] text-white" : "text-gray-700"
-                  }`}
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${
+                  selectedKey === "/about"
+                    ? "bg-[#00397f] text-white"
+                    : "text-gray-700"
+                }`}
               >
                 About
               </Link>
             </li>
             <li>
               <Link
-                onClick={() => handleMenuClick("/carrier")}
+                onClick={() => handleMenuClick("/personalplan")}
+                to="/personalplan"
+                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+              >
+                Subscripition
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/carrier"
-                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/carrier" ? "bg-[#00397f] text-white" : "text-gray-700"
-                  }`}
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${
+                  selectedKey === "/carrier"
+                    ? "bg-[#00397f] text-white"
+                    : "text-gray-700"
+                }`}
               >
                 Career
               </Link>
@@ -88,8 +105,11 @@ function Header() {
               <Link
                 onClick={() => handleMenuClick("/contact")}
                 to="/contact"
-                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${selectedKey === "/contact" ? "bg-[#00397f] text-white" : "text-gray-700"
-                  }`}
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${
+                  selectedKey === "/contact"
+                    ? "bg-[#00397f] text-white"
+                    : "text-gray-700"
+                }`}
               >
                 Contact Us
               </Link>
@@ -98,11 +118,7 @@ function Header() {
             {!isLoggedIn ? (
               <li>
                 <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3">
-                  <Link
-                    to="/login"
-                    className="no-underline text-white"
-
-                  >
+                  <Link to="/login" className="no-underline text-white">
                     Login
                   </Link>
                 </button>
@@ -112,13 +128,13 @@ function Header() {
                 <div
                   className="live-icon cursor-pointer"
                   onMouseEnter={() => setDropdownVisible(true)}
-                //
+                  //
                 >
                   <img
                     src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
                     alt="Live Icon"
                     className="avatar"
-                  // style={{ width: "40px", height: "40px" }} // Style the icon
+                    // style={{ width: "40px", height: "40px" }} // Style the icon
                   />
                   <div className="live-badge">100%</div>{" "}
                   {/* Badge for live status */}
