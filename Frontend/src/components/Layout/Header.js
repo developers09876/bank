@@ -84,7 +84,11 @@ function Header() {
               <Link
                 onClick={() => handleMenuClick("/personalplan")}
                 to="/personalplan"
-                className="block py-2 pl-3 pr-4 rounded text-gray-700 no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x"
+                className={`block py-2 pl-3 pr-4 rounded no-underline lg:hover:text-white lg:hover:bg-[#00397f] font-light lg:text-x ${
+                  selectedKey === "/personalplan"
+                    ? "bg-[#00397f] text-white"
+                    : "text-gray-700"
+                }`}
               >
                 Subscripition
               </Link>
