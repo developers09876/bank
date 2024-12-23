@@ -56,6 +56,7 @@ import {InsuranceAdminRoutes} from"./components/dashboard/admin/InsuranceAdmin/I
 import StockMarketAdmin from "./components/dashboard/admin/StockMarket/StockMarketAdmin";
 import {StockMarketRoutes} from "./components/dashboard/admin/StockMarket/StockMarketRoutes";
 
+import PersonalPlan from "./components/landing/PersonalPlan";
 
 const ProtectedRoute = ({ Component }) => {
   const token = localStorage.getItem("token");
@@ -79,6 +80,7 @@ function App() {
           <Route exact path="/contact" element={<ContactUs />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
+          <Route path="/personalplan" element={<PersonalPlan />} />
           <Route path="/taxform" element={<TaxForm />} />
           <Route
             path="/loan"
@@ -151,7 +153,10 @@ function App() {
             element={<ProtectedRoute Component={Credit} />}
           />
           <Route path="/loanreview" element={<LoanDashboard />} />
-          <Route path="/carrier" element={<Carrier />} />
+          <Route
+            path="/carrier"
+            element={<ProtectedRoute Component={Carrier} />}
+          />
           <Route path="/employee" element={<EmployeeDashboard />}>
             {EmployeeRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
