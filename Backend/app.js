@@ -17,6 +17,7 @@ import Adminlogin from "./server/Router/Adminroutes.js";
 import nodemailer from "./server/Router/NodeMailerRouter.js";
 import job from "./server/Router/JobPostRouter.js"
 import jobrequest from "./server/Router/JobRequestRouter.js"
+import lead from "./server/Router/LeadGenerationRouter.js"
 
 app.use("/admin", Adminlogin);
 app.use("/signup", signup);
@@ -25,5 +26,5 @@ app.use("/loanform", loanform);
 app.use("/nodemailer", nodemailer);
 app.use("/job",job);
 app.use("/jobrequest",jobrequest)
-
+app.use("/lead",lead)
 export default app;

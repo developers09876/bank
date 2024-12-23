@@ -102,8 +102,8 @@ const JobRequest = ({ collapsed }) => {
     },
     {
       title: "Applied For",
-      dataIndex: "role",
-      key: "role",
+      dataIndex: "jobtitle",
+      key: "jobtitle",
     },
     {
       title: "Email",
@@ -205,7 +205,7 @@ const JobRequest = ({ collapsed }) => {
               <p>
                 <strong>Resume:</strong>{" "}
                 <a
-                  href={selectedRecord.propertyOwnershipProof}
+                  href={selectedRecord.resume}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
