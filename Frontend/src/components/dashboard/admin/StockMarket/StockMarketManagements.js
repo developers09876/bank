@@ -47,7 +47,7 @@ const StockMarketManagements = ({ collapsed }) => {
       date: "01/03/2023",
       appId: "256793",
       customer: "Noah Hogan",
-      status: "Tax Details Incomplete",
+      status: "StockMarket Details Incomplete",
       action: "Delete",
     },
     {
@@ -154,4 +154,4 @@ const StockMarketManagements = ({ collapsed }) => {
   );
 };
 
-export default  StockMarketManagements;
+export default StockMarketManagements;

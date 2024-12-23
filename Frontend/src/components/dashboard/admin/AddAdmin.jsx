@@ -169,6 +169,9 @@ const AddAdmin = ({ setAuth }) => {
                     <option value="InsuranceEmployee">
                       Insurance Employee
                     </option>
+                    <option value="stockMarket">
+                      Stock Market
+                    </option>
                   </select>
                 </Col>
                 <Col lg={6} md={6}>
