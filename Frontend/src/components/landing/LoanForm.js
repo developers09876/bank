@@ -300,6 +300,7 @@ function LoanForm() {
                           name="MaritalStatus"
                           control={control}
                           defaultValue=""
+                          
                           rules={{ required: true }}
                           render={({ field }) => (
                             <Select
@@ -340,7 +341,7 @@ function LoanForm() {
                                 <input
                                   {...field}
                                   type="text"
-                                  className="form-control"
+                                  className="inputcolumn-ourProfile"
                                   placeholder="Enter Wife's Name"
                                 />
                               )}
@@ -365,7 +366,7 @@ function LoanForm() {
                               render={({ field }) => (
                                 <Select
                                   {...field}
-                                  className="form-control"
+                                  className="inputcolumn_drp"
                                   placeholder="Select Occupation"
                                   onChange={(value) => {
                                     field.onChange(value);
@@ -469,7 +470,7 @@ function LoanForm() {
                                         <input
                                           {...field}
                                           type="text"
-                                          className="form-control"
+                                          className="inputcolumn-ourProfile"
                                           placeholder="Enter Child Name"
                                         />
                                       )}
@@ -496,7 +497,7 @@ function LoanForm() {
                                         <input
                                           {...field}
                                           type="number"
-                                          className="form-control"
+                                          className="inputcolumn-ourProfile"
                                           placeholder="Enter Child Age"
                                         />
                                       )}
@@ -514,7 +515,8 @@ function LoanForm() {
                                     <Button
                                       variant="danger"
                                       onClick={() => removeChild(child.id)}
-                                      className="mt-3"
+                                      className="mt-3 mr-3"
+                                      style={{borderRadius:"10px"}}
                                     >
                                       Remove
                                     </Button>
@@ -522,9 +524,13 @@ function LoanForm() {
                                   <Button
                                     variant="primary"
                                     onClick={addChild}
-                                    className="mt-3"
+                                    className="mr-3 mt-3"
+                                    style={{borderRadius:"10px"}}
+                                    
                                   >
                                     Add Child
+
+
                                   </Button>
                                 </Col>
                               </>
@@ -708,6 +714,7 @@ function LoanForm() {
                         </label>
                         <textarea
                           className="inputcolumn-ourProfile"
+                          style={{height:"60px"}}
                           name="address"
                           {...register("address", { required: true })}
                           placeholder="Residential Address"
@@ -878,6 +885,7 @@ function LoanForm() {
                         </label>
                         <textarea
                           className="inputcolumn-ourProfile"
+                          style={{height:"60px"}}
                           {...register("existingLoans")}
                           placeholder="If any"
                         />
@@ -910,6 +918,7 @@ function LoanForm() {
                         </label>
                         <textarea
                           className="inputcolumn-ourProfile"
+                          style={{height:"60px"}}
                           {...register("propertyDetails", { required: true })}
                           placeholder="Address, Type, Size, and Value of the Property"
                         />
