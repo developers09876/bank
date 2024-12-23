@@ -51,8 +51,10 @@ import ErrorMessage from "./components/Layout/ErrorMessage";
 import LoanAdmin from "./components/dashboard/admin/LoanAdmin/LoanAdmin";
 import TaxAdmin from "./components/dashboard/admin/TaxAdmin/TaxAdmin";
 import { TaxAdminRoutes } from "./components/dashboard/admin/TaxAdmin/TaxAdminRoutes";
-import InsuranceAdmin from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdmin";
-import { InsuranceAdminRoutes } from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdminRoutes";
+import InsuranceAdmin from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdmin"; 
+import {InsuranceAdminRoutes} from"./components/dashboard/admin/InsuranceAdmin/InsuranceAdminRoutes";
+import StockMarketAdmin from "./components/dashboard/admin/StockMarket/StockMarketAdmin";
+import {StockMarketRoutes} from "./components/dashboard/admin/StockMarket/StockMarketRoutes";
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 
@@ -182,6 +184,12 @@ function App() {
 
           <Route path="/employeeInsurance" element={<InsuranceAdmin />}>
             {InsuranceAdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          <Route path="/employeeStockMarket" element={<StockMarketAdmin />}>
+            {StockMarketRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
