@@ -453,6 +453,7 @@ function LoanForm() {
                                     )}
                                   </div>
                                 </Col>
+                                {console.log("index", index)}
 
                                 <Col xs={12} md={6} lg={4}>
                                   <div>
@@ -509,13 +510,15 @@ function LoanForm() {
                                 </Col>
 
                                 <Col xs={12} md={6} lg={4}>
-                                  <Button
-                                    variant="danger"
-                                    onClick={() => removeChild(child.id)}
-                                    className="mt-3"
-                                  >
-                                    Remove
-                                  </Button>
+                                  {index !== 0 && (
+                                    <Button
+                                      variant="danger"
+                                      onClick={() => removeChild(child.id)}
+                                      className="mt-3"
+                                    >
+                                      Remove
+                                    </Button>
+                                  )}
                                   <Button
                                     variant="primary"
                                     onClick={addChild}
