@@ -420,12 +420,13 @@ function LoanForm() {
                                     <Controller
                                       name={`ChildGender_${child.id}`}
                                       control={control}
-                                      className="inputcolumn_drp"
+                                     className="inputcolumn_drp"
                                       defaultValue=""
                                       rules={{ required: true }}
                                       render={({ field }) => (
                                         <Select
                                           {...field}
+                                           className="inputcolumn_drp"
                                           placeholder="Select Child Gender"
                                         >
                                           <Option value="Male">Male</Option>
