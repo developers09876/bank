@@ -20,7 +20,6 @@ function CreateLead() {
 
   const onSubmit = async (data) => {
     const details = {
-      userType:"user",
       firstname: data.firstname,
       lastname:data.lastname,
       userId: id,
@@ -34,6 +33,7 @@ function CreateLead() {
       panno: data.panno,
     };
     const detail = {
+      userType:"user",
       firstname: data.firstname,
       lastname:data.lastname,
       userId: id,
