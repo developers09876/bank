@@ -38,7 +38,7 @@ const  InsuranceDashboard = () => {
       pending: 50,
       closed: 150,
     },
-    employees: 150,
+    users: 150,
     totalinsurance: 2000,
     revenue: "$50,000",
     invoices: 45,
@@ -118,12 +118,12 @@ const  InsuranceDashboard = () => {
               <Col md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
-                  onClick={() => navigate("/admin/employeelist")}
+                  onClick={() => navigate("insuranceuserlist")}
                 >
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
-                    <Card.Title>Total Employees</Card.Title>
-                    <Card.Text>{stats.employees}</Card.Text>
+                    <Card.Title>Total Users</Card.Title>
+                    <Card.Text>{stats.users}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
