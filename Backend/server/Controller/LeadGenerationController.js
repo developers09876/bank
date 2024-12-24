@@ -27,3 +27,15 @@ export async function createLead(req,res,next) {
         next();
     }
 }
+
+
+export async function getallLead(req, res, next) {
+    try {
+      const jobs = await Lead.find();
+      res.status(200).json(jobs);
+    }
+    catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  
