@@ -155,8 +155,8 @@ function App() {
           <Route path="/loanreview" element={<LoanDashboard />} />
           <Route
             path="/carrier"
-            element={<ProtectedRoute Component={Carrier} />}
-          />
+            element={<Carrier />}/>
+        
           <Route path="/employee" element={<EmployeeDashboard />}>
             {EmployeeRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
