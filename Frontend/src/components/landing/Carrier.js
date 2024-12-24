@@ -173,8 +173,8 @@ function Carrier() {
                     <p className='job-mini'>{job.salary} LPA</p>
                   </div>
                 </Row>
-                <p>{job.description}</p>
-                <p><strong>Requirements :</strong> {job.requirements}</p>
+                <p>{job.description}</p><br />
+                <p ><strong>Requirements :</strong> {job.requirements}</p><br />
                 {/* <Row className='py-2' style={{ display: 'flex' }}>
                   {job.requirements.map((requirement, reqIndex) => (
                     <div className='px-2' key={reqIndex}>

@@ -69,14 +69,7 @@ const Landing = () => {
       link: "#",
       icon: "fas fa-hand-holding-usd",
     },
-    {
-      title: "MICRO LOANS (UNDER ₹50K)",
-      description:
-        "Instant small ticket loans to meet your immediate cash needs",
-      buttonText: "Get Instant Loan",
-      link: "#",
-      icon: "fas fa-coins",
-    },
+   
     {
       title: "BUSINESS LOAN",
       description: "Expand your business with loans at low interest rates",
