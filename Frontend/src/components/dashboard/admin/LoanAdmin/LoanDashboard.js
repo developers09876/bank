@@ -118,11 +118,11 @@ const LoanDashboard = () => {
               <Col md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
-                  onClick={() => navigate("/admin/employeelist")}
+                  // onClick={() => navigate("/admin/employeelist")}
                 >
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
-                    <Card.Title>Total Employees</Card.Title>
+                    <Card.Title>Total Users</Card.Title>
                     <Card.Text>{stats.employees}</Card.Text>
                   </Card.Body>
                 </Card>

@@ -1,16 +1,17 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  userType: { type: String, required: true },
+  userId: { type: String},
+  userType: { type: String,},
   empno: { type: String },
   manager: { type: String },
   branch: { type: String },
   dateOfJoining: { type: String },
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  contactNumber: { type: String, required: true, unique: true },
+  firstname: { type: String,},
+  lastname: { type: String,},
+  email: { type: String,  unique: true },
+  // password: { type: String,},
+  contactNumber: { type: String,  unique: true },
   forgetPasswordCode: { type: String, default: null },
 });
 

@@ -118,7 +118,7 @@ const  StockMarketDashboard = () => {
               <Col md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
-                  onClick={() => navigate("/admin/employeelist")}
+                  // onClick={() => navigate("/admin/employeelist")}
                 >
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />

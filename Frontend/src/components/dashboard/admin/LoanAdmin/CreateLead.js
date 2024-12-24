@@ -20,10 +20,11 @@ function CreateLead() {
 
   const onSubmit = async (data) => {
     const details = {
+      userType:"user",
       firstname: data.firstname,
       lastname:data.lastname,
       userId: id,
-      phone: data.phone,
+      contactNumber: data.contactNumber,
       email: data.email,
       aadhar: data.aadhar,
       purpose: data.purpose,
@@ -32,10 +33,22 @@ function CreateLead() {
       previouslyapplied: data.previouslyapplied,
       panno: data.panno,
     };
+    const detail = {
+      firstname: data.firstname,
+      lastname:data.lastname,
+      userId: id,
+      contactNumber: data.contactNumber,
+      email: data.email,
+     
+    };
     try {
       const response = await axios.post(
         `http://localhost:5000/lead/createlead`,
         details
+      );
+      const res = await axios.post(
+        `http://localhost:5000/signup/register`,
+        detail
       );
       toast.success("Form submitted successfully");
     } catch (error) {
@@ -57,11 +70,11 @@ function CreateLead() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="text"
-                  name="name"
+                  name="firstname"
                   {...register("firstname", { required: true })}
                   placeholder="Name"
                 />
-                {errors.name && <p className="text-danger"> First Name is required</p>}
+                {errors.firstname && <p className="text-danger"> First Name is required</p>}
               </div>
             </Col>
             <Col xs={12} md={6} lg={4}>
@@ -74,7 +87,7 @@ function CreateLead() {
                   {...register("lastname", { required: true })}
                   placeholder="Name"
                 />
-                {errors.name && <p className="text-danger">Last Name is required</p>}
+                {errors.lastname && <p className="text-danger">Last Name is required</p>}
               </div>
             </Col>
 
@@ -104,11 +117,11 @@ function CreateLead() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="number"
-                  name="phone"
-                  {...register("phone", {
+                  name="contactNumber"
+                  {...register("contactNumber", {
                     required: true,
                     pattern: {
-                      value: /^[0-9]{10}$/,
+                      // value: /^[0-9]{10}$/,
                       message: "Invalid Phone Number",
                     },
                   })}
@@ -130,7 +143,7 @@ function CreateLead() {
                   {...register("aadhar", {
                     required: true,
                     pattern: {
-                      value: /^[0-9]{12}$/,
+                      // value: /^[0-9]{12}$/,
                       message: "Aadhaar must be 12 digits",
                     },
                   })}

@@ -14,8 +14,8 @@ const AddAdmin = ({ setAuth }) => {
     firstname: "",
     lastname: "",
     email: "",
-    password: "",
-    confirmPassword: "",
+    // password: "",
+    // confirmPassword: "",
     contactNumber: "",
     Manager: "",
     Branch: "",
@@ -29,8 +29,8 @@ const AddAdmin = ({ setAuth }) => {
     lastname,
     contactNumber,
     email,
-    password,
-    confirmPassword,
+    // password,
+    // confirmPassword,
     Manager,
     Branch,
     dateOfJoining,
@@ -68,8 +68,8 @@ const AddAdmin = ({ setAuth }) => {
         lastname,
         contactNumber,
         email,
-        password,
-        confirmPassword,
+        // password,
+        // confirmPassword,
         manager: Manager,
         branch: Branch,
         dateOfJoining,
@@ -222,7 +222,7 @@ const AddAdmin = ({ setAuth }) => {
                     required
                   />
                 </Col>
-                <Col lg={6} md={6}>
+                {/* <Col lg={6} md={6}>
                   <label htmlFor="password">Password:</label>
                   <input
                     type="password"
@@ -245,7 +245,7 @@ const AddAdmin = ({ setAuth }) => {
                     placeholder="**********"
                     required
                   />
-                </Col>
+                </Col> */}
                 <Col lg={6} md={6}>
                   <label htmlFor="dateOfJoining">Date of Joining:</label>
                   <input
