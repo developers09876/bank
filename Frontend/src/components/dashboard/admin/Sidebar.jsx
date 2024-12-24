@@ -74,6 +74,10 @@ function Sidebar({ collapsed }) {
             {/* <MdSend className="Nav-Icon" /> */}
             Tax Management
           </NavLink>
+          {/* <NavLink to="/employeeStockMarket">
+          
+            StockMarket Management
+          </NavLink> */}
         </SubMenu>
       </Menu>
     </div>
