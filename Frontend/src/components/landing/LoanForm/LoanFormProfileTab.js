@@ -5,6 +5,7 @@ import OurProfile from "./LoanForm";
 // import Popup from '../Popup/Popup';
 import KycComplaince from "./LoanKfc";
 // import AdminInfo from './AdminInfo.js';
+import LoanDetails from "./LoanDetails";
 
 function LoanFormProfileTab() {
   return (
@@ -19,7 +20,10 @@ function LoanFormProfileTab() {
         <Tabs.TabPane tab="User Information" key="1">
           <OurProfile />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="KYC Complainces" key="2">
+        <Tabs.TabPane tab="Loan Form" key="2">
+          <LoanDetails />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="KYC Complainces" key="3">
           <KycComplaince />
         </Tabs.TabPane>
       </Tabs>

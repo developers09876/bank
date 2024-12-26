@@ -28,13 +28,12 @@ function Header() {
       employee: "/employee",
       user: "/user",
       LoanEmployee: "/adminLoan",
-      TaxEmployee:"/employeeTax",
-      InsuranceEmployee:"/employeeInsurance",
+      TaxEmployee: "/employeeTax",
+      InsuranceEmployee: "/employeeInsurance",
     };
     const route = routes[userType] || "/login";
     navigate(route);
-
-  }
+  };
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");

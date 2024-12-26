@@ -194,12 +194,22 @@ function LoanForm() {
     unregister(`ChildName_${id}`);
     unregister(`ChildAge_${id}`);
   };
+  const [childCount, setChildCount] = useState(0);
+
+  // Watch the loanAmount field
+  const loanAmount = watch("loanAmount");
+
+  // Update child count whenever the loanAmount field changes
+  const handleLoanAmountChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    setChildCount(Number.isNaN(value) ? 0 : value); // Update the number of children
+  };
 
   return (
     <div>
       <Header />
 
-      <Container style={{ marginTop: "5%" }}>
+      <Container style={{ marginTop: "1%" }}>
         <Col xs={12} md={12} lg={12}>
           <div
             className="ourProfileParentdiv"
@@ -208,7 +218,7 @@ function LoanForm() {
             <div style={{ paddingLeft: "10px" }}>
               <center>
                 {" "}
-                <h4 className="pages-title mt-3 mb-5"> Loan Form</h4>
+                <h4 className="pages-title mt-3 mb-5"> User Details</h4>
               </center>
 
               <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -318,10 +328,10 @@ function LoanForm() {
                         <Col xs={12} md={6} lg={4}>
                           <div>
                             <label className="vendorpage_labelCss">
-                              Wife's / Husbans's Name
+                              Spouse Name
                             </label>
                             <Controller
-                              name="WifeName"
+                              name="spouseName"
                               control={control}
                               defaultValue=""
                               rules={{ required: true }}
@@ -330,13 +340,13 @@ function LoanForm() {
                                   {...field}
                                   type="text"
                                   className="inputcolumn-ourProfile"
-                                  placeholder="Enter Wife's Name"
+                                  placeholder="Enter Spouse Name"
                                 />
                               )}
                             />
                             {errors.WifeName && (
                               <p className="text-danger">
-                                Wife's / Husbans's Name is required
+                                Spouse Name is required
                               </p>
                             )}
                           </div>
@@ -344,10 +354,10 @@ function LoanForm() {
                         <Col xs={12} md={6} lg={4}>
                           <div>
                             <label className="vendorpage_labelCss">
-                              Wife's / Husband's Occupation
+                              Spouse Occupation
                             </label>
                             <Controller
-                              name="WifeOccupation"
+                              name="spouseOccupation"
                               control={control}
                               defaultValue=""
                               rules={{ required: true }}
@@ -355,10 +365,10 @@ function LoanForm() {
                                 <Select
                                   {...field}
                                   className="inputcolumn_drp"
-                                  placeholder="Select Occupation"
+                                  placeholder="Select Spouse Occupation"
                                   onChange={(value) => {
                                     field.onChange(value); // Update form state
-                                    setValue("WifeOccupation", value); // Optional: Explicitly set value if needed
+                                    setValue("spouseOccupation", value); // Optional: Explicitly set value if needed
                                   }}
                                 >
                                   <Option value="Working Person">
@@ -368,15 +378,15 @@ function LoanForm() {
                                 </Select>
                               )}
                             />
-                            {errors.WifeOccupation && (
+                            {errors.spouseOccupation && (
                               <p className="text-danger">
-                                Wife's / Husband's Occupation is required
+                                Spouse Occupation is required
                               </p>
                             )}
                           </div>
                         </Col>
 
-                        <Col xs={12} md={6} lg={4}>
+                        {/* <Col xs={12} md={6} lg={4}>
                           <div>
                             <label className="vendorpage_labelCss">
                               Children Status
@@ -516,7 +526,7 @@ function LoanForm() {
                               </React.Fragment>
                             ))}
                           </>
-                        )}
+                        )} */}
 
                         {/* Conditionally render Designation and Income fields */}
                         {watch("WifeOccupation") === "Working Person" && (
@@ -591,6 +601,105 @@ function LoanForm() {
                         )}
                       </>
                     )}
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          How Many Children?
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          {...register("loanAmount", { required: true })}
+                          placeholder="Loan Amount Requested"
+                          onChange={handleLoanAmountChange} // Call the handler on change
+                        />
+                        {errors.loanAmount && (
+                          <p className="text-danger">
+                            Loan Amount Requested is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+                    {Array.from({ length: childCount }, (_, index) => (
+                      <React.Fragment key={index}>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label>Child Gender {index + 1}</label>
+                            <Controller
+                              name={`ChildGender_${index + 1}`}
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Select
+                                  {...field}
+                                  className="inputcolumn_drp"
+                                  placeholder="Select Child Gender"
+                                  options={[
+                                    { value: "Male", label: "Male" },
+                                    { value: "Female", label: "Female" },
+                                  ]}
+                                />
+                              )}
+                            />
+                            {errors[`ChildGender_${index + 1}`] && (
+                              <p className="text-danger">
+                                Child Gender is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label>Child Name {index + 1}</label>
+                            <Controller
+                              name={`ChildName_${index + 1}`}
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="text"
+                                  className="inputcolumn-ourProfile"
+                                  placeholder="Enter Child Name"
+                                />
+                              )}
+                            />
+                            {errors[`ChildName_${index + 1}`] && (
+                              <p className="text-danger">
+                                Child Name is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label>Child Age {index + 1}</label>
+                            <Controller
+                              name={`ChildAge_${index + 1}`}
+                              control={control}
+                              rules={{ required: true, min: 1 }}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="number"
+                                  className="inputcolumn-ourProfile"
+                                  placeholder="Enter Child Age"
+                                />
+                              )}
+                            />
+                            {errors[`ChildAge_${index + 1}`] && (
+                              <p className="text-danger">
+                                Child Age is required and must be greater than 0
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                      </React.Fragment>
+                    ))}
+
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -610,60 +719,6 @@ function LoanForm() {
                     </Col>
 
                     {/* PAN */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          PAN Number
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="pan"
-                          {...register("pan", { required: true })}
-                          placeholder="PAN Number"
-                        />
-                        {errors.pan && (
-                          <p className="text-danger">PAN is required</p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Nominee Name
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="Nominee"
-                          {...register("Nominee", { required: true })}
-                          placeholder="Nominee"
-                        />
-                        {errors.Nominee && (
-                          <p className="text-danger">Nominee is required</p>
-                        )}
-                      </div>
-                    </Col>
-                    {/* Aadhaar Number */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Aadhaar Number
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          name="aadhaar"
-                          {...register("aadhaar", { required: true })}
-                          placeholder="Aadhaar Number"
-                        />
-                        {errors.aadhaar && (
-                          <p className="text-danger">
-                            Aadhaar Number is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
 
                     {/* Contact Information */}
                     <Col xs={12} md={6} lg={4}>
@@ -705,319 +760,6 @@ function LoanForm() {
                       </div>
                     </Col>
 
-                    {/* Occupation */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Proof of Identity
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("identityProof", { required: true })}
-                          placeholder="Passport, Driver’s License, Aadhaar, Voter ID, etc."
-                        />
-                        {errors.identityProof && (
-                          <p className="text-danger">
-                            Proof of Identity is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Proof of Address
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("addressProof", { required: false })}
-                          placeholder="Utility Bills, Rental Agreement, Aadhaar, etc."
-                        />
-                        {errors.addressProof && (
-                          <p className="text-danger">
-                            Proof of Address is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Income Details
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("incomeDetails", { required: true })}
-                          placeholder="Salary, Business Income, Other Sources"
-                        />
-                        {errors.incomeDetails && (
-                          <p className="text-danger">
-                            Income Details are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Employer’s Name and Address
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("employerDetails", { required: true })}
-                          placeholder="For salaried individuals"
-                        />
-                        {errors.employerDetails && (
-                          <p className="text-danger">
-                            Employer's Name and Address are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Employment Status
-                        </label>
-                        <Controller
-                          name="employmentStatus"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              placeholder="Select Status"
-                            >
-                              <Option value="Employed">Employed</Option>
-                              <Option value="Self-employed">
-                                Self-employed
-                              </Option>
-                              <Option value="Business Owner">
-                                Business Owner
-                              </Option>
-                            </Select>
-                          )}
-                        />
-                        {errors.employmentStatus && (
-                          <p className="text-danger">
-                            Employment Status is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Bank Account Details
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("bankAccountDetails", {
-                            required: true,
-                          })}
-                          placeholder="Account Number, IFSC Code"
-                        />
-                        {errors.bankAccountDetails && (
-                          <p className="text-danger">
-                            Bank Account Details are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Annual Income
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("annualIncome", { required: true })}
-                          placeholder="Annual Income"
-                        />
-                        {errors.annualIncome && (
-                          <p className="text-danger">
-                            Annual Income is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Details of Existing Loans
-                        </label>
-                        <textarea
-                          className="inputcolumn-ourProfile"
-                          style={{ height: "60px" }}
-                          {...register("existingLoans")}
-                          placeholder="If any"
-                        />
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Credit Score
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("creditScore", { required: true })}
-                          placeholder="Credit Score"
-                        />
-                        {errors.creditScore && (
-                          <p className="text-danger">
-                            Credit Score is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Property Details
-                        </label>
-                        <textarea
-                          className="inputcolumn-ourProfile"
-                          style={{ height: "60px" }}
-                          {...register("propertyDetails", { required: true })}
-                          placeholder="Address, Type, Size, and Value of the Property"
-                        />
-                        {errors.propertyDetails && (
-                          <p className="text-danger">
-                            Property Details are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Purpose of the Loan
-                        </label>
-                        <Controller
-                          name="loanPurpose"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              placeholder="Select Purpose"
-                            >
-                              <Option value="Purchase">Purchase</Option>
-                              <Option value="Construction">Construction</Option>
-                              <Option value="Renovation">Renovation</Option>
-                            </Select>
-                          )}
-                        />
-                        {errors.loanPurpose && (
-                          <p className="text-danger">
-                            Purpose of the Loan is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Loan Amount Requested
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("loanAmount", { required: true })}
-                          placeholder="Loan Amount Requested"
-                        />
-                        {errors.loanAmount && (
-                          <p className="text-danger">
-                            Loan Amount Requested is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    {/* <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Down Payment Amount
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("downPayment", { required: true })}
-                          placeholder="Down Payment Amount"
-                        />
-                        {errors.downPayment && (
-                          <p className="text-danger">
-                            Down Payment Amount is required
-                          </p>
-                        )}
-                      </div>
-                    </Col> */}
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Proof of Property Ownership or Agreement to Sell
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("propertyOwnershipProof", {
-                            required: true,
-                          })}
-                        />
-                        {errors.propertyOwnershipProof && (
-                          <p className="text-danger">
-                            Proof of Property Ownership is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Signature Specimen
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept="image/*"
-                          {...register("signature", { required: true })}
-                        />
-                        {errors.signature && (
-                          <p className="text-danger">
-                            Signature Specimen is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -1034,36 +776,6 @@ function LoanForm() {
                             Photographs are required
                           </p>
                         )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Proof of Financial Liabilities or Assets
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("financialProof")}
-                          placeholder="Optional"
-                        />
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Documentation for Co-applicants/Guarantors
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("coApplicantDocs")}
-                          placeholder="If applicable"
-                        />
                       </div>
                     </Col>
                   </Row>

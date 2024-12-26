@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 // import Api from "../../Api";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 
 function LoanKfc() {
   const {
@@ -84,6 +86,7 @@ function LoanKfc() {
 
   return (
     <div>
+      <Header />
       <Container>
         <div
           className="ourProfileParentdiv"
@@ -229,6 +232,7 @@ function LoanKfc() {
         </div>
       </Container>
       {/* </Card> */}
+      <Footer />
     </div>
   );
 }
