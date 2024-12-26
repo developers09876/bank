@@ -69,7 +69,7 @@ const Landing = () => {
       link: "#",
       icon: "fas fa-hand-holding-usd",
     },
-   
+
     {
       title: "BUSINESS LOAN",
       description: "Expand your business with loans at low interest rates",
@@ -89,7 +89,7 @@ const Landing = () => {
       description:
         "Choose from lowest interest rates available for your dream home",
       buttonText: "Check Eligibility",
-      link: "/loan",
+      link: "/loanform",
       icon: "fas fa-home",
     },
     {

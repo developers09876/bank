@@ -1,21 +1,25 @@
 import React from "react";
 import { Tabs } from "antd";
 import { Link } from "react-router-dom";
-import OurProfile from "./MyProfile";
+import OurProfile from "./LoanForm";
 // import Popup from '../Popup/Popup';
-import KycComplaince from "./Kyc";
+import KycComplaince from "./LoanKfc";
 // import AdminInfo from './AdminInfo.js';
 
-function TabsProfile() {
+function LoanFormProfileTab() {
   return (
     <div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
       <Tabs defaultActiveKey="1" centered className="p-3">
         <Tabs.TabPane tab="User Information" key="1">
           <OurProfile />
         </Tabs.TabPane>
         <Tabs.TabPane tab="KYC Complainces" key="2">
-          {/* <p style={{ marginLeft:"30px" }}>KYC Complaince</p> */}
-          {/* <Popup/> */}
           <KycComplaince />
         </Tabs.TabPane>
       </Tabs>
@@ -23,4 +27,4 @@ function TabsProfile() {
   );
 }
 
-export default TabsProfile;
+export default LoanFormProfileTab;
