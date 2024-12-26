@@ -89,7 +89,7 @@ const Landing = () => {
       description:
         "Choose from lowest interest rates available for your dream home",
       buttonText: "Check Eligibility",
-      link: "/loan",
+      link: "/loanform",
       icon: "fas fa-home",
     },
     {
