@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 // import Api from "../../Api";
 import { Controller, useForm } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import "../dashboard/user/MyProfile.scss";
+import "../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 import axios from "axios";
 
 function LoanForm() {
@@ -198,7 +198,7 @@ function LoanForm() {
   return (
     <div>
       <Header />
-      <br />
+
       <Container style={{ marginTop: "5%" }}>
         <Col xs={12} md={12} lg={12}>
           <div
@@ -420,13 +420,13 @@ function LoanForm() {
                                     <Controller
                                       name={`ChildGender_${child.id}`}
                                       control={control}
-                                     className="inputcolumn_drp"
+                                      className="inputcolumn_drp"
                                       defaultValue=""
                                       rules={{ required: true }}
                                       render={({ field }) => (
                                         <Select
                                           {...field}
-                                           className="inputcolumn_drp"
+                                          className="inputcolumn_drp"
                                           placeholder="Select Child Gender"
                                         >
                                           <Option value="Male">Male</Option>
@@ -959,7 +959,7 @@ function LoanForm() {
                       </div>
                     </Col>
 
-                    <Col xs={12} md={6} lg={4}>
+                    {/* <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
                           Down Payment Amount
@@ -976,7 +976,7 @@ function LoanForm() {
                           </p>
                         )}
                       </div>
-                    </Col>
+                    </Col> */}
 
                     <Col xs={12} md={6} lg={4}>
                       <div>

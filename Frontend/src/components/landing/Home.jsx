@@ -69,7 +69,7 @@ const Landing = () => {
       link: "#",
       icon: "fas fa-hand-holding-usd",
     },
-   
+
     {
       title: "BUSINESS LOAN",
       description: "Expand your business with loans at low interest rates",
