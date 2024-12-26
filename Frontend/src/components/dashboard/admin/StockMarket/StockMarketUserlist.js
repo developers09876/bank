@@ -53,7 +53,7 @@ const UserList = ({ setAuth }) => {
       title: 'Full Name',
       dataIndex: 'fullname',
       key: 'fullname',
-      render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
+      render: (_, user) => `${user.firstname} ${user.lastname}`,
     },
     {
       title: 'Contact Number',
@@ -68,11 +68,11 @@ const UserList = ({ setAuth }) => {
     {
       title: 'Action',
       key: 'action',
-      render: (_, employee) => (
+      render: (_, user) => (
         <Button
          type="primary" 
          style={{color:'black'}}
-         onClick={() => console.log(`Viewing user: ${employee._id}`)}>
+         onClick={() => console.log(`Viewing user: ${user._id}`)}>
           View
         </Button>
       ),
@@ -92,14 +92,18 @@ const UserList = ({ setAuth }) => {
         <div className="w-full px-4 mt-5">
           <Table
             columns={columns}
-            // dataSource={employees}
+            // dataSource={users}
             rowKey="_id"
             pagination={{ pageSize: 5 }}
+
+
           />
         </div>
+        
       </div>
     </div>
   );
 };
 
 export default UserList;
+

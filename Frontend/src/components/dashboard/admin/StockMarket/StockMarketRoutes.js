@@ -7,3 +7,6 @@ export const   StockMarketRoutes = [
   { path: "stockMarketManagements", element: < StockMarketManagements /> },
   {path: "stockuserlist", element: < StockMarketUserlist/>},
 ];
+
+
+
