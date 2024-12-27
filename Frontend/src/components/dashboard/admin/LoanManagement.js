@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button, Modal } from "antd";
+import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 const LoanManagement = ({ collapsed }) => {
@@ -200,141 +200,332 @@ const LoanManagement = ({ collapsed }) => {
           }}
         >
           {selectedRecord && (
-            <div>
-              <p>
-                <strong>Created On:</strong> {selectedRecord.createdAt}
-              </p>
-              <p>
-                <strong>Application ID:</strong> {selectedRecord._id}
-              </p>
-              <p>
-                <strong>Full Name:</strong> {selectedRecord.fullName}
-              </p>
-              <p>
-                <strong>Aadhaar:</strong> {selectedRecord.aadhaar}
-              </p>
-              <p>
-                <strong>Address:</strong> {selectedRecord.address}
-              </p>
-              <p>
-                <strong>Annual Income:</strong> {selectedRecord.annualIncome}
-              </p>
-              <p>
-                <strong>Contact:</strong> {selectedRecord.contact}
-              </p>
-              <p>
-                <strong>Credit Score:</strong> {selectedRecord.creditScore}
-              </p>
-              <p>
-                <strong>Date of Birth:</strong>{" "}
-                {new Date(selectedRecord.dob).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Down Payment:</strong> {selectedRecord.downPayment}
-              </p>
-              <p>
-                <strong>Employer Details:</strong>{" "}
-                {selectedRecord.employerDetails}
-              </p>
-              <p>
-                <strong>Employment Status:</strong>{" "}
-                {selectedRecord.employmentStatus}
-              </p>
-              <p>
-                <strong>Existing Loans:</strong> {selectedRecord.existingLoans}
-              </p>
-              <p>
-                <strong>Gender:</strong> {selectedRecord.gender}
-              </p>
-              <p>
-                <strong>Income Details:</strong> {selectedRecord.incomeDetails}
-              </p>
-              <p>
-                <strong>Loan Amount:</strong> {selectedRecord.loanAmount}
-              </p>
-              <p>
-                <strong>Loan Purpose:</strong> {selectedRecord.loanPurpose}
-              </p>
-              <p>
-                <strong>Nationality:</strong> {selectedRecord.nationality}
-              </p>
-              <p>
-                <strong>PAN:</strong> {selectedRecord.pan}
-              </p>
-              <p>
-                <strong>Property Details:</strong>{" "}
-                {selectedRecord.propertyDetails}
-              </p>
-              <p>
-                <strong>Property Ownership Proof:</strong>{" "}
-                <a
-                  href={selectedRecord.propertyOwnershipProof}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+            <div style={{ overflow: "hidden" }}>
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Created On</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.createdAt}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Application ID</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={14}>
+                <p>{selectedRecord._id}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Full Name</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.fullName}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Aadhaar</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.aadhaar}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Address</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.address}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Annual Income</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={14}>
+                <p>{selectedRecord.annualIncome}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Contact</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.contact}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Credit Score</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.creditScore}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Date of Birth</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{new Date(selectedRecord.dob).toLocaleDateString()}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Down Payment</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={14}>
+                <p>{selectedRecord.downPayment}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Employer Details</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.employerDetails}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Employment Status</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.employmentStatus}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Existing Loans</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.existingLoans}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Gender</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.gender}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Income Details</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.incomeDetails}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Loan Amount</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.loanAmount}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Loan Purpose</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.loanPurpose}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Nationality</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.nationality}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>PAN</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.pan}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Property Details</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <p>{selectedRecord.propertyDetails}</p>
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Property Ownership Proof</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <a href={selectedRecord.propertyOwnershipProof} target="_blank" rel="noopener noreferrer">
                   View
                 </a>
-              </p>
-              <p>
-                <strong>Identity Proof:</strong>{" "}
-                <a
-                  href={selectedRecord.identityProof}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Identity Proof</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <a href={selectedRecord.identityProof} target="_blank" rel="noopener noreferrer">
                   View
                 </a>
-              </p>
-              <p>
-                <strong>Signature:</strong>{" "}
-                <a
-                  href={selectedRecord.signature}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Signature</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <a href={selectedRecord.signature} target="_blank" rel="noopener noreferrer">
                   View
                 </a>
-              </p>
-              <p>
-                <strong>Photographs:</strong>{" "}
-                <a
-                  href={selectedRecord.photographs}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+              </Col>
+            </Row>
+          
+            <Row gutter={[24, 16]}>
+              <Col span={8}>
+                <p><strong>Photographs</strong></p>
+              </Col>
+              <Col span={2}>
+                <p>:</p>
+              </Col>
+              <Col span={10}>
+                <a href={selectedRecord.photographs} target="_blank" rel="noopener noreferrer">
                   View
                 </a>
-              </p>
+              </Col>
+            </Row>
+          
+            <Row justify="center" style={{ marginTop: "20px" }}>
               <Space>
                 {selectedRecord && selectedRecord.status !== "1" && (
-                  <Button
-                    type="primary"
-                    style={{ background: "#4096ff", color: "#fff" }}
-                    onClick={handleApprove}
-                  >
+                  <Button type="primary" style={{ background: "#4096ff", color: "#fff" }} onClick={handleApprove}>
                     Approve
                   </Button>
                 )}
-
+          
                 {selectedRecord && selectedRecord.status !== "2" && (
                   <Button danger onClick={handleReject}>
                     Reject
                   </Button>
                 )}
-
+          
                 {selectedRecord && selectedRecord.status === "1" && (
                   <Button type="primary" disabled>
                     Approved
                   </Button>
                 )}
-
+          
                 {selectedRecord && selectedRecord.status === "2" && (
                   <Button danger disabled>
                     Rejected
                   </Button>
                 )}
               </Space>
-            </div>
+            </Row>
+          </div>
+          
           )}
         </Modal>
       </div>

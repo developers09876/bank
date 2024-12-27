@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const  InsuranceDashboard = () => {
+const InsuranceDashboard = () => {
   const navigate = useNavigate();
   const stats = {
     totalUsers: 1200,
@@ -38,7 +38,7 @@ const  InsuranceDashboard = () => {
       pending: 50,
       closed: 150,
     },
-    employees: 150,
+    users: 150,
     totalinsurance: 2000,
     revenue: "$50,000",
     invoices: 45,
@@ -89,7 +89,7 @@ const  InsuranceDashboard = () => {
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
           <h1 className="admin-dashboard-title" style={{ marginTop: "10px" }}>
-          Insurance Dashboard
+            Insurance Dashboard
           </h1>
         </header>
 
@@ -109,8 +109,8 @@ const  InsuranceDashboard = () => {
                 >
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
-                    <Card.Title>Total  Insurances</Card.Title>
-                    <Card.Text>{stats. insurances.active}</Card.Text>
+                    <Card.Title>Total Insurances</Card.Title>
+                    <Card.Text>{stats.insurances.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -118,12 +118,12 @@ const  InsuranceDashboard = () => {
               <Col md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
-                  // onClick={() => navigate("/admin/employeelist")}
+                  onClick={() => navigate("insuranceuserlist")}
                 >
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
                     <Card.Title>Total Users</Card.Title>
-                    <Card.Text>{stats.employees}</Card.Text>
+                    <Card.Text>{stats.users}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -135,4 +135,4 @@ const  InsuranceDashboard = () => {
   );
 };
 
-export default  InsuranceDashboard;
+export default InsuranceDashboard;

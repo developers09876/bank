@@ -9,6 +9,7 @@ import LoanManagement from "./LoanManagement";
 import LoanStatus from "./LoanStatus";
 import UserList from "./UserList";
 
+
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
   { path: "userlist", element: <UserList /> },

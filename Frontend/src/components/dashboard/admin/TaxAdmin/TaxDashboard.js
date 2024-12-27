@@ -38,7 +38,7 @@ const TaxDashboard = () => {
       pending: 50,
       closed: 150,
     },
-    employees: 150,
+    users: 150,
     totalinsurance: 2000,
     revenue: "$50,000",
     invoices: 45,
@@ -88,7 +88,7 @@ const TaxDashboard = () => {
       <Sidebar />
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
-          <h1 className="admin-dashboard-title">  Tax Dashboard</h1>
+          <h1 className="admin-dashboard-title"> Tax Dashboard</h1>
         </header>
 
         <Row className="admin-dashboard-content">
@@ -116,12 +116,12 @@ const TaxDashboard = () => {
               <Col md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
-                  // onClick={() => navigate("/admin/employeelist")}
+                  onClick={() => navigate("taxuserlist")}
                 >
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
                     <Card.Title>Total Users</Card.Title>
-                    <Card.Text>{stats.employees}</Card.Text>
+                    <Card.Text>{stats.users}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
