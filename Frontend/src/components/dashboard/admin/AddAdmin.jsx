@@ -14,8 +14,8 @@ const AddAdmin = ({ setAuth }) => {
     firstname: "",
     lastname: "",
     email: "",
-    password: "",
-    confirmPassword: "",
+    // password: "",
+    // confirmPassword: "",
     contactNumber: "",
     Manager: "",
     Branch: "",
@@ -29,8 +29,8 @@ const AddAdmin = ({ setAuth }) => {
     lastname,
     contactNumber,
     email,
-    password,
-    confirmPassword,
+    // password,
+    // confirmPassword,
     Manager,
     Branch,
     dateOfJoining,
@@ -68,8 +68,8 @@ const AddAdmin = ({ setAuth }) => {
         lastname,
         contactNumber,
         email,
-        password,
-        confirmPassword,
+        // password,
+        // confirmPassword,
         manager: Manager,
         branch: Branch,
         dateOfJoining,
@@ -153,7 +153,7 @@ const AddAdmin = ({ setAuth }) => {
                   />
                 </Col>
                 <Col lg={6} md={6}>
-                  <label htmlFor="designation">Designation:</label>
+                  <label htmlFor="designation">Services:</label>
                   <select
                     name="designation"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
@@ -162,12 +162,15 @@ const AddAdmin = ({ setAuth }) => {
                     required
                   >
                     <option value="" disabled>
-                      Select Designation
+                      Select Services
                     </option>
                     <option value="LoanEmployee">Loan Employee</option>
                     <option value="TaxEmployee">Tax Employee</option>
                     <option value="InsuranceEmployee">
                       Insurance Employee
+                    </option>
+                    <option value="stockMarket">
+                      Stock Market
                     </option>
                   </select>
                 </Col>
@@ -219,7 +222,7 @@ const AddAdmin = ({ setAuth }) => {
                     required
                   />
                 </Col>
-                <Col lg={6} md={6}>
+                {/* <Col lg={6} md={6}>
                   <label htmlFor="password">Password:</label>
                   <input
                     type="password"
@@ -242,7 +245,7 @@ const AddAdmin = ({ setAuth }) => {
                     placeholder="**********"
                     required
                   />
-                </Col>
+                </Col> */}
                 <Col lg={6} md={6}>
                   <label htmlFor="dateOfJoining">Date of Joining:</label>
                   <input

@@ -4,6 +4,8 @@ export async function createLead(req,res,next) {
     try{
         const data = req.body;
         const details ={
+            firstname: data.firstname,
+            lastname:data.lastname,
             userId: data.userId ,
             phone: data.phone ,
             email: data.email,
@@ -27,3 +29,27 @@ export async function createLead(req,res,next) {
         next();
     }
 }
+
+
+export async function getallLead(req, res, next) {
+    try {
+      const jobs = await Lead.find();
+      res.status(200).json(jobs);
+    }
+    catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  
+
+  
+export async function getLeadbyId(req, res, next) {
+    try {
+      const jobs = await Lead.findById(req.params.id);
+      res.status(200).json(jobs);
+    }
+    catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  

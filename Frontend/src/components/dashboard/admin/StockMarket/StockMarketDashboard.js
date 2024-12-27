@@ -8,7 +8,7 @@ import {
   FaChartLine,
   FaUsers,
 } from "react-icons/fa";
-import Sidebar from "../TaxAdmin/TaxSidebar";
+import Sidebar from "../StockMarket/StockMarketSidebar";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -29,17 +29,17 @@ ChartJS.register(
   Legend
 );
 
-const TaxDashboard = () => {
+const  StockMarketDashboard = () => {
   const navigate = useNavigate();
   const stats = {
     totalUsers: 1200,
-    Taxs: {
+    stockMarkets: {
       active: 320,
       pending: 50,
       closed: 150,
     },
     employees: 150,
-    totalinsurance: 2000,
+    totalstockMarket: 2000,
     revenue: "$50,000",
     invoices: 45,
   };
@@ -88,7 +88,9 @@ const TaxDashboard = () => {
       <Sidebar />
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
-          <h1 className="admin-dashboard-title">  Tax Dashboard</h1>
+          <h1 className="admin-dashboard-title" style={{ marginTop: "10px" }}>
+          StockMarket Dashboard
+          </h1>
         </header>
 
         <Row className="admin-dashboard-content">
@@ -107,8 +109,8 @@ const TaxDashboard = () => {
                 >
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
-                    <Card.Title>Total Taxs</Card.Title>
-                    <Card.Text>{stats.Taxs.active}</Card.Text>
+                    <Card.Title>Total  StockMarkets</Card.Title>
+                    <Card.Text>{stats. stockMarkets.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -120,7 +122,7 @@ const TaxDashboard = () => {
                 >
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
-                    <Card.Title>Total Users</Card.Title>
+                    <Card.Title>Total Employees</Card.Title>
                     <Card.Text>{stats.employees}</Card.Text>
                   </Card.Body>
                 </Card>
@@ -133,4 +135,4 @@ const TaxDashboard = () => {
   );
 };
 
-export default TaxDashboard;
+export default  StockMarketDashboard;

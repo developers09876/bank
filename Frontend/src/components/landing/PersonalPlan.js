@@ -26,8 +26,8 @@ function PersonalPlan() {
         <Col lg={2}></Col>
         <Col lg={20} className="personal-plan-content">
           <h1>
-            Apne Sapno Ko Do Ek Nayi Udaan, Personal Subscription Plan ke sath!
-          </h1>
+          Give Wings to Your Dreams with a Personal Subscription Plan!
+</h1>
           <h3>
             Get Super Financial Consultation & Services By Industry Experts
           </h3>

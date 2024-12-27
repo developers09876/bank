@@ -14,8 +14,8 @@ const Register = ({ setAuth }) => {
     firstname: "",
     lastname: "",
     email: "",
-    password: "",
-    confirmPassword: "",
+    // password: "",
+    // confirmPassword: "",
     contactNumber: "",
   });
 
@@ -27,31 +27,31 @@ const Register = ({ setAuth }) => {
     lastname,
     contactNumber,
     email,
-    password,
-    confirmPassword,
+    // password,
+    // confirmPassword,
   } = inputs;
 
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const validateForm = () => {
-    // if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
-    //   toast.error('All fields are required');
-    //   return false;
-    // }
+  // const validateForm = () => {
+  //   // if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
+  //   //   toast.error('All fields are required');
+  //   //   return false;
+  //   // }
 
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return false;
-    }
+  //   if (password !== confirmPassword) {
+  //     toast.error("Passwords do not match");
+  //     return false;
+  //   }
 
-    return true;
-  };
+  //   return true;
+  // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    // if (!validateForm()) return;
 
     try {
       const body = {
@@ -60,8 +60,8 @@ const Register = ({ setAuth }) => {
         lastname,
         contactNumber,
         email,
-        password,
-        confirmPassword,
+        // password,
+        // confirmPassword,
       };
 
       const response = await axios.post(
@@ -193,7 +193,7 @@ const Register = ({ setAuth }) => {
                 />
               </div>
             </div>
-            <div className="register-form__row">
+            {/* <div className="register-form__row">
               <div className="register-form__group">
                 <label htmlFor="password" className="register-form__label">
                   Password:
@@ -225,7 +225,7 @@ const Register = ({ setAuth }) => {
                   required
                 />
               </div>
-            </div>
+            </div> */}
             <button type="submit" className="register-form__submit">
               Create Account
             </button>
