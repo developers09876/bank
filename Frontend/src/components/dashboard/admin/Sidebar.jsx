@@ -75,6 +75,14 @@ function Sidebar({ collapsed }) {
             Tax Management
           </NavLink>
         </SubMenu>
+        <NavLink
+          to="/admin/leadgeneration"
+          ClassName="main-nav-style"
+          // style={{ marginTop: "70px" }}
+        >
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Lead  Generation
+        </NavLink>
       </Menu>
     </div>
   );
