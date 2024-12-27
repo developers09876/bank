@@ -151,6 +151,19 @@ function Kycvendor() {
             </Row>
             <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
+                <label>VoterID: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  onChange={handleFileChange}
+                />
+              </Col>
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
                 <label>Account Number: </label>
               </Col>
               <Col sm={12} lg={6}>

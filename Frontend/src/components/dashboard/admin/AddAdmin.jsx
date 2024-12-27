@@ -153,7 +153,7 @@ const AddAdmin = ({ setAuth }) => {
                   />
                 </Col>
                 <Col lg={6} md={6}>
-                  <label htmlFor="designation">Designation:</label>
+                  <label htmlFor="designation">Services:</label>
                   <select
                     name="designation"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
@@ -162,7 +162,7 @@ const AddAdmin = ({ setAuth }) => {
                     required
                   >
                     <option value="" disabled>
-                      Select Designation
+                      Select Services
                     </option>
                     <option value="LoanEmployee">Loan Employee</option>
                     <option value="TaxEmployee">Tax Employee</option>
