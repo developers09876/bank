@@ -88,7 +88,7 @@ const TaxDashboard = () => {
       <Sidebar />
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
-          <h1 className="admin-dashboard-title">  Tax Dashboard</h1>
+          <h1 className="admin-dashboard-title"> Tax Dashboard</h1>
         </header>
 
         <Row className="admin-dashboard-content">

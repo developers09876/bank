@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const  InsuranceDashboard = () => {
+const InsuranceDashboard = () => {
   const navigate = useNavigate();
   const stats = {
     totalUsers: 1200,
@@ -89,7 +89,7 @@ const  InsuranceDashboard = () => {
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
           <h1 className="admin-dashboard-title" style={{ marginTop: "10px" }}>
-          Insurance Dashboard
+            Insurance Dashboard
           </h1>
         </header>
 
@@ -109,8 +109,8 @@ const  InsuranceDashboard = () => {
                 >
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
-                    <Card.Title>Total  Insurances</Card.Title>
-                    <Card.Text>{stats. insurances.active}</Card.Text>
+                    <Card.Title>Total Insurances</Card.Title>
+                    <Card.Text>{stats.insurances.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -135,4 +135,4 @@ const  InsuranceDashboard = () => {
   );
 };
 
-export default  InsuranceDashboard;
+export default InsuranceDashboard;

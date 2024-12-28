@@ -1,37 +1,104 @@
+// import mongoose from "mongoose";
+
+// const loanApplicationSchema = new mongoose.Schema(
+//   {
+//     userid: { type: String },
+//     aadhaar: { type: String },
+//     address: { type: String },
+//     addressProof: { type: String },
+//     annualIncome: { type: String },
+//     bankAccountDetails: { type: String },
+//     contact: { type: String },
+//     creditScore: { type: String },
+//     dob: { type: Date },
+//     downPayment: { type: String },
+//     employerDetails: { type: String },
+//     employmentStatus: { type: String },
+//     existingLoans: { type: String },
+//     fullName: { type: String },
+//     gender: { type: String, enum: ["Male", "Female", "Other"] },
+//     identityProof: { type: String },
+//     incomeDetails: { type: String },
+//     loanAmount: { type: String },
+//     loanPurpose: { type: String },
+//     maritalStatus: {
+//       type: String,
+//       enum: ["Married", "Single", "Other"],
+//     },
+//     nationality: { type: String },
+//     pan: { type: String },
+//     photographs: { type: String },
+//     propertyDetails: { type: String },
+//     propertyOwnershipProof: { type: String },
+//     signature: { type: String },
+//     status: { type: String, default: "0" },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
+
+// const LoanApplication = mongoose.model(
+//   "LoanApplication",
+//   loanApplicationSchema
+// );
+// export default LoanApplication;
+
 import mongoose from "mongoose";
 
 const loanApplicationSchema = new mongoose.Schema(
   {
-    userid: { type: String },
+    // userid: { type: String },
     aadhaar: { type: String },
     address: { type: String },
     addressProof: { type: String },
-    annualIncome: { type: String },
+    annualIncome: { type: Number },
     bankAccountDetails: { type: String },
     contact: { type: String },
-    creditScore: { type: String },
+    creditScore: { type: Number },
     dob: { type: Date },
-    downPayment: { type: String },
+    downPayment: { type: Number },
     employerDetails: { type: String },
-    employmentStatus: { type: String },
+    employmentStatus: {
+      type: String,
+      enum: ["Employed", "Unemployed", "Self-Employed", "Other"],
+    },
     existingLoans: { type: String },
     fullName: { type: String },
     gender: { type: String, enum: ["Male", "Female", "Other"] },
     identityProof: { type: String },
     incomeDetails: { type: String },
-    loanAmount: { type: String },
+    loanAmount: { type: Number },
     loanPurpose: { type: String },
     maritalStatus: {
       type: String,
       enum: ["Married", "Single", "Other"],
+      required: true,
     },
     nationality: { type: String },
     pan: { type: String },
-    photographs: { type: String },
+    photographs: [{ type: String }],
     propertyDetails: { type: String },
     propertyOwnershipProof: { type: String },
     signature: { type: String },
-    status: { type: String, default: "0" },
+    spouseName: { type: String },
+    spouseOccupation: { type: String },
+    spouseIncome: { type: Number },
+    spouseDesignation: { type: String },
+    totalChildren: { type: String },
+    children: [
+      {
+        name: { type: String },
+        gender: { type: String, enum: ["Male", "Female", "Other"] },
+        age: { type: Number },
+        schoolName: { type: String },
+      },
+    ],
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
+    },
   },
   {
     timestamps: true,

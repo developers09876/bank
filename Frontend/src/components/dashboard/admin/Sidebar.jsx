@@ -37,17 +37,17 @@ function Sidebar({ collapsed }) {
 
         <NavLink to="/admin/userlist" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
-          UserList
+          Users
         </NavLink>
         <NavLink to="/admin/employeelist" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
-          EmployeeList
+          Employees
         </NavLink>
         {/* <NavLink to="/admin/createjobform" className="main-nav-style">Job Post</NavLink> */}
 
         <SubMenu
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
-          title="Career"
+          title="Career Path"
         >
           <NavLink to="/admin/createjobform">
             {/* <MdRequestPage className="Nav-Icon" /> */}
@@ -79,6 +79,14 @@ function Sidebar({ collapsed }) {
             StockMarket Management
           </NavLink> */}
         </SubMenu>
+        <NavLink
+          to="/admin/leadgeneration"
+          ClassName="main-nav-style"
+          // style={{ marginTop: "70px" }}
+        >
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Lead  Generation
+        </NavLink>
       </Menu>
     </div>
   );

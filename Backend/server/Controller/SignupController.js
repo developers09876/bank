@@ -5,13 +5,14 @@ import jwt from "jsonwebtoken";
 // Create a new user
 export const registerUser = async (req, res) => {
   const {
+    userid,
     userType,
     empno,
     firstname,
     lastname,
     email,
-    password,
-    confirmPassword,
+    // password,
+    // confirmPassword,
     contactNumber,
     dateOfJoining,
     manager,
@@ -19,9 +20,9 @@ export const registerUser = async (req, res) => {
   } = req.body;
 
 
-  if (password !== confirmPassword) {
-    return res.status(400).json({ error: "Passwords do not match" });
-  }
+  // if (password !== confirmPassword) {
+  //   return res.status(400).json({ error: "Passwords do not match" });
+  // }
 
   try {
     const existingUser = await User.findOne({ email });
@@ -29,16 +30,17 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ error: "Email is already in use" });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
+      userid,
       userType,
       empno,
       firstname,
       lastname,
       email,
-      password: hashedPassword,
+      // password: hashedPassword,
       contactNumber,
       manager,
       dateOfJoining,

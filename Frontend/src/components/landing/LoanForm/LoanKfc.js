@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 // import Api from "../../Api";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 
-function Kycvendor() {
+function LoanKfc() {
   const {
     register,
     handleSubmit,
@@ -29,28 +31,28 @@ function Kycvendor() {
     }
   };
   const id = localStorage.getItem("vendor_id");
-//   useEffect(() => {
-//     getValue();
-//   }, []);
+  //   useEffect(() => {
+  //     getValue();
+  //   }, []);
 
-//   const getValue = async () => {
-//     try {
-//     //   const res = await Api.get(`/vendor/getOne/${id}`);
-//       const data = res.data[0];
-//       setSelectImage(data.PanOrAdharUpload);
+  //   const getValue = async () => {
+  //     try {
+  //     //   const res = await Api.get(`/vendor/getOne/${id}`);
+  //       const data = res.data[0];
+  //       setSelectImage(data.PanOrAdharUpload);
 
-//       reset({
-//         pancardNumber: data.panCardNumber,
-//         gstNumber: data.GSTNumber,
-//         accountno: data.accountNumber,
-//         ifcecode: data.IFSCCode,
-//         bankname: data.bankName,
-//         branch: data.branch,
-//       });
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//     }
-//   };
+  //       reset({
+  //         pancardNumber: data.panCardNumber,
+  //         gstNumber: data.GSTNumber,
+  //         accountno: data.accountNumber,
+  //         ifcecode: data.IFSCCode,
+  //         bankname: data.bankName,
+  //         branch: data.branch,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
   const handleFormSubmit = async () => {
     const Details = {
@@ -84,10 +86,16 @@ function Kycvendor() {
 
   return (
     <div>
+      <Header />
       <Container>
         <div
           className="ourProfileParentdiv"
-          style={{ backgroundColor: "white", padding: "10px 20px",width:"80%",marginLeft:"150px"}}
+          style={{
+            backgroundColor: "white",
+            padding: "10px 20px",
+            width: "80%",
+            marginLeft: "150px",
+          }}
         >
           <center>
             <h4 className="pages-title mt-3">KYC Complaince</h4>
@@ -120,6 +128,20 @@ function Kycvendor() {
                 )}
               </Col>
             </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
+                <label>Aadhaar Number: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  {...register("aadhaarNumber", { required: true })}
+                  className="inputcolumn-ourProfile"
+                />
+                {errors.aadhaarNumber && (
+                  <p className="text-danger">Aadhaar Number is required</p>
+                )}
+              </Col>
+            </Row>
 
             <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
@@ -138,7 +160,7 @@ function Kycvendor() {
 
             <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
-                <label>Pan or Adhar Upload Anyone: </label>
+                <label>Upload Your Pan Card Proof: </label>
               </Col>
               <Col sm={12} lg={6}>
                 <input
@@ -151,7 +173,7 @@ function Kycvendor() {
             </Row>
             <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
-                <label>VoterID: </label>
+                <label>Upload Your Aadhaar Proof: </label>
               </Col>
               <Col sm={12} lg={6}>
                 <input
@@ -237,8 +259,9 @@ function Kycvendor() {
         </div>
       </Container>
       {/* </Card> */}
+      <Footer />
     </div>
   );
 }
 
-export default Kycvendor;
+export default LoanKfc;

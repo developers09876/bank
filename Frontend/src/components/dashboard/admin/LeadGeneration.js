@@ -1,20 +1,19 @@
-import { Table, Input, Space, Pagination, Modal } from "antd";
-import React, { useEffect, useState } from "react";
+import { Table, Input, Space, Modal } from "antd";
+import React, { useState } from "react";
 import { Container, Button } from "react-bootstrap";
-import { FaPlus } from "react-icons/fa6";
-import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 import axios from "axios";
 
 function LoanLeadManagement() {
-  const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
@@ -44,31 +43,15 @@ function LoanLeadManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/lead/getById/${userId}`
-      );
-      setData(response.data.data);
-      setFilteredData(response.data.data);
+      const response = await axios.get("http://localhost:5000/lead/getall");
+      setData(response.data);
+      setFilteredData(response.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
     } finally {
       setLoading(false);
     }
   };
-
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
-  };
-
-  const handleTableChange = (pagination) => {
-    setCurrentPage(pagination.current);
-    setPageSize(pagination.pageSize);
-  };
-
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
 
   const handleViewDetails = (record) => {
     setSelectedRecord(record);
@@ -84,6 +67,25 @@ function LoanLeadManagement() {
     setIsModalVisible(false);
     setSelectedRecord(null);
   };
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const columns = [
     {
@@ -120,7 +122,6 @@ function LoanLeadManagement() {
         return (
           <Button
             type="primary"
-            size="small"
             style={{ background: "#4096ff", color: "#fff" }}
             onClick={() => handleViewDetails(record)}
           >
@@ -143,39 +144,27 @@ function LoanLeadManagement() {
             <Space style={{ marginBottom: 16 }} className="filter-actions">
               <Input
                 placeholder="Search"
-                value={searchText}
-                onChange={handleSearch}
                 style={{ width: 200 }}
                 prefix={<SearchOutlined />}
+                value={searchText}
+                onChange={handleSearch}
               />
             </Space>
-            <Button
-              type="primary"
-              onClick={() => navigate("/adminLoan/createlead")}
-              style={{
-                display: "inline",
-                float: "right",
-                backgroundColor: "#00397f",
+            <Table
+              dataSource={paginatedData}
+              columns={columns}
+              loading={loading}
+              pagination={{
+                current: currentPage,
+                pageSize: pageSize,
+                total: filteredData.length,
+                showSizeChanger: true,
               }}
-            >
-              <FaPlus style={{ display: "inline", color: "white" }} />
-              Add New
-            </Button>
+              onChange={handleTableChange}
+              rowKey="id"
+              className="loan-table"
+            />
           </div>
-          <Table
-            dataSource={paginatedData}
-            columns={columns}
-            loading={loading}
-            pagination={{
-              current: currentPage,
-              pageSize: pageSize,
-              total: filteredData.length,
-              showSizeChanger: true,
-            }}
-            onChange={handleTableChange}
-            rowKey="id"
-            className="loan-table"
-          />
         </div>
       </Container>
       <Modal

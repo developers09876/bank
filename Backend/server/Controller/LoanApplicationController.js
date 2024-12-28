@@ -1,47 +1,111 @@
 import LoanApplication from "../model/LoanApplicationModel.js";
 
+// export async function createLoanApplication(req, res, next) {
+//   try {
+//     const data = req.body;
+//     console.log("data", data);
+//     const details = {
+//       userid: data.userid,
+//       fullName: data.fullName,
+//       dob: data.dob,
+//       gender: data.gender,
+//       maritalStatus: data.MaritalStatus,
+//       nationality: data.nationality,
+//       pan: data.pan,
+//       aadhaar: data.aadhaar,
+//       contact: data.contact,
+//       address: data.address,
+//       annualIncome: data.annualIncome,
+//       bankAccountDetails: data.bankAccountDetails,
+//       creditScore: data.creditScore,
+//       downPayment: data.downPayment,
+//       employerDetails: data.employerDetails,
+//       employmentStatus: data.employmentStatus,
+//       existingLoans: data.existingLoans,
+//       incomeDetails: data.incomeDetails,
+//       loanAmount: data.loanAmount,
+//       loanPurpose: data.loanPurpose,
+//       propertyDetails: data.propertyDetails,
+//       identityProof: data.identityProof,
+//       addressProof: data.addressProof,
+//       photographs: data.photographs,
+//       propertyOwnershipProof: data.propertyOwnershipProof,
+//       signature: data.signature,
+//     };
+//     const loanApplication = await LoanApplication.create(details);
+//     if (loanApplication) {
+//       res.status(201).json({
+//         message: "Submitted Successfully",
+//         data: loanApplication,
+//       });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     next();
+//   }
+// }
+
 export async function createLoanApplication(req, res, next) {
   try {
     const data = req.body;
-    console.log("data", data);
+    console.log("Request Data:", data);
+
+    // Process children information
+    const children = Array.isArray(data.children)
+      ? data.children.map((child) => ({
+          gender: child.gender,
+          name: child.name,
+          age: child.age,
+          schoolName: child.schoolName,
+        }))
+      : [];
+
+    // Construct the details object
     const details = {
-      userid: data.userid,
+      // userid: data.userid,
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.MaritalStatus,
+      maritalStatus: data.maritalStatus || data.MaritalStatus,
       nationality: data.nationality,
-      pan: data.pan,
-      aadhaar: data.aadhaar,
       contact: data.contact,
       address: data.address,
-      annualIncome: data.annualIncome,
-      bankAccountDetails: data.bankAccountDetails,
-      creditScore: data.creditScore,
-      downPayment: data.downPayment,
-      employerDetails: data.employerDetails,
-      employmentStatus: data.employmentStatus,
-      existingLoans: data.existingLoans,
-      incomeDetails: data.incomeDetails,
-      loanAmount: data.loanAmount,
-      loanPurpose: data.loanPurpose,
-      propertyDetails: data.propertyDetails,
-      identityProof: data.identityProof,
-      addressProof: data.addressProof,
+      city: data.city,
+      state: data.state,
+      district: data.district,
+      totalChildren: data.totalChildren,
+      children: children,
+      spouseName: data.spouseName,
+      spouseOccupation: data.spouseOccupation,
+      spouseIncome: data.spouseIncome,
+      spouseDesignation: data.spouseDesignation,
+      coApplicantDocs: data.coApplicantDocs,
       photographs: data.photographs,
-      propertyOwnershipProof: data.propertyOwnershipProof,
-      signature: data.signature,
     };
+
+    console.log("Prepared Details:", details);
+
+    // Save loan application to the database
     const loanApplication = await LoanApplication.create(details);
+
+    // Respond to the client
     if (loanApplication) {
-      res.status(201).json({
+      return res.status(201).json({
         message: "Submitted Successfully",
         data: loanApplication,
       });
+    } else {
+      return res.status(400).json({
+        message: "Failed to create loan application. Please try again.",
+      });
     }
   } catch (err) {
-    console.log(err);
-    next();
+    console.error("Error creating loan application:", err);
+    res.status(500).json({
+      message: "An error occurred while processing your request.",
+      error: err.message,
+    });
+    next(err);
   }
 }
 
