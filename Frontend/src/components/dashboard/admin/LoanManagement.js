@@ -9,6 +9,10 @@ const LoanManagement = ({ collapsed }) => {
   const [pageSize, setPageSize] = useState(5);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState("");
+  const [showSubmit, setShowSubmit] = useState(false);
+
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
 
@@ -43,6 +47,14 @@ const LoanManagement = ({ collapsed }) => {
     setIsModalVisible(false);
     setSelectedRecord(null);
   };
+  // const handleRejected = () => {
+  //   if (selectedRecord && rejectionReason) {
+  //     updateStatus(selectedRecord._id, "reject", rejectionReason);
+  //     setIsRejectModalVisible(false);
+  //     setRejectionReason("");
+  //     setIsModalVisible(false);
+  //   }
+  // };
 
   const updateStatus = async (id, action) => {
     try {
@@ -52,6 +64,10 @@ const LoanManagement = ({ collapsed }) => {
         details
       );
       console.log("Response data:", response.data);
+      const updatedLoans = loan.map((item) => 
+        item._id === id ? { ...item, status: action === "approve" ? "1" : "2" } : item
+      );
+      setLoan(updatedLoans);
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -67,6 +83,9 @@ const LoanManagement = ({ collapsed }) => {
   const handleReject = () => {
     if (selectedRecord) {
       updateStatus(selectedRecord._id, "reject");
+      setIsRejectModalVisible(false);
+      setRejectionReason("");
+      setIsModalVisible(false);
       handleModalOk();
     }
   };
@@ -572,7 +591,7 @@ const LoanManagement = ({ collapsed }) => {
                 </Col>
               </Row>
 
-              <Row style={{ marginTop: "25px", marginRight: "280px" }}>
+              {/* <Row style={{ marginTop: "25px", marginRight: "280px" }}>
                 <Space>
                   {selectedRecord && selectedRecord.status !== "1" && (
                     <Button
@@ -588,6 +607,82 @@ const LoanManagement = ({ collapsed }) => {
                     <Button danger onClick={handleReject}>
                       Reject
                     </Button>
+                  )}
+
+                  {selectedRecord && selectedRecord.status === "1" && (
+                    <Button type="primary" disabled>
+                      Approved
+                    </Button>
+                  )}
+
+                  {selectedRecord && selectedRecord.status === "2" && (
+                    <Button danger disabled>
+                      Rejected
+                    </Button>
+                  )}
+                </Space>
+              </Row> */}
+              <Row style={{ marginTop: "25px", marginRight: "280px" }}>
+                <Space>
+                  {selectedRecord && selectedRecord.status !== "1" && (
+                    <Button
+                      type="primary"
+                      style={{ background: "#4096ff", color: "#fff" }}
+                      onClick={handleApprove}
+                    >
+                      Approve
+                    </Button>
+                  )}
+
+                  {selectedRecord && selectedRecord.status !== "2" && (
+                    <>
+                      <Button
+                        danger
+                        onClick={() => setIsRejectModalVisible(true)}
+                      >
+                        Reject
+                      </Button>
+                      <Modal
+                        title="Rejection Confirmation"
+                        visible={isRejectModalVisible}
+                        onCancel={() => {
+                          setIsRejectModalVisible(false);
+                          setShowSubmit(false);
+                        }}
+                        footer={null}
+                      >
+                        <div>
+                          <p>Are you sure you want to reject?</p>
+                          <Space style={{ marginTop: "20px" }}>
+                            {!showSubmit ? (
+                              <>
+                                <Button
+                                  danger
+                                  onClick={() => setShowSubmit(true)}
+                                >
+                                  Reject
+                                </Button>
+                                <Button onClick={() => setShowSubmit(false)}>
+                                  Reset
+                                </Button>
+                              </>
+                            ) : (
+                              <Button
+                                type="primary"
+                                
+                                onClick={() => {
+                                  handleReject();
+                                  setIsRejectModalVisible(false);
+                                  setShowSubmit(false);
+                                }}
+                              >
+                                Submit
+                              </Button>
+                            )}
+                          </Space>
+                        </div>
+                      </Modal>
+                    </>
                   )}
 
                   {selectedRecord && selectedRecord.status === "1" && (
