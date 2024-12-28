@@ -47,14 +47,14 @@ const LoanManagement = ({ collapsed }) => {
     setIsModalVisible(false);
     setSelectedRecord(null);
   };
-  const handleReject = () => {
-    if (selectedRecord && rejectionReason) {
-      updateStatus(selectedRecord._id, "reject", rejectionReason);
-      setIsRejectModalVisible(false);
-      setRejectionReason("");
-      setIsModalVisible(false);
-    }
-  };
+  // const handleRejected = () => {
+  //   if (selectedRecord && rejectionReason) {
+  //     updateStatus(selectedRecord._id, "reject", rejectionReason);
+  //     setIsRejectModalVisible(false);
+  //     setRejectionReason("");
+  //     setIsModalVisible(false);
+  //   }
+  // };
 
   const updateStatus = async (id, action) => {
     try {
@@ -64,6 +64,10 @@ const LoanManagement = ({ collapsed }) => {
         details
       );
       console.log("Response data:", response.data);
+      const updatedLoans = loan.map((item) => 
+        item._id === id ? { ...item, status: action === "approve" ? "1" : "2" } : item
+      );
+      setLoan(updatedLoans);
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -76,12 +80,15 @@ const LoanManagement = ({ collapsed }) => {
     }
   };
 
-  // const handleReject = () => {
-  //   if (selectedRecord) {
-  //     updateStatus(selectedRecord._id, "reject");
-  //     handleModalOk();
-  //   }
-  // };
+  const handleReject = () => {
+    if (selectedRecord) {
+      updateStatus(selectedRecord._id, "reject");
+      setIsRejectModalVisible(false);
+      setRejectionReason("");
+      setIsModalVisible(false);
+      handleModalOk();
+    }
+  };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -662,6 +669,7 @@ const LoanManagement = ({ collapsed }) => {
                             ) : (
                               <Button
                                 type="primary"
+                                
                                 onClick={() => {
                                   handleReject();
                                   setIsRejectModalVisible(false);
