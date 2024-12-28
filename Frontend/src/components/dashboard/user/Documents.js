@@ -46,7 +46,7 @@ const Documents = () => {
               <td>{file.date}</td>
               <td>
                 <button className="download-btn" onClick={() => handleDownload(file)}>
-                  Download
+                  View
                 </button>
               
               </td>
