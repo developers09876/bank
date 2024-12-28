@@ -1,18 +1,96 @@
 import { Table, Input, Space, Pagination, Modal } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LoanLeadManagement() {
+  const userId = localStorage.getItem("id");
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  useEffect(() => {
+    const filtered = data.filter((item) => {
+      const firstname = item.firstname || "";
+      const lastname = item.lastname || "";
+      const email = item.email || "";
+      const phone = item.phone || "";
+      const purpose = item.purpose || "";
+
+      return (
+        firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+        lastname.toLowerCase().includes(searchText.toLowerCase()) ||
+        email.toLowerCase().includes(searchText.toLowerCase()) ||
+        phone.toLowerCase().includes(searchText.toLowerCase()) ||
+        purpose.toLowerCase().includes(searchText.toLowerCase())
+      );
+    });
+    setFilteredData(filtered);
+  }, [searchText, data]);
+
+  const fetchLeads = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/lead/getById/${userId}`
+      );
+      setData(response.data.data);
+      setFilteredData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
+  const handleViewDetails = (record) => {
+    setSelectedRecord(record);
+    setIsModalVisible(true);
+  };
+
+  const handleModalOk = () => {
+    setIsModalVisible(false);
+    setSelectedRecord(null);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setSelectedRecord(null);
+  };
 
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      render: (_, record) => `${record.firstname} ${record.lastname}`,
     },
     {
       title: "Email Id",
@@ -25,19 +103,31 @@ function LoanLeadManagement() {
       key: "phone",
     },
     {
-      title: "Aadhar Number",
-      dataIndex: "aadhar",
-      key: "aadhar",
-    },
-    {
-      title: "PAN Number",
-      dataIndex: "panno",
-      key: "panno",
-    },
-    {
       title: "Loan Amount",
       dataIndex: "amount",
       key: "amount",
+    },
+    {
+      title: "Purpose",
+      dataIndex: "purpose",
+      key: "purpose",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (text, record) => {
+        return (
+          <Button
+            type="primary"
+            size="small"
+            style={{ background: "#4096ff", color: "#fff" }}
+            onClick={() => handleViewDetails(record)}
+          >
+            View
+          </Button>
+        );
+      },
     },
   ];
 
@@ -53,8 +143,8 @@ function LoanLeadManagement() {
             <Space style={{ marginBottom: 16 }} className="filter-actions">
               <Input
                 placeholder="Search"
-                // value={searchText}
-                // onChange={handleSearch}
+                value={searchText}
+                onChange={handleSearch}
                 style={{ width: 200 }}
                 prefix={<SearchOutlined />}
               />
@@ -73,15 +163,56 @@ function LoanLeadManagement() {
             </Button>
           </div>
           <Table
-            //  dataSource={getPaginatedData()}
+            dataSource={paginatedData}
             columns={columns}
-            pagination={false}
+            loading={loading}
+            pagination={{
+              current: currentPage,
+              pageSize: pageSize,
+              total: filteredData.length,
+              showSizeChanger: true,
+            }}
+            onChange={handleTableChange}
+            rowKey="id"
             className="loan-table"
           />
-
-          {/* </Table> */}
         </div>
       </Container>
+      <Modal
+        title="Loan Details"
+        visible={isModalVisible}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+        footer={null}
+        bodyStyle={{ maxHeight: "70vh", overflowY: "auto" }}
+      >
+        {selectedRecord && (
+          <div>
+            <p style={{ padding: "3px" }}>
+              <strong>Name:</strong>{" "}
+              {`${selectedRecord.firstname} ${selectedRecord.lastname}`}
+            </p>
+            <p style={{ padding: "3px" }}>
+              <strong>Email:</strong> {selectedRecord.email}
+            </p>
+            <p style={{ padding: "3px" }}>
+              <strong>Phone:</strong> {selectedRecord.phone}
+            </p>
+            <p style={{ padding: "3px" }}>
+              <strong>Loan Amount:</strong> {selectedRecord.amount}
+            </p>
+            <p style={{ padding: "3px" }}>
+              <strong>Aadhar Number:</strong> {selectedRecord.aadhar}
+            </p>
+            <p style={{ padding: "3px" }}>
+              <strong>PAN Card Number:</strong> {selectedRecord.panno}
+            </p>
+            <p style={{ padding: "3px" }}>
+              <strong>Purpose Of Loan:</strong> {selectedRecord.purpose}
+            </p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

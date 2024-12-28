@@ -40,16 +40,38 @@ export async function getallLead(req, res, next) {
       res.status(500).json({ message: error.message });
     }
   }
-  
 
-  
-export async function getLeadbyId(req, res, next) {
-    try {
-      const jobs = await Lead.findById(req.params.id);
-      res.status(200).json(jobs);
-    }
-    catch (error) {
-      res.status(500).json({ message: error.message });
-    }
+// export async function getLeadbyId(req, res, next) {
+//     try {
+//       const empLeads = await Lead.findById(req.params.id);
+//       res.status(200).json(empLeads);
+//     }
+//     catch (error) {
+//       res.status(500).json({ message: error.message });
+//     }
+//   }
+
+export async function getById(req, res, next) {
+  try {
+      const { id } = req.params; 
+      const leads = await Lead.find({ userId: id }); 
+      
+      if (leads && leads.length > 0) {
+          res.status(200).json({
+              message: "Leads fetched successfully",
+              data: leads,
+          });
+      } else {
+          res.status(404).json({
+              message: "No leads found for the given user ID",
+          });
+      }
+  } catch (error) {
+      console.error("Error fetching leads by ID:", error);
+      res.status(500).json({
+          message: "An error occurred while fetching leads",
+          error: error.message,
+      });
   }
+}
   
