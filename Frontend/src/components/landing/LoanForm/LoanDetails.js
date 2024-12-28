@@ -214,62 +214,58 @@ function LoanDetails() {
               <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
                   <Row>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Nominee Name
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="Nominee"
-                          {...register("Nominee", { required: true })}
-                          placeholder="Nominee"
-                        />
-                        {errors.Nominee && (
-                          <p className="text-danger">Nominee is required</p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Nominee Relationship
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="nomineeRelationship"
-                          {...register("nomineeRelationship", {
-                            required: true,
-                          })}
-                          placeholder="Nominee Relationship"
-                        />
-                        {errors.nomineeRelationship && (
-                          <p className="text-danger">Nominee is required</p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Residential Address
-                        </label>
-                        <textarea
-                          className="inputcolumn-ourProfile"
-                          style={{ height: "60px" }}
-                          name="address"
-                          {...register("address", { required: true })}
-                          placeholder="Residential Address"
-                        />
-                        {errors.address && (
-                          <p className="text-danger">Address is required</p>
-                        )}
-                      </div>
-                    </Col>
-
                     {/* Occupation */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Employer’s Name
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          {...register("employerName", { required: true })}
+                          placeholder="For salaried individuals"
+                        />
+                        {errors.employerDetails && (
+                          <p className="text-danger">
+                            Employer's Name are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Employment Status
+                        </label>
+                        <Controller
+                          name="employmentStatus"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Status"
+                            >
+                              <Option value="Salary Person">
+                                Salary Person
+                              </Option>
+                              <Option value="Business Owner">
+                                Business Owner
+                              </Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.employmentStatus && (
+                          <p className="text-danger">
+                            Employment Status is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -332,59 +328,6 @@ function LoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Employer’s Name and Address
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("employerDetails", { required: true })}
-                          placeholder="For salaried individuals"
-                        />
-                        {errors.employerDetails && (
-                          <p className="text-danger">
-                            Employer's Name and Address are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Employment Status
-                        </label>
-                        <Controller
-                          name="employmentStatus"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              placeholder="Select Status"
-                            >
-                              <Option value="Employed">Employed</Option>
-                              <Option value="Self-employed">
-                                Self-employed
-                              </Option>
-                              <Option value="Business Owner">
-                                Business Owner
-                              </Option>
-                            </Select>
-                          )}
-                        />
-                        {errors.employmentStatus && (
-                          <p className="text-danger">
-                            Employment Status is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
                           Annual Income
                         </label>
                         <input
@@ -400,7 +343,60 @@ function LoanDetails() {
                         )}
                       </div>
                     </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Nominee Name
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="Nominee"
+                          {...register("Nominee", { required: true })}
+                          placeholder="Nominee"
+                        />
+                        {errors.Nominee && (
+                          <p className="text-danger">Nominee is required</p>
+                        )}
+                      </div>
+                    </Col>
 
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Nominee Relationship
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="nomineeRelationship"
+                          {...register("nomineeRelationship", {
+                            required: true,
+                          })}
+                          placeholder="Nominee Relationship"
+                        />
+                        {errors.nomineeRelationship && (
+                          <p className="text-danger">Nominee is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Nominee Address
+                        </label>
+                        <textarea
+                          className="inputcolumn-ourProfile"
+                          style={{ height: "60px" }}
+                          name="address"
+                          {...register("address", { required: true })}
+                          placeholder="Residential Address"
+                        />
+                        {errors.address && (
+                          <p className="text-danger">Address is required</p>
+                        )}
+                      </div>
+                    </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
