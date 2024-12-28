@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import Api from "../../Api";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
 import "../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
@@ -12,39 +12,6 @@ import Footer from "../../Layout/Footer";
 import axios from "axios";
 
 function LoanForm() {
-  const [stateValue, setStateValue] = useState();
-
-  const [districtValue, setDistrictValue] = useState();
-
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    getCountry();
-  }, []);
-  useEffect(() => {
-    if (data?.country) {
-      getCountry();
-    }
-  }, [data?.country]);
-
-  useEffect(() => {
-    if (data?.country) {
-      getState(data.country);
-    }
-  }, [data?.country]);
-
-  useEffect(() => {
-    if (data?.state) {
-      getDistrict(data.state);
-    }
-  }, [data?.state]);
-
-  useEffect(() => {
-    if (data?.district) {
-      getCity(data.district);
-    }
-  }, [data?.district]);
-
   const {
     register,
     unregister,
@@ -58,20 +25,7 @@ function LoanForm() {
     formState: { errors },
   } = useForm();
 
-  const getCountry = () => {};
-
-  const getState = (country_id) => {};
-
-  const getDistrict = (state_id) => {
-    setStateValue(state_id);
-  };
-
-  const getCity = (districtId) => {
-    setDistrictValue(districtId);
-  };
-
   const [selectImage, setSelectImage] = useState(null);
-  const [showChildDetails, setShowChildDetails] = useState(false);
   const setImage = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -90,12 +44,93 @@ function LoanForm() {
   const userid = localStorage.getItem("id");
   console.log("userid", userid);
 
+  // const handleFormSubmit = async (data) => {
+  //   console.log("step1", data);
+  //   const uploadFile = async (file) => {
+  //     const formData = new FormData();
+  //     formData.append("file", file);
+  //     formData.append("upload_preset", "darshan");
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
+  //         {
+  //           method: "POST",
+  //           body: formData,
+  //         }
+  //       );
+  //       const cloudinaryData = await response.json();
+  //       return cloudinaryData.secure_url;
+  //     } catch (error) {
+  //       console.error("File upload failed", error);
+  //       return null;
+  //     }
+  //   };
+
+  //   const identityProofUrl = data.identityProof[0]
+  //     ? await uploadFile(data.identityProof[0])
+  //     : null;
+  //   const addressProofUrl = data.addressProof[0]
+  //     ? await uploadFile(data.addressProof[0])
+  //     : null;
+  //   const photographsUrl = data.photographs[0]
+  //     ? await uploadFile(data.photographs[0])
+  //     : null;
+  //   const propertyOwnershipProofUrl = data.propertyOwnershipProof[0]
+  //     ? await uploadFile(data.propertyOwnershipProof[0])
+  //     : null;
+  //   const signatureUrl = data.signature[0]
+  //     ? await uploadFile(data.signature[0])
+  //     : null;
+  //   const Details = {
+  //     userid: userid,
+  //     fullName: data.fullName,
+  //     dob: data.dob,
+  //     gender: data.gender,
+  //     maritalStatus: data.MaritalStatus,
+  //     nationality: data.nationality,
+  //     pan: data.pan,
+  //     aadhaar: data.aadhaar,
+  //     contact: data.contact,
+  //     address: data.address,
+  //     annualIncome: data.annualIncome,
+  //     bankAccountDetails: data.bankAccountDetails,
+  //     creditScore: data.creditScore,
+  //     downPayment: data.downPayment,
+  //     employerDetails: data.employerDetails,
+  //     employmentStatus: data.employmentStatus,
+  //     existingLoans: data.existingLoans,
+  //     incomeDetails: data.incomeDetails,
+  //     loanAmount: data.loanAmount,
+  //     loanPurpose: data.loanPurpose,
+  //     propertyDetails: data.propertyDetails,
+  //     identityProof: identityProofUrl,
+  //     addressProof: addressProofUrl,
+  //     photographs: photographsUrl,
+  //     propertyOwnershipProof: propertyOwnershipProofUrl,
+  //     signature: signatureUrl,
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       `http://localhost:5000/loanform/createloanapplications`,
+  //       Details
+  //     );
+  //     console.log(response, "Form submitted successfully");
+  //     toast.success("Form submitted successfully");
+  //   } catch (error) {
+  //     console.error("Form submission failed", error);
+  //     toast.error("An error occurred while submitting the form");
+  //   }
+  // };
+
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
+
+    // Helper function to upload files to Cloudinary
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "darshan");
+      formData.append("upload_preset", "darshan"); // Replace with your preset name
       try {
         const response = await fetch(
           "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
@@ -112,53 +147,43 @@ function LoanForm() {
       }
     };
 
-    const identityProofUrl = data.identityProof[0]
-      ? await uploadFile(data.identityProof[0])
+    // Upload files if they exist
+    const coApplicantDocsUrl = data.coApplicantDocs?.[0]
+      ? await uploadFile(data.coApplicantDocs[0])
       : null;
-    const addressProofUrl = data.addressProof[0]
-      ? await uploadFile(data.addressProof[0])
-      : null;
-    const photographsUrl = data.photographs[0]
+    const photographsUrl = data.photographs?.[0]
       ? await uploadFile(data.photographs[0])
       : null;
-    const propertyOwnershipProofUrl = data.propertyOwnershipProof[0]
-      ? await uploadFile(data.propertyOwnershipProof[0])
-      : null;
-    const signatureUrl = data.signature[0]
-      ? await uploadFile(data.signature[0])
-      : null;
+
+    // Construct the Details object
     const Details = {
-      userid: userid,
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
       maritalStatus: data.MaritalStatus,
       nationality: data.nationality,
-      pan: data.pan,
-      aadhaar: data.aadhaar,
       contact: data.contact,
       address: data.address,
-      annualIncome: data.annualIncome,
-      bankAccountDetails: data.bankAccountDetails,
-      creditScore: data.creditScore,
-      downPayment: data.downPayment,
-      employerDetails: data.employerDetails,
-      employmentStatus: data.employmentStatus,
-      existingLoans: data.existingLoans,
-      incomeDetails: data.incomeDetails,
-      loanAmount: data.loanAmount,
-      loanPurpose: data.loanPurpose,
-      propertyDetails: data.propertyDetails,
-      identityProof: identityProofUrl,
-      addressProof: addressProofUrl,
+      city: data.city,
+      district: data.district,
+      state: data.state,
+      country: data.Country,
+      totalChildren: data.totalChildren,
+      children: data.children, // Assuming children is already an array
+      spouseName: data.spouseName,
+      spouseOccupation: data.spouseOccupation,
+      spouseDesignation: data.spouseDesignation,
+      spouseIncome: data.spouseIncome,
+      coApplicantDocs: coApplicantDocsUrl,
       photographs: photographsUrl,
-      propertyOwnershipProof: propertyOwnershipProofUrl,
-      signature: signatureUrl,
     };
 
+    console.log("Prepared Details", Details);
+
+    // Submit data to your backend API
     try {
       const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`,
+        `http://localhost:5000/loanform/createloanapplications`, // Replace with your API endpoint
         Details
       );
       console.log(response, "Form submitted successfully");
@@ -168,42 +193,33 @@ function LoanForm() {
       toast.error("An error occurred while submitting the form");
     }
   };
-  const [children, setChildren] = useState([{ id: 1, label: "Child1" }]);
 
-  const addChild = () => {
-    const newChild = {
-      id: children.length + 1, // Assign sequential ID starting from 1
-      label: `Child${children.length + 1}`, // Dynamically set label
-    };
-    setChildren([...children, newChild]);
-  };
-
-  const removeChild = (id) => {
-    // Remove child from state
-    const updatedChildren = children.filter((child) => child.id !== id);
-    setChildren(
-      updatedChildren.map((child, index) => ({
-        ...child,
-        id: index + 1, // Reassign IDs starting from 1
-        label: `Child${index + 1}`, // Update label accordingly
-      }))
-    );
-
-    // Unregister the associated form fields
-    unregister(`ChildGender_${id}`);
-    unregister(`ChildName_${id}`);
-    unregister(`ChildAge_${id}`);
-  };
   const [childCount, setChildCount] = useState(0);
+  const loanAmount = watch("totalChildren");
 
-  // Watch the loanAmount field
-  const loanAmount = watch("loanAmount");
+  useEffect(() => {
+    const count = parseInt(loanAmount, 10);
+    setChildCount(Number.isNaN(count) ? 0 : count);
+  }, [loanAmount]);
 
-  // Update child count whenever the loanAmount field changes
-  const handleLoanAmountChange = (event) => {
-    const value = parseInt(event.target.value, 10);
-    setChildCount(Number.isNaN(value) ? 0 : value); // Update the number of children
-  };
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "children",
+  });
+
+  useEffect(() => {
+    const currentCount = fields.length;
+
+    if (childCount > currentCount) {
+      for (let i = currentCount; i < childCount; i++) {
+        append({ gender: "", name: "", age: "", schoolName: "" });
+      }
+    } else if (childCount < currentCount) {
+      for (let i = currentCount - 1; i >= childCount; i--) {
+        remove(i);
+      }
+    }
+  }, [childCount, fields.length, append, remove]);
 
   return (
     <div>
@@ -218,15 +234,12 @@ function LoanForm() {
             <div style={{ paddingLeft: "10px" }}>
               <center>
                 {" "}
-                <h4 className="pages-title mt-3 mb-5"> User Details</h4>
+                <h4 className="pages-title mt-3 mb-5">Personal Information</h4>
               </center>
 
               <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
-                  <p className="ourProfile_Heading_div">Personal Details</p>
-
                   <Row>
-                    {/* Full Name */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">Full Name</label>
@@ -242,8 +255,6 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
-                    {/* Date of Birth */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -253,7 +264,7 @@ function LoanForm() {
                           className="inputcolumn-ourProfile"
                           type="date"
                           name="dob"
-                          max={new Date().toISOString().split("T")[0]} // Prevent future dates
+                          max={new Date().toISOString().split("T")[0]}
                           {...register("dob", { required: true })}
                         />
                         {errors.dob && (
@@ -263,7 +274,6 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">Gender</label>
@@ -289,7 +299,6 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -307,7 +316,7 @@ function LoanForm() {
                               placeholder="Select Marital Status"
                               onChange={(value) => {
                                 field.onChange(value);
-                                setValue("MaritalStatus", value); // Update the form state
+                                setValue("MaritalStatus", value);
                               }}
                             >
                               <Option value="Single">Single</Option>
@@ -367,8 +376,8 @@ function LoanForm() {
                                   className="inputcolumn_drp"
                                   placeholder="Select Spouse Occupation"
                                   onChange={(value) => {
-                                    field.onChange(value); // Update form state
-                                    setValue("spouseOccupation", value); // Optional: Explicitly set value if needed
+                                    field.onChange(value);
+                                    setValue("spouseOccupation", value);
                                   }}
                                 >
                                   <Option value="Working Person">
@@ -386,158 +395,15 @@ function LoanForm() {
                           </div>
                         </Col>
 
-                        {/* <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label className="vendorpage_labelCss">
-                              Children Status
-                            </label>
-                            <Controller
-                              name="ChildrenStatus"
-                              control={control}
-                              defaultValue=""
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <Select
-                                  {...field}
-                                  className="inputcolumn_drp"
-                                  placeholder="Select Children Status"
-                                  onChange={(value) => {
-                                    field.onChange(value);
-                                    setValue("ChildrenStatus", value);
-                                    setShowChildDetails(value === "Yes");
-                                  }}
-                                >
-                                  <Option value="Yes">Yes</Option>
-                                  <Option value="No">No</Option>
-                                </Select>
-                              )}
-                            />
-                            {errors.ChildrenStatus && (
-                              <p className="text-danger">
-                                Children Status is required
-                              </p>
-                            )}
-                          </div>
-                        </Col>
-
-                        {showChildDetails && (
-                          <>
-                            {children.map((child, index) => (
-                              <React.Fragment key={child.id}>
-                                <Col xs={12} md={6} lg={4}>
-                                  <div>
-                                    <label>Child Gender</label>
-                                    <Controller
-                                      name={`ChildGender_${child.id}`}
-                                      control={control}
-                                      className="inputcolumn_drp"
-                                      defaultValue=""
-                                      rules={{ required: true }}
-                                      render={({ field }) => (
-                                        <Select
-                                          {...field}
-                                          className="inputcolumn_drp"
-                                          placeholder="Select Child Gender"
-                                        >
-                                          <Option value="Male">Male</Option>
-                                          <Option value="Female">Female</Option>
-                                        </Select>
-                                      )}
-                                    />
-                                    {errors[`ChildGender_${child.id}`] && (
-                                      <p className="text-danger">
-                                        Child Gender is required
-                                      </p>
-                                    )}
-                                  </div>
-                                </Col>
-
-                                <Col xs={12} md={6} lg={4}>
-                                  <div>
-                                    <label>Child Name</label>
-                                    <Controller
-                                      name={`ChildName_${child.id}`}
-                                      control={control}
-                                      defaultValue=""
-                                      rules={{ required: true }}
-                                      render={({ field }) => (
-                                        <input
-                                          {...field}
-                                          type="text"
-                                          className="inputcolumn-ourProfile"
-                                          placeholder="Enter Child Name"
-                                        />
-                                      )}
-                                    />
-                                    {errors[`ChildName_${child.id}`] && (
-                                      <p className="text-danger">
-                                        Child Name is required
-                                      </p>
-                                    )}
-                                  </div>
-                                </Col>
-
-                                <Col xs={12} md={6} lg={4}>
-                                  <div>
-                                    <label>Child Age</label>
-                                    <Controller
-                                      name={`ChildAge_${child.id}`}
-                                      control={control}
-                                      defaultValue=""
-                                      rules={{ required: true, min: 1 }}
-                                      render={({ field }) => (
-                                        <input
-                                          {...field}
-                                          type="number"
-                                          className="inputcolumn-ourProfile"
-                                          placeholder="Enter Child Age"
-                                        />
-                                      )}
-                                    />
-                                    {errors[`ChildAge_${child.id}`] && (
-                                      <p className="text-danger">
-                                        Child Age is required
-                                      </p>
-                                    )}
-                                  </div>
-                                </Col>
-
-                                <Col xs={12} md={6} lg={4}>
-                                  {index !== 0 && (
-                                    <Button
-                                      variant="danger"
-                                      onClick={() => removeChild(child.id)}
-                                      className="mt-3 mr-3"
-                                      style={{ borderRadius: "10px" }}
-                                    >
-                                      Remove
-                                    </Button>
-                                  )}
-                                  {index === children.length - 1 && (
-                                    <Button
-                                      variant="primary"
-                                      onClick={addChild}
-                                      className="mt-3"
-                                    >
-                                      Add Child
-                                    </Button>
-                                  )}
-                                </Col>
-                              </React.Fragment>
-                            ))}
-                          </>
-                        )} */}
-
-                        {/* Conditionally render Designation and Income fields */}
-                        {watch("WifeOccupation") === "Working Person" && (
+                        {watch("spouseOccupation") === "Working Person" && (
                           <>
                             <Col xs={12} md={6} lg={4}>
                               <div>
                                 <label className="vendorpage_labelCss">
-                                  Wife's / Husbans's Designation
+                                  Spouse Designation
                                 </label>
                                 <Controller
-                                  name="WifeDesignation"
+                                  name="spouseDesignation"
                                   control={control}
                                   defaultValue=""
                                   rules={{ required: true }}
@@ -550,9 +416,9 @@ function LoanForm() {
                                     />
                                   )}
                                 />
-                                {errors.WifeDesignation && (
+                                {errors.spouseDesignation && (
                                   <p className="text-danger">
-                                    Wife's / Husbans'sDesignation is required
+                                    Spouse Designation is required
                                   </p>
                                 )}
                               </div>
@@ -560,10 +426,10 @@ function LoanForm() {
                             <Col xs={12} md={6} lg={4}>
                               <div>
                                 <label className="vendorpage_labelCss">
-                                  Wife's / Husbans's Income
+                                  Spouse Income
                                 </label>
                                 <Controller
-                                  name="WifeIncome"
+                                  name="spouseIncome"
                                   control={control}
                                   defaultValue=""
                                   rules={{ required: true }}
@@ -572,13 +438,13 @@ function LoanForm() {
                                       {...field}
                                       type="number"
                                       className="form-control"
-                                      placeholder="Enter Wife's Income"
+                                      placeholder="Enter spouse Income"
                                     />
                                   )}
                                 />
                                 {errors.WifeIncome && (
                                   <p className="text-danger">
-                                    Wife's / Husbans's Income is required
+                                    Spouse Income is required
                                   </p>
                                 )}
                               </div>
@@ -586,7 +452,7 @@ function LoanForm() {
                             <Col xs={12} md={6} lg={4}>
                               <div>
                                 <label className="vendorpage_labelCss">
-                                  Upload Your Pay slip
+                                  Upload Your Spouse Pay slip
                                 </label>
                                 <input
                                   className="inputcolumn-ourProfile"
@@ -601,7 +467,6 @@ function LoanForm() {
                         )}
                       </>
                     )}
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -610,24 +475,23 @@ function LoanForm() {
                         <input
                           className="inputcolumn-ourProfile"
                           type="number"
-                          {...register("loanAmount", { required: true })}
-                          placeholder="Loan Amount Requested"
-                          onChange={handleLoanAmountChange} // Call the handler on change
+                          {...register("totalChildren", { required: true })}
+                          placeholder="How Many Children?"
                         />
-                        {errors.loanAmount && (
+                        {errors.totalChildren && (
                           <p className="text-danger">
-                            Loan Amount Requested is required
+                            How Many Children? is required
                           </p>
                         )}
                       </div>
                     </Col>
-                    {Array.from({ length: childCount }, (_, index) => (
-                      <React.Fragment key={index}>
+                    {fields.map((field, index) => (
+                      <React.Fragment key={field.id}>
                         <Col xs={12} md={6} lg={4}>
                           <div>
                             <label>Child Gender {index + 1}</label>
                             <Controller
-                              name={`ChildGender_${index + 1}`}
+                              name={`children.${index}.gender`}
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -642,7 +506,7 @@ function LoanForm() {
                                 />
                               )}
                             />
-                            {errors[`ChildGender_${index + 1}`] && (
+                            {errors.children?.[index]?.gender && (
                               <p className="text-danger">
                                 Child Gender is required
                               </p>
@@ -654,7 +518,7 @@ function LoanForm() {
                           <div>
                             <label>Child Name {index + 1}</label>
                             <Controller
-                              name={`ChildName_${index + 1}`}
+                              name={`children.${index}.name`}
                               control={control}
                               rules={{ required: true }}
                               render={({ field }) => (
@@ -666,7 +530,7 @@ function LoanForm() {
                                 />
                               )}
                             />
-                            {errors[`ChildName_${index + 1}`] && (
+                            {errors.children?.[index]?.name && (
                               <p className="text-danger">
                                 Child Name is required
                               </p>
@@ -678,7 +542,7 @@ function LoanForm() {
                           <div>
                             <label>Child Age {index + 1}</label>
                             <Controller
-                              name={`ChildAge_${index + 1}`}
+                              name={`children.${index}.age`}
                               control={control}
                               rules={{ required: true, min: 1 }}
                               render={({ field }) => (
@@ -690,16 +554,39 @@ function LoanForm() {
                                 />
                               )}
                             />
-                            {errors[`ChildAge_${index + 1}`] && (
+                            {errors.children?.[index]?.age && (
                               <p className="text-danger">
                                 Child Age is required and must be greater than 0
                               </p>
                             )}
                           </div>
                         </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label>Child School Name {index + 1}</label>
+                            <Controller
+                              name={`children.${index}.schoolName`}
+                              control={control}
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="text"
+                                  className="inputcolumn-ourProfile"
+                                  placeholder="Enter Child School Name"
+                                />
+                              )}
+                            />
+                            {errors.children?.[index]?.schoolName && (
+                              <p className="text-danger">
+                                Child School Name is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
                       </React.Fragment>
                     ))}
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -717,10 +604,6 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
-                    {/* PAN */}
-
-                    {/* Contact Information */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -740,8 +623,126 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
-                    {/* Residential Address */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Country</label>
+                        <Controller
+                          name="Country"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Marital Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("Country", value);
+                              }}
+                            >
+                              <Option value="Single">India</Option>
+                              <Option value="Married">Andhara pradhesh</Option>
+                              <Option value="Divorced">kerala</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.Country && (
+                          <p className="text-danger">Country is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">State</label>
+                        <br />
+                        <Controller
+                          name="state"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Marital Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("state", value);
+                              }}
+                            >
+                              <Option value="India">India</Option>
+                              <Option value="Andhara pradhesh">
+                                Andhara pradhesh
+                              </Option>
+                              <Option value="kerala">kerala</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.state && (
+                          <p className="text-danger">Country is required</p>
+                        )}
+                      </div>
+                    </Col>{" "}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">District</label>
+                        <Controller
+                          name="district"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Marital Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("district", value);
+                              }}
+                            >
+                              <Option value="Single">India</Option>
+                              <Option value="Married">Andhara pradhesh</Option>
+                              <Option value="Divorced">kerala</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.district && (
+                          <p className="text-danger">Country is required</p>
+                        )}
+                      </div>
+                    </Col>{" "}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">City</label>
+                        <br />
+                        <Controller
+                          name="city"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Marital Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("city", value);
+                              }}
+                            >
+                              <Option value="Single">India</Option>
+                              <Option value="Married">Andhara pradhesh</Option>
+                              <Option value="Divorced">kerala</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.city && (
+                          <p className="text-danger">Country is required</p>
+                        )}
+                      </div>
+                    </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -759,7 +760,6 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -789,7 +789,6 @@ function LoanForm() {
               </form>
             </div>
           </div>
-          {/* </Card> */}
         </Col>
       </Container>
       <ToastContainer />

@@ -128,6 +128,20 @@ function LoanKfc() {
                 )}
               </Col>
             </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
+                <label>Aadhaar Number: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  {...register("aadhaarNumber", { required: true })}
+                  className="inputcolumn-ourProfile"
+                />
+                {errors.aadhaarNumber && (
+                  <p className="text-danger">Aadhaar Number is required</p>
+                )}
+              </Col>
+            </Row>
 
             <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
@@ -146,7 +160,20 @@ function LoanKfc() {
 
             <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
-                <label>Pan or Adhar Upload Anyone: </label>
+                <label>Upload Your Pan Card Proof: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  onChange={handleFileChange}
+                />
+              </Col>
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
+                <label>Upload Your Aadhaar Proof: </label>
               </Col>
               <Col sm={12} lg={6}>
                 <input

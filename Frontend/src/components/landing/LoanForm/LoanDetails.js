@@ -235,6 +235,25 @@ function LoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
+                          Nominee Relationship
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="nomineeRelationship"
+                          {...register("nomineeRelationship", {
+                            required: true,
+                          })}
+                          placeholder="Nominee Relationship"
+                        />
+                        {errors.nomineeRelationship && (
+                          <p className="text-danger">Nominee is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
                           Residential Address
                         </label>
                         <textarea

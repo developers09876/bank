@@ -17,13 +17,13 @@ function LoanFormProfileTab() {
       <br />
 
       <Tabs defaultActiveKey="1" centered className="p-3">
-        <Tabs.TabPane tab="User Information" key="1">
+        <Tabs.TabPane tab="Personal Information" key="1">
           <OurProfile />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Loan Form" key="2">
           <LoanDetails />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="KYC Complainces" key="3">
+        <Tabs.TabPane tab="Bank Details" key="3">
           <KycComplaince />
         </Tabs.TabPane>
       </Tabs>
