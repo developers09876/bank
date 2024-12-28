@@ -12,39 +12,6 @@ import Footer from "../../Layout/Footer";
 import axios from "axios";
 
 function LoanDetails() {
-  const [stateValue, setStateValue] = useState();
-
-  const [districtValue, setDistrictValue] = useState();
-
-  const [data, setData] = useState();
-
-  useEffect(() => {
-    getCountry();
-  }, []);
-  useEffect(() => {
-    if (data?.country) {
-      getCountry();
-    }
-  }, [data?.country]);
-
-  useEffect(() => {
-    if (data?.country) {
-      getState(data.country);
-    }
-  }, [data?.country]);
-
-  useEffect(() => {
-    if (data?.state) {
-      getDistrict(data.state);
-    }
-  }, [data?.state]);
-
-  useEffect(() => {
-    if (data?.district) {
-      getCity(data.district);
-    }
-  }, [data?.district]);
-
   const {
     register,
     unregister,
@@ -58,33 +25,25 @@ function LoanDetails() {
     formState: { errors },
   } = useForm();
 
-  const getCountry = () => {};
-
-  const getState = (country_id) => {};
-
-  const getDistrict = (state_id) => {
-    setStateValue(state_id);
-  };
-
-  const getCity = (districtId) => {
-    setDistrictValue(districtId);
-  };
-
   const [selectImage, setSelectImage] = useState(null);
-  const [showChildDetails, setShowChildDetails] = useState(false);
+  const [employmentStatus, setEmploymentStatus] = useState("");
+  const [salaryPersonDoc, setSalaryPersonDoc] = useState(null); // State for a single Salary Person document
+  const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null); // State for a single Business Owner document
+  console.log("salaryPersonDoc", salaryPersonDoc);
+  const handleSalaryPersonFileUpload = (event) => {
+    setSalaryPersonDoc(event.target.files[0]); // Save a single Salary Person document
+  };
+
+  const handleBusinessOwnerFileUpload = (event) => {
+    setBusinessOwnerDoc(event.target.files[0]); // Save a single Business Owner document
+  };
+
   const setImage = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setSelectImage(reader.result);
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file);
-    }
   };
 
   const userid = localStorage.getItem("id");
@@ -168,32 +127,6 @@ function LoanDetails() {
       toast.error("An error occurred while submitting the form");
     }
   };
-  const [children, setChildren] = useState([{ id: 1, label: "Child1" }]);
-
-  const addChild = () => {
-    const newChild = {
-      id: children.length + 1, // Assign sequential ID starting from 1
-      label: `Child${children.length + 1}`, // Dynamically set label
-    };
-    setChildren([...children, newChild]);
-  };
-
-  const removeChild = (id) => {
-    // Remove child from state
-    const updatedChildren = children.filter((child) => child.id !== id);
-    setChildren(
-      updatedChildren.map((child, index) => ({
-        ...child,
-        id: index + 1, // Reassign IDs starting from 1
-        label: `Child${index + 1}`, // Update label accordingly
-      }))
-    );
-
-    // Unregister the associated form fields
-    unregister(`ChildGender_${id}`);
-    unregister(`ChildName_${id}`);
-    unregister(`ChildAge_${id}`);
-  };
 
   return (
     <div>
@@ -217,16 +150,15 @@ function LoanDetails() {
                     {/* Occupation */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Employer’s Name
-                        </label>
+                        <label className="vendorpage_labelCss">Name</label>
+                        <br />
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
-                          {...register("employerName", { required: true })}
-                          placeholder="For salaried individuals"
+                          {...register("Name", { required: true })}
+                          placeholder="Name"
                         />
-                        {errors.employerDetails && (
+                        {errors.Name && (
                           <p className="text-danger">
                             Employer's Name are required
                           </p>
@@ -249,6 +181,12 @@ function LoanDetails() {
                               {...field}
                               className="inputcolumn_drp"
                               placeholder="Select Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setEmploymentStatus(value); // Update state on selection
+                                setSalaryPersonDoc(null); // Reset Salary Person file
+                                setBusinessOwnerDoc(null); // Reset Business Owner file
+                              }}
                             >
                               <Option value="Salary Person">
                                 Salary Person
@@ -266,6 +204,52 @@ function LoanDetails() {
                         )}
                       </div>
                     </Col>
+
+                    {/* Conditional Rendering for Salary Person Document Upload */}
+                    {employmentStatus === "Salary Person" && (
+                      <Col xs={12} md={6} lg={4}>
+                        <div className="upload-section">
+                          <label className="vendorpage_labelCss">
+                            Upload Your Last 5 Months Payslip Document
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf" // Only PDF documents
+                            className="inputcolumn-ourProfile"
+                            onChange={handleSalaryPersonFileUpload} // Handle Salary Person file selection
+                          />
+                        </div>
+                        {/* {salaryPersonDoc && (
+                          <div>
+                            <h5>Uploaded Document:</h5>
+                            <p>{salaryPersonDoc.name}</p>
+                          </div>
+                        )} */}
+                      </Col>
+                    )}
+
+                    {/* Conditional Rendering for Business Owner Document Upload */}
+                    {employmentStatus === "Business Owner" && (
+                      <Col xs={12} md={6} lg={4}>
+                        <div className="upload-section">
+                          <label className="vendorpage_labelCss">
+                            Upload Your Last 1 Year Statement Document
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf" // Only PDF documents
+                            className="inputcolumn-ourProfile"
+                            onChange={handleBusinessOwnerFileUpload} // Handle Business Owner file selection
+                          />
+                        </div>
+                        {/* {businessOwnerDoc && (
+                          <div>
+                            <h5>Uploaded Document:</h5>
+                            <p>{businessOwnerDoc.name}</p>
+                          </div>
+                        )} */}
+                      </Col>
+                    )}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -351,11 +335,11 @@ function LoanDetails() {
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
-                          name="Nominee"
-                          {...register("Nominee", { required: true })}
+                          name="nomineeName"
+                          {...register("nomineeName", { required: true })}
                           placeholder="Nominee"
                         />
-                        {errors.Nominee && (
+                        {errors.nomineeName && (
                           <p className="text-danger">Nominee is required</p>
                         )}
                       </div>
@@ -388,11 +372,11 @@ function LoanDetails() {
                         <textarea
                           className="inputcolumn-ourProfile"
                           style={{ height: "60px" }}
-                          name="address"
-                          {...register("address", { required: true })}
+                          name="nomineeAddress"
+                          {...register("nomineeAddress", { required: true })}
                           placeholder="Residential Address"
                         />
-                        {errors.address && (
+                        {errors.nomineeAddress && (
                           <p className="text-danger">Address is required</p>
                         )}
                       </div>
