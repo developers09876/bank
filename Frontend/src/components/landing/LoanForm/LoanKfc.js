@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-// import Api from "../../Api";
+import Api from "../../../Api";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 
@@ -15,11 +15,19 @@ function LoanKfc() {
   } = useForm();
 
   const [selectImage, setSelectImage] = useState(null);
+  const [selectImageAadhar, setSelectImageAadhar] = useState(null);
 
   const setImage = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setSelectImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  const setImages = (file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSelectImageAadhar(reader.result);
     };
     reader.readAsDataURL(file);
   };
@@ -30,7 +38,13 @@ function LoanKfc() {
       setImage(file);
     }
   };
-  const id = localStorage.getItem("vendor_id");
+  const handleFileChanges = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImages(file);
+    }
+  };
+  const loanApplicationId = localStorage.getItem("loanApplicationId");
   //   useEffect(() => {
   //     getValue();
   //   }, []);
@@ -55,33 +69,47 @@ function LoanKfc() {
   //   };
 
   const handleFormSubmit = async () => {
+    const uploadFile = async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "darshan");
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const cloudinaryData = await response.json();
+        return cloudinaryData.secure_url;
+      } catch (error) {
+        console.error("File upload failed", error);
+        return null;
+      }
+    };
+    const panProofUrl = selectImage ? await uploadFile(selectImage) : null;
+    const aadhaarProofUrl = selectImageAadhar
+      ? await uploadFile(selectImageAadhar)
+      : null;
+
     const Details = {
       panCardNumber: getValues().pancardNumber,
       GSTNumber: getValues().gstNumber,
+      aadhaarNumber: getValues().aadhaarNumber,
       accountNumber: getValues().accountno,
       IFSCCode: getValues().ifcecode,
       bankName: getValues().bankname,
       branch: getValues().branch,
-      panOrAdharUpload: "",
+      panImageUpload: panProofUrl,
+      aadharImageUpload: aadhaarProofUrl,
     };
-
-    const data = new FormData();
-    data.append("file", selectImage);
-    data.append("upload_preset", "darshan");
-
-    // const response = await fetch(
-    //   "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
-    //   {
-    //     method: "POST",
-    //     body: data,
-    //   }
-    // );
-    // const cloudinaryData = await response.json();
-    // Details.panOrAdharUpload = cloudinaryData.secure_url;
-
-    // await Api.put(`/vendor/update/${id}`, Details).then(async (res) => {
-    //   console.log("res :>> ", res);
-    // });
+    await Api.put(
+      `/loanform/updateloanapplications/${loanApplicationId}`,
+      Details
+    ).then(async (res) => {
+      console.log("res :>> ", res);
+    });
   };
 
   return (
@@ -180,7 +208,7 @@ function LoanKfc() {
                   className="inputcolumn-ourProfile"
                   style={{ outline: "none", height: "50px" }}
                   type="file"
-                  onChange={handleFileChange}
+                  onChange={handleFileChanges}
                 />
               </Col>
             </Row>

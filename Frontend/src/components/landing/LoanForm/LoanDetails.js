@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import Api from "../../Api";
+import Api from "../../../Api";
 import { Controller, useForm } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
 import "../../dashboard/user/MyProfile.scss";
@@ -9,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
-import axios from "axios";
 
 function LoanDetails() {
   const {
@@ -25,32 +24,22 @@ function LoanDetails() {
     formState: { errors },
   } = useForm();
 
-  const [selectImage, setSelectImage] = useState(null);
   const [employmentStatus, setEmploymentStatus] = useState("");
-  const [salaryPersonDoc, setSalaryPersonDoc] = useState(null); // State for a single Salary Person document
-  const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null); // State for a single Business Owner document
-  console.log("salaryPersonDoc", salaryPersonDoc);
+  const [salaryPersonDoc, setSalaryPersonDoc] = useState(null);
+  const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null);
   const handleSalaryPersonFileUpload = (event) => {
-    setSalaryPersonDoc(event.target.files[0]); // Save a single Salary Person document
+    setSalaryPersonDoc(event.target.files[0]);
   };
 
   const handleBusinessOwnerFileUpload = (event) => {
-    setBusinessOwnerDoc(event.target.files[0]); // Save a single Business Owner document
+    setBusinessOwnerDoc(event.target.files[0]);
   };
 
-  const setImage = (file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSelectImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const userid = localStorage.getItem("id");
-  console.log("userid", userid);
+  const loanApplicationId = localStorage.getItem("loanApplicationId");
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
+
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -71,53 +60,72 @@ function LoanDetails() {
       }
     };
 
-    const identityProofUrl = data.identityProof[0]
+    const identityProofUrl = data.identityProof?.[0]
       ? await uploadFile(data.identityProof[0])
       : null;
-    const addressProofUrl = data.addressProof[0]
+
+    const addressProofUrl = data.addressProof?.[0]
       ? await uploadFile(data.addressProof[0])
       : null;
-    const photographsUrl = data.photographs[0]
-      ? await uploadFile(data.photographs[0])
-      : null;
-    const propertyOwnershipProofUrl = data.propertyOwnershipProof[0]
+
+    const propertyOwnershipProofUrl = data.propertyOwnershipProof?.[0]
       ? await uploadFile(data.propertyOwnershipProof[0])
       : null;
-    const signatureUrl = data.signature[0]
+
+    const signatureUrl = data.signature?.[0]
       ? await uploadFile(data.signature[0])
       : null;
+
+    const nomineeDocsDocsUrl = data.nomineeDocs?.[0]
+      ? await uploadFile(data.nomineeDocs[0])
+      : null;
+
+    const financialProofUrl = data.financialProof?.[0]
+      ? await uploadFile(data.financialProof[0])
+      : null;
+
+    const employeePayslipProof =
+      data.employmentStatus === "Salary Person"
+        ? salaryPersonDoc
+          ? await uploadFile(salaryPersonDoc)
+          : null
+        : null;
+
+    const businessOwnerStatementProof =
+      data.employmentStatus === "Business Owner"
+        ? businessOwnerDoc
+          ? await uploadFile(businessOwnerDoc)
+          : null
+        : null;
+
     const Details = {
-      userid: userid,
-      fullName: data.fullName,
-      dob: data.dob,
-      gender: data.gender,
-      maritalStatus: data.MaritalStatus,
-      nationality: data.nationality,
-      pan: data.pan,
-      aadhaar: data.aadhaar,
-      contact: data.contact,
-      address: data.address,
+      loanAgentName: data.loanAgentName,
+      loanAgentContactNumber: data.loanAgentContactNumber,
+
+      identityProof: identityProofUrl,
+      addressProof: addressProofUrl,
       annualIncome: data.annualIncome,
-      bankAccountDetails: data.bankAccountDetails,
+      nomineeDocs: nomineeDocsDocsUrl,
       creditScore: data.creditScore,
-      downPayment: data.downPayment,
-      employerDetails: data.employerDetails,
       employmentStatus: data.employmentStatus,
       existingLoans: data.existingLoans,
+      financialProof: financialProofUrl,
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
       loanPurpose: data.loanPurpose,
+      nomineeName: data.nomineeName,
+      nomineeAddress: data.nomineeAddress,
+      nomineeRelationship: data.nomineeRelationship,
       propertyDetails: data.propertyDetails,
-      identityProof: identityProofUrl,
-      addressProof: addressProofUrl,
-      photographs: photographsUrl,
       propertyOwnershipProof: propertyOwnershipProofUrl,
       signature: signatureUrl,
+      employeePayslipProof,
+      businessOwnerStatementProof,
     };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`,
+      const response = await Api.put(
+        `/loanform/updateloanapplications/${loanApplicationId}`,
         Details
       );
       console.log(response, "Form submitted successfully");
@@ -147,20 +155,42 @@ function LoanDetails() {
               <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
                   <Row>
-                    {/* Occupation */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">Name</label>
+                        <label className="vendorpage_labelCss">
+                          loan Agent Name
+                        </label>
                         <br />
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
-                          {...register("Name", { required: true })}
-                          placeholder="Name"
+                          {...register("loanAgentName", { required: true })}
+                          placeholder="loan Agent Name"
                         />
                         {errors.Name && (
                           <p className="text-danger">
-                            Employer's Name are required
+                            loan Agent Name are required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          loan Agent Contact Number
+                        </label>
+                        <br />
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          {...register("loanAgentContactNumber", {
+                            required: true,
+                          })}
+                          placeholder="loan Agent Contact Number"
+                        />
+                        {errors.loanAgentContactNumber && (
+                          <p className="text-danger">
+                            loanAgent Contact Number are required
                           </p>
                         )}
                       </div>
@@ -183,9 +213,9 @@ function LoanDetails() {
                               placeholder="Select Status"
                               onChange={(value) => {
                                 field.onChange(value);
-                                setEmploymentStatus(value); // Update state on selection
-                                setSalaryPersonDoc(null); // Reset Salary Person file
-                                setBusinessOwnerDoc(null); // Reset Business Owner file
+                                setEmploymentStatus(value);
+                                setSalaryPersonDoc(null);
+                                setBusinessOwnerDoc(null);
                               }}
                             >
                               <Option value="Salary Person">
@@ -205,7 +235,6 @@ function LoanDetails() {
                       </div>
                     </Col>
 
-                    {/* Conditional Rendering for Salary Person Document Upload */}
                     {employmentStatus === "Salary Person" && (
                       <Col xs={12} md={6} lg={4}>
                         <div className="upload-section">
@@ -214,9 +243,9 @@ function LoanDetails() {
                           </label>
                           <input
                             type="file"
-                            accept="application/pdf" // Only PDF documents
+                            accept="application/pdf"
                             className="inputcolumn-ourProfile"
-                            onChange={handleSalaryPersonFileUpload} // Handle Salary Person file selection
+                            onChange={handleSalaryPersonFileUpload}
                           />
                         </div>
                         {/* {salaryPersonDoc && (
@@ -237,9 +266,9 @@ function LoanDetails() {
                           </label>
                           <input
                             type="file"
-                            accept="application/pdf" // Only PDF documents
+                            accept="application/pdf"
                             className="inputcolumn-ourProfile"
-                            onChange={handleBusinessOwnerFileUpload} // Handle Business Owner file selection
+                            onChange={handleBusinessOwnerFileUpload}
                           />
                         </div>
                         {/* {businessOwnerDoc && (
@@ -525,25 +554,6 @@ function LoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Photographs (Passport size)
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept="image/*"
-                          {...register("photographs", { required: true })}
-                        />
-                        {errors.photographs && (
-                          <p className="text-danger">
-                            Photographs are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
                           Proof of Financial Liabilities or Assets
                         </label>
                         <input
@@ -559,13 +569,13 @@ function LoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Documentation for Co-applicants/Guarantors
+                          Documentation for Nominee
                         </label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="file"
                           accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("coApplicantDocs")}
+                          {...register("nomineeDocs")}
                           placeholder="If applicable"
                         />
                       </div>
@@ -581,7 +591,6 @@ function LoanDetails() {
               </form>
             </div>
           </div>
-          {/* </Card> */}
         </Col>
       </Container>
       <ToastContainer />

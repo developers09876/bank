@@ -50,7 +50,6 @@ export async function createLoanApplication(req, res, next) {
     const data = req.body;
     console.log("Request Data:", data);
 
-    // Process children information
     const children = Array.isArray(data.children)
       ? data.children.map((child) => ({
           gender: child.gender,
@@ -60,9 +59,8 @@ export async function createLoanApplication(req, res, next) {
         }))
       : [];
 
-    // Construct the details object
     const details = {
-      // userid: data.userid,
+      userid: data.userid,
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
@@ -70,9 +68,11 @@ export async function createLoanApplication(req, res, next) {
       nationality: data.nationality,
       contact: data.contact,
       address: data.address,
+      pinCode: data.pinCode,
       city: data.city,
       state: data.state,
       district: data.district,
+      country: data.country,
       totalChildren: data.totalChildren,
       children: children,
       spouseName: data.spouseName,
@@ -85,10 +85,8 @@ export async function createLoanApplication(req, res, next) {
 
     console.log("Prepared Details:", details);
 
-    // Save loan application to the database
     const loanApplication = await LoanApplication.create(details);
 
-    // Respond to the client
     if (loanApplication) {
       return res.status(201).json({
         message: "Submitted Successfully",
@@ -103,6 +101,71 @@ export async function createLoanApplication(req, res, next) {
     console.error("Error creating loan application:", err);
     res.status(500).json({
       message: "An error occurred while processing your request.",
+      error: err.message,
+    });
+    next(err);
+  }
+}
+export async function updateLoanDetails(req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+
+    const updatedDetails = {
+      loanAgentName: data.loanAgentName,
+      loanAgentContactNumber: data.loanAgentContactNumber,
+      identityProof: data.identityProof,
+      addressProof: data.addressProof,
+      annualIncome: data.annualIncome,
+      nomineeDocs: data.nomineeDocs,
+      creditScore: data.creditScore,
+      employmentStatus: data.employmentStatus,
+      existingLoans: data.existingLoans,
+      financialProof: data.financialProof,
+      incomeDetails: data.incomeDetails,
+      loanAmount: data.loanAmount,
+      loanPurpose: data.loanPurpose,
+      nomineeName: data.nomineeName,
+      nomineeAddress: data.nomineeAddress,
+      nomineeRelationship: data.nomineeRelationship,
+      propertyDetails: data.propertyDetails,
+      propertyOwnershipProof: data.propertyOwnershipProof,
+      signature: data.signature,
+      employeePayslipProof: data.employeePayslipProof,
+      businessOwnerStatementProof: data.businessOwnerStatementProof,
+      panCardNumber: data.panCardNumber,
+      GSTNumber: data.GSTNumber,
+      accountNumber: data.accountNumber,
+      IFSCCode: data.IFSCCode,
+      bankName: data.bankName,
+      aadhaarNumber: data.aadhaarNumber,
+      branch: data.branch,
+      panImageUpload: data.panImageUpload,
+      aadharImageUpload: data.aadharImageUpload,
+    };
+
+    console.log("Updated Details:", updatedDetails);
+
+    const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
+      id,
+      { $set: updatedDetails },
+      { new: true, runValidators: true }
+    );
+
+    if (updatedLoanApplication) {
+      return res.status(200).json({
+        message: "Loan details updated successfully",
+        data: updatedLoanApplication,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Loan application not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating loan details:", err);
+    res.status(500).json({
+      message: "An error occurred while updating the loan details.",
       error: err.message,
     });
     next(err);

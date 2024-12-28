@@ -25,112 +25,15 @@ function LoanForm() {
     formState: { errors },
   } = useForm();
 
-  const [selectImage, setSelectImage] = useState(null);
-  const setImage = (file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSelectImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file);
-    }
-  };
-
   const userid = localStorage.getItem("id");
-  console.log("userid", userid);
-
-  // const handleFormSubmit = async (data) => {
-  //   console.log("step1", data);
-  //   const uploadFile = async (file) => {
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-  //     formData.append("upload_preset", "darshan");
-  //     try {
-  //       const response = await fetch(
-  //         "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
-  //         {
-  //           method: "POST",
-  //           body: formData,
-  //         }
-  //       );
-  //       const cloudinaryData = await response.json();
-  //       return cloudinaryData.secure_url;
-  //     } catch (error) {
-  //       console.error("File upload failed", error);
-  //       return null;
-  //     }
-  //   };
-
-  //   const identityProofUrl = data.identityProof[0]
-  //     ? await uploadFile(data.identityProof[0])
-  //     : null;
-  //   const addressProofUrl = data.addressProof[0]
-  //     ? await uploadFile(data.addressProof[0])
-  //     : null;
-  //   const photographsUrl = data.photographs[0]
-  //     ? await uploadFile(data.photographs[0])
-  //     : null;
-  //   const propertyOwnershipProofUrl = data.propertyOwnershipProof[0]
-  //     ? await uploadFile(data.propertyOwnershipProof[0])
-  //     : null;
-  //   const signatureUrl = data.signature[0]
-  //     ? await uploadFile(data.signature[0])
-  //     : null;
-  //   const Details = {
-  //     userid: userid,
-  //     fullName: data.fullName,
-  //     dob: data.dob,
-  //     gender: data.gender,
-  //     maritalStatus: data.MaritalStatus,
-  //     nationality: data.nationality,
-  //     pan: data.pan,
-  //     aadhaar: data.aadhaar,
-  //     contact: data.contact,
-  //     address: data.address,
-  //     annualIncome: data.annualIncome,
-  //     bankAccountDetails: data.bankAccountDetails,
-  //     creditScore: data.creditScore,
-  //     downPayment: data.downPayment,
-  //     employerDetails: data.employerDetails,
-  //     employmentStatus: data.employmentStatus,
-  //     existingLoans: data.existingLoans,
-  //     incomeDetails: data.incomeDetails,
-  //     loanAmount: data.loanAmount,
-  //     loanPurpose: data.loanPurpose,
-  //     propertyDetails: data.propertyDetails,
-  //     identityProof: identityProofUrl,
-  //     addressProof: addressProofUrl,
-  //     photographs: photographsUrl,
-  //     propertyOwnershipProof: propertyOwnershipProofUrl,
-  //     signature: signatureUrl,
-  //   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:5000/loanform/createloanapplications`,
-  //       Details
-  //     );
-  //     console.log(response, "Form submitted successfully");
-  //     toast.success("Form submitted successfully");
-  //   } catch (error) {
-  //     console.error("Form submission failed", error);
-  //     toast.error("An error occurred while submitting the form");
-  //   }
-  // };
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
 
-    // Helper function to upload files to Cloudinary
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", "darshan"); // Replace with your preset name
+      formData.append("upload_preset", "darshan");
       try {
         const response = await fetch(
           "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
@@ -147,7 +50,6 @@ function LoanForm() {
       }
     };
 
-    // Upload files if they exist
     const coApplicantDocsUrl = data.coApplicantDocs?.[0]
       ? await uploadFile(data.coApplicantDocs[0])
       : null;
@@ -155,8 +57,8 @@ function LoanForm() {
       ? await uploadFile(data.photographs[0])
       : null;
 
-    // Construct the Details object
     const Details = {
+      userid: userid,
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
@@ -168,8 +70,9 @@ function LoanForm() {
       district: data.district,
       state: data.state,
       country: data.Country,
+      pinCode: data.pinCode,
       totalChildren: data.totalChildren,
-      children: data.children, // Assuming children is already an array
+      children: data.children,
       spouseName: data.spouseName,
       spouseOccupation: data.spouseOccupation,
       spouseDesignation: data.spouseDesignation,
@@ -180,13 +83,13 @@ function LoanForm() {
 
     console.log("Prepared Details", Details);
 
-    // Submit data to your backend API
     try {
       const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`, // Replace with your API endpoint
+        `http://localhost:5000/loanform/createloanapplications`,
         Details
       );
-      console.log(response, "Form submitted successfully");
+      console.log(response.data.data, "Form submitted successfully");
+      localStorage.setItem("loanApplicationId", response.data.data._id);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Form submission failed", error);
@@ -641,9 +544,12 @@ function LoanForm() {
                                 setValue("Country", value);
                               }}
                             >
-                              <Option value="Single">India</Option>
-                              <Option value="Married">Andhara pradhesh</Option>
-                              <Option value="Divorced">kerala</Option>
+                              <Option value="India">India</Option>
+                              <Option value="Andhara pradhesh">
+                                Andhara pradhesh
+                              </Option>
+                              <Option value="kerala">kerala</Option>
+                              <Option value="Mumbai">Mumbai</Option>
                             </Select>
                           )}
                         />
@@ -676,11 +582,12 @@ function LoanForm() {
                                 Andhara pradhesh
                               </Option>
                               <Option value="kerala">kerala</Option>
+                              <Option value="Mumbai">Mumbai</Option>
                             </Select>
                           )}
                         />
                         {errors.state && (
-                          <p className="text-danger">Country is required</p>
+                          <p className="text-danger">State is required</p>
                         )}
                       </div>
                     </Col>{" "}
@@ -702,14 +609,17 @@ function LoanForm() {
                                 setValue("district", value);
                               }}
                             >
-                              <Option value="Single">India</Option>
-                              <Option value="Married">Andhara pradhesh</Option>
-                              <Option value="Divorced">kerala</Option>
+                              <Option value="India">India</Option>
+                              <Option value="Andhara pradhesh">
+                                Andhara pradhesh
+                              </Option>
+                              <Option value="kerala">kerala</Option>
+                              <Option value="Mumbai">Mumbai</Option>
                             </Select>
                           )}
                         />
                         {errors.district && (
-                          <p className="text-danger">Country is required</p>
+                          <p className="text-danger">District is required</p>
                         )}
                       </div>
                     </Col>{" "}
@@ -732,14 +642,17 @@ function LoanForm() {
                                 setValue("city", value);
                               }}
                             >
-                              <Option value="Single">India</Option>
-                              <Option value="Married">Andhara pradhesh</Option>
-                              <Option value="Divorced">kerala</Option>
+                              <Option value="India">India</Option>
+                              <Option value="Andhara pradhesh">
+                                Andhara pradhesh
+                              </Option>
+                              <Option value="kerala">kerala</Option>
+                              <Option value="Mumbai">Mumbai</Option>
                             </Select>
                           )}
                         />
                         {errors.city && (
-                          <p className="text-danger">Country is required</p>
+                          <p className="text-danger">City is required</p>
                         )}
                       </div>
                     </Col>
@@ -757,6 +670,21 @@ function LoanForm() {
                         />
                         {errors.address && (
                           <p className="text-danger">Address is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Pin Code</label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          name="pinCode"
+                          {...register("pinCode", { required: true })}
+                          placeholder="Pin Code"
+                        />
+                        {errors.pinCode && (
+                          <p className="text-danger">Pin Code is required</p>
                         )}
                       </div>
                     </Col>
