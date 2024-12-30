@@ -207,7 +207,47 @@ export async function updateLoanApplicationStatus(req, res, next) {
     console.log(err);
     next();
   }
-}
+};
+
+export async function updateLoanApplicationStatusReason(req, res, next) {
+  try {
+    const { id } = req.params; 
+    const { reason } = req.body;
+    console.log('reason', reason) 
+
+    if (!reason || typeof reason !== "string") {
+      return res.status(400).json({
+        message: "A valid rejection reason is required.",
+      });
+    }
+
+    const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
+      id,
+      { rejectionReason: reason, status: "2" }, 
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedLoanApplication) {
+      return res.status(404).json({
+        message: "Loan application not found.",
+      });
+    }
+
+    res.status(200).json({
+      message: "Rejection reason updated successfully.",
+      data: updatedLoanApplication,
+    });
+  } catch (err) {
+    console.error("Error updating rejection reason:", err);
+    res.status(500).json({
+      message: "An error occurred while updating the rejection reason.",
+      error: err.message,
+    });
+    next(err);
+  }
+};
+
+
 export const getAllLoanApplications = async (req, res) => {
   try {
     const applications = await LoanApplication.find();
