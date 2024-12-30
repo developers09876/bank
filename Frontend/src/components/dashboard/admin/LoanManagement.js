@@ -247,7 +247,7 @@ const LoanManagement = ({ collapsed }) => {
                   <p style={{ fontSize: "15px" }}>:</p>
                 </Col>
                 <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>{selectedRecord.createdAt}</p>
+                  <p style={{ fontSize: "15px" }}>{new Date(selectedRecord.createdAt).toLocaleDateString()}</p>
                 </Col>
               </Row>
               <Row>
@@ -529,6 +529,363 @@ const LoanManagement = ({ collapsed }) => {
               <Row>
                 <Col span={10}>
                   <p style={{ fontSize: "15px" }}>
+                    <strong>Spouse Name</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.spouseName}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Spouse Occupation</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.spouseOccupation}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Spouse Income</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.spouseIncome}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Spouse Designation</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.spouseDesignation}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Total Children</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.totalChildren}
+                  </p>
+                </Col>
+              </Row>
+              {selectedRecord.children.map((child, index) => (
+                <React.Fragment key={index}>
+                  <Row>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>
+                        <strong>Child {index + 1} Name</strong>
+                      </p>
+                    </Col>
+                    <Col span={2}>
+                      <p style={{ fontSize: "15px" }}>:</p>
+                    </Col>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>{child.name}</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>
+                        <strong>Child {index + 1} Gender</strong>
+                      </p>
+                    </Col>
+                    <Col span={2}>
+                      <p style={{ fontSize: "15px" }}>:</p>
+                    </Col>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>{child.gender}</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>
+                        <strong>Child {index + 1} Age</strong>
+                      </p>
+                    </Col>
+                    <Col span={2}>
+                      <p style={{ fontSize: "15px" }}>:</p>
+                    </Col>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>{child.age}</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>
+                        <strong>Child {index + 1} School Name</strong>
+                      </p>
+                    </Col>
+                    <Col span={2}>
+                      <p style={{ fontSize: "15px" }}>:</p>
+                    </Col>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>{child.schoolName}</p>
+                    </Col>
+                  </Row>
+                </React.Fragment>
+              ))}
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Status</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>{selectedRecord.status}</p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>GST Number</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>{selectedRecord.GSTNumber}</p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>IFSC Code</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>{selectedRecord.IFSCCode}</p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Aadhaar Number</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.aadhaarNumber}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Account Number</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.accountNumber}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Address</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>{selectedRecord.address}</p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Annual Income</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.annualIncome}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Bank Name</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>{selectedRecord.bankName}</p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Branch</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>{selectedRecord.branch}</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>PAN Card Number</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.panCardNumber}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Loan Agent Contact Number</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.loanAgentContactNumber}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Loan Agent Name</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.loanAgentName}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Nominee Address</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.nomineeAddress}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Nominee Name</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.nomineeName}
+                  </p>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Nominee Relationship</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.nomineeRelationship}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
                     <strong>Property Ownership Proof</strong>
                   </p>
                 </Col>
@@ -547,7 +904,25 @@ const LoanManagement = ({ collapsed }) => {
                   </p>
                 </Col>
               </Row>
-
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Aadhaar Image</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.aadharImageUpload}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Image
+                  </a>
+                </Col>
+              </Row>
               <Row>
                 <Col span={10}>
                   <p style={{ fontSize: "15px" }}>
@@ -567,7 +942,25 @@ const LoanManagement = ({ collapsed }) => {
                   </a>
                 </Col>
               </Row>
-
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Aadhaar Image</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.aadharImageUpload}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Image
+                  </a>
+                </Col>
+              </Row>
               <Row>
                 <Col span={10}>
                   <p style={{ fontSize: "15px" }}>
@@ -607,6 +1000,104 @@ const LoanManagement = ({ collapsed }) => {
                   </a>
                 </Col>
               </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>PAN Image</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.panImageUpload}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Image
+                  </a>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Financial Proof</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.financialProof[0]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View
+                  </a>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Address Proof</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.addressProof}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Document
+                  </a>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Co-Applicant Documents</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.coApplicantDocs}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View
+                  </a>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Nominee Documents</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <a
+                    href={selectedRecord.nomineeDocs}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Document
+                  </a>
+                </Col>
+              </Row>
+
               <Row style={{ marginTop: "25px", marginRight: "280px" }}>
                 <Space>
                   {selectedRecord && selectedRecord.status !== "1" && (
