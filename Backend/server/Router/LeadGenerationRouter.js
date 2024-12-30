@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { createLead, getallLead, getById } from "../Controller/LeadGenerationController.js";
+import { createLead, getallLead, getById, updateLead } from "../Controller/LeadGenerationController.js";
 
 const router = Router();
 
 router.post("/createlead",createLead);
 router.get("/getall",getallLead);
-router.get("/getById/:id", getById)
+router.get("/getById/:id", getById);
+router.put("/updatelead/:id", updateLead);
 
 export default router;

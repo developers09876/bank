@@ -12,6 +12,12 @@ const LeadSchema = new mongoose.Schema({
     howimidiate: {type:String},
     previouslyapplied: {type:String},
     panno: {type:String},
+    remarks:[{
+    date: {type:String},
+    remarks: {type:String},
+    status: {type:String},
+    }]
+
 
 })
 

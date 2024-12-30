@@ -30,6 +30,52 @@ export async function createLead(req,res,next) {
     }
 }
 
+export async function updateLead(req, res, next) {
+    try {
+        const leadId = req.params.id; // Assuming the lead ID is passed as a URL parameter
+        const data = req.body;
+
+        // Construct the updated details from the request body
+        const updatedDetails = {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            userId: data.userId,
+            phone: data.phone,
+            email: data.email,
+            aadhar: data.aadhar,
+            purpose: data.purpose,
+            amount: data.amount,
+            howimidiate: data.howimidiate,
+            previouslyapplied: data.previouslyapplied,
+            panno: data.panno,
+            date: data.date,
+            remarks: data.remarks,
+            status: data.status,
+        };
+
+        // Find the lead by ID and update its details
+        const updatedLead = await Lead.findByIdAndUpdate(leadId, updatedDetails, { 
+            new: true, // Return the updated document
+            runValidators: true // Ensure validation rules are applied
+        });
+
+        if (updatedLead) {
+            res.status(200).json({
+                message: "Lead updated successfully",
+                data: updatedLead,
+            });
+        } else {
+            res.status(404).json({
+                message: "Lead not found",
+            });
+        }
+    } catch (err) {
+        console.log("error", err);
+        next(err); // Pass the error to the error-handling middleware
+    }
+}
+
+
 
 export async function getallLead(req, res, next) {
     try {

@@ -3,6 +3,7 @@ import CreateJobForm from "./createJobform";
 import AdminDashboard from "./dashboard";
 import EmployeeList from "./EmployeeList";
 import JobRequest from "./JobRequest";
+import LeadDetails from "./LeadDetails";
 import LeadGeneration from "./LeadGeneration";
 import Loancards from "./Loancards";
 import LoanDashboard from "./LoanDashboard";
@@ -23,6 +24,8 @@ export const AdminRoutes = [
   { path: "loanstatus", element: <LoanStatus /> },
   { path: "loandashboard", element: <LoanDashboard /> },
   { path: "leadgeneration", element: <LeadGeneration /> },
+  { path: "leaddetails/:id", element: <LeadDetails /> },
+
 
   // { path: "insurance", element: <InsuranceReview /> },
 ];
