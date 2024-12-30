@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
+import {
+  Table,
+  Input,
+  Space,
+  Pagination,
+  Button,
+  Modal,
+  Row,
+  Col,
+  message,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 const LoanManagement = ({ collapsed }) => {
@@ -10,8 +20,8 @@ const LoanManagement = ({ collapsed }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState("");
-  const [showSubmit, setShowSubmit] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+  console.log("rejectReason", rejectReason);
 
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
@@ -47,25 +57,19 @@ const LoanManagement = ({ collapsed }) => {
     setIsModalVisible(false);
     setSelectedRecord(null);
   };
-  // const handleRejected = () => {
-  //   if (selectedRecord && rejectionReason) {
-  //     updateStatus(selectedRecord._id, "reject", rejectionReason);
-  //     setIsRejectModalVisible(false);
-  //     setRejectionReason("");
-  //     setIsModalVisible(false);
-  //   }
-  // };
 
   const updateStatus = async (id, action) => {
     try {
       const details = { action };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplications/${id}`,
+        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
-      const updatedLoans = loan.map((item) => 
-        item._id === id ? { ...item, status: action === "approve" ? "1" : "2" } : item
+      const updatedLoans = loan.map((item) =>
+        item._id === id
+          ? { ...item, status: action === "approve" ? "1" : "2" }
+          : item
       );
       setLoan(updatedLoans);
     } catch (error) {
@@ -73,23 +77,36 @@ const LoanManagement = ({ collapsed }) => {
     }
   };
 
-  const handleApprove = () => {
-    if (selectedRecord) {
-      updateStatus(selectedRecord._id, "approve");
+  const handleApprove = async () => {
+    if (!selectedRecord) return;
+
+    try {
+      await updateStatus(selectedRecord._id, "approve");
       handleModalOk();
+      message.success("Approved successfully");
+    } catch (error) {
+      message.error("Error approving record");
     }
   };
 
-  const handleReject = () => {
-    if (selectedRecord) {
-      updateStatus(selectedRecord._id, "reject");
+  const handleReject = async (id, rejectReason) => {
+    try {
+      await updateStatus(id, "reject", rejectReason);
+      const updatedLoans = loan.map((item) =>
+        item._id === id ? { ...item, status: "2" } : item
+      );
+      setLoan(updatedLoans);
+      message.success("Rejected successfully");
       setIsRejectModalVisible(false);
-      setRejectionReason("");
-      setIsModalVisible(false);
-      handleModalOk();
+      handleReset();
+    } catch (error) {
+      message.error("Error rejecting record");
     }
   };
 
+  const handleReset = () => {
+    setRejectReason("");
+  };
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);
@@ -590,38 +607,6 @@ const LoanManagement = ({ collapsed }) => {
                   </a>
                 </Col>
               </Row>
-
-              {/* <Row style={{ marginTop: "25px", marginRight: "280px" }}>
-                <Space>
-                  {selectedRecord && selectedRecord.status !== "1" && (
-                    <Button
-                      type="primary"
-                      style={{ background: "#4096ff", color: "#fff" }}
-                      onClick={handleApprove}
-                    >
-                      Approve
-                    </Button>
-                  )}
-
-                  {selectedRecord && selectedRecord.status !== "2" && (
-                    <Button danger onClick={handleReject}>
-                      Reject
-                    </Button>
-                  )}
-
-                  {selectedRecord && selectedRecord.status === "1" && (
-                    <Button type="primary" disabled>
-                      Approved
-                    </Button>
-                  )}
-
-                  {selectedRecord && selectedRecord.status === "2" && (
-                    <Button danger disabled>
-                      Rejected
-                    </Button>
-                  )}
-                </Space>
-              </Row> */}
               <Row style={{ marginTop: "25px", marginRight: "280px" }}>
                 <Space>
                   {selectedRecord && selectedRecord.status !== "1" && (
@@ -645,40 +630,28 @@ const LoanManagement = ({ collapsed }) => {
                       <Modal
                         title="Rejection Confirmation"
                         visible={isRejectModalVisible}
-                        onCancel={() => {
-                          setIsRejectModalVisible(false);
-                          setShowSubmit(false);
-                        }}
+                        onCancel={() => setIsRejectModalVisible(false)}
                         footer={null}
                       >
                         <div>
-                          <p>Are you sure you want to reject?</p>
+                          <p>Please provide a reason for rejection:</p>
+                          <Input.TextArea
+                            rows={3}
+                            placeholder="Enter rejection reason"
+                            value={rejectReason}
+                            onChange={(e) => setRejectReason(e.target.value)}
+                          />
                           <Space style={{ marginTop: "20px" }}>
-                            {!showSubmit ? (
-                              <>
-                                <Button
-                                  danger
-                                  onClick={() => setShowSubmit(true)}
-                                >
-                                  Reject
-                                </Button>
-                                <Button onClick={() => setShowSubmit(false)}>
-                                  Reset
-                                </Button>
-                              </>
-                            ) : (
-                              <Button
-                                type="primary"
-                                
-                                onClick={() => {
-                                  handleReject();
-                                  setIsRejectModalVisible(false);
-                                  setShowSubmit(false);
-                                }}
-                              >
-                                Submit
-                              </Button>
-                            )}
+                            <Button
+                              type="primary"
+                              onClick={() =>
+                                handleReject(selectedRecord._id, rejectReason)
+                              }
+                              disabled={!rejectReason.trim()}
+                            >
+                              Submit
+                            </Button>
+                            <Button onClick={handleReset}>Reset</Button>
                           </Space>
                         </div>
                       </Modal>
