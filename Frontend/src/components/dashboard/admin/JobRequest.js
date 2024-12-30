@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button, Modal } from "antd";
+import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 const JobRequest = ({ collapsed }) => {
@@ -177,72 +177,142 @@ const JobRequest = ({ collapsed }) => {
         />
 
         <Modal
-          title="Loan Details"
+          title="Job Request Details"
           visible={isModalVisible}
           onOk={handleModalOk}
           onCancel={handleModalCancel}
           footer={null}
-          bodyStyle={{
-            maxHeight: "70vh",
-            overflowY: "auto",
-          }}
+          // bodyStyle={{
+          //   maxHeight: "70vh",
+          //   overflowY: "auto",
+          // }}
         >
           {selectedRecord && (
             <div>
-              <p>
-                <strong>Name:</strong> {selectedRecord.name}
-              </p>
-              <p>
-                <strong>Applied For:</strong> {selectedRecord.role}
-              </p>
-              <p>
-                <strong>Email:</strong> {selectedRecord.email}
-              </p>
-              <p>
-                <strong>Phone Number:</strong> {selectedRecord.phone}
-              </p>
-             
-              <p>
-                <strong>Resume:</strong>{" "}
-                <a
-                  href={selectedRecord.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View
-                </a>
-              </p>
-             
-              <Space>
-                {selectedRecord && selectedRecord.status !== "1" && (
-                  <Button
-                    type="primary"
-                    style={{ background: "#4096ff", color: "#fff" }}
-                    onClick={handleApprove}
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Name</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>{selectedRecord.name}</p>
+              </Col>
+            </Row>
+          
+            <Row >
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Applied For</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>{selectedRecord.role}</p>
+              </Col>
+            </Row>
+          
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Email</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>{selectedRecord.email}</p>
+              </Col>
+            </Row>
+          
+            <Row >
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Phone Number</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>{selectedRecord.phone}</p>
+              </Col>
+            </Row>
+          
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Resume</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <a
+                    href={selectedRecord.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#1890ff", textDecoration: "underline" }}
                   >
-                    Approve
-                  </Button>
-                )}
-
-                {selectedRecord && selectedRecord.status !== "2" && (
-                  <Button danger onClick={handleReject}>
-                    Reject
-                  </Button>
-                )}
-
-                {selectedRecord && selectedRecord.status === "1" && (
-                  <Button type="primary" disabled>
-                    Approved
-                  </Button>
-                )}
-
-                {selectedRecord && selectedRecord.status === "2" && (
-                  <Button danger disabled>
-                    Rejected
-                  </Button>
-                )}
-              </Space>
+                    View
+                  </a>
+                </p>
+              </Col>
+            </Row>
+          
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Status</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              </Row>
+              <Row>
+              <Col span={10}>
+                <Space>
+                  {selectedRecord && selectedRecord.status !== "1" && (
+                    <Button
+                      type="primary"
+                      style={{ background: "#4096ff", color: "#fff" }}
+                      onClick={handleApprove}
+                    >
+                      Approve
+                    </Button>
+                  )}
+          
+                  {selectedRecord && selectedRecord.status !== "2" && (
+                    <Button danger onClick={handleReject}>
+                      Reject
+                    </Button>
+                  )}
+          
+                  {selectedRecord && selectedRecord.status === "1" && (
+                    <Button type="primary" disabled>
+                      Approved
+                    </Button>
+                  )}
+          
+                  {selectedRecord && selectedRecord.status === "2" && (
+                    <Button danger disabled>
+                      Rejected
+                    </Button>
+                  )}
+                </Space>
+              </Col>
+              </Row>
             </div>
+          
           )}
         </Modal>
       </div>
