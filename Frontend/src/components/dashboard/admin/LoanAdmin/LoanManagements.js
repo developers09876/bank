@@ -809,6 +809,51 @@ const LoanManagements = ({ collapsed }) => {
                   </a>
                 </Col>
               </Row>
+              <Row>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Status</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.status === "1" ? (
+                      <span style={{ color: "green" }}>
+                        Your loan has been approved.
+                      </span>
+                    ) : selectedRecord.status === "2" ? (
+                      <span style={{ color: "red" }}>
+                        Your loan has been rejected. <br />
+                      </span>
+                    ) : (
+                      <span style={{ color: "orange" }}>Pending</span>
+                    )}
+                  </p>
+                </Col>
+              </Row>
+              <Row>
+              {selectedRecord.status === "2" ? (
+                <>
+                <Col span={10}>
+                  <p style={{ fontSize: "15px" }}>
+                    <strong>Reason for rejection</strong>
+                  </p>
+                </Col>
+                <Col span={2}>
+                  <p style={{ fontSize: "15px" }}>:</p>
+                </Col>
+                <Col span={10}>
+                  <span >
+                    {selectedRecord.rejectionReason}
+                  </span>
+                </Col>
+                </>
+                ) : null
+                }
+              </Row>
             </div>
           )}
         </Modal>
