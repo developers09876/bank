@@ -62,7 +62,7 @@ const LoanManagement = ({ collapsed }) => {
     try {
       const details = { action };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplications/${id}`,
+        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -76,36 +76,19 @@ const LoanManagement = ({ collapsed }) => {
       console.error("Error updating status:", error);
     }
   };
-  // const handleApprove = async (id) => {
-  //   try {
-  //     await updateStatus(id, "approve");
-  //     const updatedLoans = loan.map((item) =>
-  //       item._id === id ? { ...item, status: "1" } : item
-  //     );
-  //     setLoan(updatedLoans);
-  //     message.success("Approved successfully");
-  //     setIsApproveModalVisible(false);
-  //   } catch (error) {
-  //     message.error("Error approving record");
-  //   }
-  // };
 
-  const handleApprove = () => {
-    if (selectedRecord) {
-      updateStatus(selectedRecord._id, "approve");
+  const handleApprove = async () => {
+    if (!selectedRecord) return;
+
+    try {
+      await updateStatus(selectedRecord._id, "approve");
       handleModalOk();
+      message.success("Approved successfully");
+    } catch (error) {
+      message.error("Error approving record");
     }
   };
 
-  // const handleReject = async (id, rejectReason) => {
-  //   try {
-  //     await updateStatus(id, "reject", rejectReason);
-  //     message.success("Rejected successfully");
-  //     setIsRejectModalVisible(false);
-  //   } catch (error) {
-  //     message.error("Error rejecting record");
-  //   }
-  // };
   const handleReject = async (id, rejectReason) => {
     try {
       await updateStatus(id, "reject", rejectReason);
@@ -115,6 +98,7 @@ const LoanManagement = ({ collapsed }) => {
       setLoan(updatedLoans);
       message.success("Rejected successfully");
       setIsRejectModalVisible(false);
+      handleReset();
     } catch (error) {
       message.error("Error rejecting record");
     }
