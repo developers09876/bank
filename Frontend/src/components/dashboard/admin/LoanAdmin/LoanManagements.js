@@ -170,7 +170,9 @@ const LoanManagements = ({ collapsed }) => {
                   <p style={{ fontSize: "15px" }}>:</p>
                 </Col>
                 <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>{new Date(selectedRecord.createdAt).toLocaleDateString()}</p>
+                  <p style={{ fontSize: "15px" }}>
+                    {new Date(selectedRecord.createdAt).toLocaleDateString()}
+                  </p>
                 </Col>
               </Row>
               <Row>
@@ -987,98 +989,44 @@ const LoanManagements = ({ collapsed }) => {
               <Row>
                 <Col span={10}>
                   <p style={{ fontSize: "15px" }}>
-                    <strong>PAN Image</strong>
+                    <strong>Status</strong>
                   </p>
                 </Col>
                 <Col span={2}>
                   <p style={{ fontSize: "15px" }}>:</p>
                 </Col>
                 <Col span={10}>
-                  <a
-                    href={selectedRecord.panImageUpload}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Image
-                  </a>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.status === "1" ? (
+                      <span style={{ color: "green" }}>
+                        Your loan has been approved.
+                      </span>
+                    ) : selectedRecord.status === "2" ? (
+                      <span style={{ color: "red" }}>
+                        Your loan has been rejected. <br />
+                      </span>
+                    ) : (
+                      <span style={{ color: "orange" }}>Pending</span>
+                    )}
+                  </p>
                 </Col>
               </Row>
               <Row>
-                <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>
-                    <strong>Financial Proof</strong>
-                  </p>
-                </Col>
-                <Col span={2}>
-                  <p style={{ fontSize: "15px" }}>:</p>
-                </Col>
-                <Col span={10}>
-                  <a
-                    href={selectedRecord.financialProof[0]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View
-                  </a>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>
-                    <strong>Address Proof</strong>
-                  </p>
-                </Col>
-                <Col span={2}>
-                  <p style={{ fontSize: "15px" }}>:</p>
-                </Col>
-                <Col span={10}>
-                  <a
-                    href={selectedRecord.addressProof}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Document
-                  </a>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>
-                    <strong>Co-Applicant Documents</strong>
-                  </p>
-                </Col>
-                <Col span={2}>
-                  <p style={{ fontSize: "15px" }}>:</p>
-                </Col>
-                <Col span={10}>
-                  <a
-                    href={selectedRecord.coApplicantDocs}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View
-                  </a>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>
-                    <strong>Nominee Documents</strong>
-                  </p>
-                </Col>
-                <Col span={2}>
-                  <p style={{ fontSize: "15px" }}>:</p>
-                </Col>
-                <Col span={10}>
-                  <a
-                    href={selectedRecord.nomineeDocs}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Document
-                  </a>
-                </Col>
+                {selectedRecord.status === "2" ? (
+                  <>
+                    <Col span={10}>
+                      <p style={{ fontSize: "15px" }}>
+                        <strong>Reason for rejection</strong>
+                      </p>
+                    </Col>
+                    <Col span={2}>
+                      <p style={{ fontSize: "15px" }}>:</p>
+                    </Col>
+                    <Col span={10}>
+                      <span>{selectedRecord.rejectionReason}</span>
+                    </Col>
+                  </>
+                ) : null}
               </Row>
             </div>
           )}

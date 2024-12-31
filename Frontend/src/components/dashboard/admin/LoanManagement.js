@@ -20,8 +20,8 @@ const LoanManagement = ({ collapsed }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
-  const [rejectReason, setRejectReason] = useState("");
-  console.log("rejectReason", rejectReason);
+  const [rejectionReason, setRejectionReason] = useState("");
+console.log('rejectionReason', rejectionReason)
 
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
@@ -58,9 +58,9 @@ const LoanManagement = ({ collapsed }) => {
     setSelectedRecord(null);
   };
 
-  const updateStatus = async (id, action) => {
+  const updateStatus = async (id, action, reason = "") => {
     try {
-      const details = { action };
+      const details = { action, reason };
       const response = await Api.put(
         `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
         details
@@ -68,7 +68,11 @@ const LoanManagement = ({ collapsed }) => {
       console.log("Response data:", response.data);
       const updatedLoans = loan.map((item) =>
         item._id === id
-          ? { ...item, status: action === "approve" ? "1" : "2" }
+          ? {
+              ...item,
+              status: action === "approve" ? "1" : "2",
+              rejectionReason: action === "reject" ? reason : null,
+            }
           : item
       );
       setLoan(updatedLoans);
@@ -77,35 +81,29 @@ const LoanManagement = ({ collapsed }) => {
     }
   };
 
-  const handleApprove = async () => {
-    if (!selectedRecord) return;
-
-    try {
-      await updateStatus(selectedRecord._id, "approve");
+  const handleApprove = () => {
+    if (selectedRecord) {
+      updateStatus(selectedRecord._id, "approve");
       handleModalOk();
-      message.success("Approved successfully");
-    } catch (error) {
-      message.error("Error approving record");
     }
   };
 
-  const handleReject = async (id, rejectReason) => {
-    try {
-      await updateStatus(id, "reject", rejectReason);
-      const updatedLoans = loan.map((item) =>
-        item._id === id ? { ...item, status: "2" } : item
-      );
-      setLoan(updatedLoans);
-      message.success("Rejected successfully");
+  const handleRejectionReasonChange = (e) => {
+    setRejectionReason(e.target.value);
+  };
+
+  const handleReject = () => {
+    if (selectedRecord && rejectionReason.trim()) {
+      updateStatus(selectedRecord._id, "reject", rejectionReason.trim());
       setIsRejectModalVisible(false);
-      handleReset();
-    } catch (error) {
-      message.error("Error rejecting record");
+      setRejectionReason("");
+    } else {
+      console.error("Rejection reason is required.");
     }
   };
 
   const handleReset = () => {
-    setRejectReason("");
+    setRejectionReason("");
   };
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -1129,16 +1127,14 @@ const LoanManagement = ({ collapsed }) => {
                           <Input.TextArea
                             rows={3}
                             placeholder="Enter rejection reason"
-                            value={rejectReason}
-                            onChange={(e) => setRejectReason(e.target.value)}
+                            value={rejectionReason}
+                            onChange={handleRejectionReasonChange}
                           />
                           <Space style={{ marginTop: "20px" }}>
                             <Button
                               type="primary"
-                              onClick={() =>
-                                handleReject(selectedRecord._id, rejectReason)
-                              }
-                              disabled={!rejectReason.trim()}
+                              onClick={ handleReject}
+                              disabled={!rejectionReason.trim()}
                             >
                               Submit
                             </Button>
