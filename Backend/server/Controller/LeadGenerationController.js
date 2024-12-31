@@ -32,10 +32,9 @@ export async function createLead(req,res,next) {
 
 export async function updateLead(req, res, next) {
     try {
-        const leadId = req.params.id; // Assuming the lead ID is passed as a URL parameter
+        const leadId = req.params.id; 
         const data = req.body;
 
-        // Construct the updated details from the request body
         const updatedDetails = {
             firstname: data.firstname,
             lastname: data.lastname,
@@ -53,10 +52,9 @@ export async function updateLead(req, res, next) {
             status: data.status,
         };
 
-        // Find the lead by ID and update its details
         const updatedLead = await Lead.findByIdAndUpdate(leadId, updatedDetails, { 
-            new: true, // Return the updated document
-            runValidators: true // Ensure validation rules are applied
+            new: true, 
+            runValidators: true 
         });
 
         if (updatedLead) {
@@ -71,7 +69,7 @@ export async function updateLead(req, res, next) {
         }
     } catch (err) {
         console.log("error", err);
-        next(err); // Pass the error to the error-handling middleware
+        next(err); 
     }
 }
 
@@ -87,15 +85,7 @@ export async function getallLead(req, res, next) {
     }
   }
 
-// export async function getLeadbyId(req, res, next) {
-//     try {
-//       const empLeads = await Lead.findById(req.params.id);
-//       res.status(200).json(empLeads);
-//     }
-//     catch (error) {
-//       res.status(500).json({ message: error.message });
-//     }
-//   }
+
 
 export async function getById(req, res, next) {
   try {
