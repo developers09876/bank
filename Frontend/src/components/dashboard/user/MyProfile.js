@@ -25,7 +25,6 @@ function TabsVendor() {
   const [districtList, setDistrictList] = useState([]);
   const [cityList, setCityList] = useState([]);
 
-  console.log("districtList", districtList);
   useEffect(() => {
     getCountry();
   }, []);
@@ -55,7 +54,6 @@ function TabsVendor() {
     });
   };
   const handleFormSubmit = async (data) => {
-    console.log("step1", data);
 
     const uploadFile = async (file) => {
       const formData = new FormData();
@@ -89,7 +87,7 @@ function TabsVendor() {
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.MaritalStatus,
+      maritalStatus: data.maritalStatus,
       nationality: data.nationality,
       contact: data.contact,
       address: data.address,
@@ -109,18 +107,17 @@ function TabsVendor() {
     };
     console.log("Details", Details);
 
-    // try {
-    //   const response = await axios.post(
-    //     `http://localhost:5000/loanform/createloanapplications`,
-    //     Details
-    //   );
-    //   console.log(response.data.data, "Form submitted successfully");
-    //   localStorage.setItem("loanApplicationId", response.data.data._id);
-    //   toast.success("Form submitted successfully");
-    // } catch (error) {
-    //   console.error("Form submission failed", error);
-    //   toast.error("An error occurred while submitting the form");
-    // }
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/signup/update/${userid}`,
+        Details
+      );
+      console.log(response.data.data, "Form submitted successfully");
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Form submission failed", error);
+      toast.error("An error occurred while submitting the form");
+    }
   };
 
   const [childCount, setChildCount] = useState(0);
@@ -229,7 +226,7 @@ function TabsVendor() {
                         Marital Status
                       </label>
                       <Controller
-                        name="MaritalStatus"
+                        name="maritalStatus"
                         control={control}
                         defaultValue=""
                         rules={{ required: true }}
@@ -240,7 +237,7 @@ function TabsVendor() {
                             placeholder="Select Marital Status"
                             onChange={(value) => {
                               field.onChange(value);
-                              setValue("MaritalStatus", value);
+                              setValue("maritalStatus", value);
                             }}
                           >
                             <Option value="Single">Single</Option>
@@ -249,14 +246,14 @@ function TabsVendor() {
                           </Select>
                         )}
                       />
-                      {errors.MaritalStatus && (
+                      {errors.maritalStatus && (
                         <p className="text-danger">
                           Marital Status is required
                         </p>
                       )}
                     </div>
                   </Col>
-                  {watch("MaritalStatus") === "Married" && (
+                  {watch("maritalStatus") === "Married" && (
                     <>
                       <Col xs={12} md={6} lg={4}>
                         <div>

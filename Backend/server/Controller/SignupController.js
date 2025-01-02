@@ -122,7 +122,7 @@ export const getUserById = async (req, res) => {
 
 export async function updateUserDetails(req, res, next) {
   try {
-    const { id } = req.params;
+    const { id } = req.params; 
     const data = req.body;
 
     const children = Array.isArray(data.children)
@@ -138,7 +138,7 @@ export async function updateUserDetails(req, res, next) {
       fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.maritalStatus || data.MaritalStatus,
+      maritalStatus: data.maritalStatus || data.maritalStatus,
       nationality: data.nationality,
       contact: data.contact,
       address: data.address,
