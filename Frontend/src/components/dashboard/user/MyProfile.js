@@ -16,6 +16,7 @@ function TabsVendor() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     control,
     formState: { errors },
   } = useForm();
@@ -24,6 +25,7 @@ function TabsVendor() {
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [cityList, setCityList] = useState([]);
+  const [userDetail, setUserDetail] = useState();
 
   useEffect(() => {
     getCountry();
@@ -53,6 +55,44 @@ function TabsVendor() {
       setCityList(res.data.data);
     });
   };
+console.log('userDetail', userDetail)
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
+        setUserDetail(response.data); 
+        console.log("getresponse", response.data);
+        const fetchedData = response.data
+        const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
+        reset({
+          fullName: fetchedData.fullName,
+          dob: formattedDob,
+          gender: fetchedData.gender,
+          maritalStatus: fetchedData.maritalStatus,
+          nationality: fetchedData.nationality,
+          contact: fetchedData.contact,
+          address: fetchedData.address,
+          city: fetchedData.city,
+          district: fetchedData.district,
+          state: fetchedData.state,
+          country: fetchedData.country,
+          pinCode: fetchedData.pinCode,
+          totalChildren: fetchedData.totalChildren,
+          children: fetchedData.children,
+          spouseName: fetchedData.spouseName,
+          spouseOccupation: fetchedData.spouseOccupation,
+          spouseDesignation: fetchedData.spouseDesignation,
+          spouseIncome: fetchedData.spouseIncome,
+        });
+
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userid]);
+  
   const handleFormSubmit = async (data) => {
 
     const uploadFile = async (file) => {
@@ -94,7 +134,7 @@ function TabsVendor() {
       city: data.city,
       district: data.district,
       state: data.state,
-      country: data.Country,
+      country: data.country,
       pinCode: data.pinCode,
       totalChildren: data.totalChildren,
       children: data.children,
@@ -548,7 +588,7 @@ function TabsVendor() {
                     <div>
                       <label className="vendorpage_labelCss">Country</label>
                       <Controller
-                        name="Country"
+                        name="country"
                         control={control}
                         defaultValue=""
                         rules={{ required: true }}
@@ -561,7 +601,7 @@ function TabsVendor() {
                             optionFilterProp="children"
                             onChange={(value, option) => {
                               field.onChange(value);
-                              setValue("Country", value); // Update form state
+                              setValue("country", value); // Update form state
                               getState(option.key); // Pass the country ID to getState
                             }}
                             filterOption={(input, option) =>

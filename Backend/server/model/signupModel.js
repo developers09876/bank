@@ -47,6 +47,13 @@ const userSchema = new mongoose.Schema({
       schoolName: { type: String },
     },
   ],
+  panCardNumber: { type: String },
+  GSTNumber: { type: String },
+  accountNumber: { type: Number },
+  IFSCCode: { type: String },
+  bankName: { type: String },
+  branch: { type: String },
+  
 });
 
 const User = mongoose.model("UserList", userSchema);

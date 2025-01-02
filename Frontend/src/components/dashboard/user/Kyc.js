@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 // import Api from "../../Api";
 
 function Kycvendor() {
+  const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
     handleSubmit,
@@ -12,74 +16,86 @@ function Kycvendor() {
     reset,
   } = useForm();
 
-  const [selectImage, setSelectImage] = useState(null);
-
-  const setImage = (file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSelectImage(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file);
-    }
-  };
+  const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
-//   useEffect(() => {
-//     getValue();
-//   }, []);
 
-//   const getValue = async () => {
-//     try {
-//     //   const res = await Api.get(`/vendor/getOne/${id}`);
-//       const data = res.data[0];
-//       setSelectImage(data.PanOrAdharUpload);
+  console.log('userKYCDetail', userKYCDetail)
+  
+  useEffect(() => {
+    const fetchUserKYCDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
+        setUserKYCDetail(response.data);
+        const fetchedData = response.data
+        reset({
+          panCardNumber: fetchedData.panCardNumber,
+          GSTNumber: fetchedData.GSTNumber,
+          accountNumber: fetchedData.accountNumber,
+          IFSCCode: fetchedData.IFSCCode,
+          bankName: fetchedData.bankName,
+          branch: fetchedData.branch,
+        });
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+  
+    fetchUserKYCDetails();
+  }, [userid, reset]);
+  
 
-//       reset({
-//         pancardNumber: data.panCardNumber,
-//         gstNumber: data.GSTNumber,
-//         accountno: data.accountNumber,
-//         ifcecode: data.IFSCCode,
-//         bankname: data.bankName,
-//         branch: data.branch,
-//       });
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//     }
-//   };
-
-  const handleFormSubmit = async () => {
-    const Details = {
-      panCardNumber: getValues().pancardNumber,
-      GSTNumber: getValues().gstNumber,
-      accountNumber: getValues().accountno,
-      IFSCCode: getValues().ifcecode,
-      bankName: getValues().bankname,
-      branch: getValues().branch,
-      panOrAdharUpload: "",
+ 
+  const handleFormSubmit = async (data) => {
+    const uploadFile = async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "darshan");
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const cloudinaryData = await response.json();
+        return cloudinaryData.secure_url;
+      } catch (error) {
+        console.error("File upload failed", error);
+        return null;
+      }
     };
 
-    const data = new FormData();
-    data.append("file", selectImage);
-    data.append("upload_preset", "darshan");
+    const panOrAdharUploadUrl = data.panOrAdharUpload?.[0]
+      ? await uploadFile(data.panOrAdharUpload[0])
+      : null;
+    const voterIdUploadUrl = data.voterIdUpload?.[0]
+      ? await uploadFile(data.voterIdUpload[0])
+      : null;
 
-    // const response = await fetch(
-    //   "https://api.cloudinary.com/v1_1/dzblzw7ll/image/upload",
-    //   {
-    //     method: "POST",
-    //     body: data,
-    //   }
-    // );
-    // const cloudinaryData = await response.json();
-    // Details.panOrAdharUpload = cloudinaryData.secure_url;
+    const Details = {
+      panCardNumber: data.panCardNumber,
+      GSTNumber: data.GSTNumber,
+      accountNumber: data.accountNumber,
+      IFSCCode: data.IFSCCode,
+      bankName: data.bankName,
+      branch: data.branch,
+      panOrAdharUpload: panOrAdharUploadUrl,
+      voterIdUpload: voterIdUploadUrl,
+    };
+    console.log("Details", Details);
 
-    // await Api.put(`/vendor/update/${id}`, Details).then(async (res) => {
-    //   console.log("res :>> ", res);
-    // });
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/signup/updateKYC/${userid}`,
+        Details
+      );
+      console.log(response.data.data, "Form submitted successfully");
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Form submission failed", error);
+      toast.error("An error occurred while submitting the form");
+    }
   };
 
   return (
@@ -87,7 +103,12 @@ function Kycvendor() {
       <Container>
         <div
           className="ourProfileParentdiv"
-          style={{ backgroundColor: "white", padding: "10px 20px",width:"80%",marginLeft:"150px"}}
+          style={{
+            backgroundColor: "white",
+            padding: "10px 20px",
+            width: "80%",
+            marginLeft: "150px",
+          }}
         >
           <center>
             <h4 className="pages-title mt-3">KYC Complaince</h4>
@@ -112,10 +133,10 @@ function Kycvendor() {
               </Col>
               <Col sm={12} lg={6}>
                 <input
-                  {...register("pancardNumber", { required: true })}
+                  {...register("panCardNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.pancardNumber && (
+                {errors.panCardNumber && (
                   <p className="text-danger">pancard number is required</p>
                 )}
               </Col>
@@ -127,10 +148,10 @@ function Kycvendor() {
               </Col>
               <Col sm={12} lg={6}>
                 <input
-                  {...register("gstNumber", { required: true })}
+                  {...register("GSTNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.gstNumber && (
+                {errors.GSTNumber && (
                   <p className="text-danger">GST number is required</p>
                 )}
               </Col>
@@ -145,7 +166,8 @@ function Kycvendor() {
                   className="inputcolumn-ourProfile"
                   style={{ outline: "none", height: "50px" }}
                   type="file"
-                  onChange={handleFileChange}
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("panOrAdharUpload")}
                 />
               </Col>
             </Row>
@@ -158,7 +180,8 @@ function Kycvendor() {
                   className="inputcolumn-ourProfile"
                   style={{ outline: "none", height: "50px" }}
                   type="file"
-                  onChange={handleFileChange}
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("voterIdUpload")}
                 />
               </Col>
             </Row>
@@ -169,10 +192,10 @@ function Kycvendor() {
               <Col sm={12} lg={6}>
                 <input
                   type="number"
-                  {...register("accountno", { required: true })}
+                  {...register("accountNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.accountno && (
+                {errors.accountNumber && (
                   <p className="text-danger">Account number is required</p>
                 )}
               </Col>
@@ -183,10 +206,10 @@ function Kycvendor() {
               </Col>
               <Col sm={12} lg={6}>
                 <input
-                  {...register("ifcecode", { required: true })}
+                  {...register("IFSCCode", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.ifcecode && (
+                {errors.IFSCCode && (
                   <p className="text-danger">IFCE code is required</p>
                 )}
               </Col>
@@ -197,10 +220,10 @@ function Kycvendor() {
               </Col>
               <Col sm={12} lg={6}>
                 <input
-                  {...register("bankname", { required: true })}
+                  {...register("bankName", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.bankname && (
+                {errors.bankName && (
                   <p className="text-danger">Bank Name is required</p>
                 )}
               </Col>
