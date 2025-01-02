@@ -122,7 +122,7 @@ const loanApplicationSchema = new mongoose.Schema(
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
     },
-    rejectionReason: { type: String, default: "" },
+    rejectionReason: { type: String},
   },
   {
     timestamps: true,

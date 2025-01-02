@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 
 const City = new Schema({
   cityName: String,
-  districtId: String,
+  districtId: Number,
 });
 
 City.set("autoIndex", true);

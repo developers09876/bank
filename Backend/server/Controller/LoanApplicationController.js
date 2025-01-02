@@ -175,7 +175,7 @@ export async function updateLoanDetails(req, res, next) {
 export async function updateLoanApplicationStatus(req, res, next) {
   try {
     const { id } = req.params;
-    const { action } = req.body;
+    const { action , reason } = req.body;
     console.log("object", action);
     if (!["approve", "reject"].includes(action)) {
       return res.status(400).json({
@@ -185,9 +185,16 @@ export async function updateLoanApplicationStatus(req, res, next) {
 
     const status = action === "approve" ? "1" : "2";
 
+    if (action === "reject" && !reason) {
+      return res.status(400).json({
+        message: "Rejection reason is required when rejecting the loan.",
+      });
+    }
     const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
       id,
-      { status },
+      { status,
+        rejectionReason: action === "reject" ? reason : null, 
+       },
       { new: true }
     );
 
@@ -203,47 +210,10 @@ export async function updateLoanApplicationStatus(req, res, next) {
       } successfully.`,
       data: updatedLoanApplication,
     });
-  } catch (err) {
+  }
+  catch (err) {
     console.log(err);
     next();
-  }
-};
-
-export async function updateLoanApplicationStatusReason(req, res, next) {
-  try {
-    const { id } = req.params; 
-    const { reason } = req.body;
-    console.log('reason', reason) 
-
-    if (!reason || typeof reason !== "string") {
-      return res.status(400).json({
-        message: "A valid rejection reason is required.",
-      });
-    }
-
-    const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
-      id,
-      { rejectionReason: reason, status: "2" }, 
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedLoanApplication) {
-      return res.status(404).json({
-        message: "Loan application not found.",
-      });
-    }
-
-    res.status(200).json({
-      message: "Rejection reason updated successfully.",
-      data: updatedLoanApplication,
-    });
-  } catch (err) {
-    console.error("Error updating rejection reason:", err);
-    res.status(500).json({
-      message: "An error occurred while updating the rejection reason.",
-      error: err.message,
-    });
-    next(err);
   }
 };
 
