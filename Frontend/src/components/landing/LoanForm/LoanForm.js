@@ -4,29 +4,58 @@ import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
 import "../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
-import { Option } from "antd/lib/mentions";
+// import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import axios from "axios";
-
+import Api from "../../../Api";
+const { Option } = Select;
 function LoanForm() {
   const {
     register,
-    unregister,
-    getValues,
     handleSubmit,
-    reset,
     setValue,
     watch,
-
     control,
     formState: { errors },
   } = useForm();
-
   const userid = localStorage.getItem("id");
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
+  const [cityList, setCityList] = useState([]);
 
+  console.log("districtList", districtList);
+  useEffect(() => {
+    getCountry();
+  }, []);
+
+  const getCountry = async () => {
+    try {
+      const response = await Api.get("country/getallcountry");
+      setCountryList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching country data:", error);
+    }
+  };
+  const getState = (country_id) => {
+    Api.get(`state/stateById/${country_id}`).then((res) => {
+      setStateList(res.data.data);
+    });
+  };
+
+  const getDistrict = (state_id) => {
+    Api.get(`district/districtById/${state_id}`).then((res) => {
+      setDistrictList(res.data.data);
+    });
+  };
+  const getCity = (districtId) => {
+    Api.get(`city/cityById/${districtId}`).then((res) => {
+      setCityList(res.data.data);
+    });
+  };
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
 
@@ -80,8 +109,6 @@ function LoanForm() {
       coApplicantDocs: coApplicantDocsUrl,
       photographs: photographsUrl,
     };
-
-    console.log("Prepared Details", Details);
 
     try {
       const response = await axios.post(
@@ -297,6 +324,127 @@ function LoanForm() {
                             )}
                           </div>
                         </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              How Many Children?
+                            </label>
+                            <input
+                              className="inputcolumn-ourProfile"
+                              type="number"
+                              {...register("totalChildren", { required: true })}
+                              placeholder="How Many Children?"
+                            />
+                            {errors.totalChildren && (
+                              <p className="text-danger">
+                                How Many Children? is required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                        {fields.map((field, index) => (
+                          <React.Fragment key={field.id}>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child Gender {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.gender`}
+                                  control={control}
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <Select
+                                      {...field}
+                                      className="inputcolumn_drp"
+                                      placeholder="Select Child Gender"
+                                      options={[
+                                        { value: "Male", label: "Male" },
+                                        { value: "Female", label: "Female" },
+                                      ]}
+                                    />
+                                  )}
+                                />
+                                {errors.children?.[index]?.gender && (
+                                  <p className="text-danger">
+                                    Child Gender is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child Name {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.name`}
+                                  control={control}
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="inputcolumn-ourProfile"
+                                      placeholder="Enter Child Name"
+                                    />
+                                  )}
+                                />
+                                {errors.children?.[index]?.name && (
+                                  <p className="text-danger">
+                                    Child Name is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child Age {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.age`}
+                                  control={control}
+                                  rules={{ required: true, min: 1 }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="number"
+                                      className="inputcolumn-ourProfile"
+                                      placeholder="Enter Child Age"
+                                    />
+                                  )}
+                                />
+                                {errors.children?.[index]?.age && (
+                                  <p className="text-danger">
+                                    Child Age is required and must be greater
+                                    than 0
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child School Name {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.schoolName`}
+                                  control={control}
+                                  rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="inputcolumn-ourProfile"
+                                      placeholder="Enter Child School Name"
+                                    />
+                                  )}
+                                />
+                                {errors.children?.[index]?.schoolName && (
+                                  <p className="text-danger">
+                                    Child School Name is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+                          </React.Fragment>
+                        ))}
 
                         {watch("spouseOccupation") === "Working Person" && (
                           <>
@@ -370,126 +518,7 @@ function LoanForm() {
                         )}
                       </>
                     )}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          How Many Children?
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("totalChildren", { required: true })}
-                          placeholder="How Many Children?"
-                        />
-                        {errors.totalChildren && (
-                          <p className="text-danger">
-                            How Many Children? is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-                    {fields.map((field, index) => (
-                      <React.Fragment key={field.id}>
-                        <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label>Child Gender {index + 1}</label>
-                            <Controller
-                              name={`children.${index}.gender`}
-                              control={control}
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <Select
-                                  {...field}
-                                  className="inputcolumn_drp"
-                                  placeholder="Select Child Gender"
-                                  options={[
-                                    { value: "Male", label: "Male" },
-                                    { value: "Female", label: "Female" },
-                                  ]}
-                                />
-                              )}
-                            />
-                            {errors.children?.[index]?.gender && (
-                              <p className="text-danger">
-                                Child Gender is required
-                              </p>
-                            )}
-                          </div>
-                        </Col>
 
-                        <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label>Child Name {index + 1}</label>
-                            <Controller
-                              name={`children.${index}.name`}
-                              control={control}
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <input
-                                  {...field}
-                                  type="text"
-                                  className="inputcolumn-ourProfile"
-                                  placeholder="Enter Child Name"
-                                />
-                              )}
-                            />
-                            {errors.children?.[index]?.name && (
-                              <p className="text-danger">
-                                Child Name is required
-                              </p>
-                            )}
-                          </div>
-                        </Col>
-
-                        <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label>Child Age {index + 1}</label>
-                            <Controller
-                              name={`children.${index}.age`}
-                              control={control}
-                              rules={{ required: true, min: 1 }}
-                              render={({ field }) => (
-                                <input
-                                  {...field}
-                                  type="number"
-                                  className="inputcolumn-ourProfile"
-                                  placeholder="Enter Child Age"
-                                />
-                              )}
-                            />
-                            {errors.children?.[index]?.age && (
-                              <p className="text-danger">
-                                Child Age is required and must be greater than 0
-                              </p>
-                            )}
-                          </div>
-                        </Col>
-
-                        <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label>Child School Name {index + 1}</label>
-                            <Controller
-                              name={`children.${index}.schoolName`}
-                              control={control}
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <input
-                                  {...field}
-                                  type="text"
-                                  className="inputcolumn-ourProfile"
-                                  placeholder="Enter Child School Name"
-                                />
-                              )}
-                            />
-                            {errors.children?.[index]?.schoolName && (
-                              <p className="text-danger">
-                                Child School Name is required
-                              </p>
-                            )}
-                          </div>
-                        </Col>
-                      </React.Fragment>
-                    ))}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -538,18 +567,25 @@ function LoanForm() {
                             <Select
                               {...field}
                               className="inputcolumn_drp"
-                              placeholder="Select Marital Status"
-                              onChange={(value) => {
+                              showSearch
+                              placeholder="Select Country"
+                              optionFilterProp="children"
+                              onChange={(value, option) => {
                                 field.onChange(value);
-                                setValue("Country", value);
+                                setValue("Country", value); // Update form state
+                                getState(option.key); // Pass the country ID to getState
                               }}
+                              filterOption={(input, option) =>
+                                option?.children
+                                  ?.toLowerCase()
+                                  .includes(input.toLowerCase())
+                              }
                             >
-                              <Option value="India">India</Option>
-                              <Option value="Andhara pradhesh">
-                                Andhara pradhesh
-                              </Option>
-                              <Option value="kerala">kerala</Option>
-                              <Option value="Mumbai">Mumbai</Option>
+                              {countryList.map(({ id, name }) => (
+                                <Select.Option key={id} value={name}>
+                                  {name}
+                                </Select.Option>
+                              ))}
                             </Select>
                           )}
                         />
@@ -570,19 +606,20 @@ function LoanForm() {
                           render={({ field }) => (
                             <Select
                               {...field}
+                              showSearch
                               className="inputcolumn_drp"
-                              placeholder="Select Marital Status"
-                              onChange={(value) => {
+                              placeholder="Select State"
+                              onChange={(value, option) => {
                                 field.onChange(value);
-                                setValue("state", value);
+                                setValue("state", value); // Update form state
+                                getDistrict(option.key);
                               }}
                             >
-                              <Option value="India">India</Option>
-                              <Option value="Andhara pradhesh">
-                                Andhara pradhesh
-                              </Option>
-                              <Option value="kerala">kerala</Option>
-                              <Option value="Mumbai">Mumbai</Option>
+                              {stateList.map(({ id, name }) => (
+                                <Select.Option key={id} value={name}>
+                                  {name}
+                                </Select.Option>
+                              ))}
                             </Select>
                           )}
                         />
@@ -590,7 +627,7 @@ function LoanForm() {
                           <p className="text-danger">State is required</p>
                         )}
                       </div>
-                    </Col>{" "}
+                    </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">District</label>
@@ -598,31 +635,41 @@ function LoanForm() {
                           name="district"
                           control={control}
                           defaultValue=""
-                          rules={{ required: true }}
+                          rules={{ required: "District is required" }}
                           render={({ field }) => (
                             <Select
                               {...field}
+                              showSearch
                               className="inputcolumn_drp"
-                              placeholder="Select Marital Status"
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setValue("district", value);
+                              placeholder="Select District"
+                              optionFilterProp="children"
+                              onChange={(value, option) => {
+                                field.onChange(value); // Update the field value
+                                setValue("district", value); // Update the form state
+                                getCity(option.key); // Fetch city based on the selected district
                               }}
+                              filterOption={(input, option) =>
+                                option?.children
+                                  ?.toLowerCase()
+                                  .includes(input.toLowerCase())
+                              }
                             >
-                              <Option value="India">India</Option>
-                              <Option value="Andhara pradhesh">
-                                Andhara pradhesh
-                              </Option>
-                              <Option value="kerala">kerala</Option>
-                              <Option value="Mumbai">Mumbai</Option>
+                              {districtList.map(({ id, name }) => (
+                                <Select.Option key={id} value={name}>
+                                  {name}
+                                </Select.Option>
+                              ))}
                             </Select>
                           )}
                         />
                         {errors.district && (
-                          <p className="text-danger">District is required</p>
+                          <p className="text-danger">
+                            {errors.district.message}
+                          </p>
                         )}
                       </div>
-                    </Col>{" "}
+                    </Col>
+
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">City</label>
@@ -636,18 +683,17 @@ function LoanForm() {
                             <Select
                               {...field}
                               className="inputcolumn_drp"
-                              placeholder="Select Marital Status"
+                              placeholder="Select City"
                               onChange={(value) => {
                                 field.onChange(value);
-                                setValue("city", value);
+                                setValue("city", value); // Update form state
                               }}
                             >
-                              <Option value="India">India</Option>
-                              <Option value="Andhara pradhesh">
-                                Andhara pradhesh
-                              </Option>
-                              <Option value="kerala">kerala</Option>
-                              <Option value="Mumbai">Mumbai</Option>
+                              {cityList.map(({ id, cityName }) => (
+                                <Select.Option key={id} value={cityName}>
+                                  {cityName}
+                                </Select.Option>
+                              ))}
                             </Select>
                           )}
                         />
@@ -656,6 +702,7 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
+
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
