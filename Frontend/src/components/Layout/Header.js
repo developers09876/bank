@@ -198,12 +198,12 @@ function Header() {
                     <Link
                       key={item.path}
                       to={item.path}
-                      className="navlink py-1 pl-3 pr-4 rounded no-underline text-gray-700 hover:bg-gray-200"
+                      className="navlink py-1 pl-3 pr-4 rounded no-underline text-gray-700 "
                       onClick={() => handleMenuClick(item.path)}
                     >
-                      <span className="flex flex-row">
+                      <span className="flex rounded flex-row nav-link">
                         <span
-                          style={{ alignSelf: "center", paddingRight: "20px" }}
+                          style={{ alignSelf: "center", paddingRight: "20px",color:'#1a2a41', display:"inline-block" }}
                         >
                           {item.icon}
                         </span>
@@ -215,17 +215,17 @@ function Header() {
                   {!isLoggedIn ? (
                     <Link
                       to="/login"
-                      className="navlink block py-1 rounded no-underline text-gray-700 hover:bg-gray-200"
+                      className="navlink  py-1 rounded no-underline text-gray-700 "
                       onClick={() => setIsOpen(false)}
                     >
-                       <span className="flex flex-row">
+                       <span className="flex rounded flex-row nav-link">
                           <span
                             style={{
                               alignSelf: "center",
-                              paddingRight: "20px",
+                              paddingRight: "20px",color:'#1a2a41', display:"inline-block" 
                             }}
                           >
-                            <FaArrowCircleRight />
+                            <FaArrowCircleRight /> 
                           </span>
                           Login
                         </span>
@@ -242,13 +242,13 @@ function Header() {
                       <button
                       style={{padding:'0.25rem 0 !important'}}
                       onClick={handlenavigate}
-                        className="navlink  block  rounded no-underline text-gray-700 hover:bg-gray-200"
+                        className="navlink  block  rounded no-underline text-gray-700 "
                       >
-                        <span className="flex flex-row">
+                        <span className="flex rounded flex-row nav-link">
                           <span
                             style={{
                               alignSelf: "center",
-                              paddingRight: "20px",
+                              paddingRight: "20px",color:'#1a2a41', display:"inline-block"
                             }}
                           >
                             <FaAddressBook />
@@ -259,13 +259,13 @@ function Header() {
                       <button 
                       style={{padding:'0.25rem 0 !important'}}
                       onClick={handleLogout}
-                        className="navlink py-3 blockrounded no-underline text-gray-700 hover:bg-gray-200"
+                        className="navlink py-3 block rounded no-underline text-gray-700 "
                       >
-                        <span className="flex flex-row">
+                        <span className="flex rounded flex-row nav-link">
                           <span
                             style={{
                               alignSelf: "center",
-                              paddingRight: "20px",
+                              paddingRight: "20px",color:'#1a2a41', display:"inline-block"
                             }}
                           >
                             <FaArrowCircleRight />

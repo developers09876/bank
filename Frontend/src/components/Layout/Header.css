@@ -56,6 +56,20 @@
   align-items: center;
   color: #000;
 }
+.navlink {
+  font-weight: bold;
+  color: gray;
+}
+.navlink:hover span {
+  /* background-color: gray; */
+  color: #00397f;
+}
+.nav-link {
+ /* background-color: gray; */
+ /* color: white; */
+ padding: 5px;
+ /* display: inline-m; */
+}
 
 .close-button {
   background: none;
