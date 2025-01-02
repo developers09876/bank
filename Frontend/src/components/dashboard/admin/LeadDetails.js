@@ -1,28 +1,58 @@
-
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 function LeadDetails() {
   const { state } = useLocation();
   const record = state?.record;
-  const [remarksFields, setRemarksFields] = useState([
-    { date: "", remarks: "", status: "" },
-  ]);
+  const [remarksFields, setRemarksFields] = useState([]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
-  if (!record) {
-    return <p>No details available</p>;
-  }
+  useEffect(() => {
+    if (record) {
+      const initialRemarks = record.addremarks?.length
+        ? record.addremarks.map((field) => ({ ...field, prefilled: true }))
+        : [{ date: "", remarks: "", status: "", prefilled: false }];
+      setRemarksFields(initialRemarks);
+
+      const defaultValues = initialRemarks.reduce((acc, field, index) => {
+        acc[`date_${index}`] = field.date;
+        acc[`remarks_${index}`] = field.remarks;
+        acc[`status_${index}`] = field.status;
+        return acc;
+      }, {});
+      reset(defaultValues);
+    }
+  }, [record, reset]);
+
+  const addRemarkField = () => {
+    setRemarksFields([
+      ...remarksFields,
+      { date: "", remarks: "", status: "", prefilled: false },
+    ]);
+  };
+
+  const removeRemarkField = (index) => {
+    const updatedFields = remarksFields.filter((_, i) => i !== index);
+    setRemarksFields(updatedFields);
+
+    const defaultValues = updatedFields.reduce((acc, field, i) => {
+      acc[`date_${i}`] = field.date;
+      acc[`remarks_${i}`] = field.remarks;
+      acc[`status_${i}`] = field.status;
+      return acc;
+    }, {});
+    reset(defaultValues);
+  };
 
   const onSubmit = async (data) => {
     const formattedRemarks = remarksFields.map((field, index) => ({
@@ -40,7 +70,7 @@ function LeadDetails() {
       aadhar: record.aadhar,
       purpose: record.purpose,
       amount: record.amount,
-      addremark: formattedRemarks,
+      addremarks: formattedRemarks,
       panno: record.panno,
     };
 
@@ -56,104 +86,96 @@ function LeadDetails() {
     }
   };
 
-  const addRemarkField = () => {
-    setRemarksFields([
-      ...remarksFields,
-      { date: "", remarks: "", status: "" },
-    ]);
-  };
-
-  const removeRemarkField = (index) => {
-    setRemarksFields(remarksFields.filter((_, i) => i !== index));
-  };
+  if (!record) {
+    return <p>No details available</p>;
+  }
 
   return (
     <div style={{ marginTop: "50px", padding: "20px" }}>
       <h3>Lead Details</h3>
       <div>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>Name:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{`${record.firstname} ${record.lastname}`}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>Email:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{record.email}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>Phone:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{record.phone}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>Loan Amount:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{record.amount}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>Aadhar Number:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{record.aadhar}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>PAN Card Number:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{record.panno}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col xs={2}>
-      <p>
-        <strong>Purpose Of Loan:</strong>
-      </p>
-    </Col>
-    <Col xs={7}>
-      <p>{record.purpose}</p>
-    </Col>
-  </Row>
-</div>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Name:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{`${record.firstname} ${record.lastname}`}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Email:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.email}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Phone:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.phone}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Loan Amount:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.amount}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Aadhar Number:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.aadhar}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>PAN Card Number:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.panno}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Purpose Of Loan:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.purpose}</p>
+          </Col>
+        </Row>
+      </div>
 
       <div className="mt-3">
         <h3>Add Remarks</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
-          {remarksFields.map((_, index) => (
+          {remarksFields.map((field, index) => (
             <Row key={index} className="mb-3">
               <Col lg={4} md={6}>
-                <label className="vendorpage_labelCss">Date</label>
-                <br/>
+                <label>Date</label>
                 <input
                   type="date"
-                  className="inputcolumn-ourProfile"
+                  className="form-control"
                   {...register(`date_${index}`, { required: true })}
                 />
                 {errors[`date_${index}`] && (
@@ -161,9 +183,9 @@ function LeadDetails() {
                 )}
               </Col>
               <Col xs={12} md={6} lg={4}>
-                <label className="vendorpage_labelCss">Remarks</label>
+                <label>Remarks</label>
                 <textarea
-                  className="inputcolumn-ourProfile"
+                  className="form-control"
                   {...register(`remarks_${index}`, { required: true })}
                   placeholder="Remarks"
                 />
@@ -172,9 +194,9 @@ function LeadDetails() {
                 )}
               </Col>
               <Col xs={12} md={6} lg={4}>
-                <label className="vendorpage_labelCss">Status</label>
+                <label>Status</label>
                 <select
-                  className="inputcolumn-ourProfile"
+                  className="form-control"
                   {...register(`status_${index}`, { required: true })}
                 >
                   <option value="">-- SELECT --</option>
@@ -187,7 +209,7 @@ function LeadDetails() {
                 )}
               </Col>
               <Col xs={12} md={6} lg={4} className="d-flex align-items-center">
-                {remarksFields.length > 1 && (
+                {!field.prefilled && remarksFields.length > 1 && (
                   <button
                     type="button"
                     className="btn btn-danger"
