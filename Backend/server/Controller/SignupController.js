@@ -119,3 +119,68 @@ export const getUserById = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+export async function updateUserDetails(req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+
+    const children = Array.isArray(data.children)
+    ? data.children.map((child) => ({
+        gender: child.gender,
+        name: child.name,
+        age: child.age,
+        schoolName: child.schoolName,
+      }))
+    : [];
+
+    const updatedDetails = {
+      fullName: data.fullName,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.maritalStatus || data.MaritalStatus,
+      nationality: data.nationality,
+      contact: data.contact,
+      address: data.address,
+      pinCode: data.pinCode,
+      city: data.city,
+      state: data.state,
+      district: data.district,
+      country: data.country,
+      totalChildren: data.totalChildren,
+      children: children,
+      spouseName: data.spouseName,
+      spouseOccupation: data.spouseOccupation,
+      spouseIncome: data.spouseIncome,
+      spouseDesignation: data.spouseDesignation,
+      coApplicantDocs: data.coApplicantDocs,
+      photographs: data.photographs,
+    };
+
+    console.log("Updated Details:", updatedDetails);
+
+    const updatedLoanApplication = await User.findByIdAndUpdate(
+      id,
+      { $set: updatedDetails },
+      { new: true, runValidators: true }
+    );
+
+    if (updatedLoanApplication) {
+      return res.status(200).json({
+        message: "User details updated successfully",
+        data: updatedLoanApplication,
+      });
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating loan details:", err);
+    res.status(500).json({
+      message: "An error occurred while updating the details.",
+      error: err.message,
+    });
+    next(err);
+  }
+}

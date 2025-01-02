@@ -13,6 +13,30 @@ const userSchema = new mongoose.Schema({
   // password: { type: String,},
   contactNumber: { type: String,  unique: true },
   forgetPasswordCode: { type: String, default: null },
+  address: { type: String },
+  pinCode: { type: String },
+
+  city: { type: String },
+  state: { type: String },
+  district: { type: String },
+  country: { type: String },
+  addressProof: { type: String },
+  annualIncome: { type: Number },
+  contact: { type: String },
+  signature: { type: String },
+  spouseName: { type: String },
+  spouseOccupation: { type: String },
+  spouseIncome: { type: Number },
+  spouseDesignation: { type: String },
+  totalChildren: { type: String },
+  children: [
+    {
+      name: { type: String },
+      gender: { type: String, enum: ["Male", "Female", "Other"] },
+      age: { type: Number },
+      schoolName: { type: String },
+    },
+  ],
 });
 
 const User = mongoose.model("UserList", userSchema);
