@@ -27,14 +27,8 @@ function Kycvendor() {
         const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
         setUserKYCDetail(response.data);
         const fetchedData = response.data
-        reset({
-          panCardNumber: fetchedData.panCardNumber,
-          GSTNumber: fetchedData.GSTNumber,
-          accountNumber: fetchedData.accountNumber,
-          IFSCCode: fetchedData.IFSCCode,
-          bankName: fetchedData.bankName,
-          branch: fetchedData.branch,
-        });
+        reset(fetchedData);
+        
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }

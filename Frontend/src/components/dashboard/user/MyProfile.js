@@ -65,24 +65,8 @@ console.log('userDetail', userDetail)
         const fetchedData = response.data
         const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
         reset({
-          fullName: fetchedData.fullName,
+            ...fetchedData,
           dob: formattedDob,
-          gender: fetchedData.gender,
-          maritalStatus: fetchedData.maritalStatus,
-          nationality: fetchedData.nationality,
-          contact: fetchedData.contact,
-          address: fetchedData.address,
-          city: fetchedData.city,
-          district: fetchedData.district,
-          state: fetchedData.state,
-          country: fetchedData.country,
-          pinCode: fetchedData.pinCode,
-          totalChildren: fetchedData.totalChildren,
-          children: fetchedData.children,
-          spouseName: fetchedData.spouseName,
-          spouseOccupation: fetchedData.spouseOccupation,
-          spouseDesignation: fetchedData.spouseDesignation,
-          spouseIncome: fetchedData.spouseIncome,
         });
 
       } catch (error) {
