@@ -34,6 +34,15 @@ export async function updateLead(req, res, next) {
     try {
         const leadId = req.params.id; 
         const data = req.body;
+        
+        const addremarks = Array.isArray(data.addremarks)
+        ? data.addremarks.map((child) => ({
+            date: child.date,
+            remarks: child.remarks,
+            age: child.age,
+            status: child.status,
+          }))
+        : [];
 
         const updatedDetails = {
             firstname: data.firstname,
@@ -47,9 +56,7 @@ export async function updateLead(req, res, next) {
             howimidiate: data.howimidiate,
             previouslyapplied: data.previouslyapplied,
             panno: data.panno,
-            date: data.date,
-            remarks: data.remarks,
-            status: data.status,
+            addremarks:addremarks
         };
 
         const updatedLead = await Lead.findByIdAndUpdate(leadId, updatedDetails, { 
