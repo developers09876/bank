@@ -15,7 +15,7 @@ router.put("/updateloanapplications/:id", updateLoanDetails);
 
 router.get("/getall", getAllLoanApplications);
 
-router.get("/getbyid/:id", getLoanApplicationById);
+router.get("/getbyid/:userid", getLoanApplicationById);
 
 router.put("/updateloanapplicationsStaus/:id", updateLoanApplicationStatus);
 

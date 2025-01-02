@@ -229,7 +229,9 @@ export const getAllLoanApplications = async (req, res) => {
 
 export const getLoanApplicationById = async (req, res) => {
   try {
-    const application = await LoanApplication.findById(req.params.id);
+    const { userid } = req.params;
+
+    const application = await LoanApplication.findOne({userid});
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
