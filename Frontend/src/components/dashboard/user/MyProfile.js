@@ -55,20 +55,23 @@ function TabsVendor() {
       setCityList(res.data.data);
     });
   };
-console.log('userDetail', userDetail)
+  console.log("userDetail", userDetail);
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
-        setUserDetail(response.data); 
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserDetail(response.data);
         console.log("getresponse", response.data);
-        const fetchedData = response.data
-        const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
+        const fetchedData = response.data;
+        const formattedDob = fetchedData.dob
+          ? new Date(fetchedData.dob).toISOString().split("T")[0]
+          : "";
         reset({
-            ...fetchedData,
+          ...fetchedData,
           dob: formattedDob,
         });
-
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -76,9 +79,8 @@ console.log('userDetail', userDetail)
 
     fetchUserDetails();
   }, [userid]);
-  
-  const handleFormSubmit = async (data) => {
 
+  const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -305,7 +307,7 @@ console.log('userDetail', userDetail)
                             name="spouseName"
                             control={control}
                             defaultValue=""
-                            rules={{ required: true }}
+                            // rules={{ required: true }}
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -315,11 +317,11 @@ console.log('userDetail', userDetail)
                               />
                             )}
                           />
-                          {errors.WifeName && (
+                          {/* {errors.WifeName && (
                             <p className="text-danger">
                               Spouse Name is required
                             </p>
-                          )}
+                          )} */}
                         </div>
                       </Col>
                       <Col xs={12} md={6} lg={4}>
@@ -331,7 +333,7 @@ console.log('userDetail', userDetail)
                             name="spouseOccupation"
                             control={control}
                             defaultValue=""
-                            rules={{ required: true }}
+                            // rules={{ required: true }}
                             render={({ field }) => (
                               <Select
                                 {...field}
@@ -349,11 +351,11 @@ console.log('userDetail', userDetail)
                               </Select>
                             )}
                           />
-                          {errors.spouseOccupation && (
+                          {/* {errors.spouseOccupation && (
                             <p className="text-danger">
                               Spouse Occupation is required
                             </p>
-                          )}
+                          )} */}
                         </div>
                       </Col>
                       <Col xs={12} md={6} lg={4}>
@@ -364,14 +366,17 @@ console.log('userDetail', userDetail)
                           <input
                             className="inputcolumn-ourProfile"
                             type="number"
-                            {...register("totalChildren", { required: true })}
+                            {...register(
+                              "totalChildren"
+                              // { required: true }
+                            )}
                             placeholder="How Many Children?"
                           />
-                          {errors.totalChildren && (
+                          {/* {errors.totalChildren && (
                             <p className="text-danger">
                               How Many Children? is required
                             </p>
-                          )}
+                          )} */}
                         </div>
                       </Col>
                       {fields.map((field, index) => (
@@ -382,7 +387,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.gender`}
                                 control={control}
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <Select
                                     {...field}
@@ -395,11 +400,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.gender && (
+                              {/* {errors.children?.[index]?.gender && (
                                 <p className="text-danger">
                                   Child Gender is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
 
@@ -409,7 +414,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.name`}
                                 control={control}
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -419,11 +424,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.name && (
+                              {/* {errors.children?.[index]?.name && (
                                 <p className="text-danger">
                                   Child Name is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
 
@@ -433,7 +438,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.age`}
                                 control={control}
-                                rules={{ required: true, min: 1 }}
+                                // rules={{ required: true, min: 1 }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -443,12 +448,12 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.age && (
+                              {/* {errors.children?.[index]?.age && (
                                 <p className="text-danger">
                                   Child Age is required and must be greater than
                                   0
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
 
@@ -458,7 +463,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.schoolName`}
                                 control={control}
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -468,11 +473,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.schoolName && (
+                              {/* {errors.children?.[index]?.schoolName && (
                                 <p className="text-danger">
                                   Child School Name is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
                         </React.Fragment>
@@ -489,22 +494,22 @@ console.log('userDetail', userDetail)
                                 name="spouseDesignation"
                                 control={control}
                                 defaultValue=""
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
                                     type="text"
-                                className="inputcolumn-ourProfile"
-                                // className="form-control"
+                                    className="inputcolumn-ourProfile"
+                                    // className="form-control"
                                     placeholder="Enter Wife's Designation"
                                   />
                                 )}
                               />
-                              {errors.spouseDesignation && (
+                              {/* {errors.spouseDesignation && (
                                 <p className="text-danger">
                                   Spouse Designation is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
                           <Col xs={12} md={6} lg={4}>
@@ -516,37 +521,61 @@ console.log('userDetail', userDetail)
                                 name="spouseIncome"
                                 control={control}
                                 defaultValue=""
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
                                     type="number"
-                                className="inputcolumn-ourProfile"
-                                // className="form-control"
+                                    className="inputcolumn-ourProfile"
+                                    // className="form-control"
                                     placeholder="Enter spouse Income"
                                   />
                                 )}
                               />
-                              {errors.WifeIncome && (
+                              {/* {errors.WifeIncome && (
                                 <p className="text-danger">
                                   Spouse Income is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
+                         
                           <Col xs={12} md={6} lg={4}>
                             <div>
                               <label className="vendorpage_labelCss">
-                                Upload Your Spouse Pay slip
+                                Upload Your Spouse Pay Slip
                               </label>
+
                               <input
-                                className="inputcolumn-ourProfile"
                                 type="file"
-                                accept=".pdf,.jpg,.jpeg,.png"
-                                {...register("coApplicantDocs")}
-                                placeholder="If applicable"
+                                className="inputcolumn-ourProfile"
+                                id="coApplicantDocsInput"
+                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                                {...register("coApplicantDocs", {
+                                  required: !userDetail?.coApplicantDocs,
+                                })}
+                                onChange={(e) => {
+                                  if (e.target.files[0]) {
+                                    const previewUrl = URL.createObjectURL(
+                                      e.target.files[0]
+                                    );
+                                    setValue("spousePreview", previewUrl);
+                                    setValue(
+                                      "coApplicantDocsUrl",
+                                      e.target.files[0].name
+                                    );
+                                  }
+                                }}
                               />
+
+                              {!userDetail?.coApplicantDocs &&
+                                errors.coApplicantDocs && (
+                                  <p className="text-danger">
+                                    Spouse Pay Slip is required
+                                  </p>
+                                )}
                             </div>
+                            
                           </Col>
                         </>
                       )}
@@ -674,9 +703,9 @@ console.log('userDetail', userDetail)
                             placeholder="Select District"
                             optionFilterProp="children"
                             onChange={(value, option) => {
-                              field.onChange(value); 
-                              setValue("district", value); 
-                              getCity(option.key); 
+                              field.onChange(value);
+                              setValue("district", value);
+                              getCity(option.key);
                             }}
                             filterOption={(input, option) =>
                               option?.children
@@ -714,7 +743,7 @@ console.log('userDetail', userDetail)
                             placeholder="Select City"
                             onChange={(value) => {
                               field.onChange(value);
-                              setValue("city", value); 
+                              setValue("city", value);
                             }}
                           >
                             {cityList.map(({ id, cityName }) => (
@@ -727,6 +756,40 @@ console.log('userDetail', userDetail)
                       />
                       {errors.city && (
                         <p className="text-danger">City is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Photographs (Passport size)
+                      </label>
+
+                      <input
+                        type="file"
+                        className="inputcolumn-ourProfile"
+                        id="photographsInput"
+                        accept="image/*"
+                        {...register("photographs", {
+                          required: !userDetail?.photographs,
+                        })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl);
+                            setValue(
+                              "photographsFileName",
+                              e.target.files[0].name
+                            );
+                          }
+                        }}
+                      />
+
+                      {!userDetail?.photographs && errors.photographs && (
+                        <p className="text-danger">Photographs are required</p>
                       )}
                     </div>
                   </Col>
@@ -763,21 +826,43 @@ console.log('userDetail', userDetail)
                       )}
                     </div>
                   </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Photographs (Passport size)
-                      </label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="file"
-                        accept="image/*"
-                        {...register("photographs", { required: true })}
+
+                  
+                </Row>
+                <Row className="py-2">
+                  <Col lg={3}>
+                    {(userDetail?.photographs || watch("imagePreview")) && (
+                      <>
+                      <img
+                        src={watch("imagePreview") || userDetail.photographs}
+                        alt="Preview"
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          marginTop: "10px",
+                        }}
                       />
-                      {errors.photographs && (
-                        <p className="text-danger">Photographs are required</p>
-                      )}
-                    </div>
+                      <p>Photographs</p>
+                      </>
+                    )}
+                  </Col>
+                  <Col lg={3}>
+                   {(userDetail?.coApplicantDocs || watch("spousePreview")) && (
+                      <>
+                      <img
+                        src={watch("spousePreview") || userDetail.coApplicantDocs}
+                        alt="Preview"
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          marginTop: "10px",
+                        }}
+                      />
+                      <p>Spouse pay slip</p>
+                      </>
+                    )}
                   </Col>
                 </Row>
               </div>
