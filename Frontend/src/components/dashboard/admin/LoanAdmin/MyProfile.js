@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 // import Api from "../../Api";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button } from "react-bootstrap";
-import "./MyProfile.scss";
+import "../../user/MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import Api from "../../../Api";
+import Api from "../../../../Api";
 
 function TabsVendor() {
   const {
