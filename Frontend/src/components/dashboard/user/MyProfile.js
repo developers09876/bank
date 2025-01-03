@@ -55,20 +55,23 @@ function TabsVendor() {
       setCityList(res.data.data);
     });
   };
-console.log('userDetail', userDetail)
+  console.log("userDetail", userDetail);
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
-        setUserDetail(response.data); 
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserDetail(response.data);
         console.log("getresponse", response.data);
-        const fetchedData = response.data
-        const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
+        const fetchedData = response.data;
+        const formattedDob = fetchedData.dob
+          ? new Date(fetchedData.dob).toISOString().split("T")[0]
+          : "";
         reset({
-            ...fetchedData,
+          ...fetchedData,
           dob: formattedDob,
         });
-
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -76,9 +79,8 @@ console.log('userDetail', userDetail)
 
     fetchUserDetails();
   }, [userid]);
-  
-  const handleFormSubmit = async (data) => {
 
+  const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -188,7 +190,58 @@ console.log('userDetail', userDetail)
 
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div>
+                <Row className="py-2">
+                  {(userDetail?.photographs || watch("imagePreview")) && (
+                    <img
+                      src={watch("imagePreview") || userDetail.photographs}
+                      alt="Preview"
+                      style={{
+                        width: "200px",
+                        height: "auto",
+                        objectFit: "cover",
+                        marginTop: "10px",
+                      }}
+                    />
+                  )}
+                </Row>
                 <Row>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      {/* {(userDetail?.photographs || watch("imagePreview")) && (
+                        <img
+                          src={watch("imagePreview") || userDetail.photographs}
+                          alt="Preview"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            marginTop: "10px",
+                          }}
+                        />
+                      )} */}
+
+                      <label className="vendorpage_labelCss">
+                        Photographs (Passport size)
+                      </label>
+                      <input
+                        className="inputcolumn-ourProfile"
+                        type="file"
+                        accept="image/*"
+                        {...register("photographs", { required: true })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl);
+                          }
+                        }}
+                      />
+                      {errors.photographs && (
+                        <p className="text-danger">Photographs are required</p>
+                      )}
+                    </div>
+                  </Col>
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">First Name</label>
@@ -364,7 +417,8 @@ console.log('userDetail', userDetail)
                           <input
                             className="inputcolumn-ourProfile"
                             type="number"
-                            {...register("totalChildren", 
+                            {...register(
+                              "totalChildren"
                               // { required: true }
                             )}
                             placeholder="How Many Children?"
@@ -496,8 +550,8 @@ console.log('userDetail', userDetail)
                                   <input
                                     {...field}
                                     type="text"
-                                className="inputcolumn-ourProfile"
-                                // className="form-control"
+                                    className="inputcolumn-ourProfile"
+                                    // className="form-control"
                                     placeholder="Enter Wife's Designation"
                                   />
                                 )}
@@ -523,8 +577,8 @@ console.log('userDetail', userDetail)
                                   <input
                                     {...field}
                                     type="number"
-                                className="inputcolumn-ourProfile"
-                                // className="form-control"
+                                    className="inputcolumn-ourProfile"
+                                    // className="form-control"
                                     placeholder="Enter spouse Income"
                                   />
                                 )}
@@ -546,8 +600,11 @@ console.log('userDetail', userDetail)
                                 type="file"
                                 accept=".pdf,.jpg,.jpeg,.png"
                                 {...register("coApplicantDocs")}
+                                
                                 placeholder="If applicable"
                               />
+
+                              
                             </div>
                           </Col>
                         </>
@@ -676,9 +733,9 @@ console.log('userDetail', userDetail)
                             placeholder="Select District"
                             optionFilterProp="children"
                             onChange={(value, option) => {
-                              field.onChange(value); 
-                              setValue("district", value); 
-                              getCity(option.key); 
+                              field.onChange(value);
+                              setValue("district", value);
+                              getCity(option.key);
                             }}
                             filterOption={(input, option) =>
                               option?.children
@@ -716,7 +773,7 @@ console.log('userDetail', userDetail)
                             placeholder="Select City"
                             onChange={(value) => {
                               field.onChange(value);
-                              setValue("city", value); 
+                              setValue("city", value);
                             }}
                           >
                             {cityList.map(({ id, cityName }) => (
@@ -765,7 +822,7 @@ console.log('userDetail', userDetail)
                       )}
                     </div>
                   </Col>
-                  <Col xs={12} md={6} lg={4}>
+                  {/* <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">
                         Photographs (Passport size)
@@ -775,12 +832,33 @@ console.log('userDetail', userDetail)
                         type="file"
                         accept="image/*"
                         {...register("photographs", { required: true })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl); 
+                          }
+                        }}
                       />
                       {errors.photographs && (
                         <p className="text-danger">Photographs are required</p>
                       )}
+
+                      {(userDetail?.photographs || watch("imagePreview")) && (
+                        <img
+                          src={watch("imagePreview") || userDetail.photographs}
+                          alt="Preview"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            marginTop: "10px",
+                          }}
+                        />
+                      )}
                     </div>
-                  </Col>
+                  </Col> */}
                 </Row>
               </div>
 
