@@ -30,7 +30,7 @@ function Sidebar({ collapsed }) {
         >
           Dashboard
         </NavLink>
-
+        <NavLink to="myprofile"> Insurance Management</NavLink>
         <NavLink to="insurancemanagement"> Insurance Management</NavLink>
       </Menu>
     </div>
