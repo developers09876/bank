@@ -16,12 +16,12 @@ function CreateLead() {
     formState: { errors },
   } = useForm();
 
-  const id = localStorage.getItem("id")
+  const id = localStorage.getItem("id");
 
   const onSubmit = async (data) => {
     const details = {
       firstname: data.firstname,
-      lastname:data.lastname,
+      lastname: data.lastname,
       userId: id,
       contactNumber: data.contactNumber,
       email: data.email,
@@ -33,13 +33,12 @@ function CreateLead() {
       panno: data.panno,
     };
     const detail = {
-      userType:"user",
+      userType: "user",
       firstname: data.firstname,
-      lastname:data.lastname,
+      lastname: data.lastname,
       userId: id,
       contactNumber: data.contactNumber,
       email: data.email,
-     
     };
     try {
       const response = await axios.post(
@@ -74,7 +73,9 @@ function CreateLead() {
                   {...register("firstname", { required: true })}
                   placeholder="Name"
                 />
-                {errors.firstname && <p className="text-danger"> First Name is required</p>}
+                {errors.firstname && (
+                  <p className="text-danger"> First Name is required</p>
+                )}
               </div>
             </Col>
             <Col xs={12} md={6} lg={4}>
@@ -87,7 +88,9 @@ function CreateLead() {
                   {...register("lastname", { required: true })}
                   placeholder="Name"
                 />
-                {errors.lastname && <p className="text-danger">Last Name is required</p>}
+                {errors.lastname && (
+                  <p className="text-danger">Last Name is required</p>
+                )}
               </div>
             </Col>
 
@@ -279,10 +282,10 @@ function CreateLead() {
                     value="yes"
                     {...register("previouslyapplied", { required: true })}
                   />
+                  &nbsp;&nbsp;
                   <label htmlFor="yes" className="mr-3">
                     Yes
                   </label>
-
                   <input
                     type="radio"
                     id="no"
@@ -290,6 +293,7 @@ function CreateLead() {
                     value="no"
                     {...register("previouslyapplied", { required: true })}
                   />
+                  &nbsp;&nbsp;
                   <label htmlFor="no">No</label>
                 </div>
                 {errors.previouslyapplied && (
