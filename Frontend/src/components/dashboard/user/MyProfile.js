@@ -190,58 +190,7 @@ function TabsVendor() {
 
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div>
-                <Row className="py-2">
-                  {(userDetail?.photographs || watch("imagePreview")) && (
-                    <img
-                      src={watch("imagePreview") || userDetail.photographs}
-                      alt="Preview"
-                      style={{
-                        width: "200px",
-                        height: "auto",
-                        objectFit: "cover",
-                        marginTop: "10px",
-                      }}
-                    />
-                  )}
-                </Row>
                 <Row>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      {/* {(userDetail?.photographs || watch("imagePreview")) && (
-                        <img
-                          src={watch("imagePreview") || userDetail.photographs}
-                          alt="Preview"
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "cover",
-                            marginTop: "10px",
-                          }}
-                        />
-                      )} */}
-
-                      <label className="vendorpage_labelCss">
-                        Photographs (Passport size)
-                      </label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="file"
-                        accept="image/*"
-                        {...register("photographs", { required: true })}
-                        onChange={(e) => {
-                          if (e.target.files[0]) {
-                            const fileUrl = URL.createObjectURL(
-                              e.target.files[0]
-                            );
-                            setValue("imagePreview", fileUrl);
-                          }
-                        }}
-                      />
-                      {errors.photographs && (
-                        <p className="text-danger">Photographs are required</p>
-                      )}
-                    </div>
-                  </Col>
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">First Name</label>
@@ -590,22 +539,43 @@ function TabsVendor() {
                               )} */}
                             </div>
                           </Col>
+                         
                           <Col xs={12} md={6} lg={4}>
                             <div>
                               <label className="vendorpage_labelCss">
-                                Upload Your Spouse Pay slip
+                                Upload Your Spouse Pay Slip
                               </label>
+
                               <input
-                                className="inputcolumn-ourProfile"
                                 type="file"
-                                accept=".pdf,.jpg,.jpeg,.png"
-                                {...register("coApplicantDocs")}
-                                
-                                placeholder="If applicable"
+                                className="inputcolumn-ourProfile"
+                                id="coApplicantDocsInput"
+                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                                {...register("coApplicantDocs", {
+                                  required: !userDetail?.coApplicantDocs,
+                                })}
+                                onChange={(e) => {
+                                  if (e.target.files[0]) {
+                                    const previewUrl = URL.createObjectURL(
+                                      e.target.files[0]
+                                    );
+                                    setValue("spousePreview", previewUrl);
+                                    setValue(
+                                      "coApplicantDocsUrl",
+                                      e.target.files[0].name
+                                    );
+                                  }
+                                }}
                               />
 
-                              
+                              {!userDetail?.coApplicantDocs &&
+                                errors.coApplicantDocs && (
+                                  <p className="text-danger">
+                                    Spouse Pay Slip is required
+                                  </p>
+                                )}
                             </div>
+                            
                           </Col>
                         </>
                       )}
@@ -793,6 +763,40 @@ function TabsVendor() {
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">
+                        Photographs (Passport size)
+                      </label>
+
+                      <input
+                        type="file"
+                        className="inputcolumn-ourProfile"
+                        id="photographsInput"
+                        accept="image/*"
+                        {...register("photographs", {
+                          required: !userDetail?.photographs,
+                        })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl);
+                            setValue(
+                              "photographsFileName",
+                              e.target.files[0].name
+                            );
+                          }
+                        }}
+                      />
+
+                      {!userDetail?.photographs && errors.photographs && (
+                        <p className="text-danger">Photographs are required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
                         Residential Address
                       </label>
                       <textarea
@@ -822,43 +826,44 @@ function TabsVendor() {
                       )}
                     </div>
                   </Col>
-                  {/* <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Photographs (Passport size)
-                      </label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="file"
-                        accept="image/*"
-                        {...register("photographs", { required: true })}
-                        onChange={(e) => {
-                          if (e.target.files[0]) {
-                            const fileUrl = URL.createObjectURL(
-                              e.target.files[0]
-                            );
-                            setValue("imagePreview", fileUrl); 
-                          }
+
+                  
+                </Row>
+                <Row className="py-2">
+                  <Col lg={3}>
+                    {(userDetail?.photographs || watch("imagePreview")) && (
+                      <>
+                      <img
+                        src={watch("imagePreview") || userDetail.photographs}
+                        alt="Preview"
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          marginTop: "10px",
                         }}
                       />
-                      {errors.photographs && (
-                        <p className="text-danger">Photographs are required</p>
-                      )}
-
-                      {(userDetail?.photographs || watch("imagePreview")) && (
-                        <img
-                          src={watch("imagePreview") || userDetail.photographs}
-                          alt="Preview"
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "cover",
-                            marginTop: "10px",
-                          }}
-                        />
-                      )}
-                    </div>
-                  </Col> */}
+                      <p>Photographs</p>
+                      </>
+                    )}
+                  </Col>
+                  <Col lg={3}>
+                   {(userDetail?.coApplicantDocs || watch("spousePreview")) && (
+                      <>
+                      <img
+                        src={watch("spousePreview") || userDetail.coApplicantDocs}
+                        alt="Preview"
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          marginTop: "10px",
+                        }}
+                      />
+                      <p>Spouse pay slip</p>
+                      </>
+                    )}
+                  </Col>
                 </Row>
               </div>
 
