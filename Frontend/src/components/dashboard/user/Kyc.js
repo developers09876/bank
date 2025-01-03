@@ -27,14 +27,8 @@ function Kycvendor() {
         const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
         setUserKYCDetail(response.data);
         const fetchedData = response.data
-        reset({
-          panCardNumber: fetchedData.panCardNumber,
-          GSTNumber: fetchedData.GSTNumber,
-          accountNumber: fetchedData.accountNumber,
-          IFSCCode: fetchedData.IFSCCode,
-          bankName: fetchedData.bankName,
-          branch: fetchedData.branch,
-        });
+        reset(fetchedData);
+        
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -79,7 +73,7 @@ function Kycvendor() {
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
       bankName: data.bankName,
-      branch: data.branch,
+      bankBranch: data.bankBranch,
       panOrAdharUpload: panOrAdharUploadUrl,
       voterIdUpload: voterIdUploadUrl,
     };
@@ -234,10 +228,10 @@ function Kycvendor() {
               </Col>
               <Col sm={12} lg={6}>
                 <input
-                  {...register("branch", { required: true })}
+                  {...register("bankBranch", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.branch && (
+                {errors.bankBranch && (
                   <p className="text-danger">Branch is required</p>
                 )}
               </Col>
