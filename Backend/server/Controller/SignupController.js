@@ -135,12 +135,14 @@ export async function updateUserDetails(req, res, next) {
     : [];
 
     const updatedDetails = {
-      fullName: data.fullName,
+      // fullName: data.fullName,
+      firstname: data.firstname,
+      lastname: data.lastname,
       dob: data.dob,
       gender: data.gender,
       maritalStatus: data.maritalStatus || data.maritalStatus,
       nationality: data.nationality,
-      contact: data.contact,
+      contactNumber: data.contactNumber,
       address: data.address,
       pinCode: data.pinCode,
       city: data.city,
@@ -196,7 +198,7 @@ export async function updateKYCDetails(req, res, next) {
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
       bankName: data.bankName,
-      branch: data.branch,
+      bankBranch: data.bankBranch,
       panOrAdharUpload: data.panOrAdharUpload,
       voterIdUpload: data.voterIdUpload,
     };

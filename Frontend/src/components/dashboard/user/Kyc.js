@@ -73,7 +73,7 @@ function Kycvendor() {
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
       bankName: data.bankName,
-      branch: data.branch,
+      bankBranch: data.bankBranch,
       panOrAdharUpload: panOrAdharUploadUrl,
       voterIdUpload: voterIdUploadUrl,
     };
@@ -228,10 +228,10 @@ function Kycvendor() {
               </Col>
               <Col sm={12} lg={6}>
                 <input
-                  {...register("branch", { required: true })}
+                  {...register("bankBranch", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.branch && (
+                {errors.bankBranch && (
                   <p className="text-danger">Branch is required</p>
                 )}
               </Col>

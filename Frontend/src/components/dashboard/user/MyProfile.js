@@ -108,12 +108,14 @@ console.log('userDetail', userDetail)
 
     const Details = {
       userid: userid,
-      fullName: data.fullName,
+      // fullName: data.fullName,
+      lastname: data.lastname,
+      firstname: data.firstname,
       dob: data.dob,
       gender: data.gender,
       maritalStatus: data.maritalStatus,
       nationality: data.nationality,
-      contact: data.contact,
+      contactNumber: data.contactNumber,
       address: data.address,
       city: data.city,
       district: data.district,
@@ -189,16 +191,31 @@ console.log('userDetail', userDetail)
                 <Row>
                   <Col xs={12} md={6} lg={4}>
                     <div>
-                      <label className="vendorpage_labelCss">Full Name</label>
+                      <label className="vendorpage_labelCss">First Name</label>
                       <input
                         className="inputcolumn-ourProfile"
                         type="text"
-                        name="fullName"
-                        {...register("fullName", { required: true })}
-                        placeholder="Full Name"
+                        name="firstname"
+                        {...register("firstname", { required: true })}
+                        placeholder="First Name"
                       />
-                      {errors.fullName && (
-                        <p className="text-danger">Full Name is required</p>
+                      {errors.firstname && (
+                        <p className="text-danger">First Name is required</p>
+                      )}
+                    </div>
+                  </Col>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Last Name</label>
+                      <input
+                        className="inputcolumn-ourProfile"
+                        type="text"
+                        name="lastname"
+                        {...register("lastname", { required: true })}
+                        placeholder="Last Name"
+                      />
+                      {errors.lastname && (
+                        <p className="text-danger">Last Name is required</p>
                       )}
                     </div>
                   </Col>
@@ -559,11 +576,11 @@ console.log('userDetail', userDetail)
                       <input
                         className="inputcolumn-ourProfile"
                         type="tel"
-                        name="contact"
-                        {...register("contact", { required: true })}
+                        name="contactNumber"
+                        {...register("contactNumber", { required: true })}
                         placeholder="Phone Number"
                       />
-                      {errors.contact && (
+                      {errors.contactNumber && (
                         <p className="text-danger">Phone Number is required</p>
                       )}
                     </div>

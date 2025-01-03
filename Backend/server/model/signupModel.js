@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   dateOfJoining: { type: String },
   firstname: { type: String },
   lastname: { type: String },
-  fullName: { type: String },
+  // fullName: { type: String },
   email: { type: String, unique: true },
   // password: { type: String,},
   contactNumber: { type: String, unique: true },
@@ -32,13 +32,15 @@ const userSchema = new mongoose.Schema({
   gender: { type: String, enum: ["Male", "Female", "Other"] },
   addressProof: { type: String },
   annualIncome: { type: Number },
-  contact: { type: String },
+  // contact: { type: String },
   signature: { type: String },
   spouseName: { type: String },
   spouseOccupation: { type: String },
   spouseIncome: { type: Number },
   spouseDesignation: { type: String },
   totalChildren: { type: String },
+  coApplicantDocs: { type: String },
+  photographs: { type: String },
   children: [
     {
       name: { type: String },
@@ -52,8 +54,9 @@ const userSchema = new mongoose.Schema({
   accountNumber: { type: Number },
   IFSCCode: { type: String },
   bankName: { type: String },
-  branch: { type: String },
-  
+  bankBranch: { type: String },
+  panOrAdharUpload: { type: String },
+  voterIdUpload: { type: String },
 });
 
 const User = mongoose.model("UserList", userSchema);
