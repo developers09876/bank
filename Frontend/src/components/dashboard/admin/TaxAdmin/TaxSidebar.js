@@ -30,6 +30,10 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Dashboard
         </NavLink>
+        <NavLink to="myprofile">
+          {/* <MdSend className="Nav-Icon" /> */}
+          My Profile
+        </NavLink>
         <NavLink to="taxmanagement">
           {/* <MdSend className="Nav-Icon" /> */}
           Tax Management
