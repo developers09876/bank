@@ -21,7 +21,7 @@ const LoanManagement = ({ collapsed }) => {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
-console.log('rejectionReason', rejectionReason)
+  console.log("rejectionReason", rejectionReason);
 
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
@@ -245,7 +245,9 @@ console.log('rejectionReason', rejectionReason)
                   <p style={{ fontSize: "15px" }}>:</p>
                 </Col>
                 <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>{new Date(selectedRecord.createdAt).toLocaleDateString()}</p>
+                  <p style={{ fontSize: "15px" }}>
+                    {new Date(selectedRecord.createdAt).toLocaleDateString()}
+                  </p>
                 </Col>
               </Row>
               <Row>
@@ -277,14 +279,17 @@ console.log('rejectionReason', rejectionReason)
               <Row>
                 <Col span={10}>
                   <p style={{ fontSize: "15px" }}>
-                    <strong>Aadhaar</strong>
+                    <strong>Aadhaar Number</strong>
                   </p>
                 </Col>
                 <Col span={2}>
                   <p style={{ fontSize: "15px" }}>:</p>
                 </Col>
                 <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>{selectedRecord.aadhaar}</p>
+                  <p style={{ fontSize: "15px" }}>
+                    {" "}
+                    {selectedRecord.aadhaarNumber}
+                  </p>
                 </Col>
               </Row>
               <Row>
@@ -1133,7 +1138,7 @@ console.log('rejectionReason', rejectionReason)
                           <Space style={{ marginTop: "20px" }}>
                             <Button
                               type="primary"
-                              onClick={ handleReject}
+                              onClick={handleReject}
                               disabled={!rejectionReason.trim()}
                             >
                               Submit
