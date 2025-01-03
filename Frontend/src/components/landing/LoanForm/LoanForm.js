@@ -24,6 +24,7 @@ function LoanForm() {
     formState: { errors },
   } = useForm();
   const userid = localStorage.getItem("id");
+  const userType = localStorage.getItem("userType");
   console.log('userid',userid)
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -96,17 +97,17 @@ function LoanForm() {
 
     const Details = {
       userid: userid,
-      fullName: data.fullName,
+      firstname: data.firstname,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.MaritalStatus,
+      maritalStatus: data.maritalStatus,
       nationality: data.nationality,
-      contact: data.contact,
+      contactNumber: data.contactNumber,
       address: data.address,
       city: data.city,
       district: data.district,
       state: data.state,
-      country: data.Country,
+      country: data.country,
       pinCode: data.pinCode,
       totalChildren: data.totalChildren,
       children: data.children,
@@ -114,8 +115,8 @@ function LoanForm() {
       spouseOccupation: data.spouseOccupation,
       spouseDesignation: data.spouseDesignation,
       spouseIncome: data.spouseIncome,
-      coApplicantDocs: coApplicantDocsUrl,
-      photographs: photographsUrl,
+      coApplicantDocs: data.coApplicantDocsUrl,
+      photographs: data.photographsUrl,
     };
 
     try {
@@ -142,7 +143,7 @@ function LoanForm() {
       try {
         console.log("Fetching loan application with userID:", userid);
         const response = await axios.get(
-          `http://localhost:5000/loanform/getbyid/${userid}`
+          `http://localhost:5000/signup/getby/${userid}`
         );
         console.log("Response received:", response);  
         setLoanApplicationData(response.data.data);
@@ -152,27 +153,34 @@ function LoanForm() {
     };
   
     fetchLoanApplication();
-  }, []);
+  }, [ userid]);
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userid}`);
-        setUserDetail(response.data); 
-        console.log("getresponse", response.data);
-        const fetchedData = response.data
-        const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
-        reset({
+        if (userType === "user") {
+          const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
+          setUserDetail(response.data); 
+          console.log("getresponse", response.data);
+          
+          const fetchedData = response.data;
+          const formattedDob = fetchedData.dob 
+            ? new Date(fetchedData.dob).toISOString().split("T")[0] 
+            : "";
+  
+          reset({
             ...fetchedData,
-          dob: formattedDob,
-        });
-
+            dob: formattedDob,
+          });
+        }
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
     };
-
+  
     fetchUserDetails();
-  }, [userid]);
+  }, [userType, userid]);
+  
   const loanAmount = watch("totalChildren");
 
   useEffect(() => {
@@ -219,19 +227,19 @@ function LoanForm() {
                 <div>
                   <Row>
                     <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">Full Name</label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          name="fullName"
-                          {...register("fullName", { required: true })}
-                          placeholder="Full Name"
-                        />
-                        {errors.fullName && (
-                          <p className="text-danger">Full Name is required</p>
-                        )}
-                      </div>
+                    <div>
+                      <label className="vendorpage_labelCss">First Name</label>
+                      <input
+                        className="inputcolumn-ourProfile"
+                        type="text"
+                        name="firstname"
+                        {...register("firstname", { required: true })}
+                        placeholder="First Name"
+                      />
+                      {errors.firstname && (
+                        <p className="text-danger">First Name is required</p>
+                      )}
+                    </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
@@ -283,7 +291,7 @@ function LoanForm() {
                           Marital Status
                         </label>
                         <Controller
-                          name="MaritalStatus"
+                          name="maritalStatus"
                           control={control}
                           defaultValue=""
                           rules={{ required: true }}
@@ -294,7 +302,7 @@ function LoanForm() {
                               placeholder="Select Marital Status"
                               onChange={(value) => {
                                 field.onChange(value);
-                                setValue("MaritalStatus", value);
+                                setValue("maritalStatus", value);
                               }}
                             >
                               <Option value="Single">Single</Option>
@@ -303,14 +311,14 @@ function LoanForm() {
                             </Select>
                           )}
                         />
-                        {errors.MaritalStatus && (
+                        {errors.maritalStatus && (
                           <p className="text-danger">
                             Marital Status is required
                           </p>
                         )}
                       </div>
                     </Col>
-                    {watch("MaritalStatus") === "Married" && (
+                    {watch("maritalStatus") === "Married" && (
                       <>
                         <Col xs={12} md={6} lg={4}>
                           <div>
@@ -585,29 +593,27 @@ function LoanForm() {
                       </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Contact Information
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="tel"
-                          name="contact"
-                          {...register("contact", { required: true })}
-                          placeholder="Phone Number"
-                        />
-                        {errors.contact && (
-                          <p className="text-danger">
-                            Phone Number is required
-                          </p>
-                        )}
-                      </div>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Contact Information
+                      </label>
+                      <input
+                        className="inputcolumn-ourProfile"
+                        type="tel"
+                        name="contactNumber"
+                        {...register("contactNumber", { required: true })}
+                        placeholder="Phone Number"
+                      />
+                      {errors.contactNumber && (
+                        <p className="text-danger">Phone Number is required</p>
+                      )}
+                    </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">Country</label>
                         <Controller
-                          name="Country"
+                          name="country"
                           control={control}
                           defaultValue=""
                           rules={{ required: true }}
@@ -616,11 +622,11 @@ function LoanForm() {
                               {...field}
                               className="inputcolumn_drp"
                               showSearch
-                              placeholder="Select Country"
+                              placeholder="Select country"
                               optionFilterProp="children"
                               onChange={(value, option) => {
                                 field.onChange(value);
-                                setValue("Country", value); // Update form state
+                                setValue("country", value); // Update form state
                                 getState(option.key); // Pass the country ID to getState
                               }}
                               filterOption={(input, option) =>
@@ -637,7 +643,7 @@ function LoanForm() {
                             </Select>
                           )}
                         />
-                        {errors.Country && (
+                        {errors.country && (
                           <p className="text-danger">Country is required</p>
                         )}
                       </div>
