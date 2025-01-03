@@ -55,20 +55,23 @@ function TabsVendor() {
       setCityList(res.data.data);
     });
   };
-console.log('userDetail', userDetail)
+  console.log("userDetailssss", userDetail);
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
-        setUserDetail(response.data); 
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserDetail(response.data);
         console.log("getresponse", response.data);
-        const fetchedData = response.data
-        const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
+        const fetchedData = response.data;
+        const formattedDob = fetchedData.dob
+          ? new Date(fetchedData.dob).toISOString().split("T")[0]
+          : "";
         reset({
-            ...fetchedData,
+          ...fetchedData,
           dob: formattedDob,
         });
-
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -76,9 +79,8 @@ console.log('userDetail', userDetail)
 
     fetchUserDetails();
   }, [userid]);
-  
-  const handleFormSubmit = async (data) => {
 
+  const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -364,7 +366,8 @@ console.log('userDetail', userDetail)
                           <input
                             className="inputcolumn-ourProfile"
                             type="number"
-                            {...register("totalChildren", 
+                            {...register(
+                              "totalChildren"
                               // { required: true }
                             )}
                             placeholder="How Many Children?"
@@ -496,8 +499,8 @@ console.log('userDetail', userDetail)
                                   <input
                                     {...field}
                                     type="text"
-                                className="inputcolumn-ourProfile"
-                                // className="form-control"
+                                    className="inputcolumn-ourProfile"
+                                    // className="form-control"
                                     placeholder="Enter Wife's Designation"
                                   />
                                 )}
@@ -523,8 +526,8 @@ console.log('userDetail', userDetail)
                                   <input
                                     {...field}
                                     type="number"
-                                className="inputcolumn-ourProfile"
-                                // className="form-control"
+                                    className="inputcolumn-ourProfile"
+                                    // className="form-control"
                                     placeholder="Enter spouse Income"
                                   />
                                 )}
@@ -676,9 +679,9 @@ console.log('userDetail', userDetail)
                             placeholder="Select District"
                             optionFilterProp="children"
                             onChange={(value, option) => {
-                              field.onChange(value); 
-                              setValue("district", value); 
-                              getCity(option.key); 
+                              field.onChange(value);
+                              setValue("district", value);
+                              getCity(option.key);
                             }}
                             filterOption={(input, option) =>
                               option?.children
@@ -716,7 +719,7 @@ console.log('userDetail', userDetail)
                             placeholder="Select City"
                             onChange={(value) => {
                               field.onChange(value);
-                              setValue("city", value); 
+                              setValue("city", value);
                             }}
                           >
                             {cityList.map(({ id, cityName }) => (
