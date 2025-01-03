@@ -99,7 +99,7 @@ function LoanLeadManagement() {
     },
     {
       title: "Phone Number",
-      dataIndex: "phone",
+      dataIndex: "contactNumber",
       key: "phone",
     },
     {
