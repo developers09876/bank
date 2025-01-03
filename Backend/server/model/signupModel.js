@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   maritalStatus: {
     type: String,
     enum: ["Married", "Single", "Other"],
-    required: true,
+    // required: true,
   },
   gender: { type: String, enum: ["Male", "Female", "Other"] },
   addressProof: { type: String },

@@ -140,7 +140,7 @@ export async function updateUserDetails(req, res, next) {
       lastname: data.lastname,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.maritalStatus || data.maritalStatus,
+      maritalStatus: data.maritalStatus ,
       nationality: data.nationality,
       contactNumber: data.contactNumber,
       address: data.address,

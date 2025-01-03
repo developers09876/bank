@@ -305,7 +305,7 @@ console.log('userDetail', userDetail)
                             name="spouseName"
                             control={control}
                             defaultValue=""
-                            rules={{ required: true }}
+                            // rules={{ required: true }}
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -315,11 +315,11 @@ console.log('userDetail', userDetail)
                               />
                             )}
                           />
-                          {errors.WifeName && (
+                          {/* {errors.WifeName && (
                             <p className="text-danger">
                               Spouse Name is required
                             </p>
-                          )}
+                          )} */}
                         </div>
                       </Col>
                       <Col xs={12} md={6} lg={4}>
@@ -331,7 +331,7 @@ console.log('userDetail', userDetail)
                             name="spouseOccupation"
                             control={control}
                             defaultValue=""
-                            rules={{ required: true }}
+                            // rules={{ required: true }}
                             render={({ field }) => (
                               <Select
                                 {...field}
@@ -349,11 +349,11 @@ console.log('userDetail', userDetail)
                               </Select>
                             )}
                           />
-                          {errors.spouseOccupation && (
+                          {/* {errors.spouseOccupation && (
                             <p className="text-danger">
                               Spouse Occupation is required
                             </p>
-                          )}
+                          )} */}
                         </div>
                       </Col>
                       <Col xs={12} md={6} lg={4}>
@@ -364,14 +364,16 @@ console.log('userDetail', userDetail)
                           <input
                             className="inputcolumn-ourProfile"
                             type="number"
-                            {...register("totalChildren", { required: true })}
+                            {...register("totalChildren", 
+                              // { required: true }
+                            )}
                             placeholder="How Many Children?"
                           />
-                          {errors.totalChildren && (
+                          {/* {errors.totalChildren && (
                             <p className="text-danger">
                               How Many Children? is required
                             </p>
-                          )}
+                          )} */}
                         </div>
                       </Col>
                       {fields.map((field, index) => (
@@ -382,7 +384,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.gender`}
                                 control={control}
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <Select
                                     {...field}
@@ -395,11 +397,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.gender && (
+                              {/* {errors.children?.[index]?.gender && (
                                 <p className="text-danger">
                                   Child Gender is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
 
@@ -409,7 +411,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.name`}
                                 control={control}
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -419,11 +421,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.name && (
+                              {/* {errors.children?.[index]?.name && (
                                 <p className="text-danger">
                                   Child Name is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
 
@@ -433,7 +435,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.age`}
                                 control={control}
-                                rules={{ required: true, min: 1 }}
+                                // rules={{ required: true, min: 1 }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -443,12 +445,12 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.age && (
+                              {/* {errors.children?.[index]?.age && (
                                 <p className="text-danger">
                                   Child Age is required and must be greater than
                                   0
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
 
@@ -458,7 +460,7 @@ console.log('userDetail', userDetail)
                               <Controller
                                 name={`children.${index}.schoolName`}
                                 control={control}
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -468,11 +470,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.children?.[index]?.schoolName && (
+                              {/* {errors.children?.[index]?.schoolName && (
                                 <p className="text-danger">
                                   Child School Name is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
                         </React.Fragment>
@@ -489,7 +491,7 @@ console.log('userDetail', userDetail)
                                 name="spouseDesignation"
                                 control={control}
                                 defaultValue=""
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -500,11 +502,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.spouseDesignation && (
+                              {/* {errors.spouseDesignation && (
                                 <p className="text-danger">
                                   Spouse Designation is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
                           <Col xs={12} md={6} lg={4}>
@@ -516,7 +518,7 @@ console.log('userDetail', userDetail)
                                 name="spouseIncome"
                                 control={control}
                                 defaultValue=""
-                                rules={{ required: true }}
+                                // rules={{ required: true }}
                                 render={({ field }) => (
                                   <input
                                     {...field}
@@ -527,11 +529,11 @@ console.log('userDetail', userDetail)
                                   />
                                 )}
                               />
-                              {errors.WifeIncome && (
+                              {/* {errors.WifeIncome && (
                                 <p className="text-danger">
                                   Spouse Income is required
                                 </p>
-                              )}
+                              )} */}
                             </div>
                           </Col>
                           <Col xs={12} md={6} lg={4}>
