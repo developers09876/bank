@@ -12,22 +12,27 @@ import Footer from "../../Layout/Footer";
 import axios from "axios";
 import Api from "../../../Api";
 const { Option } = Select;
+
 function LoanForm() {
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     watch,
     control,
     formState: { errors },
   } = useForm();
   const userid = localStorage.getItem("id");
+  console.log('userid',userid)
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [cityList, setCityList] = useState([]);
+  const [loanApplicationData, setLoanApplicationData] = useState(null);
+  const [childCount, setChildCount] = useState(0);
+  const [userDetail, setUserDetail] = useState(null);
 
-  console.log("districtList", districtList);
   useEffect(() => {
     getCountry();
   }, []);
@@ -40,6 +45,7 @@ function LoanForm() {
       console.error("Error fetching country data:", error);
     }
   };
+
   const getState = (country_id) => {
     Api.get(`state/stateById/${country_id}`).then((res) => {
       setStateList(res.data.data);
@@ -51,11 +57,13 @@ function LoanForm() {
       setDistrictList(res.data.data);
     });
   };
+
   const getCity = (districtId) => {
     Api.get(`city/cityById/${districtId}`).then((res) => {
       setCityList(res.data.data);
     });
   };
+
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
 
@@ -123,8 +131,48 @@ function LoanForm() {
       toast.error("An error occurred while submitting the form");
     }
   };
+  useEffect(() => {
+    const fetchLoanApplication = async () => {
+      const userid = localStorage.getItem("id");
+      if (!userid) {
+        console.log("User ID not found in localStorage");
+        return;
+      }
+  
+      try {
+        console.log("Fetching loan application with userID:", userid);
+        const response = await axios.get(
+          `http://localhost:5000/loanform/getbyid/${userid}`
+        );
+        console.log("Response received:", response);  
+        setLoanApplicationData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching loan application data:", error);
+      }
+    };
+  
+    fetchLoanApplication();
+  }, []);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userid}`);
+        setUserDetail(response.data); 
+        console.log("getresponse", response.data);
+        const fetchedData = response.data
+        const formattedDob = fetchedData.dob ? new Date(fetchedData.dob).toISOString().split("T")[0] : "";
+        reset({
+            ...fetchedData,
+          dob: formattedDob,
+        });
 
-  const [childCount, setChildCount] = useState(0);
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userid]);
   const loanAmount = watch("totalChildren");
 
   useEffect(() => {
