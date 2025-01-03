@@ -112,7 +112,7 @@ function Kycvendor() {
               style={{
                 backgroundColor: "#fccc55",
                 padding: "10px",
-                width: "80%",
+                width: "100%",
                 fontSize: "18px",
               }}
             >
