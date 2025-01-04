@@ -31,6 +31,8 @@ function Sidebar({ collapsed }) {
         >
           Dashboard
         </NavLink>
+        <NavLink to="/adminLoan/myprofile">My Profile</NavLink>
+
 
         <NavLink to="/adminLoan/loanmanagement">Loan Management</NavLink>
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Header from "../../Layout/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -14,33 +13,32 @@ function Kycvendor() {
     handleSubmit,
     formState: { errors },
     getValues,
-    watch,
     reset,
-    setValue,
   } = useForm();
 
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
 
-  console.log("userKYCDetail", userKYCDetail);
-
+  console.log('userKYCDetail', userKYCDetail)
+  
   useEffect(() => {
     const fetchUserKYCDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
+        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
         setUserKYCDetail(response.data);
-        const fetchedData = response.data;
+        const fetchedData = response.data
         reset(fetchedData);
+        
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
     };
-
+  
     fetchUserKYCDetails();
   }, [userid, reset]);
+  
 
+ 
   const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
       const formData = new FormData();
@@ -96,7 +94,6 @@ function Kycvendor() {
 
   return (
     <div>
-      <Header/>
       <Container>
         <div
           className="ourProfileParentdiv"
@@ -114,7 +111,7 @@ function Kycvendor() {
               style={{
                 backgroundColor: "#fccc55",
                 padding: "10px",
-                width: "100%",
+                width: "80%",
                 fontSize: "18px",
               }}
             >
@@ -125,9 +122,10 @@ function Kycvendor() {
 
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="kycRow_Container">
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={12} lg={4}>
                 <label>PanCard Number: </label>
-
+              </Col>
+              <Col sm={12} lg={6}>
                 <input
                   {...register("panCardNumber", { required: true })}
                   className="inputcolumn-ourProfile"
@@ -136,10 +134,13 @@ function Kycvendor() {
                   <p className="text-danger">pancard number is required</p>
                 )}
               </Col>
+            </Row>
 
-              <Col sm={12} md={6} lg={6}>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
                 <label>GST Number: </label>
-
+              </Col>
+              <Col sm={12} lg={6}>
                 <input
                   {...register("GSTNumber", { required: true })}
                   className="inputcolumn-ourProfile"
@@ -148,10 +149,41 @@ function Kycvendor() {
                   <p className="text-danger">GST number is required</p>
                 )}
               </Col>
+            </Row>
 
-              <Col sm={12} md={6} lg={6}>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
+                <label>Pan or Adhar Upload Anyone: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("panOrAdharUpload")}
+                />
+              </Col>
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
+                <label>VoterID: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("voterIdUpload")}
+                />
+              </Col>
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
                 <label>Account Number: </label>
-
+              </Col>
+              <Col sm={12} lg={6}>
                 <input
                   type="number"
                   {...register("accountNumber", { required: true })}
@@ -161,9 +193,12 @@ function Kycvendor() {
                   <p className="text-danger">Account number is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
                 <label>IFSC Code</label>
-
+              </Col>
+              <Col sm={12} lg={6}>
                 <input
                   {...register("IFSCCode", { required: true })}
                   className="inputcolumn-ourProfile"
@@ -172,9 +207,12 @@ function Kycvendor() {
                   <p className="text-danger">IFCE code is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
                 <label>Bank Name: </label>
-
+              </Col>
+              <Col sm={12} lg={6}>
                 <input
                   {...register("bankName", { required: true })}
                   className="inputcolumn-ourProfile"
@@ -183,107 +221,18 @@ function Kycvendor() {
                   <p className="text-danger">Bank Name is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
-                <label>Branch</label>
-                <br />
-
+            </Row>
+            <Row className="kycRow_Container">
+              <Col sm={12} lg={4}>
+                <label>Branch:</label>
+              </Col>
+              <Col sm={12} lg={6}>
                 <input
                   {...register("bankBranch", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
                 {errors.bankBranch && (
                   <p className="text-danger">Branch is required</p>
-                )}
-              </Col>
-              <Col sm={12} md={6} lg={6}>
-                <label>Pan or Adhar Upload Anyone: </label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  style={{ outline: "none", height: "50px" }}
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  {...register("panOrAdharUpload", {
-                    required: !userKYCDetail?.panOrAdharUpload,
-                  })}
-                  onChange={(e) => {
-                    if (e.target.files[0]) {
-                      const fileUrl = URL.createObjectURL(e.target.files[0]);
-                      setValue("panOrAdharPreview", fileUrl);
-                      setValue("panOrAdharFileName", e.target.files[0].name);
-                    }
-                  }}
-                />
-
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panOrAdharUpload && (
-                    <p className="text-danger">Pan or Adhar is required</p>
-                  )}
-              </Col>
-
-              <Col sm={12} md={6} lg={6}>
-                <label>Voter ID: </label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  style={{ outline: "none", height: "50px" }}
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  {...register("voterIdUpload", {
-                    required: !userKYCDetail?.voterIdUpload,
-                  })}
-                  onChange={(e) => {
-                    if (e.target.files[0]) {
-                      const fileUrl = URL.createObjectURL(e.target.files[0]);
-                      setValue("voterIdPreview", fileUrl);
-                      setValue("voterIdFileName", e.target.files[0].name);
-                    }
-                  }}
-                />
-
-                {!userKYCDetail?.voterIdUpload && errors.voterIdUpload && (
-                  <p className="text-danger">Voter ID is required</p>
-                )}
-              </Col>
-            </Row>
-            <Row>
-              <Col lg={3}>
-                {(userKYCDetail?.panOrAdharUpload ||
-                  watch("panOrAdharPreview")) && (
-                  <>
-                    <img
-                      src={
-                        watch("panOrAdharPreview") ||
-                        userKYCDetail.panOrAdharUpload
-                      }
-                      alt="Preview"
-                      style={{
-                        width: "150px",
-                        height: "150px",
-                        objectFit: "contain",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <p>Pan or Adhar</p>
-                  </>
-                )}
-              </Col>
-
-              <Col lg={3}>
-                {(userKYCDetail?.voterIdUpload || watch("voterIdPreview")) && (
-                  <>
-                    <img
-                      src={
-                        watch("voterIdPreview") || userKYCDetail.voterIdUpload
-                      }
-                      alt="Preview"
-                      style={{
-                        width: "150px",
-                        height: "150px",
-                        objectFit: "contain",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <p>Voter ID</p>
-                  </>
                 )}
               </Col>
             </Row>
@@ -304,8 +253,6 @@ function Kycvendor() {
           </form>
         </div>
       </Container>
-      <ToastContainer />
-
       {/* </Card> */}
     </div>
   );

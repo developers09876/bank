@@ -109,6 +109,10 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Tax
         </NavLink>
+        <NavLink to="/user/feedback" ClassName="main-nav-style">
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Feedback
+        </NavLink>
       </Menu>
     </div>
   );

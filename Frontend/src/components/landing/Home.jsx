@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   PermIdentity,
@@ -17,6 +17,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Api from "../../Api";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -156,20 +157,7 @@ const Landing = () => {
       icon: "fas fa-plane",
     },
   ];
-  const testimonials = [
-    {
-      quote: "This app has transformed the way I manage my loans!",
-      author: "- Jane Doe",
-    },
-    {
-      quote: "I love how easy it is to keep track of my finances.",
-      author: "- John Smith",
-    },
-    {
-      quote: "A must-have tool for any business!",
-      author: "- Sarah Lee",
-    },
-  ];
+
   const tax = [
     {
       title: "INCOME TAX FILING",
@@ -213,7 +201,16 @@ const Landing = () => {
     autoplaySpeed: 3000,
     arrows: false,
   };
-
+  const [userFeedback, setUserFeedBack] = useState();
+  useEffect(() => {
+    getUserFeedback();
+  }, []);
+  const getUserFeedback = async () => {
+    await Api.get("/signup/getall").then((res) => {
+      console.log("step1", res.data);
+      setUserFeedBack(res.data);
+    });
+  };
   return (
     <div className="home">
       <Header />
@@ -420,16 +417,23 @@ const Landing = () => {
           </h2>
           <div className="testimonial-slider ">
             <Slider {...settingss}>
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="testimonial-slide">
-                  <div className="testimonial-content">
-                    <p className="testimonial-quote" style={{ color: "white" }}>
-                      "{testimonial.quote}"
-                    </p>
-                    <p className="testimonial-author">- {testimonial.author}</p>
+              {userFeedback
+                ?.filter((testimonial) => testimonial?.userFeedback?.trim()) // Filter out items without userFeedback
+                .map((testimonial, index) => (
+                  <div key={index} className="testimonial-slide">
+                    <div className="testimonial-content">
+                      <p
+                        className="testimonial-quote"
+                        style={{ color: "white" }}
+                      >
+                        "{testimonial?.userFeedback}"
+                      </p>
+                      <p className="testimonial-author">
+                        - {testimonial?.firstname}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </Slider>
           </div>
         </div>

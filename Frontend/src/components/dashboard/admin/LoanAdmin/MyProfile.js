@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 // import Api from "../../Api";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button } from "react-bootstrap";
-import "./MyProfile.scss";
+import "../../user/MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../../Layout/Header";
 import axios from "axios";
-import Api from "../../../Api";
+import Api from "../../../../Api";
 
 function TabsVendor() {
   const {
@@ -178,7 +177,6 @@ function TabsVendor() {
 
   return (
     <div>
-  <Header />
       <Col xs={12} md={12} lg={12}>
         <div
           className="ourProfileParentdiv"
@@ -187,62 +185,59 @@ function TabsVendor() {
           <div style={{ paddingLeft: "10px" }}>
             <center>
               {" "}
-              <h4 className="pages-title mt-3 mb-5"> User Details</h4>
+              <h4 className="pages-title mt-3 mb-5"> User Detailsss</h4>
             </center>
 
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div>
+                <Row className="py-2">
+                  {(userDetail?.photographs || watch("imagePreview")) && (
+                    <img
+                      src={watch("imagePreview") || userDetail.photographs}
+                      alt="Preview"
+                      style={{
+                        width: "200px",
+                        height: "auto",
+                        objectFit: "cover",
+                        marginTop: "10px",
+                      }}
+                    />
+                  )}
+                </Row>
                 <Row>
-                  <Row className="py-2">
-                    <Col lg={3}>
-                      {(userDetail?.photographs || watch("imagePreview")) && (
-                        <>
-                          <img
-                            src={
-                              watch("imagePreview") || userDetail.photographs
-                            }
-                            alt="Preview"
-                            style={{
-                              width: "150px",
-                              height: "150px",
-                              objectFit: "contain",
-                              marginTop: "10px",
-                            }}
-                          />
-                          <p>Photographs</p>
-                        </>
-                      )}
-                    </Col>
-                  </Row>
                   <Col xs={12} md={6} lg={4}>
                     <div>
+                      {/* {(userDetail?.photographs || watch("imagePreview")) && (
+                        <img
+                          src={watch("imagePreview") || userDetail.photographs}
+                          alt="Preview"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            marginTop: "10px",
+                          }}
+                        />
+                      )} */}
+
                       <label className="vendorpage_labelCss">
                         Photographs (Passport size)
                       </label>
-
                       <input
-                        type="file"
                         className="inputcolumn-ourProfile"
-                        id="photographsInput"
+                        type="file"
                         accept="image/*"
-                        {...register("photographs", {
-                          required: !userDetail?.photographs,
-                        })}
+                        {...register("photographs", { required: true })}
                         onChange={(e) => {
                           if (e.target.files[0]) {
                             const fileUrl = URL.createObjectURL(
                               e.target.files[0]
                             );
                             setValue("imagePreview", fileUrl);
-                            setValue(
-                              "photographsFileName",
-                              e.target.files[0].name
-                            );
                           }
                         }}
                       />
-
-                      {!userDetail?.photographs && errors.photographs && (
+                      {errors.photographs && (
                         <p className="text-danger">Photographs are required</p>
                       )}
                     </div>
@@ -297,7 +292,6 @@ function TabsVendor() {
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">Gender</label>
-                      <br />
                       <Controller
                         name="gender"
                         control={control}
@@ -596,60 +590,18 @@ function TabsVendor() {
                               )} */}
                             </div>
                           </Col>
-
                           <Col xs={12} md={6} lg={4}>
                             <div>
                               <label className="vendorpage_labelCss">
-                                Upload Your Spouse Pay Slip
+                                Upload Your Spouse Pay slip
                               </label>
-
                               <input
-                                type="file"
                                 className="inputcolumn-ourProfile"
-                                id="coApplicantDocsInput"
-                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                                {...register("coApplicantDocs", {
-                                  required: !userDetail?.coApplicantDocs,
-                                })}
-                                onChange={(e) => {
-                                  if (e.target.files[0]) {
-                                    const previewUrl = URL.createObjectURL(
-                                      e.target.files[0]
-                                    );
-                                    setValue("spousePreview", previewUrl);
-                                    setValue(
-                                      "coApplicantDocsUrl",
-                                      e.target.files[0].name
-                                    );
-                                  }
-                                }}
+                                type="file"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                                {...register("coApplicantDocs")}
+                                placeholder="If applicable"
                               />
-
-                              {!userDetail?.coApplicantDocs &&
-                                errors.coApplicantDocs && (
-                                  <p className="text-danger">
-                                    Spouse Pay Slip is required
-                                  </p>
-                                )}
-                              {/* {(userDetail?.coApplicantDocs ||
-                                watch("spousePreview")) && (
-                                <>
-                                  <img
-                                    src={
-                                      watch("spousePreview") ||
-                                      userDetail.coApplicantDocs
-                                    }
-                                    alt="Preview"
-                                    style={{
-                                      width: "150px",
-                                      height: "150px",
-                                      objectFit: "cover",
-                                      marginTop: "10px",
-                                    }}
-                                  />
-                                  <p>Spouse pay slip</p>
-                                </>
-                              )} */}
                             </div>
                           </Col>
                         </>
@@ -765,7 +717,6 @@ function TabsVendor() {
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">District</label>
-                      <br />
                       <Controller
                         name="district"
                         control={control}
@@ -868,6 +819,43 @@ function TabsVendor() {
                       )}
                     </div>
                   </Col>
+                  {/* <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Photographs (Passport size)
+                      </label>
+                      <input
+                        className="inputcolumn-ourProfile"
+                        type="file"
+                        accept="image/*"
+                        {...register("photographs", { required: true })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl); 
+                          }
+                        }}
+                      />
+                      {errors.photographs && (
+                        <p className="text-danger">Photographs are required</p>
+                      )}
+
+                      {(userDetail?.photographs || watch("imagePreview")) && (
+                        <img
+                          src={watch("imagePreview") || userDetail.photographs}
+                          alt="Preview"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                            marginTop: "10px",
+                          }}
+                        />
+                      )}
+                    </div>
+                  </Col> */}
                 </Row>
               </div>
 
@@ -882,7 +870,6 @@ function TabsVendor() {
         {/* </Card> */}
       </Col>
       <ToastContainer />
-      
     </div>
   );
 }

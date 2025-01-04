@@ -1,9 +1,10 @@
 import { Table, Input, Space } from "antd";
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { FaPlus } from "react-icons/fa";
 
 function LoanLeadManagement() {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ function LoanLeadManagement() {
     },
     {
       title: "Phone Number",
-      dataIndex: "phone",
+      dataIndex: "contactNumber",
       key: "phone",
     },
     {
@@ -130,6 +131,18 @@ function LoanLeadManagement() {
             onChange={handleSearch}
           />
         </Space>
+        <Button
+              type="primary"
+              onClick={() => navigate("/admin/createlead")}
+              style={{
+                display: "inline",
+                float: "right",
+                backgroundColor: "#00397f",
+              }}
+            >
+              <FaPlus style={{ display: "inline", color: "white" }} />
+              Add New
+            </Button>
         <Table
           dataSource={paginatedData}
           columns={columns}
