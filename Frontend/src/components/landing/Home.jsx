@@ -157,20 +157,7 @@ const Landing = () => {
       icon: "fas fa-plane",
     },
   ];
-  const testimonials = [
-    {
-      quote: "This app has transformed the way I manage my loans!",
-      author: "- Jane Doe",
-    },
-    {
-      quote: "I love how easy it is to keep track of my finances.",
-      author: "- John Smith",
-    },
-    {
-      quote: "A must-have tool for any business!",
-      author: "- Sarah Lee",
-    },
-  ];
+
   const tax = [
     {
       title: "INCOME TAX FILING",
