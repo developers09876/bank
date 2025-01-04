@@ -241,7 +241,7 @@ function Kycvendor() {
                 )}
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col lg={3}>
                 {(userKYCDetail?.panOrAdharUpload ||
                   watch("panOrAdharPreview")) && (
@@ -283,7 +283,7 @@ function Kycvendor() {
                   </>
                 )}
               </Col>
-            </Row>
+            </Row> */}
             <center>
               <div className="submitbuttons px-4">
                 <Button
