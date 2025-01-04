@@ -1,74 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Api from "../../../Api";
-import Header from "../../Layout/Header";
-import Footer from "../../Layout/Footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+// import Api from "../../Api";
 
-function LoanKfc() {
+function Kycvendor() {
+  const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
+    watch,
     reset,
+    setValue,
   } = useForm();
 
-  const [selectImage, setSelectImage] = useState(null);
-  const [selectImageAadhar, setSelectImageAadhar] = useState(null);
+  const userid = localStorage.getItem("id");
+  const id = localStorage.getItem("vendor_id");
 
-  const setImage = (file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSelectImage(reader.result);
+  console.log("userKYCDetail", userKYCDetail);
+
+  useEffect(() => {
+    const fetchUserKYCDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserKYCDetail(response.data);
+        const fetchedData = response.data;
+        reset(fetchedData);
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
     };
-    reader.readAsDataURL(file);
-  };
-  const setImages = (file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setSelectImageAadhar(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(file);
-    }
-  };
-  const handleFileChanges = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImages(file);
-    }
-  };
-  const loanApplicationId = localStorage.getItem("loanApplicationId");
-  //   useEffect(() => {
-  //     getValue();
-  //   }, []);
+    fetchUserKYCDetails();
+  }, [userid, reset]);
 
-  //   const getValue = async () => {
-  //     try {
-  //     //   const res = await Api.get(`/vendor/getOne/${id}`);
-  //       const data = res.data[0];
-  //       setSelectImage(data.PanOrAdharUpload);
-
-  //       reset({
-  //         pancardNumber: data.panCardNumber,
-  //         gstNumber: data.GSTNumber,
-  //         accountno: data.accountNumber,
-  //         ifcecode: data.IFSCCode,
-  //         bankname: data.bankName,
-  //         branch: data.branch,
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
       const formData = new FormData();
       formData.append("file", file);
@@ -88,33 +60,41 @@ function LoanKfc() {
         return null;
       }
     };
-    const panProofUrl = selectImage ? await uploadFile(selectImage) : null;
-    const aadhaarProofUrl = selectImageAadhar
-      ? await uploadFile(selectImageAadhar)
+
+    const panOrAdharUploadUrl = data.panOrAdharUpload?.[0]
+      ? await uploadFile(data.panOrAdharUpload[0])
+      : null;
+    const voterIdUploadUrl = data.voterIdUpload?.[0]
+      ? await uploadFile(data.voterIdUpload[0])
       : null;
 
     const Details = {
-      panCardNumber: getValues().pancardNumber,
-      GSTNumber: getValues().gstNumber,
-      aadhaarNumber: getValues().aadhaarNumber,
-      accountNumber: getValues().accountno,
-      IFSCCode: getValues().ifcecode,
-      bankName: getValues().bankname,
-      branch: getValues().branch,
-      panImageUpload: panProofUrl,
-      aadharImageUpload: aadhaarProofUrl,
+      panCardNumber: data.panCardNumber,
+      GSTNumber: data.GSTNumber,
+      accountNumber: data.accountNumber,
+      IFSCCode: data.IFSCCode,
+      bankName: data.bankName,
+      bankBranch: data.bankBranch,
+      panOrAdharUpload: panOrAdharUploadUrl,
+      voterIdUpload: voterIdUploadUrl,
     };
-    await Api.put(
-      `/loanform/updateloanapplications/${loanApplicationId}`,
-      Details
-    ).then(async (res) => {
-      console.log("res :>> ", res);
-    });
+    console.log("Details", Details);
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/signup/updateKYC/${userid}`,
+        Details
+      );
+      console.log(response.data.data, "Form submitted successfully");
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Form submission failed", error);
+      toast.error("An error occurred while submitting the form");
+    }
   };
 
   return (
     <div>
-      <Header />
       <Container>
         <div
           className="ourProfileParentdiv"
@@ -132,7 +112,7 @@ function LoanKfc() {
               style={{
                 backgroundColor: "#fccc55",
                 padding: "10px",
-                width: "80%",
+                width: "100%",
                 fontSize: "18px",
               }}
             >
@@ -143,129 +123,164 @@ function LoanKfc() {
 
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
+              <Col sm={12} md={6} lg={6}>
                 <label>PanCard Number: </label>
-              </Col>
-              <Col sm={12} lg={6}>
+
                 <input
-                  {...register("pancardNumber", { required: true })}
+                  {...register("panCardNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.pancardNumber && (
+                {errors.panCardNumber && (
                   <p className="text-danger">pancard number is required</p>
                 )}
               </Col>
-            </Row>
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
-                <label>Aadhaar Number: </label>
-              </Col>
-              <Col sm={12} lg={6}>
-                <input
-                  {...register("aadhaarNumber", { required: true })}
-                  className="inputcolumn-ourProfile"
-                />
-                {errors.aadhaarNumber && (
-                  <p className="text-danger">Aadhaar Number is required</p>
-                )}
-              </Col>
-            </Row>
 
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
+              <Col sm={12} md={6} lg={6}>
                 <label>GST Number: </label>
-              </Col>
-              <Col sm={12} lg={6}>
+
                 <input
-                  {...register("gstNumber", { required: true })}
+                  {...register("GSTNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.gstNumber && (
+                {errors.GSTNumber && (
                   <p className="text-danger">GST number is required</p>
                 )}
               </Col>
-            </Row>
 
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
-                <label>Upload Your Pan Card Proof: </label>
-              </Col>
-              <Col sm={12} lg={6}>
-                <input
-                  className="inputcolumn-ourProfile"
-                  style={{ outline: "none", height: "50px" }}
-                  type="file"
-                  onChange={handleFileChange}
-                />
-              </Col>
-            </Row>
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
-                <label>Upload Your Aadhaar Proof: </label>
-              </Col>
-              <Col sm={12} lg={6}>
-                <input
-                  className="inputcolumn-ourProfile"
-                  style={{ outline: "none", height: "50px" }}
-                  type="file"
-                  onChange={handleFileChanges}
-                />
-              </Col>
-            </Row>
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
+              <Col sm={12} md={6} lg={6}>
                 <label>Account Number: </label>
-              </Col>
-              <Col sm={12} lg={6}>
+
                 <input
                   type="number"
-                  {...register("accountno", { required: true })}
+                  {...register("accountNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.accountno && (
+                {errors.accountNumber && (
                   <p className="text-danger">Account number is required</p>
                 )}
               </Col>
-            </Row>
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
+              <Col sm={12} md={6} lg={6}>
                 <label>IFSC Code</label>
-              </Col>
-              <Col sm={12} lg={6}>
+
                 <input
-                  {...register("ifcecode", { required: true })}
+                  {...register("IFSCCode", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.ifcecode && (
+                {errors.IFSCCode && (
                   <p className="text-danger">IFCE code is required</p>
                 )}
               </Col>
-            </Row>
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
+              <Col sm={12} md={6} lg={6}>
                 <label>Bank Name: </label>
-              </Col>
-              <Col sm={12} lg={6}>
+
                 <input
-                  {...register("bankname", { required: true })}
+                  {...register("bankName", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.bankname && (
+                {errors.bankName && (
                   <p className="text-danger">Bank Name is required</p>
                 )}
               </Col>
-            </Row>
-            <Row className="kycRow_Container">
-              <Col sm={12} lg={4}>
+              <Col sm={12} md={6} lg={6}>
                 <label>Branch:</label>
-              </Col>
-              <Col sm={12} lg={6}>
+
                 <input
-                  {...register("branch", { required: true })}
+                  {...register("bankBranch", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
-                {errors.branch && (
+                {errors.bankBranch && (
                   <p className="text-danger">Branch is required</p>
+                )}
+              </Col>
+              <Col sm={12} md={6} lg={6}>
+                <label>Pan or Adhar Upload Anyone: </label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("panOrAdharUpload", {
+                    required: !userKYCDetail?.panOrAdharUpload,
+                  })}
+                  onChange={(e) => {
+                    if (e.target.files[0]) {
+                      const fileUrl = URL.createObjectURL(e.target.files[0]);
+                      setValue("panOrAdharPreview", fileUrl);
+                      setValue("panOrAdharFileName", e.target.files[0].name);
+                    }
+                  }}
+                />
+
+                {!userKYCDetail?.panOrAdharUpload &&
+                  errors.panOrAdharUpload && (
+                    <p className="text-danger">Pan or Adhar is required</p>
+                  )}
+              </Col>
+
+              <Col sm={12} md={6} lg={6}>
+                <label>Voter ID: </label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("voterIdUpload", {
+                    required: !userKYCDetail?.voterIdUpload,
+                  })}
+                  onChange={(e) => {
+                    if (e.target.files[0]) {
+                      const fileUrl = URL.createObjectURL(e.target.files[0]);
+                      setValue("voterIdPreview", fileUrl);
+                      setValue("voterIdFileName", e.target.files[0].name);
+                    }
+                  }}
+                />
+
+                {!userKYCDetail?.voterIdUpload && errors.voterIdUpload && (
+                  <p className="text-danger">Voter ID is required</p>
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={3}>
+                {(userKYCDetail?.panOrAdharUpload ||
+                  watch("panOrAdharPreview")) && (
+                  <>
+                    <img
+                      src={
+                        watch("panOrAdharPreview") ||
+                        userKYCDetail.panOrAdharUpload
+                      }
+                      alt="Preview"
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "contain",
+                        marginTop: "10px",
+                      }}
+                    />
+                    <p>Pan or Adhar</p>
+                  </>
+                )}
+              </Col>
+
+              <Col lg={3}>
+                {(userKYCDetail?.voterIdUpload || watch("voterIdPreview")) && (
+                  <>
+                    <img
+                      src={
+                        watch("voterIdPreview") || userKYCDetail.voterIdUpload
+                      }
+                      alt="Preview"
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "contain",
+                        marginTop: "10px",
+                      }}
+                    />
+                    <p>Voter ID</p>
+                  </>
                 )}
               </Col>
             </Row>
@@ -287,9 +302,8 @@ function LoanKfc() {
         </div>
       </Container>
       {/* </Card> */}
-      <Footer />
     </div>
   );
 }
 
-export default LoanKfc;
+export default Kycvendor;
