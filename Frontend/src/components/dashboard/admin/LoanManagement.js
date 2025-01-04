@@ -1103,7 +1103,7 @@ const LoanManagement = ({ collapsed }) => {
 
               <Row style={{ marginTop: "25px", marginRight: "280px" }}>
                 <Space>
-                  {selectedRecord && selectedRecord.status !== "1" && (
+                  {selectedRecord && selectedRecord.status === "Pending" && (
                     <Button
                       type="primary"
                       style={{ background: "#4096ff", color: "#fff" }}
@@ -1113,7 +1113,7 @@ const LoanManagement = ({ collapsed }) => {
                     </Button>
                   )}
 
-                  {selectedRecord && selectedRecord.status !== "2" && (
+                  {selectedRecord && selectedRecord.status === "Pending" && (
                     <>
                       <Button
                         danger
