@@ -191,6 +191,58 @@ function TabsVendor() {
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div>
                 <Row>
+                <Row className="py-2">
+                  <Col lg={3}>
+                    {(userDetail?.photographs || watch("imagePreview")) && (
+                      <>
+                        <img
+                          src={watch("imagePreview") || userDetail.photographs}
+                          alt="Preview"
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            objectFit: "contain",
+                            marginTop: "10px",
+                          }}
+                        />
+                        <p>Photographs</p>
+                      </>
+                    )}
+                  </Col>
+                </Row>
+                <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Photographs (Passport size)
+                      </label>
+
+                      <input
+                        type="file"
+                        className="inputcolumn-ourProfile"
+                        id="photographsInput"
+                        accept="image/*"
+                        {...register("photographs", {
+                          required: !userDetail?.photographs,
+                        })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl);
+                            setValue(
+                              "photographsFileName",
+                              e.target.files[0].name
+                            );
+                          }
+                        }}
+                      />
+
+                      {!userDetail?.photographs && errors.photographs && (
+                        <p className="text-danger">Photographs are required</p>
+                      )}
+                    </div>
+                  </Col>
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">First Name</label>
@@ -539,7 +591,7 @@ function TabsVendor() {
                               )} */}
                             </div>
                           </Col>
-                         
+
                           <Col xs={12} md={6} lg={4}>
                             <div>
                               <label className="vendorpage_labelCss">
@@ -574,8 +626,26 @@ function TabsVendor() {
                                     Spouse Pay Slip is required
                                   </p>
                                 )}
+                              {/* {(userDetail?.coApplicantDocs ||
+                                watch("spousePreview")) && (
+                                <>
+                                  <img
+                                    src={
+                                      watch("spousePreview") ||
+                                      userDetail.coApplicantDocs
+                                    }
+                                    alt="Preview"
+                                    style={{
+                                      width: "150px",
+                                      height: "150px",
+                                      objectFit: "cover",
+                                      marginTop: "10px",
+                                    }}
+                                  />
+                                  <p>Spouse pay slip</p>
+                                </>
+                              )} */}
                             </div>
-                            
                           </Col>
                         </>
                       )}
@@ -760,39 +830,7 @@ function TabsVendor() {
                     </div>
                   </Col>
 
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Photographs (Passport size)
-                      </label>
-
-                      <input
-                        type="file"
-                        className="inputcolumn-ourProfile"
-                        id="photographsInput"
-                        accept="image/*"
-                        {...register("photographs", {
-                          required: !userDetail?.photographs,
-                        })}
-                        onChange={(e) => {
-                          if (e.target.files[0]) {
-                            const fileUrl = URL.createObjectURL(
-                              e.target.files[0]
-                            );
-                            setValue("imagePreview", fileUrl);
-                            setValue(
-                              "photographsFileName",
-                              e.target.files[0].name
-                            );
-                          }
-                        }}
-                      />
-
-                      {!userDetail?.photographs && errors.photographs && (
-                        <p className="text-danger">Photographs are required</p>
-                      )}
-                    </div>
-                  </Col>
+                 
 
                   <Col xs={12} md={6} lg={4}>
                     <div>
@@ -826,45 +864,8 @@ function TabsVendor() {
                       )}
                     </div>
                   </Col>
-
-                  
                 </Row>
-                <Row className="py-2">
-                  <Col lg={3}>
-                    {(userDetail?.photographs || watch("imagePreview")) && (
-                      <>
-                      <img
-                        src={watch("imagePreview") || userDetail.photographs}
-                        alt="Preview"
-                        style={{
-                          width: "150px",
-                          height: "150px",
-                          objectFit: "cover",
-                          marginTop: "10px",
-                        }}
-                      />
-                      <p>Photographs</p>
-                      </>
-                    )}
-                  </Col>
-                  <Col lg={3}>
-                   {(userDetail?.coApplicantDocs || watch("spousePreview")) && (
-                      <>
-                      <img
-                        src={watch("spousePreview") || userDetail.coApplicantDocs}
-                        alt="Preview"
-                        style={{
-                          width: "150px",
-                          height: "150px",
-                          objectFit: "cover",
-                          marginTop: "10px",
-                        }}
-                      />
-                      <p>Spouse pay slip</p>
-                      </>
-                    )}
-                  </Col>
-                </Row>
+               
               </div>
 
               <div className="upgrade_column mb-3 mt-3">
