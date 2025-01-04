@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema({
   totalChildren: { type: String },
   coApplicantDocs: { type: String },
   photographs: { type: String },
+  userFeedback: { type: String },
   children: [
     {
       name: { type: String },
