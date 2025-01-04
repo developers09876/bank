@@ -7,6 +7,7 @@ import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../../Layout/Header";
 import axios from "axios";
 import Api from "../../../Api";
 
@@ -177,6 +178,7 @@ function TabsVendor() {
 
   return (
     <div>
+  <Header />
       <Col xs={12} md={12} lg={12}>
         <div
           className="ourProfileParentdiv"
@@ -878,6 +880,7 @@ function TabsVendor() {
         {/* </Card> */}
       </Col>
       <ToastContainer />
+      
     </div>
   );
 }
