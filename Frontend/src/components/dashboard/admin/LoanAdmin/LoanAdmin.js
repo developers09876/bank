@@ -30,6 +30,7 @@ const LoanAdmin = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userType");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
 

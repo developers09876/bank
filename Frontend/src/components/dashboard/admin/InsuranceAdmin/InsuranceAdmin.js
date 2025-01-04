@@ -31,6 +31,7 @@ const InsuranceAdmin = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("userType");
     localStorage.removeItem("email");
 
     navigate("/login");

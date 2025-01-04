@@ -62,15 +62,15 @@ function Sidebar({ collapsed }) {
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"
         >
-          <NavLink to="/admin/loanmanagement">
+          <NavLink to="/admin/loanManagement">
             {/* <MdRequestPage className="Nav-Icon" /> */}
             Loan Management
           </NavLink>
-          <NavLink to="/employeeInsurance">
+          <NavLink to="/admin/insuranceManagement">
             {/* <MdSend className="Nav-Icon" /> */}
             Insurance Management
           </NavLink>
-          <NavLink to="/employeeTax">
+          <NavLink to="/admin/taxManagement">
             {/* <MdSend className="Nav-Icon" /> */}
             Tax Management
           </NavLink>
