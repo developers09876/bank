@@ -191,26 +191,28 @@ function TabsVendor() {
             <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div>
                 <Row>
-                <Row className="py-2">
-                  <Col lg={3}>
-                    {(userDetail?.photographs || watch("imagePreview")) && (
-                      <>
-                        <img
-                          src={watch("imagePreview") || userDetail.photographs}
-                          alt="Preview"
-                          style={{
-                            width: "150px",
-                            height: "150px",
-                            objectFit: "contain",
-                            marginTop: "10px",
-                          }}
-                        />
-                        <p>Photographs</p>
-                      </>
-                    )}
-                  </Col>
-                </Row>
-                <Col xs={12} md={6} lg={4}>
+                  <Row className="py-2">
+                    <Col lg={3}>
+                      {(userDetail?.photographs || watch("imagePreview")) && (
+                        <>
+                          <img
+                            src={
+                              watch("imagePreview") || userDetail.photographs
+                            }
+                            alt="Preview"
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                              objectFit: "contain",
+                              marginTop: "10px",
+                            }}
+                          />
+                          <p>Photographs</p>
+                        </>
+                      )}
+                    </Col>
+                  </Row>
+                  <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">
                         Photographs (Passport size)
@@ -293,6 +295,7 @@ function TabsVendor() {
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">Gender</label>
+                      <br />
                       <Controller
                         name="gender"
                         control={control}
@@ -760,6 +763,7 @@ function TabsVendor() {
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">District</label>
+                      <br />
                       <Controller
                         name="district"
                         control={control}
@@ -830,8 +834,6 @@ function TabsVendor() {
                     </div>
                   </Col>
 
-                 
-
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">
@@ -865,7 +867,6 @@ function TabsVendor() {
                     </div>
                   </Col>
                 </Row>
-               
               </div>
 
               <div className="upgrade_column mb-3 mt-3">
