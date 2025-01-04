@@ -714,4 +714,9 @@
     text-transform: uppercase;
     transition: 0.5s;
   }
-  
+  @media (min-width: 992px) {
+    .col-lg-6 {
+        flex: 0 0 auto;
+        width: 48%;
+    }
+}

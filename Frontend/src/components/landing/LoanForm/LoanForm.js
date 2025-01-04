@@ -12,22 +12,28 @@ import Footer from "../../Layout/Footer";
 import axios from "axios";
 import Api from "../../../Api";
 const { Option } = Select;
+
 function LoanForm() {
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     watch,
     control,
     formState: { errors },
   } = useForm();
   const userid = localStorage.getItem("id");
+  const userType = localStorage.getItem("userType");
+  console.log("userid", userid);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [cityList, setCityList] = useState([]);
+  const [loanApplicationData, setLoanApplicationData] = useState(null);
+  const [childCount, setChildCount] = useState(0);
+  const [userDetail, setUserDetail] = useState(null);
 
-  console.log("districtList", districtList);
   useEffect(() => {
     getCountry();
   }, []);
@@ -40,6 +46,7 @@ function LoanForm() {
       console.error("Error fetching country data:", error);
     }
   };
+
   const getState = (country_id) => {
     Api.get(`state/stateById/${country_id}`).then((res) => {
       setStateList(res.data.data);
@@ -51,11 +58,13 @@ function LoanForm() {
       setDistrictList(res.data.data);
     });
   };
+
   const getCity = (districtId) => {
     Api.get(`city/cityById/${districtId}`).then((res) => {
       setCityList(res.data.data);
     });
   };
+
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
 
@@ -88,17 +97,17 @@ function LoanForm() {
 
     const Details = {
       userid: userid,
-      fullName: data.fullName,
+      firstname: data.firstname,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.MaritalStatus,
+      maritalStatus: data.maritalStatus,
       nationality: data.nationality,
-      contact: data.contact,
+      contactNumber: data.contactNumber,
       address: data.address,
       city: data.city,
       district: data.district,
       state: data.state,
-      country: data.Country,
+      country: data.country,
       pinCode: data.pinCode,
       totalChildren: data.totalChildren,
       children: data.children,
@@ -123,8 +132,57 @@ function LoanForm() {
       toast.error("An error occurred while submitting the form");
     }
   };
+  useEffect(() => {
+    const fetchLoanApplication = async () => {
+      const userid = localStorage.getItem("id");
+      if (!userid) {
+        console.log("User ID not found in localStorage");
+        return;
+      }
 
-  const [childCount, setChildCount] = useState(0);
+      try {
+        console.log("Fetching loan application with userID:", userid);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        console.log("Response received:", response);
+        setLoanApplicationData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching loan application data:", error);
+      }
+    };
+
+    fetchLoanApplication();
+  }, [userid]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        if (userType === "user") {
+          const response = await axios.get(
+            `http://localhost:5000/signup/getby/${userid}`
+          );
+          setUserDetail(response.data);
+          console.log("getresponse", response.data);
+
+          const fetchedData = response.data;
+          const formattedDob = fetchedData.dob
+            ? new Date(fetchedData.dob).toISOString().split("T")[0]
+            : "";
+
+          reset({
+            ...fetchedData,
+            dob: formattedDob,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userType, userid]);
+
   const loanAmount = watch("totalChildren");
 
   useEffect(() => {
@@ -172,16 +230,18 @@ function LoanForm() {
                   <Row>
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">Full Name</label>
+                        <label className="vendorpage_labelCss">
+                          First Name
+                        </label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
-                          name="fullName"
-                          {...register("fullName", { required: true })}
-                          placeholder="Full Name"
+                          name="firstname"
+                          {...register("firstname", { required: true })}
+                          placeholder="First Name"
                         />
-                        {errors.fullName && (
-                          <p className="text-danger">Full Name is required</p>
+                        {errors.firstname && (
+                          <p className="text-danger">First Name is required</p>
                         )}
                       </div>
                     </Col>
@@ -235,7 +295,7 @@ function LoanForm() {
                           Marital Status
                         </label>
                         <Controller
-                          name="MaritalStatus"
+                          name="maritalStatus"
                           control={control}
                           defaultValue=""
                           rules={{ required: true }}
@@ -246,7 +306,7 @@ function LoanForm() {
                               placeholder="Select Marital Status"
                               onChange={(value) => {
                                 field.onChange(value);
-                                setValue("MaritalStatus", value);
+                                setValue("maritalStatus", value);
                               }}
                             >
                               <Option value="Single">Single</Option>
@@ -255,14 +315,14 @@ function LoanForm() {
                             </Select>
                           )}
                         />
-                        {errors.MaritalStatus && (
+                        {errors.maritalStatus && (
                           <p className="text-danger">
                             Marital Status is required
                           </p>
                         )}
                       </div>
                     </Col>
-                    {watch("MaritalStatus") === "Married" && (
+                    {watch("maritalStatus") === "Married" && (
                       <>
                         <Col xs={12} md={6} lg={4}>
                           <div>
@@ -501,18 +561,40 @@ function LoanForm() {
                               </div>
                             </Col>
                             <Col xs={12} md={6} lg={4}>
-                              <div>
-                                <label className="vendorpage_labelCss">
-                                  Upload Your Spouse Pay slip
-                                </label>
-                                <input
-                                  className="inputcolumn-ourProfile"
-                                  type="file"
-                                  accept=".pdf,.jpg,.jpeg,.png"
-                                  {...register("coApplicantDocs")}
-                                  placeholder="If applicable"
-                                />
-                              </div>
+                            <div>
+                              <label className="vendorpage_labelCss">
+                                Upload Your Spouse Pay Slip
+                              </label>
+
+                              <input
+                                type="file"
+                                className="inputcolumn-ourProfile"
+                                id="coApplicantDocsInput"
+                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                                {...register("coApplicantDocs", {
+                                  required: !userDetail?.coApplicantDocs,
+                                })}
+                                onChange={(e) => {
+                                  if (e.target.files[0]) {
+                                    const previewUrl = URL.createObjectURL(
+                                      e.target.files[0]
+                                    );
+                                    setValue("spousePreview", previewUrl);
+                                    setValue(
+                                      "coApplicantDocsUrl",
+                                      e.target.files[0].name
+                                    );
+                                  }
+                                }}
+                              />
+
+                              {!userDetail?.coApplicantDocs &&
+                                errors.coApplicantDocs && (
+                                  <p className="text-danger">
+                                    Spouse Pay Slip is required
+                                  </p>
+                                )}
+                            </div>
                             </Col>
                           </>
                         )}
@@ -544,11 +626,11 @@ function LoanForm() {
                         <input
                           className="inputcolumn-ourProfile"
                           type="tel"
-                          name="contact"
-                          {...register("contact", { required: true })}
+                          name="contactNumber"
+                          {...register("contactNumber", { required: true })}
                           placeholder="Phone Number"
                         />
-                        {errors.contact && (
+                        {errors.contactNumber && (
                           <p className="text-danger">
                             Phone Number is required
                           </p>
@@ -559,7 +641,7 @@ function LoanForm() {
                       <div>
                         <label className="vendorpage_labelCss">Country</label>
                         <Controller
-                          name="Country"
+                          name="country"
                           control={control}
                           defaultValue=""
                           rules={{ required: true }}
@@ -568,11 +650,11 @@ function LoanForm() {
                               {...field}
                               className="inputcolumn_drp"
                               showSearch
-                              placeholder="Select Country"
+                              placeholder="Select country"
                               optionFilterProp="children"
                               onChange={(value, option) => {
                                 field.onChange(value);
-                                setValue("Country", value); // Update form state
+                                setValue("country", value); // Update form state
                                 getState(option.key); // Pass the country ID to getState
                               }}
                               filterOption={(input, option) =>
@@ -589,7 +671,7 @@ function LoanForm() {
                             </Select>
                           )}
                         />
-                        {errors.Country && (
+                        {errors.country && (
                           <p className="text-danger">Country is required</p>
                         )}
                       </div>
@@ -736,24 +818,75 @@ function LoanForm() {
                       </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Photographs (Passport size)
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept="image/*"
-                          {...register("photographs", { required: true })}
-                        />
-                        {errors.photographs && (
-                          <p className="text-danger">
-                            Photographs are required
-                          </p>
-                        )}
-                      </div>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Photographs (Passport size)
+                      </label>
+
+                      <input
+                        type="file"
+                        className="inputcolumn-ourProfile"
+                        id="photographsInput"
+                        accept="image/*"
+                        {...register("photographs", {
+                          required: !userDetail?.photographs,
+                        })}
+                        onChange={(e) => {
+                          if (e.target.files[0]) {
+                            const fileUrl = URL.createObjectURL(
+                              e.target.files[0]
+                            );
+                            setValue("imagePreview", fileUrl);
+                            setValue(
+                              "photographsFileName",
+                              e.target.files[0].name
+                            );
+                          }
+                        }}
+                      />
+
+                      {!userDetail?.photographs && errors.photographs && (
+                        <p className="text-danger">Photographs are required</p>
+                      )}
+                    </div>
                     </Col>
                   </Row>
+                  <Row className="py-2">
+                                    <Col lg={3}>
+                                      {(userDetail?.photographs || watch("imagePreview")) && (
+                                        <>
+                                        <img
+                                          src={watch("imagePreview") || userDetail.photographs}
+                                          alt="Preview"
+                                          style={{
+                                            width: "150px",
+                                            height: "150px",
+                                            objectFit: "cover",
+                                            marginTop: "10px",
+                                          }}
+                                        />
+                                        <p>Photographs</p>
+                                        </>
+                                      )}
+                                    </Col>
+                                    <Col lg={3}>
+                                     {(userDetail?.coApplicantDocs || watch("spousePreview")) && (
+                                        <>
+                                        <img
+                                          src={watch("spousePreview") || userDetail.coApplicantDocs}
+                                          alt="Preview"
+                                          style={{
+                                            width: "150px",
+                                            height: "150px",
+                                            objectFit: "cover",
+                                            marginTop: "10px",
+                                          }}
+                                        />
+                                        <p>Spouse pay slip</p>
+                                        </>
+                                      )}
+                                    </Col>
+                                  </Row>
                 </div>
 
                 <div className="upgrade_column mb-3 mt-3">

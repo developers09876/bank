@@ -204,14 +204,16 @@ const LoanManagements = ({ collapsed }) => {
               <Row>
                 <Col span={10}>
                   <p style={{ fontSize: "15px" }}>
-                    <strong>Aadhaar</strong>
+                    <strong>Aadhaar Number</strong>
                   </p>
                 </Col>
                 <Col span={2}>
                   <p style={{ fontSize: "15px" }}>:</p>
                 </Col>
                 <Col span={10}>
-                  <p style={{ fontSize: "15px" }}>{selectedRecord.aadhaar}</p>
+                  <p style={{ fontSize: "15px" }}>
+                    {selectedRecord.aadhaarNumber}
+                  </p>
                 </Col>
               </Row>
               <Row>
