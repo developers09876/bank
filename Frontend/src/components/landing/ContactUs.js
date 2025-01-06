@@ -4,7 +4,7 @@ import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Row, Col, Container, Modal, Button } from "react-bootstrap";
+import { Row, Col, Container} from "react-bootstrap";
 import Api from "../../Api";
 
 const ContactUs = () => {
