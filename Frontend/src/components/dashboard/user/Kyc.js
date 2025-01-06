@@ -182,7 +182,8 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Branch:</label>
+                <label>Branch</label>
+                <br />
 
                 <input
                   {...register("bankBranch", { required: true })}
@@ -210,7 +211,7 @@ function Kycvendor() {
                     }
                   }}
                 />
-                
+
                 {!userKYCDetail?.panOrAdharUpload &&
                   errors.panOrAdharUpload && (
                     <p className="text-danger">Pan or Adhar is required</p>
@@ -235,7 +236,7 @@ function Kycvendor() {
                     }
                   }}
                 />
-                
+
                 {!userKYCDetail?.voterIdUpload && errors.voterIdUpload && (
                   <p className="text-danger">Voter ID is required</p>
                 )}
@@ -268,7 +269,9 @@ function Kycvendor() {
                 {(userKYCDetail?.voterIdUpload || watch("voterIdPreview")) && (
                   <>
                     <img
-                      src={watch("voterIdPreview") || userKYCDetail.voterIdUpload}
+                      src={
+                        watch("voterIdPreview") || userKYCDetail.voterIdUpload
+                      }
                       alt="Preview"
                       style={{
                         width: "150px",
@@ -299,6 +302,8 @@ function Kycvendor() {
           </form>
         </div>
       </Container>
+      <ToastContainer />
+
       {/* </Card> */}
     </div>
   );

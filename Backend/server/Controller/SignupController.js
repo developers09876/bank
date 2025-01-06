@@ -16,9 +16,8 @@ export const registerUser = async (req, res) => {
     contactNumber,
     dateOfJoining,
     manager,
-    branch
+    branch,
   } = req.body;
-
 
   // if (password !== confirmPassword) {
   //   return res.status(400).json({ error: "Passwords do not match" });
@@ -44,7 +43,7 @@ export const registerUser = async (req, res) => {
       contactNumber,
       manager,
       dateOfJoining,
-      branch
+      branch,
     });
 
     await newUser.save();
@@ -85,8 +84,8 @@ export async function loginUser(req, res, next) {
     const token = jwt.sign({ userId: user._id }, "your_jwt_secret", {
       expiresIn: "1h",
     });
-    
-    res.json({ token ,user});
+
+    res.json({ token, user });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -95,7 +94,7 @@ export async function loginUser(req, res, next) {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password"); 
+    const users = await User.find().select("-password");
     res.status(200).json(users);
   } catch (err) {
     console.error(err.message);
@@ -103,11 +102,10 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-
 export const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(id).select("-password"); 
+    const user = await User.findById(id).select("-password");
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -122,17 +120,17 @@ export const getUserById = async (req, res) => {
 
 export async function updateUserDetails(req, res, next) {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const data = req.body;
 
     const children = Array.isArray(data.children)
-    ? data.children.map((child) => ({
-        gender: child.gender,
-        name: child.name,
-        age: child.age,
-        schoolName: child.schoolName,
-      }))
-    : [];
+      ? data.children.map((child) => ({
+          gender: child.gender,
+          name: child.name,
+          age: child.age,
+          schoolName: child.schoolName,
+        }))
+      : [];
 
     const updatedDetails = {
       // fullName: data.fullName,
@@ -140,7 +138,7 @@ export async function updateUserDetails(req, res, next) {
       lastname: data.lastname,
       dob: data.dob,
       gender: data.gender,
-      maritalStatus: data.maritalStatus ,
+      maritalStatus: data.maritalStatus,
       nationality: data.nationality,
       contactNumber: data.contactNumber,
       address: data.address,
@@ -157,9 +155,8 @@ export async function updateUserDetails(req, res, next) {
       spouseDesignation: data.spouseDesignation,
       coApplicantDocs: data.coApplicantDocs,
       photographs: data.photographs,
+      userFeedback: data.userFeedback,
     };
-
-    console.log("Updated Details:", updatedDetails);
 
     const updatedLoanApplication = await User.findByIdAndUpdate(
       id,
@@ -189,7 +186,7 @@ export async function updateUserDetails(req, res, next) {
 
 export async function updateKYCDetails(req, res, next) {
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const data = req.body;
 
     const updatedKYCDetails = {
@@ -202,8 +199,6 @@ export async function updateKYCDetails(req, res, next) {
       panOrAdharUpload: data.panOrAdharUpload,
       voterIdUpload: data.voterIdUpload,
     };
-
-    console.log("Updated KYC Details:", updatedKYCDetails);
 
     const updatedKYCApplication = await User.findByIdAndUpdate(
       id,
