@@ -61,14 +61,15 @@ import PersonalPlan from "./components/landing/PersonalPlan";
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
+  const role = localStorage.getItem("role");
 
   if (!token) {
     return <Navigate to="/login" />;
   }
 
-  if (!allowedUserTypes.includes(userType)) {
+  if (!allowedUserTypes.includes(userType || role)) {
     return <Navigate to="/" />;
-  }
+  } 
 
   return <Component />;
 };
@@ -181,7 +182,14 @@ function App() {
           </Route> */}
 
           <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/admin" element={<Admin />}>
+          <Route path="/admin" 
+          element={
+            <ProtectedRoute
+              Component={Admin}
+              allowedUserTypes={["admin"]}
+          />
+          }
+          >
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}

@@ -32,6 +32,7 @@ const StockMarketAdmin = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("userType");
+    localStorage.removeItem("id");
     localStorage.removeItem("email");
 
     navigate("/adminlogin");
