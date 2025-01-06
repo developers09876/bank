@@ -1,4 +1,5 @@
 import AddAdmin from "./AddAdmin";
+import ContactUs from "./ContactUs";
 import CreateJobForm from "./createJobform";
 import CreateLead from "./CreateLead";
 import AdminDashboard from "./dashboard";
@@ -26,6 +27,7 @@ export const AdminRoutes = [
   { path: "loandashboard", element: <LoanDashboard /> },
   { path: "leadgeneration", element: <LeadGeneration /> },
   { path: "createlead", element: <CreateLead /> },
+  { path: "contact", element: <ContactUs /> },
   { path: "leaddetails/:id", element: <LeadDetails /> },
 
 
