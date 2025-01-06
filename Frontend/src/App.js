@@ -74,6 +74,18 @@ const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   return <Component />;
 };
 
+const ProtectedRoutes = ({ Component }) => {
+    const token = localStorage.getItem("token");
+    const userType = localStorage.getItem("userType");
+  
+    console.log("userType", token);
+    if (token) {
+      return <Component />;
+    } else {
+      return <Navigate to="/login" />;
+    }
+  };
+
 function App() {
   return (
     <div className="App">
@@ -88,20 +100,20 @@ function App() {
           <Route path="/taxform" element={<TaxForm />} />
           <Route
             path="/loan"
-            element={<ProtectedRoute Component={LoanPage} />}
+            element={<ProtectedRoutes Component={LoanPage} />}
           />
 
           <Route
             path="/insurancepage"
-            element={<ProtectedRoute Component={InsuranceCards} />}
+            element={<ProtectedRoutes Component={InsuranceCards} />}
           />
           <Route
             path="/taxpage"
-            element={<ProtectedRoute Component={TaxCards} />}
+            element={<ProtectedRoutes Component={TaxCards} />}
           />
           <Route
             path="/loanform"
-            element={<ProtectedRoute Component={LoanForm} />}
+            element={<ProtectedRoutes Component={LoanForm} />}
           />
 
           {/* REGISTER */}
@@ -157,7 +169,7 @@ function App() {
           <Route exact path="/emailClient" element={<EmailPage />} />
           <Route
             path="/credit"
-            element={<ProtectedRoute Component={Credit} />}
+            element={<ProtectedRoutes Component={Credit} />}
           />
           <Route path="/loanreview" element={<LoanDashboard />} />
           <Route path="/carrier" element={<Carrier />} />
