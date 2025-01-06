@@ -3,6 +3,8 @@ import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 import axios from "axios";
 // import Api from "../../Api";
 
@@ -95,6 +97,7 @@ function Kycvendor() {
 
   return (
     <div>
+       <Header />
       <Container>
         <div
           className="ourProfileParentdiv"
@@ -302,6 +305,7 @@ function Kycvendor() {
         </div>
       </Container>
       {/* </Card> */}
+      <Footer />
     </div>
   );
 }
