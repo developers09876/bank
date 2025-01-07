@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Table } from "react-bootstrap";
+import Header from "../../Layout/Header";
 // import "./FileTable.css"; // Add CSS for styling
 
 const Documents = () => {
@@ -25,6 +26,7 @@ const Documents = () => {
   };
   return (
     <div className="file-table-container">
+      <Header/>
       <h2>Files</h2>
       <Table className="file-table">
         <thead>
