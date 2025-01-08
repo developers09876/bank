@@ -6,8 +6,8 @@ import { HiUserCircle } from "react-icons/hi";
 import Sidebar from "./Sidebar";
 import Imageh1 from "../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 
-import '../HeaderNavbar.scss';
-import '../Sidebar.scss';
+import "../HeaderNavbar.scss";
+import "../Sidebar.scss";
 
 const Admin = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -30,28 +30,32 @@ const Admin = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
-
+    localStorage.removeItem("userType");
 
     navigate("/adminlogin");
   };
 
   return (
-    <div style={{minHeight:"100vh"}}>
+    <div style={{ minHeight: "100vh" }}>
       <header className="dashboards__headerNavs">
         <div className="dashboards__headerNavs--container">
           <span className="navMenu p-2" onClick={toggleSidebar}>
             {collapsed ? <AiOutlineClose /> : <GiHamburgerMenu />}
           </span>
           <span className="navName" onClick={() => navigate("/")}>
-          <img
-            src={Imageh1}
-            alt="logo-img"
-            style={{ width: "100px", height: "95px"}}
-          />
+            <img
+              src={Imageh1}
+              alt="logo-img"
+              style={{ width: "100px", height: "95px" }}
+            />
           </span>
-            <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3" onClick={handleLogout}>
+          <button
+            className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3"
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </div>

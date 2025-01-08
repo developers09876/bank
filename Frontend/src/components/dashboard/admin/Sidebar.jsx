@@ -62,15 +62,15 @@ function Sidebar({ collapsed }) {
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"
         >
-          <NavLink to="/admin/loanmanagement">
+          <NavLink to="/admin/loanManagement">
             {/* <MdRequestPage className="Nav-Icon" /> */}
             Loan Management
           </NavLink>
-          <NavLink to="/employeeInsurance">
+          <NavLink to="/admin/insuranceManagement">
             {/* <MdSend className="Nav-Icon" /> */}
             Insurance Management
           </NavLink>
-          <NavLink to="/employeeTax">
+          <NavLink to="/admin/taxManagement">
             {/* <MdSend className="Nav-Icon" /> */}
             Tax Management
           </NavLink>
@@ -86,6 +86,14 @@ function Sidebar({ collapsed }) {
         >
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Lead  Generation
+        </NavLink>
+        <NavLink
+          to="/admin/contact"
+          ClassName="main-nav-style"
+          // style={{ marginTop: "70px" }}
+        >
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Contact Us
         </NavLink>
       </Menu>
     </div>

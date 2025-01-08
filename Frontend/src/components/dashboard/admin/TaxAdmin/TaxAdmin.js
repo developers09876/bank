@@ -30,6 +30,8 @@ const TaxAdmin = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("id");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
 

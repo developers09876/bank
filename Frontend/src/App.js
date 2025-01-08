@@ -60,18 +60,35 @@ import StockMarketAdmin from "./components/dashboard/admin/StockMarket/StockMark
 import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/StockMarketRoutes";
 
 import PersonalPlan from "./components/landing/PersonalPlan";
+import Refer from "./components/landing/Refer";
 
-const ProtectedRoute = ({ Component }) => {
+const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
+  const role = localStorage.getItem("role");
 
-  console.log("userType", token);
-  if (token) {
-    return <Component />;
-  } else {
+  if (!token) {
     return <Navigate to="/login" />;
   }
+
+  if (!allowedUserTypes.includes(userType || role)) {
+    return <Navigate to="/" />;
+  } 
+
+  return <Component />;
 };
+
+const ProtectedRoutes = ({ Component }) => {
+    const token = localStorage.getItem("token");
+    const userType = localStorage.getItem("userType");
+  
+    console.log("userType", token);
+    if (token) {
+      return <Component />;
+    } else {
+      return <Navigate to="/login" />;
+    }
+  };
 
 function App() {
   return (
@@ -81,6 +98,7 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<ContactUs />} />
+          <Route path="/refer" element={<Refer />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
           {/* <Route path="/insurance" element={<InsuranceFormProfileTab />} /> */}
@@ -88,21 +106,21 @@ function App() {
           <Route path="/taxform" element={<TaxForm />} />
           <Route
             path="/loan"
-            element={<ProtectedRoute Component={LoanPage} />}
+            element={<ProtectedRoutes Component={LoanPage} />}
           />
 
           <Route
             path="/insurancepage"
-            element={<ProtectedRoute Component={InsuranceCards} />}
+            element={<ProtectedRoutes Component={InsuranceCards} />}
           />
          
           <Route
             path="/taxpage"
-            element={<ProtectedRoute Component={TaxCards} />}
+            element={<ProtectedRoutes Component={TaxCards} />}
           />
           <Route
             path="/loanform"
-            element={<ProtectedRoute Component={LoanForm} />}
+            element={<ProtectedRoutes Component={LoanForm} />}
           />
             <Route
             path="/insurancepolicy"
@@ -162,53 +180,135 @@ function App() {
           <Route exact path="/emailClient" element={<EmailPage />} />
           <Route
             path="/credit"
-            element={<ProtectedRoute Component={Credit} />}
+            element={<ProtectedRoutes Component={Credit} />}
           />
           <Route path="/loanreview" element={<LoanDashboard />} />
           <Route path="/carrier" element={<Carrier />} />
 
-          <Route path="/employee" element={<EmployeeDashboard />}>
+          <Route
+            path="/employee"
+            element={
+              <ProtectedRoute
+                Component={EmployeeDashboard}
+                allowedUserTypes={["employee"]}
+              />
+            }
+          >
             {EmployeeRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
+          {/* <Route path="/employee" element={<EmployeeDashboard />}>
+            {EmployeeRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
 
           <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/admin" element={<Admin />}>
+          <Route path="/admin" 
+          element={
+            <ProtectedRoute
+              Component={Admin}
+              allowedUserTypes={["admin"]}
+          />
+          }
+          >
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
 
-          <Route path="/adminLoan" element={<LoanAdmin />}>
+          <Route
+            path="/adminLoan"
+            element={
+              <ProtectedRoute
+                Component={LoanAdmin}
+                allowedUserTypes={["LoanEmployee"]}
+              />
+            }
+          >
             {LoanAdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
+          {/* <Route path="/adminLoan" element={<LoanAdmin />}>
+            {LoanAdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
 
-          <Route path="/employeeTax" element={<TaxAdmin />}>
+          <Route
+            path="/employeeTax"
+            element={
+              <ProtectedRoute
+                Component={TaxAdmin}
+                allowedUserTypes={["TaxEmployee"]}
+              />
+            }
+          >
             {TaxAdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
+          {/* <Route path="/employeeTax" element={<TaxAdmin />}>
+            {TaxAdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
 
-          <Route path="/employeeInsurance" element={<InsuranceAdmin />}>
+          <Route
+            path="/employeeInsurance"
+            element={
+              <ProtectedRoute
+                Component={InsuranceAdmin}
+                allowedUserTypes={["InsuranceEmployee"]}
+              />
+            }
+          >
             {InsuranceAdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
+          {/* <Route path="/employeeInsurance" element={<InsuranceAdmin />}>
+            {InsuranceAdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
 
-          <Route path="/employeeStockMarket" element={<StockMarketAdmin />}>
+          <Route
+            path="/employeeStockMarket"
+            element={
+              <ProtectedRoute
+                Component={StockMarketAdmin}
+                allowedUserTypes={["stockMarket"]}
+              />
+            }
+          >
             {StockMarketRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
+          {/* <Route path="/employeeStockMarket" element={<StockMarketAdmin />}>
+            {StockMarketRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
 
-          <Route path="/user" element={<User />}>
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute Component={User} allowedUserTypes={["user"]} />
+            }
+          >
             {UserRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
+          {/* <Route path="/user" element={<User />}>
+            {UserRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
         </Routes>
       </Fragment>
     </div>
