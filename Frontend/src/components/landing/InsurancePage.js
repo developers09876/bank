@@ -104,7 +104,7 @@ const InsuranceCards = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" href="/insuranceform">
+            <Button variant="primary" href="/insurancepolicy">
               Proceed to Apply
             </Button>
           </Modal.Footer>

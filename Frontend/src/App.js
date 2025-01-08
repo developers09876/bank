@@ -35,8 +35,10 @@ import UserList from "./components/dashboard/admin/UserList";
 import TaxForm from "./components/landing/TaxForm";
 import LoanPage from "./components/landing/LoanPage";
 import InsuranceCards from "./components/landing/InsurancePage";
+// import InsuranceFormProfileTab from "./components/landing/InsuranceForm/InsuranceFormProfileTab"
 import TaxCards from "./components/landing/TaxPage";
 import LoanForm from "./components/landing/LoanForm/LoanFormProfileTab";
+import InsuranceForm from "./components/landing/InsuranceForm/InsuranceFormProfileTab";
 import LoanDashboard from "./components/dashboard/Employee/LoanReview";
 import EmployeeDashboard from "./components/dashboard/Employee";
 import { EmployeeRoutes } from "./components/dashboard/Employee/EmployeeRoutes";
@@ -80,6 +82,7 @@ function App() {
           <Route exact path="/contact" element={<ContactUs />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
+          {/* <Route path="/insurance" element={<InsuranceFormProfileTab />} /> */}
           <Route path="/personalplan" element={<PersonalPlan />} />
           <Route path="/taxform" element={<TaxForm />} />
           <Route
@@ -91,6 +94,7 @@ function App() {
             path="/insurancepage"
             element={<ProtectedRoute Component={InsuranceCards} />}
           />
+         
           <Route
             path="/taxpage"
             element={<ProtectedRoute Component={TaxCards} />}
@@ -98,6 +102,10 @@ function App() {
           <Route
             path="/loanform"
             element={<ProtectedRoute Component={LoanForm} />}
+          />
+            <Route
+            path="/insurancepolicy"
+            element={<ProtectedRoute Component={InsuranceForm} />}
           />
 
           {/* REGISTER */}
