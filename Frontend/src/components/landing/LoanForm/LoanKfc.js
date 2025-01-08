@@ -63,8 +63,11 @@ function Kycvendor() {
       }
     };
 
-    const panOrAdharUploadUrl = data.panOrAdharUpload?.[0]
-      ? await uploadFile(data.panOrAdharUpload[0])
+    const panUploadUrl = data.panUpload?.[0]
+      ? await uploadFile(data.panUpload[0])
+      : null;
+      const AdharUploadUrl = data.AdharUpload?.[0]
+      ? await uploadFile(data.AdharUpload[0])
       : null;
     const voterIdUploadUrl = data.voterIdUpload?.[0]
       ? await uploadFile(data.voterIdUpload[0])
@@ -77,7 +80,8 @@ function Kycvendor() {
       IFSCCode: data.IFSCCode,
       bankName: data.bankName,
       bankBranch: data.bankBranch,
-      panOrAdharUpload: panOrAdharUploadUrl,
+      panUpload: panUploadUrl,
+      AdharUpload: AdharUploadUrl,
       voterIdUpload: voterIdUploadUrl,
     };
     console.log("Details", Details);
@@ -126,7 +130,7 @@ function Kycvendor() {
 
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="kycRow_Container">
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>PanCard Number: </label>
 
                 <input
@@ -138,7 +142,7 @@ function Kycvendor() {
                 )}
               </Col>
 
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>GST Number: </label>
 
                 <input
@@ -150,7 +154,7 @@ function Kycvendor() {
                 )}
               </Col>
 
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>Account Number: </label>
 
                 <input
@@ -162,7 +166,7 @@ function Kycvendor() {
                   <p className="text-danger">Account number is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>IFSC Code</label>
 
                 <input
@@ -173,7 +177,7 @@ function Kycvendor() {
                   <p className="text-danger">IFCE code is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>Bank Name: </label>
 
                 <input
@@ -184,7 +188,7 @@ function Kycvendor() {
                   <p className="text-danger">Bank Name is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>Branch:</label>
 
                 <input
@@ -195,32 +199,57 @@ function Kycvendor() {
                   <p className="text-danger">Branch is required</p>
                 )}
               </Col>
-              <Col sm={12} md={6} lg={6}>
-                <label>Pan or Adhar Upload Anyone: </label>
+              <Col sm={10} md={4} lg={4}>
+                <label>Pan Upload: </label>
                 <input
                   className="inputcolumn-ourProfile"
                   style={{ outline: "none", height: "50px" }}
                   type="file"
                   accept=".pdf,.jpg,.jpeg,.png"
-                  {...register("panOrAdharUpload", {
-                    required: !userKYCDetail?.panOrAdharUpload,
+                  {...register("panUpload", {
+                    required: !userKYCDetail?.panUpload,
                   })}
                   onChange={(e) => {
                     if (e.target.files[0]) {
                       const fileUrl = URL.createObjectURL(e.target.files[0]);
-                      setValue("panOrAdharPreview", fileUrl);
-                      setValue("panOrAdharFileName", e.target.files[0].name);
+                      setValue("panPreview", fileUrl);
+                      setValue("panFileName", e.target.files[0].name);
+                    }
+                  }}
+                />
+
+                {!userKYCDetail?.panOrAdharUpload &&
+                  errors.panUpload && (
+                    <p className="text-danger">Pan is required</p>
+                  )}
+              </Col>
+
+              <Col sm={10} md={4} lg={4}>
+                <label>Adhar Upload : </label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  style={{ outline: "none", height: "50px" }}
+                  type="file"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  {...register("AdharUpload", {
+                    required: !userKYCDetail?.AdharUpload,
+                  })}
+                  onChange={(e) => {
+                    if (e.target.files[0]) {
+                      const fileUrl = URL.createObjectURL(e.target.files[0]);
+                      setValue("AdharPreview", fileUrl);
+                      setValue("AdharFileName", e.target.files[0].name);
                     }
                   }}
                 />
 
                 {!userKYCDetail?.panOrAdharUpload &&
                   errors.panOrAdharUpload && (
-                    <p className="text-danger">Pan or Adhar is required</p>
+                    <p className="text-danger"> Adhar is required</p>
                   )}
               </Col>
 
-              <Col sm={12} md={6} lg={6}>
+              <Col sm={10} md={4} lg={4}>
                 <label>Voter ID: </label>
                 <input
                   className="inputcolumn-ourProfile"
