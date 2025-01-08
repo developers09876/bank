@@ -184,111 +184,123 @@ function LoanLeadManagement() {
         onOk={handleModalOk}
         onCancel={handleModalCancel}
         footer={null}
-        style={{fontSize:"18px"}}
+        style={{ fontSize: "18px" }}
         // bodyStyle={{ maxHeight: "70vh", overflowY: "auto" }}
       >
         {selectedRecord && (
           <div>
-          <Row >
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>Name</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                {`${selectedRecord.firstname} ${selectedRecord.lastname}`}
-              </p>
-            </Col>
-          </Row>
-        
-          <Row >
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>Email</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>{selectedRecord.email}</p>
-            </Col>
-          </Row>
-        
-          <Row >
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>Phone</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>{selectedRecord.phone}</p>
-            </Col>
-          </Row>
-        
-          <Row >
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>Loan Amount</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>{selectedRecord.amount}</p>
-            </Col>
-          </Row>
-        
-          <Row >
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>Aadhar Number</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>{selectedRecord.aadhar}</p>
-            </Col>
-          </Row>
-        
-          <Row>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>PAN Card Number</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>{selectedRecord.panno}</p>
-            </Col>
-          </Row>
-        
-          <Row>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>
-                <strong>Purpose Of Loan</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-            </Col>
-            <Col span={10}>
-              <p style={{ fontSize: "15px", padding: "3px" }}>{selectedRecord.purpose}</p>
-            </Col>
-          </Row>
-        </div>
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Name</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {`${selectedRecord.firstname} ${selectedRecord.lastname}`}
+                </p>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Email</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.email}
+                </p>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Phone</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.phone}
+                </p>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Loan Amount</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.amount}
+                </p>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Aadhar Number</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.aadhar}
+                </p>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>PAN Card Number</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.panno}
+                </p>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Purpose Of Loan</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.purpose}
+                </p>
+              </Col>
+            </Row>
+          </div>
         )}
       </Modal>
     </div>

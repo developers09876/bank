@@ -72,22 +72,22 @@ const ProtectedRoute = ({ Component, allowedUserTypes }) => {
 
   if (!allowedUserTypes.includes(userType || role)) {
     return <Navigate to="/" />;
-  } 
+  }
 
   return <Component />;
 };
 
 const ProtectedRoutes = ({ Component }) => {
-    const token = localStorage.getItem("token");
-    const userType = localStorage.getItem("userType");
-  
-    console.log("userType", token);
-    if (token) {
-      return <Component />;
-    } else {
-      return <Navigate to="/login" />;
-    }
-  };
+  const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("userType");
+
+  console.log("userType", token);
+  if (token) {
+    return <Component />;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
 
 function App() {
   return (
@@ -112,7 +112,7 @@ function App() {
             path="/insurancepage"
             element={<ProtectedRoutes Component={InsuranceCards} />}
           />
-         
+
           <Route
             path="/taxpage"
             element={<ProtectedRoutes Component={TaxCards} />}
@@ -121,9 +121,10 @@ function App() {
             path="/loanform"
             element={<ProtectedRoutes Component={LoanForm} />}
           />
-            <Route
+          <Route
             path="/insurancepolicy"
-            element={<ProtectedRoute Component={InsuranceForm} />}
+            // element={<ProtectedRoute Component={InsuranceForm} />}
+            element={<InsuranceForm />}
           />
 
           {/* REGISTER */}
@@ -204,13 +205,11 @@ function App() {
           </Route> */}
 
           <Route path="/adminlogin" element={<AdminLogin />} />
-          <Route path="/admin" 
-          element={
-            <ProtectedRoute
-              Component={Admin}
-              allowedUserTypes={["admin"]}
-          />
-          }
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute Component={Admin} allowedUserTypes={["admin"]} />
+            }
           >
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
