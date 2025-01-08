@@ -57,6 +57,7 @@ import StockMarketAdmin from "./components/dashboard/admin/StockMarket/StockMark
 import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/StockMarketRoutes";
 
 import PersonalPlan from "./components/landing/PersonalPlan";
+import Refer from "./components/landing/Refer";
 
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
@@ -94,6 +95,7 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<ContactUs />} />
+          <Route path="/refer" element={<Refer />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
           <Route path="/personalplan" element={<PersonalPlan />} />
