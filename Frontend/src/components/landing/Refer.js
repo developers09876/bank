@@ -19,21 +19,17 @@ const Refer = () => {
             <Row className="refer-firstrow px-5 py-2">
               <Col
                 className="refer-firstcol px-3 py-2"
-                lg={4}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
               >
                 <div className="referral-left animate-slide-in-left">
                   <h1 className="refer-heading">
-                    Refer a {" "}
-                    {/* <span className="refer-heading"> */}
-                      Friend
-                      {/* </span> */}
+                    Refer a Friend
                   </h1>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    <br /> sed diam nonummy nibh euismod tincidunt ut laoreet.
+                  For every successful referral, earn exciting rewards as a token of our appreciation.
                   </p>
                   <div>
                   <TextField
@@ -41,7 +37,8 @@ const Refer = () => {
                     label="Enter the Email"
                     variant="outlined"
                     type="email"
-                    fullWidth
+                    size="small"
+                    // fullWidth
                     // className="inputcolumn-refer"
                   /><br/>
                   <button type="submit" className="learn-more-button">Submit</button>
@@ -51,7 +48,7 @@ const Refer = () => {
               </Col>
               <Col
                 className="refer-secondcol px-3 py-2"
-                lg={8}
+                lg={6}
                 md={12}
                 sm={12}
                 xs={12}
