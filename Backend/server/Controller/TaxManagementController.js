@@ -30,3 +30,12 @@ export async function createTaxManagementDb(req, res, next) {
     next();
   }
 }
+
+export async function getallTaxManagement(req, res, next) {
+  try {
+    const TaxManagement = await taxManagementDb.find();
+    res.status(200).json(TaxManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
