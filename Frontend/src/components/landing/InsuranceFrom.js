@@ -180,23 +180,23 @@ function Insurance() {
 
                   <Row>
                     {/* Full Name */}
-                   <Col xs={12} md={6} lg={4}>
-                                         <div>
-                                           <label className="vendorpage_labelCss">
-                                             First Name
-                                           </label>
-                                           <input
-                                             className="inputcolumn-ourProfile"
-                                             type="text"
-                                             name="firstname"
-                                             {...register("firstname", { required: true })}
-                                             placeholder="First Name"
-                                           />
-                                           {errors.firstname && (
-                                             <p className="text-danger">First Name is required</p>
-                                           )}
-                                         </div>
-                                       </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          First Name
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="firstname"
+                          {...register("firstname", { required: true })}
+                          placeholder="First Name"
+                        />
+                        {errors.firstname && (
+                          <p className="text-danger">First Name is required</p>
+                        )}
+                      </div>
+                    </Col>
 
                     {/* Date of Birth */}
                     <Col xs={12} md={6} lg={4}>
