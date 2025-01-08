@@ -10,11 +10,12 @@ import LeadDetails from "./LeadDetails";
 import LeadGeneration from "./LeadGeneration";
 import Loancards from "./Loancards";
 import LoanDashboard from "./LoanDashboard";
+import LoanDetails from "./LoanDetails";
 import LoanManagement from "./LoanManagement";
 import LoanStatus from "./LoanStatus";
 import TaxManagement from "./TaxManagement";
 import UserList from "./UserList";
-
+import CreatTaxManagement from "./CreateTaxManagementAdmin/CreateTaxManagement";
 
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
@@ -31,8 +32,10 @@ export const AdminRoutes = [
   { path: "loandashboard", element: <LoanDashboard /> },
   { path: "leadgeneration", element: <LeadGeneration /> },
   { path: "createlead", element: <CreateLead /> },
+  { path: "createTaxMangement", element: <CreatTaxManagement /> },
   { path: "contact", element: <ContactUs /> },
   { path: "leaddetails/:id", element: <LeadDetails /> },
+  { path: "loandetails/:id", element: <LoanDetails /> },
 
 
   // { path: "insurance", element: <InsuranceReview /> },

@@ -1,7 +1,7 @@
 .refer-parent {
   background-color: #5178e6ab;
-  height: 100vh;
-  margin-top: 104px;
+  height: 70vh;
+  margin-top: 106px;
   align-content: center;
 }
 .refer-container {
@@ -10,8 +10,8 @@
   margin-right: auto;
 }
 .refer-card {
-  height: 85vh;
-  width: 90%;
+  height: 60vh;
+  width: 70%;
   box-shadow: 0 0 10px 2px #455e86;
   position: relative;
   align-content: center;
@@ -92,7 +92,8 @@
 
 
 .referral-left p {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
+  font-family: serif;
   margin: 20px 0;
   color: #555;
 }
@@ -131,7 +132,7 @@
  z-index: 1;
 }
 .refer-secondcol img {
-  width: 70%;
+  width: 100%;
   justify-self: self-end;
 }
 
@@ -162,12 +163,12 @@ font-size: 46px;
   }
   .refer-parent {
     background-color: #5178e6ab;
-    height: 100vh;
+    height: 85vh;
     margin-top: 65px;
     align-content: center;
   }
   .refer-card {
-    height: 90vh;
+    height: 90%;
     width: 95%;
     box-shadow: 0 0 10px 2px #455e86;
     position: relative;
@@ -177,7 +178,7 @@ font-size: 46px;
     background-color: white;
   }
   .refer-secondcol img {
-    width: 75%;
+    width: 60%;
     justify-self: center;
   }
 }
@@ -185,7 +186,7 @@ font-size: 46px;
 @media (max-width: 425px) {
   .refer-parent {
     background-color: #5178e6ab;
-    height: 100vh;
+    height: 80vh;
     margin-top: 65px;
     align-content: center;
   }

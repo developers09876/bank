@@ -42,7 +42,7 @@ function LoanLeadManagement() {
     setLoading(true);
     try {
       const response = await axios.get("http://localhost:5000/lead/getall");
-      console.log('response', response.data.purpose)
+      console.log("response", response.data.purpose);
       setData(response.data);
       setFilteredData(response.data);
     } catch (error) {
@@ -116,22 +116,22 @@ function LoanLeadManagement() {
   return (
     <div style={{ marginTop: "50px", width: "100%" }}>
       <Container style={{ width: "90%" }}>
-      <div style={{ width: "100%" }}>
-        <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
-          Lead Management
-        </h4>
-        <br />
-        <div style={{ justifyContent: "space-between" }}>
-        <Space style={{ marginBottom: 16 }}className="filter-actions">
-          <Input
-            placeholder="Search"
-            style={{ width: 200 }}
-            prefix={<SearchOutlined />}
-            value={searchText}
-            onChange={handleSearch}
-          />
-        </Space>
-        <Button
+        <div style={{ width: "100%" }}>
+          <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
+            Lead Management
+          </h4>
+          <br />
+          <div style={{ justifyContent: "space-between" }}>
+            <Space style={{ marginBottom: 16 }} className="filter-actions">
+              <Input
+                placeholder="Search"
+                style={{ width: 200 }}
+                prefix={<SearchOutlined />}
+                value={searchText}
+                onChange={handleSearch}
+              />
+            </Space>
+            <Button
               type="primary"
               onClick={() => navigate("/admin/createlead")}
               style={{
@@ -143,24 +143,22 @@ function LoanLeadManagement() {
               <FaPlus style={{ display: "inline", color: "white" }} />
               Add New
             </Button>
-        <Table
-          dataSource={paginatedData}
-          columns={columns}
-          loading={loading}
-          pagination={{
-            current: currentPage,
-            pageSize: pageSize,
-            total: filteredData.length,
-            showSizeChanger: true,
-          }}
-          onChange={handleTableChange}
-          rowKey="id"
-        />
-         </div>
-         </div>
-
+            <Table
+              dataSource={paginatedData}
+              columns={columns}
+              loading={loading}
+              pagination={{
+                current: currentPage,
+                pageSize: pageSize,
+                total: filteredData.length,
+                showSizeChanger: true,
+              }}
+              onChange={handleTableChange}
+              rowKey="id"
+            />
+          </div>
+        </div>
       </Container>
-      
     </div>
   );
 }
