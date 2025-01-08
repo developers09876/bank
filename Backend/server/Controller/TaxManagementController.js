@@ -39,3 +39,17 @@ export async function getallTaxManagement(req, res, next) {
     res.status(500).json({ message: error.message });
   }
 }
+
+export const getTaxManagementUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log("object", userId);
+    const taxManagement = await taxManagementDb.find({ userId });
+    if (!taxManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(taxManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
