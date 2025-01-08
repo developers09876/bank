@@ -2,11 +2,9 @@ import React from "react";
 import { Tabs } from "antd";
 import { Link } from "react-router-dom";
 import Insurance from "../InsuranceFrom";
-// import Popup from '../Popup/Popup';
 import KycComplaince from "../LoanForm/LoanKfc";
-// import AdminInfo from './AdminInfo.js';
-import LoanDetails from "../LoanForm/LoanDetails";
-
+import InsuranceDetails from "../InsuranceForm/InsuranceDetails";
+ 
 function InsuranceFormProfileTab() {
   return (
     <div>
@@ -20,12 +18,12 @@ function InsuranceFormProfileTab() {
         <Tabs.TabPane tab="Personal Information" key="1">
           <Insurance />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Loan Form" key="2">
-          <LoanDetails />
+        <Tabs.TabPane tab="Insurance Form" key="2">
+          <InsuranceDetails />
         </Tabs.TabPane>
-        {/* <Tabs.TabPane tab="Bank Details" key="3">
+        <Tabs.TabPane tab="Bank Details" key="3">
           <KycComplaince />
-        </Tabs.TabPane> */}
+        </Tabs.TabPane>
       </Tabs>
     </div>
   );
