@@ -1,6 +1,7 @@
 .refer-parent {
   background-color: #5178e6ab;
   height: 100vh;
+  margin-top: 104px;
   align-content: center;
 }
 .refer-container {
@@ -56,7 +57,7 @@
 }
 .refer-heading {
   font-weight: bold;
-  font-size: 64px;
+  font-size: 56px;
   color: transparent; 
   -webkit-text-stroke: 2px #2563eb; 
   background: linear-gradient(90deg, #2563eb 0%, #3b82f6 50%, transparent 100%);
@@ -162,6 +163,7 @@ font-size: 46px;
   .refer-parent {
     background-color: #5178e6ab;
     height: 100vh;
+    margin-top: 65px;
     align-content: center;
   }
   .refer-card {
@@ -184,6 +186,7 @@ font-size: 46px;
   .refer-parent {
     background-color: #5178e6ab;
     height: 100vh;
+    margin-top: 65px;
     align-content: center;
   }
   .refer-card {

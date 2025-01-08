@@ -6,10 +6,13 @@ import Image2 from "../Images/bgrem.png";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Input } from "antd";
+import Header from "../Layout/Header";
+import Footer from "../Layout/Footer";
 
 const Refer = () => {
   return (
     <div>
+      <Header/>
       <div className="refer-parent">
         <div className="refer-container">
           <div className="refer-card">
@@ -89,6 +92,7 @@ const Refer = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
