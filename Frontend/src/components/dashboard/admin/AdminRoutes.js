@@ -32,11 +32,11 @@ export const AdminRoutes = [
   { path: "loandashboard", element: <LoanDashboard /> },
   { path: "leadgeneration", element: <LeadGeneration /> },
   { path: "createlead", element: <CreateLead /> },
+
   { path: "createTaxMangement", element: <CreatTaxManagement /> },
   { path: "contact", element: <ContactUs /> },
   { path: "leaddetails/:id", element: <LeadDetails /> },
   { path: "loandetails/:id", element: <LoanDetails /> },
-
 
   // { path: "insurance", element: <InsuranceReview /> },
 ];
