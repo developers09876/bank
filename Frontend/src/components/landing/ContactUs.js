@@ -4,7 +4,7 @@ import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Row, Col, Container} from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import Api from "../../Api";
 
 const ContactUs = () => {
@@ -19,7 +19,6 @@ const ContactUs = () => {
   console.log("userid", userid);
   const [contactUsData, setContactUsData] = useState([]);
 
-
   const handleFormSubmit = async (data) => {
     const contactusDetails = {
       email: data.email,
@@ -32,12 +31,14 @@ const ContactUs = () => {
 
     try {
       const response = await Api.post(
-        "http://localhost:5000/contactus/create",contactusDetails);
-       toast.success("ContactUs submitted successfully");
+        "http://localhost:5000/contactus/create",
+        contactusDetails
+      );
+      toast.success("ContactUs submitted successfully");
       reset();
     } catch (error) {
       console.error("ContactUs submission failed", error);
-       toast.error("An error occurred while submitting the ContactUs.");
+      toast.error("An error occurred while submitting the ContactUs.");
     }
   };
   useEffect(() => {
@@ -51,7 +52,6 @@ const ContactUs = () => {
       } catch (error) {
         console.error("Error fetching contact us data", error);
       }
-      
     };
     fetchContactUsData();
   }, []);

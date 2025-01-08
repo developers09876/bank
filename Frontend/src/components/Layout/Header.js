@@ -81,6 +81,7 @@ function Header() {
     { path: "/about", label: "About", icon: <FaInfoCircle /> },
     { path: "/personalplan", label: "Subscription", icon: <FaClipboardList /> },
     { path: "/carrier", label: "Career", icon: <FaBriefcase /> },
+    { path: "/refer", label: "Referral", icon: <FaEnvelope /> },
     { path: "/contact", label: "Contact Us", icon: <FaEnvelope /> },
   ];
 
