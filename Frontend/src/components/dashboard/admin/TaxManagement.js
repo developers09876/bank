@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
+import Api from "../../../Api";
 
 function TaxManagementAdmin() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function TaxManagementAdmin() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/lead/getall");
+      const response = await Api.get("/taxManagement/getAllTaxManagement");
       console.log("response", response.data.purpose);
       setData(response.data);
       setFilteredData(response.data);
@@ -62,7 +63,8 @@ function TaxManagementAdmin() {
   };
 
   const handleViewDetails = (record) => {
-    navigate(`/admin/leaddetails/${record.id}`, { state: { record } });
+    console.log("record", record);
+    navigate(`/admin/leaddetails/${record._id}`, { state: { record } });
   };
 
   const paginatedData = filteredData.slice(
@@ -88,15 +90,11 @@ function TaxManagementAdmin() {
       key: "phone",
     },
     {
-      title: "Loan Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Created By",
+      dataIndex: "userType",
+      key: "userType",
     },
-    {
-      title: "Purpose",
-      dataIndex: "purpose",
-      key: "purpose",
-    },
+
     {
       title: "Action",
       dataIndex: "action",
