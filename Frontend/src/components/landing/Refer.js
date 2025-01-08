@@ -26,9 +26,9 @@ const Refer = () => {
               >
                 <div className="referral-left animate-slide-in-left">
                   <h1 className="refer-heading">
-                    Refer a {" "}
+                    Refer a Friend
                     {/* <span className="refer-heading"> */}
-                      Friend
+                      
                       {/* </span> */}
                   </h1>
                   <p>
