@@ -43,7 +43,7 @@ function TaxManagementAdmin() {
     setLoading(true);
     try {
       const response = await Api.get("/taxManagement/getAllTaxManagement");
-      console.log("response", response.data.purpose);
+      console.log("responsessss", response.data.purpose);
       setData(response.data);
       setFilteredData(response.data);
     } catch (error) {
