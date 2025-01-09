@@ -206,7 +206,19 @@ function App() {
           </Route> */}
 
           <Route path="/adminlogin" element={<AdminLogin />} />
+          {/* <Route path="/admin" element={<Admin/>}/> */}
+
           <Route
+            path="/admin"
+            element={
+              <Admin />
+            }
+          >
+            {AdminRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+          {/* <Route
             path="/admin"
             element={
               <ProtectedRoute Component={Admin} allowedUserTypes={["admin"]} />
@@ -215,7 +227,7 @@ function App() {
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
-          </Route>
+          </Route> */}
 
           <Route
             path="/adminLoan"

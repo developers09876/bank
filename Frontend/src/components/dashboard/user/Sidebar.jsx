@@ -113,6 +113,10 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Feedback
         </NavLink>
+        <NavLink to="/user/rewards" ClassName="main-nav-style">
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Rewards
+        </NavLink>
       </Menu>
     </div>
   );
