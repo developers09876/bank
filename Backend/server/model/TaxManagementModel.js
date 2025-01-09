@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const taxManagementSchema = new mongoose.Schema({
+  AdminId: { type: String },
   userId: { type: String },
   userType: { type: String },
   firstname: { type: String },
@@ -14,6 +15,9 @@ const taxManagementSchema = new mongoose.Schema({
   businessType: { type: String },
   annualIncome: { type: String },
   taxPaid: { type: String },
+  description: { type: String },
+  employeeId: { type: String },
+  employeeType: { type: String },
 });
 const taxManagementDb = mongoose.model("taxManagementdb", taxManagementSchema);
 

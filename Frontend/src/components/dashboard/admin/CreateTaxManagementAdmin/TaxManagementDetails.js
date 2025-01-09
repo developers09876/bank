@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Api from "../../../../Api";
 
 function TaxManagementDetails() {
   const { state } = useLocation();
   const record = state?.record || {};
+  const id = localStorage.getItem("regid");
 
   const [employeeType, setEmployeeType] = useState("");
   const [employeeList, setEmployeeList] = useState([]);
@@ -18,12 +19,7 @@ function TaxManagementDetails() {
     formState: { errors },
   } = useForm();
 
-  const employeeTypes = [
-    "user",
-    "LoanEmployee",
-    "InsuranceEmployee",
-    "TaxEmployee",
-  ];
+  const employeeTypes = ["LoanEmployee", "InsuranceEmployee", "TaxEmployee"];
 
   useEffect(() => {
     if (employeeType) {
@@ -52,6 +48,7 @@ function TaxManagementDetails() {
 
   const onSubmit = async (data) => {
     const details = {
+      AdminId: id,
       firstname: record.firstname,
       lastname: record.lastname,
       userId: record.id,
@@ -64,17 +61,24 @@ function TaxManagementDetails() {
       annualIncome: record.annualIncome,
       taxPaid: record.taxPaid,
       incomeTaxStatus: record.incomeTaxStatus,
+      description: data.description,
+      employeeId: data.employeeId,
+      employeeType: data.employeeType,
     };
 
     try {
       await Api.put(
-        `http://localhost:5000/lead/updatelead/${record._id}`,
+        `/taxManagement/updateTaxManagement/${record._id}`,
         details
       );
-      toast.success("Form submitted successfully");
+      toast.success("Task Assigned successfully");
     } catch (error) {
-      console.error("Error:", error.message);
-      toast.error("An error occurred while submitting the form");
+      console.error("Error:", error);
+
+      const errorMessage =
+        error.response?.data?.error ||
+        "An error occurred while submitting the form";
+      toast.error(errorMessage);
     }
   };
 
@@ -267,6 +271,7 @@ function TaxManagementDetails() {
           </Row>
         </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
