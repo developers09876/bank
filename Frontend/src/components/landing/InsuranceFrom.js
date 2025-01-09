@@ -112,6 +112,7 @@ function Insurance() {
   const handleFormSubmit = async () => {
     const Details = {
       vendorName: IyerName,
+      firstname: data.firstname,
       templeName: getValues().templeName,
       aadharNumber: getValues().aadharNumber,
       mobileNumber: IyerPhone,
@@ -181,16 +182,18 @@ function Insurance() {
                     {/* Full Name */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">Full Name</label>
+                        <label className="vendorpage_labelCss">
+                          First Name
+                        </label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
-                          name="fullName"
-                          {...register("fullName", { required: true })}
-                          placeholder="Full Name"
+                          name="firstname"
+                          {...register("firstname", { required: true })}
+                          placeholder="First Name"
                         />
-                        {errors.fullName && (
-                          <p className="text-danger">Full Name is required</p>
+                        {errors.firstname && (
+                          <p className="text-danger">First Name is required</p>
                         )}
                       </div>
                     </Col>
@@ -312,7 +315,7 @@ function Insurance() {
                     </Col>
 
                     {/* PAN */}
-                    <Col xs={12} md={6} lg={4}>
+                    {/* <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
                           PAN Number
@@ -328,10 +331,10 @@ function Insurance() {
                           <p className="text-danger">PAN is required</p>
                         )}
                       </div>
-                    </Col>
+                    </Col> */}
 
                     {/* Aadhaar Number */}
-                    <Col xs={12} md={6} lg={4}>
+                    {/* <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
                           Aadhaar Number
@@ -349,7 +352,7 @@ function Insurance() {
                           </p>
                         )}
                       </div>
-                    </Col>
+                    </Col> */}
 
                     {/* Contact Information */}
                     <Col xs={12} md={6} lg={4}>
@@ -431,7 +434,7 @@ function Insurance() {
                     </Col>
 
                     {/* Bank Account Details */}
-                    <Col xs={12} md={6} lg={4}>
+                    {/* <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
                           Bank Account Details
@@ -449,7 +452,7 @@ function Insurance() {
                           </p>
                         )}
                       </div>
-                    </Col>
+                    </Col> */}
 
                     {/* Policy Type */}
                     <Col xs={12} md={6} lg={4}>

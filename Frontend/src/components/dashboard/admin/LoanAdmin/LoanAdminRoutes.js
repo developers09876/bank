@@ -14,5 +14,4 @@ export const LoanAdminRoutes = [
   { path: "/adminLoan/createlead", element: <CreateLead /> },
   { path: "employeeuserlist", element: <EmployeeUserList /> },
   { path: "myprofile", element: <TabsProfile /> },
-
 ];

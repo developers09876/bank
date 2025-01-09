@@ -101,7 +101,19 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+export const getByUserType = async (req, res) => {
+  try {
+    const { userType } = req.params;
 
+    const application = await User.find({ userType });
+    if (!application) {
+      return res.status(404).json({ message: "User Type not found" });
+    }
+    res.status(200).json(application);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const getUserById = async (req, res) => {
   const { id } = req.params;
   try {

@@ -6,6 +6,7 @@ import {
   registerUser,
   updateKYCDetails,
   updateUserDetails,
+  getByUserType,
 } from "../Controller/SignupController.js";
 
 const router = Router();
@@ -13,8 +14,8 @@ const router = Router();
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/getall").get(getAllUsers);
+router.route("/getbyUserType/:userType").get(getByUserType);
 router.route("/getby/:id").get(getUserById);
-
 router.route("/update/:id").put(updateUserDetails);
 router.route("/updateKYC/:id").put(updateKYCDetails);
 

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import axios from "axios";
+
 const LoanManagements = ({ collapsed }) => {
+
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
+  const userId = localStorage.getItem("id");
 
   useEffect(() => {
     getAll();
@@ -17,12 +22,13 @@ const LoanManagements = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/loanform/getall`, {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("token") },
-      });
-      const loans = await response.json();
+      console.log('userId', userId)
+      const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userId}`)
+      const loans = response.data;
+      // const filterbyUserid = loans.filter(item => item.userid === userId);
+      // console.log('filterbyUserid', filterbyUserid)
       setLoan(loans);
+      console.log('responseget', loans)
     } catch (error) {
       console.log(error);
     }
