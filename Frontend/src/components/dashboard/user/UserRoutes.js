@@ -5,6 +5,7 @@ import TabsProfile from "./ProfileTabs";
 import TaxDetails from "./TaxDetails";
 import Feedback from "./Feedback";
 import Taxmangement from "./TaxMangement/Taxmangement";
+import Rewards from  "./Rewards";
 
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
@@ -31,5 +32,9 @@ export const UserRoutes = [
   {
     path: "/user/feedback",
     element: <Feedback />,
+  },
+  {
+    path: "/user/rewards",
+    element: <Rewards />,
   },
 ];
