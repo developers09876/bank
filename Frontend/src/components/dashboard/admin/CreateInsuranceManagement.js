@@ -213,11 +213,9 @@ function CreateInsuranceManagement() {
 
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">
-                  Income Tax Filing Status
-                </label>
+                <label className="vendorpage_labelCss">Policy Type</label>
                 <Controller
-                  name="incomeTaxStatus"
+                  name="PolicyType"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -225,44 +223,50 @@ function CreateInsuranceManagement() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Status"
+                      placeholder="Select Gender"
                     >
-                      <Option value="filed">Filed</Option>
-                      <Option value="notFiled">Not Filed</Option>
+                      <Option value="Single">Life Insurance</Option>
+                      <Option value="Health Insurance">Health Insurance</Option>
+                      <Option value="Vehicle">Vehicle Insurance</Option>
                     </Select>
                   )}
                 />
-                {errors.incomeTaxStatus && (
-                  <p className="text-danger">Select filing status</p>
+                {errors.PolicyType && (
+                  <p className="text-danger">Policy Type is required</p>
                 )}
               </div>
             </Col>
 
+            {/* Policy Term */}
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Business Type</label>
-                <Controller
-                  name="businessType"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Business Type"
-                    >
-                      <Option value="soleProprietorship">
-                        Sole Proprietorship
-                      </Option>
-                      <Option value="partnership">Partnership</Option>
-                      <Option value="privateLimited">Private Limited</Option>
-                      <Option value="publicLimited">Public Limited</Option>
-                    </Select>
-                  )}
+                <label className="vendorpage_labelCss">Policy Term</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="policyTerm"
+                  {...register("policyTerm", { required: true })}
+                  placeholder="Policy Term (years)"
                 />
-                {errors.businessType && (
-                  <p className="text-danger">Select business type</p>
+                {errors.policyTerm && (
+                  <p className="text-danger">Policy Term is required</p>
+                )}
+              </div>
+            </Col>
+
+            {/* Sum Assured */}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Sum Assured</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="sumAssured"
+                  {...register("sumAssured", { required: true })}
+                  placeholder="Sum Assured"
+                />
+                {errors.sumAssured && (
+                  <p className="text-danger">Sum Assured is required</p>
                 )}
               </div>
             </Col>
@@ -279,24 +283,6 @@ function CreateInsuranceManagement() {
                 />
                 {errors.annualIncome && (
                   <p className="text-danger">Enter annual income</p>
-                )}
-              </div>
-            </Col>
-
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  Tax Paid in Last Year
-                </label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="taxPaid"
-                  {...register("taxPaid", { required: true })}
-                  placeholder="Tax Paid"
-                />
-                {errors.taxPaid && (
-                  <p className="text-danger">Enter tax paid last year</p>
                 )}
               </div>
             </Col>
