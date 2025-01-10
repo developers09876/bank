@@ -4,6 +4,7 @@ import LoanDashboard from "./LoanDashboard";
 import LoanLeadManagement from "./LoanLeadManagement";
 import EmployeeUserList from "./EmployeeUserList";
 import TabsProfile from "./ProfileTabs";
+import TaxManagementTable from "./TaxManagementTable";
 import LoanLeadDetails from "./LoanLeadDetails";
 
 export const LoanAdminRoutes = [
@@ -14,4 +15,5 @@ export const LoanAdminRoutes = [
   { path: "/adminLoan/createlead", element: <CreateLead /> },
   { path: "employeeuserlist", element: <EmployeeUserList /> },
   { path: "myprofile", element: <TabsProfile /> },
+  { path: "TaxManagement", element: <TaxManagementTable /> },
 ];
