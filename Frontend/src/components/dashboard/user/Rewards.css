@@ -1,8 +1,10 @@
 .rewards-container {
     padding: 40px;
     background: #f0f2f5;
+    height: 100vh;
+   
   }
-  
+ 
   .rewards-title {
     margin-bottom: 30px;
   }
@@ -17,8 +19,11 @@
   .rewards-cards {
     text-align: center;
     margin-top: 20px;
+    flex-grow: 1;
+    /* overflow-y: auto; */
+    width: 100%;
   }
-  
+ 
   .reward-card {
     text-align: center;
     background: #ffffff;
@@ -26,7 +31,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
     padding: 10px;
-    width: 500px;
+    width: 400px;
+    height:530px;
     margin-right: 250px;
   }
   
@@ -37,8 +43,8 @@
   
   .reward-image {
     border-radius: 15px;
-    width: 400px;
-    height: 250px;
+    width: 300px;
+    height: 150px;
     transition: transform 0.3s ease;
   }
   
