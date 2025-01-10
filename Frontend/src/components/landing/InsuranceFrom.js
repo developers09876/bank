@@ -484,25 +484,7 @@ function Insurance() {
                         )}
                       </div>
                     </Col>
-                    {/* <Col xs={12} md={6} lg={4}>
-    <div>
-      <label className="vendorpage_labelCss">Policy Type</label>
-      <Select
-        className="inputcolumn_drp"
-        placeholder="Select Policy Type"
-        {...register("policyType", { required: true })}
-        options={[
-          { value: "life", label: "Life Insurance" },
-          { value: "health", label: "Health Insurance" },
-          { value: "vehicle", label: "Vehicle Insurance" }
-        ]}
-      />
-      {errors.policyType && (
-        <p className="text-danger">Policy Type is required</p>
-      )}
-    </div>
-  </Col> */}
-
+             
                     {/* Policy Term */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
