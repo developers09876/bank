@@ -5,8 +5,8 @@ import TabsProfile from "./ProfileTabs";
 import TaxDetails from "./TaxDetails";
 import Feedback from "./Feedback";
 import Taxmangement from "./TaxMangement/Taxmangement";
-import Rewards from "./Rewards";
 import LoanDetails from "./LoanDetails";
+import Rewards from "./Rewards";
 
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
