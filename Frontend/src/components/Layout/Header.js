@@ -12,8 +12,7 @@ import {
   FaBriefcase,
   FaEnvelope,
 } from "react-icons/fa";
-import { RiLoginCircleFill } from "react-icons/ri";
-import { IoPersonCircleSharp } from "react-icons/io5";
+import { IoNotifications } from "react-icons/io5";
 
 import Api from "../../Api";
 import { Divider } from "antd";
@@ -108,6 +107,9 @@ function Header() {
                 </Link>
               </li>
             ))}
+            <div>
+              <IoNotifications />
+            </div>
             {!isLoggedIn ? (
               <li>
                 <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3">
@@ -204,7 +206,12 @@ function Header() {
                     >
                       <span className="flex rounded flex-row nav-link">
                         <span
-                          style={{ alignSelf: "center", paddingRight: "20px",color:'#1a2a41', display:"inline-block" }}
+                          style={{
+                            alignSelf: "center",
+                            paddingRight: "20px",
+                            color: "#1a2a41",
+                            display: "inline-block",
+                          }}
                         >
                           {item.icon}
                         </span>
@@ -212,6 +219,9 @@ function Header() {
                       </span>
                     </Link>
                   ))}
+                  <div>
+                    <IoNotifications />
+                  </div>
 
                   {!isLoggedIn ? (
                     <Link
@@ -219,17 +229,19 @@ function Header() {
                       className="navlink  py-1 rounded no-underline text-gray-700 "
                       onClick={() => setIsOpen(false)}
                     >
-                       <span className="flex rounded flex-row nav-link">
-                          <span
-                            style={{
-                              alignSelf: "center",
-                              paddingRight: "20px",color:'#1a2a41', display:"inline-block" 
-                            }}
-                          >
-                            <FaArrowCircleRight /> 
-                          </span>
-                          Login
+                      <span className="flex rounded flex-row nav-link">
+                        <span
+                          style={{
+                            alignSelf: "center",
+                            paddingRight: "20px",
+                            color: "#1a2a41",
+                            display: "inline-block",
+                          }}
+                        >
+                          <FaArrowCircleRight />
                         </span>
+                        Login
+                      </span>
                     </Link>
                   ) : (
                     <div
@@ -241,15 +253,17 @@ function Header() {
                       }}
                     >
                       <button
-                      style={{padding:'0.25rem 0 !important'}}
-                      onClick={handlenavigate}
+                        style={{ padding: "0.25rem 0 !important" }}
+                        onClick={handlenavigate}
                         className="navlink  block  rounded no-underline text-gray-700 "
                       >
                         <span className="flex rounded flex-row nav-link">
                           <span
                             style={{
                               alignSelf: "center",
-                              paddingRight: "20px",color:'#1a2a41', display:"inline-block"
+                              paddingRight: "20px",
+                              color: "#1a2a41",
+                              display: "inline-block",
                             }}
                           >
                             <FaAddressBook />
@@ -257,16 +271,18 @@ function Header() {
                           My Profile
                         </span>
                       </button>
-                      <button 
-                      style={{padding:'0.25rem 0 !important'}}
-                      onClick={handleLogout}
+                      <button
+                        style={{ padding: "0.25rem 0 !important" }}
+                        onClick={handleLogout}
                         className="navlink py-3 block rounded no-underline text-gray-700 "
                       >
                         <span className="flex rounded flex-row nav-link">
                           <span
                             style={{
                               alignSelf: "center",
-                              paddingRight: "20px",color:'#1a2a41', display:"inline-block"
+                              paddingRight: "20px",
+                              color: "#1a2a41",
+                              display: "inline-block",
                             }}
                           >
                             <FaArrowCircleRight />
