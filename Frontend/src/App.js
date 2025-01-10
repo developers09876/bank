@@ -61,6 +61,7 @@ import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/Stoc
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
+import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
 
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
@@ -126,6 +127,11 @@ function App() {
             path="/insurancepolicy"
             // element={<ProtectedRoute Component={InsuranceForm} />}
             element={<InsuranceForm />}
+          />
+          <Route
+            path="/TaxForms"
+            // element={<ProtectedRoute Component={InsuranceForm} />}
+            element={<TaxFormTab />}
           />
 
           {/* REGISTER */}
@@ -208,12 +214,7 @@ function App() {
           <Route path="/adminlogin" element={<AdminLogin />} />
           {/* <Route path="/admin" element={<Admin/>}/> */}
 
-          <Route
-            path="/admin"
-            element={
-              <Admin />
-            }
-          >
+          <Route path="/admin" element={<Admin />}>
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}

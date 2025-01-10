@@ -18,7 +18,7 @@ const Refer = () => {
           <div className="refer-card">
             <Row className="refer-firstrow px-5 py-2">
               <Col
-                className="refer-firstcol px-3 py-2"
+                className="refer-firstcol px-1 py-2"
                 lg={6}
                 md={12}
                 sm={12}
@@ -29,7 +29,7 @@ const Refer = () => {
                     Refer a Friend
                   </h1>
                   <p>
-                  For every successful referral, earn exciting rewards as a token of our appreciation.
+                  Share the benefits you enjoy with your friends and family. For every successful referral, earn exciting rewards as a token of our appreciation.
                   </p>
                   <div>
                   <TextField

@@ -115,7 +115,9 @@ const Landing = () => {
       description:
         "Affordable term insurance plans to secure your loved ones financially.",
       buttonText: "Check Eligibility",
-      link: "/insurancepage",
+      // link: "/insurancepage",
+      link: "/insurancepolicy",
+
       icon: "fas fa-file-alt",
     },
     {
@@ -164,7 +166,9 @@ const Landing = () => {
       description:
         "Get assistance with filing your annual income tax returns accurately and on time.",
       buttonText: "File Now",
-      link: "/taxpage",
+      // link: "/taxpage",
+
+      link: "/taxforms",
       icon: "fas fa-file-invoice-dollar",
     },
     {

@@ -8,7 +8,7 @@ import Footer from "../../Layout/Footer";
 import axios from "axios";
 // import Api from "../../Api";
 
-function Kycvendor() {
+function TaxFormKyc() {
   const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
@@ -23,7 +23,6 @@ function Kycvendor() {
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
   const loanApplicationId = localStorage.getItem("loanApplicationId");
-
 
   console.log("userKYCDetail", userKYCDetail);
 
@@ -68,7 +67,7 @@ function Kycvendor() {
     const panUploadUrl = data.panUpload?.[0]
       ? await uploadFile(data.panUpload[0])
       : null;
-      const AdharUploadUrl = data.AdharUpload?.[0]
+    const AdharUploadUrl = data.AdharUpload?.[0]
       ? await uploadFile(data.AdharUpload[0])
       : null;
     const voterIdUploadUrl = data.voterIdUpload?.[0]
@@ -77,7 +76,7 @@ function Kycvendor() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
-      aadhaarNumber:data.aadhaarNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -104,7 +103,7 @@ function Kycvendor() {
 
   return (
     <div>
-       <Header />
+      <Header />
       <Container>
         <div
           className="ourProfileParentdiv"
@@ -230,10 +229,9 @@ function Kycvendor() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panUpload && (
-                    <p className="text-danger">Pan is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.panUpload && (
+                  <p className="text-danger">Pan is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>
@@ -351,4 +349,4 @@ function Kycvendor() {
   );
 }
 
-export default Kycvendor;
+export default TaxFormKyc;

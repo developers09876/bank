@@ -1,106 +1,101 @@
-import React from 'react';
-import { Table, Tag, Button } from 'antd';
-
-
-const loanData = [
-  {
-    key: '1',
-    loanID: 'LN001',
-    bankName: 'Bank of America',
-    amount: 5000,
-    status: 'Approved',
-    applicationDate: '2024-10-01',
-    loanType: 'Personal Loan',
-  },
-  {
-    key: '2',
-    loanID: 'LN002',
-    bankName: 'Wells Fargo',
-    amount: 15000,
-    status: 'Pending',
-    applicationDate: '2024-10-05',
-    loanType: 'Home Loan',
-  },
-  {
-    key: '3',
-    loanID: 'LN003',
-    bankName: 'Chase Bank',
-    amount: 20000,
-    status: 'Rejected',
-    applicationDate: '2024-10-10',
-    loanType: 'Auto Loan',
-  },
-  {
-    key: '4',
-    loanID: 'LN004',
-    bankName: 'Citibank',
-    amount: 10000,
-    status: 'Approved',
-    applicationDate: '2024-10-15',
-    loanType: 'Business Loan',
-  },
-];
-
-const columns = [
-  {
-    title: 'Loan ID',
-    dataIndex: 'loanID',
-    key: 'loanID',
-  },
-  {
-    title: 'Bank Name',
-    dataIndex: 'bankName',
-    key: 'bankName',
-  },
-  {
-    title: 'Amount ($)',
-    dataIndex: 'amount',
-    key: 'amount',
-  },
-  {
-    title: 'Application Date',
-    dataIndex: 'applicationDate',
-    key: 'applicationDate',
-  },
-  {
-    title: 'Loan Type',
-    dataIndex: 'loanType',
-    key: 'loanType',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    render: (status) => {
-      let color = status === 'Approved' ? 'green' : status === 'Pending' ? 'orange' : 'red';
-      return <Tag color={color}>{status.toUpperCase()}</Tag>;
-    },
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Button type="primary" style={{ color: "black" }} onClick={() => handleView(record)}>
-        View
-      </Button>
-    ),
-  },
-];
-
-const handleView = (record) => {
-  alert(`Viewing details for ${record.loanID}`);
-};
+import React, { useEffect, useState } from "react";
+import { Table, Tag, Button } from "antd";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoanStatusTable = ({ collapsed }) => {
+  const [loans, setLoans] = useState([]);
+
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("id");
+
+  useEffect(() => {
+    const getUserLoan = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/loanform/getbyid/${userId}`
+        );
+        const loan = response.data;
+        console.log("loan", loan);
+        setLoans(loan);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserLoan();
+  }, [userId]);
+
+  const handleViewDetails = (record) => {
+    navigate(`/user/userloandetails/${record._id}`, { state: { record } });
+  };
+
+  const columns = [
+    {
+      title: "Created On",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => new Date(text).toLocaleDateString(),
+    },
+    {
+      title: "Application ID",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
+      title: "Loan Amount",
+      dataIndex: "loanAmount",
+      key: "loanAmount",
+    },
+    {
+      title: "Purpose of Loan",
+      dataIndex: "loanPurpose",
+      key: "loanPurpose",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (text, record) => {
+        return (
+          <Button
+            type="primary"
+            style={{ background: "#4096ff", color: "#fff" }}
+            onClick={() => handleViewDetails(record)}
+          >
+            View
+          </Button>
+        );
+      },
+    },
+  ];
+
+  const handleView = (record) => {
+    alert(`Viewing details for ${record.loanID}`);
+  };
+
   return (
     <div>
-      <div
-        style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}
-      >
-        <div className={collapsed === true ? "main-content.open" : "main-content"}>
+      <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
+        <div
+          className={collapsed === true ? "main-content.open" : "main-content"}
+        >
           <Table
             columns={columns}
-            dataSource={loanData}
+            dataSource={loans}
+          rowKey="_id"
             pagination={{ pageSize: 5 }}
           />
         </div>
