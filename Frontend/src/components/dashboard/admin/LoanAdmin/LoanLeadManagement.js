@@ -71,9 +71,9 @@ function LoanLeadManagement() {
   );
 
   const handleViewDetails = (record) => {
-    setSelectedRecord(record);
-    setIsModalVisible(true);
+    navigate("/adminLoan/leaddetails", { state: { record } });
   };
+  
 
   const handleModalOk = () => {
     setIsModalVisible(false);
@@ -178,7 +178,7 @@ function LoanLeadManagement() {
           />
         </div>
       </Container>
-      <Modal
+      {/* <Modal
         title="Lead Management Details"
         visible={isModalVisible}
         onOk={handleModalOk}
@@ -302,7 +302,7 @@ function LoanLeadManagement() {
             </Row>
           </div>
         )}
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
