@@ -5,6 +5,7 @@ import TabsProfile from "./ProfileTabs";
 import TaxDetails from "./TaxDetails";
 import Feedback from "./Feedback";
 import Taxmangement from "./TaxMangement/Taxmangement";
+import LoanDetails from "./LoanDetails";
 
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
@@ -21,9 +22,13 @@ export const UserRoutes = [
     element: <LoanStatusTable />,
   },
   {
+    path: "/user/userloandetails/:id",
+    element: <LoanDetails />,
+  },
+  {
     path: "/user/insuranceDetails",
     element: <InsuranceDetails />,
-  },
+  }, 
   {
     path: "/user/taxDetails",
     element: <TaxDetails />,
