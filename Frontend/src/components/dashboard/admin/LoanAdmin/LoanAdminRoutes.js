@@ -4,11 +4,8 @@ import LoanDashboard from "./LoanDashboard";
 import LoanLeadManagement from "./LoanLeadManagement";
 import EmployeeUserList from "./EmployeeUserList";
 import TabsProfile from "./ProfileTabs";
-<<<<<<< HEAD
 import TaxManagementTable from "./TaxManagementTable";
-=======
 import LoanLeadDetails from "./LoanLeadDetails";
->>>>>>> karthi
 
 export const LoanAdminRoutes = [
   { path: "", element: <LoanDashboard /> },
