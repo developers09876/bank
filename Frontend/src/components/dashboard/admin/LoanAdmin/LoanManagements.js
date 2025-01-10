@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoanManagements = ({ collapsed }) => {
-
+ 
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,6 +13,8 @@ const LoanManagements = ({ collapsed }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   
+  const navigate  =  useNavigate();
+
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
   const userId = localStorage.getItem("id");
@@ -34,9 +37,8 @@ const LoanManagements = ({ collapsed }) => {
     }
   };
 
-  const handleViewDetails = (record) => {
-    setSelectedRecord(record);
-    setIsModalVisible(true);
+   const handleViewDetails = (record) => {
+   navigate(`/adminLoan/loandetails/${record._id}`, {state: { record } })
   };
 
   const handleModalOk = () => {

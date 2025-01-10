@@ -6,6 +6,7 @@ import EmployeeUserList from "./EmployeeUserList";
 import TabsProfile from "./ProfileTabs";
 import TaxManagementTable from "./TaxManagementTable";
 import LoanLeadDetails from "./LoanLeadDetails";
+import LoanDetails from "./LoanDetails";
 
 export const LoanAdminRoutes = [
   { path: "", element: <LoanDashboard /> },
@@ -16,4 +17,5 @@ export const LoanAdminRoutes = [
   { path: "employeeuserlist", element: <EmployeeUserList /> },
   { path: "myprofile", element: <TabsProfile /> },
   { path: "TaxManagement", element: <TaxManagementTable /> },
+  { path: "/adminLoan/loandetails/:id", element: <LoanDetails /> },
 ];

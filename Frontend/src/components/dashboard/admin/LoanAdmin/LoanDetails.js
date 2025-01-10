@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
 import { CheckCircleOutlined, ClockCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import "./LoanDetails.css"; // External CSS for styles
+import "../../user/LoanDetails.css"
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
 
