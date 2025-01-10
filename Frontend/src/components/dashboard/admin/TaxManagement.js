@@ -64,7 +64,9 @@ function TaxManagementAdmin() {
 
   const handleViewDetails = (record) => {
     console.log("record", record);
-    navigate(`/admin/leaddetails/${record._id}`, { state: { record } });
+    navigate(`/admin/taxManagementdetails/${record._id}`, {
+      state: { record },
+    });
   };
 
   const paginatedData = filteredData.slice(

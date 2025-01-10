@@ -1,88 +1,84 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import Api from "../../../../Api";
 
 function TaxManagementDetails() {
   const { state } = useLocation();
-  const record = state?.record;
-  const [remarksFields, setRemarksFields] = useState([]);
+  const record = state?.record || {};
+  const id = localStorage.getItem("regid");
+
+  const [employeeType, setEmployeeType] = useState("");
+  const [employeeList, setEmployeeList] = useState([]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
 
+  const employeeTypes = ["LoanEmployee", "InsuranceEmployee", "TaxEmployee"];
+
   useEffect(() => {
-    if (record) {
-      const initialRemarks = record.addremarks?.length
-        ? record.addremarks.map((field) => ({ ...field, prefilled: true }))
-        : [{ date: "", remarks: "", status: "", prefilled: false }];
-      setRemarksFields(initialRemarks);
-
-      const defaultValues = initialRemarks.reduce((acc, field, index) => {
-        acc[`date_${index}`] = field.date;
-        acc[`remarks_${index}`] = field.remarks;
-        acc[`status_${index}`] = field.status;
-        return acc;
-      }, {});
-      reset(defaultValues);
+    if (employeeType) {
+      fetchEmployeeList(employeeType);
     }
-  }, [record, reset]);
+  }, [employeeType]);
 
-  const addRemarkField = () => {
-    setRemarksFields([
-      ...remarksFields,
-      { date: "", remarks: "", status: "", prefilled: false },
-    ]);
+  const fetchEmployeeList = async (type) => {
+    try {
+      const response = await Api.get(`signup/getbyUserType/${type}`);
+      setEmployeeList(
+        response.data.map((employee) => ({
+          id: employee._id,
+          name: employee.firstname,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching employee list:", error);
+      toast.error("Failed to fetch employee list.");
+    }
   };
 
-  const removeRemarkField = (index) => {
-    const updatedFields = remarksFields.filter((_, i) => i !== index);
-    setRemarksFields(updatedFields);
-
-    const defaultValues = updatedFields.reduce((acc, field, i) => {
-      acc[`date_${i}`] = field.date;
-      acc[`remarks_${i}`] = field.remarks;
-      acc[`status_${i}`] = field.status;
-      return acc;
-    }, {});
-    reset(defaultValues);
+  const handleEmployeeTypeChange = (event) => {
+    setEmployeeType(event.target.value);
   };
 
   const onSubmit = async (data) => {
-    const formattedRemarks = remarksFields.map((field, index) => ({
-      date: data[`date_${index}`],
-      remarks: data[`remarks_${index}`],
-      status: data[`status_${index}`],
-    }));
-
     const details = {
+      AdminId: id,
       firstname: record.firstname,
       lastname: record.lastname,
       userId: record.id,
       contactNumber: record.phone,
       email: record.email,
       aadhar: record.aadhar,
-      purpose: record.purpose,
-      amount: record.amount,
-      addremarks: formattedRemarks,
       panno: record.panno,
+      gstNo: record.gstNo,
+      businessType: record.businessType,
+      annualIncome: record.annualIncome,
+      taxPaid: record.taxPaid,
+      incomeTaxStatus: record.incomeTaxStatus,
+      description: data.description,
+      employeeId: data.employeeId,
+      employeeType: data.employeeType,
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/lead/updatelead/${record._id}`,
+      await Api.put(
+        `/taxManagement/updateTaxManagement/${record._id}`,
         details
       );
-      toast.success("Form submitted successfully");
+      toast.success("Task Assigned successfully");
     } catch (error) {
-      console.error("Error:", error.message);
-      toast.error("An error occurred while submitting the form");
+      console.error("Error:", error);
+
+      const errorMessage =
+        error.response?.data?.error ||
+        "An error occurred while submitting the form";
+      toast.error(errorMessage);
     }
   };
 
@@ -92,7 +88,7 @@ function TaxManagementDetails() {
 
   return (
     <div style={{ marginTop: "50px", padding: "20px" }}>
-      <h3>Lead Details</h3>
+      <h3>Tax Management Details</h3>
       <div>
         <Row>
           <Col xs={2}>
@@ -121,19 +117,10 @@ function TaxManagementDetails() {
             </p>
           </Col>
           <Col xs={7}>
-            <p>{record.phone}</p>
+            <p>{record.contactNumber}</p>
           </Col>
         </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Loan Amount:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.amount}</p>
-          </Col>
-        </Row>
+
         <Row>
           <Col xs={2}>
             <p>
@@ -147,6 +134,17 @@ function TaxManagementDetails() {
         <Row>
           <Col xs={2}>
             <p>
+              <strong>GST Number:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.gst}</p>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs={2}>
+            <p>
               <strong>PAN Card Number:</strong>
             </p>
           </Col>
@@ -157,82 +155,123 @@ function TaxManagementDetails() {
         <Row>
           <Col xs={2}>
             <p>
-              <strong>Purpose Of Loan:</strong>
+              <strong>Income Tax Status:</strong>
             </p>
           </Col>
           <Col xs={7}>
-            <p>{record.purpose}</p>
+            <p>{record.incomeTaxStatus}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Tax paid:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.taxPaid}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Annual Incom:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.annualIncome}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <p>
+              <strong>Business Type:</strong>
+            </p>
+          </Col>
+          <Col xs={7}>
+            <p>{record.businessType}</p>
           </Col>
         </Row>
       </div>
 
       <div className="mt-3">
-        <h3>Add Remarks</h3>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
-          {remarksFields.map((field, index) => (
-            <Row key={index} className="mb-3">
-              <Col lg={4} md={6}>
-                <label>Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  {...register(`date_${index}`, { required: true })}
-                />
-                {errors[`date_${index}`] && (
-                  <p className="text-danger">Date is required</p>
-                )}
-              </Col>
-              <Col xs={12} md={6} lg={4}>
-                <label>Remarks</label>
-                <textarea
-                  className="form-control"
-                  {...register(`remarks_${index}`, { required: true })}
-                  placeholder="Remarks"
-                />
-                {errors[`remarks_${index}`] && (
-                  <p className="text-danger">Remarks are required</p>
-                )}
-              </Col>
-              <Col xs={12} md={6} lg={4}>
-                <label>Status</label>
-                <select
-                  className="form-control"
-                  {...register(`status_${index}`, { required: true })}
-                >
-                  <option value="">-- SELECT --</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="In-Progress">In-Progress</option>
-                  <option value="Approved">Approved</option>
-                </select>
-                {errors[`status_${index}`] && (
-                  <p className="text-danger">Status is required</p>
-                )}
-              </Col>
-              <Col xs={12} md={6} lg={4} className="d-flex align-items-center">
-                {!field.prefilled && remarksFields.length > 1 && (
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => removeRemarkField(index)}
-                  >
-                    -
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className="btn btn-success ms-2"
-                  onClick={addRemarkField}
-                >
-                  +
-                </button>
-              </Col>
-            </Row>
-          ))}
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
-          </button>
-        </form>
+        <h3>Assign To</h3>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Row className="mb-3">
+            <Col xs={2}>
+              <Form.Label>
+                <strong>Employee Type:</strong>
+              </Form.Label>
+            </Col>
+            <Col xs={7}>
+              <Form.Select
+                {...register("employeeType", { required: true })}
+                value={employeeType}
+                onChange={handleEmployeeTypeChange}
+              >
+                <option value="">Select Employee Type</option>
+                {employeeTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </Form.Select>
+              {errors.employeeType && (
+                <p className="text-danger">Employee Type is required</p>
+              )}
+            </Col>
+          </Row>
+
+          <Row className="mb-3">
+            <Col xs={2}>
+              <Form.Label>
+                <strong>Employee List:</strong>
+              </Form.Label>
+            </Col>
+            <Col xs={7}>
+              <Form.Select {...register("employeeId", { required: true })}>
+                <option value="">Select Employee</option>
+                {employeeList.map((employee) => (
+                  <option key={employee.id} value={employee.id}>
+                    {employee.name}
+                  </option>
+                ))}
+              </Form.Select>
+              {errors.employeeId && (
+                <p className="text-danger">Employee List is required</p>
+              )}
+            </Col>
+          </Row>
+
+          <Row className="mb-3">
+            <Col xs={2}>
+              <Form.Label>
+                <strong>Description:</strong>
+              </Form.Label>
+            </Col>
+            <Col xs={7}>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter description"
+                {...register("description", { required: true })}
+              />
+              {errors.description && (
+                <p className="text-danger">Description is required</p>
+              )}
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={{ span: 7, offset: 2 }}>
+              <Button type="submit" variant="primary">
+                Submit
+              </Button>
+            </Col>
+          </Row>
+        </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
