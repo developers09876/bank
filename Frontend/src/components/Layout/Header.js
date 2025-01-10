@@ -7,7 +7,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import "./Header.css";
 import { FaHome, FaAddressBook, FaInfoCircle, FaArrowCircleRight, FaClipboardList, FaBriefcase, FaEnvelope } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
-
+import { Badge } from "antd";
 import Api from "../../Api";
 import { Divider } from "antd";
 
@@ -18,6 +18,7 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [userDetail, setUserDetail] = useState();
+  const [notificationCount, setNotificationCount] = useState(1); 
   const navigate = useNavigate();
 
   const handleMenuClick = (key) => {
@@ -102,7 +103,9 @@ function Header() {
               </li>
             ))}
             <div>
-              <IoNotifications onClick={() => setIsOpen(true)} />
+              <Badge count={notificationCount} size="small" offset={[-5, 5]}>
+                <IoNotifications  style={{ fontSize: '24px' }}  onClick={() => setIsOpen(true)} />
+              </Badge>
             </div>
             {!isLoggedIn ? (
               <li>
