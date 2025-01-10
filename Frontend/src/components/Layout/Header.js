@@ -5,7 +5,15 @@ import villuLogo from "../Images/villu-logo-png.png";
 import { Modal, Card, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "./Header.css";
-import { FaHome, FaAddressBook, FaInfoCircle, FaArrowCircleRight, FaClipboardList, FaBriefcase, FaEnvelope } from "react-icons/fa";
+import {
+  FaHome,
+  FaAddressBook,
+  FaInfoCircle,
+  FaArrowCircleRight,
+  FaClipboardList,
+  FaBriefcase,
+  FaEnvelope,
+} from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 
 import Api from "../../Api";
@@ -42,7 +50,9 @@ function Header() {
 
   const fetchUser = async () => {
     try {
-      const response = await Api.get(`http://localhost:5000/signup/getby/${userId}`);
+      const response = await Api.get(
+        `http://localhost:5000/signup/getby/${userId}`
+      );
       setUserDetail(response.data);
       console.log("response", response.data);
     } catch (error) {
@@ -179,7 +189,9 @@ const NotificationModal = ({ isOpen, setIsOpen }) => {
   };
 
   const handleDelete = (id) => {
-    setNotifications(notifications.filter((notification) => notification.id !== id));
+    setNotifications(
+      notifications.filter((notification) => notification.id !== id)
+    );
   };
 
   return (
@@ -188,8 +200,8 @@ const NotificationModal = ({ isOpen, setIsOpen }) => {
       visible={isOpen}
       onCancel={handleCancel}
       footer={null}
-      width={400} 
-      className="notification-modal" 
+      width={400}
+      className="notification-modal"
     >
       <div style={{ maxHeight: "300px", overflowY: "auto" }}>
         {notifications.length === 0 ? (
@@ -200,22 +212,27 @@ const NotificationModal = ({ isOpen, setIsOpen }) => {
               key={notification.id}
               style={{
                 // marginBottom: "16px",
-                borderRadius: "8px", 
-                boxShadow: "0 2px 8px rgba(17, 219, 226, 0.1)", 
-                height:"125px",
+                borderRadius: "8px",
+                boxShadow: "0 2px 8px rgba(17, 219, 226, 0.1)",
+                height: "125px",
               }}
               actions={[
                 <Button
                   type="link"
                   icon={<DeleteOutlined />}
                   onClick={() => handleDelete(notification.id)}
-                  style={{ color: "red" }} 
-                >
-                </Button>,
+                  style={{ color: "red" }}
+                ></Button>,
               ]}
             >
-              <p><strong className="notification-heading">Date:</strong> {notification.date}</p> 
-              <p ><strong className="notification-heading">Message:</strong> {notification.message}</p> 
+              <p>
+                <strong className="notification-heading">Date:</strong>{" "}
+                {notification.date}
+              </p>
+              <p>
+                <strong className="notification-heading">Message:</strong>{" "}
+                {notification.message}
+              </p>
             </Card>
           ))
         )}
