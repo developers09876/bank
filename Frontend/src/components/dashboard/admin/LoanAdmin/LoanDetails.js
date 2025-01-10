@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
-import { CheckCircleOutlined, ClockCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import "../../user/LoanDetails.css"
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
+import "../../user/LoanDetails.css";
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
 
@@ -32,21 +36,36 @@ const LoanDetails = ({ collapsed }) => {
                 icon={
                   record.status === "Pending" ? (
                     <ClockCircleOutlined />
-                  ) : record.status === "Rejected" ? (
+                  ) : record.status === "2" ? (
                     <CloseCircleOutlined />
-                  ) : (
+                  ) : record.status === "1" ? (
                     <CheckCircleOutlined />
-                  )
+                  ) : null
                 }
                 color={
                   record.status === "Pending"
                     ? "orange"
-                    : record.status === "Rejected"
+                    : record.status === "2"
                     ? "red"
-                    : "green"
+                    : record.status === "1"
+                    ? "green"
+                    : null
                 }
-                className="status-tag"
-                > {record.status}
+                className={`status-tag ${
+                  record.status === "1"
+                    ? "approved"
+                    : record.status === "2"
+                    ? "rejected"
+                    : "pending"
+                }`}
+              >
+                {record.status === "1" ? (
+                  <p style={{ display: "inline" }}>Approved</p>
+                ) : record.status === "2" ? (
+                  <p style={{ display: "inline" }}>Rejected</p>
+                ) : (
+                  <p style={{ display: "inline" }}>Pending</p>
+                )}
               </Tag>
             </div>
             <Row className="px-4 py-3">
@@ -79,10 +98,10 @@ const LoanDetails = ({ collapsed }) => {
                             }}
                           />
                         </div>
-                      ): (
+                      ) : (
                         <div className="photo-preview mb-2">
                           <img
-                      src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                            src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
                             //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
                             // src={record.photographs}
                             alt="Photograph"
@@ -96,10 +115,9 @@ const LoanDetails = ({ collapsed }) => {
                             }}
                           />
                         </div>
-                      )
-                      }
+                      )}
                       <p>
-                        {record.firstname}{" "}{record.lastname}
+                        {record.firstname} {record.lastname}
                       </p>
                     </Col>
 
@@ -115,7 +133,7 @@ const LoanDetails = ({ collapsed }) => {
                         column={{ xl: 3, lg: 2, xs: 1, md: 2, sm: 1 }}
                       >
                         <Descriptions.Item label="Name">
-                          {record.firstname}{" "}{record.lastname}
+                          {record.firstname} {record.lastname}
                         </Descriptions.Item>
                         <Descriptions.Item label="Gender">
                           {record.gender}
@@ -254,6 +272,27 @@ const LoanDetails = ({ collapsed }) => {
               </Col>
 
               <Col lg={12} md={12}>
+                <Card className="loandetail-custom-card" title="Loan Status">
+                  <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                    <Descriptions.Item label="Approval Status">
+                      {record.status === "1" ? (
+                        <p color="green">Approved</p>
+                      ) : record.status === "2" ? (
+                        <p color="red">Rejected</p>
+                      ) : (
+                        <p color="orange">Pending</p>
+                      )}
+                    </Descriptions.Item>
+                    {record.status === "2" && (
+                      <Descriptions.Item label="Reason for Rejection">
+                        {record.rejectionReason}
+                      </Descriptions.Item>
+                    )}
+                  </Descriptions>
+                </Card>
+              </Col>
+
+              <Col lg={12} md={12}>
                 <Card
                   className="loandetail-custom-card"
                   title="Nominee Details"
@@ -274,7 +313,10 @@ const LoanDetails = ({ collapsed }) => {
 
               {record.maritalStatus === "Married" && (
                 <Col lg={12} md={12}>
-                  <Card className="loandetail-custom-card" title="Spouse Details">
+                  <Card
+                    className="loandetail-custom-card"
+                    title="Spouse Details"
+                  >
                     <Descriptions
                       column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
                     >
@@ -302,34 +344,34 @@ const LoanDetails = ({ collapsed }) => {
 
               {record.bankName && (
                 <Col lg={12} md={12}>
-                <Card className="loandetail-custom-card" title="Bank Details">
-                  <Descriptions
-                    column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
-                  >
-                    <Descriptions.Item label="Bank Name">
-                      {record.bankName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Branch Name">
-                      {record.branch}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="IFSC Code">
-                      {record.IFSCCode}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Account Number">
-                      {record.accountNumber}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="GST Number">
-                      {record.GSTNumber}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Aadhar Number">
-                      {record.aadhaarNumber}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="PAN Number">
-                      {record.panCardNumber}
-                    </Descriptions.Item>
+                  <Card className="loandetail-custom-card" title="Bank Details">
+                    <Descriptions
+                      column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
+                    >
+                      <Descriptions.Item label="Bank Name">
+                        {record.bankName}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Branch Name">
+                        {record.branch}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="IFSC Code">
+                        {record.IFSCCode}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Account Number">
+                        {record.accountNumber}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="GST Number">
+                        {record.GSTNumber}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Aadhar Number">
+                        {record.aadhaarNumber}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="PAN Number">
+                        {record.panCardNumber}
+                      </Descriptions.Item>
                     </Descriptions>
-                    </Card>
-                    </Col>
+                  </Card>
+                </Col>
               )}
 
               <Col lg={12} md={12}>
