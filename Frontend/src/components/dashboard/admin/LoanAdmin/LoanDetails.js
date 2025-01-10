@@ -1,84 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Card, Descriptions,Button, Tag, Space, Divider, Modal, Input } from "antd";
+import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-// import "../../user/LoanDetails.css";
-import "../user/LoanDetails.css";
+import "../../user/LoanDetails.css";
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
-import Api from "../../../Api";
 
 const LoanDetails = ({ collapsed }) => {
+  const [loan, setLoan] = useState([]);
+
+  const navigate = useNavigate();
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState("");
-  const [loan, setLoan] = useState([]);
-  const navigate = useNavigate();
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
 
-  const handleModalOk = () => {
-    setSelectedRecord(null);
-  };
-
-  const handleModalCancel = () => {
-    setSelectedRecord(null);
-  };
-
-  const updateStatus = async (id, action, reason = "") => {
-    try {
-      const details = { action, reason };
-      const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
-        details
-      );
-      console.log("Response data:", response.data);
-      const updatedLoans = loan.map((item) =>
-        item._id === id
-          ? {
-              ...item,
-              status: action === "approve" ? "1" : "2",
-              rejectionReason: action === "reject" ? reason : null,
-            }
-          : item
-      );
-      setLoan(updatedLoans);
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
-
-  const handleApprove = () => {
-    if (record) {
-      updateStatus(record._id, "approve");
-      navigate("/admin/loanManagement");
-    }
-  };
-
-  const handleRejectionReasonChange = (e) => {
-    setRejectionReason(e.target.value);
-  };
-
-  const handleReject = () => {
-    if (record && rejectionReason.trim()) {
-      updateStatus(record._id, "reject", rejectionReason.trim());
-      setIsRejectModalVisible(false);
-      setRejectionReason("");
-      navigate("/admin/loanManagement");
-    } else {
-      console.error("Rejection reason is required.");
-    }
-  };
-
-  const handleReset = () => {
-    setRejectionReason("");
-  };
+  if (!record) {
+    return <div>Loading or No loan details available.</div>;
+  }
 
   return (
     <div>
@@ -88,8 +31,6 @@ const LoanDetails = ({ collapsed }) => {
             <center>
               <h3>Loan Details</h3>
             </center>
-            
-
             <div className="px-2" style={{ textAlign: "end" }}>
               <Tag
                 icon={
@@ -240,61 +181,61 @@ const LoanDetails = ({ collapsed }) => {
 
             <Row className="px-2">
               {/* <Col lg={6} md={12}>
-                    <Card
-                      className="loandetail-custom-card"
-                      title="Personal Details"
-                    >
-                      <Descriptions
-                        size="small"
-                        layout="vertical"
-                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
-                      >
-                        <Descriptions.Item label="Name">
-                          {record.firstname} {record.lastname}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Gender">
-                          {record.gender}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Date of Birth">
-                          {dateFormat}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Marital Status">
-                          {record.maritalStatus}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Nationality">
-                          {record.nationality}
-                        </Descriptions.Item>
-                      </Descriptions>
-                    </Card>
-                  </Col> */}
+                <Card
+                  className="loandetail-custom-card"
+                  title="Personal Details"
+                >
+                  <Descriptions
+                    size="small"
+                    layout="vertical"
+                    column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                  >
+                    <Descriptions.Item label="Name">
+                      {record.firstname} {record.lastname}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Gender">
+                      {record.gender}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Date of Birth">
+                      {dateFormat}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Marital Status">
+                      {record.maritalStatus}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Nationality">
+                      {record.nationality}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Col> */}
 
               {/* <Col lg={6} md={12}>
-                    <Card
-                      className="loandetail-custom-card"
-                      title="Contact Details"
-                    >
-                      <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                        <Descriptions.Item label="Address">
-                          {record.address}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="City">
-                          {record.city}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="District">
-                          {record.district}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="State">
-                          {record.state}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Country">
-                          {record.country}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Pincode">
-                          {record.pinCode}
-                        </Descriptions.Item>
-                      </Descriptions>
-                    </Card>
-                  </Col> */}
+                <Card
+                  className="loandetail-custom-card"
+                  title="Contact Details"
+                >
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                    <Descriptions.Item label="Address">
+                      {record.address}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="City">
+                      {record.city}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="District">
+                      {record.district}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="State">
+                      {record.state}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Country">
+                      {record.country}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Pincode">
+                      {record.pinCode}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Col> */}
 
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
@@ -526,86 +467,6 @@ const LoanDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-            <Row className="px-4 py-5">
-                <Space>
-                  {record && record.status === "Pending" && (
-                    <Button
-                      type="primary"
-                      style={{ background: "#4096ff", color: "#fff" }}
-                      onClick={handleApprove}
-                    >
-                      Approve
-                    </Button>
-                  )}
-
-                  {record && record.status === "Pending" && (
-                    <>
-                      <Button
-                        danger
-                        onClick={() => setIsRejectModalVisible(true)}
-                      >
-                        Reject
-                      </Button>
-                      </>
-                  )}
-
-                      <Modal
-                        title="Rejection Confirmation"
-                        visible={isRejectModalVisible}
-                        onCancel={() => setIsRejectModalVisible(false)}
-                        footer={null}
-                      >
-                        <div>
-                          <p>Please provide a reason for rejection:</p>
-                          <Input.TextArea
-                            rows={3}
-                            placeholder="Enter rejection reason"
-                            value={rejectionReason}
-                            onChange={handleRejectionReasonChange}
-                          />
-                          <Space style={{ marginTop: "20px" }}>
-                            <Button
-                              type="primary"
-                              onClick={handleReject}
-                              disabled={!rejectionReason.trim()}
-                            >
-                              Submit
-                            </Button>
-                            <Button onClick={handleReset}>Reset</Button>
-                          </Space>
-                        </div>
-                      </Modal>
-
-                  {record && record.status === "1" && (
-                    <>
-                    <Button type="primary" disabled>
-                      Approved
-                    </Button>
-                    <Button
-                    danger
-                    onClick={() => setIsRejectModalVisible(true)}
-                  >
-                    Reject
-                  </Button>
-                  </>
-                  )}
-
-                  {record && record.status === "2" && (
-                    <>
-                    <Button
-                    type="primary"
-                    style={{ background: "#4096ff", color: "#fff" }}
-                    onClick={handleApprove}
-                  >
-                    Approve
-                  </Button>
-                    <Button danger disabled>
-                      Rejected
-                    </Button>
-                    </>
-                  )}
-                </Space>
-              </Row>
           </div>
         </div>
       </div>
