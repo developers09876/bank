@@ -96,6 +96,7 @@ function LoanForm() {
 
     const Details = {
       userid: userid,
+      lastname: data.lastname,
       firstname: data.firstname,
       dob: data.dob,
       gender: data.gender,
@@ -296,6 +297,23 @@ function LoanForm() {
                           placeholder="First Name"
                         />
                         {errors.firstname && (
+                          <p className="text-danger">First Name is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Last Name
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="lastname"
+                          {...register("lastname", { required: true })}
+                          placeholder="Last Name"
+                        />
+                        {errors.lastname && (
                           <p className="text-danger">First Name is required</p>
                         )}
                       </div>

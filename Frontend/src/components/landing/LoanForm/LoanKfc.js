@@ -22,6 +22,8 @@ function Kycvendor() {
 
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
+  const loanApplicationId = localStorage.getItem("loanApplicationId");
+
 
   console.log("userKYCDetail", userKYCDetail);
 
@@ -75,6 +77,7 @@ function Kycvendor() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
+      aadhaarNumber:data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -88,7 +91,7 @@ function Kycvendor() {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/signup/updateKYC/${userid}`,
+        `http://localhost:5000/loanform/updateloanapplications/${loanApplicationId}`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");
@@ -132,13 +135,22 @@ function Kycvendor() {
             <Row className="kycRow_Container">
               <Col sm={10} md={4} lg={4}>
                 <label>PanCard Number: </label>
-
                 <input
                   {...register("panCardNumber", { required: true })}
                   className="inputcolumn-ourProfile"
                 />
                 {errors.panCardNumber && (
                   <p className="text-danger">pancard number is required</p>
+                )}
+              </Col>
+              <Col sm={10} md={4} lg={4}>
+                <label>Aadhar Number: </label>
+                <input
+                  {...register("aadhaarNumber", { required: true })}
+                  className="inputcolumn-ourProfile"
+                />
+                {errors.aadhaarNumber && (
+                  <p className="text-danger">Aadhaar number is required</p>
                 )}
               </Col>
 

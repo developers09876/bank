@@ -61,12 +61,15 @@ export async function createLoanApplication(req, res, next) {
 
     const details = {
       userid: data.userid,
-      fullName: data.fullName,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      // fullName: data.fullName,
       dob: data.dob,
       gender: data.gender,
       maritalStatus: data.maritalStatus || data.MaritalStatus,
       nationality: data.nationality,
       contact: data.contact,
+      contactNumber: data.contactNumber,
       address: data.address,
       pinCode: data.pinCode,
       city: data.city,
@@ -139,7 +142,7 @@ export async function updateLoanDetails(req, res, next) {
       IFSCCode: data.IFSCCode,
       bankName: data.bankName,
       aadhaarNumber: data.aadhaarNumber,
-      branch: data.branch,
+      bankBranch: data.bankBranch,
       panImageUpload: data.panImageUpload,
       aadharImageUpload: data.aadharImageUpload,
     };
