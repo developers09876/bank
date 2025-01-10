@@ -2,16 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Imageh1 from "../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 import villuLogo from "../Images/villu-logo-png.png";
+import { Modal, Card, Button } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import "./Header.css";
-import {
-  FaHome,
-  FaAddressBook,
-  FaInfoCircle,
-  FaArrowCircleRight,
-  FaClipboardList,
-  FaBriefcase,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaHome, FaAddressBook, FaInfoCircle, FaArrowCircleRight, FaClipboardList, FaBriefcase, FaEnvelope } from "react-icons/fa";
 import { IoNotifications } from "react-icons/io5";
 
 import Api from "../../Api";
@@ -29,7 +23,7 @@ function Header() {
   const handleMenuClick = (key) => {
     setSelectedKey(key);
     window.scrollTo(0, 0);
-    setIsOpen(false); // Close the mobile menu on link click
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -48,15 +42,14 @@ function Header() {
 
   const fetchUser = async () => {
     try {
-      const response = await Api.get(
-        `http://localhost:5000/signup/getby/${userId}`
-      );
+      const response = await Api.get(`http://localhost:5000/signup/getby/${userId}`);
       setUserDetail(response.data);
       console.log("response", response.data);
     } catch (error) {
       console.error("Error fetching user:", error);
     }
   };
+
   const handlenavigate = () => {
     const routes = {
       employee: "/employee",
@@ -75,6 +68,7 @@ function Header() {
     localStorage.removeItem("userType");
     navigate("/login");
   };
+
   const menuItems = [
     { path: "/", label: "Home", icon: <FaHome /> },
     { path: "/about", label: "About", icon: <FaInfoCircle /> },
@@ -108,7 +102,7 @@ function Header() {
               </li>
             ))}
             <div>
-              <IoNotifications />
+              <IoNotifications onClick={() => setIsOpen(true)} />
             </div>
             {!isLoggedIn ? (
               <li>
@@ -153,153 +147,81 @@ function Header() {
               </li>
             )}
           </ul>
-
-          <button
-            className="hamburger lg:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            &#9776;
-          </button>
-          {isOpen && (
-            <div className="offcanvas show">
-              <button className="close-button" onClick={() => setIsOpen(false)}>
-                &times;
-              </button>
-              <div className="nav-links flex flex-col items-start space-y-1">
-                {isLoggedIn ? (
-                  // <div className="flex flex-row items-center w-full">
-                  //   <div><img
-                  //     src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
-                  //     alt="Profile"
-                  //     className="w-16 h-16 rounded-full"
-                  //   /></div>
-                  //    <div className="px-2 text-gray">
-                  //   <p style={{justifyContent:'flex-start'}}>{userDetail.firstname}</p>
-                  //   <p style={{justifyContent:'flex-start'}}>{userDetail.email}</p>
-                  //   </div>
-                  // </div>
-                  <div className="flex flex-col items-center w-full">
-                    <img
-                      onClick={handlenavigate}
-                      src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
-                      alt="Profile"
-                      className="w-16 h-16 rounded-full"
-                    />
-                    <p style={{ justifyContent: "flex-start" }}>
-                      {userDetail.firstname} {userDetail.lastname}
-                    </p>
-                  </div>
-                ) : (
-                  <img
-                    src={Imageh1}
-                    alt="logo-img"
-                    className="w-16 h-16 mb-2"
-                  />
-                )}
-                <div style={{ alignSelf: "flex-start", marginLeft: "20px" }}>
-                  {menuItems.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className="navlink py-1 pl-3 pr-4 rounded no-underline text-gray-700 "
-                      onClick={() => handleMenuClick(item.path)}
-                    >
-                      <span className="flex rounded flex-row nav-link">
-                        <span
-                          style={{
-                            alignSelf: "center",
-                            paddingRight: "20px",
-                            color: "#1a2a41",
-                            display: "inline-block",
-                          }}
-                        >
-                          {item.icon}
-                        </span>
-                        {item.label}
-                      </span>
-                    </Link>
-                  ))}
-                  <div>
-                    <IoNotifications />
-                  </div>
-
-                  {!isLoggedIn ? (
-                    <Link
-                      to="/login"
-                      className="navlink  py-1 rounded no-underline text-gray-700 "
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <span className="flex rounded flex-row nav-link">
-                        <span
-                          style={{
-                            alignSelf: "center",
-                            paddingRight: "20px",
-                            color: "#1a2a41",
-                            display: "inline-block",
-                          }}
-                        >
-                          <FaArrowCircleRight />
-                        </span>
-                        Login
-                      </span>
-                    </Link>
-                  ) : (
-                    <div
-                      style={{
-                        alignSelf: "flex-start",
-                        display: "flex",
-                        flexDirection: "column",
-                        textAlignLast: "justify",
-                      }}
-                    >
-                      <button
-                        style={{ padding: "0.25rem 0 !important" }}
-                        onClick={handlenavigate}
-                        className="navlink  block  rounded no-underline text-gray-700 "
-                      >
-                        <span className="flex rounded flex-row nav-link">
-                          <span
-                            style={{
-                              alignSelf: "center",
-                              paddingRight: "20px",
-                              color: "#1a2a41",
-                              display: "inline-block",
-                            }}
-                          >
-                            <FaAddressBook />
-                          </span>
-                          My Profile
-                        </span>
-                      </button>
-                      <button
-                        style={{ padding: "0.25rem 0 !important" }}
-                        onClick={handleLogout}
-                        className="navlink py-3 block rounded no-underline text-gray-700 "
-                      >
-                        <span className="flex rounded flex-row nav-link">
-                          <span
-                            style={{
-                              alignSelf: "center",
-                              paddingRight: "20px",
-                              color: "#1a2a41",
-                              display: "inline-block",
-                            }}
-                          >
-                            <FaArrowCircleRight />
-                          </span>
-                          Logout
-                        </span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </nav>
+
+      {/* Notification Modal */}
+      <NotificationModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 }
+const NotificationModal = ({ isOpen, setIsOpen }) => {
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      date: "2025-01-10",
+      message: "Your request has been deleted.",
+    },
+    // {
+    //   id: 2,
+    //   date: "2025-01-09",
+    //   message: "Your product has been shipped.",
+    // },
+    // {
+    //   id: 3,
+    //   date: "2025-01-08",
+    //   message: "You have a new message from admin.",
+    // },
+  ]);
+
+  const handleCancel = () => {
+    setIsOpen(false);
+  };
+
+  const handleDelete = (id) => {
+    setNotifications(notifications.filter((notification) => notification.id !== id));
+  };
+
+  return (
+    <Modal
+      title="Notifications"
+      visible={isOpen}
+      onCancel={handleCancel}
+      footer={null}
+      width={400} 
+      className="notification-modal" 
+    >
+      <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+        {notifications.length === 0 ? (
+          <p>No notifications available.</p>
+        ) : (
+          notifications.map((notification) => (
+            <Card
+              key={notification.id}
+              style={{
+                // marginBottom: "16px",
+                borderRadius: "8px", 
+                boxShadow: "0 2px 8px rgba(17, 219, 226, 0.1)", 
+                height:"125px",
+              }}
+              actions={[
+                <Button
+                  type="link"
+                  icon={<DeleteOutlined />}
+                  onClick={() => handleDelete(notification.id)}
+                  style={{ color: "red" }} 
+                >
+                </Button>,
+              ]}
+            >
+              <p><strong className="notification-heading">Date:</strong> {notification.date}</p> 
+              <p ><strong className="notification-heading">Message:</strong> {notification.message}</p> 
+            </Card>
+          ))
+        )}
+      </div>
+    </Modal>
+  );
+};
 
 export default Header;
