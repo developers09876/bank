@@ -5,11 +5,13 @@ import { FaPlus } from "react-icons/fa6";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Api from "../../../../Api";
 
-function LoanLeadManagement() {
+function TaxManagementTable() {
   const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  console.log("step1", data);
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -28,14 +30,14 @@ function LoanLeadManagement() {
       const lastname = item.lastname || "";
       const email = item.email || "";
       const phone = item.phone || "";
-      const purpose = item.purpose || "";
+      const businessType = item.businessType || "";
 
       return (
         firstname.toLowerCase().includes(searchText.toLowerCase()) ||
         lastname.toLowerCase().includes(searchText.toLowerCase()) ||
         email.toLowerCase().includes(searchText.toLowerCase()) ||
         phone.toLowerCase().includes(searchText.toLowerCase()) ||
-        purpose.toLowerCase().includes(searchText.toLowerCase())
+        businessType.toLowerCase().includes(searchText.toLowerCase())
       );
     });
     setFilteredData(filtered);
@@ -44,11 +46,9 @@ function LoanLeadManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/lead/getById/${userId}`
-      );
-      setData(response.data.data);
-      setFilteredData(response.data.data);
+      const response = await Api.get(`taxManagement/getbyEmployeeid/${userId}`);
+      setData(response.data);
+      setFilteredData(response.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
     } finally {
@@ -71,9 +71,9 @@ function LoanLeadManagement() {
   );
 
   const handleViewDetails = (record) => {
-    navigate("/adminLoan/leaddetails", { state: { record } });
+    setSelectedRecord(record);
+    setIsModalVisible(true);
   };
-  
 
   const handleModalOk = () => {
     setIsModalVisible(false);
@@ -103,15 +103,11 @@ function LoanLeadManagement() {
       key: "phone",
     },
     {
-      title: "Loan Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Business Type",
+      dataIndex: "businessType",
+      key: "businessType",
     },
-    {
-      title: "Purpose",
-      dataIndex: "purpose",
-      key: "purpose",
-    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -136,7 +132,7 @@ function LoanLeadManagement() {
       <Container style={{ width: "90%" }}>
         <div style={{ width: "100%" }}>
           <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
-            Lead Management
+            Task Management
           </h4>
           <br />
           <div style={{ justifyContent: "space-between" }}>
@@ -149,7 +145,7 @@ function LoanLeadManagement() {
                 prefix={<SearchOutlined />}
               />
             </Space>
-            <Button
+            {/* <Button
               type="primary"
               onClick={() => navigate("/adminLoan/createlead")}
               style={{
@@ -160,7 +156,7 @@ function LoanLeadManagement() {
             >
               <FaPlus style={{ display: "inline", color: "white" }} />
               Add New
-            </Button>
+            </Button> */}
           </div>
           <Table
             dataSource={paginatedData}
@@ -178,8 +174,8 @@ function LoanLeadManagement() {
           />
         </div>
       </Container>
-      {/* <Modal
-        title="Lead Management Details"
+      <Modal
+        title="Task Management Details"
         visible={isModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
@@ -232,23 +228,7 @@ function LoanLeadManagement() {
               </Col>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.phone}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Loan Amount</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.amount}
+                  {selectedRecord.contactNumber}
                 </p>
               </Col>
             </Row>
@@ -288,7 +268,7 @@ function LoanLeadManagement() {
             <Row>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Purpose Of Loan</strong>
+                  <strong>Business Type</strong>
                 </p>
               </Col>
               <Col span={2}>
@@ -296,15 +276,90 @@ function LoanLeadManagement() {
               </Col>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.purpose}
+                  {selectedRecord.businessType}
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Income Tax Status</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.incomeTaxStatus}
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>GST Number</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.gst}
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Tax paid for last year</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.taxPaid}
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Annual Income</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.annualIncome}
+                </p>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  <strong>Admin Message</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px", padding: "3px" }}>
+                  {selectedRecord.description}
                 </p>
               </Col>
             </Row>
           </div>
         )}
-      </Modal> */}
+      </Modal>
     </div>
   );
 }
 
-export default LoanLeadManagement;
+export default TaxManagementTable;

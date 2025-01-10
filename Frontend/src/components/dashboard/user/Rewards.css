@@ -1,0 +1,78 @@
+.rewards-container {
+    padding: 40px;
+    background: #f0f2f5;
+  }
+  
+  .rewards-title {
+    margin-bottom: 30px;
+  }
+  
+  .rewards-balance {
+    /* text-align: center; */
+    margin-bottom: 40px;
+    margin-left: 480px;
+    
+  }
+  
+  .rewards-cards {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .reward-card {
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    padding: 10px;
+    width: 500px;
+    margin-right: 250px;
+  }
+  
+  .reward-image-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .reward-image {
+    border-radius: 15px;
+    width: 400px;
+    height: 250px;
+    transition: transform 0.3s ease;
+  }
+  
+  .reward-card-title {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .reward-button {
+    margin: 10px 0;
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+  
+  .reward-description {
+    text-align: center;
+  }
+  
+  .reward-text {
+    color: #333;
+    font-size: 15px;
+  }
+  
+  .reward-icon {
+    color: #faad14;
+    margin-right: 5px;
+  }
+  
+  .reward-encouragement {
+    color: #ff4d4f;
+    font-weight: bold;
+  }
+  
+  .reward-image:hover {
+    transform: scale(1.1);
+  }
+  

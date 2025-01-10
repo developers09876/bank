@@ -33,10 +33,10 @@ function Sidebar({ collapsed }) {
         </NavLink>
         <NavLink to="/adminLoan/myprofile">My Profile</NavLink>
 
-
         <NavLink to="/adminLoan/loanmanagement">Loan Management</NavLink>
 
         <NavLink to="/adminLoan/leadmanagement">Lead Generation</NavLink>
+        <NavLink to="/adminLoan/TaxManagement">Task Management</NavLink>
       </Menu>
     </div>
   );
