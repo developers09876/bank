@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Space } from "antd";
+import { Table, Input, Space,Modal , Row, Col} from "antd";
 import { useForm } from "react-hook-form";
 import { SearchOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
@@ -18,6 +18,8 @@ function ContactUs() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [contactUsData, setContactUsData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
 
 
   const fetchLeads = async () => {
@@ -62,6 +64,12 @@ function ContactUs() {
   );
   const handleViewDetails = (record) => {
     // navigate(`/admin/leaddetails/${record.id}`, { state: { record } });
+    setSelectedRecord(record);
+    setIsModalVisible(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setSelectedRecord(null);
   };
 
   useEffect(() => {
@@ -145,6 +153,74 @@ function ContactUs() {
        </div>
        </div>
     </Container>
+
+    <Modal
+        title="Contact Details"
+        visible={isModalVisible}
+        onCancel={handleCloseModal}
+        footer={[
+          <button key="close" className="btn btn-secondary" onClick={handleCloseModal}>
+            Close
+          </button>,
+        ]}
+      >
+        {selectedRecord && (
+          <div>
+          <Row>
+            <Col span={10}>
+              <p style={{ fontSize: "15px" }}>
+                <strong>Email</strong>
+              </p>
+            </Col>
+            <Col span={2}>
+              <p style={{ fontSize: "15px" }}>:</p>
+            </Col>
+            <Col span={12}>
+              <p style={{ fontSize: "15px" }}>{selectedRecord.email}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={10}>
+              <p style={{ fontSize: "15px" }}>
+                <strong>Phone Number</strong>
+              </p>
+            </Col>
+            <Col span={2}>
+              <p style={{ fontSize: "15px" }}>:</p>
+            </Col>
+            <Col span={12}>
+              <p style={{ fontSize: "15px" }}>{selectedRecord.phonenumber}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={10}>
+              <p style={{ fontSize: "15px" }}>
+                <strong>Subject</strong>
+              </p>
+            </Col>
+            <Col span={2}>
+              <p style={{ fontSize: "15px" }}>:</p>
+            </Col>
+            <Col span={12}>
+              <p style={{ fontSize: "15px" }}>{selectedRecord.subject}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={10}>
+              <p style={{ fontSize: "15px" }}>
+                <strong>Message</strong>
+              </p>
+            </Col>
+            <Col span={2}>
+              <p style={{ fontSize: "15px" }}>:</p>
+            </Col>
+            <Col span={12}>
+              <p style={{ fontSize: "15px" }}>{selectedRecord.message}</p>
+            </Col>
+          </Row>
+        </div>
+        )}
+      </Modal>
   </div>
 
   );

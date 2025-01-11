@@ -101,11 +101,15 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Loan
         </NavLink>
-        <NavLink to="/user/insuranceDetails" ClassName="main-nav-style">
+        <NavLink to="/user/insu" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Insurance
         </NavLink>
-        <NavLink to="/user/userTaxmangemnent" ClassName="main-nav-style">
+        {/* <NavLink to="/user/userTaxmangemnent" ClassName="main-nav-style">
+          Tax
+        </NavLink> */}
+        
+        <NavLink to="/user/tax" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Tax
         </NavLink>
