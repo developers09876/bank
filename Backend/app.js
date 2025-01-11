@@ -26,6 +26,7 @@ import jobrequest from "./server/Router/JobRequestRouter.js";
 import lead from "./server/Router/LeadGenerationRouter.js";
 import Contactus from "./server/Router/ContactusRoutes.js";
 import taxManagement from "./server/Router/TaxManagementRoute.js";
+import insuranceManagement from "./server/Router/InsuranceManagementRouter.js"
 
 app.use("/country", country);
 app.use("/state", state);
@@ -33,6 +34,8 @@ app.use("/district", district);
 app.use("/city", city);
 app.use("/area", area);
 app.use("/taxManagement", taxManagement);
+app.use("/insuranceManagement", insuranceManagement);
+
 
 app.use("/admin", Adminlogin);
 app.use("/signup", signup);

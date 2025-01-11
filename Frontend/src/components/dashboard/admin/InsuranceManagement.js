@@ -1,157 +1,166 @@
-import React, { useState } from "react";
-import { Table, Input, Space, Pagination, Button } from "antd";
+import { Table, Input, Space } from "antd";
+import React, { useState, useEffect } from "react";
+import { Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
-import { Container } from "react-bootstrap";
+import axios from "axios";
+import { FaPlus } from "react-icons/fa";
+import Api from "../../../Api";
 
-const InsuranceManagements = ({ collapsed }) => {
-  const [searchText, setSearchText] = useState("");
+function InsuranceManagement() {
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
-  const data = [
-    {
-      key: "1",
-      date: "01/02/2023",
-      appId: "256789",
-      customer: "Katerina Simpson",
-      status: "Documents Required",
-      action: "Doc. Upload",
-    },
-    {
-      key: "2",
-      date: "01/02/2023",
-      appId: "256790",
-      customer: "Willow Fuller",
-      status: "Approved",
-      action: "Continue",
-    },
-    {
-      key: "3",
-      date: "01/03/2023",
-      appId: "256791",
-      customer: "Stacey Hawkins",
-      status: "Soft Approved",
-      action: "Continue",
-    },
-    {
-      key: "4",
-      date: "01/03/2023",
-      appId: "256792",
-      customer: "Micheal Decker",
-      status: "Banking Incomplete",
-      action: "Continue",
-    },
-    {
-      key: "5",
-      date: "01/03/2023",
-      appId: "256793",
-      customer: "Noah Hogan",
-      status: "Loan Details Incomplete",
-      action: "Delete",
-    },
-    {
-      key: "6",
-      date: "01/03/2023",
-      appId: "256794",
-      customer: "James Millner",
-      status: "Soft Approved",
-      action: "Continue",
-    },
-  ];
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  useEffect(() => {
+    const filtered = data.filter((item) => {
+      const firstname = item.firstname || "";
+      const lastname = item.lastname || "";
+      const email = item.email || "";
+      const phone = item.phone || "";
+      const purpose = item.purpose || "";
+
+      return (
+        firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+        lastname.toLowerCase().includes(searchText.toLowerCase()) ||
+        email.toLowerCase().includes(searchText.toLowerCase()) ||
+        phone.toLowerCase().includes(searchText.toLowerCase()) ||
+        purpose.toLowerCase().includes(searchText.toLowerCase())
+      );
+    });
+    setFilteredData(filtered);
+  }, [searchText, data]);
+
+  const fetchLeads = async () => {
+    setLoading(true);
+    try {
+      const response = await Api.get("/insuranceManagement/getAllInsuranceManagement");
+      console.log("responsessss", response.data.purpose);
+      setData(response.data);
+      setFilteredData(response.data);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
+  const handleViewDetails = (record) => {
+    console.log("record", record);
+    navigate(`/admin/insuranceManagementdetails/${record._id}`, {
+      state: { record },
+    });
+  };
+
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const columns = [
     {
-      title: "Created On",
-      dataIndex: "date",
-      key: "date",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (_, record) => `${record.firstname} ${record.lastname}`,
     },
     {
-      title: "Application ID",
-      dataIndex: "appId",
-      key: "appId",
+      title: "Email Id",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: "Customer Name",
-      dataIndex: "customer",
-      key: "customer",
+      title: "Phone Number",
+      dataIndex: "contactNumber",
+      key: "phone",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: "Created By",
+      dataIndex: "userType",
+      key: "userType",
     },
+
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
       render: (text, record) => (
-        <Space>
-          <Button type="primary" style={{ color: "black" }}>
-            View
-          </Button>
-        </Space>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => handleViewDetails(record)}
+        >
+          View
+        </button>
       ),
     },
   ];
 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    setSearchText(searchTerm);
-    const filtered = data.filter((item) =>
-      item.customer.toLowerCase().includes(searchTerm)
-    );
-    setFilteredData(filtered);
-    setCurrentPage(1); // Reset to the first page when filtering
-  };
-
-  // Get the current page data by slicing the array based on pagination values
-  const getPaginatedData = () => {
-    const sourceData = searchText ? filteredData : data;
-    const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-    return sourceData.slice(start, end);
-  };
-
   return (
-    <div>
-      <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
-        {/* <Sidebar/> */}
-        <div
-          className={collapsed === true ? "main-content.open" : "main-content"}
-        >
-          <Space style={{ marginBottom: 16 }} className="filter-actions">
-            <Input
-              placeholder="Search"
-              value={searchText}
-              onChange={handleSearch}
-              style={{ width: 200 }}
-              prefix={<SearchOutlined />}
+    <div style={{ marginTop: "50px", width: "100%" }}>
+      <Container style={{ width: "90%" }}>
+        <div style={{ width: "100%" }}>
+          <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
+            Insurance Management
+          </h4>
+          <br />
+          <div style={{ justifyContent: "space-between" }}>
+            <Space style={{ marginBottom: 16 }} className="filter-actions">
+              <Input
+                placeholder="Search"
+                style={{ width: 200 }}
+                prefix={<SearchOutlined />}
+                value={searchText}
+                onChange={handleSearch}
+              />
+            </Space>
+            <Button
+              type="primary"
+              onClick={() => navigate("/admin/createinauranceMangement")}
+              style={{
+                display: "inline",
+                float: "right",
+                backgroundColor: "#00397f",
+              }}
+            >
+              <FaPlus style={{ display: "inline", color: "white" }} />
+              Add New
+            </Button>
+            <Table
+              dataSource={paginatedData}
+              columns={columns}
+              loading={loading}
+              pagination={{
+                current: currentPage,
+                pageSize: pageSize,
+                total: filteredData.length,
+                showSizeChanger: true,
+              }}
+              onChange={handleTableChange}
+              rowKey="id"
             />
-          </Space>
-
-          <Table
-            dataSource={getPaginatedData()}
-            columns={columns}
-            pagination={false}
-            className="loan-table"
-          />
-
-          <Pagination
-            current={currentPage}
-            pageSize={pageSize}
-            total={searchText ? filteredData.length : data.length}
-            onChange={(page, pageSize) => {
-              setCurrentPage(page);
-              setPageSize(pageSize);
-            }}
-            className="pagination-control"
-            // showSizeChanger
-          />
+          </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
-};
+}
 
-export default InsuranceManagements;
+export default InsuranceManagement;

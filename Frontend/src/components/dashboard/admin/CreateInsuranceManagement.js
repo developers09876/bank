@@ -1,13 +1,12 @@
 import { Select } from "antd";
-import axios from "axios";
 import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
-
+import Api from "../../../Api";
 const { Option } = Select;
 
-function CreateLead() {
+function CreateInsuranceManagement() {
   const {
     register,
     handleSubmit,
@@ -16,21 +15,24 @@ function CreateLead() {
     formState: { errors },
   } = useForm();
 
-  const id = localStorage.getItem("id");
+  const id = localStorage.getItem("regid");
+  const userType = localStorage.getItem("role");
 
   const onSubmit = async (data) => {
     const details = {
+      userId: id,
+      userType: userType,
       firstname: data.firstname,
       lastname: data.lastname,
-      userId: id,
       contactNumber: data.contactNumber,
       email: data.email,
       aadhar: data.aadhar,
-      purpose: data.purpose,
-      amount: data.amount,
-      howimidiate: data.howimidiate,
-      previouslyapplied: data.previouslyapplied,
       panno: data.panno,
+      gst: data.gst,
+      policyTerm: data.policyTerm,
+      PolicyType: data.PolicyType,
+      annualIncome: data.annualIncome,
+      sumAssured: data.sumAssured,
     };
     const detail = {
       userType: "user",
@@ -41,15 +43,12 @@ function CreateLead() {
       email: data.email,
     };
     try {
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
-      const response = await axios.post(
-        `http://localhost:5000/lead/createlead`,
+      const res = await Api.post(`/signup/register`, detail);
+
+      const response = await Api.post(
+        `/insuranceManagement/createinsuranceManagement`,
         details
       );
-
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error);
@@ -60,12 +59,13 @@ function CreateLead() {
       toast.error(errorMessage);
     }
   };
+
   return (
     <div>
       <Container style={{ marginTop: "5%" }}>
         <form>
           <h4 style={{ textAlign: "center", color: "#00397f" }}>
-            <b>Add Lead</b>
+            <b>Insurance mangement</b>
           </h4>
           <Row className="px-2 py-3">
             <Col xs={12} md={6} lg={4}>
@@ -190,37 +190,32 @@ function CreateLead() {
 
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Purpose of Loan</label>
-                <Controller
-                  name="purpose"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Purpose of Loan"
-                    >
-                      <Option value="">Select Purpose</Option>
-                      <Option value="personal">Personal</Option>
-                      <Option value="business">Business</Option>
-                      <Option value="education">Education</Option>
-                      <Option value="home">Home</Option>
-                    </Select>
-                  )}
+                <label className="vendorpage_labelCss">GST Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  name="gst"
+                  {...register("gst", {
+                    required: true,
+                    pattern: {
+                      // value:
+                      //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+                      message: "Invalid GST Number",
+                    },
+                  })}
+                  placeholder="GST Number"
                 />
-                {errors.purpose && (
-                  <p className="text-danger">Select the purpose of loan</p>
+                {errors.gst && (
+                  <p className="text-danger">Enter valid GST Number</p>
                 )}
               </div>
             </Col>
 
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Loan Amount</label>
+                <label className="vendorpage_labelCss">Policy Type</label>
                 <Controller
-                  name="amount"
+                  name="PolicyType"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -228,81 +223,66 @@ function CreateLead() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Loan Amount"
+                      placeholder="Select Gender"
                     >
-                      <Option value="">Select Loan Amount</Option>
-                      <Option value="50000">50,000</Option>
-                      <Option value="100000">1 Lakh</Option>
-                      <Option value="500000">5 Lakh</Option>
-                      <Option value="1000000">10 Lakh</Option>
-                      <Option value="above10">Above 10Lakh</Option>
+                      <Option value="Single">Life Insurance</Option>
+                      <Option value="Health Insurance">Health Insurance</Option>
+                      <Option value="Vehicle">Vehicle Insurance</Option>
                     </Select>
                   )}
                 />
-                {errors.amount && (
-                  <p className="text-danger">Select Loan Amount</p>
+                {errors.PolicyType && (
+                  <p className="text-danger">Policy Type is required</p>
+                )}
+              </div>
+            </Col>
+
+            {/* Policy Term */}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Policy Term</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="policyTerm"
+                  {...register("policyTerm", { required: true })}
+                  placeholder="Policy Term (years)"
+                />
+                {errors.policyTerm && (
+                  <p className="text-danger">Policy Term is required</p>
+                )}
+              </div>
+            </Col>
+
+            {/* Sum Assured */}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Sum Assured</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="sumAssured"
+                  {...register("sumAssured", { required: true })}
+                  placeholder="Sum Assured"
+                />
+                {errors.sumAssured && (
+                  <p className="text-danger">Sum Assured is required</p>
                 )}
               </div>
             </Col>
 
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">
-                  How Immediately You Want Loan
-                </label>
-                <Controller
-                  name="howimidiate"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Duration"
-                    >
-                      <Option value="">Select Dueration</Option>
-                      <Option value="immediately">Immediately</Option>
-                      <Option value="1month">Within 1 Month</Option>
-                      <Option value="3months">Within 3 Months</Option>
-                      <Option value="6months">Within 6 Months</Option>
-                    </Select>
-                  )}
+                <label className="vendorpage_labelCss">Annual Income</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="annualIncome"
+                  {...register("annualIncome", { required: true })}
+                  placeholder="Annual Income"
                 />
-                {errors.howimidiate && (
-                  <p className="text-danger">Select Dueration</p>
-                )}
-              </div>
-            </Col>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  Previously Applied for Loan?
-                </label>
-                <div>
-                  <input
-                    type="radio"
-                    id="yes"
-                    name="previouslyapplied"
-                    value="yes"
-                    {...register("previouslyapplied", { required: true })}
-                  />
-                  &nbsp;&nbsp;
-                  <label htmlFor="yes" className="mr-3">
-                    Yes
-                  </label>
-                  <input
-                    type="radio"
-                    id="no"
-                    name="previouslyapplied"
-                    value="no"
-                    {...register("previouslyapplied", { required: true })}
-                  />
-                  &nbsp;&nbsp;
-                  <label htmlFor="no">No</label>
-                </div>
-                {errors.previouslyapplied && (
-                  <p className="text-danger">Please select an option.</p>
+                {errors.annualIncome && (
+                  <p className="text-danger">Enter annual income</p>
                 )}
               </div>
             </Col>
@@ -333,4 +313,4 @@ function CreateLead() {
   );
 }
 
-export default CreateLead;
+export default CreateInsuranceManagement;

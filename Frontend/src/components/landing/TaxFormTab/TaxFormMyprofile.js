@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import "../dashboard/user/MyProfile.scss";
+import "../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../Layout/Header";
-import Footer from "../Layout/Footer";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 
-function Insurance() {
+function TaxFormMyprofile() {
   const [typeValue, setTypeValue] = useState();
   const [serviceType, setServiceType] = useState([]);
   const [selectYear, setSelectYear] = useState();
@@ -169,10 +169,7 @@ function Insurance() {
             style={{ backgroundColor: "white", padding: "10px 20px" }}
           >
             <div style={{ paddingLeft: "10px" }}>
-              <center>
-                {" "}
-                <h4 className="pages-title mt-3 mb-5"> Insurance Policy</h4>
-              </center>
+              <center> </center>
 
               <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
@@ -484,7 +481,25 @@ function Insurance() {
                         )}
                       </div>
                     </Col>
-             
+                    {/* <Col xs={12} md={6} lg={4}>
+    <div>
+      <label className="vendorpage_labelCss">Policy Type</label>
+      <Select
+        className="inputcolumn_drp"
+        placeholder="Select Policy Type"
+        {...register("policyType", { required: true })}
+        options={[
+          { value: "life", label: "Life Insurance" },
+          { value: "health", label: "Health Insurance" },
+          { value: "vehicle", label: "Vehicle Insurance" }
+        ]}
+      />
+      {errors.policyType && (
+        <p className="text-danger">Policy Type is required</p>
+      )}
+    </div>
+  </Col> */}
+
                     {/* Policy Term */}
                     <Col xs={12} md={6} lg={4}>
                       <div>
@@ -757,4 +772,4 @@ function Insurance() {
   );
 }
 
-export default Insurance;
+export default TaxFormMyprofile;

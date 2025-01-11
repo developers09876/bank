@@ -6,7 +6,7 @@ import TaxDetails from "./TaxDetails";
 import Feedback from "./Feedback";
 import Taxmangement from "./TaxMangement/Taxmangement";
 import LoanDetails from "./LoanDetails";
-import Rewards from  "./Rewards";
+import Rewards from "./Rewards";
 
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
@@ -29,7 +29,7 @@ export const UserRoutes = [
   {
     path: "/user/insuranceDetails",
     element: <InsuranceDetails />,
-  }, 
+  },
   {
     path: "/user/taxDetails",
     element: <TaxDetails />,

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -61,8 +61,12 @@ import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/Stoc
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
-
+import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
+import { generateToken } from "./components/notification/fireBase";
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
+  useEffect(() => {
+    generateToken();
+  }, []);
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
   const role = localStorage.getItem("role");
@@ -126,6 +130,11 @@ function App() {
             path="/insurancepolicy"
             // element={<ProtectedRoute Component={InsuranceForm} />}
             element={<InsuranceForm />}
+          />
+          <Route
+            path="/TaxForms"
+            // element={<ProtectedRoute Component={InsuranceForm} />}
+            element={<TaxFormTab />}
           />
 
           {/* REGISTER */}
@@ -208,12 +217,7 @@ function App() {
           <Route path="/adminlogin" element={<AdminLogin />} />
           {/* <Route path="/admin" element={<Admin/>}/> */}
 
-          <Route
-            path="/admin"
-            element={
-              <Admin />
-            }
-          >
+          <Route path="/admin" element={<Admin />}>
             {AdminRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}

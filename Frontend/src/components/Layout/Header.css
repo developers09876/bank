@@ -137,3 +137,29 @@
     margin-left: auto;
   }
 }
+.notification-modal .ant-modal-content {
+  border-radius: 8px; 
+}
+
+.notification-modal .ant-modal-header {
+  /* background-color: #f0f0f0;  */
+  border-radius: 8px 8px 0 0; 
+}
+
+.notification-modal .ant-modal-body {
+  padding: 5px; 
+}
+
+.notification-modal .ant-card {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(220, 196, 196, 0.1); 
+}
+:where(.css-dev-only-do-not-override-7ny38l).ant-card .ant-card-body {
+  padding: 8px;
+  border-radius: 0 0 8px 8px;
+}
+.notification-heading {
+  color: rgb(0, 174, 255);
+}
