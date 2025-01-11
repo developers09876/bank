@@ -29,10 +29,10 @@ function CreateInsuranceManagement() {
       aadhar: data.aadhar,
       panno: data.panno,
       gst: data.gst,
-      incomeTaxStatus: data.incomeTaxStatus,
-      businessType: data.businessType,
+      policyTerm: data.policyTerm,
+      PolicyType: data.PolicyType,
       annualIncome: data.annualIncome,
-      taxPaid: data.taxPaid,
+      sumAssured: data.sumAssured,
     };
     const detail = {
       userType: "user",
@@ -46,7 +46,7 @@ function CreateInsuranceManagement() {
       const res = await Api.post(`/signup/register`, detail);
 
       const response = await Api.post(
-        `/taxManagement/createTaxManagement`,
+        `/insuranceManagement/createinsuranceManagement`,
         details
       );
       toast.success("Form submitted successfully");
