@@ -42,7 +42,7 @@ function InsuranceManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await Api.get("/taxManagement/getAllTaxManagement");
+      const response = await Api.get("/insuranceManagement/getAllInsuranceManagement");
       console.log("responsessss", response.data.purpose);
       setData(response.data);
       setFilteredData(response.data);
@@ -64,7 +64,7 @@ function InsuranceManagement() {
 
   const handleViewDetails = (record) => {
     console.log("record", record);
-    navigate(`/admin/taxManagementdetails/${record._id}`, {
+    navigate(`/admin/insuranceManagementdetails/${record._id}`, {
       state: { record },
     });
   };
