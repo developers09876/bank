@@ -38,6 +38,10 @@ function Sidebar({ collapsed }) {
           {/* <MdSend className="Nav-Icon" /> */}
           Tax Management
         </NavLink>
+        <NavLink to="leadmanagement">
+          {/* <MdSend className="Nav-Icon" /> */}
+          Lead Generation
+        </NavLink>
       </Menu>
     </div>
   );

@@ -33,6 +33,7 @@ function Sidebar({ collapsed }) {
         </NavLink>
 
         <NavLink to="stockMarketManagements">StockMarket</NavLink>
+        <NavLink to="leadmanagement">Lead Generation</NavLink>
       </Menu>
     </div>
   );
