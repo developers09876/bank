@@ -43,7 +43,7 @@ const Insurance = ({ collapsed }) => {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await Api.get(`http://localhost:5000/getInsuranceBy/${userid}`);
+      const response = await Api.get(`http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`);
       console.log("Fetched Data:", response.data);
       setInsurance(response.data);
       setFilteredData(response.data);
