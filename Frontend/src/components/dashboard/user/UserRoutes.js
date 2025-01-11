@@ -7,7 +7,8 @@ import Feedback from "./Feedback";
 import Taxmangement from "./TaxMangement/Taxmangement";
 import LoanDetails from "./LoanDetails";
 import Rewards from "./Rewards";
-
+import Insurance from "../../landing/InsuranceForm/Insurance";
+import Tax from "../../landing/TaxFormTab/Tax";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -27,8 +28,16 @@ export const UserRoutes = [
     element: <LoanDetails />,
   },
   {
+    path: "/user/insu",
+    element: <Insurance />,
+  },
+  {
     path: "/user/insuranceDetails",
     element: <InsuranceDetails />,
+  },
+  {
+    path: "/user/tax",
+    element: <Tax />,
   },
   {
     path: "/user/taxDetails",
