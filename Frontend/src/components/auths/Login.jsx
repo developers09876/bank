@@ -121,6 +121,7 @@ const LoginPage = () => {
       );
       console.log("response", response);
       localStorage.setItem("token", response.data.data.token);
+      localStorage.setItem("email", response.data.data.checkEmail.email);
 
       toast.success("Verification successfull!", {
         position: "top-center",
@@ -135,9 +136,9 @@ const LoginPage = () => {
           employee: "/employee",
           user: "/user",
           LoanEmployee: "/adminLoan",
-          TaxEmployee:"/employeeTax",
-          InsuranceEmployee:"/employeeInsurance",
-          stockMarket:"/employeeStockMarket"
+          TaxEmployee: "/employeeTax",
+          InsuranceEmployee: "/employeeInsurance",
+          stockMarket: "/employeeStockMarket",
         };
         const route = routes[userType] || "/login";
         navigate(route);

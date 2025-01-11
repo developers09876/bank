@@ -25,9 +25,19 @@
     text-align: end;
   }
   
-  .status-tag:hover {
+  .status-tag.approved:hover {
     color: #fff;
-    background-color: #ff4d4f; 
+    background-color: #52c41a;
+  }
+  
+  .status-tag.rejected:hover {
+    color: #fff;
+    background-color: #ff4d4f;
+  }
+  
+  .status-tag.pending:hover {
+    color: #fff;
+    background-color: #fa8c16;
   }
   
   .loandetail-custom-card.ant-card {
