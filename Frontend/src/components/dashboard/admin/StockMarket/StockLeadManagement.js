@@ -27,14 +27,14 @@ function StockLeadManagement() {
       const firstname = item.firstname || "";
       const lastname = item.lastname || "";
       const email = item.email || "";
-      const phone = item.phone || "";
+      const contactNumber = item.contactNumber || "";
       const purpose = item.purpose || "";
 
       return (
         firstname.toLowerCase().includes(searchText.toLowerCase()) ||
         lastname.toLowerCase().includes(searchText.toLowerCase()) ||
         email.toLowerCase().includes(searchText.toLowerCase()) ||
-        phone.toLowerCase().includes(searchText.toLowerCase()) ||
+        contactNumber.toLowerCase().includes(searchText.toLowerCase()) ||
         purpose.toLowerCase().includes(searchText.toLowerCase())
       );
     });
@@ -100,7 +100,7 @@ function StockLeadManagement() {
     {
       title: "Phone Number",
       dataIndex: "contactNumber",
-      key: "phone",
+      key: "contactNumber",
     },
     {
       title: "Loan Amount",

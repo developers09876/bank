@@ -27,7 +27,7 @@ function LoanLeadDetails() {
       </Row>
       <Row>
         <Col span={6}><strong>Phone:</strong></Col>
-        <Col span={18}>{record.phone}</Col>
+        <Col span={18}>{record.contactNumber}</Col>
       </Row>
       <Row>
         <Col span={6}><strong>Loan Amount:</strong></Col>

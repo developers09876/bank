@@ -17,12 +17,14 @@ function CreateLead() {
   } = useForm();
 
   const id = localStorage.getItem("id");
+  const userType = localStorage.getItem("role");
 
   const onSubmit = async (data) => {
     const details = {
       firstname: data.firstname,
       lastname: data.lastname,
       userId: id,
+      userType: userType,
       contactNumber: data.contactNumber,
       email: data.email,
       aadhar: data.aadhar,
@@ -135,7 +137,7 @@ function CreateLead() {
                   })}
                   placeholder="Phone Number"
                 />
-                {errors.phone && (
+                {errors.contactNumber && (
                   <p className="text-danger">Enter Phone number</p>
                 )}
               </div>
