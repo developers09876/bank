@@ -38,11 +38,11 @@ export async function updateLead(req, res, next) {
       ? data.addremarks.map((child) => ({
           date: child.date,
           remarks: child.remarks,
-          age: child.age,
           status: child.status,
+          // notiFicatioinStauts: child.notiFicatioinStauts,
         }))
       : [];
-
+    console.log("addremarks", addremarks);
     const updatedDetails = {
       firstname: data.firstname,
       lastname: data.lastname,
@@ -78,6 +78,32 @@ export async function updateLead(req, res, next) {
     next(err);
   }
 }
+
+export const updateNotificationStatus = async (req, res) => {
+  const { leadId } = req.params; // ID of the lead to update
+  console.log("object", leadId);
+  try {
+    const updatedLead = await Lead.updateOne(
+      { _id: leadId },
+      { $set: { "addremarks.$[].notiFicatioinStauts": "true" } }
+    );
+
+    if (updatedLead.modifiedCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Lead not found or already updated" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Notification status updated successfully" });
+  } catch (error) {
+    console.error("Error updating notification status:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating notification status" });
+  }
+};
 
 export async function getallLead(req, res, next) {
   try {

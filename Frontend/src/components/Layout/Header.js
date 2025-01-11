@@ -180,24 +180,54 @@ const UserDropdown = ({
 
 const NotificationModal = ({ isOpen, setIsOpen, setNotificationCount }) => {
   const email = localStorage.getItem("email");
+  const userId = localStorage.getItem("id");
+
   const [notifications, setNotifications] = useState([]);
   const [userNotificationId, setUserNotificationId] = useState(null);
+  const [notificationsStatus, setNotificationsStatus] = useState(null);
 
   useEffect(() => {
     if (email) {
       fetchNotifications();
     }
-  }, [email]);
+  }, [email, notificationsStatus]);
+
+  // Trigger API when modal opens
+  useEffect(() => {
+    if (isOpen && userNotificationId) {
+      updateNotificationStatus();
+    }
+  }, [isOpen, userNotificationId]);
 
   const fetchNotifications = async () => {
     try {
       const response = await Api.get(`/lead/getByMail/${email}`);
       const remarks = response.data.data.addremarks || [];
+
+      // Filter notifications: Include only those with no `notiFicatioinStauts` or where it is "false"
+      const unreadNotifications = remarks.filter(
+        (remark) =>
+          !remark.notiFicatioinStauts || remark.notiFicatioinStauts === "false"
+      );
+
       setNotifications(remarks);
       setUserNotificationId(response.data.data._id);
-      setNotificationCount(remarks.length);
+      setNotificationCount(unreadNotifications.length); // Set count based on filtered notifications
     } catch (error) {
       console.error("Error fetching notifications:", error);
+    }
+  };
+
+  const updateNotificationStatus = async () => {
+    try {
+      await Api.put(`/lead/notification-status/${userNotificationId}`).then(
+        (res) => {
+          setNotificationsStatus(res);
+        }
+      );
+      console.log("Notification status updated successfully");
+    } catch (error) {
+      console.error("Error updating notification status:", error);
     }
   };
 

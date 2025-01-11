@@ -59,6 +59,7 @@ function LeadDetails() {
       date: data[`date_${index}`],
       remarks: data[`remarks_${index}`],
       status: data[`status_${index}`],
+      // notiFicatioinStauts: "false",
     }));
 
     const details = {
