@@ -7,7 +7,7 @@ import TaxLeaddetails from "./TaxLeaddetails";
 import TaxLeadManagement from "./TaxLeadManagement";
 export const TaxAdminRoutes = [
     { path: "", element: <TaxDashboard /> },
-    { path: "myprofile", element: <TabsProfile /> },
+    { path: "myprofile", element: <TabsProfile /> }, 
     { path: "taxmanagement", element: <TaxManagements /> },
     { path: "taxuserlist", element: <TaxUserList /> },
   { path: "/employeeTax/createlead", element: <CreateLead /> },
