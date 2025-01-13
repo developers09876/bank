@@ -81,10 +81,10 @@ const Rewards = () => {
           title: "Quarterly Plan",
           rewards: "For Each Referal You Earn Rs.50",
         },
-        { key: "3-3", title: "Annual Plan", rewards: "For Each Referal You Earn Rs.65" },
+        { key: "3-3", title: "Half Yearly Plan", rewards: "For Each Referal You Earn Rs.65" },
         {
           key: "3-4",
-          title: "Custom Plan",
+          title: "Annual Plan",
           rewards: "For Each Referal You Earn Rs.75",
         },
       ],
