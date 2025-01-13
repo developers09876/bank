@@ -17,9 +17,14 @@ const Register = ({ setAuth }) => {
     // password: "",
     // confirmPassword: "",
     contactNumber: "",
+    subType: "",
+    incomeTaxCategory: "",
   });
 
   const navigate = useNavigate();
+
+  const [subOptions, setSubOptions] = useState([]);
+  const [incomeTaxOptions, setIncomeTaxOptions] = useState([]);
 
   const {
     userType,
@@ -27,13 +32,50 @@ const Register = ({ setAuth }) => {
     lastname,
     contactNumber,
     email,
+    subType,
+    incomeTaxCategory,
     // password,
     // confirmPassword,
   } = inputs;
 
+
+
   const onChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (name === "userType") {
+      switch (value) {
+        case "adminLoan":
+          setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan"]);
+          break;
+        case "employeeInsurance":
+          setSubOptions(["Health Insurance", "Life Insurance", "Vehicle Insurance"]);
+          break;
+        case "employeeTax":
+          setSubOptions(["Income Tax", "TDS / TCS Services", "GST Services", "ESI & PF Services"]);
+          break;
+        default:
+          setSubOptions([]);
+          break;
+      }
+      setInputs((prev) => ({ ...prev, subType: "", incomeTaxCategory: "" }));
+      setIncomeTaxOptions([]);
+    }
+
+    if (name === "subType" && value === "Income Tax") {
+      setIncomeTaxOptions(["Company", "Individual", "Firm", "Others"]);
+      setInputs((prev) => ({ ...prev, incomeTaxCategory: "" }));
+    } else if (name === "subType" && value !== "Income Tax") {
+      setIncomeTaxOptions([]);
+      setInputs((prev) => ({ ...prev, incomeTaxCategory: "" }));
+    }
   };
+
 
   // const validateForm = () => {
   //   // if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
@@ -192,7 +234,73 @@ const Register = ({ setAuth }) => {
                   required
                 />
               </div>
+              </div>
+              <div className="register-form__row">
+              <div className="register-form__group">
+                <label htmlFor="userType" className="register-form__label">
+                  User Type:
+                </label>
+                <select
+                  name="userType"
+                  value={userType}
+                  onChange={onChange}
+                  className="register-form__input"
+                  required
+                >
+                  <option value="">Select User Type</option>
+                  <option value="user">User</option>
+                  <option value="adminLoan">Loan Admin</option>
+                  <option value="employeeInsurance">Insurance Admin</option>
+                  <option value="employeeTax">Tax Admin</option>
+                </select>
+              </div>
+            {subOptions.length > 0 && (
+                <div className="register-form__group">
+                  <label htmlFor="subType" className="register-form__label">
+                    Sub Type:
+                  </label>
+                  <select
+                    name="subType"
+                    value={subType}
+                    onChange={onChange}
+                    className="register-form__input"
+                    required
+                  >
+                    <option value="">Select Sub Type</option>
+                    {subOptions.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+            )}
+            {subType === "Income Tax" && incomeTaxOptions.length > 0 && (
+                <div className="register-form__group">
+                  <label
+                    htmlFor="incomeTaxCategory"
+                    className="register-form__label"
+                  >
+                    Income Tax Category:
+                  </label>
+                  <select
+                    name="incomeTaxCategory"
+                    value={incomeTaxCategory}
+                    onChange={onChange}
+                    className="register-form__input"
+                    required
+                  >
+                    <option value="">Select Income Tax Category</option>
+                    {incomeTaxOptions.map((option, index) => (
+                      <option key={index} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
+            
             {/* <div className="register-form__row">
               <div className="register-form__group">
                 <label htmlFor="password" className="register-form__label">
