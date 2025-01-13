@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button } from "antd";
+import {
+  Table,
+  Input,
+  Space,
+  Pagination,
+  Button,
+  Modal,
+  Descriptions,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 import Api from "../../../Api";
+
 const Tax = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -10,41 +20,44 @@ const Tax = ({ collapsed }) => {
   const [pageSize, setPageSize] = useState(5);
   const [tax, setTax] = useState([]);
   const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
-  const handleViewDetails = (record) => {};
+
+  const handleViewDetails = (record) => {
+    setSelectedRecord(record);
+    setIsModalVisible(true);
+  };
 
   const handleAddTax = () => {
     navigate(`/user/userTaxmangemnent`);
   };
-   useEffect(() => {
-      const filtered = data.filter((item) => {
-          // userId: data.userId,
-        const firstname = item.firstname || "";
-        
-        
-        const phone = item.contactNumber || "";
-        const aadhar = item.aadhar || "";
-        const policy = item.businessType|| "";
-        return (
-          firstname.toLowerCase().includes(searchText.toLowerCase()) ||
-         
-         
-          phone.toLowerCase().includes(searchText.toLowerCase()) ||
-          aadhar.toLowerCase().includes(searchText.toLowerCase())
-          // policy.toLowerCase().includes(searchText.toLowerCase())
-        );
-        
-      });
-      setFilteredData(filtered);
-    }, [searchText, data]);
-  
+
+  useEffect(() => {
+    const filtered = data.filter((item) => {
+      const firstname = item.firstname || "";
+      const phone = item.contactNumber || "";
+      const aadhar = item.aadhar || "";
+      const business = item.businessType || "";
+      return (
+        firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+        phone.toLowerCase().includes(searchText.toLowerCase()) ||
+        aadhar.toLowerCase().includes(searchText.toLowerCase()) ||
+        business.toLowerCase().includes(searchText.toLowerCase())
+      );
+    });
+    setFilteredData(filtered);
+  }, [searchText, data]);
+
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await Api.get(`http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`);
+      const response = await Api.get(
+        `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
+      );
       console.log("Fetched Data:", response.data);
       setTax(response.data);
       setFilteredData(response.data);
@@ -54,11 +67,14 @@ const Tax = ({ collapsed }) => {
       setLoading(false);
     }
   };
+
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);
     const filtered = tax.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm)
+      Object.values(item).some((val) =>
+        String(val).toLowerCase().includes(searchTerm)
+      )
     );
     setFilteredData(filtered);
     setCurrentPage(1);
@@ -107,9 +123,11 @@ const Tax = ({ collapsed }) => {
       ),
     },
   ];
+
   useEffect(() => {
     fetchLeads();
   }, []);
+
   return (
     <div>
       <div
@@ -130,7 +148,7 @@ const Tax = ({ collapsed }) => {
             style={{ width: 200, marginLeft: "50px" }}
             prefix={<SearchOutlined />}
           />
-          <Button
+          {/* <Button
             type="primary"
             onClick={handleAddTax}
             style={{
@@ -140,6 +158,19 @@ const Tax = ({ collapsed }) => {
             }}
           >
             Add Tax
+          </Button> */}
+          <Button
+            type="primary"
+            onClick={handleAddTax}
+            style={{
+              display: "inline",
+              float: "right",
+              marginRight: "100px",
+              backgroundColor: "#00397f",
+            }}
+          >
+            <FaPlus style={{ display: "inline", color: "white" }} />
+            Add New
           </Button>
         </Space>
 
@@ -149,6 +180,7 @@ const Tax = ({ collapsed }) => {
           pagination={false}
           className="loan-table"
           rowKey="_id"
+          loading={loading}
         />
 
         <Pagination
@@ -162,6 +194,35 @@ const Tax = ({ collapsed }) => {
           className="pagination-control"
         />
       </div>
+
+      {/* Modal for viewing details */}
+      <Modal
+        title="Tax Details"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setIsModalVisible(false)}>
+            Close
+          </Button>,
+        ]}
+      >
+        {selectedRecord && (
+          <div>
+            <p>
+              <strong>First Name:</strong> {selectedRecord.firstname}
+            </p>
+            <p>
+              <strong>Phone Number:</strong> {selectedRecord.contactNumber}
+            </p>
+            <p>
+              <strong>Aadhaar Number:</strong> {selectedRecord.aadhar}
+            </p>
+            <p>
+              <strong>Business Type:</strong> {selectedRecord.businessType}
+            </p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
