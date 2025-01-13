@@ -4,6 +4,7 @@ export async function createLead(req, res, next) {
   try {
     const data = req.body;
     const details = {
+      userType: data.userType,
       firstname: data.firstname,
       lastname: data.lastname,
       userId: data.userId,

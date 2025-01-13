@@ -17,14 +17,14 @@ function CreateLead() {
   } = useForm();
 
   const id = localStorage.getItem("id");
-  const userType = localStorage.getItem("role");
+  const userType = localStorage.getItem("userType");
 
   const onSubmit = async (data) => {
     const details = {
       firstname: data.firstname,
       lastname: data.lastname,
-      userId: id,
       userType: userType,
+      userId: id,
       contactNumber: data.contactNumber,
       email: data.email,
       aadhar: data.aadhar,
@@ -43,23 +43,18 @@ function CreateLead() {
       email: data.email,
     };
     try {
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
       const response = await axios.post(
         `http://localhost:5000/lead/createlead`,
         details
       );
-
+      const res = await axios.post(
+        `http://localhost:5000/signup/register`,
+        detail
+      );
       toast.success("Form submitted successfully");
     } catch (error) {
-      console.error("Error:", error);
-
-      const errorMessage =
-        error.response?.data?.error ||
-        "An error occurred while submitting the form";
-      toast.error(errorMessage);
+      console.error("Error:", error.message);
+      toast.error("An error occurred while submitting the form");
     }
   };
   return (

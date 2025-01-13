@@ -6,7 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function LoanLeadManagement() {
+function TaxLeadManagement() {
   const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -71,7 +71,7 @@ function LoanLeadManagement() {
   );
 
   const handleViewDetails = (record) => {
-    navigate("/adminLoan/leaddetails", { state: { record } });
+    navigate("/employeeTax/leaddetails", { state: { record } });
   };
   
 
@@ -151,7 +151,7 @@ function LoanLeadManagement() {
             </Space>
             <Button
               type="primary"
-              onClick={() => navigate("/adminLoan/createlead")}
+              onClick={() => navigate("/employeeTax/createlead")}
               style={{
                 display: "inline",
                 float: "right",
@@ -178,133 +178,9 @@ function LoanLeadManagement() {
           />
         </div>
       </Container>
-      {/* <Modal
-        title="Lead Management Details"
-        visible={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={handleModalCancel}
-        footer={null}
-        style={{ fontSize: "18px" }}
-        // bodyStyle={{ maxHeight: "70vh", overflowY: "auto" }}
-      >
-        {selectedRecord && (
-          <div>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Name</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {`${selectedRecord.firstname} ${selectedRecord.lastname}`}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Email</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.email}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Phone</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.phone}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Loan Amount</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.amount}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Aadhar Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.aadhar}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>PAN Card Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.panno}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Purpose Of Loan</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.purpose}
-                </p>
-              </Col>
-            </Row>
-          </div>
-        )}
-      </Modal> */}
+      
     </div>
   );
 }
 
-export default LoanLeadManagement;
+export default TaxLeadManagement;

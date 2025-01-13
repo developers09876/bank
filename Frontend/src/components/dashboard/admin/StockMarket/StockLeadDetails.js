@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Button } from "antd";
 
-function LoanLeadDetails() {
+function StockLeadDetails() {
   const location = useLocation();
   const navigate = useNavigate();
   const { record } = location.state || {};
@@ -87,4 +87,4 @@ function LoanLeadDetails() {
   );
 }
 
-export default LoanLeadDetails;
+export default StockLeadDetails;
