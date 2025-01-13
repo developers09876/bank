@@ -1,86 +1,161 @@
-import React from "react";
-import { Card, Typography, Row, Col, Image, Space, Button, notification } from "antd";
-import { TrophyOutlined, GiftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import './Rewards.css';
+import React, { useState } from "react";
+import { Card, Typography, Row, Col, Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import "./Rewards.css";
 
-const { Text, Title } = Typography;
+const { Title, Text } = Typography;
 
 const Rewards = () => {
-  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const rewards = [
+  const data = [
     {
       key: "1",
-      title: "Referral Reward",
-      points: "Click to Refer",
-      image: "https://cdn3.invitereferrals.com/blog/wp-content/uploads/2020/01/16122055/Referral-Program-min.png",
-      description: "Invite your friends and earn 100 reward points for every successful referral!",
-      encouragement: "Refer more friends to earn extra rewards!",
+      title: "Loans",
+      image:
+        "https://blog.jeton.com/wp-content/uploads/2021/01/personal_loan.png",
+      details: ["Click to refer a loan"],
+      subCategories: [
+        {
+          key: "1-1",
+          title: "Business Loan",
+          rewards: "2 members = 0.5% rewards",
+        },
+        {
+          key: "1-2",
+          title: "Vehicle Loan",
+          rewards: "3 members = 1% rewards",
+        },
+        { key: "1-3", title: "Home Loan", rewards: "4 members = 1.5% rewards" },
+      ],
+    },
+    {
+      key: "2",
+      title: "Insurance",
+      image:
+        "https://www.hdfclife.com/content/dam/hdfclifeinsurancecompany/knowledge-center/images/about-life-insurance/HDFC-Importance-Of-Insurance-Insurance-Needs-And-Types.png",
+      details: ["Click to refer insurance"],
+      subCategories: [
+        {
+          key: "2-1",
+          title: "Life Insurance",
+          rewards: "2 members = 0.7% rewards",
+        },
+        {
+          key: "2-2",
+          title: "Health Insurance",
+          rewards: "3 members = 1.2% rewards",
+        },
+        {
+          key: "2-3",
+          title: "Vehicle Insurance",
+          rewards: "4 members = 1.8% rewards",
+        },
+      ],
+    },
+    {
+      key: "3",
+      title: "CIBIL",
+      image:
+        "https://img.etimg.com/thumb/width-1600,height-900,imgsize-88046,resizemode-75,msid-76745277/wealth/borrow/what-is-a-cibil-score.jpg",
+      details: ["Click to refer CIBIL"],
+      subCategories: [
+        {
+          key: "3-1",
+          title: "Monthly Plan",
+          rewards: "1 member = 0.3% rewards",
+        },
+        {
+          key: "3-2",
+          title: "Quarterly Plan",
+          rewards: "2 members = 0.5% rewards",
+        },
+        { key: "3-3", title: "Annual Plan", rewards: "3 members = 1% rewards" },
+        {
+          key: "3-4",
+          title: "Custom Plan",
+          rewards: "4 members = 1.2% rewards",
+        },
+      ],
     },
   ];
 
-  const handleRewardClick = (reward) => {
-    navigate("/refer");
+  const handleAddReferral = (title) => {
+    console.log(`Add Referral clicked for ${title}`);
+  };
+
+  const handleCardClick = (key) => {
+    setSelectedCategory((prev) => (prev === key ? null : key));
   };
 
   return (
     <div className="rewards-container">
-      <Title level={3} className="rewards-title">
-        Rewards
-      </Title>
-
-      <div style={{marginLeft:"400px"}} className="rewards-balance">
-        <Title level={1} style={{ color: "#1890ff" }}>
-          500 Points
+      <div className="dashboard-header">
+        <Title level={4} className="dashboard-title">
+          Income Dashboard
         </Title>
-        <Text>Your current reward points balance</Text>
+        <div className="summary-cards">
+          <Card className="summary-card">
+            <Title level={5}>Total Referrals: 1</Title>
+          </Card>
+          <Card className="summary-card">
+            <Title level={5}>Total Bonus: ₹0.50</Title>
+          </Card>
+        </div>
       </div>
 
-      <div style={{marginLeft:"300px"}}>
-        <Row >
-          {rewards.map((reward) => (
-            <Col key={reward.key} xs={24} sm={12} md={8} lg={6}>
-              <Card
-                hoverable
-                cover={
-                  <div className="reward-image-container">
-                    <Image
-                      src={reward.image}
-                      alt={reward.title}
-                      preview={false}
-                      className="reward-image"
-                    />
-                  </div>
-                }
-                className="reward-card"
-              >
-                <Title level={4} className="reward-card-title">
-                  {reward.title}
+      <Row className="rewards-row">
+        {data.map((item) => (
+          <Col xs={10} sm={6} lg={6} key={item.key}>
+            <Card
+              className="reward-card"
+              cover={<img alt={item.title} src={item.image} />}
+              onClick={() => handleCardClick(item.key)}
+            >
+              <div className="card-header">
+                <Title level={5} className="card-title">
+                  {item.title}
                 </Title>
-                <Button
-                  type="primary"
-                  icon={<GiftOutlined />}
-                  className="reward-button"
-                  onClick={() => handleRewardClick(reward)}
-                >
-                  {reward.points}
-                </Button>
+              </div>
+              <div className="card-details">
+                {item.details.map((detail, index) => (
+                  <Text key={index} className="card-detail">
+                    {detail}
+                  </Text>
+                ))}
+              </div>
+            </Card>
 
-                <Space direction="vertical" size="small" className="reward-description">
-                  <Text className="reward-text">
-                    <TrophyOutlined className="reward-icon" />
-                    {reward.description}
-                  </Text>
-                  <Text className="reward-encouragement">
-                    {reward.encouragement}
-                  </Text>
-                </Space>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </div>
+            {selectedCategory === item.key && (
+              <>
+                {item.subCategories.map((subItem) => (
+                  <Row key={subItem.key} className="sub-cards-row">
+                    <Col xs={24} sm={12} lg={8}>
+                      <Card className="sub-card">
+                        <Title level={5} className="sub-card-title">
+                          {subItem.title}
+                        </Title>
+                        <Text className="sub-card-rewards">
+                          {subItem.rewards}
+                        </Text>
+                        <Button
+                          type="primary"
+                          icon={<PlusOutlined />}
+                          size="small"
+                          className="add-referral-button"
+                          onClick={() => handleAddReferral(subItem.title)}
+                        >
+                          Add Referral
+                        </Button>
+                      </Card>
+                    </Col>
+                  </Row>
+                ))}
+              </>
+            )}
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

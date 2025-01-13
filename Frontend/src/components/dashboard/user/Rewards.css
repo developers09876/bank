@@ -1,81 +1,143 @@
 .rewards-container {
-    padding: 40px;
-    background: #f0f2f5;
-    height: calc(100vh - 90px) !important;
-    position: static;
-    overflow: hidden;
-  }
- 
-  .rewards-title {
-    margin-bottom: 30px;
-  }
-  
-  .rewards-balance {
-    margin-bottom: 40px;
-    margin-left: 480px;
-    height: 10vh;
-  }
+  padding: 20px;
+  background-color: #f5f5f5;
+}
 
-  .reward-card {
-    text-align: center;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 20px;
-    padding: 10px;
-    width: 400px;
-    height:59vh;
-    margin-right: 250px;
-  }
-  
-  .reward-image-container {
-    text-align: center;
-    padding: 20px;
-    
-  }
-  
-  .reward-image {
-    border-radius: 15px;
-    height: 20vh;
-    transition: transform 0.3s ease;
-  }
-  
-  .reward-card-title {
-    color: #333;
-    margin-bottom: 10px;
-    margin-top: -15px;
-  }
-  
-  .reward-button {
-    margin: 10px 0;
-    background-color: #1890ff;
-    border-color: #1890ff;
-  }
-  
-  .reward-description {
-    text-align: center;
-  }
-  
-  .reward-text {
-    color: #333;
-    font-size: 15px;
-  }
-  
-  .reward-icon {
-    color: #faad14;
-    margin-right: 5px;
-  }
-  
-  .reward-encouragement {
-    color: #ff4d4f;
-    font-weight: bold;
-  }
-  
-  .reward-image:hover {
-    transform: scale(1.1);
-  }
-  :where(.css-dev-only-do-not-override-1kf000u).ant-image .ant-image-img {
-    height: 186px;
-    margin-top: -13px;
-    vertical-align: middle;
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  color: #1890ff;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.summary-card {
+  background-color: #d9f7be;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  min-width: 150px;
+}
+
+.rewards-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.reward-card {
+  background-color: #e6fffb;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  color: #13c2c2;
+}
+
+.card-details {
+  margin: 10px 0;
+}
+
+.card-detail {
+  display: block;
+  color: #595959;
+}
+
+.card-footer {
+  text-align: left;
+}
+
+.total-text {
+  font-weight: bold;
+  color: #08979c;
+}
+.rewards-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  color: #1890ff;
+}
+
+.summary-cards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.summary-card {
+  background-color: #d9f7be;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  min-width: 150px;
+}
+
+.rewards-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.reward-card, .sub-card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* .reward-card img, .sub-card img {
+  height: 150px;
+  object-fit: cover;
+} */
+
+.card-header, .sub-card-title {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.sub-cards-row {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  /* width: 100%; */
+}
+
+.sub-card {
+  width: 180px; /* Set fixed width for sub-cards */
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 20px; /* Add padding for better spacing */
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sub-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
