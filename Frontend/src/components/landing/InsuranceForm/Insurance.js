@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button } from "antd";
+import { Table, Input, Space, Pagination, Button, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 import Api from "../../../Api";
 
 const Insurance = ({ collapsed }) => {
@@ -11,40 +12,28 @@ const Insurance = ({ collapsed }) => {
   const [pageSize, setPageSize] = useState(5);
   const [insurance, setInsurance] = useState([]);
   const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
   const navigate = useNavigate();
   const userid = localStorage.getItem("id");
-  const userType = localStorage.getItem("userType");
+
   const handleViewDetails = (record) => {
-    // navigate(`/user/insuranceDetails/${record._id}`, { state: { record } });
+    setSelectedRecord(record);
+    setIsModalVisible(true);
   };
 
   const handleAddInsurance = () => {
     navigate(`/user/insurancedetails`);
   };
-  useEffect(() => {
-    const filtered = data.filter((item) => {
-        // userId: data.userId,
-      const firstname = item.firstname || "";
-      const phone = item.contactNumber || "";
-      const aadhar = item.aadhar || "";
-      const policy = item.businessType|| "";
-      return (
-        firstname.toLowerCase().includes(searchText.toLowerCase()) ||
-        phone.toLowerCase().includes(searchText.toLowerCase()) ||
-        aadhar.toLowerCase().includes(searchText.toLowerCase())
-        // policy.toLowerCase().includes(searchText.toLowerCase())
-      );
-      
-    });
-    setFilteredData(filtered);
-  }, [searchText, data]);
 
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await Api.get(`http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`);
-      console.log("Fetched Data:", response.data);
+      const response = await Api.get(
+        `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
+      );
       setInsurance(response.data);
       setFilteredData(response.data);
     } catch (error) {
@@ -57,6 +46,22 @@ const Insurance = ({ collapsed }) => {
   useEffect(() => {
     fetchLeads();
   }, []);
+
+  useEffect(() => {
+    const filtered = data.filter((item) => {
+      const firstname = item.firstname || "";
+      const phone = item.contactNumber || "";
+      const aadhar = item.aadhar || "";
+      const policy = item.PolicyType || "";
+      return (
+        firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+        phone.toLowerCase().includes(searchText.toLowerCase()) ||
+        aadhar.toLowerCase().includes(searchText.toLowerCase()) ||
+        policy.toLowerCase().includes(searchText.toLowerCase())
+      );
+    });
+    setFilteredData(filtered);
+  }, [searchText, data]);
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -95,7 +100,7 @@ const Insurance = ({ collapsed }) => {
     },
     {
       title: "Policy Type",
-      dataIndex: "businessType",
+      dataIndex: "PolicyType",
       key: "policyType",
     },
     {
@@ -116,9 +121,7 @@ const Insurance = ({ collapsed }) => {
 
   return (
     <div>
-      <div
-        className={collapsed ? "main-content.open" : "main-content"}
-      >
+      <div className={collapsed ? "main-content.open" : "main-content"}>
         <Space style={{ marginBottom: 16 }} className="filter-actions">
           <Input
             placeholder="Search"
@@ -127,7 +130,7 @@ const Insurance = ({ collapsed }) => {
             style={{ width: 200, marginLeft: "50px" }}
             prefix={<SearchOutlined />}
           />
-          <Button
+          {/* <Button
             type="primary"
             onClick={handleAddInsurance}
             style={{
@@ -137,6 +140,19 @@ const Insurance = ({ collapsed }) => {
             }}
           >
             Add Insurance
+          </Button> */}
+          <Button
+            type="primary"
+            onClick={handleAddInsurance}
+            style={{
+              display: "inline",
+              float: "right",
+              marginLeft: "830px",
+              backgroundColor: "#00397f",
+            }}
+          >
+            <FaPlus style={{ display: "inline", color: "white" }} />
+            Add New
           </Button>
         </Space>
 
@@ -160,6 +176,34 @@ const Insurance = ({ collapsed }) => {
           className="pagination-control"
         />
       </div>
+
+      <Modal
+        title="Insurance Details"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={[
+          <Button key="close" onClick={() => setIsModalVisible(false)}>
+            Close
+          </Button>,
+        ]}
+      >
+        {selectedRecord && (
+          <div>
+            <p>
+              <strong>First Name:</strong> {selectedRecord.firstname}
+            </p>
+            <p>
+              <strong>Phone Number:</strong> {selectedRecord.contactNumber}
+            </p>
+            <p>
+              <strong>Aadhaar Number:</strong> {selectedRecord.aadhar}
+            </p>
+            <p>
+              <strong>Policy Type:</strong> {selectedRecord.PolicyType}
+            </p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

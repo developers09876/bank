@@ -8,6 +8,6 @@ router.post("/createinsuranceManagement", createInsuranceManagementDb);
 router.put("/updateInsuranceManagement/:id", updateInsuranceManagementDb);
 router.get("/getbyEmployeeid/:employeeId", getInsuranceManagementEmployeeId);
 router.get("/getAllInsuranceManagement", getallInsuranceManagement);
-router.get("/getByIdInsuranceManagement/:userId", getInsuranceManagementUserId);
+router.get("/getByIdInsuranceManagement/:userid", getInsuranceManagementUserId);
 
 export default router;
