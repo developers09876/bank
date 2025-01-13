@@ -122,7 +122,7 @@ function LeadDetails() {
             </p>
           </Col>
           <Col xs={7}>
-            <p>{record.phone}</p>
+            <p>{record.contactNumber}</p>
           </Col>
         </Row>
         <Row>
