@@ -38,8 +38,6 @@ const Register = ({ setAuth }) => {
     // confirmPassword,
   } = inputs;
 
-
-
   const onChange = (e) => {
     const { name, value } = e.target;
 
@@ -54,10 +52,19 @@ const Register = ({ setAuth }) => {
           setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan"]);
           break;
         case "employeeInsurance":
-          setSubOptions(["Health Insurance", "Life Insurance", "Vehicle Insurance"]);
+          setSubOptions([
+            "Health Insurance",
+            "Life Insurance",
+            "Vehicle Insurance",
+          ]);
           break;
         case "employeeTax":
-          setSubOptions(["Income Tax", "TDS / TCS Services", "GST Services", "ESI & PF Services"]);
+          setSubOptions([
+            "Income Tax",
+            "TDS / TCS Services",
+            "GST Services",
+            "ESI & PF Services",
+          ]);
           break;
         default:
           setSubOptions([]);
@@ -75,7 +82,6 @@ const Register = ({ setAuth }) => {
       setInputs((prev) => ({ ...prev, incomeTaxCategory: "" }));
     }
   };
-
 
   // const validateForm = () => {
   //   // if (!firstname || !lastname || !email || !password || !confirmPassword || !contactNumber) {
@@ -172,7 +178,6 @@ const Register = ({ setAuth }) => {
               Sign Up
             </Typography> */}
             {/* <div className='register-form__row'> */}
-           
 
             {/* </div> */}
             <div className="register-form__row">
@@ -234,8 +239,8 @@ const Register = ({ setAuth }) => {
                   required
                 />
               </div>
-              </div>
-              <div className="register-form__row">
+            </div>
+            <div className="register-form__row">
               <div className="register-form__group">
                 <label htmlFor="userType" className="register-form__label">
                   User Type:
@@ -254,34 +259,36 @@ const Register = ({ setAuth }) => {
                   <option value="employeeTax">Tax Admin</option>
                 </select>
               </div>
-            {subOptions.length > 0 && (
-                <div className="register-form__group">
-                  <label htmlFor="subType" className="register-form__label">
-                    Sub Type:
-                  </label>
-                  <select
-                    name="subType"
-                    value={subType}
-                    onChange={onChange}
-                    className="register-form__input"
-                    required
-                  >
-                    <option value="">Select Sub Type</option>
-                    {subOptions.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-            )}
-            {subType === "Income Tax" && incomeTaxOptions.length > 0 && (
+              <div className="register-form__group">
+                {subOptions.length > 0 && (
+                  <>
+                    <label htmlFor="subType" className="register-form__label">
+                      Sub Type:
+                    </label>
+                    <select
+                      name="subType"
+                      value={subType}
+                      onChange={onChange}
+                      className="register-form__input"
+                      required
+                    >
+                      <option value="">Select Sub Type</option>
+                      {subOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                )}
+              </div>
+              {subType === "Income Tax" && incomeTaxOptions.length > 0 && (
                 <div className="register-form__group">
                   <label
                     htmlFor="incomeTaxCategory"
                     className="register-form__label"
                   >
-                    Income Tax Category:
+                    Income Tax Type:
                   </label>
                   <select
                     name="incomeTaxCategory"
@@ -300,7 +307,7 @@ const Register = ({ setAuth }) => {
                 </div>
               )}
             </div>
-            
+
             {/* <div className="register-form__row">
               <div className="register-form__group">
                 <label htmlFor="password" className="register-form__label">
