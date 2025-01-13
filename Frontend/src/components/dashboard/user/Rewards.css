@@ -6,18 +6,21 @@
 
 .dashboard-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  font-size: large;
 }
 
 .dashboard-title {
   color: #1890ff;
+ 
 }
 
 .summary-cards {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 10px 0;
+  margin: 20px 0;
+  margin-top: 20px;
 }
 
 .summary-card {
@@ -25,40 +28,96 @@
   border-radius: 10px;
   text-align: center;
   padding: 10px;
-  width: 250px;
+  width: 262px;
+}
+
+.rewards-row {
+  margin-top: 20px;
 }
 
 .reward-card {
-  cursor: pointer;
-  transition: transform 0.3s;
-  /* width: 400px; */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 310px;
+  width: 350px;
+  transition: all 0.3s ease; 
 }
-
 .reward-card:hover {
-  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px); 
 }
-
 .reward-card-image {
-  height: 150px;
+  width: 70%;
+  height: 200px; 
   object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease; 
+}
+.reward-card-image:hover {
+  transform: scale(1.05); 
 }
 
-.card-details {
-  margin-top: 8px;
-}
-
-.sub-cards-row {
-  margin-top: 16px;
- 
-}
-
-.sub-card {
+.card-title {
+  font-size: 20px; 
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: center;
-  /* width: 150px; */
- 
+}
+
+.card-detail {
+  font-size: 14px; 
+  color: #2580be;
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.full-page-view {
+  margin-top: 20px;
+}
+
+.back-button {
+  margin-bottom: 10px;
+}
+
+.sub-cards-row-full {
+  margin-top: 20px;
+}
+
+.sub-card-full {
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 350px;
+}
+
+.sub-card-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.sub-card-rewards {
+  display: block;
+  margin-bottom: 10px;
+  color: #777;
 }
 
 .add-referral-button {
-  margin-top: 8px;
- 
+  margin-top: 10px;
+  width: 70%;
+  text-align: center;
+  padding: 15px;
+}
+.sub-cards-col{
+  height:250px;
+}
+
+.sub-card-full {
+  transition: transform 0.3s ease-out; 
+}
+
+.sub-card-full:hover {
+  transform: scale(1.05); 
 }
