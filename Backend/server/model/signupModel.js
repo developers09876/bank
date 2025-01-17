@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
   dateOfJoining: { type: String },
   firstname: { type: String },
   lastname: { type: String },
+  employeeCategory: {type: String},
+  subCategory: {type: String},
   // fullName: { type: String },
   email: { type: String, unique: true },
   // password: { type: String,},

@@ -17,6 +17,8 @@ export const registerUser = async (req, res) => {
     dateOfJoining,
     manager,
     branch,
+    employeeCategory,
+    subCategory
   } = req.body;
 
   // if (password !== confirmPassword) {
@@ -44,6 +46,8 @@ export const registerUser = async (req, res) => {
       manager,
       dateOfJoining,
       branch,
+      employeeCategory,
+      subCategory
     });
 
     await newUser.save();
