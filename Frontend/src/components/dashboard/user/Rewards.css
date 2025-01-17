@@ -3,6 +3,7 @@
   background-color: #f5f5f5;
 }
 
+
 .dashboard-header {
   text-align: center;
   margin-bottom: 20px;
@@ -24,120 +25,40 @@
   border-radius: 10px;
   text-align: center;
   padding: 10px;
-  min-width: 150px;
-}
-
-.rewards-row {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
+  width: 250px;
 }
 
 .reward-card {
-  background-color: #e6fffb;
-  border-radius: 10px;
-  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  /* width: 400px; */
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.reward-card:hover {
+  transform: scale(1.05);
 }
 
-.card-title {
-  color: #13c2c2;
+.reward-card-image {
+  height: 150px;
+  object-fit: cover;
 }
 
 .card-details {
-  margin: 10px 0;
-}
-
-.card-detail {
-  display: block;
-  color: #595959;
-}
-
-.card-footer {
-  text-align: left;
-}
-
-.total-text {
-  font-weight: bold;
-  color: #08979c;
-}
-.rewards-container {
-  padding: 20px;
-  background-color: #f5f5f5;
-}
-
-.dashboard-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.dashboard-title {
-  color: #1890ff;
-}
-
-.summary-cards {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
-}
-
-.summary-card {
-  background-color: #d9f7be;
-  border-radius: 10px;
-  text-align: center;
-  padding: 10px;
-  min-width: 150px;
-}
-
-.rewards-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-}
-
-.reward-card, .sub-card {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* .reward-card img, .sub-card img {
-  height: 150px;
-  object-fit: cover;
-} */
-
-.card-header, .sub-card-title {
-  text-align: center;
-  margin: 10px 0;
+  margin-top: 8px;
 }
 
 .sub-cards-row {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  /* width: 100%; */
+  margin-top: 16px;
+ 
 }
 
 .sub-card {
-  width: 180px; /* Set fixed width for sub-cards */
-  background-color: #fff;
-  border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  padding: 20px; /* Add padding for better spacing */
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* width: 150px; */
+ 
 }
 
-.sub-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+.add-referral-button {
+  margin-top: 8px;
+ 
 }
