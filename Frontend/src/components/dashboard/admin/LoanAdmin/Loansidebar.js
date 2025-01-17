@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 import { Menu } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 
@@ -32,11 +31,10 @@ function Sidebar({ collapsed }) {
           Dashboard
         </NavLink>
         <NavLink to="/adminLoan/myprofile">My Profile</NavLink>
-
         <NavLink to="/adminLoan/loanmanagement">Loan Management</NavLink>
-
         <NavLink to="/adminLoan/leadmanagement">Lead Generation</NavLink>
         <NavLink to="/adminLoan/TaxManagement">Task Management</NavLink>
+        <NavLink to="/adminLoan/loanemployeelist">Employee List</NavLink>
       </Menu>
     </div>
   );
