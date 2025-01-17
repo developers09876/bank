@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function EmployeeList() {
-//   const userId = localStorage.getItem("id");
+  const userId = localStorage.getItem("id");
   const navigate = useNavigate();
+  const [fetchedData, setFetchedData] = useState();
+  const [loading, setLoading] = useState(false);
 //   const [data, setData] = useState([]);
-//   const [loading, setLoading] = useState(false);
 //   const [filteredData, setFilteredData] = useState([]);
 //   const [searchText, setSearchText] = useState("");
 //   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -56,22 +57,21 @@ function EmployeeList() {
 //     }
 //   };
 
-// const getEmployees = async () => {
-//     try {
-//       const response = await fetch('http://localhost:5000/signup/getall', {
-//         method: 'GET',
-//         headers: { Authorization: localStorage.getItem('token') },
-//       });
-
-//       const users = await response.json();
-
-//       // Filter only users with userType 'employee'
-//       const employeeUsers = users.filter((user) => user.userType != 'user');
-//       setEmployees(employeeUsers);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+useEffect(() => {
+  const getEmployees =  async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:5000/signup/getCreatedbyId/${userId}`)
+      setFetchedData(response.data)
+      console.log('getresponse', response.data)
+    } catch (error) {
+      console.log('error', error)
+    } finally {
+         setLoading(false);
+             }
+  }
+  getEmployees();
+},[userId])
 
 //   const handleSearch = (e) => {
 //     setSearchText(e.target.value);
@@ -112,12 +112,12 @@ function EmployeeList() {
       title: 'Full Name',
       dataIndex: 'fullname',
       key: 'fullname',
-    //   render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
+      render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
     },
     {
       title: 'Designation',
-      dataIndex: 'userType',
-      key: 'userType',
+      dataIndex: 'employeeCategory',
+      key: 'employeeCategory',
     },
     {
       title: 'Email',
@@ -133,24 +133,24 @@ function EmployeeList() {
       title: 'Action',
       dataIndex:'Action',
       key: 'Action',
-    //   render: (_, employee) => (
-    //     <div>
-    //       <Button
-    //         type="primary"
-    //         style={{color:'black'}}
-    //         onClick={() => console.log(`Viewing employee: ${employee._id}`)}
-    //       >
-    //         View
-    //       </Button>
-    //       {/* <Button
-    //         type="danger"
-    //         className="ml-2"
-    //         onClick={() => deleteEmployee(employee._id)}
-    //       >
-    //         Delete
-    //       </Button> */}
-    //     </div>
-    //   ),
+      render: (_, employee) => (
+        <div>
+          <Button
+            type="primary"
+            style={{color:'black'}}
+            onClick={() => console.log(`Viewing employee: ${employee._id}`)}
+          >
+            View
+          </Button>
+          {/* <Button
+            type="danger"
+            className="ml-2"
+            onClick={() => deleteEmployee(employee._id)}
+          >
+            Delete
+          </Button> */}
+        </div>
+      ),
     },
   ];
 
@@ -186,9 +186,9 @@ function EmployeeList() {
             </Button>
           </div>
           <Table
-            // dataSource={paginatedData}
+            dataSource={fetchedData}
             columns={columns}
-            // loading={loading}
+            loading={loading}
             // pagination={{
             //   current: currentPage,
             //   pageSize: pageSize,

@@ -1,15 +1,16 @@
 import { Logout } from "@mui/icons-material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../InsuranceAdmin/InsuranceSidebar";
 import { Col, Container, Row } from "react-bootstrap";
+import axios from "axios";
 
 const AddInsuranceEmployee = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     empno: "",
-    designation: "",
+    userType: "InsuranceEmployee",
     firstname: "",
     lastname: "",
     email: "",
@@ -17,15 +18,14 @@ const AddInsuranceEmployee = ({ setAuth }) => {
     Manager: "",
     Branch: "",
     dateOfJoining: "",
-    userTypes: "",
-    subType: "",
-    incomeTaxCategory: "",
-    insuranceType: "",
+    employeeCategory: "",
   });
+
+  const empCreatedBy = localStorage.getItem("id")
 
   const {
     empno,
-    designation,
+    userType,
     firstname,
     lastname,
     contactNumber,
@@ -33,10 +33,7 @@ const AddInsuranceEmployee = ({ setAuth }) => {
     Manager,
     Branch,
     dateOfJoining,
-    userTypes,
-    subType,
-    incomeTaxCategory,
-    insuranceType, 
+    employeeCategory, 
   } = inputs;
 
   const onChange = (e) => {
@@ -45,9 +42,32 @@ const AddInsuranceEmployee = ({ setAuth }) => {
 
   const navigate = useNavigate();
 
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", inputs);
+    
+    try {
+      const response = await axios.post("http://localhost:5000/signup/register", {
+        empno,
+        userType,
+        empCreatedBy,
+        firstname,
+        lastname,
+        email,
+        contactNumber,
+        Manager,
+        Branch,
+        dateOfJoining,
+        employeeCategory,
+      });
+  
+        toast.success("Employee added successfully!");
+        // reset(); 
+      
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      toast.error("An error occurred while submitting the form. Please try again.");
+    }
   };
 
   return (
@@ -105,13 +125,15 @@ const AddInsuranceEmployee = ({ setAuth }) => {
                 <Col lg={6} md={6}>
                   <label htmlFor="designation">Services:</label>
                   <select
-                    name="designation"
+                    name="userType"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    value={designation}
+                    value={userType}
                     onChange={onChange}
+                    // defaultValue="TaxEmployee"
+                    disabled
                     required
                   >
-                    <option value="" disabled>
+                    <option value="" >
                       Select Services
                     </option>
                     <option value="LoanEmployee">Loan Employee</option>
@@ -123,21 +145,21 @@ const AddInsuranceEmployee = ({ setAuth }) => {
                   </select>
                 </Col>
                 <Col lg={6} md={6}>
-                  <label htmlFor="insuranceType">Insurance Type:</label>
+                  <label htmlFor="employeeCategory">Insurance Type:</label>
                   <select
-                    name="insuranceType"
+                    name="employeeCategory"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    value={insuranceType}
+                    value={employeeCategory}
                     onChange={onChange}
                     required
                   >
-                    <option value="" disabled>
+                    <option value="">
                       Select Insurance Type
                     </option>
-                    <option value="Health">Health</option>
-                    <option value="Life">Life</option>
-                    <option value="Vehicle">Vehicle</option>
-                    <option value="Property">Property</option>
+                    <option value="Health Insurance">Health Insurance</option>
+                    <option value="Life Insurance">Life Insurance</option>
+                    <option value="Vehicle Insurance">Vehicle Insurance</option>
+                    <option value="Property Insurance">Property Insurance</option>
                   </select>
                 </Col>
                 <Col lg={6} md={6}>

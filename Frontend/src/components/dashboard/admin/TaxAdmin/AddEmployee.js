@@ -42,19 +42,7 @@ function CreateLead() {
     dateOfJoining: "",
   });
 
-  const {
-    empno,
-    designation,
-    firstname,
-    lastname,
-    contactNumber,
-    email,
-    // password,
-    // confirmPassword,
-    Manager,
-    Branch,
-    dateOfJoining,
-  } = inputs;
+  const empCreatedBy = localStorage.getItem("id")
 
 const onSubmit = async (data) => {
   const formData = {
@@ -72,8 +60,7 @@ const onSubmit = async (data) => {
   };
 
   try {
-    // Make the API call
-    const response = await axios.post("http://localhost:5000/signup/register", formData);
+    const response = await axios.post("http://localhost:5000/signup/register", {...formData, empCreatedBy});
 
     
       toast.success("Employee added successfully!");
@@ -85,55 +72,6 @@ const onSubmit = async (data) => {
   }
 };
 
-  //   const handleCategoryChange = (e) => {
-  //     setCategory(e.target.value);
-  //     if (e.target.value !== "IncomeTax") {
-  //       setSubCategory(""); // Reset sub-category if category is not Income Tax
-  //     }
-  //   };
-
-  //   const handleSubCategoryChange = (e) => {
-  //     setSubCategory(e.target.value);
-  //   };
-
-  //   const onSubmit = async (data) => {
-  //     const details = {
-  //       firstname: data.firstname,
-  //       lastname: data.lastname,
-  //       userType: userType,
-  //       userId: id,
-  //       contactNumber: data.contactNumber,
-  //       email: data.email,
-  //       aadhar: data.aadhar,
-  //       purpose: data.purpose,
-  //       amount: data.amount,
-  //       howimidiate: data.howimidiate,
-  //       previouslyapplied: data.previouslyapplied,
-  //       panno: data.panno,
-  //     };
-  //     const detail = {
-  //       userType: "user",
-  //       firstname: data.firstname,
-  //       lastname: data.lastname,
-  //       userId: id,
-  //       contactNumber: data.contactNumber,
-  //       email: data.email,
-  //     };
-  //     try {
-  //       const response = await axios.post(
-  //         `http://localhost:5000/lead/createlead`,
-  //         details
-  //       );
-  //       const res = await axios.post(
-  //         `http://localhost:5000/signup/register`,
-  //         detail
-  //       );
-  //       toast.success("Form submitted successfully");
-  //     } catch (error) {
-  //       console.error("Error:", error.message);
-  //       toast.error("An error occurred while submitting the form");
-  //     }
-  //   };
   return (
     <div>
       <Container style={{ marginTop: "5%" }}>

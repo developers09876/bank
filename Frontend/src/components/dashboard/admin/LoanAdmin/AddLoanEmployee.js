@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../LoanAdmin/Loansidebar";
 import { Col, Container, Row } from "react-bootstrap";
+import axios from "axios";
 
 const AddLoanEmployee = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     empno: "",
-    designation: "",
+    userType: "LoanEmployee",
     firstname: "",
     lastname: "",
     email: "",
@@ -16,12 +17,14 @@ const AddLoanEmployee = ({ setAuth }) => {
     Manager: "",
     Branch: "",
     dateOfJoining: "",
-    loanType: "", 
+    employeeCategory: "", 
   });
+
+  const empCreatedBy = localStorage.getItem("id")
 
   const {
     empno,
-    designation,
+    userType,
     firstname,
     lastname,
     contactNumber,
@@ -29,7 +32,7 @@ const AddLoanEmployee = ({ setAuth }) => {
     Manager,
     Branch,
     dateOfJoining,
-    loanType, // Destructure loanType
+    employeeCategory,
   } = inputs;
 
   const onChange = (e) => {
@@ -40,20 +43,30 @@ const AddLoanEmployee = ({ setAuth }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted with the following data:");
-    console.log({
-      empno,
-      designation,
-      firstname,
-      lastname,
-      contactNumber,
-      email,
-      Manager,
-      Branch,
-      dateOfJoining,
-      loanType,
-    });
+    try {
+      const response = await axios.post("http://localhost:5000/signup/register", {
+        empno,
+        userType,
+        empCreatedBy,
+        firstname,
+        lastname,
+        email,
+        contactNumber,
+        Manager,
+        Branch,
+        dateOfJoining,
+        employeeCategory,
+      });
+  
+        toast.success("Employee added successfully!");
+        // reset(); 
+      
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      toast.error("An error occurred while submitting the form. Please try again.");
+    }
   };
+
   return (
     <div className="flex h-[900px]">
       <Sidebar />
@@ -106,17 +119,17 @@ const AddLoanEmployee = ({ setAuth }) => {
                 </Col>
 
                 <Col lg={6} md={6}>
-                  <label htmlFor="designation">Services:</label>
+                  <label >Services:</label>
                   <select
-                    name="designation"
+                    name="userType"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    value={designation}
+                    value={userType}
                     onChange={onChange}
+                    // defaultValue="LoanEmployee"
+                    disabled
                     required
                   >
-                    <option value="" disabled>
-                      Select Services
-                    </option>
+                   
                     <option value="LoanEmployee">Loan Employee</option>
                     <option value="TaxEmployee">Tax Employee</option>
                     <option value="InsuranceEmployee">
@@ -127,17 +140,16 @@ const AddLoanEmployee = ({ setAuth }) => {
                 </Col>
 
                 {/* Conditional Loan Type Dropdown */}
-                {designation === "LoanEmployee" && (
                   <Col lg={6} md={6}>
-                    <label htmlFor="loanType">Loan Type:</label>
+                    <label htmlFor="employeeCategory">Loan Type:</label>
                     <select
-                      name="loanType"
+                      name="employeeCategory"
                       className="block border border-grey-500 w-full p-3 rounded mb-4"
-                      value={loanType}
+                      value={employeeCategory}
                       onChange={onChange}
                       required
                     >
-                      <option value="" disabled>
+                      <option value="" >
                         Select Loan Type
                       </option>
                       <option value="Home Loan">Home Loan</option>
@@ -146,7 +158,6 @@ const AddLoanEmployee = ({ setAuth }) => {
                       <option value="Personal Loan">Personal Loan</option>
                     </select>
                   </Col>
-                )}
 
                 <Col lg={6} md={6}>
                   <label htmlFor="firstname">First Name:</label>

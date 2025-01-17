@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   lastname: { type: String },
   employeeCategory: {type: String},
   subCategory: {type: String},
+  empCreatedBy: {type: String},
   // fullName: { type: String },
   email: { type: String, unique: true },
   // password: { type: String,},
