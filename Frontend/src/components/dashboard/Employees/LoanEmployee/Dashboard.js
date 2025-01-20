@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const EmployeesDashboard = () => {
+const LoanEmployeesDashboard = () => {
   const navigate = useNavigate();
   const stats = {
     totalUsers: 120,
@@ -134,4 +134,4 @@ const EmployeesDashboard = () => {
   );
 };
 
-export default EmployeesDashboard;
+export default LoanEmployeesDashboard;

@@ -1,7 +1,8 @@
 import EmployeesDashboard from "./Dashboard";
 
 const roles = localStorage.getItem("userType");
-export const EmployeesRoutes = [
+
+export const LoanEmployeesRoutes = [
   {
     path: "",
     element: <EmployeesDashboard />,

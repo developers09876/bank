@@ -144,7 +144,7 @@ const LoginPage = () => {
           InsuranceEmployee: "/employeeInsurance",
           stockMarket: "/employeeStockMarket",
         };
-        const route = employeeCategory ? "/employees" : routes[userType] || "/login";
+        const route = employeeCategory ? "/loanEmp" : routes[userType] || "/login";
         navigate(route);
       }, 3000);
 

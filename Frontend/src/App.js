@@ -43,8 +43,8 @@ import InsuranceForm from "./components/landing/InsuranceForm/InsuranceFormProfi
 import LoanDashboard from "./components/dashboard/Employee/LoanReview";
 import EmployeeDashboard from "./components/dashboard/Employee";
 import { EmployeeRoutes } from "./components/dashboard/Employee/EmployeeRoutes";
-import EmployeesDashboard from "./components/dashboard/Employees";
-import { EmployeesRoutes } from "./components/dashboard/Employees/EmployeesRoutes";
+// import EmployeesDashboard from "./components/dashboard/Employees";
+// import { EmployeesRoutes } from "./components/dashboard/Employees/EmployeesRoutes";
 import Admin from "./components/dashboard/admin";
 import { AdminRoutes } from "./components/dashboard/admin/AdminRoutes";
 import { LoanAdminRoutes } from "./components/dashboard/admin/LoanAdmin/LoanAdminRoutes";
@@ -61,11 +61,15 @@ import { InsuranceAdminRoutes } from "./components/dashboard/admin/InsuranceAdmi
 import StockMarketAdmin from "./components/dashboard/admin/StockMarket/StockMarketAdmin";
 import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/StockMarketRoutes";
 
+// employees
+import LoanEmoloyee from "./components/dashboard/Employees/LoanEmployee/index";
+import { LoanEmployeesRoutes } from "./components/dashboard/Employees/LoanEmployee/EmployeesRoutes";
+
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
 import { generateToken } from "./components/notification/fireBase";
-import EmployeesIndex from "./components/dashboard/Employees";
+// import EmployeesIndex from "./components/dashboard/Employees";
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   useEffect(() => {
     generateToken();
@@ -198,14 +202,11 @@ function App() {
           <Route path="/loanreview" element={<LoanDashboard />} />
           <Route path="/carrier" element={<Carrier />} />
 
-          <Route
-            path="/employees"
-            element={<EmployeesIndex/>}
-          >
+          {/* <Route path="/employees" element={<EmployeesIndex />}>
             {EmployeesRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
-          </Route>
+          </Route> */}
           <Route
             path="/employee"
             element={
@@ -243,6 +244,19 @@ function App() {
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route> */}
+          <Route
+            path="/loanEmp"
+            element={
+              <ProtectedRoute
+                Component={LoanEmoloyee}
+                allowedUserTypes={["LoanEmployee"]}
+              />
+            }
+          >
+            {LoanEmployeesRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
 
           <Route
             path="/adminLoan"
