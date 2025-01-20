@@ -31,7 +31,7 @@ function Sidebar({ collapsed }) {
         </NavLink>
         <NavLink to="myprofile"> My Profile</NavLink>
         <NavLink to="insurancemanagement"> Insurance Management</NavLink>
-        <NavLink to="leadmanagement"> Lead Generation</NavLink>
+        <NavLink to="insuranceleadmanagement"> Lead Generation</NavLink>
       </Menu>
     </div>
   );
