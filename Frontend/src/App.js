@@ -64,16 +64,16 @@ import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/Stoc
 // employees
 import LoanEmoloyee from "./components/dashboard/Employees/LoanEmployee/index";
 import { LoanEmployeesRoutes } from "./components/dashboard/Employees/LoanEmployee/EmployeesRoutes";
-import InsuranceEmoloyee from "./components/dashboard/Employees/InsuranceEmployee/index";
 import InsuranceEmployee from "./components/dashboard/Employees/InsuranceEmployee/index";
 import { InsuranceEmployeeRoutes } from "./components/dashboard/Employees/InsuranceEmployee/InsuranceEmployeeRoutes";
-
+import TaxEmoloyee from "./components/dashboard/Employees/TaxEmployee/index";
+import { TaxEmployeesRoutes } from "./components/dashboard/Employees/TaxEmployee/EmployeesRoutes";
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
 import { generateToken } from "./components/notification/fireBase";
-// import EmployeesIndex from "./components/dashboard/Employees";
+
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   useEffect(() => {
     generateToken();
@@ -279,32 +279,18 @@ function App() {
           </Route>
 
           <Route
-            path="/insuranceEmply"
+            path="/taxEmp"
             element={
               <ProtectedRoute
-                Component={InsuranceEmployee}
-                allowedUserTypes={["InsuranceEmployee"]}
+                Component={TaxEmoloyee}
+                allowedUserTypes={["TaxEmployee"]}
               />
             }
           >
-            {InsuranceEmployeeRoutes.map(({ path, element: Ele }, index) => (
+            {TaxEmployeesRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
-
-          {/* <Route
-            path="/InsuranceEmp"
-            element={
-              <ProtectedRoute
-                Component={InsuranceEmoloyee}
-                allowedUserTypes={["InsuranceEmployee"]}
-              />
-            }
-          >
-            {LoanEmployeesRoutes.map(({ path, element: Ele }, index) => (
-              <Route key={index} path={path} element={Ele} />
-            ))}
-          </Route> */}
 
 {/* Admin Routes */}
           <Route

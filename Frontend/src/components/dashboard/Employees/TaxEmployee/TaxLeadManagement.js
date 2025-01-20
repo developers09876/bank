@@ -71,7 +71,7 @@ function TaxLeadManagement() {
   );
 
   const handleViewDetails = (record) => {
-    navigate("/employeeTax/leaddetails", { state: { record } });
+    navigate("/taxEmp/leaddetails", { state: { record } });
   };
   
 
@@ -151,7 +151,7 @@ function TaxLeadManagement() {
             </Space>
             <Button
               type="primary"
-              onClick={() => navigate("/employeeTax/createlead")}
+              onClick={() => navigate("/taxEmp/createlead")}
               style={{
                 display: "inline",
                 float: "right",

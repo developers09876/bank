@@ -3,7 +3,7 @@ import { Table, Input, Space, Pagination, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Container } from "react-bootstrap";
 
-const StockMarketManagements = ({ collapsed }) => {
+const TaxManagements = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -154,4 +154,4 @@ const StockMarketManagements = ({ collapsed }) => {
   );
 };
 
-export default  StockMarketManagements;
+export default  TaxManagements;

@@ -139,9 +139,10 @@ const LoginPage = () => {
         const routes = {
           employee: "/employee",
           user: "/user",
-          LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
           // LoanEmployee: "/adminLoan",
-          TaxEmployee: "/employeeTax",
+          LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+          // TaxEmployee: "/employeeTax",
+          TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
           // InsuranceEmployee: "/employeeInsurance",
           InsuranceEmployee: employeeCategory ? "/insuranceEmply":"/employeeInsurance",
           stockMarket: "/employeeStockMarket",
