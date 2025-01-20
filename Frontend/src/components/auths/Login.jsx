@@ -142,7 +142,8 @@ const LoginPage = () => {
           LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
           // LoanEmployee: "/adminLoan",
           TaxEmployee: "/employeeTax",
-          InsuranceEmployee: "/employeeInsurance",
+          // InsuranceEmployee: "/employeeInsurance",
+          InsuranceEmployee: employeeCategory ? "/insuranceEmply":"/employeeInsurance",
           stockMarket: "/employeeStockMarket",
         };
         const route = routes[userType] || "/login";
