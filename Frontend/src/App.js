@@ -65,6 +65,9 @@ import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/Stoc
 import LoanEmoloyee from "./components/dashboard/Employees/LoanEmployee/index";
 import { LoanEmployeesRoutes } from "./components/dashboard/Employees/LoanEmployee/EmployeesRoutes";
 import InsuranceEmoloyee from "./components/dashboard/Employees/InsuranceEmployee/index";
+import InsuranceEmployee from "./components/dashboard/Employees/InsuranceEmployee/index";
+import { InsuranceEmployeeRoutes } from "./components/dashboard/Employees/InsuranceEmployee/InsuranceEmployeeRoutes";
+
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
@@ -257,6 +260,34 @@ function App() {
             }
           >
             {LoanEmployeesRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          <Route
+            path="/insuranceEmply"
+            element={
+              <ProtectedRoute
+                Component={InsuranceEmployee}
+                allowedUserTypes={["InsuranceEmployee"]}
+              />
+            }
+          >
+            {InsuranceEmployeeRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          <Route
+            path="/insuranceEmply"
+            element={
+              <ProtectedRoute
+                Component={InsuranceEmployee}
+                allowedUserTypes={["InsuranceEmployee"]}
+              />
+            }
+          >
+            {InsuranceEmployeeRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route>
