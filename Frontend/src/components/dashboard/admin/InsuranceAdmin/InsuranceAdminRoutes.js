@@ -4,6 +4,8 @@ import InsuranceUserList from "../InsuranceAdmin/InsuranceUserList";
 import CreateLead from "./CreateLead";
 import InsuranceLeadDetails from "./InsuranceLeadDetails";
 import InsuranceLeadManagement from "./InsuranceLeadManagement";
+import InsuranceEmployeeList from "./InsuranceEmployeeList";
+import AddInsuranceEmployee from "./AddInsuranceEmployee";
 import TabsProfile from "./ProfileTabs";
 
 export const  InsuranceAdminRoutes = [
@@ -14,4 +16,6 @@ export const  InsuranceAdminRoutes = [
   { path: "/employeeInsurance/createlead", element: <CreateLead /> },
   { path: "leadmanagement", element: <InsuranceLeadManagement /> },
   { path: "leaddetails", element: <InsuranceLeadDetails /> },
+  { path: "insuranceemployeelist", element: <InsuranceEmployeeList/> },
+  { path: "/employeeInsurance/addinsuranceemployee", element: <AddInsuranceEmployee/> },
 ];

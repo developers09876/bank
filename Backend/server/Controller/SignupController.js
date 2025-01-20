@@ -17,6 +17,9 @@ export const registerUser = async (req, res) => {
     dateOfJoining,
     manager,
     branch,
+    employeeCategory,
+    subCategory,
+    empCreatedBy,
   } = req.body;
 
   // if (password !== confirmPassword) {
@@ -44,11 +47,14 @@ export const registerUser = async (req, res) => {
       manager,
       dateOfJoining,
       branch,
+      employeeCategory,
+      subCategory,
+      empCreatedBy
     });
 
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully" , newUser});
   } catch (err) {
     console.error(err);
   }
@@ -124,6 +130,22 @@ export const getUserById = async (req, res) => {
     }
 
     res.status(200).json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const getUserCreatedById = async (req, res) => {
+  const { empCreatedBy } = req.params;
+  try {
+    const usersList = await User.find({empCreatedBy}).select("-password");
+
+    if (!usersList) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(usersList);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Server error" });

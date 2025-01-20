@@ -82,6 +82,10 @@ const LoginPage = () => {
 
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
+      console.log('response.data.data', response.data.data)
+      if( response.data.data?.empCreatedBy){
+        localStorage.setItem("employeeCategory", response.data.data.employeeCategory)
+      }
 
       toast.success("OTP sent successfully!", {
         position: "top-center",
@@ -128,7 +132,7 @@ const LoginPage = () => {
         autoClose: 3000,
       });
       const userType = localStorage.getItem("userType");
-
+      const employeeCategory = localStorage.getItem("employeeCategory");
       console.log("userType", userType);
 
       setTimeout(() => {
@@ -140,7 +144,7 @@ const LoginPage = () => {
           InsuranceEmployee: "/employeeInsurance",
           stockMarket: "/employeeStockMarket",
         };
-        const route = routes[userType] || "/login";
+        const route = employeeCategory ? "/employees" : routes[userType] || "/login";
         navigate(route);
       }, 3000);
 

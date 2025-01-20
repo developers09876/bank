@@ -7,6 +7,7 @@ import {
   updateKYCDetails,
   updateUserDetails,
   getByUserType,
+  getUserCreatedById,
 } from "../Controller/SignupController.js";
 
 const router = Router();
@@ -16,6 +17,7 @@ router.route("/login").post(loginUser);
 router.route("/getall").get(getAllUsers);
 router.route("/getbyUserType/:userType").get(getByUserType);
 router.route("/getby/:id").get(getUserById);
+router.route("/getCreatedbyId/:empCreatedBy").get(getUserCreatedById);
 router.route("/update/:id").put(updateUserDetails);
 router.route("/updateKYC/:id").put(updateKYCDetails);
 

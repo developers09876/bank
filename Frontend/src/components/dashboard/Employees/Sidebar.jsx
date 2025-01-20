@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu } from "antd";
-import SubMenu from "antd/lib/menu/SubMenu";
 
 function Sidebar({ collapsed }) {
   const onClick = (e) => {
@@ -24,16 +23,13 @@ function Sidebar({ collapsed }) {
 
         {/* </SubMenu> */}
         <NavLink
-          to="/employeeInsurance"
+          to=""
           ClassName="main-nav-style"
           style={{ marginTop: "70px" }}
         >
           Dashboard
         </NavLink>
-        <NavLink to="myprofile"> My Profile</NavLink>
-        <NavLink to="insurancemanagement"> Insurance Management</NavLink>
-        <NavLink to="leadmanagement"> Lead Generation</NavLink>
-        <NavLink to="insuranceemployeelist">Employee List</NavLink>
+        
       </Menu>
     </div>
   );
