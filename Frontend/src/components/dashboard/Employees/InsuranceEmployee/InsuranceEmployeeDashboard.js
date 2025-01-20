@@ -119,8 +119,8 @@ const InsuranceEmployeeDashboard = () => {
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
-                    <Card.Title>Total Loans</Card.Title>
-                     <Card.Text>{stats.loans.active}</Card.Text>
+                    <Card.Title>Total Insurances</Card.Title>
+                     <Card.Text>{stats.insurances.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
