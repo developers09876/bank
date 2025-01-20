@@ -1,22 +1,20 @@
 import React from "react";
 import { Tabs } from "antd";
 import { Link } from "react-router-dom";
-import OurProfile from "./MyProfile";
+import MyProfile from "./MyProfile";
 // import Popup from '../Popup/Popup';
-import KycComplaince from "./Kyc";
+import Kyc from "./Kyc";
 // import AdminInfo from './AdminInfo.js';
 
 function TabsProfile() {
   return (
     <div>
       <Tabs defaultActiveKey="1" centered className="p-3">
-        <Tabs.TabPane tab="User Information" key="1">
-          <OurProfile />
+        <Tabs.TabPane tab="User Details" key="1">
+          <MyProfile />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="KYC Complainces" key="2">
-          {/* <p style={{ marginLeft:"30px" }}>KYC Complaince</p> */}
-          {/* <Popup/> */}
-          <KycComplaince />
+        <Tabs.TabPane tab="KYC " key="2">
+          <Kyc />
         </Tabs.TabPane>
         
       </Tabs>

@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 // import Api from "../../Api";
 
-function Kycvendor() {
+function Kyc() {
   const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
@@ -258,4 +258,4 @@ function Kycvendor() {
   );
 }
 
-export default Kycvendor;
+export default Kyc;
