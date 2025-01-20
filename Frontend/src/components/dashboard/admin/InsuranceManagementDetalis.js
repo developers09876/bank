@@ -8,11 +8,13 @@ import Api from "../../../Api";
 function InsuranceManagementDetails() {
   const { state } = useLocation();
   const record = state?.record || {};
-  console.log('record', record)
   const id = localStorage.getItem("regid");
 
   const [employeeType, setEmployeeType] = useState("");
   const [employeeList, setEmployeeList] = useState([]);
+  const [subOptions, setSubOptions] = useState([]);
+  const [incomeTaxOptions, setIncomeTaxOptions] = useState([]);
+  const [subType, setSubType] = useState("");
 
   const {
     register,
@@ -44,7 +46,39 @@ function InsuranceManagementDetails() {
   };
 
   const handleEmployeeTypeChange = (event) => {
-    setEmployeeType(event.target.value);
+    const value = event.target.value;
+    setEmployeeType(value);
+
+    // Update subOptions based on employeeType
+    switch (value) {
+      case "LoanEmployee":
+        setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan"]);
+        break;
+      case "InsuranceEmployee":
+        setSubOptions(["Health Insurance", "Life Insurance", "Vehicle Insurance"]);
+        break;
+      case "TaxEmployee":
+        setSubOptions(["Income Tax", "TDS / TCS Services", "GST Services", "ESI & PF Services"]);
+        break;
+      default:
+        setSubOptions([]);
+        break;
+    }
+
+    setIncomeTaxOptions([]); // Reset incomeTaxOptions
+    setSubType(""); // Reset subType
+  };
+
+  const handleSubtypeChange = (event) => {
+    const { value } = event.target;
+
+    setSubType(value); // Update selected subType
+
+    if (value === "Income Tax") {
+      setIncomeTaxOptions(["Company", "Individual", "Firm", "Others"]);
+    } else {
+      setIncomeTaxOptions([]); // Reset incomeTaxOptions if not Income Tax
+    }
   };
 
   const onSubmit = async (data) => {
@@ -68,17 +102,12 @@ function InsuranceManagementDetails() {
     };
 
     try {
-      await Api.put(
-        `/insuranceManagement/updateInsuranceManagement/${record._id}`,
-        details
-      );
+      await Api.put(`/insuranceManagement/updateInsuranceManagement/${record._id}`, details);
       toast.success("Task Assigned successfully");
     } catch (error) {
       console.error("Error:", error);
-
       const errorMessage =
-        error.response?.data?.error ||
-        "An error occurred while submitting the form";
+        error.response?.data?.error || "An error occurred while submitting the form";
       toast.error(errorMessage);
     }
   };
@@ -90,191 +119,170 @@ function InsuranceManagementDetails() {
   return (
     <div style={{ marginTop: "50px", padding: "20px" }}>
       <h3>Tax Management Details</h3>
-      <div>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Name:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{`${record.firstname} ${record.lastname}`}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Email:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.email}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Phone:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.contactNumber}</p>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Aadhar Number:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.aadhar}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>GST Number:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.gst}</p>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>PAN Card Number:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.panno}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Policy Type:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.PolicyType}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>policy Term:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.policyTerm}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Annual Incom:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.annualIncome}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Sum Assured:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.sumAssured}</p>
-          </Col>
-        </Row>
-      </div>
-
-      <div className="mt-3">
-        <h3>Assign To</h3>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Row className="mb-3">
-            <Col xs={2}>
-              <Form.Label>
-                <strong>Employee Type:</strong>
-              </Form.Label>
-            </Col>
-            <Col xs={7}>
-              <Form.Select
-                {...register("employeeType", { required: true })}
-                value={employeeType}
-                onChange={handleEmployeeTypeChange}
-              >
-                <option value="">Select Employee Type</option>
-                {employeeTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </Form.Select>
-              {errors.employeeType && (
-                <p className="text-danger">Employee Type is required</p>
-              )}
-            </Col>
-          </Row>
-
-          <Row className="mb-3">
-            <Col xs={2}>
-              <Form.Label>
-                <strong>Employee List:</strong>
-              </Form.Label>
-            </Col>
-            <Col xs={7}>
-              <Form.Select {...register("employeeId", { required: true })}>
-                <option value="">Select Employee</option>
-                {employeeList.map((employee) => (
-                  <option key={employee.id} value={employee.id}>
-                    {employee.name}
-                  </option>
-                ))}
-              </Form.Select>
-              {errors.employeeId && (
-                <p className="text-danger">Employee List is required</p>
-              )}
-            </Col>
-          </Row>
-
-          <Row className="mb-3">
-            <Col xs={2}>
-              <Form.Label>
-                <strong>Description:</strong>
-              </Form.Label>
-            </Col>
-            <Col xs={7}>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Enter description"
-                {...register("description", { required: true })}
-              />
-              {errors.description && (
-                <p className="text-danger">Description is required</p>
-              )}
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs={{ span: 7, offset: 2 }}>
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </div>
+      <DetailsSection record={record} />
+      <AssignTaskSection
+        employeeTypes={employeeTypes}
+        employeeType={employeeType}
+        employeeList={employeeList}
+        subOptions={subOptions}
+        incomeTaxOptions={incomeTaxOptions}
+        handleEmployeeTypeChange={handleEmployeeTypeChange}
+        handleSubtypeChange={handleSubtypeChange}
+        onSubmit={handleSubmit(onSubmit)}
+        register={register}
+        errors={errors}
+      />
       <ToastContainer />
     </div>
   );
 }
+
+const DetailsSection = ({ record }) => (
+  <div>
+    {Object.entries(record).map(([key, value]) => (
+      <Row key={key}>
+        <Col xs={2}>
+          <p>
+            <strong>{key.replace(/([A-Z])/g, " $1")}: </strong>
+          </p>
+        </Col>
+        <Col xs={7}>
+          <p>{value}</p>
+        </Col>
+      </Row>
+    ))}
+  </div>
+);
+
+const AssignTaskSection = ({
+  employeeTypes,
+  employeeType,
+  employeeList,
+  subOptions,
+  incomeTaxOptions,
+  handleEmployeeTypeChange,
+  handleSubtypeChange,
+  subType,
+  onSubmit,
+  register,
+  errors,
+}) => (
+  <div className="mt-3">
+    <h3>Assign To</h3>
+    <Form onSubmit={onSubmit}>
+      <Row className="mb-3">
+        <Col xs={2}>
+          <Form.Label>
+            <strong>Employee Type:</strong>
+          </Form.Label>
+        </Col>
+        <Col xs={7}>
+          <Form.Select
+            {...register("employeeType", { required: true })}
+            value={employeeType}
+            onChange={handleEmployeeTypeChange}
+          >
+            <option value="">Select Employee Type</option>
+            {employeeTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </Form.Select>
+          {errors.employeeType && <p className="text-danger">Employee Type is required</p>}
+        </Col>
+      </Row>
+
+      {subOptions.length > 0 && (
+        <Row className="mb-3">
+          <Col xs={2}>
+            <Form.Label>
+              <strong>Category:</strong>
+            </Form.Label>
+          </Col>
+          <Col xs={7}>
+            <Form.Select
+              {...register("subType", { required: true })}
+              value={subType}
+              onChange={handleSubtypeChange}
+            >
+              <option value="">Select Sub Type</option>
+              {subOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Form.Select>
+            {errors.subType && <p className="text-danger">Category is required</p>}
+          </Col>
+        </Row>
+      )}
+
+      {incomeTaxOptions.length > 0 && (
+        <Row className="mb-3">
+          <Col xs={2}>
+            <Form.Label>
+              <strong>Income Tax Category:</strong>
+            </Form.Label>
+          </Col>
+          <Col xs={7}>
+            <Form.Select {...register("incomeTaxCategory", { required: true })}>
+              <option value="">Select Category</option>
+              {incomeTaxOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
+        </Row>
+      )}
+
+      <Row className="mb-3">
+        <Col xs={2}>
+          <Form.Label>
+            <strong>Employee List:</strong>
+          </Form.Label>
+        </Col>
+        <Col xs={7}>
+          <Form.Select {...register("employeeId", { required: true })}>
+            <option value="">Select Employee</option>
+            {employeeList.map((employee) => (
+              <option key={employee.id} value={employee.id}>
+                {employee.name}
+              </option>
+            ))}
+          </Form.Select>
+          {errors.employeeId && <p className="text-danger">Employee List is required</p>}
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
+        <Col xs={2}>
+          <Form.Label>
+            <strong>Description:</strong>
+          </Form.Label>
+        </Col>
+        <Col xs={7}>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            placeholder="Enter description"
+            {...register("description", { required: true })}
+          />
+          {errors.description && <p className="text-danger">Description is required</p>}
+        </Col>
+      </Row>
+
+      <Row>
+        <Col xs={{ span: 7, offset: 2 }}>
+          <Button type="submit" variant="primary">
+            Submit
+          </Button>
+        </Col>
+      </Row>
+    </Form>
+  </div>
+);
 
 export default InsuranceManagementDetails;
