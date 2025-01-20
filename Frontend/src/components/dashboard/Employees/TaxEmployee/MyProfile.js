@@ -600,8 +600,11 @@ function TabsVendor() {
                                 type="file"
                                 accept=".pdf,.jpg,.jpeg,.png"
                                 {...register("coApplicantDocs")}
+                                
                                 placeholder="If applicable"
                               />
+
+                              
                             </div>
                           </Col>
                         </>
