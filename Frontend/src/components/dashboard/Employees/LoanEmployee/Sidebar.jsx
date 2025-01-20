@@ -22,14 +22,12 @@ function Sidebar({ collapsed }) {
         > */}
 
         {/* </SubMenu> */}
-        <NavLink
-          to=""
-          ClassName="main-nav-style"
-          style={{ marginTop: "70px" }}
-        >
+        <NavLink to="" ClassName="main-nav-style" style={{ marginTop: "70px" }}>
           Dashboard
         </NavLink>
-        
+        <NavLink to="myprofile">My Profile</NavLink>
+                <NavLink to="loanmanagement">Loan Management</NavLink>
+                <NavLink to="leadmanagement">Lead Generation</NavLink>
       </Menu>
     </div>
   );

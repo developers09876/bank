@@ -64,6 +64,7 @@ import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/Stoc
 // employees
 import LoanEmoloyee from "./components/dashboard/Employees/LoanEmployee/index";
 import { LoanEmployeesRoutes } from "./components/dashboard/Employees/LoanEmployee/EmployeesRoutes";
+import InsuranceEmoloyee from "./components/dashboard/Employees/InsuranceEmployee/index";
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
@@ -244,6 +245,8 @@ function App() {
               <Route key={index} path={path} element={Ele} />
             ))}
           </Route> */}
+
+          {/* Employees Routes */}
           <Route
             path="/loanEmp"
             element={
@@ -258,6 +261,21 @@ function App() {
             ))}
           </Route>
 
+          {/* <Route
+            path="/InsuranceEmp"
+            element={
+              <ProtectedRoute
+                Component={InsuranceEmoloyee}
+                allowedUserTypes={["InsuranceEmployee"]}
+              />
+            }
+          >
+            {LoanEmployeesRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route> */}
+
+{/* Admin Routes */}
           <Route
             path="/adminLoan"
             element={
