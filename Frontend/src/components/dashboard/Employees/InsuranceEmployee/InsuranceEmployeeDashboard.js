@@ -8,7 +8,7 @@ import {
   FaChartLine,
   FaUsers,
 } from "react-icons/fa";
-import Sidebar from "./Sidebar";
+import Sidebar from "../InsuranceEmployee/Sidebar";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -90,7 +90,7 @@ const InsuranceEmployeeDashboard = () => {
 
   return (
     <div className="admin-dashboard-container">
-      <Sidebar />
+      <Sidebar/>
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
           <h1 className="admin-dashboard-title">Insurance Employee Dashboard  </h1>
@@ -124,8 +124,6 @@ const InsuranceEmployeeDashboard = () => {
                   </Card.Body>
                 </Card>
               </Col>
-
-             
             </Row>
           </Col>
         </Row>
