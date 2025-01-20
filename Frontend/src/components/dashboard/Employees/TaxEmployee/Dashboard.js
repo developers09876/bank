@@ -119,7 +119,7 @@ const TaxEmployeesDashboard = () => {
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
-                    <Card.Title>Total Loans</Card.Title>
+                    <Card.Title>Total Taxs</Card.Title>
                      <Card.Text>{stats.loans.active}</Card.Text>
                   </Card.Body>
                 </Card>
