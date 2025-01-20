@@ -3,7 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiUserCircle } from "react-icons/hi";
-// import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar";
 import Imageh1 from "../../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 
 import '../../HeaderNavbar.scss';
@@ -57,7 +57,7 @@ const InsuranceEmployeesIndex = () => {
           </button>
         </div>
       </header>
-      {/* <Sidebar collapsed={collapsed} /> */}
+      <Sidebar collapsed={collapsed} />
       <main className={collapsed ? "main-content open" : "main-content"}>
         <Outlet />
       </main>
