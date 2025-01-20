@@ -139,12 +139,13 @@ const LoginPage = () => {
         const routes = {
           employee: "/employee",
           user: "/user",
-          LoanEmployee: "/adminLoan",
+          LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+          // LoanEmployee: "/adminLoan",
           TaxEmployee: "/employeeTax",
           InsuranceEmployee: "/employeeInsurance",
           stockMarket: "/employeeStockMarket",
         };
-        const route = employeeCategory ? "/loanEmp" : routes[userType] || "/login";
+        const route = routes[userType] || "/login";
         navigate(route);
       }, 3000);
 
