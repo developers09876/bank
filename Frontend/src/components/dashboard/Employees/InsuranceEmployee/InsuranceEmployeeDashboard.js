@@ -33,7 +33,7 @@ const InsuranceEmployeeDashboard = () => {
   const navigate = useNavigate();
   const stats = {
     totalUsers: 120,
-    loans: {
+    insurances: {
       active: 32,
       pending: 50,
       closed: 150,
