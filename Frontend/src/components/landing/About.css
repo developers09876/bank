@@ -1,0 +1,296 @@
+.aboutus-bg {
+    width: 100%;
+    height: 400px;
+    margin-top: 100px;
+    align-content: center;
+    z-index: -1;
+    background:
+        linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(6, 21, 37, 0.9) 80%),
+        url('https://st3.depositphotos.com/24359662/37039/i/450/depositphotos_370396314-stock-photo-real-estate-broker-sale-agent.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.aboutus-heading {
+    h2 {
+        color: white;
+        text-align: left;
+        font-weight: bold;
+        font-size: 47px;
+        display: inline;
+    }
+}
+
+.aboutus-heading-para {
+    font-size: 1rem;
+    width: 70%;
+    padding-top: 20px;
+    margin-bottom: 1.5rem;
+    color: #c2c2c2;
+}
+
+.aboutus-secondcontent {
+    position: relative;
+}
+
+.aboutus-secondcontent::before {
+    position: absolute;
+    content: " ";
+    top: 30;
+    left: 30px;
+    width: 120px;
+    height: 100px;
+    background-size: contain;
+    background-image: url(https://thegenius.co/html/loanlift/assets/images/shape/about-shape-1.png);
+}
+
+.aboutus-section {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+}
+
+.aboutus-content .main-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.aboutus-content .description {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.aboutus-content .sub-heading {
+    border: 1px solid rgba(9, 36, 76, 1);
+    border-radius: 30px;
+    padding: 4px 20px;
+    color: #0f1011;
+    font-size: 14px;
+}
+
+
+.contactus-button {
+    border: 1px solid rgba(9, 36, 76, 1);
+    border-radius: 30px;
+    padding: 4px 20px;
+    background: none;
+    font-size: 18px;
+    color: #1a2a41;
+    transition: background 0.3s ease, color 0.3s ease;
+
+    &:hover {
+        color: white;
+        background-image: linear-gradient(139deg, #111e31, #052657bf);
+        border: #1a2a41;
+        color: white;
+        transition: background-image 0.3s ease, color 0.3s ease;
+
+    }
+}
+
+.signature-img {
+    max-height: 40px;
+    margin-top: 0.5rem;
+}
+
+.aboutus-images .img1 {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+.aboutus-images .img2 {
+    width: 100%;
+    height: 268px;
+    object-fit: cover;
+}
+
+.experience-box {
+    padding: 1rem;
+    height: 158px;
+    border-radius: 5px;
+}
+
+.aboutus-cardDesign {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #f2f4f8;
+    padding: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(10px);
+    }
+
+    &:hover .aboutus-card-icon {
+        transform: scaleX(-1);
+    }
+}
+
+.card-shadow:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon-wrapper {
+    font-size: 2.5rem;
+    color: #f7b731;
+}
+
+.aboutus-card-icon {
+    color: #5a5a5a;
+    width: 100%;
+    font-size: 37px;
+}
+
+.aboutus-whywe {
+    background-color: #061525;
+}
+
+.whywe-sub-heading {
+    border: 1px solid white;
+    color: white;
+    border-radius: 30px;
+    padding: 4px 20px;
+    font-size: 14px;
+}
+
+.aboutus-whywe .whywe-main-heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.aboutus-whywe .whywe-description {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #c2c2c2b3;
+}
+
+.aboutus-whywe::before {
+    position: absolute;
+    content: " ";
+    top: 30;
+    left: 0;
+    width: 120px;
+    height: 170px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(https://thegenius.co/html/loanlift/assets/images/shape/why-choose-shape-2.png);
+    animation: moveBackgroundUpDown 5s linear infinite;
+}
+
+@keyframes moveBackgroundUpDown {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 0 100%;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+ul.counter-box-one {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    justify-content: center;
+}
+
+ul.counter-box-one li h6 {
+    font-size: 75px;
+    font-weight: 800;
+    line-height: 85px;
+    letter-spacing: 0.02em;
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.9);
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+    font-family: sans-serif;
+}
+
+.ul.counter-box-one li p {
+    font-size: 16px;
+    line-height: 30px;
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.9) !important;
+    margin: 0;
+}
+
+ul.counter-box-one li span {
+    font-size: 14px;
+    line-height: 20px;
+    margin-left: auto;
+    display: block;
+    width: fit-content;
+    margin-bottom: 3px;
+    color: #c2c2c2b3;
+}
+
+.whywe-card-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 5px;
+    color: #fff;
+}
+
+.whywecards-card {
+    flex: 1;
+    margin: 0 10px;
+    padding: 10px 5px;
+    border: 1px solid #1e3a5f;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whywecards-card:hover {
+    transform: translateY(10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.whywecards-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #b0c7de;
+    display: inline;
+}
+
+.whywecards-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    display: inline-flex;
+    font-weight: 600;
+}
+
+.whywecards-description {
+    font-size: 1rem;
+    line-height: 1.3;
+    text-align: justify;
+    color: #b0c7de;
+}
+
+@media (max-width: 768px) {
+    .whywe-card-section {
+        flex-direction: column;
+    }
+
+    .whywecards-card {
+        margin: 10px 0;
+    }
+}
+
+.aboutus-loan {
+    background-image: linear-gradient(167deg, #f2f4f8, #ffffff);
+}
+
+.aboutus-loan h2 {
+    font-weight: bold;
+    font-size: 44px;
+}

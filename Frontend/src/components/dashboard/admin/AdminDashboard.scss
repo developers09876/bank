@@ -1,0 +1,76 @@
+// Base container
+.admin-dashboard-container {
+  display: flex;
+  overflow: hidden;
+
+  .admin-main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+  }
+
+  .admin-dashboard-header {
+    margin-bottom: 20px;
+
+    .admin-dashboard-title {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  // Stats card styles
+  .admin-stats-row {
+    margin-top: 10px;
+
+    .admin-stat-card {
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      border-radius: 8px;
+      position: relative;
+      height: 180px; // Fixed height for all cards
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      .admin-stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #007bff;
+      }
+
+      .card-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .card-text {
+        font-size: 1rem;
+        color: #666;
+      }
+
+      // Hidden details for "Total Loans"
+      .loan-details {
+        display: none; // Hide initially
+        font-size: 0.9rem;
+        color: #555;
+        margin-top: 5px;
+        text-align: left;
+      }
+
+      &:hover {
+        .loan-details {
+          display: block; // Show on hover
+        }
+      }
+    }
+  }
+}
