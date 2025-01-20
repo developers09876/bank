@@ -23,16 +23,20 @@ function Sidebar({ collapsed }) {
 
         {/* </SubMenu> */}
         <NavLink
-          to=""
+          to="/insuranceEmply"
           ClassName="main-nav-style"
           style={{ marginTop: "70px" }}
         >
-          Dashboard
+          Insurance Dashboard 
         </NavLink>
-        
+        <NavLink to="myprofile"> My Profile</NavLink>
+        <NavLink to="insurancemanagement"> Insurance Management</NavLink>
+        <NavLink to="leadmanagement"> Lead Generation</NavLink>
       </Menu>
     </div>
   );
 }
 
 export default Sidebar;
+
+

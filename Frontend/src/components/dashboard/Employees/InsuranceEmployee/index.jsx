@@ -4,12 +4,12 @@ import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiUserCircle } from "react-icons/hi";
 import Sidebar from "./Sidebar";
-import Imageh1 from "../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
+import Imageh1 from "../../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 
-import '../HeaderNavbar.scss';
-import '../Sidebar.scss';
+import '../../HeaderNavbar.scss';
+import "../../Sidebar.scss";
 
-const EmployeesIndex = () => {
+const InsuranceEmployeesIndex = () => {
   const [collapsed, setCollapsed] = useState(true);
   const navigate = useNavigate();
 
@@ -65,4 +65,4 @@ const EmployeesIndex = () => {
   );
 };
 
-export default EmployeesIndex;
+export default InsuranceEmployeesIndex;
