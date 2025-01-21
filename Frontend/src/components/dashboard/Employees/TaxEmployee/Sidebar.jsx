@@ -28,6 +28,7 @@ function Sidebar({ collapsed }) {
         <NavLink to="myprofile">My Profile</NavLink>
         <NavLink to="taxmanagement">Tax Management</NavLink>
         <NavLink to="leadmanagement">Lead Generation</NavLink>
+        <NavLink to="taxtaskmanagement">Task Management</NavLink>
       </Menu>
     </div>
   );

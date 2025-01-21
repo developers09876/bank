@@ -5,6 +5,7 @@ import InsuranceLeadManagement from "./InsuranceLeadManagement";
 import InsuranceLeadDetails from "./Insurance Lead Details";
 import CreateLead from "./CreateLead";
 import InsuranceDetails from "./Insurance Details";
+import InsuranceTaskManagement from "./InsuranceTaskManagement";
 const roles = localStorage.getItem("userType");
 
 export const InsuranceEmployeeRoutes = [
@@ -15,5 +16,6 @@ export const InsuranceEmployeeRoutes = [
   { path: "leaddetails", element: <InsuranceLeadDetails /> },
   { path: "/insuranceEmply/createlead", element: <CreateLead /> },
   { path: "/insuranceEmply/insurancedetails/:id", element: <InsuranceDetails/> },
+  { path: "insurancetaskmanagement", element: <InsuranceTaskManagement/> },
 ]
   
