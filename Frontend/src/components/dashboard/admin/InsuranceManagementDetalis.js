@@ -12,9 +12,10 @@ function InsuranceManagementDetails() {
 
   const [employeeType, setEmployeeType] = useState("");
   const [employeeList, setEmployeeList] = useState([]);
-  const [subOptions, setSubOptions] = useState([]);
+  const [subOptions, setSubOptions] = useState("");
   const [incomeTaxOptions, setIncomeTaxOptions] = useState([]);
   const [subType, setSubType] = useState("");
+  console.log('subOptions', subOptions)
 
   const {
     register,
@@ -22,7 +23,7 @@ function InsuranceManagementDetails() {
     formState: { errors },
   } = useForm();
 
-  const employeeTypes = ["LoanEmployee", "InsuranceEmployee", "TaxEmployee"];
+  const employeeTypes = [ "InsuranceEmployee"];
 
   useEffect(() => {
     if (employeeType) {
@@ -50,7 +51,6 @@ function InsuranceManagementDetails() {
     const value = event.target.value;
     setEmployeeType(value);
 
-    // Update subOptions based on employeeType
     switch (value) {
       case "LoanEmployee":
         setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan" , "Business Loan"]);
@@ -66,22 +66,29 @@ function InsuranceManagementDetails() {
         break;
     }
 
-    setIncomeTaxOptions([]); // Reset incomeTaxOptions
-    setSubType(""); // Reset subType
+    setIncomeTaxOptions([]); 
+    setSubType(""); 
   };
 
   const handleSubtypeChange = (event) => {
-    const { value } = event.target;
-
-    setSubType(value); // Update selected subType
-
-    if (value === "Income Tax") {
-      setIncomeTaxOptions(["Company", "Individual", "Firm", "Others"]);
-    } else {
-      setIncomeTaxOptions([]); // Reset incomeTaxOptions if not Income Tax
-    }
+    const selectedSubType = event.target.value; 
+    console.log('selectedSubType', selectedSubType)
+    console.log('employeeList', employeeList)
+  
+    const filteredEmployees = employeeList.filter(
+      (employee) => employee.categoey === selectedSubType
+    );
+    console.log('filteredEmployees', filteredEmployees)
+  
+    setEmployeeList(
+      filteredEmployees.map((employee) => ({
+        id: employee._id,
+        name: `${employee.firstname} ${employee.lastname}`,
+        category: employee.employeeCategory,
+      }))
+    );
   };
-
+  
   const onSubmit = async (data) => {
     const details = {
       AdminId: id,
@@ -202,20 +209,21 @@ const AssignTaskSection = ({
             </Form.Label>
           </Col>
           <Col xs={7}>
-            <Form.Select
-              {...register("subType", { required: true })}
-              value={subType}
-              onChange={handleSubtypeChange}
-            >
-              <option value="">Select Sub Type</option>
-              {subOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </Form.Select>
-            {errors.subType && <p className="text-danger">Category is required</p>}
-          </Col>
+  <Form.Select
+    {...register("subType", { required: true })}
+    value={subType}
+    onChange={handleSubtypeChange}
+  >
+    <option value="">Select Sub Type</option>
+    {subOptions.map((option, index) => (
+      <option key={index} value={option}>
+        {option}
+      </option>
+    ))}
+  </Form.Select>
+  {errors.subType && <p className="text-danger">Category is required</p>}
+</Col>
+
         </Row>
       )}
 
