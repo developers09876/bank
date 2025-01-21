@@ -72,7 +72,7 @@ import { TaxEmployeesRoutes } from "./components/dashboard/Employees/TaxEmployee
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
-import EmployeesIndex from "./components/dashboard/Employees";
+// import EmployeesIndex from "./components/dashboard/Employees";
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
