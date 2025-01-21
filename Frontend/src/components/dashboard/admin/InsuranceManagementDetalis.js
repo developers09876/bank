@@ -37,6 +37,7 @@ function InsuranceManagementDetails() {
         response.data.map((employee) => ({
           id: employee._id,
           name: employee.firstname,
+          categoey: employee.employeeCategory
         }))
       );
     } catch (error) {
@@ -52,7 +53,7 @@ function InsuranceManagementDetails() {
     // Update subOptions based on employeeType
     switch (value) {
       case "LoanEmployee":
-        setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan"]);
+        setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan" , "Business Loan"]);
         break;
       case "InsuranceEmployee":
         setSubOptions([

@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const EmployeesDashboard = () => {
+const TaxEmployeesDashboard = () => {
   const navigate = useNavigate();
   const stats = {
     totalUsers: 120,
@@ -119,7 +119,7 @@ const EmployeesDashboard = () => {
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
-                    <Card.Title>Total Loans</Card.Title>
+                    <Card.Title>Total Taxs</Card.Title>
                      <Card.Text>{stats.loans.active}</Card.Text>
                   </Card.Body>
                 </Card>
@@ -134,4 +134,4 @@ const EmployeesDashboard = () => {
   );
 };
 
-export default EmployeesDashboard;
+export default TaxEmployeesDashboard;

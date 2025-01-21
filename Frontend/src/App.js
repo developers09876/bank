@@ -43,8 +43,8 @@ import InsuranceForm from "./components/landing/InsuranceForm/InsuranceFormProfi
 import LoanDashboard from "./components/dashboard/Employee/LoanReview";
 import EmployeeDashboard from "./components/dashboard/Employee";
 import { EmployeeRoutes } from "./components/dashboard/Employee/EmployeeRoutes";
-import EmployeesDashboard from "./components/dashboard/Employees";
-import { EmployeesRoutes } from "./components/dashboard/Employees/EmployeesRoutes";
+// import EmployeesDashboard from "./components/dashboard/Employees";
+// import { EmployeesRoutes } from "./components/dashboard/Employees/EmployeesRoutes";
 import Admin from "./components/dashboard/admin";
 import { AdminRoutes } from "./components/dashboard/admin/AdminRoutes";
 import { LoanAdminRoutes } from "./components/dashboard/admin/LoanAdmin/LoanAdminRoutes";
@@ -60,6 +60,14 @@ import InsuranceAdmin from "./components/dashboard/admin/InsuranceAdmin/Insuranc
 import { InsuranceAdminRoutes } from "./components/dashboard/admin/InsuranceAdmin/InsuranceAdminRoutes";
 import StockMarketAdmin from "./components/dashboard/admin/StockMarket/StockMarketAdmin";
 import { StockMarketRoutes } from "./components/dashboard/admin/StockMarket/StockMarketRoutes";
+
+// employees
+import LoanEmoloyee from "./components/dashboard/Employees/LoanEmployee/index";
+import { LoanEmployeesRoutes } from "./components/dashboard/Employees/LoanEmployee/EmployeesRoutes";
+import InsuranceEmployee from "./components/dashboard/Employees/InsuranceEmployee/index";
+import { InsuranceEmployeeRoutes } from "./components/dashboard/Employees/InsuranceEmployee/InsuranceEmployeeRoutes";
+import TaxEmoloyee from "./components/dashboard/Employees/TaxEmployee/index";
+import { TaxEmployeesRoutes } from "./components/dashboard/Employees/TaxEmployee/EmployeesRoutes";
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
@@ -194,11 +202,11 @@ function App() {
           <Route path="/loanreview" element={<LoanDashboard />} />
           <Route path="/carrier" element={<Carrier />} />
 
-          <Route path="/employees" element={<EmployeesIndex />}>
+          {/* <Route path="/employees" element={<EmployeesIndex />}>
             {EmployeesRoutes.map(({ path, element: Ele }, index) => (
               <Route key={index} path={path} element={Ele} />
             ))}
-          </Route>
+          </Route> */}
           <Route
             path="/employee"
             element={
@@ -237,6 +245,50 @@ function App() {
             ))}
           </Route> */}
 
+          {/* Employees Routes */}
+          <Route
+            path="/loanEmp"
+            element={
+              <ProtectedRoute
+                Component={LoanEmoloyee}
+                allowedUserTypes={["LoanEmployee"]}
+              />
+            }
+          >
+            {LoanEmployeesRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          <Route
+            path="/insuranceEmply"
+            element={
+              <ProtectedRoute
+                Component={InsuranceEmployee}
+                allowedUserTypes={["InsuranceEmployee"]}
+              />
+            }
+          >
+            {InsuranceEmployeeRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          <Route
+            path="/taxEmp"
+            element={
+              <ProtectedRoute
+                Component={TaxEmoloyee}
+                allowedUserTypes={["TaxEmployee"]}
+              />
+            }
+          >
+            {TaxEmployeesRoutes.map(({ path, element: Ele }, index) => (
+              <Route key={index} path={path} element={Ele} />
+            ))}
+          </Route>
+
+          {/* Admin Routes */}
           <Route
             path="/adminLoan"
             element={
