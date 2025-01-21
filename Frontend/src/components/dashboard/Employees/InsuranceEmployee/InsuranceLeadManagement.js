@@ -71,7 +71,7 @@ function InsuranceLeadManagement() {
   );
 
   const handleViewDetails = (record) => {
-    navigate("/employeeInsurance/leaddetails", { state: { record } });
+    navigate("/insuranceEmply/leaddetails", { state: { record } });
   };
   
 
@@ -136,7 +136,7 @@ function InsuranceLeadManagement() {
       <Container style={{ width: "90%" }}>
         <div style={{ width: "100%" }}>
           <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
-            Lead Management
+          Insurance Lead Management
           </h4>
           <br />
           <div style={{ justifyContent: "space-between" }}>
@@ -151,7 +151,7 @@ function InsuranceLeadManagement() {
             </Space>
             <Button
               type="primary"
-              onClick={() => navigate("/employeeInsurance/createlead")}
+              onClick={() => navigate("/insuranceEmply/createlead")}
               style={{
                 display: "inline",
                 float: "right",
