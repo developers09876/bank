@@ -34,6 +34,7 @@ function Sidebar({ collapsed }) {
         <NavLink to="insurancemanagement"> Insurance Management</NavLink>
         <NavLink to="leadmanagement"> Lead Generation</NavLink>
         <NavLink to="insuranceemployeelist">Employee List</NavLink>
+        <NavLink to="taskManagement">Task Management</NavLink>
       </Menu>
     </div>
   );
