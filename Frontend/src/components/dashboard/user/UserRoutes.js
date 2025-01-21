@@ -9,6 +9,8 @@ import LoanDetails from "./LoanDetails";
 import Rewards from "./Rewards";
 import Insurance from "../../landing/InsuranceForm/Insurance";
 import Tax from "../../landing/TaxFormTab/Tax";
+import LeadGeneration  from"./LeadGeneration";
+import CreateLead from "./CreateLead";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -42,6 +44,14 @@ export const UserRoutes = [
   {
     path: "/user/taxDetails",
     element: <TaxDetails />,
+  },
+  {
+    path: "/user/leadgeneration",
+    element: <LeadGeneration />,
+  },
+  {
+    path: "/user/createlead",
+    element: <CreateLead/>,
   },
   {
     path: "/user/feedback",

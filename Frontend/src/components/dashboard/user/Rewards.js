@@ -108,10 +108,10 @@ const Rewards = () => {
             <Title level={5}>Total Referrals: 1</Title>
           </Card>
           <Card className="summary-card">
-            <Title level={5}>Total Bonus: ₹0.50</Title>
+            <Title level={5}>Total Income: ₹0.50</Title>
           </Card>
           <Card className="summary-card">
-            <Title level={5}>Current Month Earnings: ₹500</Title>
+            <Title level={5}>Monthly Income: ₹500</Title>
           </Card>
         </div>
       </div>
