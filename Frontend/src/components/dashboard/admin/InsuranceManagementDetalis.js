@@ -12,9 +12,10 @@ function InsuranceManagementDetails() {
 
   const [employeeType, setEmployeeType] = useState("");
   const [employeeList, setEmployeeList] = useState([]);
-  const [subOptions, setSubOptions] = useState([]);
+  const [subOptions, setSubOptions] = useState("");
   const [incomeTaxOptions, setIncomeTaxOptions] = useState([]);
   const [subType, setSubType] = useState("");
+  console.log("subOptions", subOptions);
 
   const {
     register,
@@ -22,7 +23,7 @@ function InsuranceManagementDetails() {
     formState: { errors },
   } = useForm();
 
-  const employeeTypes = ["LoanEmployee", "InsuranceEmployee", "TaxEmployee"];
+  const employeeTypes = ["InsuranceEmployee"];
 
   useEffect(() => {
     if (employeeType) {
@@ -37,7 +38,7 @@ function InsuranceManagementDetails() {
         response.data.map((employee) => ({
           id: employee._id,
           name: employee.firstname,
-          categoey: employee.employeeCategory
+          categoey: employee.employeeCategory,
         }))
       );
     } catch (error) {
@@ -50,10 +51,14 @@ function InsuranceManagementDetails() {
     const value = event.target.value;
     setEmployeeType(value);
 
-    // Update subOptions based on employeeType
     switch (value) {
       case "LoanEmployee":
-        setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan" , "Business Loan"]);
+        setSubOptions([
+          "Home Loan",
+          "Personal Loan",
+          "Vehicle Loan",
+          "Business Loan",
+        ]);
         break;
       case "InsuranceEmployee":
         setSubOptions([
@@ -75,20 +80,27 @@ function InsuranceManagementDetails() {
         break;
     }
 
-    setIncomeTaxOptions([]); // Reset incomeTaxOptions
-    setSubType(""); // Reset subType
+    setIncomeTaxOptions([]);
+    setSubType("");
   };
 
   const handleSubtypeChange = (event) => {
-    const { value } = event.target;
+    const selectedSubType = event.target.value;
+    console.log("selectedSubType", selectedSubType);
+    console.log("employeeList", employeeList);
 
-    setSubType(value); // Update selected subType
+    const filteredEmployees = employeeList.filter(
+      (employee) => employee.categoey === selectedSubType
+    );
+    console.log("filteredEmployees", filteredEmployees);
 
-    if (value === "Income Tax") {
-      setIncomeTaxOptions(["Company", "Individual", "Firm", "Others"]);
-    } else {
-      setIncomeTaxOptions([]); // Reset incomeTaxOptions if not Income Tax
-    }
+    setEmployeeList(
+      filteredEmployees.map((employee) => ({
+        id: employee._id,
+        name: `${employee.firstname} ${employee.lastname}`,
+        category: employee.employeeCategory,
+      }))
+    );
   };
 
   const onSubmit = async (data) => {
@@ -223,8 +235,8 @@ const AssignTaskSection = ({
               onChange={handleSubtypeChange}
             >
               <option value="">Select Sub Type</option>
-              {subOptions.map((option) => (
-                <option key={option} value={option}>
+              {subOptions.map((option, index) => (
+                <option key={index} value={option}>
                   {option}
                 </option>
               ))}
