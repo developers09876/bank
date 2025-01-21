@@ -42,6 +42,10 @@ function Sidebar({ collapsed }) {
           {/* <MdSend className="Nav-Icon" /> */}
           Lead Generation
         </NavLink>
+        <NavLink to="taskManagement">
+          {/* <MdSend className="Nav-Icon" /> */}
+          Task Management
+        </NavLink>
         <NavLink to="employeeTable">
           {/* <MdSend className="Nav-Icon" /> */}
           Employees
