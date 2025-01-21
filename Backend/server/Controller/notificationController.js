@@ -32,9 +32,9 @@
 // };
 
 // export const sendNotification = async (req, res) => {
-//   const { title, body, userId } = req.body;
+//   const { title, body, userId, image } = req.body;
 
-//   if (!title || !body || !userId) {
+//   if (!title || !body || !userId || !image) {
 //     return res
 //       .status(400)
 //       .json({ message: "Title, body, and userId are required" });
@@ -55,6 +55,7 @@
 //       notification: {
 //         title,
 //         body,
+//         image,
 //       },
 //     };
 //     console.log("hello", message);

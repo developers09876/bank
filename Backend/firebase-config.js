@@ -1,18 +1,18 @@
-// import admin from "firebase-admin";
-// import fs from "fs";
-// import path from "path";
+// // import admin from "firebase-admin";
+// // import fs from "fs";
+// // import path from "path";
 
-// // Read and parse the JSON file manually
-// const serviceAccount = JSON.parse(
-//   fs.readFileSync(path.resolve("./server/serviceAccount.json"), "utf8")
-// );
+// // // Read and parse the JSON file manually
+// // const serviceAccount = JSON.parse(
+// //   fs.readFileSync(path.resolve("./server/serviceAccount.json"), "utf8")
+// // );
 
-// // Initialize Firebase Admin SDK
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-// });
+// // // Initialize Firebase Admin SDK
+// // admin.initializeApp({
+// //   credential: admin.credential.cert(serviceAccount),
+// // });
 
-// export default admin;
+// // export default admin;
 
 // import admin from "firebase-admin";
 // import fs from "fs";
