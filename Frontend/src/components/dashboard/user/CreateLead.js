@@ -43,10 +43,10 @@ function CreateLead() {
       email: data.email,
     };
     try {
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
+      // const res = await axios.post(
+      //   `http://localhost:5000/signup/register`,
+      //   detail
+      // );
       const response = await axios.post(
         `http://localhost:5000/lead/createlead`,
         details
