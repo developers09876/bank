@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
@@ -27,7 +26,7 @@ function TaskManagementDetails() {
   } = useForm();
 
   const category = watch("employeeCategory");
-  const employeeType = "TaxEmployee";
+  const employeeType = "InsuranceEmployee";
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
@@ -78,7 +77,7 @@ function TaskManagementDetails() {
 
     try {
       await Api.put(
-        `/taxManagement/updateTaxManagement/${record._id}`,
+        `/insuranceManagement/updateInsuranceManagement/${record._id}`,
         details
       );
       toast.success("Task Assigned successfully");
@@ -97,7 +96,7 @@ function TaskManagementDetails() {
 
   return (
     <div style={{ marginTop: "50px", padding: "20px" }}>
-      <h3>Tax Management Details</h3>
+      <h3>Insurance Management Details</h3>
       <div>
         {Object.entries(record).map(([key, value]) => (
           <Row key={key}>
@@ -122,7 +121,7 @@ function TaskManagementDetails() {
                 <Controller
                   name="employeeType"
                   control={control}
-                  defaultValue="TaxEmployee"
+                  defaultValue="InsuranceEmployee"
                   // value={employeeType}
                   rules={{ required: true }}
                   render={({ field }) => (
@@ -161,11 +160,13 @@ function TaskManagementDetails() {
                         setValue("employeeCategory", value);
                       }}
                     >
-                      <Option value="">Select Category</Option>
-                      <Option value="IncomeTax">Income Tax</Option>
-                      <Option value="Tds&TcsServices">TDS / TCS Services</Option>
-                      <Option value="GSTservices">GST Services</Option>
-                      <Option value="Esi&PfServices">ESI & PF Services</Option>
+                      <Option value="">
+                      Select Insurance Type
+                    </Option>
+                    <Option value="Health Insurance">Health Insurance</Option>
+                    <Option value="Life Insurance">Life Insurance</Option>
+                    <Option value="Vehicle Insurance">Vehicle Insurance</Option>
+                    <Option value="Property Insurance">Property Insurance</Option>
                     </Select>
                   )}
                 />
@@ -175,38 +176,6 @@ function TaskManagementDetails() {
               </div>
             </Col>
 
-            {category === "IncomeTax" && (
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Sub Category:</label>
-                  <Controller
-                    name="subCategory"
-                    control={control}
-                    defaultValue=""
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        className="inputcolumn_drp"
-                        placeholder="Select Sub Category"
-                        onChange={(value) => {
-                          field.onChange(value);
-                          setValue("subCategory", value);
-                        }}
-                      >
-                        <Option value="Company">Company</Option>
-                        <Option value="Individual">Individual</Option>
-                        <Option value="Firm">Firm</Option>
-                        <Option value="Other">Other</Option>
-                      </Select>
-                    )}
-                  />
-                  {errors.subCategory && (
-                    <p className="text-danger">Sub-category is required</p>
-                  )}
-                </div>
-              </Col>
-            )}
           <Col xs={12} md={6} lg={4}>
               <label>Employee List:</label>
               <select

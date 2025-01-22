@@ -16,6 +16,8 @@ const taxManagementSchema = new mongoose.Schema({
   annualIncome: { type: String },
   taxPaid: { type: String },
   description: { type: String },
+  startDate: { type: String },
+  endDate: { type: String },
   employeeId: { type: String },
   employeeType: { type: String },
 });
