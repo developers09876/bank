@@ -235,7 +235,7 @@ function CreateLead() {
                       <Option value="">Select Loan Amount</Option>
                       <Option value="0-5Lakhs">0-5Lakhs</Option>
                       <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
-                      <Option value="10-15Lakhs">10 - 15 Lakhs</Option>
+                      <Option value="10-15Lakhs">10-15Lakhs</Option>
                       <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
                       <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
                       <Option value="25-30Lakhs">25 - 30 Lakhs</Option>
