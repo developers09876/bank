@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Tag, Button } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 
 const LoanStatusTable = ({ collapsed }) => {
   const [loans, setLoans] = useState([]);
@@ -70,13 +71,32 @@ const LoanStatusTable = ({ collapsed }) => {
       key: "action",
       render: (text, record) => {
         return (
-          <Button
-            type="primary"
-            style={{ background: "#4096ff", color: "#fff" }}
-            onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
+          // <Button
+          //   type="primary"
+          //   style={{ background: "#4096ff", color: "#fff" }}
+          //   onClick={() => handleViewDetails(record)}
+          // >
+          //   View
+          // </Button>
+          <>
+        <EyeOutlined
+          style={{
+            fontSize: "18px",
+            color: "#4096ff",
+            cursor: "pointer",
+            marginRight: "15px",
+          }}
+          onClick={() => handleViewDetails(record)}
+        />
+        <EditOutlined
+          style={{
+            fontSize: "18px",
+            color: "#ff4d4f",
+            cursor: "pointer",
+          }}
+          // onClick={() => handleEdit(record)}
+        />
+      </>
         );
       },
     },
