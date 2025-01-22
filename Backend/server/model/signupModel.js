@@ -54,6 +54,7 @@ const userSchema = new mongoose.Schema({
     },
   ],
   panCardNumber: { type: String },
+  aadhaarNumber: { type: String },
   GSTNumber: { type: String },
   accountNumber: { type: Number },
   IFSCCode: { type: String },

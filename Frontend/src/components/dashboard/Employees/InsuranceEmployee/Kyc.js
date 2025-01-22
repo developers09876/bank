@@ -19,26 +19,25 @@ function Kyc() {
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
 
-  console.log('userKYCDetail', userKYCDetail)
-  
+  console.log("userKYCDetail", userKYCDetail);
+
   useEffect(() => {
     const fetchUserKYCDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/signup/getby/${userid}`);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
         setUserKYCDetail(response.data);
-        const fetchedData = response.data
+        const fetchedData = response.data;
         reset(fetchedData);
-        
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
     };
-  
+
     fetchUserKYCDetails();
   }, [userid, reset]);
-  
 
- 
   const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
       const formData = new FormData();
@@ -69,6 +68,7 @@ function Kyc() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -132,6 +132,20 @@ function Kyc() {
                 />
                 {errors.panCardNumber && (
                   <p className="text-danger">pancard number is required</p>
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12} lg={4}>
+                <label>AadhaarCard Number: </label>
+              </Col>
+              <Col sm={12} lg={6}>
+                <input
+                  {...register("aadhaarNumber", { required: true })}
+                  className="inputcolumn-ourProfile"
+                />
+                {errors.aadhaarNumber && (
+                  <p className="text-danger">Adhaarcard number is required</p>
                 )}
               </Col>
             </Row>

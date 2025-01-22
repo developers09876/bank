@@ -10,12 +10,12 @@ export async function createLead(req, res, next) {
       userId: data.userId,
       contactNumber: data.contactNumber,
       email: data.email,
-      aadhar: data.aadhar,
+      aadhaarNumber: data.aadhaarNumber,
       purpose: data.purpose,
       amount: data.amount,
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
-      panno: data.panno,
+      panCardNumber: data.panCardNumber,
     };
     const lead = await Lead.create(details);
     if (lead) {
@@ -50,12 +50,12 @@ export async function updateLead(req, res, next) {
       userId: data.userId,
       contactNumber: data.contactNumber,
       email: data.email,
-      aadhar: data.aadhar,
+      aadhaarNumber: data.aadhaarNumber,
       purpose: data.purpose,
       amount: data.amount,
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
-      panno: data.panno,
+      panCardNumber: data.panCardNumber,
       addremarks: addremarks,
     };
 

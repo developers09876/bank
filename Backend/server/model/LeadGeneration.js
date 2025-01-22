@@ -7,12 +7,12 @@ const LeadSchema = new mongoose.Schema({
   lastname: { type: String },
   contactNumber: { type: String },
   email: { type: String },
-  aadhar: { type: String },
+  aadhaarNumber: { type: String },
   purpose: { type: String },
   amount: { type: String },
   howimidiate: { type: String },
   previouslyapplied: { type: String },
-  panno: { type: String },
+  panCardNumber: { type: String },
   addremarks: [
     {
       date: { type: String },
