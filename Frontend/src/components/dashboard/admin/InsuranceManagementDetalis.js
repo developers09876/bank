@@ -90,9 +90,8 @@ function InsuranceManagementDetails() {
     console.log("employeeList", employeeList);
 
     const filteredEmployees = employeeList.filter(
-      (employee) => employee.categoey === selectedSubType
+      (employee) => employee.categoey === "Health Insurance"
     );
-    console.log("filteredEmployees", filteredEmployees);
 
     setEmployeeList(
       filteredEmployees.map((employee) => ({
