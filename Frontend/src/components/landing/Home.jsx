@@ -59,7 +59,7 @@ const Landing = () => {
       description:
         "From 50+ Options, Choose a card matching your lifestyle & needs",
       buttonText: "Get Best Offers",
-      link: "#",
+      link: "/loanform",
       icon: "fas fa-credit-card",
     },
     {
@@ -67,7 +67,7 @@ const Landing = () => {
       description:
         "Select the best offer curated just for you from a wide choice of Banks & NBFC's",
       buttonText: "Check Eligibility",
-      link: "#",
+      link: "/loanform",
       icon: "fas fa-hand-holding-usd",
     },
 
@@ -75,14 +75,14 @@ const Landing = () => {
       title: "BUSINESS LOAN",
       description: "Expand your business with loans at low interest rates",
       buttonText: "Check Eligibility",
-      link: "#",
+      link: "/loanform",
       icon: "fas fa-briefcase",
     },
     {
       title: "TRANSFER PERSONAL LOAN",
       description: "Get better interest rates on your existing personal loan",
       buttonText: "Reduce Your EMI",
-      link: "#",
+      link: "/loanform",
       icon: "fas fa-exchange-alt",
     },
     {
@@ -97,14 +97,14 @@ const Landing = () => {
       title: "LOAN AGAINST PROPERTY",
       description: "Get liquidity against your property at best interest rates",
       buttonText: "Check Eligibility",
-      link: "#",
+      link: "/loanform",
       icon: "fas fa-building",
     },
     {
       title: "TRANSFER HOME LOAN",
       description: "Get better interest rates on your existing home loan",
       buttonText: "Reduce Your EMI",
-      link: "#",
+      link: "/loanform",
       icon: "fa-solid fa-handshake-simple",
     },
   ];
@@ -125,7 +125,7 @@ const Landing = () => {
       description:
         "Get comprehensive health coverage to safeguard you and your family.",
       buttonText: "Get Best Offers",
-      link: "#",
+      link: "/insurancepolicy",
       icon: "fas fa-heartbeat",
     },
     {
@@ -133,14 +133,14 @@ const Landing = () => {
       description:
         "Secure your family’s future with the best life insurance plans.",
       buttonText: "Check Plans",
-      link: "#",
+      link: "/insurancepolicy",
       icon: "fas fa-user-shield",
     },
     {
       title: "CAR INSURANCE",
       description: "Protect your vehicle from accidents, theft, and damage.",
       buttonText: "Get Covered",
-      link: "#",
+      link: "/insurancepolicy",
       icon: "fas fa-car-crash",
     },
     {
@@ -148,14 +148,14 @@ const Landing = () => {
       description:
         "Safeguard your home and valuable possessions from unforeseen events.",
       buttonText: "Get Protection",
-      link: "#",
+      link: "/insurancepolicy",
       icon: "fas fa-home",
     },
     {
       title: "TRAVEL INSURANCE",
       description: "Ensure a worry-free journey with travel insurance plans.",
       buttonText: "Explore Options",
-      link: "#",
+      link: "/insurancepolicy",
       icon: "fas fa-plane",
     },
   ];
@@ -176,14 +176,14 @@ const Landing = () => {
       description:
         "Quick and easy GST registration services for businesses of all sizes.",
       buttonText: "Register Now",
-      link: "#",
+      link: "/taxforms",
       icon: "fas fa-receipt",
     },
     {
       title: "TAX PLANNING",
       description: "Optimize your tax savings with expert tax planning advice.",
       buttonText: "Start Planning",
-      link: "#",
+      link: "/taxforms",
       icon: "fas fa-chart-line",
     },
     {
@@ -191,7 +191,7 @@ const Landing = () => {
       description:
         "Ensure timely and accurate TDS return filing to avoid penalties.",
       buttonText: "File Returns",
-      link: "#",
+      link: "/taxforms",
       icon: "fas fa-calculator",
     },
   ];
