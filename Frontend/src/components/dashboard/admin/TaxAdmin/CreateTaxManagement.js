@@ -65,7 +65,7 @@ function TaxmangementAdmin() {
       <Container style={{ marginTop: "5%" }}>
         <form>
           <h4 style={{ textAlign: "center", color: "#00397f" }}>
-            <b>Tax Taxmangement</b>
+            <b>Tax mangement</b>
           </h4>
           <Row className="px-2 py-3">
             <Col xs={12} md={6} lg={4}>
