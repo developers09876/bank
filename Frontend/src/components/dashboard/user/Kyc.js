@@ -71,6 +71,7 @@ function Kycvendor() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -134,6 +135,17 @@ function Kycvendor() {
                 />
                 {errors.panCardNumber && (
                   <p className="text-danger">pancard number is required</p>
+                )}
+              </Col>
+              <Col sm={12} md={6} lg={6}>
+                <label>AadhaarCard Number: </label>
+
+                <input
+                  {...register("aadhaarNumber", { required: true })}
+                  className="inputcolumn-ourProfile"
+                />
+                {errors.aadhaarNumber && (
+                  <p className="text-danger">Adhaarcard number is required</p>
                 )}
               </Col>
 
@@ -243,6 +255,7 @@ function Kycvendor() {
                   <p className="text-danger">Voter ID is required</p>
                 )}
               </Col>
+              <Col sm={12} md={6} lg={6}></Col>
             </Row>
             <Row>
               <Col lg={3}>

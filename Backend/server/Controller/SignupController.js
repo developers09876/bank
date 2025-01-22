@@ -225,6 +225,7 @@ export async function updateKYCDetails(req, res, next) {
 
     const updatedKYCDetails = {
       panCardNumber: data.panCardNumber,
+      aadhaarNumber:data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
