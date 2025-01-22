@@ -36,6 +36,7 @@ function LoanDetails() {
   };
 
   const loanApplicationId = localStorage.getItem("loanApplicationId");
+  const userType = localStorage.getItem("userType");
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
@@ -155,7 +156,9 @@ function LoanDetails() {
               <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
                   <Row>
-                    <Col xs={12} md={6} lg={4}>
+                    {userType !== "user" && (
+                      <>
+                      <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
                           loan Agent Name
@@ -195,6 +198,9 @@ function LoanDetails() {
                         )}
                       </div>
                     </Col>
+                      </>
+                    )}
+                    
 
                     <Col xs={12} md={6} lg={4}>
                       <div>
