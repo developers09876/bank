@@ -9,6 +9,7 @@ import AddInsuranceEmployee from "./AddInsuranceEmployee";
 import TabsProfile from "./ProfileTabs";
 import TaskManagementDetails from "./TaskManagementDetalis";
 import TaskManagements from "./TaskManagements";
+import CreateInsuranceManagement from "./CreateInsuranceManagement";
 
 export const  InsuranceAdminRoutes = [
   { path: "", element: <InsuranceDashboard /> },
@@ -21,5 +22,6 @@ export const  InsuranceAdminRoutes = [
   { path: "insuranceemployeelist", element: <InsuranceEmployeeList/> },
   { path: "/employeeInsurance/taskManagementdetails/:id", element: <TaskManagementDetails /> },
   { path: "taskManagement", element: <TaskManagements /> },
+  { path: "createinauranceMangement", element: <CreateInsuranceManagement /> },
   { path: "/employeeInsurance/addinsuranceemployee", element: <AddInsuranceEmployee/> },
 ];
