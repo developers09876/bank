@@ -112,6 +112,7 @@ export async function createLoanApplication(req, res, next) {
 export async function updateLoanDetails(req, res, next) {
   try {
     const { id } = req.params;
+    console.log('updateLoanDetailsid', id)
     const data = req.body;
 
     const updatedDetails = {

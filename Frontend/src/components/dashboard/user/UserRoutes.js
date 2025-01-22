@@ -11,6 +11,7 @@ import Insurance from "../../landing/InsuranceForm/Insurance";
 import Tax from "../../landing/TaxFormTab/Tax";
 import LeadGeneration  from"./LeadGeneration";
 import CreateLead from "./CreateLead";
+import LoanForm from "../user/LoanForm/LoanFormProfileTab"
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -28,6 +29,10 @@ export const UserRoutes = [
   {
     path: "/user/userloandetails/:id",
     element: <LoanDetails />,
+  },
+  {
+    path: "/user/loanform/:id",
+    element: <LoanForm />,
   },
   {
     path: "/user/insu",

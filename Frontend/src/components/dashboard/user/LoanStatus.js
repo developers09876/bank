@@ -29,6 +29,9 @@ const LoanStatusTable = ({ collapsed }) => {
   const handleViewDetails = (record) => {
     navigate(`/user/userloandetails/${record._id}`, { state: { record } });
   };
+  const handleEdit = (record) => {
+    navigate(`/user/loanform/${record._id}`, { state: { record } });
+  };
 
   const columns = [
     {
@@ -94,7 +97,7 @@ const LoanStatusTable = ({ collapsed }) => {
             color: "#ff4d4f",
             cursor: "pointer",
           }}
-          // onClick={() => handleEdit(record)}
+          onClick={() => handleEdit(record)}
         />
       </>
         );

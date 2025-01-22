@@ -60,7 +60,7 @@ const loanApplicationSchema = new mongoose.Schema(
     addressProof: { type: String },
     annualIncome: { type: Number },
     contact: { type: String },
-    contactNumber:{ type: String, unique: true },
+    contactNumber:{ type: String },
     creditScore: { type: Number },
     dob: { type: Date },
     downPayment: { type: Number },
