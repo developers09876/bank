@@ -46,7 +46,7 @@ function InsuranceTaskManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await Api.get(`taxManagement/getbyEmployeeid/${userId}`);
+      const response = await Api.get(`insuranceManagement/getbyEmployeeid/${userId}`);
       setData(response.data);
       setFilteredData(response.data);
     } catch (error) {
