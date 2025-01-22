@@ -16,7 +16,7 @@ const ContactUs = () => {
   } = useForm();
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
-  console.log("userid", userid);
+  console.log("useridsss", userid);
   const [contactUsData, setContactUsData] = useState([]);
 
   const handleFormSubmit = async (data) => {
@@ -183,3 +183,23 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
+
+// import React, { useEffect } from "react";
+// import { generateToken, messaging } from "../notification/fireBase";
+// import { onMessage } from "firebase/messaging";
+// const App = () => {
+//   useEffect(() => {
+//     generateToken();
+//     onMessage(messaging, (payload) => {
+//       console.log(payload);
+//     });
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>React Firebase Cloud Messaging</h1>
+//     </div>
+//   );
+// };
+
+// export default App;
