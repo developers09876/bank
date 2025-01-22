@@ -131,7 +131,7 @@ function TaskManagements() {
                 onChange={handleSearch}
               />
             </Space>
-            {/* <Button
+            <Button
               type="primary"
               onClick={() => navigate("/employeeInsurance/createinauranceMangement")}
               style={{
@@ -142,7 +142,7 @@ function TaskManagements() {
             >
               <FaPlus style={{ display: "inline", color: "white" }} />
               Add New
-            </Button> */}
+            </Button>
             <Table
               dataSource={paginatedData}
               columns={columns}
