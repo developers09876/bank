@@ -220,6 +220,52 @@ export async function updateLoanApplicationStatus(req, res, next) {
   }
 };
 
+export async function updateLoan(req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    console.log("data", data);
+    const updateDetails = {
+      AdminId: data.AdminId,
+      description: data.description,
+      employeeId: data.employeeId,
+      employeeType: data.employeeType,
+      employeeList: data.employeeList,
+      loanType: data.loanType,
+      startDate: data.startDate || null,
+      endDate: data.endDate || null,
+      // dob: data.dob || null,
+    };
+    console.log("Update Details:", updateDetails);
+
+    const updatedRecord = await LoanApplication.findByIdAndUpdate(
+      id,
+      updateDetails,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (updatedRecord) {
+      res.status(200).json({
+        message: "Updated Successfully",
+        data: updatedRecord,
+      });
+    } else {
+      res.status(404).json({
+        message: "Record not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating record:", err);
+    res.status(500).json({
+      message: "Failed to update record",
+    });
+    next(err);
+  }
+}
+
 
 export const getAllLoanApplications = async (req, res) => {
   try {
