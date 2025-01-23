@@ -11,7 +11,6 @@ function LeadTask() {
   const navigate = useNavigate();
   const [fetchedData, setFetchedData] = useState([]); 
   const [loading, setLoading] = useState(false);
-//   const specificId = "678a3aa5d785570cd62748f9"; 
   useEffect(() => {
     fetchLeads();
   }, []);
@@ -20,7 +19,6 @@ function LeadTask() {
     setLoading(true);
     try {
       const response = await Api.get(`lead/getbyEmployeeid/${userId}`);
-    //   const filteredData = response.data.filter(lead => lead._id === specificId);
       setFetchedData(response.data); 
       console.log('response.data', response.data)
     } catch (error) {
