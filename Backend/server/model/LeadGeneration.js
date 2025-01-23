@@ -13,6 +13,14 @@ const LeadSchema = new mongoose.Schema({
   howimidiate: { type: String },
   previouslyapplied: { type: String },
   panCardNumber: { type: String },
+  loanType:{ type: String },
+  employeeId: { type: String },
+  employeeType: { type: String },     
+  employeeList:{ type: String }, 
+  startDate: { type: Date},
+  endDate: { type: Date},
+  dob: { type: Date},          
+  description:{ type: String },  
   addremarks: [
     {
       date: { type: String },
