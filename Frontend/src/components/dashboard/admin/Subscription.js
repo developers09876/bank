@@ -32,12 +32,13 @@ function Subscription() {
         console.log("response.data", response.data.data);
         toast.success("Price created successfully");
       }
+      await fetchSubscriptionPlan();
     } catch (error) {
       console.log("error", error);
     }
   };
 
-  useEffect(() => {
+ 
     const fetchSubscriptionPlan = async () => {
       try {
         const response = await Api.get("/subscription/getall");
@@ -48,6 +49,8 @@ function Subscription() {
         console.log("error", error);
       }
     };
+    
+    useEffect(() => {
     fetchSubscriptionPlan();
   }, [reset]);
 
