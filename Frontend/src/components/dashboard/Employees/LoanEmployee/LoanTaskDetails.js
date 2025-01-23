@@ -5,7 +5,7 @@ import {
   Card,
   Descriptions,
   Tag,
-  Space,
+  Space,Button,
   Divider,
   Modal,
   Input,
@@ -18,159 +18,100 @@ import {
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-// import "../../user/LoanDetails.css";
-import "../user/LoanDetails.css";
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
-import Api from "../../../Api";
+import Api from "../../../../Api"
+import '../../user/LoanDetails.css'
 const { Option } = Select;
 
-const LoanDetails = ({ collapsed }) => {
-  const { state } = useLocation();
-  const record = state?.record;
-  console.log("record", record);
-  const id = localStorage.getItem("regid");
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState("");
-  const [loan, setLoan] = useState([]);
-  const navigate = useNavigate();
-  const dateFormat = new Date(record.dob).toISOString().split("T")[0];
-  const [employeeList, setEmployeeList] = useState([]);
-  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+function LoanTaskDetails() {
+      const { state } = useLocation();
+      const initialRecord = state?.record;
+      const [record, setRecord] = useState(initialRecord); 
+     const location = useLocation();
+     const userId = localStorage.getItem('id')
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm();
+      const [selectedRecord, setSelectedRecord] = useState(null);
+       const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
+       const [rejectionReason, setRejectionReason] = useState("");
+       const [loan, setLoan] = useState([]);
+     const dateFormat = new Date(record.dob).toISOString().split("T")[0];
+     
+     const fetchUpdatedRecord = async () => {
+       try {
+         const response = await Api.get(
+           `http://localhost:5000/loanform/getbyEmployeeid/${userId}`
+         );
+         console.log("responseget.data", response.data);
+         const update = response.data;
+         console.log('update', update)
+         const updatedRecord = update.filter(
+           (loandata) => loandata._id === record._id
+         );
+         console.log('updatedRecord', updatedRecord)
+         if (updatedRecord) {
+           setRecord(updatedRecord[0]); 
+         }
+       } catch (error) {
+         console.error("Error fetching updated record:", error);
+       }
+     };
+    
+     const updateStatus = async (id, action, reason = "") => {
+        try {
+          const details = { action, reason };
+          const response = await Api.put(
+            `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+            details
+          );
+          console.log("Response data:", response.data);
+          const updatedLoans = loan.map((item) =>
+            item._id === id
+              ? {
+                  ...item,
+                  status: action === "approve" ? "1" : "2",
+                  rejectionReason: action === "reject" ? reason : null,
+                }
+              : item
+          );
+          setLoan(updatedLoans);
 
-  const category = watch("loanType");
-  console.log("category", category);
+          await fetchUpdatedRecord();
+        } catch (error) {
+          console.error("Error updating status:", error);
+        }
+      };
 
-  const employeeType = "LoanEmployee";
-  useEffect(() => {
-    const fetchEmployeeList = async () => {
-      try {
-        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
-        setEmployeeList(response.data);
-        console.log("responseemployee", response.data);
-      } catch (error) {
-        console.error("Error fetching employee list:", error);
-        toast.error("Failed to fetch employee list.");
-      }
-    };
-    fetchEmployeeList();
-  }, [employeeType]);
-
-  useEffect(() => {
-    if (category) {
-      console.log("category", category);
-      const filtered = employeeList.filter(
-        (employee) => employee.employeeCategory === category
-      );
-      setFilteredEmployeeList(filtered);
-    }
-  }, [category, employeeList]);
-  const handleModalOk = () => {
-    setSelectedRecord(null);
-  };
-
-  const handleModalCancel = () => {
-    setSelectedRecord(null);
-  };
-
-  const updateStatus = async (id, action, reason = "") => {
-    try {
-      const details = { action, reason };
-      const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
-        details
-      );
-      console.log("Response data:", response.data);
-      const updatedLoans = loan.map((item) =>
-        item._id === id
-          ? {
-              ...item,
-              status: action === "approve" ? "1" : "2",
-              rejectionReason: action === "reject" ? reason : null,
-            }
-          : item
-      );
-      setLoan(updatedLoans);
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
-
-  const handleApprove = () => {
-    if (record) {
-      updateStatus(record._id, "approve");
-      navigate("/admin/loanManagement");
-    }
-  };
-
-  const handleRejectionReasonChange = (e) => {
-    setRejectionReason(e.target.value);
-  };
-
-  const handleReject = () => {
-    if (record && rejectionReason.trim()) {
-      updateStatus(record._id, "reject", rejectionReason.trim());
-      setIsRejectModalVisible(false);
-      setRejectionReason("");
-      navigate("/admin/loanManagement");
-    } else {
-      console.error("Rejection reason is required.");
-    }
-  };
-
-  const handleReset = () => {
-    setRejectionReason("");
-  };
-
-  const onSubmit = async (data, event) => {
-    event.preventDefault();
-
-    const updateDetails = {
-      AdminId: data.AdminId,
-      employeeType: data.employeeType,
-      loanType: data.loanType,
-      employeeList: data.employeeList,
-      employeeId: data.employeeId,
-      description: data.description,
-      startDate: data.startDate || null,
-      endDate: data.endDate || null,
-    };
-
-    try {
-      const response = await Api.put(
-        `http://localhost:5000/loanform/updateloan/${record._id}`,
-        updateDetails
-      );
-      toast.success("Task Assigned successfully");
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-      const errorMessage =
-        error?.response?.data?.error ||
-        "An error occurred while submitting the form";
-      toast.error(errorMessage);
-    }
-  };
-
-  if (!record) {
-    return <p>No details available</p>;
-  }
+     const handleApprove = () => {
+        if (record) {
+          updateStatus(record._id, "approve");
+        }
+      };
+    
+      const handleRejectionReasonChange = (e) => {
+        setRejectionReason(e.target.value);
+      };
+    
+      const handleReject = () => {
+        if (record && rejectionReason.trim()) {
+          updateStatus(record._id, "reject", rejectionReason.trim());
+          setIsRejectModalVisible(false);
+          setRejectionReason("");
+        } else {
+          console.error("Rejection reason is required.");
+        }
+      };
+    
+      const handleReset = () => {
+        setRejectionReason("");
+      };
+    
 
   return (
-    <div>
-      <div className="loandetail-container">
-        <div className={collapsed ? "main-content.open" : "main-content"}>
-          <div>
+    <div style={{marginTop:'40px'}}>
+        <div className="loandetail-container">
+        <div >
+            <div>
             <center>
               <h3>Loan Details</h3>
             </center>
@@ -229,7 +170,6 @@ const LoanDetails = ({ collapsed }) => {
                       {record.photographs ? (
                         <div className="photo-preview mb-2">
                           <img
-                            //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
                             src={record.photographs}
                             alt="Photograph"
                             className="photo-image"
@@ -246,8 +186,6 @@ const LoanDetails = ({ collapsed }) => {
                         <div className="photo-preview mb-2">
                           <img
                             src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
-                            //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
-                            // src={record.photographs}
                             alt="Photograph"
                             className="photo-image"
                             style={{
@@ -324,63 +262,6 @@ const LoanDetails = ({ collapsed }) => {
             </Row>
 
             <Row className="px-2">
-              {/* <Col lg={6} md={12}>
-                    <Card
-                      className="loandetail-custom-card"
-                      title="Personal Details"
-                    >
-                      <Descriptions
-                        size="small"
-                        layout="vertical"
-                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
-                      >
-                        <Descriptions.Item label="Name">
-                          {record.firstname} {record.lastname}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Gender">
-                          {record.gender}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Date of Birth">
-                          {dateFormat}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Marital Status">
-                          {record.maritalStatus}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Nationality">
-                          {record.nationality}
-                        </Descriptions.Item>
-                      </Descriptions>
-                    </Card>
-                  </Col> */}
-
-              {/* <Col lg={6} md={12}>
-                    <Card
-                      className="loandetail-custom-card"
-                      title="Contact Details"
-                    >
-                      <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                        <Descriptions.Item label="Address">
-                          {record.address}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="City">
-                          {record.city}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="District">
-                          {record.district}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="State">
-                          {record.state}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Country">
-                          {record.country}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Pincode">
-                          {record.pinCode}
-                        </Descriptions.Item>
-                      </Descriptions>
-                    </Card>
-                  </Col> */}
-
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
@@ -611,178 +492,51 @@ const LoanDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-            <div className="py-2 px-2">
-              <h5>
-                <b>Assign To</b>
-              </h5>
-              <form onSubmit={(e) => onSubmit(watch(), e)}>
-                <Row>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Employee Type:
-                      </label>
-                      <Controller
-                        name="employeeType"
-                        control={control}
-                        defaultValue="LoanEmployee"
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            disabled
-                            className="inputcolumn_drp"
-                          >
-                            <Option value="LoanEmployee">Loan Employee</Option>
-                            <Option value="TaxEmployee">Tax Employee</Option>
-                            <Option value="InsuranceEmployee">
-                              Insurance Employee
-                            </Option>
-                            <Option value="StockMarket">Stock Market</Option>
-                          </Select>
-                        )}
-                      />
-                      {errors.employeeType && (
-                        <p className="text-danger">Employee type is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Loan Type:</label>
-                      <Controller
-                        name="loanType"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            placeholder="Select Loan Type"
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setValue("loanType", value);
-                            }}
-                          >
-                            <Option value="">Select Loan Type</Option>
-                            <Option value="Home Loan">Home Loan</Option>
-                            <Option value="Business Loan">Business Loan</Option>
-                            <Option value="Vehicle Loan">Vechicle Loan</Option>
-                            <Option value="Personal Loan">Personal Loan</Option>
-                          </Select>
-                        )}
-                      />
-                      {errors.loanType && (
-                        <p className="text-danger">Loan type is required</p>
-                      )}
-                    </div>
-                  </Col>
 
-                  <Col xs={12} md={6} lg={4}>
-                    <label>Employee List:</label>
-                    <select
-                      {...register("employeeId", { required: true })}
-                      className="form-select"
-                      placeholder="Select Employee"
+            <Row className="py-3">
+            {record.employeeType && (
+                <>
+                <center><h3>Update the Loan Status</h3></center>
+                <Col lg={12} md={12}>
+                  <Card className="loandetail-custom-card" title="Task Details">
+                    <Descriptions
+                      column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
                     >
-                      <option value="">Select Employee</option>
-                      {filteredEmployeeList?.map((employee) => (
-                        <option key={employee._id} value={employee._id}>
-                          {employee.firstname} {employee.lastname}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.employeeId && (
-                      <p className="text-danger">
-                        Employee selection is required
-                      </p>
+                      <Descriptions.Item label="Loan Type">
+                        {record.loanType}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Start Date">
+                      {record.startDate ? new Date(record.startDate).toISOString().split("T")[0] : "N/A"}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="End Date">
+                      {record.endDate ? new Date(record.endDate).toISOString().split("T")[0] : "N/A"}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Description">
+                        {record.description}
+                      </Descriptions.Item>
+                      {record.status !== "Pending" && (
+                        <>
+                        <Descriptions.Item label="Your Approval Status">
+                      {record.status === "1" ? (
+                        <p color="green">You have Approved the Loan</p>
+                      ) : record.status === "2" ? (
+                        <p color="red">You have Rejected the Loan</p>
+                      ) : null }
+                    </Descriptions.Item>
+                        </>
+                      )}
+                      {record.status === "2" && (
+                      <Descriptions.Item label="Reason for Your Rejection">
+                        {record.rejectionReason}
+                      </Descriptions.Item>
                     )}
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Start Date:</label>
-                      <Controller
-                        name="startDate"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <input
-                            type="date"
-                            {...field}
-                            className="form-control"
-                            placeholder="Start Date"
-                          />
-                        )}
-                      />
-                      {errors.startDate && (
-                        <p className="text-danger">Start date is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">End Date:</label>
-                      <Controller
-                        name="endDate"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <input
-                            type="date"
-                            {...field}
-                            className="form-control"
-                            placeholder="End Date"
-                          />
-                        )}
-                      />
-                      {errors.endDate && (
-                        <p className="text-danger">End date is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Description:
-                      </label>
-                      <Controller
-                        name="description"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <textarea
-                            {...field}
-                            className="form-control"
-                            placeholder="Task description"
-                          />
-                        )}
-                      />
-                      {errors.description && (
-                        <p className="text-danger">Description is required</p>
-                      )}
-                    </div>
-                  </Col>
-                </Row>
+                    </Descriptions>
 
-                <Row>
-                  <Col className="px-2 py-2">
-                    <Button type="submit" variant="primary">
-                      Submit
-                    </Button>
-                  </Col>
-                </Row>
-              </form>
-            </div>
-
-            {/* <Row className="px-4 py-5">
+                    <Row className="px-4 py-4" style={{justifySelf:'center'}}>
                 <Space>
                   {record && record.status === "Pending" && (
                     <Button
-                      type="primary"
+                    type="primary"
                       style={{ background: "#4096ff", color: "#fff" }}
                       onClick={handleApprove}
                     >
@@ -793,7 +547,7 @@ const LoanDetails = ({ collapsed }) => {
                   {record && record.status === "Pending" && (
                     <>
                       <Button
-                        danger
+                         type="primary" danger
                         onClick={() => setIsRejectModalVisible(true)}
                       >
                         Reject
@@ -817,13 +571,13 @@ const LoanDetails = ({ collapsed }) => {
                           />
                           <Space style={{ marginTop: "20px" }}>
                             <Button
-                              type="primary"
+                               type="primary" 
                               onClick={handleReject}
                               disabled={!rejectionReason.trim()}
                             >
                               Submit
                             </Button>
-                            <Button onClick={handleReset}>Reset</Button>
+                            <Button variant="secondary" onClick={handleReset}>Reset</Button>
                           </Space>
                         </div>
                       </Modal>
@@ -834,7 +588,7 @@ const LoanDetails = ({ collapsed }) => {
                       Approved
                     </Button>
                     <Button
-                    danger
+                     type="primary" danger
                     onClick={() => setIsRejectModalVisible(true)}
                   >
                     Reject
@@ -851,18 +605,24 @@ const LoanDetails = ({ collapsed }) => {
                   >
                     Approve
                   </Button>
-                    <Button danger disabled>
+                    <Button  type="primary" danger disabled>
                       Rejected
                     </Button>
                     </>
                   )}
                 </Space>
-              </Row> */}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+              </Row>
+                  </Card>
+                </Col>
+                </>
+              )}
 
-export default LoanDetails;
+            </Row>
+                </div>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default LoanTaskDetails

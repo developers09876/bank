@@ -291,6 +291,19 @@ export const getLoanApplicationById = async (req, res) => {
   }
 };
 
+export const getLoanByEmpId = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const loanManagement = await LoanApplication.find({ employeeId });
+    if (!loanManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(loanManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteLoanApplication = async (req, res) => {
   try {
     const deletedApplication = await LoanApplication.findByIdAndDelete(
