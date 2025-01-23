@@ -19,6 +19,7 @@ import CreatTaxManagement from "./CreateTaxManagementAdmin/CreateTaxManagement";
 import TaxManagementDetails from "./CreateTaxManagementAdmin/TaxManagementDetails";
 import CreateInsuranceManagement from "./CreateInsuranceManagement";
 import InsuranceManagementDetails from "./InsuranceManagementDetalis";
+import Subscription from "./Subscription";
 
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
@@ -35,6 +36,7 @@ export const AdminRoutes = [
   { path: "loandashboard", element: <LoanDashboard /> },
   { path: "leadgeneration", element: <LeadGeneration /> },
   { path: "createlead", element: <CreateLead /> },
+  { path: "subscription", element: <Subscription /> },
 
   { path: "createTaxMangement", element: <CreatTaxManagement /> },
   { path: "createinauranceMangement", element: <CreateInsuranceManagement /> },

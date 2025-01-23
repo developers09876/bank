@@ -27,6 +27,7 @@ import lead from "./server/Router/LeadGenerationRouter.js";
 import Contactus from "./server/Router/ContactusRoutes.js";
 import taxManagement from "./server/Router/TaxManagementRoute.js";
 import insuranceManagement from "./server/Router/InsuranceManagementRouter.js";
+import SubscriptionPrice from "./server/Router/SubscriptionPriceRoutes.js";
 // import notificationRoutes from "./server/Router/NotificationRoutes.js";
 
 app.use("/country", country);
@@ -47,4 +48,5 @@ app.use("/job", job);
 app.use("/jobrequest", jobrequest);
 app.use("/lead", lead);
 app.use("/contactus", Contactus);
+app.use("/subscription", SubscriptionPrice);
 export default app;
