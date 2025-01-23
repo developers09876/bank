@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Card, Descriptions,Button, Tag, Space, Divider, Modal, Input } from "antd";
+import {
+  Layout,
+  Card,
+  Descriptions,
+  Tag,
+  Space,
+  Divider,
+  Modal,
+  Input,
+} from "antd";
+import { Controller, useForm } from "react-hook-form";
+import { Select } from "antd";
+import { toast, ToastContainer } from "react-toastify";
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -8,21 +20,60 @@ import {
 } from "@ant-design/icons";
 // import "../../user/LoanDetails.css";
 import "../user/LoanDetails.css";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
 import Api from "../../../Api";
-
+const { Option } = Select;
 const LoanDetails = ({ collapsed }) => {
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
+  const id = localStorage.getItem("regid");
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
   const [loan, setLoan] = useState([]);
   const navigate = useNavigate();
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
+  const [employeeList, setEmployeeList] = useState([]);
+  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
 
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  const category = watch("loanType");
+  console.log("category", category);
+
+  const employeeType = "LoanEmployee";
+  useEffect(() => {
+    const fetchEmployeeList = async () => {
+      try {
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
+        setEmployeeList(response.data);
+        console.log("responseemployee", response.data);
+      } catch (error) {
+        console.error("Error fetching employee list:", error);
+        toast.error("Failed to fetch employee list.");
+      }
+    };
+    fetchEmployeeList();
+  }, [employeeType]);
+
+  useEffect(() => {
+    if (category) {
+      console.log("category", category);
+      const filtered = employeeList.filter(
+        (employee) => employee.employeeCategory === category
+      );
+      setFilteredEmployeeList(filtered);
+    }
+  }, [category, employeeList]);
   const handleModalOk = () => {
     setSelectedRecord(null);
   };
@@ -80,6 +131,39 @@ const LoanDetails = ({ collapsed }) => {
     setRejectionReason("");
   };
 
+  const onSubmit = async (data, event) => {
+    event.preventDefault();
+
+    const updateDetails = {
+      AdminId: data.AdminId,
+      employeeType: data.employeeType,
+      loanType: data.loanType,
+      employeeList: data.employeeList,
+      description: data.description,
+      startDate: data.startDate || null,
+      endDate: data.endDate || null,
+    };
+
+    try {
+      const response = await Api.put(
+        `http://localhost:5000/loanform/updateloan/${record._id}`,
+        updateDetails
+      );
+      toast.success("Task Assigned successfully");
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+      const errorMessage =
+        error?.response?.data?.error ||
+        "An error occurred while submitting the form";
+      toast.error(errorMessage);
+    }
+  };
+
+  if (!record) {
+    return <p>No details available</p>;
+  }
+
   return (
     <div>
       <div className="loandetail-container">
@@ -88,7 +172,6 @@ const LoanDetails = ({ collapsed }) => {
             <center>
               <h3>Loan Details</h3>
             </center>
-            
 
             <div className="px-2" style={{ textAlign: "end" }}>
               <Tag
@@ -526,7 +609,174 @@ const LoanDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-            <Row className="px-4 py-5">
+            <div className="py-2 px-2">
+              <h5>
+                <b>Assign To</b>
+              </h5>
+              <form onSubmit={(e) => onSubmit(watch(), e)}>
+                <Row>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Employee Type:
+                      </label>
+                      <Controller
+                        name="employeeType"
+                        control={control}
+                        defaultValue="LoanEmployee"
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            disabled
+                            className="inputcolumn_drp"
+                          >
+                            <Option value="LoanEmployee">Loan Employee</Option>
+                            <Option value="TaxEmployee">Tax Employee</Option>
+                            <Option value="InsuranceEmployee">
+                              Insurance Employee
+                            </Option>
+                            <Option value="StockMarket">Stock Market</Option>
+                          </Select>
+                        )}
+                      />
+                      {errors.employeeType && (
+                        <p className="text-danger">Employee type is required</p>
+                      )}
+                    </div>
+                  </Col>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Loan Type:</label>
+                      <Controller
+                        name="loanType"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            placeholder="Select Loan Type"
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValue("loanType", value);
+                            }}
+                          >
+                            <Option value="">Select Loan Type</Option>
+                            <Option value="Home Loan">Home Loan</Option>
+                            <Option value="Business Loan">Business Loan</Option>
+                            <Option value="Vehicle Loan">Vechicle Loan</Option>
+                            <Option value="Personal Loan">Personal Loan</Option>
+                          </Select>
+                        )}
+                      />
+                      {errors.loanType && (
+                        <p className="text-danger">Loan type is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  <Col xs={12} md={6} lg={4}>
+                    <label>Employee List:</label>
+                    <select
+                      {...register("employeeId", { required: true })}
+                      className="form-select"
+                      placeholder="Select Employee"
+                    >
+                      <option value="">Select Employee</option>
+                      {filteredEmployeeList?.map((employee) => (
+                        <option key={employee._id} value={employee._id}>
+                          {employee.firstname} {employee.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.employeeId && (
+                      <p className="text-danger">
+                        Employee selection is required
+                      </p>
+                    )}
+                  </Col>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Start Date:</label>
+                      <Controller
+                        name="startDate"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <input
+                            type="date"
+                            {...field}
+                            className="form-control"
+                            placeholder="Start Date"
+                          />
+                        )}
+                      />
+                      {errors.startDate && (
+                        <p className="text-danger">Start date is required</p>
+                      )}
+                    </div>
+                  </Col>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">End Date:</label>
+                      <Controller
+                        name="endDate"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <input
+                            type="date"
+                            {...field}
+                            className="form-control"
+                            placeholder="End Date"
+                          />
+                        )}
+                      />
+                      {errors.endDate && (
+                        <p className="text-danger">End date is required</p>
+                      )}
+                    </div>
+                  </Col>
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Description:
+                      </label>
+                      <Controller
+                        name="description"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <textarea
+                            {...field}
+                            className="form-control"
+                            placeholder="Task description"
+                          />
+                        )}
+                      />
+                      {errors.description && (
+                        <p className="text-danger">Description is required</p>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col className="px-2 py-2">
+                    <Button type="submit" variant="primary">
+                      Submit
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+            </div>
+
+            {/* <Row className="px-4 py-5">
                 <Space>
                   {record && record.status === "Pending" && (
                     <Button
@@ -605,7 +855,7 @@ const LoanDetails = ({ collapsed }) => {
                     </>
                   )}
                 </Space>
-              </Row>
+              </Row> */}
           </div>
         </div>
       </div>

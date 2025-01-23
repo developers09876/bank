@@ -23,17 +23,19 @@ function CreateLead() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/signup/getby/${id}`);
-        console.log('responseget', response.data);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${id}`
+        );
+        console.log("responseget", response.data);
         setUserDetail(response.data);
         const fetchedData = response.data;
         reset(fetchedData);
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchUserDetails();
-  },[id, reset]);
+  }, [id, reset]);
 
   const onSubmit = async (data) => {
     const details = {

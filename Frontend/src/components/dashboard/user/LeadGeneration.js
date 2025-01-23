@@ -73,7 +73,6 @@ function LeadGeneration() {
   const handleViewDetails = (record) => {
     navigate("/loanEmp/leaddetails", { state: { record } });
   };
-  
 
   const handleModalOk = () => {
     setIsModalVisible(false);

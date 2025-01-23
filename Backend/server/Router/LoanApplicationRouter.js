@@ -6,6 +6,7 @@ import {
   updateLoanApplicationStatus,
   deleteLoanApplication,
   updateLoanDetails,
+  updateLoan,
 } from "../Controller/LoanApplicationController.js";
 
 const router = Router();
@@ -18,6 +19,7 @@ router.get("/getall", getAllLoanApplications);
 router.get("/getbyid/:userid", getLoanApplicationById);
 
 router.put("/updateloanapplicationsStaus/:id", updateLoanApplicationStatus);
+router.put("/updateloan/:id", updateLoan );
 
 router.delete("/deleteloanapplications/:id", deleteLoanApplication);
 

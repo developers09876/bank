@@ -110,6 +110,14 @@ const loanApplicationSchema = new mongoose.Schema(
     panImageUpload: { type: String },
     aadharImageUpload: { type: String },
     aadhaarNumber: { type: String },
+    loanType:{ type: String },
+    employeeId: { type: String },
+    employeeType: { type: String },     
+    employeeList:{ type: String }, 
+    startDate: { type: Date},
+    endDate: { type: Date},
+    dob: { type: Date},          
+    description:{ type: String },  
 
     children: [
       {
@@ -125,6 +133,7 @@ const loanApplicationSchema = new mongoose.Schema(
       default: "Pending",
     },
     rejectionReason: { type: String},
+    
   },
   {
     timestamps: true,
