@@ -268,7 +268,7 @@ function InsuranceTaskManagement() {
             <Row>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Business Type</strong>
+                  <strong>Policy Type</strong>
                 </p>
               </Col>
               <Col span={2}>
@@ -276,14 +276,14 @@ function InsuranceTaskManagement() {
               </Col>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.businessType}
+                  {selectedRecord.PolicyType}
                 </p>
               </Col>
             </Row>
             <Row>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Income Tax Status</strong>
+                  <strong>policy Term</strong>
                 </p>
               </Col>
               <Col span={2}>
@@ -291,7 +291,7 @@ function InsuranceTaskManagement() {
               </Col>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.incomeTaxStatus}
+                  {selectedRecord.policyTerm}
                 </p>
               </Col>
             </Row>
@@ -313,7 +313,7 @@ function InsuranceTaskManagement() {
             <Row>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Tax paid for last year</strong>
+                  <strong>sum Assured</strong>
                 </p>
               </Col>
               <Col span={2}>
@@ -321,7 +321,7 @@ function InsuranceTaskManagement() {
               </Col>
               <Col span={10}>
                 <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.taxPaid}
+                  {selectedRecord.sumAssured}
                 </p>
               </Col>
             </Row>
