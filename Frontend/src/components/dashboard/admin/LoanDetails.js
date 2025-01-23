@@ -19,24 +19,54 @@ const LoanDetails = ({ collapsed }) => {
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
+  const id = localStorage.getItem("regid");
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
   const [loan, setLoan] = useState([]);
   const navigate = useNavigate();
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
-   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+const [employeeList, setEmployeeList] = useState([]);
+const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+
  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm();
+     register,
+     handleSubmit,
+     setValue,
+     watch,
+     control,
+     formState: { errors },
+   } = useForm();
+ 
+  const category = watch("employeeCategory");
+  const employeeType = "LoanEmployee"; 
+  useEffect(() => {
+    const fetchEmployeeList = async () => {
+      try {
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
+        setEmployeeList(response.data);
+        console.log("responseemployee", response.data);
+      } catch (error) {
+        console.error("Error fetching employee list:", error);
+        toast.error("Failed to fetch employee list.");
+      }
+    };
+    fetchEmployeeList();
+  }, [employeeType]);
+  
+  useEffect(() => {
+    if (category) {
+   
+      const filtered = employeeList.filter(
+        (employee) => employee.employeeCategory === category
+      );
+      setFilteredEmployeeList(filtered);
+    }
+  }, [category, employeeList]);
   const handleModalOk = () => {
     setSelectedRecord(null);
   };
+
 
   const handleModalCancel = () => {
     setSelectedRecord(null);
@@ -602,7 +632,7 @@ const LoanDetails = ({ collapsed }) => {
         <div>
           <label className="vendorpage_labelCss">Loan Type:</label>
           <Controller
-            name="loanType"
+            name=" loanType"
             control={control}
             defaultValue=""
             rules={{ required: true }}
@@ -613,18 +643,18 @@ const LoanDetails = ({ collapsed }) => {
                 placeholder="Select Loan Type"
                 onChange={(value) => {
                   field.onChange(value);
-                  setValue("loanType", value);
+                  setValue(" loanType", value);
                 }}
               >
                 <Option value="">Select Loan Type</Option>
                 <Option value="Home Loan">Home Loan</Option>
                 <Option value="Business Loan">Business Loan</Option>
                 <Option value="Vechicle Loan">Vechicle Loan</Option>
-                <Option value="Education Loan">Education Loan</Option>
+                <Option value="Personal Loan">Personal Loan</Option>
               </Select>
             )}
           />
-          {errors.loanType && (
+          {errors. loanType&& (
             <p className="text-danger">Loan type is required</p>
           )}
         </div>
