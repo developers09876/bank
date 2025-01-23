@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Button } from "antd";
 import "./PersonalPlan.css";
 import {
@@ -18,7 +18,26 @@ import {
 } from "react-icons/tb";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
+import Api from "../../Api";
+
 function PersonalPlan() {
+
+  const [fetchedData, setfetchedData] = useState([]);
+  
+  const fetchSubscriptionPlan = async () => {
+    try {
+      const response = await Api.get("/subscription/getall");
+      setfetchedData(response.data[0]);
+      console.log("fetchedData", response.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  
+  useEffect(() => {
+  fetchSubscriptionPlan();
+}, []);
+
   return (
     <div>
       <Header />
@@ -65,8 +84,8 @@ function PersonalPlan() {
           <div className="personal-plan-box">
             <h2>Personal Subscription Plan</h2>
             <p className="price">
-              <span className="discounted-price">Rs. 399</span>
-              <span className="original-price">1,499</span> only
+              <span className="discounted-price">Rs. {fetchedData.offerPrice}</span>
+              <span className="original-price"> {fetchedData.subsriptionPrice}</span> Only
             </p>
             <ul className="features-list">
               <li>
