@@ -228,3 +228,35 @@ export async function updateLeadAssign (req, res, next) {
     next(err);
   }
 }
+// export const getByEmployeeId = async (req, res) => {
+//   try {
+//     const { id } = req.params; 
+
+   
+//     const lead = await Lead.findById(id);
+
+//     if (!lead) {
+//       return res.status(404).json({ message: "Lead not found" });
+//     }
+
+//     res.status(200).json({
+//       message: "Lead assignment retrieved successfully",
+//       data: lead,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching lead assignment:", error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+export const getByEmployeeId = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const lead = await Lead.find({ employeeId });
+    if (!lead ) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(lead );
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

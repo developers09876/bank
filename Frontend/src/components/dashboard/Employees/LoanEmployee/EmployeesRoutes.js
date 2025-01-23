@@ -6,7 +6,7 @@ import TabsProfile from "./ProfileTabs";
 import LoanLeadManagement from "./LoanLeadManagement";
 import LoanLeadDetails from "./LoanLeadDetails";
 import LoanTaskManagement from "./LoanTaskManagement";
-
+import LeadTask from "./LeadTask";
 
 const roles = localStorage.getItem("userType");
 
@@ -19,5 +19,7 @@ export const LoanEmployeesRoutes = [
   { path: "/loanEmp/createlead", element: <CreateLead /> },
   { path: "/loanEmp/loandetails/:id", element: <LoanDetails /> },
   { path: "loantaskmanagement", element: <LoanTaskManagement /> },
+  { path: "leadtask", element: <LeadTask/> },
+
 ]
   
