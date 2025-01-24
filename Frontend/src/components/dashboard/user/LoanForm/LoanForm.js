@@ -10,6 +10,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 import Api from "../../../../Api";
+
 const { Option } = Select;
 
 function LoanForm() {
@@ -23,12 +24,10 @@ function LoanForm() {
     formState: { errors },
   } = useForm();
   const userid = localStorage.getItem("id");
-  const userType = localStorage.getItem("userType");
-  console.log("userid", userid);
-
   const { state } = useLocation();
   const record = state?.record;
-
+  const userType = localStorage.getItem("userType");
+  console.log("userid", userid);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
@@ -137,26 +136,53 @@ function LoanForm() {
   };
 
   useEffect(() => {
-    const fetchLoanApplicationData = async () => {
+    const fetchLoanApplication = async () => {
+      const userid = localStorage.getItem("id");
+      if (!userid) {
+        console.log("User ID not found in localStorage");
+        return;
+      }
+
       try {
-        const response = await Api.get(`/loanform/getbyid/${userid}`);
-        const filterOneApplication = response.data.filter(
-          (application) => application._id === record._id
+        console.log("Fetching loan application with userID:", userid);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
         );
-        console.log("Applicationresponse", response.data);
-        console.log("filterOneApplication", filterOneApplication[0]);
-        const formattedDob = filterOneApplication[0].dob
-          ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
-          : "";
-        if (filterOneApplication) {
-          reset({ ...filterOneApplication[0], dob: formattedDob });
-        }
+        console.log("Response received:", response);
+        setLoanApplicationData(response.data.data);
       } catch (error) {
-        console.log("error", error);
+        console.error("Error fetching loan application data:", error);
       }
     };
-    fetchLoanApplicationData();
-  }, [userid, record._id, reset]);
+
+    fetchLoanApplication();
+  }, [userid]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserDetail(response.data);
+        console.log("getresponse", response.data);
+
+        const fetchedData = response.data;
+        const formattedDob = fetchedData.dob
+          ? new Date(fetchedData.dob).toISOString().split("T")[0]
+          : "";
+
+        reset({
+          ...fetchedData,
+          dob: formattedDob,
+        });
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userType, userid]);
 
   const loanAmount = watch("totalChildren");
 
