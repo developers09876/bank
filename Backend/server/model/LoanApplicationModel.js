@@ -133,7 +133,7 @@ const loanApplicationSchema = new mongoose.Schema(
       default: "Pending",
     },
     rejectionReason: { type: String},
-    
+    pendingReason: {type: String},
   },
   {
     timestamps: true,
