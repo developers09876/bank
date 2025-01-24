@@ -115,7 +115,7 @@ function Kycvendor() {
           }}
         >
           <center>
-            <h4 className="pages-title mt-3">KYC Complaincessssss</h4>
+            <h4 className="pages-title mt-3">KYC Complainces</h4>
             <br />
             <p
               style={{
