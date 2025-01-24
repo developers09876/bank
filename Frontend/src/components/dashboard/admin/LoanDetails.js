@@ -432,6 +432,11 @@ const LoanDetails = ({ collapsed }) => {
                         {record.rejectionReason}
                       </Descriptions.Item>
                     )}
+                    {record.status === "Pending" && record.pendingReason && (
+                      <Descriptions.Item label="Reason for Hold">
+                        {record.pendingReason}
+                      </Descriptions.Item>
+                    )}
                   </Descriptions>
                 </Card>
               </Col>
