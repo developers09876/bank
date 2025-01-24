@@ -27,6 +27,8 @@ function LoanForm() {
   const userid = localStorage.getItem("id");
   const id = useParams().id;
   console.log("id", id);
+   const { state } = useLocation();
+      const record = state?.record;
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
   const [countryList, setCountryList] = useState([]);
