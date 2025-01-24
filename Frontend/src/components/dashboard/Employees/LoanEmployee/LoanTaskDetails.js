@@ -33,7 +33,9 @@ function LoanTaskDetails() {
 
       const [selectedRecord, setSelectedRecord] = useState(null);
        const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
+       const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
        const [rejectionReason, setRejectionReason] = useState("");
+       const [pendingReason, setPendingReason] = useState("");
        const [loan, setLoan] = useState([]);
      const dateFormat = new Date(record.dob).toISOString().split("T")[0];
      
@@ -69,8 +71,9 @@ function LoanTaskDetails() {
             item._id === id
               ? {
                   ...item,
-                  status: action === "approve" ? "1" : "2",
+                  status: action === "approve" ? "1" : action === "reject" ? "2" : "Pending" ,
                   rejectionReason: action === "reject" ? reason : null,
+            pendingReason: action === "Pending" ? reason : null,
                 }
               : item
           );
@@ -88,6 +91,20 @@ function LoanTaskDetails() {
         }
       };
     
+      const handlePendingReasonChange = (e) => {
+        setPendingReason(e.target.value);
+      };
+    
+      const handlePending = () => {
+        if (record && pendingReason.trim()) {
+          updateStatus(record._id, "Pending", pendingReason.trim());
+          setIsPendingModalVisible(false);
+          setPendingReason("");
+        } else {
+          console.error("Pending reason is required.");
+        }
+      };
+      
       const handleRejectionReasonChange = (e) => {
         setRejectionReason(e.target.value);
       };
@@ -104,6 +121,7 @@ function LoanTaskDetails() {
     
       const handleReset = () => {
         setRejectionReason("");
+        setPendingReason("");
       };
     
 
@@ -313,6 +331,11 @@ function LoanTaskDetails() {
                         {record.rejectionReason}
                       </Descriptions.Item>
                     )}
+                    {record.status === "Pending" && record.pendingReason && (
+                      <Descriptions.Item label="Reason for Hold">
+                        {record.pendingReason}
+                      </Descriptions.Item>
+                    )}
                   </Descriptions>
                 </Card>
               </Col>
@@ -514,20 +537,28 @@ function LoanTaskDetails() {
                       <Descriptions.Item label="Description">
                         {record.description}
                       </Descriptions.Item>
-                      {record.status !== "Pending" && (
-                        <>
-                        <Descriptions.Item label="Your Approval Status">
+                     
+                      {(record.pendingReason === null || record.rejectionReason === null) && (
+                      <Descriptions.Item label="Your Approval Status">
                       {record.status === "1" ? (
-                        <p color="green">You have Approved the Loan</p>
+                        <p color="green">Loan Approved</p>
                       ) : record.status === "2" ? (
-                        <p color="red">You have Rejected the Loan</p>
-                      ) : null }
-                    </Descriptions.Item>
-                        </>
+                        <p color="red">Loan Rejected</p>
+                      ) : (<p style={{ color: "orange" }}>
+                      Loan is on Hold
+                    </p>
                       )}
+                    </Descriptions.Item>
+                    )}
+                        
                       {record.status === "2" && (
                       <Descriptions.Item label="Reason for Your Rejection">
                         {record.rejectionReason}
+                      </Descriptions.Item>
+                    )}
+                    {record.status === "Pending" && record.pendingReason &&(
+                      <Descriptions.Item label="Reason for Holding the Loan">
+                        {record.pendingReason}
                       </Descriptions.Item>
                     )}
                     </Descriptions>
@@ -582,6 +613,33 @@ function LoanTaskDetails() {
                         </div>
                       </Modal>
 
+                      <Modal
+                        title="Pending Confirmation"
+                        visible={isPendingtModalVisible}
+                        onCancel={() => setIsPendingModalVisible(false)}
+                        footer={null}
+                      >
+                        <div>
+                          <p>Please provide a reason for holding the Loan application:</p>
+                          <Input.TextArea
+                            rows={3}
+                            placeholder="Enter Pending reason"
+                            value={pendingReason}
+                            onChange={handlePendingReasonChange}
+                          />
+                          <Space style={{ marginTop: "20px" }}>
+                            <Button
+                               type="primary" 
+                              onClick={handlePending}
+                              disabled={!pendingReason.trim()}
+                            >
+                              Submit
+                            </Button>
+                            <Button variant="secondary" onClick={handleReset}>Reset</Button>
+                          </Space>
+                        </div>
+                      </Modal>
+
                   {record && record.status === "1" && (
                     <>
                     <Button type="primary" disabled>
@@ -592,6 +650,12 @@ function LoanTaskDetails() {
                     onClick={() => setIsRejectModalVisible(true)}
                   >
                     Reject
+                  </Button>
+                  <Button
+                     type="primary" ghost
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    Hold
                   </Button>
                   </>
                   )}
@@ -608,6 +672,12 @@ function LoanTaskDetails() {
                     <Button  type="primary" danger disabled>
                       Rejected
                     </Button>
+                    <Button
+                     type="primary" ghost
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    Hold
+                  </Button>
                     </>
                   )}
                 </Space>
