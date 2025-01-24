@@ -258,23 +258,24 @@ export async function updateLoanApplicationStatus(req, res, next) {
     const { id } = req.params;
     const { action , reason } = req.body;
     console.log("object", action);
-    if (!["approve", "reject"].includes(action)) {
+    if (!["approve", "reject", "Pending"].includes(action)) {
       return res.status(400).json({
-        message: "Invalid action. Allowed actions are 'approve' or 'reject'.",
+        message: "Invalid action. Allowed actions are 'approve' or 'reject' or 'Pending'.",
       });
     }
 
-    const status = action === "approve" ? "1" : "2";
+    const status = action === "approve" ? "1" : action === "reject" ? "2" : "Pending";
 
-    if (action === "reject" && !reason) {
+    if ((action === "reject"|| action === "Pending") && !reason) {
       return res.status(400).json({
-        message: "Rejection reason is required when rejecting the loan.",
+        message: "Reason is required when marking the loan as '${action}'",
       });
     }
     const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
       id,
       { status,
-        rejectionReason: action === "reject" ? reason : null, 
+        rejectionReason: action === "reject" ? reason : null,
+        pendingReason: action === "Pending" ? reason : null,
        },
       { new: true }
     );
@@ -287,7 +288,7 @@ export async function updateLoanApplicationStatus(req, res, next) {
 
     res.status(200).json({
       message: `Loan application ${
-        action === "approve" ? "approved" : "rejected"
+         action === "approve" ? "approved" : action === "reject" ? "rejected" : "marked as Pending"
       } successfully.`,
       data: updatedLoanApplication,
     });

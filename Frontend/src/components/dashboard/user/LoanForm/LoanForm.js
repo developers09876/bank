@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 import Api from "../../../../Api";
+
 const { Option } = Select;
 
 function LoanForm() {
@@ -28,8 +29,6 @@ function LoanForm() {
   console.log("id", id);
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
-  const { state } = useLocation();
-  const record = state?.record;
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
@@ -180,22 +179,21 @@ function LoanForm() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        
-          const response = await axios.get(
-            `http://localhost:5000/signup/getby/${userid}`
-          );
-          setUserDetail(response.data);
-          console.log("getresponse", response.data);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserDetail(response.data);
+        console.log("getresponse", response.data);
 
-          const fetchedData = response.data;
-          const formattedDob = fetchedData.dob
-            ? new Date(fetchedData.dob).toISOString().split("T")[0]
-            : "";
+        const fetchedData = response.data;
+        const formattedDob = fetchedData.dob
+          ? new Date(fetchedData.dob).toISOString().split("T")[0]
+          : "";
 
-          reset({
-            ...fetchedData,
-            dob: formattedDob,
-          });
+        reset({
+          ...fetchedData,
+          dob: formattedDob,
+        });
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -322,9 +320,7 @@ function LoanForm() {
                     </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Last Name
-                        </label>
+                        <label className="vendorpage_labelCss">Last Name</label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
@@ -949,7 +945,6 @@ function LoanForm() {
       <ToastContainer />
       <br />
       <br />
-
     </div>
   );
 }

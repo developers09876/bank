@@ -12,9 +12,15 @@ function CreateLead() {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     control,
     formState: { errors },
   } = useForm();
+
+  const category = watch("employeeCategory");
+  const employeeType = watch("employeeType");
+
 
   const id = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
@@ -189,10 +195,40 @@ function CreateLead() {
                 )}
               </div>
             </Col>
-
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Purpose of Loan</label>
+                <label className="vendorpage_labelCss">Service Type:</label>
+                <Controller
+                  name="employeeType"
+                  control={control}
+                  // defaultValue="InsuranceEmployee"
+                  // value={employeeType}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Service Type"
+                    >
+                      <Option value="LoanEmployee">Loan </Option>
+                      <Option value="TaxEmployee">Tax </Option>
+                      <Option value="InsuranceEmployee">
+                        Insurance 
+                      </Option>
+                      <Option value="StockMarket">Stock Market</Option>
+                    </Select>
+                  )}
+                />
+                {errors.employeeType && (
+                  <p className="text-danger">Service is required</p>
+                )}
+              </div>
+            </Col>
+            {employeeType === "LoanEmployee" && (
+              <>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">category</label>
                 <Controller
                   name="purpose"
                   control={control}
@@ -276,10 +312,210 @@ function CreateLead() {
                 )}
               </div>
             </Col>
+            </>
+            )}
+             {employeeType === "InsuranceEmployee" && (
+              <>
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">
-                  Previously Applied for Loan?
+                   Category:
+                </label>
+                <Controller
+                  name="employeeCategory"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Employee Category"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue("employeeCategory", value);
+                      }}
+                    >
+                      <Option value="">Select Category</Option>
+                      <Option value="Health Insurance">Health Insurance</Option>
+
+                      <Option value="Life Insurance">Life Insurance</Option>
+                      <Option value="Vehicle Insurance">
+                        Vehicle Insurance
+                      </Option>
+                    </Select>
+                  )}
+                />
+                {errors.employeeCategory && (
+                  <p className="text-danger">Employee category is required</p>
+                )}
+              </div>
+            </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Policy Term</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="policyTerm"
+                  {...register("policyTerm", { required: true })}
+                  placeholder="Policy Term (years)"
+                />
+                {errors.policyTerm && (
+                  <p className="text-danger">Policy Term is required</p>
+                )}
+              </div>
+            </Col>
+
+            {/* Sum Assured */}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Sum Assured</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="sumAssured"
+                  {...register("sumAssured", { required: true })}
+                  placeholder="Sum Assured"
+                />
+                {errors.sumAssured && (
+                  <p className="text-danger">Sum Assured is required</p>
+                )}
+              </div>
+            </Col>
+            </>
+             )}
+             {employeeType === "TaxEmployee" && (
+              <>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">
+                 Category:
+                </label>
+                <Controller
+                  name="employeeCategory"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Employee Category"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue("employeeCategory", value);
+                      }}
+                    >
+                      <Option value="">Select Category</Option>
+                      <Option value="IncomeTax">Income Tax</Option>
+                      <Option value="Tds&TcsServices">
+                        TDS / TCS Services
+                      </Option>
+                      <Option value="GSTservices">GST Services</Option>
+                      <Option value="Esi&PfServices">ESI & PF Services</Option>
+                    </Select>
+                  )}
+                />
+                {errors.employeeCategory && (
+                  <p className="text-danger">Employee category is required</p>
+                )}
+              </div>
+            </Col>
+
+            {category === "IncomeTax" && (
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Sub Category:</label>
+                  <Controller
+                    name="subCategory"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className="inputcolumn_drp"
+                        placeholder="Select Sub Category"
+                        onChange={(value) => {
+                          field.onChange(value);
+                          setValue("subCategory", value);
+                        }}
+                      >
+                        <Option value="Company">Company</Option>
+                        <Option value="Individual">Individual</Option>
+                        <Option value="Firm">Firm</Option>
+                        <Option value="Other">Other</Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.subCategory && (
+                    <p className="text-danger">Sub-category is required</p>
+                  )}
+                </div>
+              </Col>
+            )}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">
+                  Income Tax Filing Status
+                </label>
+                <Controller
+                  name="incomeTaxStatus"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Status"
+                    >
+                      <Option value="filed">Filed</Option>
+                      <Option value="notFiled">Not Filed</Option>
+                    </Select>
+                  )}
+                />
+                {errors.incomeTaxStatus && (
+                  <p className="text-danger">Select filing status</p>
+                )}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Business Type</label>
+                <Controller
+                  name="businessType"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Business Type"
+                    >
+                      <Option value="soleProprietorship">
+                        Sole Proprietorship
+                      </Option>
+                      <Option value="partnership">Partnership</Option>
+                      <Option value="privateLimited">Private Limited</Option>
+                      <Option value="publicLimited">Public Limited</Option>
+                    </Select>
+                  )}
+                />
+                {errors.businessType && (
+                  <p className="text-danger">Select business type</p>
+                )}
+              </div>
+            </Col>
+            </>
+             )}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">
+                  Previously Applied ?
                 </label>
                 <div>
                   <input
