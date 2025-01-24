@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 import Api from "../../../../Api";
 
@@ -27,8 +27,8 @@ function LoanForm() {
   const userid = localStorage.getItem("id");
   const id = useParams().id;
   console.log("id", id);
-   const { state } = useLocation();
-      const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
   const [countryList, setCountryList] = useState([]);
@@ -38,7 +38,6 @@ function LoanForm() {
   const [loanApplicationData, setLoanApplicationData] = useState(null);
   const [childCount, setChildCount] = useState(0);
   const [userDetail, setUserDetail] = useState(null);
-  
 
   useEffect(() => {
     getCountry();
@@ -101,59 +100,56 @@ function LoanForm() {
       ? await uploadFile(data.photographs[0])
       : null;
 
-     
-        const Details = {
-          userid: userid,
-          lastname: data.lastname,
-          firstname: data.firstname,
-          dob: data.dob,
-          gender: data.gender,
-          maritalStatus: data.maritalStatus,
-          nationality: data.nationality,
-          contactNumber: data.contactNumber,
-          address: data.address,
-          city: data.city,
-          district: data.district,
-          state: data.state,
-          country: data.country,
-          pinCode: data.pinCode,
-          totalChildren: data.totalChildren,
-          children: data.children,
-          spouseName: data.spouseName,
-          spouseOccupation: data.spouseOccupation,
-          spouseDesignation: data.spouseDesignation,
-          spouseIncome: data.spouseIncome,
-          coApplicantDocs: coApplicantDocsUrl,
-          photographs: photographsUrl,
-        };
-      
-        try {
-          const response = await axios.post(
-            `http://localhost:5000/loanform/createloanapplications`,
-            Details
-          );
-          console.log(response.data.data, "Form submitted successfully");
-          localStorage.setItem("loanApplicationId", response.data.data._id);
-          toast.success("Form submitted successfully");
-        } catch (error) {
-          console.error("Form submission failed", error);
-          toast.error("An error occurred while submitting the form");
-        }
-      
-        try {
-          const response = await axios.put(
-            `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
-            Details
-          );
-          console.log(response, "Form updated successfully");
-          toast.success("Form updated successfully");
-        } catch (error) {
-          console.error("Form update failed", error);
-          toast.error("An error occurred while updating the form");
-        }
-      };
-      
+    const Details = {
+      userid: userid,
+      lastname: data.lastname,
+      firstname: data.firstname,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.maritalStatus,
+      nationality: data.nationality,
+      contactNumber: data.contactNumber,
+      address: data.address,
+      city: data.city,
+      district: data.district,
+      state: data.state,
+      country: data.country,
+      pinCode: data.pinCode,
+      totalChildren: data.totalChildren,
+      children: data.children,
+      spouseName: data.spouseName,
+      spouseOccupation: data.spouseOccupation,
+      spouseDesignation: data.spouseDesignation,
+      spouseIncome: data.spouseIncome,
+      coApplicantDocs: coApplicantDocsUrl,
+      photographs: photographsUrl,
+    };
 
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/loanform/createloanapplications`,
+        Details
+      );
+      console.log(response.data.data, "Form submitted successfully");
+      localStorage.setItem("loanApplicationId", response.data.data._id);
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Form submission failed", error);
+      toast.error("An error occurred while submitting the form");
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
+        Details
+      );
+      console.log(response, "Form updated successfully");
+      toast.success("Form updated successfully");
+    } catch (error) {
+      console.error("Form update failed", error);
+      toast.error("An error occurred while updating the form");
+    }
+  };
 
   useEffect(() => {
     const fetchLoanApplication = async () => {
