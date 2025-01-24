@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 // import Api from "../../Api";
 
 function Kycvendor() {
@@ -19,9 +20,8 @@ function Kycvendor() {
   } = useForm();
 
   const userid = localStorage.getItem("id");
-  const id = localStorage.getItem("vendor_id");
-  const loanApplicationId = localStorage.getItem("loanApplicationId");
-
+  const { state } = useLocation();
+  const record = state?.record;
 
   console.log("userKYCDetail", userKYCDetail);
 
@@ -66,7 +66,7 @@ function Kycvendor() {
     const panUploadUrl = data.panUpload?.[0]
       ? await uploadFile(data.panUpload[0])
       : null;
-      const AdharUploadUrl = data.AdharUpload?.[0]
+    const AdharUploadUrl = data.AdharUpload?.[0]
       ? await uploadFile(data.AdharUpload[0])
       : null;
     const voterIdUploadUrl = data.voterIdUpload?.[0]
@@ -75,7 +75,7 @@ function Kycvendor() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
-      aadhaarNumber:data.aadhaarNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -89,7 +89,7 @@ function Kycvendor() {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplications/${loanApplicationId}`,
+        `http://localhost:5000/loanform/updateloanapplications/${record._id}`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");
@@ -113,7 +113,7 @@ function Kycvendor() {
           }}
         >
           <center>
-            <h4 className="pages-title mt-3">KYC Complaince</h4>
+            <h4 className="pages-title mt-3">KYC Complaincessssss</h4>
             <br />
             <p
               style={{
@@ -227,10 +227,9 @@ function Kycvendor() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panUpload && (
-                    <p className="text-danger">Pan is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.panUpload && (
+                  <p className="text-danger">Pan is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>
