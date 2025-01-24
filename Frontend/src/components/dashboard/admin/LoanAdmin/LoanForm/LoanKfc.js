@@ -5,9 +5,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import Api from "../../../../Api";
-
+import Api from "../../../../../Api";
 function Kycvendor() {
+     const { state } = useLocation();
+      const record = state?.record;
   const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
@@ -18,9 +19,6 @@ function Kycvendor() {
     reset,
     setValue,
   } = useForm();
-
-  const { state } = useLocation();
-      const record = state?.record;
 
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");

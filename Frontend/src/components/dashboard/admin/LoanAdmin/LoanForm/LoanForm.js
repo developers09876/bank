@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import "../../../dashboard/user/MyProfile.scss";
+import "../../../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 // import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import Api from "../../../../Api";
+import Api from "../../../../../Api";
 import { useLocation } from "react-router-dom";
 const { Option } = Select;
 
 function LoanForm() {
-
   const {
     register,
     handleSubmit,
@@ -22,13 +21,14 @@ function LoanForm() {
     control,
     formState: { errors },
   } = useForm();
+  
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
 
 const { state } = useLocation();
     const record = state?.record;
-  
+
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
@@ -159,6 +159,7 @@ const { state } = useLocation();
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
 
+
   const loanAmount = watch("totalChildren");
 
   useEffect(() => {
@@ -277,9 +278,7 @@ const { state } = useLocation();
                     </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Last Name
-                        </label>
+                        <label className="vendorpage_labelCss">Last Name</label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
@@ -904,7 +903,6 @@ const { state } = useLocation();
       <ToastContainer />
       <br />
       <br />
-
     </div>
   );
 }
