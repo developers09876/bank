@@ -27,7 +27,11 @@ function LeadTask() {
       setLoading(false);
     }
   };
-
+  const handleViewDetails = (record) => {
+    console.log('record', record)
+    navigate(`/loanEmp/leadtaskdetails/${record._id}`, { state: { record } });
+    // navigate(`leadtaskdetails`);
+  };
   const columns = [
     {
       title: "Full Name",
@@ -54,12 +58,12 @@ function LeadTask() {
       title: "Action",
       dataIndex: "Action",
       key: "Action",
-      render: (_, employee) => (
+      render: (_,record) => (
         <div>
           <Button
             type="primary"
             style={{ color: "black" }}
-            onClick={() => console.log(`Viewing employee: ${employee._id}`)}
+            onClick={() => handleViewDetails(record)}
           >
             View
           </Button>
