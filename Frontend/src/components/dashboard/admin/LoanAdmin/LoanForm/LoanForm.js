@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import "../../../dashboard/user/MyProfile.scss";
+import "../../../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 // import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import Api from "../../../../../Api";
 import { useLocation } from "react-router-dom";
-
-import Api from "../../../../Api";
 const { Option } = Select;
 
 function LoanForm() {
@@ -22,12 +21,13 @@ function LoanForm() {
     control,
     formState: { errors },
   } = useForm();
+  
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
 
-  const { state } = useLocation();
-  const record = state?.record;
+const { state } = useLocation();
+    const record = state?.record;
 
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -124,15 +124,16 @@ function LoanForm() {
     };
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
+      const response = await axios.post(
+        `http://localhost:5000/loanform/createloanapplications`,
         Details
       );
-      console.log(response, "Form updated successfully");
-      toast.success("Form updated successfully");
+      console.log(response.data.data, "Form submitted successfully");
+      localStorage.setItem("loanApplicationId", response.data.data._id);
+      toast.success("Form submitted successfully");
     } catch (error) {
-      console.error("Form update failed", error);
-      toast.error("An error occurred while updating the form");
+      console.error("Form submission failed", error);
+      toast.error("An error occurred while submitting the form");
     }
   };
 
@@ -140,23 +141,24 @@ function LoanForm() {
     const fetchLoanApplicationData = async () => {
       try {
         const response = await Api.get(`/loanform/getbyid/${userid}`);
-        const filterOneApplication = response.data.filter(
-          (application) => application._id === record._id
-        );
-        console.log("Applicationresponse", response.data);
-        console.log("filterOneApplication", filterOneApplication[0]);
+        const filterOneApplication = response.data.filter((application) => application._id === record._id )
+        console.log('Applicationresponse', response.data);
+        console.log('filterOneApplication', filterOneApplication[0]);
         const formattedDob = filterOneApplication[0].dob
-          ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
-          : "";
+            ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
+            : "";
         if (filterOneApplication) {
-          reset({ ...filterOneApplication[0], dob: formattedDob });
+          reset({...filterOneApplication[0],
+            dob: formattedDob
+          }); 
         }
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error)
       }
-    };
+    }
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
+
 
   const loanAmount = watch("totalChildren");
 

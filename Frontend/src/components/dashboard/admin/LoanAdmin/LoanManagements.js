@@ -3,6 +3,7 @@ import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 
 const LoanManagements = ({ collapsed }) => {
  
@@ -39,6 +40,9 @@ const LoanManagements = ({ collapsed }) => {
 
    const handleViewDetails = (record) => {
    navigate(`/adminLoan/loandetails/${record._id}`, {state: { record } })
+  };
+  const handleEdit = (record) => {
+    navigate(`/adminLoan/loanform/${record._id}`, { state: { record } });
   };
 
 
@@ -100,13 +104,25 @@ const LoanManagements = ({ collapsed }) => {
       key: "action",
       render: (text, record) => {
         return (
-          <Button
-            type="primary"
-            style={{ background: "#4096ff", color: "#fff" }}
-            onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
+          <>
+          <EyeOutlined
+          style={{
+            fontSize: "18px",
+            color: "#4096ff",
+            cursor: "pointer",
+            marginRight: "15px",
+          }}
+          onClick={() => handleViewDetails(record)}
+        />
+        <EditOutlined
+          style={{
+            fontSize: "18px",
+            color: "#ff4d4f",
+            cursor: "pointer",
+          }}
+          onClick={() => handleEdit(record)}
+        />
+      </>
         );
       },
     },
