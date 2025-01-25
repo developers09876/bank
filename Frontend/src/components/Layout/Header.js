@@ -43,6 +43,7 @@ const Header = () => {
 
   const userType = localStorage.getItem("userType");
   const userId = localStorage.getItem("id");
+  const employeeCategory = localStorage.getItem("employeeCategory");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -76,9 +77,12 @@ const Header = () => {
     const routes = {
       employee: "/employee",
       user: "/user",
-      LoanEmployee: "/adminLoan",
-      TaxEmployee: "/employeeTax",
-      InsuranceEmployee: "/employeeInsurance",
+      // LoanEmployee: "/adminLoan",
+      LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+      // TaxEmployee: "/employeeTax",
+      TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
+          // InsuranceEmployee: "/employeeInsurance",
+      InsuranceEmployee: employeeCategory ? "/insuranceEmply":"/employeeInsurance",
     };
     navigate(routes[userType] || "/login");
   };
@@ -86,7 +90,9 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     localStorage.removeItem("userType");
+    localStorage.removeItem("employeeCategory")
     navigate("/login");
   };
 
@@ -113,12 +119,15 @@ const Header = () => {
                 </Link>
               </li>
             ))}
-            <Badge count={notificationCount} size="small" offset={[-5, 5]}>
+            {isLoggedIn && userType === "user" &&(
+              <Badge count={notificationCount} size="small" offset={[-5, 5]}>
               <IoNotifications
                 style={{ fontSize: "24px" }}
                 onClick={() => setIsOpen(true)}
               />
             </Badge>
+            )}
+            
             {!isLoggedIn ? (
               <li>
                 <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3">

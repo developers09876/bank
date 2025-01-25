@@ -100,12 +100,12 @@ function TaskManagementDetails() {
       <div>
         {Object.entries(record).map(([key, value]) => (
           <Row key={key}>
-            <Col xs={2}>
+            <Col xs={4}>
               <p>
                 <strong>{key.replace(/([A-Z])/g, " $1")}: </strong>
               </p>
             </Col>
-            <Col xs={7}>
+            <Col xs={8}>  
               <p>{value}</p>
             </Col>
           </Row>

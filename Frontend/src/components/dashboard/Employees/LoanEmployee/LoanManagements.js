@@ -3,6 +3,8 @@ import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+
 
 const LoanManagements = ({ collapsed }) => {
  
@@ -26,10 +28,10 @@ const LoanManagements = ({ collapsed }) => {
   const getAll = async () => {
     try {
       console.log('userId', userId)
-      const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userId}`)
+      const response = await axios.get(`http://localhost:5000/loanform/getbyEmployeeid/${userId}`)
       const loans = response.data;
       // const filterbyUserid = loans.filter(item => item.userid === userId);
-      // console.log('filterbyUserid', filterbyUserid)
+      console.log('filterbyUserid', loans)
       setLoan(loans);
       console.log('responseget', loans)
     } catch (error) {
@@ -40,7 +42,9 @@ const LoanManagements = ({ collapsed }) => {
    const handleViewDetails = (record) => {
    navigate(`/loanEmp/loandetails/${record._id}`, {state: { record } })
   };
-
+  const handleEdit = (record) => {
+    navigate(`/loanEmp/loanform/${record._id}`, { state: { record } });
+  };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -75,11 +79,13 @@ const LoanManagements = ({ collapsed }) => {
       title: "Customer Name",
       dataIndex: "fullName",
       key: "fullName",
+      render: (_, record) => `${record.firstname} ${record.lastname}`,
+
     },
     {
       title: "Phone Number",
-      dataIndex: "contact",
-      key: "contact",
+      dataIndex: "contactNumber",
+      key: "contactNumber",
     },
     {
       title: "Status",
@@ -100,13 +106,25 @@ const LoanManagements = ({ collapsed }) => {
       key: "action",
       render: (text, record) => {
         return (
-          <Button
-            type="primary"
-            style={{ background: "#4096ff", color: "#fff" }}
-            onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
+          <>
+          <EyeOutlined
+          style={{
+            fontSize: "18px",
+            color: "#4096ff",
+            cursor: "pointer",
+            marginRight: "15px",
+          }}
+          onClick={() => handleViewDetails(record)}
+        />
+        <EditOutlined
+          style={{
+            fontSize: "18px",
+            color: "#ff4d4f",
+            cursor: "pointer",
+          }}
+          onClick={() => handleEdit(record)}
+        />
+      </>
         );
       },
     },

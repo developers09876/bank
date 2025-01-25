@@ -27,8 +27,9 @@ import lead from "./server/Router/LeadGenerationRouter.js";
 import Contactus from "./server/Router/ContactusRoutes.js";
 import taxManagement from "./server/Router/TaxManagementRoute.js";
 import insuranceManagement from "./server/Router/InsuranceManagementRouter.js";
+import SubscriptionPrice from "./server/Router/SubscriptionPriceRoutes.js";
 // import notificationRoutes from "./server/Router/NotificationRoutes.js";
-
+import referralRoutes from "./server/Router/RewardRoute.js";
 app.use("/country", country);
 app.use("/state", state);
 app.use("/district", district);
@@ -37,7 +38,7 @@ app.use("/area", area);
 app.use("/taxManagement", taxManagement);
 app.use("/insuranceManagement", insuranceManagement);
 // app.use("/api/notifications", notificationRoutes);
-
+app.use("/api/referrals", referralRoutes);
 app.use("/admin", Adminlogin);
 app.use("/signup", signup);
 app.use("/employeesignup", employeeSignup);
@@ -47,4 +48,5 @@ app.use("/job", job);
 app.use("/jobrequest", jobrequest);
 app.use("/lead", lead);
 app.use("/contactus", Contactus);
+app.use("/subscription", SubscriptionPrice);
 export default app;

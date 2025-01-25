@@ -192,9 +192,9 @@ function CreateLead() {
 
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Purpose of Loan</label>
+                <label className="vendorpage_labelCss">Loan Type</label>
                 <Controller
-                  name="purpose"
+                  name="loan type"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -202,7 +202,7 @@ function CreateLead() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Purpose of Loan"
+                      placeholder="Select Loan Type"
                     >
                       <Option value="">Select Purpose</Option>
                       <Option value="personal">Personal</Option>
@@ -213,7 +213,7 @@ function CreateLead() {
                   )}
                 />
                 {errors.purpose && (
-                  <p className="text-danger">Select the purpose of loan</p>
+                  <p className="text-danger">Select the loan type</p>
                 )}
               </div>
             </Col>
@@ -233,11 +233,20 @@ function CreateLead() {
                       placeholder="Select Loan Amount"
                     >
                       <Option value="">Select Loan Amount</Option>
-                      <Option value="50000">50,000</Option>
-                      <Option value="100000">1 Lakh</Option>
-                      <Option value="500000">5 Lakh</Option>
-                      <Option value="1000000">10 Lakh</Option>
-                      <Option value="above10">Above 10Lakh</Option>
+                      <Option value="0-5Lakhs">0-5Lakhs</Option>
+                      <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
+                      <Option value="10-15Lakhs">10-15Lakhs</Option>
+                      <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
+                      <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
+                      <Option value="25-30Lakhs">25 - 30 Lakhs</Option>
+                      <Option value="30-40Lakhs">30 - 40 Lakhs</Option>
+                      <Option value="40-50Lakhs">40 - 50 Lakhs</Option>
+                      <Option value="50-60Lakhs">50 - 60 Lakhs</Option>
+                      <Option value="60-70Lakhs">60 - 70 Lakhs</Option>
+                      <Option value="70-80Lakhs">70 - 80 Lakhs</Option>
+                      <Option value="80-90Lakhs">80 - 90 Lakhs</Option>
+                      <Option value="90-100Lakhs">90 Lakhs - 1 Crore</Option>
+                      <Option value="above1Crore">Above 1 Crore</Option>
                     </Select>
                   )}
                 />

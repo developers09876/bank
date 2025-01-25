@@ -7,6 +7,8 @@ import {
   getByUserId,
   deleteRemark,
   updateNotificationStatus,
+  updateLeadAssign,
+  getByEmployeeId,
 } from "../Controller/LeadGenerationController.js";
 
 const router = Router();
@@ -18,5 +20,7 @@ router.put("/notification-status/:leadId", updateNotificationStatus);
 router.get("/getByMail/:email", getByUserId);
 router.delete("/delete/:leadId/remark/:remarkId", deleteRemark);
 router.put("/updatelead/:id", updateLead);
+router.put("/updateleadassign/:id", updateLeadAssign);
+router.get("/getbyEmployeeid/:employeeId", getByEmployeeId);
 
 export default router;

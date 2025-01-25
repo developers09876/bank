@@ -16,6 +16,8 @@ const insuranceManagementSchema = new mongoose.Schema({
   annualIncome: { type: String },
   sumAssured: { type: String },
   description: { type: String },
+  startDate: { type: String },
+  endDate: { type: String },
   employeeId: { type: String },
   employeeType: { type: String },
 });

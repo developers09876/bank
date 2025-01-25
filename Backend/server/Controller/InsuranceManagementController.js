@@ -39,6 +39,8 @@ export async function createInsuranceManagementDb(req, res, next) {
       const updateDetails = {
         AdminId: data.AdminId,
         description: data.description,
+        startDate: data.startDate,
+        endDate: data.endDate,
         employeeId: data.employeeId,
         employeeType: data.employeeType,
       };

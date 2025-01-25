@@ -108,15 +108,14 @@ function Sidebar({ collapsed }) {
         {/* <NavLink to="/user/userTaxmangemnent" ClassName="main-nav-style">
           Tax
         </NavLink> */}
-        
+
         <NavLink to="/user/tax" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Tax
         </NavLink>
-        <NavLink to="/user/leadgeneration" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
+        {/* <NavLink to="/user/leadgeneration" ClassName="main-nav-style">
           Lead Generation
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/user/feedback" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Feedback

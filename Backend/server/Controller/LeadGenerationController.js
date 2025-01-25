@@ -10,7 +10,7 @@ export async function createLead(req, res, next) {
       userId: data.userId,
       contactNumber: data.contactNumber,
       email: data.email,
-      aadhar: data.aadhar,
+      aadhaarNumber: data.aadhaarNumber,
       purpose: data.purpose,
       amount: data.amount,
       howimidiate: data.howimidiate,
@@ -23,6 +23,7 @@ export async function createLead(req, res, next) {
       taxType: data.taxType,
       businessType: data.businessType,
       serviceType: data.serviceType,
+      panCardNumber: data.panCardNumber,
     };
     const lead = await Lead.create(details);
     if (lead) {
@@ -57,12 +58,12 @@ export async function updateLead(req, res, next) {
       userId: data.userId,
       contactNumber: data.contactNumber,
       email: data.email,
-      aadhar: data.aadhar,
+      aadhaarNumber: data.aadhaarNumber,
       purpose: data.purpose,
       amount: data.amount,
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
-      panno: data.panno,
+      panCardNumber: data.panCardNumber,
       addremarks: addremarks,
     };
 
@@ -187,6 +188,83 @@ export const deleteRemark = async (req, res) => {
     });
   } catch (error) {
     console.error("Error deleting remark:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+export async function updateLeadAssign (req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    console.log("data", data);
+    const updateDetails = {
+      AdminId: data.AdminId,
+      description: data.description,
+      employeeId: data.employeeId,
+      employeeType: data.employeeType,
+      employeeList: data.employeeList,
+      loanType: data.loanType,
+      startDate: data.startDate || null,
+      endDate: data.endDate || null,
+      // dob: data.dob || null,
+    };
+    console.log("Update Details:", updateDetails);
+
+    const updatedRecord = await Lead.findByIdAndUpdate(
+      id,
+      updateDetails,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (updatedRecord) {
+      res.status(200).json({
+        message: "Updated Successfully",
+        data: updatedRecord,
+      });
+    } else {
+      res.status(404).json({
+        message: "Record not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating record:", err);
+    res.status(500).json({
+      message: "Failed to update record",
+    });
+    next(err);
+  }
+}
+// export const getByEmployeeId = async (req, res) => {
+//   try {
+//     const { id } = req.params; 
+
+   
+//     const lead = await Lead.findById(id);
+
+//     if (!lead) {
+//       return res.status(404).json({ message: "Lead not found" });
+//     }
+
+//     res.status(200).json({
+//       message: "Lead assignment retrieved successfully",
+//       data: lead,
+//     });
+//   } catch (error) {
+//     console.error("Error fetching lead assignment:", error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+export const getByEmployeeId = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const lead = await Lead.find({ employeeId });
+    if (!lead ) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(lead );
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

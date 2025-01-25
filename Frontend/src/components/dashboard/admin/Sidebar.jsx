@@ -88,6 +88,14 @@ function Sidebar({ collapsed }) {
           Lead Generation
         </NavLink>
         <NavLink
+          to="/admin/subscription"
+          ClassName="main-nav-style"
+          // style={{ marginTop: "70px" }}
+        >
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          Subscription
+        </NavLink>
+        <NavLink
           to="/admin/contact"
           ClassName="main-nav-style"
           // style={{ marginTop: "70px" }}

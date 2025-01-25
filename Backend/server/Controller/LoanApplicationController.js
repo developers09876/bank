@@ -109,9 +109,87 @@ export async function createLoanApplication(req, res, next) {
     next(err);
   }
 }
+export async function updateLoanApplication(req, res, next) {
+  try {
+    const applicationId = req.params.id;
+
+    if (!applicationId) {
+      return res.status(400).json({
+        message: "Application ID is required.",
+      });
+    }
+
+    console.log("Application ID:", applicationId);
+
+    const data = req.body;
+    console.log("Request Data:", data);
+
+    const children = Array.isArray(data.children)
+      ? data.children.map((child) => ({
+          gender: child.gender,
+          name: child.name,
+          age: child.age,
+          schoolName: child.schoolName,
+        }))
+      : [];
+
+    const details = {
+      userid: data.userid,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.maritalStatus || data.MaritalStatus,
+      nationality: data.nationality,
+      contact: data.contact,
+      contactNumber: data.contactNumber,
+      address: data.address,
+      pinCode: data.pinCode,
+      city: data.city,
+      state: data.state,
+      district: data.district,
+      country: data.country,
+      totalChildren: data.totalChildren,
+      children: children,
+      spouseName: data.spouseName,
+      spouseOccupation: data.spouseOccupation,
+      spouseIncome: data.spouseIncome,
+      spouseDesignation: data.spouseDesignation,
+      coApplicantDocs: data.coApplicantDocs,
+      photographs: data.photographs,
+    };
+
+    console.log("Prepared Details:", details);
+
+    const loanApplication = await LoanApplication.findByIdAndUpdate(
+      applicationId,
+      details,
+      { new: true } // Return the updated document
+    );
+
+    if (!loanApplication) {
+      return res.status(404).json({
+        message: "Loan application not found.",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Updated Successfully",
+      data: loanApplication,
+    });
+  } catch (err) {
+    console.error("Error updating loan application:", err);
+    res.status(500).json({
+      message: "An error occurred while processing your request.",
+      error: err.message,
+    });
+    next(err);
+  }
+}
 export async function updateLoanDetails(req, res, next) {
   try {
     const { id } = req.params;
+    console.log('updateLoanDetailsid', id)
     const data = req.body;
 
     const updatedDetails = {
@@ -180,23 +258,24 @@ export async function updateLoanApplicationStatus(req, res, next) {
     const { id } = req.params;
     const { action , reason } = req.body;
     console.log("object", action);
-    if (!["approve", "reject"].includes(action)) {
+    if (!["approve", "reject", "Pending"].includes(action)) {
       return res.status(400).json({
-        message: "Invalid action. Allowed actions are 'approve' or 'reject'.",
+        message: "Invalid action. Allowed actions are 'approve' or 'reject' or 'Pending'.",
       });
     }
 
-    const status = action === "approve" ? "1" : "2";
+    const status = action === "approve" ? "1" : action === "reject" ? "2" : "Pending";
 
-    if (action === "reject" && !reason) {
+    if ((action === "reject"|| action === "Pending") && !reason) {
       return res.status(400).json({
-        message: "Rejection reason is required when rejecting the loan.",
+        message: "Reason is required when marking the loan as '${action}'",
       });
     }
     const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
       id,
       { status,
-        rejectionReason: action === "reject" ? reason : null, 
+        rejectionReason: action === "reject" ? reason : null,
+        pendingReason: action === "Pending" ? reason : null,
        },
       { new: true }
     );
@@ -209,7 +288,7 @@ export async function updateLoanApplicationStatus(req, res, next) {
 
     res.status(200).json({
       message: `Loan application ${
-        action === "approve" ? "approved" : "rejected"
+         action === "approve" ? "approved" : action === "reject" ? "rejected" : "marked as Pending"
       } successfully.`,
       data: updatedLoanApplication,
     });
@@ -219,6 +298,52 @@ export async function updateLoanApplicationStatus(req, res, next) {
     next();
   }
 };
+
+export async function updateLoan(req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    console.log("data", data);
+    const updateDetails = {
+      AdminId: data.AdminId,
+      description: data.description,
+      employeeId: data.employeeId,
+      employeeType: data.employeeType,
+      employeeList: data.employeeList,
+      loanType: data.loanType,
+      startDate: data.startDate || null,
+      endDate: data.endDate || null,
+      // dob: data.dob || null,
+    };
+    console.log("Update Details:", updateDetails);
+
+    const updatedRecord = await LoanApplication.findByIdAndUpdate(
+      id,
+      updateDetails,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (updatedRecord) {
+      res.status(200).json({
+        message: "Updated Successfully",
+        data: updatedRecord,
+      });
+    } else {
+      res.status(404).json({
+        message: "Record not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating record:", err);
+    res.status(500).json({
+      message: "Failed to update record",
+    });
+    next(err);
+  }
+}
 
 
 export const getAllLoanApplications = async (req, res) => {
@@ -239,6 +364,31 @@ export const getLoanApplicationById = async (req, res) => {
       return res.status(404).json({ message: "Application not found" });
     }
     res.status(200).json(application);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const getOneLoanApplicationById = async (req, res) => {
+  try {
+    const  id  = req.params.id;
+    const oneLoanManagement = await LoanApplication.findById(id);
+    if (!oneLoanManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(oneLoanManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getLoanByEmpId = async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const loanManagement = await LoanApplication.find({ employeeId });
+    if (!loanManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(loanManagement);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

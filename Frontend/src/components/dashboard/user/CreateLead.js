@@ -1,6 +1,6 @@
 import { Select } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,6 +18,24 @@ function CreateLead() {
 
   const id = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
+  const [userDetail, setUserDetail] = useState();
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${id}`
+        );
+        console.log("responseget", response.data);
+        setUserDetail(response.data);
+        const fetchedData = response.data;
+        reset(fetchedData);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchUserDetails();
+  }, [id, reset]);
 
   const onSubmit = async (data) => {
     const details = {
@@ -27,26 +45,14 @@ function CreateLead() {
       userType: userType,
       contactNumber: data.contactNumber,
       email: data.email,
-      aadhar: data.aadhar,
+      aadhaarNumber: data.aadhaarNumber,
       purpose: data.purpose,
       amount: data.amount,
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
-      panno: data.panno,
-    };
-    const detail = {
-      userType: "user",
-      firstname: data.firstname,
-      lastname: data.lastname,
-      userId: id,
-      contactNumber: data.contactNumber,
-      email: data.email,
+      panCardNumber: data.panCardNumber,
     };
     try {
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
       const response = await axios.post(
         `http://localhost:5000/lead/createlead`,
         details
@@ -149,8 +155,8 @@ function CreateLead() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="number"
-                  name="aadhar"
-                  {...register("aadhar", {
+                  name="aadhaarNumber"
+                  {...register("aadhaarNumber", {
                     required: true,
                     pattern: {
                       // value: /^[0-9]{12}$/,
@@ -159,7 +165,7 @@ function CreateLead() {
                   })}
                   placeholder="Aadhaar Number"
                 />
-                {errors.aadhar && (
+                {errors.aadhaarNumber && (
                   <p className="text-danger">Enter Aadhaar Number</p>
                 )}
               </div>
@@ -171,8 +177,8 @@ function CreateLead() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="text"
-                  name="panno"
-                  {...register("panno", {
+                  name="panCardNumber"
+                  {...register("panCardNumber", {
                     required: true,
                     pattern: {
                       // value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
@@ -184,7 +190,7 @@ function CreateLead() {
                     e.target.value = e.target.value.toUpperCase();
                   }}
                 />
-                {errors.panno && (
+                {errors.panCardNumber && (
                   <p className="text-danger">Enter PAN card number</p>
                 )}
               </div>
@@ -194,7 +200,7 @@ function CreateLead() {
               <div>
                 <label className="vendorpage_labelCss">Loan Type</label>
                 <Controller
-                  name="loan type"
+                  name="purpose"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
