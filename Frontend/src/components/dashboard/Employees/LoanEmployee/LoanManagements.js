@@ -31,7 +31,7 @@ const LoanManagements = ({ collapsed }) => {
       const response = await axios.get(`http://localhost:5000/loanform/getbyEmployeeid/${userId}`)
       const loans = response.data;
       // const filterbyUserid = loans.filter(item => item.userid === userId);
-      // console.log('filterbyUserid', filterbyUserid)
+      console.log('filterbyUserid', loans)
       setLoan(loans);
       console.log('responseget', loans)
     } catch (error) {

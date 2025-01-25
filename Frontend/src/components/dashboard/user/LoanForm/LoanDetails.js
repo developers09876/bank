@@ -146,20 +146,19 @@ function LoanDetails() {
   useEffect(() => {
     const fetchLoanApplicationData = async () => {
       try {
-        const response = await Api.get(`/loanform/getbyid/${userId}`);
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
-        if (filterOneApplication) {
-          setLoanData(filterOneApplication[0]);
-          reset(filterOneApplication[0]); 
+        const response = await Api.get(`/loanform/getby/${record._id}`);
+        const OneApplication = response.data;
+        console.log('Applicationresponse', OneApplication);
+        
+        if (OneApplication) {
+          reset(OneApplication); 
         }
       } catch (error) {
         console.log('error', error)
       }
     }
     fetchLoanApplicationData();
-  }, [userId, record._id, reset]);
+  }, [ record._id, reset]);
 
   return (
     <div>

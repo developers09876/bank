@@ -136,27 +136,25 @@ function LoanForm() {
   };
 
   useEffect(() => {
-    const fetchLoanApplication = async () => {
-      const userid = localStorage.getItem("id");
-      if (!userid) {
-        console.log("User ID not found in localStorage");
-        return;
-      }
-
+    const fetchLoanApplicationData = async () => {
       try {
-        console.log("Fetching loan application with userID:", userid);
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
-        console.log("Response received:", response);
-        setLoanApplicationData(response.data.data);
+        const response = await Api.get(`/loanform/getby/${record._id}`);
+        const OneApplication = response.data;
+        console.log('Applicationresponse', OneApplication);
+        const formattedDob = OneApplication.dob
+            ? new Date(OneApplication.dob).toISOString().split("T")[0]
+            : "";
+        if (OneApplication) {
+          reset({...OneApplication,
+            dob: formattedDob
+          }); 
+        }
       } catch (error) {
-        console.error("Error fetching loan application data:", error);
+        console.log('error', error)
       }
-    };
-
-    fetchLoanApplication();
-  }, [userid]);
+    }
+    fetchLoanApplicationData();
+  }, [userid, record._id, reset]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {

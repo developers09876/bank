@@ -9,6 +9,7 @@ import {
   updateLoanDetails,
   updateLoan,
   getLoanByEmpId,
+  getOneLoanApplicationById,
 } from "../Controller/LoanApplicationController.js";
 
 const router = Router();
@@ -18,6 +19,7 @@ router.put("/updateloanapplication/:id", updateLoanApplication);
 router.put("/updateloanapplications/:id", updateLoanDetails);
 router.get("/getall", getAllLoanApplications);
 router.get("/getbyid/:userid", getLoanApplicationById);
+router.get("/getby/:id", getOneLoanApplicationById);
 router.get("/getbyEmployeeid/:employeeId", getLoanByEmpId);
 router.put("/updateloanapplicationsStaus/:id", updateLoanApplicationStatus);
 router.put("/updateloan/:id", updateLoan );

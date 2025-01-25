@@ -140,15 +140,14 @@ const { state } = useLocation();
   useEffect(() => {
     const fetchLoanApplicationData = async () => {
       try {
-        const response = await Api.get(`/loanform/getbyEmployeeid/${userid}`);
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
-        const formattedDob = filterOneApplication[0].dob
-            ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
+        const response = await Api.get(`/loanform/getby/${record._id}`);
+        const OneApplication = response.data;
+        console.log('Applicationresponse', OneApplication);
+        const formattedDob = OneApplication.dob
+            ? new Date(OneApplication.dob).toISOString().split("T")[0]
             : "";
-        if (filterOneApplication) {
-          reset({...filterOneApplication[0],
+        if (OneApplication) {
+          reset({...OneApplication,
             dob: formattedDob
           }); 
         }

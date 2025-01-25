@@ -368,6 +368,18 @@ export const getLoanApplicationById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const getOneLoanApplicationById = async (req, res) => {
+  try {
+    const  id  = req.params.id;
+    const oneLoanManagement = await LoanApplication.findById(id);
+    if (!oneLoanManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(oneLoanManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export const getLoanByEmpId = async (req, res) => {
   try {
