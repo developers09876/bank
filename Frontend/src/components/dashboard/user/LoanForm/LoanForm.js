@@ -7,12 +7,13 @@ import { Select } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import Api from "../../../../Api";
 import { useLocation } from "react-router-dom";
+
+import Api from "../../../../Api";
+
 const { Option } = Select;
 
 function LoanForm() {
-
   const {
     register,
     handleSubmit,
@@ -23,12 +24,10 @@ function LoanForm() {
     formState: { errors },
   } = useForm();
   const userid = localStorage.getItem("id");
+  const { state } = useLocation();
+  const record = state?.record;
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
-
-const { state } = useLocation();
-    const record = state?.record;
-  
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
@@ -124,40 +123,66 @@ const { state } = useLocation();
     };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`,
+      const response = await axios.put(
+        `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
         Details
       );
-      console.log(response.data.data, "Form submitted successfully");
-      localStorage.setItem("loanApplicationId", response.data.data._id);
-      toast.success("Form submitted successfully");
+      console.log(response, "Form updated successfully");
+      toast.success("Form updated successfully");
     } catch (error) {
-      console.error("Form submission failed", error);
-      toast.error("An error occurred while submitting the form");
+      console.error("Form update failed", error);
+      toast.error("An error occurred while updating the form");
     }
   };
 
   useEffect(() => {
-    const fetchLoanApplicationData = async () => {
-      try {
-        const response = await Api.get(`/loanform/getbyid/${userid}`);
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
-        const formattedDob = filterOneApplication[0].dob
-            ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
-            : "";
-        if (filterOneApplication) {
-          reset({...filterOneApplication[0],
-            dob: formattedDob
-          }); 
-        }
-      } catch (error) {
-        console.log('error', error)
+    const fetchLoanApplication = async () => {
+      const userid = localStorage.getItem("id");
+      if (!userid) {
+        console.log("User ID not found in localStorage");
+        return;
       }
-    }
-    fetchLoanApplicationData();
-  }, [userid, record._id, reset]);
+
+      try {
+        console.log("Fetching loan application with userID:", userid);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        console.log("Response received:", response);
+        setLoanApplicationData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching loan application data:", error);
+      }
+    };
+
+    fetchLoanApplication();
+  }, [userid]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserDetail(response.data);
+        console.log("getresponse", response.data);
+
+        const fetchedData = response.data;
+        const formattedDob = fetchedData.dob
+          ? new Date(fetchedData.dob).toISOString().split("T")[0]
+          : "";
+
+        reset({
+          ...fetchedData,
+          dob: formattedDob,
+        });
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userType, userid]);
 
   const loanAmount = watch("totalChildren");
 
@@ -277,9 +302,7 @@ const { state } = useLocation();
                     </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Last Name
-                        </label>
+                        <label className="vendorpage_labelCss">Last Name</label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
@@ -904,7 +927,6 @@ const { state } = useLocation();
       <ToastContainer />
       <br />
       <br />
-
     </div>
   );
 }

@@ -109,6 +109,83 @@ export async function createLoanApplication(req, res, next) {
     next(err);
   }
 }
+export async function updateLoanApplication(req, res, next) {
+  try {
+    const applicationId = req.params.id;
+
+    if (!applicationId) {
+      return res.status(400).json({
+        message: "Application ID is required.",
+      });
+    }
+
+    console.log("Application ID:", applicationId);
+
+    const data = req.body;
+    console.log("Request Data:", data);
+
+    const children = Array.isArray(data.children)
+      ? data.children.map((child) => ({
+          gender: child.gender,
+          name: child.name,
+          age: child.age,
+          schoolName: child.schoolName,
+        }))
+      : [];
+
+    const details = {
+      userid: data.userid,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      dob: data.dob,
+      gender: data.gender,
+      maritalStatus: data.maritalStatus || data.MaritalStatus,
+      nationality: data.nationality,
+      contact: data.contact,
+      contactNumber: data.contactNumber,
+      address: data.address,
+      pinCode: data.pinCode,
+      city: data.city,
+      state: data.state,
+      district: data.district,
+      country: data.country,
+      totalChildren: data.totalChildren,
+      children: children,
+      spouseName: data.spouseName,
+      spouseOccupation: data.spouseOccupation,
+      spouseIncome: data.spouseIncome,
+      spouseDesignation: data.spouseDesignation,
+      coApplicantDocs: data.coApplicantDocs,
+      photographs: data.photographs,
+    };
+
+    console.log("Prepared Details:", details);
+
+    const loanApplication = await LoanApplication.findByIdAndUpdate(
+      applicationId,
+      details,
+      { new: true } // Return the updated document
+    );
+
+    if (!loanApplication) {
+      return res.status(404).json({
+        message: "Loan application not found.",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Updated Successfully",
+      data: loanApplication,
+    });
+  } catch (err) {
+    console.error("Error updating loan application:", err);
+    res.status(500).json({
+      message: "An error occurred while processing your request.",
+      error: err.message,
+    });
+    next(err);
+  }
+}
 export async function updateLoanDetails(req, res, next) {
   try {
     const { id } = req.params;
