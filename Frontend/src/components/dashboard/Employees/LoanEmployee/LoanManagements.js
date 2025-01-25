@@ -28,7 +28,7 @@ const LoanManagements = ({ collapsed }) => {
   const getAll = async () => {
     try {
       console.log('userId', userId)
-      const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userId}`)
+      const response = await axios.get(`http://localhost:5000/loanform/getbyEmployeeid/${userId}`)
       const loans = response.data;
       // const filterbyUserid = loans.filter(item => item.userid === userId);
       // console.log('filterbyUserid', filterbyUserid)
@@ -79,11 +79,13 @@ const LoanManagements = ({ collapsed }) => {
       title: "Customer Name",
       dataIndex: "fullName",
       key: "fullName",
+      render: (_, record) => `${record.firstname} ${record.lastname}`,
+
     },
     {
       title: "Phone Number",
-      dataIndex: "contact",
-      key: "contact",
+      dataIndex: "contactNumber",
+      key: "contactNumber",
     },
     {
       title: "Status",
