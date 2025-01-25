@@ -123,17 +123,28 @@ const { state } = useLocation();
       photographs: photographsUrl,
     };
 
+    // try {
+    //   const response = await axios.post(
+    //     `http://localhost:5000/loanform/createloanapplications`,
+    //     Details
+    //   );
+    //   console.log(response.data.data, "Form submitted successfully");
+    //   localStorage.setItem("loanApplicationId", response.data.data._id);
+    //   toast.success("Form submitted successfully");
+    // } catch (error) {
+    //   console.error("Form submission failed", error);
+    //   toast.error("An error occurred while submitting the form");
+    // }
     try {
-      const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`,
+      const response = await axios.put(
+        `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
         Details
       );
-      console.log(response.data.data, "Form submitted successfully");
-      localStorage.setItem("loanApplicationId", response.data.data._id);
-      toast.success("Form submitted successfully");
+      console.log(response, "Form updated successfully");
+      toast.success("Form updated successfully");
     } catch (error) {
-      console.error("Form submission failed", error);
-      toast.error("An error occurred while submitting the form");
+      console.error("Form update failed", error);
+      toast.error("An error occurred while updating the form");
     }
   };
 
