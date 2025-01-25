@@ -79,11 +79,13 @@ const LoanManagements = ({ collapsed }) => {
       title: "Customer Name",
       dataIndex: "fullName",
       key: "fullName",
+      render: (_, record) => `${record.firstname} ${record.lastname}`,
+
     },
     {
       title: "Phone Number",
-      dataIndex: "contact",
-      key: "contact",
+      dataIndex: "contactNumber",
+      key: "contactNumber",
     },
     {
       title: "Status",
