@@ -85,7 +85,7 @@ const Refer = () => {
                     token of our appreciation.
                   </p>
                   {subCategory?.title && (<p>
-        Refer for {subCategory?.title} 
+        Refer for {subCategory?.title} and get reward worth Rs. {subCategory.rewards} per referral.
       </p>)}
                   <div>
                     <TextField
