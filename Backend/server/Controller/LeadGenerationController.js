@@ -16,6 +16,13 @@ export async function createLead(req, res, next) {
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
       panno: data.panno,
+      insuranceType: data.insuranceType,
+      PolicyTerm: data.PolicyTerm,
+      sumAssured: data.sumAssured,
+      incomeTaxStatus: data.incomeTaxStatus,
+      taxType: data.taxType,
+      businessType: data.businessType,
+      serviceType: data.serviceType,
     };
     const lead = await Lead.create(details);
     if (lead) {

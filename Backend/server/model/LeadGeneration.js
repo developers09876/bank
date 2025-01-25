@@ -13,6 +13,13 @@ const LeadSchema = new mongoose.Schema({
   howimidiate: { type: String },
   previouslyapplied: { type: String },
   panno: { type: String },
+  insuranceType: { type: String },
+      PolicyTerm:{ type: String },
+      sumAssured: { type: String },
+      incomeTaxStatus: { type: String },
+      taxType: { type: String },
+      businessType: { type: String },
+      serviceType:{ type: String },
   addremarks: [
     {
       date: { type: String },

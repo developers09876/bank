@@ -165,9 +165,35 @@ function LeadDetails() {
             <p>{record.purpose}</p>
           </Col>
         </Row>
+
+        <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3>
+
+{record.addremarks && record.addremarks.length > 0 ? (
+  record.addremarks.map((remark, index) => (
+    <div key={index} style={{ marginBottom: "10px" }}>
+      <Row>
+        <Col span={6}>
+          <strong>Date:</strong>
+        </Col>
+        <Col span={18}>{remark.date}</Col>
+      </Row>
+      <Row>
+        <Col span={6}>
+          <strong>Message:</strong>
+        </Col>
+        <Col span={18}>{remark.remarks}</Col>
+      </Row>
+
+      <hr style={{ margin: "10px 0" }} />
+    </div>
+  ))
+) : (
+  <p>No reminders available.</p>
+)}
       </div>
 
-      <div className="mt-3">
+
+      {/* <div className="mt-3">
         <h3>Add Remarks</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
           {remarksFields.map((field, index) => (
@@ -233,7 +259,7 @@ function LeadDetails() {
             Submit
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
   );
 }

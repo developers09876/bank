@@ -19,7 +19,7 @@ function CreateLead() {
   } = useForm();
 
   const category = watch("employeeCategory");
-  const employeeType = watch("employeeType");
+  const serviceType = watch("serviceType");
 
 
   const id = localStorage.getItem("id");
@@ -39,6 +39,13 @@ function CreateLead() {
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
       panno: data.panno,
+      insuranceType: data.insuranceType,
+      PolicyTerm: data.PolicyTerm,
+      sumAssured: data.sumAssured,
+      incomeTaxStatus: data.incomeTaxStatus,
+      taxType: data.taxType,
+      businessType: data.businessType,
+      serviceType: data.serviceType,
     };
     const detail = {
       userType: "user",
@@ -199,10 +206,10 @@ function CreateLead() {
               <div>
                 <label className="vendorpage_labelCss">Service Type:</label>
                 <Controller
-                  name="employeeType"
+                  name="serviceType"
                   control={control}
                   // defaultValue="InsuranceEmployee"
-                  // value={employeeType}
+                  value={serviceType}
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
@@ -219,12 +226,12 @@ function CreateLead() {
                     </Select>
                   )}
                 />
-                {errors.employeeType && (
+                {errors.serviceType && (
                   <p className="text-danger">Service is required</p>
                 )}
               </div>
             </Col>
-            {employeeType === "LoanEmployee" && (
+            {serviceType === "LoanEmployee" && (
               <>
             <Col xs={12} md={6} lg={4}>
               <div>
@@ -314,7 +321,7 @@ function CreateLead() {
             </Col>
             </>
             )}
-             {employeeType === "InsuranceEmployee" && (
+             {serviceType === "InsuranceEmployee" && (
               <>
             <Col xs={12} md={6} lg={4}>
               <div>
@@ -322,7 +329,7 @@ function CreateLead() {
                    Category:
                 </label>
                 <Controller
-                  name="employeeCategory"
+                  name="insuranceType"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -330,10 +337,10 @@ function CreateLead() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
+                      placeholder="Select insuranceType"
                       onChange={(value) => {
                         field.onChange(value);
-                        setValue("employeeCategory", value);
+                        setValue("insuranceType", value);
                       }}
                     >
                       <Option value="">Select Category</Option>
@@ -385,7 +392,7 @@ function CreateLead() {
             </Col>
             </>
              )}
-             {employeeType === "TaxEmployee" && (
+             {serviceType === "TaxEmployee" && (
               <>
             <Col xs={12} md={6} lg={4}>
               <div>
@@ -393,7 +400,7 @@ function CreateLead() {
                  Category:
                 </label>
                 <Controller
-                  name="employeeCategory"
+                  name="taxtype"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -401,10 +408,10 @@ function CreateLead() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
+                      placeholder="Select taxtype"
                       onChange={(value) => {
                         field.onChange(value);
-                        setValue("employeeCategory", value);
+                        setValue("taxtype", value);
                       }}
                     >
                       <Option value="">Select Category</Option>
