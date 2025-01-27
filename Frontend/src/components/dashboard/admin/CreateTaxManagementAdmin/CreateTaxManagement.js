@@ -11,9 +11,13 @@ function TaxmangementAdmin() {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm();
+
+  const category = watch("employeeCategory");
 
   const id = localStorage.getItem("regid");
   const userType = localStorage.getItem("role");
@@ -210,6 +214,72 @@ function TaxmangementAdmin() {
                 )}
               </div>
             </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Category:</label>
+                <Controller
+                  name="taxtype"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select taxtype"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue("taxtype", value);
+                      }}
+                    >
+                      <Option value="">Select Category</Option>
+                      <Option value="IncomeTax">Income Tax</Option>
+                      <Option value="Tds&TcsServices">
+                        TDS / TCS Services
+                      </Option>
+                      <Option value="GSTservices">GST Services</Option>
+                      <Option value="Esi&PfServices">ESI & PF Services</Option>
+                    </Select>
+                  )}
+                />
+                {errors.employeeCategory && (
+                  <p className="text-danger">Employee category is required</p>
+                )}
+              </div>
+            </Col>
+
+            {category === "IncomeTax" && (
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Sub Category:</label>
+                  <Controller
+                    name="subCategory"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className="inputcolumn_drp"
+                        placeholder="Select Sub Category"
+                        onChange={(value) => {
+                          field.onChange(value);
+                          setValue("subCategory", value);
+                        }}
+                      >
+                        <Option value="Company">Company</Option>
+                        <Option value="Individual">Individual</Option>
+                        <Option value="Firm">Firm</Option>
+                        <Option value="Other">Other</Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.subCategory && (
+                    <p className="text-danger">Sub-category is required</p>
+                  )}
+                </div>
+              </Col>
+            )}
 
             <Col xs={12} md={6} lg={4}>
               <div>
