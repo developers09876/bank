@@ -4,8 +4,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Select, Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
-import Api from "../../../Api";
 import "../user/LoanDetails.css";
+import Api from "../../../Api";
 const { Option } = Select;
 
 function InsuranceManagementDetails() {
@@ -49,8 +49,9 @@ function InsuranceManagementDetails() {
       const employeeid = record.employeeId;
       try {
         const response = await Api.get(`signup/getby/${employeeid}`);
-        setEmployeeName(response.data);
-        console.log("employeeId", response.data);
+        if (response.data && response.data.firstname && response.data.lastname) {
+          setEmployeeName(`${response.data.firstname} ${response.data.lastname}`); 
+        }
       } catch (error) {
         console.error("Error fetching employee list:", error);
         toast.error("Failed to fetch employee list.");
@@ -113,7 +114,8 @@ function InsuranceManagementDetails() {
   }
 
   return (
-    <div style={{ marginTop: "50px", padding: "20px" }}>
+    <div className="loandetail-container" 
+    style={{ marginTop: "50px", padding: "20px" }}>
       {/* <div>
         {Object.entries(record).map(([key, value]) => (
           <Row key={key}>
@@ -232,7 +234,7 @@ function InsuranceManagementDetails() {
           >
             <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
               <Descriptions.Item label="Employee Name">
-                {employeeName.firstname}{" "}{employeeName.lastname}
+                {employeeName}
               </Descriptions.Item>
               <Descriptions.Item label="Description">
                 {record.description}
