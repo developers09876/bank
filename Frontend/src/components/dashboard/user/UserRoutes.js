@@ -13,6 +13,7 @@ import LeadGeneration  from"./LeadGeneration";
 import CreateLead from "./CreateLead";
 import LoanForm from "../user/LoanForm/LoanFormProfileTab"
 import InsuranceViewDetails from "../../landing/InsuranceForm/InsuranceViewDetails";
+import TaxViewDetails from "../../landing/TaxFormTab/TaxViewDetails";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -50,6 +51,10 @@ export const UserRoutes = [
   {
     path: "/user/tax",
     element: <Tax />,
+  },
+  {
+    path: "/user/TaxViewdetails/:id",
+    element: <TaxViewDetails />,
   },
   {
     path: "/user/taxDetails",

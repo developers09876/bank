@@ -27,11 +27,13 @@ const Tax = ({ collapsed }) => {
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
 
+  // const handleViewDetails = (record) => {
+  //   setSelectedRecord(record);
+  //   setIsModalVisible(true);
+  // };
   const handleViewDetails = (record) => {
-    setSelectedRecord(record);
-    setIsModalVisible(true);
+    navigate(`/user/TaxViewdetails/${record._id}`, { state: { record } });
   };
-
   const handleAddTax = () => {
     navigate(`/user/userTaxmangemnent`);
   };

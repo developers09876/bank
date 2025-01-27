@@ -13,6 +13,7 @@ export async function createTaxManagementDb(req, res, next) {
       aadhar: data.aadhar,
       panno: data.panno,
       gst: data.gst,
+      taxType: data.taxType,
       incomeTaxStatus: data.incomeTaxStatus,
       businessType: data.businessType,
       annualIncome: data.annualIncome,

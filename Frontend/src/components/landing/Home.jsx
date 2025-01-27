@@ -54,14 +54,14 @@ const Landing = () => {
     // Add more cards as needed...
   ];
   const products = [
-    {
-      title: "CREDIT CARDS",
-      description:
-        "From 50+ Options, Choose a card matching your lifestyle & needs",
-      buttonText: "Get Best Offers",
-      link: "/loanform",
-      icon: "fas fa-credit-card",
-    },
+    // {
+    //   title: "CREDIT CARDS",
+    //   description:
+    //     "From 50+ Options, Choose a card matching your lifestyle & needs",
+    //   buttonText: "Get Best Offers",
+    //   link: "/loanform",
+    //   icon: "fas fa-credit-card",
+    // },
     {
       title: "PERSONAL LOAN",
       description:
@@ -78,13 +78,13 @@ const Landing = () => {
       link: "/loanform",
       icon: "fas fa-briefcase",
     },
-    {
-      title: "TRANSFER PERSONAL LOAN",
-      description: "Get better interest rates on your existing personal loan",
-      buttonText: "Reduce Your EMI",
-      link: "/loanform",
-      icon: "fas fa-exchange-alt",
-    },
+    // {
+    //   title: "TRANSFER PERSONAL LOAN",
+    //   description: "Get better interest rates on your existing personal loan",
+    //   buttonText: "Reduce Your EMI",
+    //   link: "/loanform",
+    //   icon: "fas fa-exchange-alt",
+    // },
     {
       title: "HOME LOAN",
       description:
@@ -93,39 +93,39 @@ const Landing = () => {
       link: "/loanform",
       icon: "fas fa-home",
     },
-    {
-      title: "LOAN AGAINST PROPERTY",
-      description: "Get liquidity against your property at best interest rates",
-      buttonText: "Check Eligibility",
-      link: "/loanform",
-      icon: "fas fa-building",
-    },
-    {
-      title: "TRANSFER HOME LOAN",
-      description: "Get better interest rates on your existing home loan",
-      buttonText: "Reduce Your EMI",
-      link: "/loanform",
-      icon: "fa-solid fa-handshake-simple",
-    },
+    // {
+    //   title: "LOAN AGAINST PROPERTY",
+    //   description: "Get liquidity against your property at best interest rates",
+    //   buttonText: "Check Eligibility",
+    //   link: "/loanform",
+    //   icon: "fas fa-building",
+    // },
+    // {
+    //   title: "TRANSFER HOME LOAN",
+    //   description: "Get better interest rates on your existing home loan",
+    //   buttonText: "Reduce Your EMI",
+    //   link: "/loanform",
+    //   icon: "fa-solid fa-handshake-simple",
+    // },
   ];
 
   const insurance = [
-    {
-      title: "TERM INSURANCE",
-      description:
-        "Affordable term insurance plans to secure your loved ones financially.",
-      buttonText: "Check Eligibility",
-      // link: "/insurancepage",
-      link: "/insurancepolicy",
+    // {
+    //   title: "TERM INSURANCE",
+    //   description:
+    //     "Affordable term insurance plans to secure your loved ones financially.",
+    //   buttonText: "Check Eligibility",
+    //   // link: "/insurancepage",
+    //   link: "/insurancepolicy",
 
-      icon: "fas fa-file-alt",
-    },
+    //   icon: "fas fa-file-alt",
+    // },
     {
       title: "HEALTH INSURANCE",
       description:
         "Get comprehensive health coverage to safeguard you and your family.",
       buttonText: "Get Best Offers",
-      link: "/insurancepolicy",
+      link: "/user/insurancedetails",
       icon: "fas fa-heartbeat",
     },
     {
@@ -133,31 +133,31 @@ const Landing = () => {
       description:
         "Secure your family’s future with the best life insurance plans.",
       buttonText: "Check Plans",
-      link: "/insurancepolicy",
+      link: "/user/insurancedetails",
       icon: "fas fa-user-shield",
     },
     {
       title: "CAR INSURANCE",
       description: "Protect your vehicle from accidents, theft, and damage.",
       buttonText: "Get Covered",
-      link: "/insurancepolicy",
+      link: "/user/insurancedetails",
       icon: "fas fa-car-crash",
     },
-    {
-      title: "HOME INSURANCE",
-      description:
-        "Safeguard your home and valuable possessions from unforeseen events.",
-      buttonText: "Get Protection",
-      link: "/insurancepolicy",
-      icon: "fas fa-home",
-    },
-    {
-      title: "TRAVEL INSURANCE",
-      description: "Ensure a worry-free journey with travel insurance plans.",
-      buttonText: "Explore Options",
-      link: "/insurancepolicy",
-      icon: "fas fa-plane",
-    },
+    // {
+    //   title: "HOME INSURANCE",
+    //   description:
+    //     "Safeguard your home and valuable possessions from unforeseen events.",
+    //   buttonText: "Get Protection",
+    //   link: "/insurancepolicy",
+    //   icon: "fas fa-home",
+    // },
+    // {
+    //   title: "TRAVEL INSURANCE",
+    //   description: "Ensure a worry-free journey with travel insurance plans.",
+    //   buttonText: "Explore Options",
+    //   link: "/insurancepolicy",
+    //   icon: "fas fa-plane",
+    // },
   ];
 
   const tax = [
@@ -168,7 +168,7 @@ const Landing = () => {
       buttonText: "File Now",
       // link: "/taxpage",
 
-      link: "/taxforms",
+      link: "/user/tax",
       icon: "fas fa-file-invoice-dollar",
     },
     {
@@ -176,14 +176,14 @@ const Landing = () => {
       description:
         "Quick and easy GST registration services for businesses of all sizes.",
       buttonText: "Register Now",
-      link: "/taxforms",
+      link: "user/userTaxmangemnent",
       icon: "fas fa-receipt",
     },
     {
       title: "TAX PLANNING",
       description: "Optimize your tax savings with expert tax planning advice.",
       buttonText: "Start Planning",
-      link: "/taxforms",
+      link: "user/userTaxmangemnent",
       icon: "fas fa-chart-line",
     },
     {
@@ -191,7 +191,7 @@ const Landing = () => {
       description:
         "Ensure timely and accurate TDS return filing to avoid penalties.",
       buttonText: "File Returns",
-      link: "/taxforms",
+      link: "user/userTaxmangemnent",
       icon: "fas fa-calculator",
     },
   ];

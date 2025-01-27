@@ -19,8 +19,7 @@ function CreateLead() {
   } = useForm();
 
   const category = watch("employeeCategory");
-  const employeeType = watch("employeeType");
-
+  const serviceType = watch("serviceType");
 
   const id = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
@@ -39,6 +38,13 @@ function CreateLead() {
       howimidiate: data.howimidiate,
       previouslyapplied: data.previouslyapplied,
       panno: data.panno,
+      insuranceType: data.insuranceType,
+      PolicyTerm: data.PolicyTerm,
+      sumAssured: data.sumAssured,
+      incomeTaxStatus: data.incomeTaxStatus,
+      taxType: data.taxType,
+      businessType: data.businessType,
+      serviceType: data.serviceType,
     };
     const detail = {
       userType: "user",
@@ -199,10 +205,10 @@ function CreateLead() {
               <div>
                 <label className="vendorpage_labelCss">Service Type:</label>
                 <Controller
-                  name="employeeType"
+                  name="serviceType"
                   control={control}
                   // defaultValue="InsuranceEmployee"
-                  // value={employeeType}
+                  value={serviceType}
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
@@ -212,306 +218,323 @@ function CreateLead() {
                     >
                       <Option value="LoanEmployee">Loan </Option>
                       <Option value="TaxEmployee">Tax </Option>
-                      <Option value="InsuranceEmployee">
-                        Insurance 
-                      </Option>
+                      <Option value="InsuranceEmployee">Insurance</Option>
                       <Option value="StockMarket">Stock Market</Option>
                     </Select>
                   )}
                 />
-                {errors.employeeType && (
+                {errors.serviceType && (
                   <p className="text-danger">Service is required</p>
                 )}
               </div>
             </Col>
-            {employeeType === "LoanEmployee" && (
+            {serviceType === "LoanEmployee" && (
               <>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">category</label>
-                <Controller
-                  name="purpose"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Purpose of Loan"
-                    >
-                      <Option value="">Select Purpose</Option>
-                      <Option value="personal">Personal</Option>
-                      <Option value="business">Business</Option>
-                      <Option value="education">Education</Option>
-                      <Option value="home">Home</Option>
-                    </Select>
-                  )}
-                />
-                {errors.purpose && (
-                  <p className="text-danger">Select the purpose of loan</p>
-                )}
-              </div>
-            </Col>
-
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Loan Amount</label>
-                <Controller
-                  name="amount"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Loan Amount"
-                    >
-                      <Option value="">Select Loan Amount</Option>
-                      <Option value="50000">50,000</Option>
-                      <Option value="100000">1 Lakh</Option>
-                      <Option value="500000">5 Lakh</Option>
-                      <Option value="1000000">10 Lakh</Option>
-                      <Option value="above10">Above 10Lakh</Option>
-                    </Select>
-                  )}
-                />
-                {errors.amount && (
-                  <p className="text-danger">Select Loan Amount</p>
-                )}
-              </div>
-            </Col>
-
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  How Immediately You Want Loan
-                </label>
-                <Controller
-                  name="howimidiate"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Duration"
-                    >
-                      <Option value="">Select Dueration</Option>
-                      <Option value="immediately">Immediately</Option>
-                      <Option value="1month">Within 1 Month</Option>
-                      <Option value="3months">Within 3 Months</Option>
-                      <Option value="6months">Within 6 Months</Option>
-                    </Select>
-                  )}
-                />
-                {errors.howimidiate && (
-                  <p className="text-danger">Select Dueration</p>
-                )}
-              </div>
-            </Col>
-            </>
-            )}
-             {employeeType === "InsuranceEmployee" && (
-              <>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                   Category:
-                </label>
-                <Controller
-                  name="employeeCategory"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
-                      onChange={(value) => {
-                        field.onChange(value);
-                        setValue("employeeCategory", value);
-                      }}
-                    >
-                      <Option value="">Select Category</Option>
-                      <Option value="Health Insurance">Health Insurance</Option>
-
-                      <Option value="Life Insurance">Life Insurance</Option>
-                      <Option value="Vehicle Insurance">
-                        Vehicle Insurance
-                      </Option>
-                    </Select>
-                  )}
-                />
-                {errors.employeeCategory && (
-                  <p className="text-danger">Employee category is required</p>
-                )}
-              </div>
-            </Col>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Policy Term</label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="policyTerm"
-                  {...register("policyTerm", { required: true })}
-                  placeholder="Policy Term (years)"
-                />
-                {errors.policyTerm && (
-                  <p className="text-danger">Policy Term is required</p>
-                )}
-              </div>
-            </Col>
-
-            {/* Sum Assured */}
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Sum Assured</label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="sumAssured"
-                  {...register("sumAssured", { required: true })}
-                  placeholder="Sum Assured"
-                />
-                {errors.sumAssured && (
-                  <p className="text-danger">Sum Assured is required</p>
-                )}
-              </div>
-            </Col>
-            </>
-             )}
-             {employeeType === "TaxEmployee" && (
-              <>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                 Category:
-                </label>
-                <Controller
-                  name="employeeCategory"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
-                      onChange={(value) => {
-                        field.onChange(value);
-                        setValue("employeeCategory", value);
-                      }}
-                    >
-                      <Option value="">Select Category</Option>
-                      <Option value="IncomeTax">Income Tax</Option>
-                      <Option value="Tds&TcsServices">
-                        TDS / TCS Services
-                      </Option>
-                      <Option value="GSTservices">GST Services</Option>
-                      <Option value="Esi&PfServices">ESI & PF Services</Option>
-                    </Select>
-                  )}
-                />
-                {errors.employeeCategory && (
-                  <p className="text-danger">Employee category is required</p>
-                )}
-              </div>
-            </Col>
-
-            {category === "IncomeTax" && (
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Sub Category:</label>
-                  <Controller
-                    name="subCategory"
-                    control={control}
-                    defaultValue=""
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        className="inputcolumn_drp"
-                        placeholder="Select Sub Category"
-                        onChange={(value) => {
-                          field.onChange(value);
-                          setValue("subCategory", value);
-                        }}
-                      >
-                        <Option value="Company">Company</Option>
-                        <Option value="Individual">Individual</Option>
-                        <Option value="Firm">Firm</Option>
-                        <Option value="Other">Other</Option>
-                      </Select>
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Loan Type</label>
+                    <Controller
+                      name="purpose"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select Purpose of Loan"
+                        >
+                          <Option value="">Select Purpose</Option>
+                          <Option value="personal">Personal</Option>
+                          <Option value="business">Business</Option>
+                          <Option value="education">Education</Option>
+                          <Option value="home">Home</Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.purpose && (
+                      <p className="text-danger">Select the purpose of loan</p>
                     )}
-                  />
-                  {errors.subCategory && (
-                    <p className="text-danger">Sub-category is required</p>
-                  )}
-                </div>
-              </Col>
-            )}
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  Income Tax Filing Status
-                </label>
-                <Controller
-                  name="incomeTaxStatus"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Status"
-                    >
-                      <Option value="filed">Filed</Option>
-                      <Option value="notFiled">Not Filed</Option>
-                    </Select>
-                  )}
-                />
-                {errors.incomeTaxStatus && (
-                  <p className="text-danger">Select filing status</p>
-                )}
-              </div>
-            </Col>
+                  </div>
+                </Col>
 
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Business Type</label>
-                <Controller
-                  name="businessType"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Business Type"
-                    >
-                      <Option value="soleProprietorship">
-                        Sole Proprietorship
-                      </Option>
-                      <Option value="partnership">Partnership</Option>
-                      <Option value="privateLimited">Private Limited</Option>
-                      <Option value="publicLimited">Public Limited</Option>
-                    </Select>
-                  )}
-                />
-                {errors.businessType && (
-                  <p className="text-danger">Select business type</p>
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Loan Amount</label>
+                    <Controller
+                      name="amount"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select Loan Amount"
+                        >
+                          <Option value="">Select Loan Amount</Option>
+                          <Option value="0-5Lakhs">0-5Lakhs</Option>
+                          <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
+                          <Option value="10-15Lakhs">10-15Lakhs</Option>
+                          <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
+                          <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
+                          <Option value="25-30Lakhs">25 - 30 Lakhs</Option>
+                          <Option value="30-40Lakhs">30 - 40 Lakhs</Option>
+                          <Option value="40-50Lakhs">40 - 50 Lakhs</Option>
+                          <Option value="50-60Lakhs">50 - 60 Lakhs</Option>
+                          <Option value="60-70Lakhs">60 - 70 Lakhs</Option>
+                          <Option value="70-80Lakhs">70 - 80 Lakhs</Option>
+                          <Option value="80-90Lakhs">80 - 90 Lakhs</Option>
+                          <Option value="90-100Lakhs">
+                            90 Lakhs - 1 Crore
+                          </Option>
+                          <Option value="above1Crore">Above 1 Crore</Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.amount && (
+                      <p className="text-danger">Select Loan Amount</p>
+                    )}
+                  </div>
+                </Col>
+
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">
+                      How Immediately You Want Loan
+                    </label>
+                    <Controller
+                      name="howimidiate"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select Duration"
+                        >
+                          <Option value="">Select Dueration</Option>
+                          <Option value="immediately">Immediately</Option>
+                          <Option value="1month">Within 1 Month</Option>
+                          <Option value="3months">Within 3 Months</Option>
+                          <Option value="6months">Within 6 Months</Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.howimidiate && (
+                      <p className="text-danger">Select Dueration</p>
+                    )}
+                  </div>
+                </Col>
+              </>
+            )}
+            {serviceType === "InsuranceEmployee" && (
+              <>
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Category:</label>
+                    <Controller
+                      name="insuranceType"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select insuranceType"
+                          onChange={(value) => {
+                            field.onChange(value);
+                            setValue("insuranceType", value);
+                          }}
+                        >
+                          <Option value="">Select Category</Option>
+                          <Option value="Health Insurance">
+                            Health Insurance
+                          </Option>
+
+                          <Option value="Life Insurance">Life Insurance</Option>
+                          <Option value="Vehicle Insurance">
+                            Vehicle Insurance
+                          </Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.employeeCategory && (
+                      <p className="text-danger">
+                        Employee category is required
+                      </p>
+                    )}
+                  </div>
+                </Col>
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Policy Term</label>
+                    <input
+                      className="inputcolumn-ourProfile"
+                      type="number"
+                      name="policyTerm"
+                      {...register("policyTerm", { required: true })}
+                      placeholder="Policy Term (years)"
+                    />
+                    {errors.policyTerm && (
+                      <p className="text-danger">Policy Term is required</p>
+                    )}
+                  </div>
+                </Col>
+
+                {/* Sum Assured */}
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Sum Assured</label>
+                    <input
+                      className="inputcolumn-ourProfile"
+                      type="number"
+                      name="sumAssured"
+                      {...register("sumAssured", { required: true })}
+                      placeholder="Sum Assured"
+                    />
+                    {errors.sumAssured && (
+                      <p className="text-danger">Sum Assured is required</p>
+                    )}
+                  </div>
+                </Col>
+              </>
+            )}
+            {serviceType === "TaxEmployee" && (
+              <>
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Category:</label>
+                    <Controller
+                      name="taxtype"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select taxtype"
+                          onChange={(value) => {
+                            field.onChange(value);
+                            setValue("taxtype", value);
+                          }}
+                        >
+                          <Option value="">Select Category</Option>
+                          <Option value="IncomeTax">Income Tax</Option>
+                          <Option value="Tds&TcsServices">
+                            TDS / TCS Services
+                          </Option>
+                          <Option value="GSTservices">GST Services</Option>
+                          <Option value="Esi&PfServices">
+                            ESI & PF Services
+                          </Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.employeeCategory && (
+                      <p className="text-danger">
+                        Employee category is required
+                      </p>
+                    )}
+                  </div>
+                </Col>
+
+                {category === "IncomeTax" && (
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Sub Category:
+                      </label>
+                      <Controller
+                        name="subCategory"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            placeholder="Select Sub Category"
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValue("subCategory", value);
+                            }}
+                          >
+                            <Option value="Company">Company</Option>
+                            <Option value="Individual">Individual</Option>
+                            <Option value="Firm">Firm</Option>
+                            <Option value="Other">Other</Option>
+                          </Select>
+                        )}
+                      />
+                      {errors.subCategory && (
+                        <p className="text-danger">Sub-category is required</p>
+                      )}
+                    </div>
+                  </Col>
                 )}
-              </div>
-            </Col>
-            </>
-             )}
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">
+                      Income Tax Filing Status
+                    </label>
+                    <Controller
+                      name="incomeTaxStatus"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select Status"
+                        >
+                          <Option value="filed">Filed</Option>
+                          <Option value="notFiled">Not Filed</Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.incomeTaxStatus && (
+                      <p className="text-danger">Select filing status</p>
+                    )}
+                  </div>
+                </Col>
+
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label className="vendorpage_labelCss">Business Type</label>
+                    <Controller
+                      name="businessType"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select Business Type"
+                        >
+                          <Option value="soleProprietorship">
+                            Sole Proprietorship
+                          </Option>
+                          <Option value="partnership">Partnership</Option>
+                          <Option value="privateLimited">
+                            Private Limited
+                          </Option>
+                          <Option value="publicLimited">Public Limited</Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.businessType && (
+                      <p className="text-danger">Select business type</p>
+                    )}
+                  </div>
+                </Col>
+              </>
+            )}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">

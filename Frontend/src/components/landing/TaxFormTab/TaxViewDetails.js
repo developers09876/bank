@@ -4,11 +4,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
 import "../../dashboard/user/LoanDetails.css";
 
-const InsuranceViewDetails = ({ collapsed }) => {
+const TaxViewDetails = ({ collapsed }) => {
      const navigate = useNavigate();
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
+
+ 
 
   return (
     <div>
@@ -16,16 +18,16 @@ const InsuranceViewDetails = ({ collapsed }) => {
         <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
             <center>
-              <h3>Insurance Details</h3>
+              <h3>Tax Details</h3>
             </center>
           </div>
           <Row className="px-4 py-3" style={{justifyContent:'center'}}>
-              <Col lg={7}>
+              <Col lg={8}>
                 <Card>
                   <Row className="personal_card_row">
                     <Col
                       className="firstrowcol px-1 py-1"
-                      lg={4}
+                      lg={6} md={12}
                       style={{
                         height: "auto",
                         alignContent: "center",
@@ -84,7 +86,7 @@ const InsuranceViewDetails = ({ collapsed }) => {
                     </Descriptions>
                     </Col> */}
 
-                    <Col lg={8} className="px-3 py-1">
+                    <Col lg={6} md={12 } className="px-3 py-1">
                       <center><h6>Other Information</h6></center>
                       <Descriptions
                         size="small"
@@ -137,20 +139,21 @@ const InsuranceViewDetails = ({ collapsed }) => {
                 </Card>
               </Col> */}
           <Col lg={12} md={12}>
-                <Card style={{width:'60%'}} className="loandetail-custom-card" title="Insurance Details">
+                <Card style={{width:'60%'}} className="loandetail-custom-card" title="Tax Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Policy Type">
-                      {record.PolicyType}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Sum Assured">
-                      {record.sumAssured}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Policy Term">
-                      {record.policyTerm}
+                  <Descriptions.Item label="bussiness Type">
+                      {record.businessType}
                     </Descriptions.Item>
                     <Descriptions.Item label="Annual Income">
                       {record.annualIncome}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Tax Paid">
+                      {record.taxPaid}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Income Tax Status">
+                      {record.incomeTaxStatus}
+                    </Descriptions.Item>
+                    
                     </Descriptions>
                 </Card>
               </Col>
@@ -162,4 +165,4 @@ const InsuranceViewDetails = ({ collapsed }) => {
   )
 }
 
-export default InsuranceViewDetails
+export default TaxViewDetails

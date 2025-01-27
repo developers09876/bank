@@ -153,31 +153,8 @@ function LoanLeadDetails() {
           </Col>
           <Col span={18}>{record.previouslyapplied}</Col>
         </Row>
-        {/* 
-        <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3>
-
-        {record.addremarks && record.addremarks.length > 0 ? (
-          record.addremarks.map((remark, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <Row>
-                <Col span={6}>
-                  <strong>Date:</strong>
-                </Col>
-                <Col span={18}>{remark.date}</Col>
-              </Row>
-              <Row>
-                <Col span={6}>
-                  <strong>Message:</strong>
-                </Col>
-                <Col span={18}>{remark.remarks}</Col>
-              </Row>
-
-              <hr style={{ margin: "10px 0" }} />
-            </div>
-          ))
-        ) : (
-          <p>No reminders available.</p>
-        )} */}
+        
+       
 
         <Button
           type="primary"

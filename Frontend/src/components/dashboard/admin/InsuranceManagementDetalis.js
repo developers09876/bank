@@ -1,307 +1,10 @@
-// import React, { useState, useEffect } from "react";
-// import { Col, Row, Form, Button } from "react-bootstrap";
-// import { useForm } from "react-hook-form";
-// import { useLocation } from "react-router-dom";
-// import { toast, ToastContainer } from "react-toastify";
-// import Api from "../../../Api";
-
-// function InsuranceManagementDetails() {
-//   const { state } = useLocation();
-//   const record = state?.record || {};
-//   const id = localStorage.getItem("regid");
-
-//   const [employeeType, setEmployeeType] = useState("");
-//   const [employeeList, setEmployeeList] = useState([]);
-//   const [subOptions, setSubOptions] = useState("");
-//   const [incomeTaxOptions, setIncomeTaxOptions] = useState([]);
-//   const [subType, setSubType] = useState("");
-//   console.log('subOptions', subOptions)
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
-
-//   const employeeTypes = [ "InsuranceEmployee"];
-
-//   useEffect(() => {
-//     if (employeeType) {
-//       fetchEmployeeList(employeeType);
-//     }
-//   }, [employeeType]);
-
-//   const fetchEmployeeList = async (type) => {
-//     try {
-//       const response = await Api.get(`signup/getbyUserType/${type}`);
-//       setEmployeeList(
-//         response.data.map((employee) => ({
-//           id: employee._id,
-//           name: employee.firstname,
-//           categoey: employee.employeeCategory
-//         }))
-//       );
-//     } catch (error) {
-//       console.error("Error fetching employee list:", error);
-//       toast.error("Failed to fetch employee list.");
-//     }
-//   };
-
-//   const handleEmployeeTypeChange = (event) => {
-//     const value = event.target.value;
-//     setEmployeeType(value);
-
-//     switch (value) {
-//       case "LoanEmployee":
-//         setSubOptions(["Home Loan", "Personal Loan", "Vehicle Loan" , "Business Loan"]);
-//         break;
-//       case "InsuranceEmployee":
-//         setSubOptions(["Health Insurance", "Life Insurance", "Vehicle Insurance"]);
-//         break;
-//       case "TaxEmployee":
-//         setSubOptions(["Income Tax", "TDS / TCS Services", "GST Services", "ESI & PF Services"]);
-//         break;
-//       default:
-//         setSubOptions([]);
-//         break;
-//     }
-
-//     setIncomeTaxOptions([]);
-//     setSubType("");
-//   };
-
-//   const handleSubtypeChange = (event) => {
-//     const selectedSubType = event.target.value;
-//     console.log('selectedSubType', selectedSubType)
-//     console.log('employeeList', employeeList)
-
-//     const filteredEmployees = employeeList.filter(
-//       (employee) => employee.categoey === "Health Insurance"
-//     );
-//     console.log('filteredEmployees', filteredEmployees.categoey)
-
-//     setEmployeeList(
-//       filteredEmployees.map((employee) => ({
-//         id: employee._id,
-//         name: `${employee.firstname} ${employee.lastname}`,
-//         category: employee.employeeCategory,
-//       }))
-//     );
-//   };
-
-//   const onSubmit = async (data) => {
-//     const details = {
-//       AdminId: id,
-//       firstname: record.firstname,
-//       lastname: record.lastname,
-//       userId: record.id,
-//       contactNumber: record.phone,
-//       email: record.email,
-//       aadhar: record.aadhar,
-//       panno: record.panno,
-//       gstNo: record.gstNo,
-//       PolicyType: record.PolicyType,
-//       annualIncome: record.annualIncome,
-//       sumAssured: record.sumAssured,
-//       policyTerm: record.policyTerm,
-//       description: data.description,
-//       employeeId: data.employeeId,
-//       employeeType: data.employeeType,
-//     };
-
-//     try {
-//       await Api.put(`/insuranceManagement/updateInsuranceManagement/${record._id}`, details);
-//       toast.success("Task Assigned successfully");
-//     } catch (error) {
-//       console.error("Error:", error);
-//       const errorMessage =
-//         error.response?.data?.error || "An error occurred while submitting the form";
-//       toast.error(errorMessage);
-//     }
-//   };
-
-//   if (!record) {
-//     return <p>No details available</p>;
-//   }
-
-//   return (
-//     <div style={{ marginTop: "50px", padding: "20px" }}>
-//       <h3>Tax Management Details</h3>
-//       <DetailsSection record={record} />
-//       <AssignTaskSection
-//         employeeTypes={employeeTypes}
-//         employeeType={employeeType}
-//         employeeList={employeeList}
-//         subOptions={subOptions}
-//         incomeTaxOptions={incomeTaxOptions}
-//         handleEmployeeTypeChange={handleEmployeeTypeChange}
-//         handleSubtypeChange={handleSubtypeChange}
-//         onSubmit={handleSubmit(onSubmit)}
-//         register={register}
-//         errors={errors}
-//       />
-//       <ToastContainer />
-//     </div>
-//   );
-// }
-
-// const DetailsSection = ({ record }) => (
-//   <div>
-//     {Object.entries(record).map(([key, value]) => (
-//       <Row key={key}>
-//         <Col xs={2}>
-//           <p>
-//             <strong>{key.replace(/([A-Z])/g, " $1")}: </strong>
-//           </p>
-//         </Col>
-//         <Col xs={7}>
-//           <p>{value}</p>
-//         </Col>
-//       </Row>
-//     ))}
-//   </div>
-// );
-
-// const AssignTaskSection = ({
-//   employeeTypes,
-//   employeeType,
-//   employeeList,
-//   subOptions,
-//   incomeTaxOptions,
-//   handleEmployeeTypeChange,
-//   handleSubtypeChange,
-//   subType,
-//   onSubmit,
-//   register,
-//   errors,
-// }) => (
-//   <div className="mt-3">
-//     <h3>Assign To</h3>
-//     <Form onSubmit={onSubmit}>
-//       <Row className="mb-3">
-//         <Col xs={2}>
-//           <Form.Label>
-//             <strong>Employee Type:</strong>
-//           </Form.Label>
-//         </Col>
-//         <Col xs={7}>
-//           <Form.Select
-//             {...register("employeeType", { required: true })}
-//             value={employeeType}
-//             onChange={handleEmployeeTypeChange}
-//           >
-//             <option value="">Select Employee Type</option>
-//             {employeeTypes.map((type) => (
-//               <option key={type} value={type}>
-//                 {type}
-//               </option>
-//             ))}
-//           </Form.Select>
-//           {errors.employeeType && <p className="text-danger">Employee Type is required</p>}
-//         </Col>
-//       </Row>
-
-//       {subOptions.length > 0 && (
-//         <Row className="mb-3">
-//           <Col xs={2}>
-//             <Form.Label>
-//               <strong>Category:</strong>
-//             </Form.Label>
-//           </Col>
-//           <Col xs={7}>
-//   <Form.Select
-//     {...register("subType", { required: true })}
-//     value={subType}
-//     onChange={handleSubtypeChange}
-//   >
-//     <option value="">Select Sub Type</option>
-//     {subOptions.map((option, index) => (
-//       <option key={index} value={option}>
-//         {option}
-//       </option>
-//     ))}
-//   </Form.Select>
-//   {errors.subType && <p className="text-danger">Category is required</p>}
-// </Col>
-
-//         </Row>
-//       )}
-
-//       {incomeTaxOptions.length > 0 && (
-//         <Row className="mb-3">
-//           <Col xs={2}>
-//             <Form.Label>
-//               <strong>Income Tax Category:</strong>
-//             </Form.Label>
-//           </Col>
-//           <Col xs={7}>
-//             <Form.Select {...register("incomeTaxCategory", { required: true })}>
-//               <option value="">Select Category</option>
-//               {incomeTaxOptions.map((option) => (
-//                 <option key={option} value={option}>
-//                   {option}
-//                 </option>
-//               ))}
-//             </Form.Select>
-//           </Col>
-//         </Row>
-//       )}
-
-//       <Row className="mb-3">
-//         <Col xs={2}>
-//           <Form.Label>
-//             <strong>Employee List:</strong>
-//           </Form.Label>
-//         </Col>
-//         <Col xs={7}>
-//           <Form.Select {...register("employeeId", { required: true })}>
-//             <option value="">Select Employee</option>
-//             {employeeList.map((employee) => (
-//               <option key={employee.id} value={employee.id}>
-//                 {employee.name}
-//               </option>
-//             ))}
-//           </Form.Select>
-//           {errors.employeeId && <p className="text-danger">Employee List is required</p>}
-//         </Col>
-//       </Row>
-
-//       <Row className="mb-3">
-//         <Col xs={2}>
-//           <Form.Label>
-//             <strong>Description:</strong>
-//           </Form.Label>
-//         </Col>
-//         <Col xs={7}>
-//           <Form.Control
-//             as="textarea"
-//             rows={3}
-//             placeholder="Enter description"
-//             {...register("description", { required: true })}
-//           />
-//           {errors.description && <p className="text-danger">Description is required</p>}
-//         </Col>
-//       </Row>
-
-//       <Row>
-//         <Col xs={{ span: 7, offset: 2 }}>
-//           <Button type="submit" variant="primary">
-//             Submit
-//           </Button>
-//         </Col>
-//       </Row>
-//     </Form>
-//   </div>
-// );
-
-// export default InsuranceManagementDetails;
-
 import React, { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Select } from "antd";
+import { Select, Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import "../user/LoanDetails.css";
 import Api from "../../../Api";
 const { Option } = Select;
 
@@ -313,7 +16,9 @@ function InsuranceManagementDetails() {
   // const [employeeType, setEmployeeType] = useState("");
   const [inputs, setInputs] = useState();
   const [employeeList, setEmployeeList] = useState();
+  const [employeeName, setEmployeeName] = useState();
   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+  console.log('employeeName', employeeName)
   const {
     register,
     handleSubmit,
@@ -338,6 +43,22 @@ function InsuranceManagementDetails() {
     };
     fetchEmployeeList();
   }, [employeeType]);
+
+  useEffect(() => {
+    const fetchEmployeeList = async () => {
+      const employeeid = record.employeeId;
+      try {
+        const response = await Api.get(`signup/getby/${employeeid}`);
+        if (response.data && response.data.firstname && response.data.lastname) {
+          setEmployeeName(`${response.data.firstname} ${response.data.lastname}`); 
+        }
+      } catch (error) {
+        console.error("Error fetching employee list:", error);
+        toast.error("Failed to fetch employee list.");
+      }
+    };
+    fetchEmployeeList();
+  }, []);
 
   useEffect(() => {
     if (category) {
@@ -393,9 +114,9 @@ function InsuranceManagementDetails() {
   }
 
   return (
-    <div style={{ marginTop: "50px", padding: "20px" }}>
-      <h3>Insurance Management Details</h3>
-      <div>
+    <div className="loandetail-container" 
+    style={{ marginTop: "50px", padding: "20px" }}>
+      {/* <div>
         {Object.entries(record).map(([key, value]) => (
           <Row key={key}>
             <Col xs={2}>
@@ -408,11 +129,135 @@ function InsuranceManagementDetails() {
             </Col>
           </Row>
         ))}
+      </div> */}
+      <div>
+        <center>
+          <h3>Insurance Details</h3>
+        </center>
       </div>
+      <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
+        <Col lg={8}>
+          <Card>
+            <Row className="personal_card_row">
+              <Col
+                className="firstrowcol px-1 py-1"
+                lg={6}
+                md={12}
+                style={{
+                  height: "auto",
+                  alignContent: "center",
+                  borderRight: "1px #e5e7eb solid",
+                  textAlign: "-webkit-center",
+                }}
+              >
+                <div className="photo-preview mb-2">
+                  <img
+                    src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                    //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
+                    // src={record.photographs}
+                    alt="Photograph"
+                    className="photo-image"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      //   objectFit: "cover",
+                      borderRadius: "50%",
+                      border: "6px solid #80808040",
+                    }}
+                  />
+                </div>
+                <p>
+                  {record.firstname} {record.lastname}
+                </p>
+                <p>{record.email}</p>
+                <p>{record.contactNumber}</p>
+              </Col>
+              
+              <Col lg={6} md={12} className="px-3 py-1">
+                <center>
+                  <h6>Other Information</h6>
+                </center>
+                <Descriptions
+                  size="small"
+                  // layout="vertical"
+                  style={{
+                    paddingBottom: "10px",
+                  }}
+                  column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
+                >
+                  <Descriptions.Item label="Adhaar Number">
+                    {record.aadhar}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="PanCard Number">
+                    {record.panno}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="GST Number">
+                    {record.gst}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+      <Row style={{ textAlign: "-webkit-center" }}>
+        <Col lg={12} md={12}>
+          <Card
+            style={{ width: "60%" }}
+            className="loandetail-custom-card"
+            title="Insurance Details"
+          >
+            <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+              <Descriptions.Item label="Policy Type">
+                {record.PolicyType}
+              </Descriptions.Item>
+              <Descriptions.Item label="Sum Assured">
+                {record.sumAssured}
+              </Descriptions.Item>
+              <Descriptions.Item label="Policy Term">
+                {record.policyTerm}
+              </Descriptions.Item>
+              <Descriptions.Item label="Annual Income">
+                {record.annualIncome}
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        </Col>
+      </Row>
+      {record.employeeId && (
+        <Row style={{ textAlign: "-webkit-center" }}>
+        <Col lg={12} md={12}>
+          <Card
+            style={{ width: "60%" }}
+            className="loandetail-custom-card"
+            title="Task Assigned Details"
+          >
+            <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+              <Descriptions.Item label="Employee Name">
+                {employeeName}
+              </Descriptions.Item>
+              <Descriptions.Item label="Description">
+                {record.description}
+              </Descriptions.Item>
+              <Descriptions.Item label="Employee Type">
+                {record.employeeType}
+              </Descriptions.Item>
+              <Descriptions.Item label="Start Date">
+                {record.startDate}
+              </Descriptions.Item>
+              <Descriptions.Item label="End Date">
+                {record.endDate}
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
+        </Col>
+      </Row>
+      )}
       <div className="py-2 px-2">
         <h5>
           <b>Assign To</b>
         </h5>
+        
         <form onSubmit={(e) => onSubmit(watch(), e)}>
           <Row>
             <Col xs={12} md={6} lg={4}>
