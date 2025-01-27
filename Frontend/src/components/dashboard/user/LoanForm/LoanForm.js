@@ -140,19 +140,17 @@ function LoanForm() {
       try {
         const response = await Api.get(`/loanform/getby/${record._id}`);
         const OneApplication = response.data;
-        console.log('Applicationresponse', OneApplication);
+        console.log("Applicationresponse", OneApplication);
         const formattedDob = OneApplication.dob
-            ? new Date(OneApplication.dob).toISOString().split("T")[0]
-            : "";
+          ? new Date(OneApplication.dob).toISOString().split("T")[0]
+          : "";
         if (OneApplication) {
-          reset({...OneApplication,
-            dob: formattedDob
-          }); 
+          reset({ ...OneApplication, dob: formattedDob });
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
 
