@@ -19,13 +19,13 @@ const InsuranceViewDetails = ({ collapsed }) => {
               <h3>Insurance Details</h3>
             </center>
           </div>
-          <Row className="px-4 py-3">
-              <Col lg={9}>
+          <Row className="px-4 py-3" style={{justifyContent:'center'}}>
+              <Col lg={7}>
                 <Card>
                   <Row className="personal_card_row">
                     <Col
                       className="firstrowcol px-1 py-1"
-                      lg={6}
+                      lg={4}
                       style={{
                         height: "auto",
                         alignContent: "center",
@@ -84,8 +84,8 @@ const InsuranceViewDetails = ({ collapsed }) => {
                     </Descriptions>
                     </Col> */}
 
-                    <Col lg={6} className="px-3 py-1">
-                      <h6>Other Information</h6>
+                    <Col lg={8} className="px-3 py-1">
+                      <center><h6>Other Information</h6></center>
                       <Descriptions
                         size="small"
                         // layout="vertical"
@@ -110,8 +110,8 @@ const InsuranceViewDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-          <Row>
-          <Col lg={12} md={12}>
+          <Row style={{textAlign:'-webkit-center'}}>
+          {/* <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Personal Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="Name">
@@ -135,9 +135,9 @@ const InsuranceViewDetails = ({ collapsed }) => {
                     
                   </Descriptions>
                 </Card>
-              </Col>
+              </Col> */}
           <Col lg={12} md={12}>
-                <Card className="loandetail-custom-card" title="Insurance Details">
+                <Card style={{width:'60%'}} className="loandetail-custom-card" title="Insurance Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
                     <Descriptions.Item label="Policy Type">
                       {record.PolicyType}
