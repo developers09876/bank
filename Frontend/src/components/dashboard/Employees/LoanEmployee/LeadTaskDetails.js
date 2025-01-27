@@ -12,7 +12,7 @@ function LeadTaskDetails() {
   const [remarksFields, setRemarksFields] = useState([]);
   const { state } = useLocation();
   const record = state?.record;
-  console.log("record", record);
+  console.log("recordsssss", record);
   const {
     register,
     handleSubmit,
