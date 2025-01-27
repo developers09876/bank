@@ -36,7 +36,8 @@ const [users, setUsers] = useState();
 const [employees, setEmployees] = useState();
 const [loans, setLoans] = useState();
 const [insurances, setInsurances] = useState();
-
+const [taxs, setTaxs] = useState();
+const [stockmarket, setStockmarket] = useState();
 const user = "user"
 const fetchUsers = async () => {
   try {
@@ -48,24 +49,85 @@ const fetchUsers = async () => {
     console.log('error occurs while fetch users', error)
   }
 };
-
+useEffect(() => {
+  fetchUsers();
+},[])
 const fetchEmployees = async () => {
   try {
     const response = await axios.get("http://localhost:5000/signup/getall");
 const filteredemployees = response.data.filter((employees) => employees.userType !== "user");
 console.log('filteredemployees', filteredemployees)
 setEmployees(filteredemployees.length)
+   
+  } catch (error) {
+    console.log('error occurs while fetch users', error)
+  }
+};
+useEffect(() => {
+  fetchEmployees();
+},[])
+const fetchLoans = async () => {
+  try {
+    const response = await axios.get(`http://localhost:5000/loanform/getall`);
+    console.log('response.data', response.data);
+    setLoans(response.data.length); 
+    console.log('loans', response.data.length);
+  } catch (error) {
+    console.log('Error occurs while fetching loans:', error);
+  }
+};
+useEffect(() => {
+  fetchLoans();
+}, []);
+const fetchInsurances = async () => {
+  try {
+    const response = await axios.get(`http://localhost:5000/insuranceManagement/getAllInsuranceManagement`);
+    console.log('response.data', response.data);
+    setInsurances(response.data.length); 
+    console.log('insurances', response.data.length);
+  } catch (error) {
+    console.log('Error occurs while fetching insurances:', error);
+  }
+};
+
+useEffect(() => {
+  fetchInsurances();
+}, []);
+const fetchTaxs = async () => {
+  try {
+    const response = await axios.get(`http://localhost:5000/taxManagement/getAllTaxManagement`);
+    console.log('response.data', response.data);
+    setTaxs(response.data.length); 
+    console.log('taxes', response.data.length);
+  } catch (error) {
+    console.log('Error occurs while fetching taxes:', error);
+  }
+};
+
+useEffect(() => {
+  fetchTaxs();
+}, []);
+
+const fetchEmployee = async () => {
+  try {
+    const userTypes = [
+      "LoanEmployee",
+      "TaxEmployee",
+      "InsuranceEmployee",
+      "StockMarket",
+    ];
+
+    const response = await axios.post(
+      "http://localhost:5000/signup/getUserCounts",
+      { userTypes }
+    );
+
     console.log("Employee counts:", response.data);
   } catch (error) {
     console.error("Error occurred while fetching employee counts", error);
   }
 };
 
-
-useEffect(() => {
-  fetchUsers();
-  fetchEmployees();
-},[])
 
   const stats = {
     totalUsers: 50,
@@ -159,7 +221,7 @@ useEffect(() => {
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
                     <Card.Title>Total Loans</Card.Title>
-                    <Card.Text>{stats.loans.active}</Card.Text>
+                    <Card.Text>{loans}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -182,7 +244,25 @@ useEffect(() => {
                   <Card.Body>
                     <FaFileInvoice className="admin-stat-icon" />
                     <Card.Title>Total Insurance</Card.Title>
-                    <Card.Text>Total: {stats.totalinsurance}</Card.Text>
+                    <Card.Text>{insurances}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col md={6} lg={6}>
+                <Card className="admin-stat-card">
+                  <Card.Body>
+                    <FaFileInvoice className="admin-stat-icon" />
+                    <Card.Title>Total Tax</Card.Title>
+                    <Card.Text>{taxs}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col md={6} lg={6}>
+                <Card className="admin-stat-card">
+                  <Card.Body>
+                    <FaFileInvoice className="admin-stat-icon" />
+                    <Card.Title>Total StockMarket</Card.Title>
+                    <Card.Text>{stockmarket}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
