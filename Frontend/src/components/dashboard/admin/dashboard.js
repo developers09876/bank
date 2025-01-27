@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.scss"; // Custom SCSS styles
@@ -19,6 +19,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -31,8 +32,50 @@ ChartJS.register(
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+const [users, setUsers] = useState();
+const [employees, setEmployees] = useState();
+const [loans, setLoans] = useState();
+const [insurances, setInsurances] = useState();
+
+const user = "user"
+const fetchUsers = async () => {
+  try {
+    const response = await axios.get(`http://localhost:5000/signup/getbyUserType/${user}`);
+    console.log('response.data', response.data);
+    setUsers(response.data.length);
+    console.log('users', response.data.length)
+  } catch (error) {
+    console.log('error occurs while fetch users', error)
+  }
+};
+
+const fetchEmployees = async () => {
+  try {
+    const userTypes = [
+      "LoanEmployee",
+      "TaxEmployee",
+      "InsuranceEmployee",
+      "StockMarket",
+    ];
+
+    const response = await axios.post(
+      "http://localhost:5000/signup/getUserCounts",
+      { userTypes }
+    );
+
+    console.log("Employee counts:", response.data);
+    setUsers(response.data); 
+  } catch (error) {
+    console.error("Error occurred while fetching employee counts", error);
+  }
+};
+
+
+useEffect(() => {
+  fetchUsers();
+},[])
   const stats = {
-    totalUsers: 1200,
+    totalUsers: 50,
     loans: {
       active: 320,
       pending: 50,
@@ -110,7 +153,7 @@ const AdminDashboard = () => {
                   <Card.Body>
                     <FaUsers className="admin-stat-icon" />
                     <Card.Title>Total Users</Card.Title>
-                    <Card.Text>{stats.totalUsers}</Card.Text>
+                    <Card.Text>{users}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>

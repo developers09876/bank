@@ -20,8 +20,7 @@ const Insurance = ({ collapsed }) => {
   const userid = localStorage.getItem("id");
 
   const handleViewDetails = (record) => {
-    setSelectedRecord(record);
-    setIsModalVisible(true);
+    navigate(`/user/InsuranceViewdetails/${record._id}`, { state: { record } });
   };
 
   const handleAddInsurance = () => {
@@ -36,6 +35,7 @@ const Insurance = ({ collapsed }) => {
       );
       setInsurance(response.data);
       setFilteredData(response.data);
+      console.log('insurance response.data', response.data)
     } catch (error) {
       console.error("Error fetching leads:", error);
     } finally {
@@ -177,7 +177,7 @@ const Insurance = ({ collapsed }) => {
         />
       </div>
 
-      <Modal
+      {/* <Modal
         title="Insurance Details"
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
@@ -203,7 +203,7 @@ const Insurance = ({ collapsed }) => {
             </p>
           </div>
         )}
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
