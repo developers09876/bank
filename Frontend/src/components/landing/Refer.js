@@ -50,7 +50,7 @@ const Refer = () => {
       if (response.ok) {
         console.log("API response:", await response.json());
         alert("Referral submitted successfully!");
-        navigate("/user/rewards"); // Navigate back to rewards page
+        navigate("/user/rewards"); 
       } else {
         const errorData = await response.json();
         console.error("API failed with status:", response.status, errorData);

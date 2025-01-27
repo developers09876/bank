@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Tag, Button } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
 
 const LoanStatusTable = ({ collapsed }) => {
   const [loans, setLoans] = useState([]);
@@ -32,6 +32,7 @@ const LoanStatusTable = ({ collapsed }) => {
   const handleEdit = (record) => {
     navigate(`/user/loanform/${record._id}`, { state: { record } });
   };
+ 
 
   const columns = [
     {
@@ -95,10 +96,18 @@ const LoanStatusTable = ({ collapsed }) => {
           style={{
             fontSize: "18px",
             color: "#ff4d4f",
+            marginRight: "15px",
             cursor: "pointer",
           }}
           onClick={() => handleEdit(record)}
         />
+         <DownloadOutlined
+              style={{
+                fontSize: "18px",
+                color: "#52c41a",
+            cursor: "pointer",
+              }}
+          />
       </>
         );
       },

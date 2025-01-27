@@ -12,6 +12,7 @@ import Tax from "../../landing/TaxFormTab/Tax";
 import LeadGeneration  from"./LeadGeneration";
 import CreateLead from "./CreateLead";
 import LoanForm from "../user/LoanForm/LoanFormProfileTab"
+import InsuranceViewDetails from "../../landing/InsuranceForm/InsuranceViewDetails";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -37,11 +38,15 @@ export const UserRoutes = [
   {
     path: "/user/insu",
     element: <Insurance />,
+  },{
+    path: "/user/InsuranceViewdetails/:id",
+    element: <InsuranceViewDetails />,
   },
   {
     path: "/user/insuranceDetails",
     element: <InsuranceDetails />,
   },
+
   {
     path: "/user/tax",
     element: <Tax />,
