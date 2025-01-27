@@ -4,13 +4,13 @@ import Referral from "../model/RewardModel.js";
 // Add a new referral
 export const addReferral = async (req, res) => {
   try {
-    const { subCategory, reward, userId } = req.body;
+    const {contactNumber, category, subCategory, reward, userId } = req.body;
 
-    if (!subCategory || !reward || !userId) {
+    if (!contactNumber || !category || !subCategory || !reward || !userId) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const referral = new Referral({ subCategory, reward, userId });
+    const referral = new Referral({contactNumber, category, subCategory, reward, userId });
     await referral.save();
 
     res.status(201).json({ message: "Referral added successfully", referral });
