@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 
 const referralSchema = new mongoose.Schema(
   {
+    contactNumber: {type:String, required: true},
+    category: {type: String, required: true},
     subCategory: { type: String, required: true },
     reward: { type: Number, required: true },
     userId: {

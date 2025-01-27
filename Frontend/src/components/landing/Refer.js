@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./refer.css";
 import { Col, Row } from "react-bootstrap";
 import image1 from "../Images/refer-a-friend-hd.png";
@@ -8,8 +8,61 @@ import TextField from "@mui/material/TextField";
 import { Input } from "antd";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Refer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { subCategory, categoryTitle } = location.state || {};
+  const [contactNumber, setContactNumber] = useState("");
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  
+  const submitReferral = async () => {
+    if (!contactNumber) {
+      alert("Please enter a contact number.");
+      return;
+    }
+  
+    const userId = localStorage.getItem("id");
+    console.log("Submitting referral with data:", {
+      category: categoryTitle,
+      subCategory: subCategory.title,
+      reward: subCategory.rewards,
+      userId,
+      contactNumber,
+    });
+  
+    try {
+      const response = await fetch(`${API_URL}/api/referrals/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          category: categoryTitle,
+          subCategory: subCategory.title,
+          reward: subCategory.rewards,
+          userId,
+          contactNumber,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log("API response:", await response.json());
+        alert("Referral submitted successfully!");
+        navigate("/user/rewards"); 
+      } else {
+        const errorData = await response.json();
+        console.error("API failed with status:", response.status, errorData);
+        alert("Failed to submit referral.");
+      }
+    } catch (error) {
+      console.error("Error submitting referral:", error);
+      alert("Error: Unable to submit referral.");
+    }
+  };
+  
+
   return (
     <div>
       <Header />
@@ -31,18 +84,23 @@ const Refer = () => {
                     For every successful referral, earn exciting rewards as a
                     token of our appreciation.
                   </p>
+                  {subCategory?.title && (<p>
+        Refer for {subCategory?.title} and get reward worth Rs. {subCategory.rewards} per referral.
+      </p>)}
                   <div>
                     <TextField
                       id="number-input"
                       label="Enter the Number"
                       variant="outlined"
                       type="nunber"
+                      value={contactNumber}
+                      onChange={(e) => setContactNumber(e.target.value)}
                       size="small"
                       // fullWidth
                       // className="inputcolumn-refer"
                     />
                     <br />
-                    <button type="submit" className="learn-more-button">
+                    <button type="submit" className="learn-more-button" onClick={submitReferral}>
                       Submit
                     </button>
                   </div>
