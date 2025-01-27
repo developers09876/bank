@@ -13,6 +13,8 @@ function LeadDetails() {
   const [remarksFields, setRemarksFields] = useState([]);
   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
+  const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
+  const [categories, setCategories] = useState([]);
   const { Option } = Select;
   const {
     register,
@@ -26,7 +28,7 @@ function LeadDetails() {
   const category = watch("loanType");
   console.log("category", category);
 
-  const employeeType = "LoanEmployee";
+  const employeeType = selectedEmployeeType;
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
@@ -40,7 +42,30 @@ function LeadDetails() {
     };
     fetchEmployeeList();
   }, [employeeType]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+        );
 
+        // Extract unique employeeCategory values (case-insensitive)
+        const uniqueCategories = [
+          ...new Set(
+            response.data
+              .map((item) => item.employeeCategory?.trim()) // Trim whitespace
+              .filter(Boolean) // Remove null/undefined values
+          ),
+        ];
+
+        setCategories(uniqueCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, [selectedEmployeeType]);
   useEffect(() => {
     if (category) {
       console.log("category", category);
@@ -268,10 +293,19 @@ function LeadDetails() {
                 <Controller
                   name="employeeType"
                   control={control}
-                  defaultValue="LoanEmployee"
+                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select {...field} disabled className="inputcolumn_drp">
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      onChange={(value) => {
+                        field.onChange(value); // Update React Hook Form value
+                        setSelectedEmployeeType(value); // Update local state
+                      }}
+                    >
+                      <Option value="">Select Employee Type</Option>
+
                       <Option value="LoanEmployee">Loan Employee</Option>
                       <Option value="TaxEmployee">Tax Employee</Option>
                       <Option value="InsuranceEmployee">
@@ -286,7 +320,7 @@ function LeadDetails() {
                 )}
               </div>
             </Col>
-            <Col xs={12} md={6} lg={4}>
+            {/* <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Loan Type:</label>
                 <Controller
@@ -314,6 +348,40 @@ function LeadDetails() {
                 />
                 {errors.loanType && (
                   <p className="text-danger">Loan type is required</p>
+                )}
+              </div>
+            </Col> */}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">
+                  Employee Category:
+                </label>
+                <Controller
+                  name="loanType"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Employee Category"
+                      onChange={(value) => {
+                        field.onChange(value); // Update React Hook Form value
+                        setValue("loanType", value); // Update field value in form
+                      }}
+                    >
+                      <Option value="">Select Employee Category</Option>
+                      {categories.map((category, index) => (
+                        <Option key={index} value={category}>
+                          {category}
+                        </Option>
+                      ))}
+                    </Select>
+                  )}
+                />
+                {errors.loanType && (
+                  <p className="text-danger">Employee category is required</p>
                 )}
               </div>
             </Col>

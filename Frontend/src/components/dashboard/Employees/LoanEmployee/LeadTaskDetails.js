@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-function LeadTaskDetails () {
+function LeadTaskDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-//   const { record } = location.state || {};
+  //   const { record } = location.state || {};
   const [remarksFields, setRemarksFields] = useState([]);
   const { state } = useLocation();
   const record = state?.record;
@@ -55,7 +55,10 @@ function LeadTaskDetails () {
     }, {});
     reset(defaultValues);
   };
-
+  const formatDate = (dateString) => {
+    if (!dateString) return ""; // Handle null/undefined
+    return new Date(dateString).toLocaleDateString("en-CA"); // "en-CA" gives "YYYY-MM-DD"
+  };
   const onSubmit = async (data) => {
     const formattedRemarks = remarksFields.map((field, index) => ({
       date: data[`date_${index}`],
@@ -153,6 +156,24 @@ function LeadTaskDetails () {
             <strong>Previously Applied:</strong>
           </Col>
           <Col span={18}>{record.previouslyapplied}</Col>
+        </Row>
+        <Row>
+          <Col span={6}>
+            <strong>Task Message</strong>
+          </Col>
+          <Col span={18}>{record.description}</Col>
+        </Row>
+        <Row>
+          <Col span={6}>
+            <strong>Task Assigned Start Date</strong>
+          </Col>
+          <Col span={18}>{formatDate(record.startDate)}</Col>
+        </Row>
+        <Row>
+          <Col span={6}>
+            <strong>Task Assigned End Date</strong>
+          </Col>
+          <Col span={18}>{formatDate(record.endDate)}</Col>
         </Row>
         {/* 
         <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3>
@@ -252,7 +273,7 @@ function LeadTaskDetails () {
             </Row>
           ))}
           <button type="submit" className="btn btn-primary mt-3">
-            Submitsss
+            Submit
           </button>
         </form>
       </div>
@@ -260,4 +281,4 @@ function LeadTaskDetails () {
   );
 }
 
-export default LeadTaskDetails ;
+export default LeadTaskDetails;
