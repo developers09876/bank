@@ -172,7 +172,7 @@ useEffect(() => {
                   <Card.Body>
                     <FaMoneyBillWave className="admin-stat-icon" />
                     <Card.Title>Total Employees</Card.Title>
-                    <Card.Text>{stats.employees}</Card.Text>
+                    <Card.Text>{employees}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
