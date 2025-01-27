@@ -51,20 +51,11 @@ const fetchUsers = async () => {
 
 const fetchEmployees = async () => {
   try {
-    const userTypes = [
-      "LoanEmployee",
-      "TaxEmployee",
-      "InsuranceEmployee",
-      "StockMarket",
-    ];
-
-    const response = await axios.post(
-      "http://localhost:5000/signup/getUserCounts",
-      { userTypes }
-    );
-
+    const response = await axios.get("http://localhost:5000/signup/getall");
+const filteredemployees = response.data.filter((employees) => employees.userType !== "user");
+console.log('filteredemployees', filteredemployees)
+setEmployees(filteredemployees.length)
     console.log("Employee counts:", response.data);
-    setUsers(response.data); 
   } catch (error) {
     console.error("Error occurred while fetching employee counts", error);
   }
@@ -73,7 +64,9 @@ const fetchEmployees = async () => {
 
 useEffect(() => {
   fetchUsers();
+  fetchEmployees();
 },[])
+
   const stats = {
     totalUsers: 50,
     loans: {
