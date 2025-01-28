@@ -37,7 +37,6 @@ const [employees, setEmployees] = useState();
 const [loans, setLoans] = useState();
 const [insurances, setInsurances] = useState();
 const [taxs, setTaxs] = useState();
-const [stockmarket, setStockmarket] = useState();
 const user = "user"
 const fetchUsers = async () => {
   try {
@@ -254,15 +253,6 @@ const fetchEmployee = async () => {
                     <FaFileInvoice className="admin-stat-icon" />
                     <Card.Title>Total Tax</Card.Title>
                     <Card.Text>{taxs}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col md={6} lg={6}>
-                <Card className="admin-stat-card">
-                  <Card.Body>
-                    <FaFileInvoice className="admin-stat-icon" />
-                    <Card.Title>Total StockMarket</Card.Title>
-                    <Card.Text>{stockmarket}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
