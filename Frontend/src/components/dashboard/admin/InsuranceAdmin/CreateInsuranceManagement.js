@@ -15,8 +15,8 @@ function CreateInsuranceManagement() {
     formState: { errors },
   } = useForm();
 
-  const id = localStorage.getItem("regid");
-  const userType = localStorage.getItem("role");
+  const id = localStorage.getItem("id");
+  const userType = localStorage.getItem("userType");
 
   const onSubmit = async (data) => {
     const details = {
