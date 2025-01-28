@@ -163,38 +163,49 @@ const UserDropdown = ({
   handleLogout,
   dropdownVisible,
   setDropdownVisible,
-}) => (
-  <li className="relative">
-    <div
-      className="live-icon cursor-pointer"
-      onClick={() => setDropdownVisible(true)}
-      // onMouseLeave={() => setDropdownVisible(false)}
-    >
-      <img
-        src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
-        alt="User Avatar"
-        className="avatar"
-      />
-      <div className="live-badge">100%</div>
-      {dropdownVisible && (
-        <div className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded">
-          <button
-            onClick={handlenavigate}
-            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-          >
-            My Profile
-          </button>
-          <button
-            onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-          >
-            Logout
-          </button>
-        </div>
-      )}
-    </div>
-  </li>
-);
+}) => {
+  useEffect(() => {
+    if (dropdownVisible) {
+      const timer = setTimeout(() => {
+        setDropdownVisible(false);
+      }, 5000); // 5 seconds
+
+      return () => clearTimeout(timer); // Cleanup timer on component unmount or visibility change
+    }
+  }, [dropdownVisible, setDropdownVisible]);
+  return (
+    <li className="relative">
+      <div
+        className="live-icon cursor-pointer"
+        onClick={() => setDropdownVisible(true)}
+        // onMouseLeave={() => setDropdownVisible(false)}
+      >
+        <img
+          src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
+          alt="User Avatar"
+          className="avatar"
+        />
+        <div className="live-badge">100%</div>
+        {dropdownVisible && (
+          <div className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded">
+            <button
+              onClick={handlenavigate}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              My Profile
+            </button>
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </li>
+  );
+};
 
 const NotificationModal = ({ isOpen, setIsOpen, setNotificationCount }) => {
   const email = localStorage.getItem("email");
