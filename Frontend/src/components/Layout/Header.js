@@ -293,7 +293,7 @@ const NotificationModal = ({ isOpen, setIsOpen, setNotificationCount }) => {
                 {notification.date}
               </p>
               <p>
-                <strong className="notification-heading">Remarks:</strong>{" "}
+                <strong className="notification-heading">Subject:</strong>{" "}
                 {notification.remarks}
               </p>
             </Card>
