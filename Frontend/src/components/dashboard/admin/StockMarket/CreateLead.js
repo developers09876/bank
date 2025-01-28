@@ -228,11 +228,15 @@ function CreateLead() {
                       placeholder="Select Loan Amount"
                     >
                       <Option value="">Select Loan Amount</Option>
-                      <Option value="50000">50,000</Option>
-                      <Option value="100000">1 Lakh</Option>
-                      <Option value="500000">5 Lakh</Option>
-                      <Option value="1000000">10 Lakh</Option>
-                      <Option value="above10">Above 10Lakh</Option>
+                          <Option value="0-5Lakhs">0-5Lakhs</Option>
+                          <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
+                          <Option value="10-15Lakhs">10 - 15Lakhs</Option>
+                          <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
+                          <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
+                          <Option value="25-50Lakhs">25 - 50 Lakhs</Option>
+                          <Option value="50-75Lakhs">50 - 75 Lakhs</Option>
+                          <Option value="75-1Crore">75 Lakhs - 1 Crore</Option>
+                          <Option value="above1Crore">Above 1 Crore</Option>
                     </Select>
                   )}
                 />
