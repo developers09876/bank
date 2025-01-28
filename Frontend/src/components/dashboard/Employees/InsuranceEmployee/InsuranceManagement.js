@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Table, Input, Space, Pagination, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const InsuranceManagements = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const navigate = useNavigate();
 
   const data = [
     {
@@ -60,6 +61,10 @@ const InsuranceManagements = ({ collapsed }) => {
     },
   ];
 
+  const handleViewDetails = (record) => {
+    navigate(`/insuranceEmply/insurancedetails/${record._id}`, {state: { record } });
+  };
+
   const columns = [
     {
       title: "Created On",
@@ -85,9 +90,13 @@ const InsuranceManagements = ({ collapsed }) => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text, record) => (
+      render: (_, record) => (
         <Space>
-          <Button type="primary" style={{ color: "black" }}>
+          <Button
+            type="primary"
+            style={{ color: "black" }}
+            onClick={() => handleViewDetails(record)}
+          >
             View
           </Button>
         </Space>
@@ -116,7 +125,6 @@ const InsuranceManagements = ({ collapsed }) => {
   return (
     <div>
       <div style={{ width: "90%", marginRight: "auto", marginLeft: "auto" }}>
-        {/* <Sidebar/> */}
         <div
           className={collapsed === true ? "main-content.open" : "main-content"}
         >
@@ -146,7 +154,6 @@ const InsuranceManagements = ({ collapsed }) => {
               setPageSize(pageSize);
             }}
             className="pagination-control"
-            // showSizeChanger
           />
         </div>
       </div>

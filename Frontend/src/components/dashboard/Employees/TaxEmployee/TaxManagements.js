@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Table, Input, Space, Pagination, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Container } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const TaxManagements = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-
+const navigate = useNavigate();
   const data = [
     {
       key: "1",
@@ -59,6 +59,10 @@ const TaxManagements = ({ collapsed }) => {
       action: "Continue",
     },
   ];
+  const handleViewDetails = (record) => {
+    // navigate(`taxEmp/leaddetails/${record._id}`, {state: { record } });
+    navigate(`leaddetails`);
+  };
 
   const columns = [
     {
@@ -87,7 +91,9 @@ const TaxManagements = ({ collapsed }) => {
       key: "action",
       render: (text, record) => (
         <Space>
-          <Button type="primary" style={{ color: "black" }}>
+          <Button type="primary" style={{ color: "black" }}
+          onClick={() => handleViewDetails(record)}
+          >
             View
           </Button>
         </Space>
