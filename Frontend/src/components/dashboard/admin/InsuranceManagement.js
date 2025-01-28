@@ -43,7 +43,7 @@ function InsuranceManagement() {
     setLoading(true);
     try {
       const response = await Api.get("/insuranceManagement/getAllInsuranceManagement");
-      console.log("responsessss", response.data.purpose);
+      console.log("getAllInsurance", response.data);
       setData(response.data);
       setFilteredData(response.data);
     } catch (error) {

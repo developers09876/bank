@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Select, Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
-import "../../user/LoanDetails.css"
+import "../../user/LoanDetails.css";
 import Api from "../../../../Api";
 const { Option } = Select;
 
@@ -16,9 +15,10 @@ function TaskManagementDetails() {
 
   // const [employeeType, setEmployeeType] = useState("");
   const [inputs, setInputs] = useState();
-  const [employeeList, setEmployeeList] = useState();  
+  const [employeeList, setEmployeeList] = useState();
   const [employeeName, setEmployeeName] = useState();
-  
+  const [employeeCategory, setemployeeCategory] = useState();
+
   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const {
     register,
@@ -50,9 +50,16 @@ function TaskManagementDetails() {
       const employeeid = record.employeeId;
       try {
         const response = await Api.get(`signup/getby/${employeeid}`);
-        if (response.data && response.data.firstname && response.data.lastname) {
-          setEmployeeName(`${response.data.firstname} ${response.data.lastname}`); 
+        if (
+          response.data &&
+          response.data.firstname &&
+          response.data.lastname
+        ) {
+          setEmployeeName(
+            `${response.data.firstname} ${response.data.lastname}`
+          );
         }
+        setemployeeCategory(response.data.employeeCategory);
       } catch (error) {
         console.error("Error fetching employee list:", error);
         toast.error("Failed to fetch employee list.");
@@ -115,8 +122,10 @@ function TaskManagementDetails() {
   }
 
   return (
-    <div className="loandetail-container" 
-    style={{ marginTop: "50px", padding: "20px" }}>
+    <div
+      className="loandetail-container"
+      style={{ marginTop: "50px", padding: "20px" }}
+    >
       {/* <div>
         {Object.entries(record).map(([key, value]) => (
           <Row key={key}>
@@ -131,7 +140,7 @@ function TaskManagementDetails() {
           </Row>
         ))}
       </div> */}
-        <div>
+      <div>
         <center>
           <h3>Tax Details</h3>
         </center>
@@ -173,7 +182,7 @@ function TaskManagementDetails() {
                 <p>{record.email}</p>
                 <p>{record.contactNumber}</p>
               </Col>
-              
+
               <Col lg={6} md={12} className="px-3 py-1">
                 <center>
                   <h6>Other Information</h6>
@@ -202,57 +211,65 @@ function TaskManagementDetails() {
         </Col>
       </Row>
       <Row style={{ textAlign: "-webkit-center" }}>
-      <Col lg={12} md={12}>
-                <Card style={{width:'60%'}} className="loandetail-custom-card" title="Tax Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                  <Descriptions.Item label="bussiness Type">
-                      {record.businessType}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Annual Income">
-                      {record.annualIncome}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Tax Paid">
-                      {record.taxPaid}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Income Tax Status">
-                      {record.incomeTaxStatus}
-                    </Descriptions.Item>
-                    
-                    </Descriptions>
-                </Card>
-                </Col>
-      </Row>
-      {record.employeeId && (
-        <Row style={{ textAlign: "-webkit-center" }}>
         <Col lg={12} md={12}>
           <Card
             style={{ width: "60%" }}
             className="loandetail-custom-card"
-            title="Task Assigned Details"
+            title="Tax Details"
           >
             <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-              <Descriptions.Item label="Employee Name">
-                {employeeName}
+              <Descriptions.Item label="bussiness Type">
+                {record.businessType}
               </Descriptions.Item>
-              <Descriptions.Item label="Description">
-                {record.description}
+              <Descriptions.Item label="Annual Income">
+                {record.annualIncome}
               </Descriptions.Item>
-              <Descriptions.Item label="Employee Type">
-                {record.employeeType}
+              <Descriptions.Item label="Tax Paid">
+                {record.taxPaid}
               </Descriptions.Item>
-              <Descriptions.Item label="Start Date">
-                {record.startDate}
-              </Descriptions.Item>
-              <Descriptions.Item label="End Date">
-                {record.endDate}
+              <Descriptions.Item label="Income Tax Status">
+                {record.incomeTaxStatus}
               </Descriptions.Item>
             </Descriptions>
           </Card>
         </Col>
       </Row>
+      {record.employeeId && (
+        <Row style={{ textAlign: "-webkit-center" }}>
+          <Col lg={12} md={12}>
+            <Card
+              style={{ width: "60%" }}
+              className="loandetail-custom-card"
+              title="Task Assigned Details"
+            >
+              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                <Descriptions.Item label="Employee Name">
+                  {employeeName}
+                </Descriptions.Item>
+                <Descriptions.Item label="Employee Type">
+                  {record.employeeType}
+                </Descriptions.Item>
+                <Descriptions.Item label="Employee Category">
+                  {employeeCategory}
+                </Descriptions.Item>
+                <Descriptions.Item label="Description">
+                  {record.description}
+                </Descriptions.Item>
+                <Descriptions.Item label="Start Date">
+                  {record.startDate}
+                </Descriptions.Item>
+                <Descriptions.Item label="End Date">
+                  {record.endDate}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </Col>
+        </Row>
       )}
-      <div className='py-2 px-2'>
-        <h5><b>Assign To</b></h5>
+      <div className="py-2 px-2">
+        <h5>
+          <b>Assign To</b>
+        </h5>
         <form onSubmit={(e) => onSubmit(watch(), e)}>
           <Row>
             <Col xs={12} md={6} lg={4}>
@@ -302,7 +319,9 @@ function TaskManagementDetails() {
                     >
                       <Option value="">Select Category</Option>
                       <Option value="IncomeTax">Income Tax</Option>
-                      <Option value="Tds&TcsServices">TDS / TCS Services</Option>
+                      <Option value="Tds&TcsServices">
+                        TDS / TCS Services
+                      </Option>
                       <Option value="GSTservices">GST Services</Option>
                       <Option value="Esi&PfServices">ESI & PF Services</Option>
                     </Select>
@@ -346,7 +365,7 @@ function TaskManagementDetails() {
                 </div>
               </Col>
             )}
-          <Col xs={12} md={6} lg={4}>
+            <Col xs={12} md={6} lg={4}>
               <label>Employee List:</label>
               <select
                 {...register("employeeId", { required: true })}

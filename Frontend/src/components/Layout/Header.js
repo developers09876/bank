@@ -81,8 +81,10 @@ const Header = () => {
       LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
       // TaxEmployee: "/employeeTax",
       TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
-          // InsuranceEmployee: "/employeeInsurance",
-      InsuranceEmployee: employeeCategory ? "/insuranceEmply":"/employeeInsurance",
+      // InsuranceEmployee: "/employeeInsurance",
+      InsuranceEmployee: employeeCategory
+        ? "/insuranceEmply"
+        : "/employeeInsurance",
     };
     navigate(routes[userType] || "/login");
   };
@@ -92,7 +94,7 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("userType");
-    localStorage.removeItem("employeeCategory")
+    localStorage.removeItem("employeeCategory");
     navigate("/login");
   };
 
@@ -119,15 +121,15 @@ const Header = () => {
                 </Link>
               </li>
             ))}
-            {isLoggedIn && userType === "user" &&(
+            {isLoggedIn && userType === "user" && (
               <Badge count={notificationCount} size="small" offset={[-5, 5]}>
-              <IoNotifications
-                style={{ fontSize: "24px" }}
-                onClick={() => setIsOpen(true)}
-              />
-            </Badge>
+                <IoNotifications
+                  style={{ fontSize: "24px" }}
+                  onClick={() => setIsOpen(true)}
+                />
+              </Badge>
             )}
-            
+
             {!isLoggedIn ? (
               <li>
                 <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3">
@@ -161,38 +163,49 @@ const UserDropdown = ({
   handleLogout,
   dropdownVisible,
   setDropdownVisible,
-}) => (
-  <li className="relative">
-    <div
-      className="live-icon cursor-pointer"
-      onMouseEnter={() => setDropdownVisible(true)}
-      onMouseLeave={() => setDropdownVisible(false)}
-    >
-      <img
-        src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
-        alt="User Avatar"
-        className="avatar"
-      />
-      <div className="live-badge">100%</div>
-      {dropdownVisible && (
-        <div className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded">
-          <button
-            onClick={handlenavigate}
-            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-          >
-            My Profile
-          </button>
-          <button
-            onClick={handleLogout}
-            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-          >
-            Logout
-          </button>
-        </div>
-      )}
-    </div>
-  </li>
-);
+}) => {
+  useEffect(() => {
+    if (dropdownVisible) {
+      const timer = setTimeout(() => {
+        setDropdownVisible(false);
+      }, 5000); // 5 seconds
+
+      return () => clearTimeout(timer); // Cleanup timer on component unmount or visibility change
+    }
+  }, [dropdownVisible, setDropdownVisible]);
+  return (
+    <li className="relative">
+      <div
+        className="live-icon cursor-pointer"
+        onClick={() => setDropdownVisible(true)}
+        // onMouseLeave={() => setDropdownVisible(false)}
+      >
+        <img
+          src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
+          alt="User Avatar"
+          className="avatar"
+        />
+        <div className="live-badge">100%</div>
+        {dropdownVisible && (
+          <div className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded">
+            <button
+              onClick={handlenavigate}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              My Profile
+            </button>
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </li>
+  );
+};
 
 const NotificationModal = ({ isOpen, setIsOpen, setNotificationCount }) => {
   const email = localStorage.getItem("email");

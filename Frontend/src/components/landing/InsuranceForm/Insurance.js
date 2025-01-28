@@ -122,7 +122,8 @@ const Insurance = ({ collapsed }) => {
   return (
     <div>
       <div className={collapsed ? "main-content.open" : "main-content"}>
-        <Space style={{ marginBottom: 16 }} className="filter-actions">
+        <Space style={{ marginBottom: 16, display: "flex",
+            justifyContent: "space-between", }} className="filter-actions">
           <Input
             placeholder="Search"
             value={searchText}
@@ -147,7 +148,7 @@ const Insurance = ({ collapsed }) => {
             style={{
               display: "inline",
               float: "right",
-              marginLeft: "830px",
+              marginRight: "100px",
               backgroundColor: "#00397f",
             }}
           >
