@@ -38,6 +38,8 @@ const LoanDetails = ({ collapsed }) => {
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
   const [employeeList, setEmployeeList] = useState([]);
   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+  const [employeeName, setEmployeeName] = useState();
+  const [employeeCategory, setemployeeCategory] = useState();
 
   const {
     register,
@@ -65,6 +67,29 @@ const LoanDetails = ({ collapsed }) => {
     };
     fetchEmployeeList();
   }, [employeeType]);
+
+  useEffect(() => {
+    const fetchEmployeeName = async () => {
+      const employeeid = record.employeeId;
+      try {
+        const response = await Api.get(`signup/getby/${employeeid}`);
+        if (
+          response.data &&
+          response.data.firstname &&
+          response.data.lastname
+        ) {
+          setEmployeeName(
+            `${response.data.firstname} ${response.data.lastname}`
+          );
+        }
+        setemployeeCategory(response.data.employeeCategory);
+      } catch (error) {
+        console.error("Error fetching employee list:", error);
+        toast.error("Failed to fetch employee list.");
+      }
+    };
+    fetchEmployeeName();
+  }, []);
 
   useEffect(() => {
     if (category) {
@@ -616,6 +641,45 @@ const LoanDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
+            {record.employeeId && (
+              <Row style={{ textAlign: "-webkit-center" }}>
+                <h5>
+                  <b>Task Details:</b>
+                </h5>
+                <Col lg={12} md={12}>
+                  <Card
+                    className="loandetail-custom-card"
+                    title="Task Assigned Details"
+                  >
+                    <Descriptions
+                      column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                    >
+                      <Descriptions.Item label="Employee Name">
+                        {employeeName}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Employee Type">
+                        {record.employeeType}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Employee Category">
+                        {employeeCategory}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Description">
+                        {record.description}
+                      </Descriptions.Item>
+
+                      <Descriptions.Item label="Start Date">
+                        {record.startDate
+                          ? record.startDate.split("T")[0]
+                          : "N/A"}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="End Date">
+                        {record.endDate ? record.endDate.split("T")[0] : "N/A"}
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </Card>
+                </Col>
+              </Row>
+            )}
             <div className="py-2 px-2">
               <h5>
                 <b>Assign To</b>

@@ -81,8 +81,10 @@ const Header = () => {
       LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
       // TaxEmployee: "/employeeTax",
       TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
-          // InsuranceEmployee: "/employeeInsurance",
-      InsuranceEmployee: employeeCategory ? "/insuranceEmply":"/employeeInsurance",
+      // InsuranceEmployee: "/employeeInsurance",
+      InsuranceEmployee: employeeCategory
+        ? "/insuranceEmply"
+        : "/employeeInsurance",
     };
     navigate(routes[userType] || "/login");
   };
@@ -92,7 +94,7 @@ const Header = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("userType");
-    localStorage.removeItem("employeeCategory")
+    localStorage.removeItem("employeeCategory");
     navigate("/login");
   };
 
@@ -119,15 +121,15 @@ const Header = () => {
                 </Link>
               </li>
             ))}
-            {isLoggedIn && userType === "user" &&(
+            {isLoggedIn && userType === "user" && (
               <Badge count={notificationCount} size="small" offset={[-5, 5]}>
-              <IoNotifications
-                style={{ fontSize: "24px" }}
-                onClick={() => setIsOpen(true)}
-              />
-            </Badge>
+                <IoNotifications
+                  style={{ fontSize: "24px" }}
+                  onClick={() => setIsOpen(true)}
+                />
+              </Badge>
             )}
-            
+
             {!isLoggedIn ? (
               <li>
                 <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3">
@@ -165,8 +167,8 @@ const UserDropdown = ({
   <li className="relative">
     <div
       className="live-icon cursor-pointer"
-      onMouseEnter={() => setDropdownVisible(true)}
-      onMouseLeave={() => setDropdownVisible(false)}
+      onClick={() => setDropdownVisible(true)}
+      // onMouseLeave={() => setDropdownVisible(false)}
     >
       <img
         src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="

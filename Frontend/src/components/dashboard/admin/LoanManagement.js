@@ -39,6 +39,7 @@ const LoanManagement = ({ collapsed }) => {
         headers: { Authorization: localStorage.getItem("token") },
       });
       const loans = await response.json();
+      console.log('getAllloans', loans)
       setLoan(loans);
     } catch (error) {
       console.log(error);
