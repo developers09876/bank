@@ -111,7 +111,7 @@
 }
 
 .learn-more-button:hover {
-  background-color: #022c70;
+  background-color: #3f7ad7;
 }
 .refer-svgpath {
   position: absolute;
@@ -205,3 +205,45 @@ font-size: 46px;
     justify-self: center;
   }
 }
+.refer-input-boxes {
+  display: flex;
+  gap: 10px;
+  justify-content: left;
+  margin-top: 20px;
+}
+
+.refer-digit-input {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.refer-digit-input:hover {
+  background-color: #d6dbe3;
+  border-color: #3b82f6;
+  cursor: pointer;
+}
+
+.refer-digit-input:focus {
+  border-color: #3b82f6;
+  background-color: #fff0f5;
+  box-shadow: 0 0 8px #3b82f6;
+}
+
+.refer-secondcol img {
+  width: 100%;
+  max-width: 380px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.refer-secondcol img:hover {
+  transform: scale(1.1);
+}
+
