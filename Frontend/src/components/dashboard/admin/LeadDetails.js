@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import { Select } from "antd";
+import { Select, Card, Descriptions } from "antd";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Api from "../../../Api";
@@ -182,10 +182,16 @@ function LeadDetails() {
     return <p>No details available</p>;
   }
   return (
-    <div style={{ marginTop: "50px", padding: "20px" }}>
+    <div
+    className="loandetail-container"
+    style={{ marginTop: "50px", padding: "20px" }}
+  >
+    <div >
+      <center>
       <h3>Lead Details</h3>
+      </center>
       <div>
-        <Row>
+        {/* <Row>
           <Col xs={2}>
             <p>
               <strong>Name:</strong>
@@ -254,32 +260,147 @@ function LeadDetails() {
           <Col xs={7}>
             <p>{record.purpose}</p>
           </Col>
+        </Row> */}
+      <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
+              <Col lg={8}>
+                <Card>
+                  <Row className="personal_card_row">
+                    <Col
+                      className="firstrowcol px-1 py-1"
+                      lg={6}
+                      md={12}
+                      style={{
+                        height: "auto",
+                        alignContent: "center",
+                        borderRight: "1px #e5e7eb solid",
+                        textAlign: "-webkit-center",
+                      }}
+                    >
+                      <div className="photo-preview mb-2">
+                        <img
+                          src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                          //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
+                          // src={record.photographs}
+                          alt="Photograph"
+                          className="photo-image"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            //   objectFit: "cover",
+                            borderRadius: "50%",
+                            border: "6px solid #80808040",
+                          }}
+                        />
+                      </div>
+                      <p>
+                        {record.firstname} {record.lastname}
+                      </p>
+                      <p>{record.email}</p>
+                      <p>{record.contactNumber}</p>
+                    </Col>
+      
+                    <Col lg={6} md={12} className="px-3 py-1">
+                      <center>
+                        <h6>Other Information</h6>
+                      </center>
+                      <Descriptions
+                        size="small"
+                        // layout="vertical"
+                        style={{
+                          paddingBottom: "10px",
+                        }}
+                        column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
+                      >
+                        <Descriptions.Item label="Adhaar Number">
+                          {record.aadhar}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="PanCard Number">
+                          {record.panno}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="GST Number">
+                          {record.gst}
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
+            </Row>
+        <Row style={{ textAlign: "-webkit-center" }}>
+          <Col lg={12} md={12}>
+            <Card
+              style={{ width: "60%" }}
+              className="loandetail-custom-card"
+              title="Loan Details"
+            >
+              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                <Descriptions.Item label="Loan Amount">
+                  {record.amount}
+                </Descriptions.Item>
+                <Descriptions.Item label="Purpose Of Loan">
+                  {record.purpose}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </Col>
+        </Row>
+        <Row style={{ textAlign: "-webkit-center" }}>
+          <Col lg={12} md={12}>
+            <Card
+              style={{ width: "60%" }}
+              className="loandetail-custom-card"
+              title="Insurance Details"
+            >
+              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                <Descriptions.Item label="Policy Type">
+                  {record.PolicyType}
+                </Descriptions.Item>
+                <Descriptions.Item label="Sum Assured">
+                  {record.sumAssured}
+                </Descriptions.Item>
+                <Descriptions.Item label="Policy Term">
+                  {record.policyTerm}
+                </Descriptions.Item>
+                <Descriptions.Item label="Annual Income">
+                  {record.annualIncome}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          </Col>
         </Row>
 
-        <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3>
+        {/* <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3> */}
 
-        {record.addremarks && record.addremarks.length > 0 ? (
-          record.addremarks.map((remark, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <Row>
-                <Col span={6}>
-                  <strong>Date:</strong>
-                </Col>
-                <Col span={18}>{remark.date}</Col>
+        {/* {record.addremarks && record.addremarks.length > 0 ? (
+          record.addremarks.map((remark, index) => ( */}
+            {/* <div key={index} style={{ marginBottom: "10px" }}> */}
+              <Row style={{ textAlign: "-webkit-center" }}>
+                <Col lg={12} md={12}>
+                <Card
+                           style={{ width: "60%" }}
+                           className="loandetail-custom-card"
+                           title="Reminders"
+                         >
+             <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
+  {record.addremarks && record.addremarks.length > 0 ? (
+    record.addremarks.map((remark, index) => (
+      <React.Fragment key={index}>
+        <Descriptions.Item label="Date">{remark.date}</Descriptions.Item>
+        <Descriptions.Item label="Message">{remark.remarks}</Descriptions.Item>
+      </React.Fragment>
+    ))
+  ) : (
+    <Descriptions.Item>No reminders available.</Descriptions.Item>
+  )}
+</Descriptions>
+              </Card>
+              </Col>
               </Row>
-              <Row>
-                <Col span={6}>
-                  <strong>Message:</strong>
-                </Col>
-                <Col span={18}>{remark.remarks}</Col>
-              </Row>
-
-              <hr style={{ margin: "10px 0" }} />
-            </div>
-          ))
+            {/* </div> */}
+          {/* ))
         ) : (
           <p>No reminders available.</p>
-        )}
+        )} */}
       </div>
       <div className="py-2 px-2">
         <h5>
@@ -480,6 +601,7 @@ function LeadDetails() {
           </Row>
         </form>
       </div>
+    </div>
     </div>
   );
 }
