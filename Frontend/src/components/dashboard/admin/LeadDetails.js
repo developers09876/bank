@@ -344,7 +344,7 @@ function LeadDetails() {
             </Card>
           </Col>
         </Row>
-        <Row style={{ textAlign: "-webkit-center" }}>
+        {/* <Row style={{ textAlign: "-webkit-center" }}>
           <Col lg={12} md={12}>
             <Card
               style={{ width: "60%" }}
@@ -367,7 +367,7 @@ function LeadDetails() {
               </Descriptions>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
 
         {/* <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3> */}
 
