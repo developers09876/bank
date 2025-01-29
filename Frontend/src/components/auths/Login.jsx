@@ -82,8 +82,9 @@ const LoginPage = () => {
 
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
-      console.log('response.data.data', response.data.data)
-      
+      localStorage.setItem("referralCode", response.data.data.referralCode);
+
+      console.log("response.data.data", response.data.data);
 
       toast.success("OTP sent successfully!", {
         position: "top-center",
@@ -123,9 +124,14 @@ const LoginPage = () => {
       );
       console.log("response", response);
       localStorage.setItem("token", response.data.data.token);
+      localStorage.setItem("token", response.data.data.token);
+
       localStorage.setItem("email", response.data.data.checkEmail.email);
-      if( response.data.data.checkEmail?.employeeCategory){
-        localStorage.setItem("employeeCategory", response.data.data.checkEmail.employeeCategory)
+      if (response.data.data.checkEmail?.employeeCategory) {
+        localStorage.setItem(
+          "employeeCategory",
+          response.data.data.checkEmail.employeeCategory
+        );
       }
       toast.success("Verification successfull!", {
         position: "top-center",
@@ -144,7 +150,9 @@ const LoginPage = () => {
           // TaxEmployee: "/employeeTax",
           TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
           // InsuranceEmployee: "/employeeInsurance",
-          InsuranceEmployee: employeeCategory ? "/insuranceEmply":"/employeeInsurance",
+          InsuranceEmployee: employeeCategory
+            ? "/insuranceEmply"
+            : "/employeeInsurance",
           stockMarket: "/employeeStockMarket",
         };
         const route = routes[userType] || "/login";

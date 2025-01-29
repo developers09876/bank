@@ -111,7 +111,7 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<ContactUs />} />
           <Route path="/refer" element={<Refer />} />
-          <Route path="/refercode/12345" element={<Refercode />} />
+          <Route path="/refercode/:id" element={<Refercode />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
           {/* <Route path="/insurance" element={<InsuranceFormProfileTab />} /> */}
