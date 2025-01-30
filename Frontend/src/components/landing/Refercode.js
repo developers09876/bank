@@ -4,7 +4,8 @@ import { Col, Row } from "react-bootstrap";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import { useLocation, useNavigate,useParams  } from "react-router-dom";
-
+import { toast , ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ReferCode = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,24 +32,57 @@ const ReferCode = () => {
     setReferCode(alphanumericValue.slice(0, 11));
   };
 
+  // const handleSubmit = async () => {
+  //   if (referCode.length < 11) {
+  //     alert("Please enter at least a 6-character referral code.");
+  //     return;
+  //   }
+
+  //   const userId = localStorage.getItem("id");
+
+  //   try {
+  //     const response = await fetch(`${API_URL}/api/referrals/addCode`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         category: categoryTitle,
+  //         subCategory: subCategory?.title,
+  //         reward: subCategory?.rewards,
+  //         userId,
+  //         referCode,
+  //         firstName,
+  //         lastName,
+  //         contactNumber,
+  //         email,
+  //         referType,
+  //         loanType,
+  //         insuranceType,
+  //         cibilType,
+  //       }),
+  //     });
+
+  //     if (response.ok) {
+  //       alert("Referral code submitted successfully!");
+  //       navigate("/user/rewards");
+  //     } else {
+  //       alert("Failed to submit referral code.");
+  //     }
+  //   } catch (error) {
+  //     alert("Error: Unable to submit referral code.");
+  //   }
+  // };
   const handleSubmit = async () => {
-    if (referCode.length < 11) {
+    // Check for referral code length
+    if (referCode.length < 6) {
       alert("Please enter at least a 6-character referral code.");
       return;
     }
-
-    const userId = localStorage.getItem("id");
-
+  
     try {
-      const response = await fetch(`${API_URL}/api/referrals/addCode`, {
+      const response = await fetch("http://localhost:5000/signup/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          category: categoryTitle,
-          subCategory: subCategory?.title,
-          reward: subCategory?.rewards,
-          userId,
-          referCode,
           firstName,
           lastName,
           contactNumber,
@@ -57,23 +91,32 @@ const ReferCode = () => {
           loanType,
           insuranceType,
           cibilType,
+          referCode,
         }),
       });
-
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        alert("Referral code submitted successfully!");
-        navigate("/user/rewards");
+        toast.success("Registration successful!", { autoClose: 2000 });
+        setTimeout(() => {
+          navigate("/user/rewards");
+        }, 2000);
       } else {
-        alert("Failed to submit referral code.");
+        console.error("Backend Error:", data);
+        toast.error(data.error || "Failed to register.");
       }
     } catch (error) {
-      alert("Error: Unable to submit referral code.");
+      console.error("Network or Server Error:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
-
+  
+  
   return (
     <div>
       <Header />
+       <ToastContainer />
       <div className="refer-parent">
         <div className="refer-containers">
           <div className="refer-cards">
@@ -180,10 +223,10 @@ const ReferCode = () => {
                           value={insuranceType}
                           onChange={(e) => setInsuranceType(e.target.value)}
                         >
-                          <option value="">Insurance Type</option>
+                          {/* <option value="">Insurance Type</option> */}
                           <option value="Health Insurance">Health Insurance</option>
                           <option value="Life Insurance">Life Insurance</option>
-                          <option value="Vehicle Insurance">Life Insurance</option>
+                          <option value="Vehicle Insurance">Vehicle Insurance</option>
                         </select>
                       </Col>
                     )}
@@ -197,9 +240,10 @@ const ReferCode = () => {
                           value={cibilType}
                           onChange={(e) => setCibilType(e.target.value)}
                         >
-                          <option value="">CIBIL Type</option>
+                          {/* <option value="">CIBIL Type</option> */}
                            <option value="Monthly Plan">Monthly Plan</option>
       <option value="Quarterly Plan">Quarterly Plan</option>
+      <option value="Half Yearly Plan">Half Yearly Plan</option>
       <option value="Annual Plan">Annual Plan</option>
                         </select>
                       </Col>
@@ -222,7 +266,7 @@ const ReferCode = () => {
 
                     <Col lg={6} md={6} sm={12}>
                       <button className="learn-more-button" onClick={handleSubmit}>
-                        Submit Code
+                        Submit 
                       </button>
                     </Col>
                   </Row>
