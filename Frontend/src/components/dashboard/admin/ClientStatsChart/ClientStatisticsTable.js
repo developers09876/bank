@@ -21,7 +21,7 @@ const ClientStatistics = () => {
           );
           let filteredLoans = response.data;
           console.log("getallLoans", response.data);
-          // Filter loans based on status mapping:
+
           if (status === "completed") {
             filteredLoans = filteredLoans.filter((loan) => loan.status === "1");
           } else if (status === "rejected") {

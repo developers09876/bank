@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, Row, Col, Container } from "react-bootstrap";
 import { FaDollarSign, FaShieldAlt, FaFileInvoiceDollar } from "react-icons/fa";
-import "./ClientStatisticsPage.css"; // Ensure to create this CSS file for styling
+import "./ClientStatisticsPage.css";
 
 const ClientStatisticsPage = () => {
   const { status } = useParams();

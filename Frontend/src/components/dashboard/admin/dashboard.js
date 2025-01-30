@@ -183,7 +183,7 @@ const AdminDashboard = () => {
     },
   };
   const handleCardClick = () => {
-    navigate("/admin/loandashboard"); // Set the desired navigation path here
+    navigate("/admin/loandashboard");
   };
   return (
     <div className="admin-dashboard-container">
