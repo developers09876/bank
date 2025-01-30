@@ -1,95 +1,69 @@
 import { Logout } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { Controller, useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./Sidebar";
 import { Col, Container, Row } from "react-bootstrap";
+import { Select } from "antd";
+const { Option } = Select;
+
+const serviceToCategoryMap = {
+  LoanEmployee: ["personal", "business", "education", "home"],
+  TaxEmployee: [
+    "IncomeTax",
+    "Tds&TcsServices",
+    "GSTservices",
+    "Esi&PfServices",
+  ],
+  InsuranceEmployee: [
+    "Health Insurance",
+    "Life Insurance",
+    "Vehicle Insurance",
+  ],
+  stockMarket: ["Mutual Funds", "Equity", "Bonds"],
+};
 
 const AddAdmin = ({ setAuth }) => {
-  const [inputs, setInputs] = useState({
-    empno: "",
-    designation: "",
-    firstname: "",
-    lastname: "",
-    email: "",
-    // password: "",
-    // confirmPassword: "",
-    contactNumber: "",
-    Manager: "",
-    Branch: "",
-    dateOfJoining: "",
-  });
+  const navigate = useNavigate();
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
 
   const {
-    empno,
-    designation,
-    firstname,
-    lastname,
-    contactNumber,
-    email,
-    // password,
-    // confirmPassword,
-    Manager,
-    Branch,
-    dateOfJoining,
-  } = inputs;
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-  const onChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    // Get categories based on selected services
+    let categories = new Set();
+    selectedServices.forEach((service) => {
+      serviceToCategoryMap[service]?.forEach((category) =>
+        categories.add(category)
+      );
+    });
+    setFilteredCategories([...categories]);
+  }, [selectedServices]);
 
-  const addSuccessful = () => {
-    toast.promise(
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
-      }),
-      {
-        pending: "Adding New Admin...",
-        success: "Added Successfully!",
-        error: "Error occurred!",
-      },
-      { autoClose: 1000 }
-    );
-  };
-
-  const navigate = useNavigate();
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
-      const body = {
-        empno,
-        userType: designation, // Using designation as userType
-        firstname,
-        lastname,
-        contactNumber,
-        email,
-        // password,
-        // confirmPassword,
-        manager: Manager,
-        branch: Branch,
-        dateOfJoining,
-      };
+      const body = { ...data, userType: data.designation };
 
       const response = await fetch("http://localhost:5000/signup/register", {
         method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
+        headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),
       });
 
       const parseRes = await response.json();
 
       if (response.ok) {
-        addSuccessful();
-        setTimeout(() => {
-          navigate(-1);
-        }, 3000);
+        toast.success("Added Successfully!");
+        setTimeout(() => navigate(-1), 3000);
       } else {
         toast.error(parseRes.message || "Failed to add admin!");
       }
@@ -114,89 +88,130 @@ const AddAdmin = ({ setAuth }) => {
                 backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
               }}
             >
-              <div>
-                <h3 className="text-lg font-medium leading-6 text-white">
-                  Add New Employee
-                </h3>
-                <p className="mt-1 max-w-2xl text-sm text-white">
-                  Register all the required fields.
-                </p>
-              </div>
-              <div className="text-white">
-                <button
-                  onClick={(e) => {
-                    setAuth(false);
-                  }}
-                >
-                  <Link to="/login">
-                    <Logout />
-                  </Link>
-                </button>
-              </div>
+              <h3 className="text-lg font-medium leading-6 text-white">
+                Add New Employee
+              </h3>
+              <button onClick={() => setAuth(false)}>
+                <Link to="/login">
+                  <Logout />
+                </Link>
+              </button>
             </div>
 
+            {/* FORM */}
             <form
-              onSubmit={onSubmit}
+              onSubmit={handleSubmit(onSubmit)}
               className="mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500"
             >
               <Row>
+                {/* Employee No */}
                 <Col lg={6} md={6}>
                   <label htmlFor="empno">Employee No:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="empno"
-                    value={empno}
-                    onChange={onChange}
+                    className="block border w-full p-3 rounded mb-4"
+                    {...register("empno", {
+                      required: "Employee No is required",
+                    })}
                     placeholder="Employee No"
-                    required
                   />
+                  {errors.empno && (
+                    <p className="text-red-500">{errors.empno.message}</p>
+                  )}
                 </Col>
+
+                {/* Services */}
                 <Col lg={6} md={6}>
-                  <label htmlFor="designation">Services:</label>
-                  <select
-                    name="designation"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    value={designation}
-                    onChange={onChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Select Services
-                    </option>
-                    <option value="LoanEmployee">Loan Employee</option>
-                    <option value="TaxEmployee">Tax Employee</option>
-                    <option value="InsuranceEmployee">
-                      Insurance Employee
-                    </option>
-                    <option value="stockMarket">
-                      Stock Market
-                    </option>
-                  </select>
+                  <label htmlFor="services">Services:</label>
+                  <Controller
+                    name="services"
+                    control={control}
+                    rules={{ required: "Please select at least one service" }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        mode="multiple"
+                        className="inputcolumn_drp"
+                        placeholder="Select Services"
+                        style={{ height: "55%" }}
+                        onChange={(value) => {
+                          setSelectedServices(value);
+                          setValue("services", value);
+                        }}
+                      >
+                        <Option value="LoanEmployee">Loan Employee</Option>
+                        <Option value="TaxEmployee">Tax Employee</Option>
+                        <Option value="InsuranceEmployee">
+                          Insurance Employee
+                        </Option>
+                        <Option value="stockMarket">Stock Market</Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.services && (
+                    <p className="text-red-500">{errors.services.message}</p>
+                  )}
                 </Col>
+
+                {/* Category - Filtered Based on Services */}
+                <Col lg={6} md={6}>
+                  <label htmlFor="category">Category:</label>
+                  <Controller
+                    name="category"
+                    control={control}
+                    rules={{ required: "Please select at least one category" }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        mode="multiple"
+                        className="inputcolumn_drp"
+                        placeholder="Select Category"
+                        style={{ height: "55%" }}
+                        disabled={filteredCategories.length === 0}
+                        onChange={(value) => setValue("category", value)}
+                      >
+                        {filteredCategories.map((category) => (
+                          <Option key={category} value={category}>
+                            {category}
+                          </Option>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                  {errors.category && (
+                    <p className="text-red-500">{errors.category.message}</p>
+                  )}
+                </Col>
+
+                {/* Other Fields */}
                 <Col lg={6} md={6}>
                   <label htmlFor="firstname">First Name:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="firstname"
-                    value={firstname}
-                    onChange={onChange}
+                    className="block border w-full p-3 rounded mb-4"
+                    {...register("firstname", {
+                      required: "First Name is required",
+                    })}
                     placeholder="First Name"
-                    required
                   />
+                  {errors.firstname && (
+                    <p className="text-red-500">{errors.firstname.message}</p>
+                  )}
                 </Col>
+
                 <Col lg={6} md={6}>
                   <label htmlFor="lastname">Last Name:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="lastname"
-                    value={lastname}
-                    onChange={onChange}
+                    className="block border w-full p-3 rounded mb-4"
+                    {...register("lastname", {
+                      required: "Last Name is required",
+                    })}
                     placeholder="Last Name"
-                    required
                   />
+                  {errors.lastname && (
+                    <p className="text-red-500">{errors.lastname.message}</p>
+                  )}
                 </Col>
                 <Col lg={6} md={6}>
                   <label htmlFor="contactNumber">Contact Number:</label>
@@ -204,58 +219,44 @@ const AddAdmin = ({ setAuth }) => {
                     type="number"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="contactNumber"
-                    value={contactNumber}
-                    onChange={onChange}
-                    placeholder="Contact Number"
-                    required
+                    {...register("contactNumber", {
+                      required: "contactNumber is required",
+                    })}
+                    placeholder="contactNumber"
                   />
+                  {errors.contactNumber && (
+                    <p className="text-red-500">{errors.contactNumber.message}</p>
+                  )}
                 </Col>
+
+
                 <Col lg={6} md={6}>
                   <label htmlFor="email">Email Address:</label>
                   <input
                     type="email"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="email"
-                    value={email}
-                    onChange={onChange}
+                    className="block border w-full p-3 rounded mb-4"
+                    {...register("email", { required: "Email is required" })}
                     placeholder="Email"
-                    required
                   />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email.message}</p>
+                  )}
                 </Col>
-                {/* <Col lg={6} md={6}>
-                  <label htmlFor="password">Password:</label>
-                  <input
-                    type="password"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="password"
-                    value={password}
-                    onChange={onChange}
-                    placeholder="**********"
-                    required
-                  />
-                </Col>
-                <Col lg={6} md={6}>
-                  <label htmlFor="confirmPassword">Confirm Password:</label>
-                  <input
-                    type="password"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={onChange}
-                    placeholder="**********"
-                    required
-                  />
-                </Col> */}
+
                 <Col lg={6} md={6}>
                   <label htmlFor="dateOfJoining">Date of Joining:</label>
                   <input
                     type="date"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
-                    name="dateOfJoining"
-                    value={dateOfJoining}
-                    onChange={onChange}
-                    required
+                    className="block border w-full p-3 rounded mb-4"
+                    {...register("dateOfJoining", {
+                      required: "Date of Joining is required",
+                    })}
                   />
+                  {errors.dateOfJoining && (
+                    <p className="text-red-500">
+                      {errors.dateOfJoining.message}
+                    </p>
+                  )}
                 </Col>
                 <Col lg={6} md={6}>
                   <label htmlFor="Manager">Reporting Manager:</label>
@@ -263,11 +264,14 @@ const AddAdmin = ({ setAuth }) => {
                     type="text"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="Manager"
-                    value={Manager}
-                    onChange={onChange}
+                    {...register("manager", {
+                      required: "Manager is required",
+                    })}
                     placeholder="Manager"
-                    required
                   />
+                  {errors.Manager && (
+                    <p className="text-red-500">{errors.Manager.message}</p>
+                  )}
                 </Col>
                 <Col lg={6} md={6}>
                   <label htmlFor="Branch">Reporting Branch:</label>
@@ -275,29 +279,23 @@ const AddAdmin = ({ setAuth }) => {
                     type="text"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
                     name="Branch"
-                    value={Branch}
-                    onChange={onChange}
+                    {...register("branch", {
+                      required: "Branch is required",
+                    })}
                     placeholder="Branch"
-                    required
                   />
+                  {errors.Branch && (
+                    <p className="text-red-500">{errors.Branch.message}</p>
+                  )}
                 </Col>
               </Row>
 
-              <button
-                type="submit"
-                className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6"
-                style={{
-                  backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
-                }}
-              >
+              <button type="submit" className="btn btn-primary mr-3">
                 Save
               </button>
               <button
                 type="button"
-                className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10"
-                style={{
-                  backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
-                }}
+                className="btn btn-secondary"
                 onClick={() => navigate("/admin")}
               >
                 Cancel

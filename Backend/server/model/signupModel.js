@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
   empno: { type: String },
   manager: { type: String },
   branch: { type: String },
+  services: { type: [String] },
+  category: { type: [String] },
   dateOfJoining: { type: String },
   firstname: { type: String },
   lastname: { type: String },
