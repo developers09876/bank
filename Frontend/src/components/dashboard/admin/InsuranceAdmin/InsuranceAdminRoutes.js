@@ -10,18 +10,29 @@ import TabsProfile from "./ProfileTabs";
 import TaskManagementDetails from "./TaskManagementDetalis";
 import TaskManagements from "./TaskManagements";
 import CreateInsuranceManagement from "./CreateInsuranceManagement";
+import InsuranceViewDetails from "./InsuranceViewDetails";
 
-export const  InsuranceAdminRoutes = [
+export const InsuranceAdminRoutes = [
   { path: "", element: <InsuranceDashboard /> },
   { path: "myprofile", element: <TabsProfile /> },
   { path: "insurancemanagement", element: <InsuranceManagements /> },
-  { path: "insuranceuserlist",element: <InsuranceUserList/>},
+  {
+    path: "/employeeInsurance/InsuranceViewdetails/:id",
+    element: <InsuranceViewDetails />,
+  },
+  { path: "insuranceuserlist", element: <InsuranceUserList /> },
   { path: "/employeeInsurance/createlead", element: <CreateLead /> },
   { path: "leadmanagement", element: <InsuranceLeadManagement /> },
   { path: "leaddetails", element: <InsuranceLeadDetails /> },
-  { path: "insuranceemployeelist", element: <InsuranceEmployeeList/> },
-  { path: "/employeeInsurance/taskManagementdetails/:id", element: <TaskManagementDetails /> },
+  { path: "insuranceemployeelist", element: <InsuranceEmployeeList /> },
+  {
+    path: "/employeeInsurance/taskManagementdetails/:id",
+    element: <TaskManagementDetails />,
+  },
   { path: "taskManagement", element: <TaskManagements /> },
   { path: "createinauranceMangement", element: <CreateInsuranceManagement /> },
-  { path: "/employeeInsurance/addinsuranceemployee", element: <AddInsuranceEmployee/> },
+  {
+    path: "/employeeInsurance/addinsuranceemployee",
+    element: <AddInsuranceEmployee />,
+  },
 ];

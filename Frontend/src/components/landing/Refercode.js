@@ -78,7 +78,13 @@ const ReferCode = () => {
         <div className="refer-containers">
           <div className="refer-cards">
             <Row className="refer-firstrow px-5 py-2">
-              <Col className="refer-firstcol px-1 py-2" lg={6} md={12} sm={12} xs={12}>
+              <Col
+                className="refer-firstcol px-1 py-2"
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <div className="referral-left animate-slide-in-left">
                   <h1 className="refer-headings">Enter Your Referral Code and Login</h1>
 
@@ -120,6 +126,7 @@ const ReferCode = () => {
                     </Col>
                     <Col lg={6} md={6} sm={12}>
                       <label>Email</label>
+                      <br />
                       <input
                         type="email"
                         className="refer-input"
@@ -132,10 +139,10 @@ const ReferCode = () => {
 
                   {/* Referral Type Based on Refer Type */}
                   <Row>
-                    <Col  lg={6} md={6} sm={12}>
+                    <Col lg={6} md={6} sm={12}>
                       <label>Referral Type</label>
                       <select
-                      style={{width:"200px"}}
+                      style={{width:"180px"}}
                         className="refer-input"
                         value={referType}
                         onChange={(e) => setReferType(e.target.value)}
@@ -148,10 +155,10 @@ const ReferCode = () => {
 
                     {/* Loan, Insurance, or CIBIL Type Based on Refer Type */}
                     {referType === "Loan" && (
-                      <Col  lg={6} md={6} sm={12}>
+                      <Col lg={6} md={6} sm={12}>
                         <label>Loan Type</label>
                         <select
-                        style={{width:"200px"}}
+                        style={{width:"180px"}}
                           className="refer-input"
                           value={loanType}
                           onChange={(e) => setLoanType(e.target.value)}
@@ -165,35 +172,34 @@ const ReferCode = () => {
                     )}
 
                     {referType === "Insurance" && (
-                      <Col  lg={6} md={6} sm={12}>
+                      <Col lg={6} md={6} sm={12}>
                         <label>Insurance Type</label>
                         <select
-                        style={{width:"200px"}}
+                        style={{width:"180px"}}
                           className="refer-input"
                           value={insuranceType}
                           onChange={(e) => setInsuranceType(e.target.value)}
                         >
-                          {/* <option value="">Insurance Type</option> */}
+                          <option value="">Insurance Type</option>
                           <option value="Health Insurance">Health Insurance</option>
                           <option value="Life Insurance">Life Insurance</option>
-                          <option value="Vehicle Insurance">Vehicle Insurance</option>
+                          <option value="Vehicle Insurance">Life Insurance</option>
                         </select>
                       </Col>
                     )}
 
                     {referType === "CIBIL" && (
-                      <Col  lg={6} md={6} sm={12}>
+                      <Col lg={6} md={6} sm={12}>
                         <label>CIBIL Type</label>
                         <select
-                          style={{width:"200px"}}
+                          style={{width:"180px"}}
                           className="refer-input"
                           value={cibilType}
                           onChange={(e) => setCibilType(e.target.value)}
                         >
-                          {/* <option value="">CIBIL Type</option> */}
+                          <option value="">CIBIL Type</option>
                            <option value="Monthly Plan">Monthly Plan</option>
       <option value="Quarterly Plan">Quarterly Plan</option>
-      <option value="Annual Plan">Half Yearly Plan</option>
       <option value="Annual Plan">Annual Plan</option>
                         </select>
                       </Col>
@@ -216,14 +222,20 @@ const ReferCode = () => {
 
                     <Col lg={6} md={6} sm={12}>
                       <button className="learn-more-button" onClick={handleSubmit}>
-                        Submit 
+                        Submit Code
                       </button>
                     </Col>
                   </Row>
                 </div>
               </Col>
 
-              <Col className="refer-secondcol px-3 py-2" lg={6} md={12} sm={12} xs={12}>
+              <Col
+                className="refer-secondcol px-3 py-2"
+                lg={6}
+                md={12}
+                sm={12}
+                xs={12}
+              >
                 <img
                   src="https://cdni.iconscout.com/illustration/premium/thumb/online-file-sharing-illustration-download-in-svg-png-gif-formats--document-business-meeting-activities-pack-people-illustrations-5858310.png"
                   alt="Refer Code"
@@ -239,7 +251,13 @@ const ReferCode = () => {
                 className="svg-path"
               >
                 <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <linearGradient
+                    id="gradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="0%"
+                    y2="100%"
+                  >
                     <stop offset="0%" stopColor="#1e3a8a" />
                     <stop offset="50%" stopColor="#2563eb" />
                     <stop offset="100%" stopColor="#3b82f6" />

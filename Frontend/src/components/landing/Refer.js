@@ -16,52 +16,125 @@ const Refer = () => {
   const { subCategory, categoryTitle } = location.state || {};
   const [contactNumber, setContactNumber] = useState("");
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-  
+
+  // const submitReferral = async () => {
+  //   if (!contactNumber) {
+  //     alert("Please enter a contact number.");
+  //     return;
+  //   }
+
+  //   const userId = localStorage.getItem("id");
+  //   console.log("Submitting referral with data:", {
+  //     category: categoryTitle,
+  //     subCategory: subCategory.title,
+  //     reward: subCategory.rewards,
+  //     userId,
+  //     contactNumber,
+  //   });
+
+  //   try {
+  //     const response = await fetch(`${API_URL}/api/referrals/add`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         category: categoryTitle,
+  //         subCategory: subCategory.title,
+  //         reward: subCategory.rewards,
+  //         userId,
+  //         contactNumber,
+  //       }),
+  //     });
+
+  //     if (response.ok) {
+  //       console.log("API response:", await response.json());
+  //       alert("Referral submitted successfully!");
+  //       navigate("/user/rewards");
+  //     } else {
+  //       const errorData = await response.json();
+  //       console.error("API failed with status:", response.status, errorData);
+  //       alert("Failed to submit referral.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting referral:", error);
+  //     alert("Error: Unable to submit referral.");
+  //   }
+  // };
+
   const submitReferral = async () => {
     if (!contactNumber) {
       alert("Please enter a contact number.");
       return;
     }
-  
+
     const userId = localStorage.getItem("id");
-    console.log("Submitting referral with data:", {
+    const referralCode = localStorage.getItem("referralCode");
+
+    const referralData = {
       category: categoryTitle,
       subCategory: subCategory.title,
       reward: subCategory.rewards,
       userId,
       contactNumber,
-    });
-  
+    };
+
+    console.log("Submitting referral with data:", referralData);
+
     try {
-      const response = await fetch(`${API_URL}/api/referrals/add`, {
+      // Submit referral
+      const referralResponse = await fetch(`${API_URL}/api/referrals/add`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          category: categoryTitle,
-          subCategory: subCategory.title,
-          reward: subCategory.rewards,
-          userId,
-          contactNumber,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(referralData),
       });
-  
-      if (response.ok) {
-        console.log("API response:", await response.json());
-        alert("Referral submitted successfully!");
-        navigate("/user/rewards"); 
-      } else {
-        const errorData = await response.json();
-        console.error("API failed with status:", response.status, errorData);
+
+      if (!referralResponse.ok) {
+        const errorData = await referralResponse.json();
+        console.error(
+          "Referral API failed:",
+          referralResponse.status,
+          errorData
+        );
         alert("Failed to submit referral.");
+        return;
       }
+
+      console.log("Referral API response:", await referralResponse.json());
+
+      // Send WhatsApp message
+      const whatsappResponse = await fetch(
+        "https://api.ultramsg.com/instance104991/messages/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: "uiqso13q4dzwu5lr",
+            to: contactNumber,
+            body: `Hi,\nYour friend referred you for ${categoryTitle}.\nClick the link below and use this code: ${referralCode}\n\nhttp://localhost:3000/refercode/${referralCode}`,
+          }),
+        }
+      );
+
+      if (!whatsappResponse.ok) {
+        const errorData = await whatsappResponse.json();
+        console.error(
+          "WhatsApp API failed:",
+          whatsappResponse.status,
+          errorData
+        );
+        alert("Failed to send WhatsApp message.");
+        return;
+      }
+
+      console.log("WhatsApp API response:", await whatsappResponse.json());
+      alert("Referral submitted successfully!");
+      navigate("/user/rewards");
     } catch (error) {
       console.error("Error submitting referral:", error);
       alert("Error: Unable to submit referral.");
     }
   };
-  
 
   return (
     <div>
@@ -84,9 +157,12 @@ const Refer = () => {
                     For every successful referral, earn exciting rewards as a
                     token of our appreciation.
                   </p>
-                  {subCategory?.title && (<p>
-        Refer for {subCategory?.title} and get reward worth Rs. {subCategory.rewards} per referral.
-      </p>)}
+                  {subCategory?.title && (
+                    <p>
+                      Refer for {subCategory?.title} and get reward worth Rs.{" "}
+                      {subCategory.rewards} per referral.
+                    </p>
+                  )}
                   <div>
                     <TextField
                       id="number-input"
@@ -100,7 +176,11 @@ const Refer = () => {
                       // className="inputcolumn-refer"
                     />
                     <br />
-                    <button type="submit" className="learn-more-button" onClick={submitReferral}>
+                    <button
+                      type="submit"
+                      className="learn-more-button"
+                      onClick={submitReferral}
+                    >
                       Submit
                     </button>
                   </div>

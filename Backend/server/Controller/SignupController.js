@@ -3,6 +3,77 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // Create a new user
+// export const registerUser = async (req, res) => {
+//   const {
+//     userid,
+//     userType,
+//     empno,
+//     firstname,
+//     lastname,
+//     email,
+//     // password,
+//     // confirmPassword,
+//     contactNumber,
+//     dateOfJoining,
+//     manager,
+//     branch,
+//     employeeCategory,
+//     subCategory,
+//     empCreatedBy,
+//   } = req.body;
+
+//   // if (password !== confirmPassword) {
+//   //   return res.status(400).json({ error: "Passwords do not match" });
+//   // }
+
+//   try {
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ error: "Email is already in use" });
+//     }
+
+//     // const salt = await bcrypt.genSalt(10);
+//     // const hashedPassword = await bcrypt.hash(password, salt);
+
+//     const newUser = new User({
+//       userid,
+//       userType,
+//       empno,
+//       firstname,
+//       lastname,
+//       email,
+//       // password: hashedPassword,
+//       contactNumber,
+//       manager,
+//       dateOfJoining,
+//       branch,
+//       employeeCategory,
+//       subCategory,
+//       empCreatedBy
+//     });
+
+//     await newUser.save();
+
+//     res.status(201).json({ message: "User registered successfully" , newUser});
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+
+const generateReferralCode = async () => {
+  let unique = false;
+  let referralCode;
+
+  while (!unique) {
+    const randomNum = Math.floor(10000 + Math.random() * 90000);
+    referralCode = `VILLU${randomNum}`;
+
+    const existingUser = await User.findOne({ referralCode });
+    if (!existingUser) unique = true;
+  }
+  return referralCode;
+};
+
 export const registerUser = async (req, res) => {
   const {
     userid,
@@ -11,10 +82,10 @@ export const registerUser = async (req, res) => {
     firstname,
     lastname,
     email,
-    // password,
-    // confirmPassword,
     contactNumber,
     dateOfJoining,
+    services,
+    category,
     manager,
     branch,
     employeeCategory,
@@ -22,18 +93,16 @@ export const registerUser = async (req, res) => {
     empCreatedBy,
   } = req.body;
 
-  // if (password !== confirmPassword) {
-  //   return res.status(400).json({ error: "Passwords do not match" });
-  // }
-
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email is already in use" });
     }
 
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(password, salt);
+    let referralCode = null;
+    if (userType === "user") {
+      referralCode = await generateReferralCode();
+    }
 
     const newUser = new User({
       userid,
@@ -42,29 +111,30 @@ export const registerUser = async (req, res) => {
       firstname,
       lastname,
       email,
-      // password: hashedPassword,
       contactNumber,
       manager,
       dateOfJoining,
+      services,
+      category,
       branch,
       employeeCategory,
       subCategory,
-      empCreatedBy
+      empCreatedBy,
+      referralCode,
     });
 
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully" , newUser});
+    res.status(201).json({ message: "User registered successfully", newUser });
   } catch (err) {
     console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 };
 
-//login
 export async function loginUser(req, res, next) {
   const { email, password } = req.body;
   try {
-    // Validate email format
     const validateEmail = (email) => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
@@ -74,19 +144,16 @@ export async function loginUser(req, res, next) {
       return res.status(400).json({ error: "Invalid email format" });
     }
 
-    // Find the user by email
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ error: "Email not found" });
     }
 
-    // Compare passwords
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(400).json({ error: "Password mismatch" });
     }
-    // Create JWT token
     const token = jwt.sign({ userId: user._id }, "your_jwt_secret", {
       expiresIn: "1h",
     });
@@ -139,7 +206,7 @@ export const getUserById = async (req, res) => {
 export const getUserCreatedById = async (req, res) => {
   const { empCreatedBy } = req.params;
   try {
-    const usersList = await User.find({empCreatedBy}).select("-password");
+    const usersList = await User.find({ empCreatedBy }).select("-password");
 
     if (!usersList) {
       return res.status(404).json({ error: "User not found" });
@@ -225,7 +292,7 @@ export async function updateKYCDetails(req, res, next) {
 
     const updatedKYCDetails = {
       panCardNumber: data.panCardNumber,
-      aadhaarNumber:data.aadhaarNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,

@@ -100,13 +100,13 @@ const Landing = () => {
     //   link: "/loanform",
     //   icon: "fas fa-building",
     // },
-    // {
-    //   title: "TRANSFER HOME LOAN",
-    //   description: "Get better interest rates on your existing home loan",
-    //   buttonText: "Reduce Your EMI",
-    //   link: "/loanform",
-    //   icon: "fa-solid fa-handshake-simple",
-    // },
+    {
+      title: "TRANSFER HOME LOAN",
+      description: "Get better interest rates on your existing home loan",
+      buttonText: "Reduce Your EMI",
+      link: "/loanform",
+      icon: "fa-solid fa-handshake-simple",
+    },
   ];
 
   const insurance = [

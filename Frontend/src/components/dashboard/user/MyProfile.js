@@ -178,7 +178,7 @@ function TabsVendor() {
 
   return (
     <div>
-  <Header />
+      <Header />
       <Col xs={12} md={12} lg={12}>
         <div
           className="ourProfileParentdiv"
@@ -301,13 +301,15 @@ function TabsVendor() {
                       <Controller
                         name="gender"
                         control={control}
-                        defaultValue=""
+                        defaultValue={[]} // Set defaultValue to an empty array for multi-select
                         rules={{ required: true }}
                         render={({ field }) => (
                           <Select
                             {...field}
                             className="inputcolumn_drp"
                             placeholder="Select Gender"
+                            mode="multiple" // Enable multi-select
+                            allowClear
                           >
                             <Option value="Male">Male</Option>
                             <Option value="Female">Female</Option>
@@ -320,6 +322,7 @@ function TabsVendor() {
                       )}
                     </div>
                   </Col>
+
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">
@@ -882,7 +885,6 @@ function TabsVendor() {
         {/* </Card> */}
       </Col>
       <ToastContainer />
-      
     </div>
   );
 }
