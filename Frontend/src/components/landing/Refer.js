@@ -111,7 +111,7 @@ const Refer = () => {
           body: JSON.stringify({
             token: "uiqso13q4dzwu5lr",
             to: contactNumber,
-            body: `Hi,\nYour friend referred you for ${categoryTitle}.\nClick the link below and use this code: ${referralCode}\n\nhttp://localhost:3000/refercode/${referralCode}`,
+            body: `Hi,\nYour friend referred you for ${subCategory?.title}.\nClick the link below and use this code: ${referralCode}\n\nhttp://localhost:3000/refercode/${referralCode}`,
           }),
         }
       );
@@ -123,7 +123,6 @@ const Refer = () => {
           whatsappResponse.status,
           errorData
         );
-        alert("Failed to send WhatsApp message.");
         return;
       }
 
@@ -132,7 +131,6 @@ const Refer = () => {
       navigate("/user/rewards");
     } catch (error) {
       console.error("Error submitting referral:", error);
-      alert("Error: Unable to submit referral.");
     }
   };
 
