@@ -233,9 +233,11 @@ function HomeInsuranceForm() {
                       className="inputcolumn_drp"
                       placeholder="Select Gender"
                     >
-                      <Option value="Single">Life Insurance</Option>
+                      <Option value="Life Insurance">Life Insurance</Option>
                       <Option value="Health Insurance">Health Insurance</Option>
-                      <Option value="Vehicle">Vehicle Insurance</Option>
+                      <Option value="Vehicle Insurance">
+                        Vehicle Insurance
+                      </Option>
                     </Select>
                   )}
                 />

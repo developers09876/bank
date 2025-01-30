@@ -208,7 +208,14 @@ const Rewards = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [referrals, setReferrals] = useState([]);
   const [totalIncome, setTotalIncome] = useState(null);
-  const [currentMonthIncome, setCurrentMonthIncome] = useState();
+  const [insuranceReferCount, setInsuranceReferCount] = useState(null);
+
+  const totalReferralCount = referrals?.length + insuranceReferCount?.length;
+  const [currentMonthIncome, setCurrentMonthIncome] = useState({
+    loanIncome: 0,
+    insuranceIncome: 0,
+    totalMonthIncome: 0,
+  });
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const navigate = useNavigate();
   useEffect(() => {
@@ -219,8 +226,9 @@ const Rewards = () => {
     });
 
     fetchReferrals();
-    ReferralmonthIncome();
+    fetchReferralMonthIncome();
     ReferralTotalIncome();
+    fetchInsurance();
   }, []);
 
   const fetchReferrals = async () => {
@@ -241,16 +249,16 @@ const Rewards = () => {
     }
   };
 
-  const ReferralmonthIncome = async () => {
+  const fetchInsurance = async () => {
     const referralCode = localStorage.getItem("referralCode");
 
     try {
       const response = await fetch(
-        `${API_URL}/loanform/currentMonthIncome/${referralCode}`
+        `${API_URL}/insuranceManagement/referCode/${referralCode}`
       );
       if (response.ok) {
         const data = await response.json();
-        setCurrentMonthIncome(data?.totalIncome);
+        setInsuranceReferCount(data);
       } else {
         console.error("Failed to fetch referrals");
       }
@@ -258,21 +266,70 @@ const Rewards = () => {
       console.error("Error fetching referrals:", error);
     }
   };
+
+  const fetchReferralMonthIncome = async () => {
+    const referralCode = localStorage.getItem("referralCode");
+
+    try {
+      const [loanResponse, insuranceResponse] = await Promise.all([
+        fetch(`${API_URL}/loanform/currentMonthIncome/${referralCode}`),
+        fetch(
+          `${API_URL}/insuranceManagement/currentMonthIncome/${referralCode}`
+        ),
+      ]);
+
+      if (!loanResponse.ok || !insuranceResponse.ok) {
+        console.error("Failed to fetch one or more income data.");
+        return;
+      }
+
+      const loanData = await loanResponse.json();
+      const insuranceData = await insuranceResponse.json();
+
+      // Calculate total earnings
+      const totalMonthIncome =
+        (loanData?.totalIncome || 0) + (insuranceData?.totalIncome || 0);
+
+      setCurrentMonthIncome({
+        loanIncome: loanData?.totalIncome || 0,
+        insuranceIncome: insuranceData?.totalIncome || 0,
+        totalMonthIncome,
+      });
+    } catch (error) {
+      console.error("Error fetching monthly income:", error);
+    }
+  };
   const ReferralTotalIncome = async () => {
     const referralCode = localStorage.getItem("referralCode");
 
     try {
-      const response = await fetch(
-        `${API_URL}/loanform/calculateEarnings/${referralCode}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setTotalIncome(data); // Store the entire object
-      } else {
-        console.error("Failed to fetch referrals");
+      const [loanResponse, insuranceResponse] = await Promise.all([
+        fetch(`${API_URL}/loanform/calculateEarnings/${referralCode}`),
+        fetch(
+          `${API_URL}/insuranceManagement/calculateEarnings/${referralCode}`
+        ),
+      ]);
+
+      if (!loanResponse.ok || !insuranceResponse.ok) {
+        console.error("Failed to fetch one or more earnings data.");
+        return;
       }
+
+      const loanData = await loanResponse.json();
+      const insuranceData = await insuranceResponse.json();
+
+      // Extract earnings from both responses and calculate total earnings
+      const totalEarnings =
+        (loanData?.totalEarnings || 0) + (insuranceData?.totalEarnings || 0);
+
+      // Store the combined earnings
+      setTotalIncome({
+        ...loanData,
+        insuranceEarnings: insuranceData?.totalEarnings || 0,
+        totalEarnings,
+      });
     } catch (error) {
-      console.error("Error fetching referrals:", error);
+      console.error("Error fetching earnings:", error);
     }
   };
 
@@ -377,11 +434,13 @@ const Rewards = () => {
           <Card className="summary-card">
             <Title level={5}>
               Total Referrals:
-              {referrals?.length}
+              {totalReferralCount}
             </Title>
           </Card>
           <Card className="summary-card">
-            <Title level={5}>Monthly Income: ₹{currentMonthIncome}</Title>
+            <Title level={5}>
+              Monthly Income: ₹{currentMonthIncome?.totalMonthIncome}
+            </Title>
           </Card>
           <Card className="summary-card">
             <Title level={5}>Total Income: ₹{totalIncome?.totalEarnings}</Title>
