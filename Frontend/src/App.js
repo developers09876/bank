@@ -71,6 +71,7 @@ import { TaxEmployeesRoutes } from "./components/dashboard/Employees/TaxEmployee
 
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
+import Refercode from "./components/landing/Refercode";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
 // import EmployeesIndex from "./components/dashboard/Employees";
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
@@ -110,6 +111,7 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<ContactUs />} />
           <Route path="/refer" element={<Refer />} />
+          <Route path="/refercode/:id" element={<Refercode />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
           {/* <Route path="/insurance" element={<InsuranceFormProfileTab />} /> */}

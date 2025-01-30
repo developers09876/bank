@@ -52,7 +52,7 @@ const loanApplicationSchema = new mongoose.Schema(
     aadhaar: { type: String },
     address: { type: String },
     pinCode: { type: String },
- 
+
     city: { type: String },
     state: { type: String },
     district: { type: String },
@@ -60,7 +60,7 @@ const loanApplicationSchema = new mongoose.Schema(
     addressProof: { type: String },
     annualIncome: { type: Number },
     contact: { type: String },
-    contactNumber:{ type: String },
+    contactNumber: { type: String },
     creditScore: { type: Number },
     dob: { type: Date },
     downPayment: { type: Number },
@@ -75,7 +75,7 @@ const loanApplicationSchema = new mongoose.Schema(
     loanPurpose: { type: String },
     loanAgentName: { type: String },
     loanAgentContactNumber: { type: String },
-
+    referCode: { type: String, unique: true },
     employmentStatus: { type: String },
     maritalStatus: {
       type: String,
@@ -110,14 +110,14 @@ const loanApplicationSchema = new mongoose.Schema(
     panImageUpload: { type: String },
     aadharImageUpload: { type: String },
     aadhaarNumber: { type: String },
-    loanType:{ type: String },
+    loanType: { type: String },
     employeeId: { type: String },
-    employeeType: { type: String },     
-    employeeList:{ type: String }, 
-    startDate: { type: Date},
-    endDate: { type: Date},
-    dob: { type: Date},          
-    description:{ type: String },  
+    employeeType: { type: String },
+    employeeList: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    dob: { type: Date },
+    description: { type: String },
 
     children: [
       {
@@ -132,8 +132,8 @@ const loanApplicationSchema = new mongoose.Schema(
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
     },
-    rejectionReason: { type: String},
-    pendingReason: {type: String},
+    rejectionReason: { type: String },
+    pendingReason: { type: String },
   },
   {
     timestamps: true,

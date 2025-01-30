@@ -157,6 +157,7 @@ export async function updateLoanApplication(req, res, next) {
       spouseDesignation: data.spouseDesignation,
       coApplicantDocs: data.coApplicantDocs,
       photographs: data.photographs,
+      referCode: data.referCode,
     };
 
     console.log("Prepared Details:", details);
@@ -189,7 +190,7 @@ export async function updateLoanApplication(req, res, next) {
 export async function updateLoanDetails(req, res, next) {
   try {
     const { id } = req.params;
-    console.log('updateLoanDetailsid', id)
+    console.log("updateLoanDetailsid", id);
     const data = req.body;
 
     const updatedDetails = {
@@ -256,27 +257,30 @@ export async function updateLoanDetails(req, res, next) {
 export async function updateLoanApplicationStatus(req, res, next) {
   try {
     const { id } = req.params;
-    const { action , reason } = req.body;
+    const { action, reason } = req.body;
     console.log("object", action);
     if (!["approve", "reject", "Pending"].includes(action)) {
       return res.status(400).json({
-        message: "Invalid action. Allowed actions are 'approve' or 'reject' or 'Pending'.",
+        message:
+          "Invalid action. Allowed actions are 'approve' or 'reject' or 'Pending'.",
       });
     }
 
-    const status = action === "approve" ? "1" : action === "reject" ? "2" : "Pending";
+    const status =
+      action === "approve" ? "1" : action === "reject" ? "2" : "Pending";
 
-    if ((action === "reject"|| action === "Pending") && !reason) {
+    if ((action === "reject" || action === "Pending") && !reason) {
       return res.status(400).json({
         message: "Reason is required when marking the loan as '${action}'",
       });
     }
     const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
       id,
-      { status,
+      {
+        status,
         rejectionReason: action === "reject" ? reason : null,
         pendingReason: action === "Pending" ? reason : null,
-       },
+      },
       { new: true }
     );
 
@@ -288,16 +292,19 @@ export async function updateLoanApplicationStatus(req, res, next) {
 
     res.status(200).json({
       message: `Loan application ${
-         action === "approve" ? "approved" : action === "reject" ? "rejected" : "marked as Pending"
+        action === "approve"
+          ? "approved"
+          : action === "reject"
+          ? "rejected"
+          : "marked as Pending"
       } successfully.`,
       data: updatedLoanApplication,
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err);
     next();
   }
-};
+}
 
 export async function updateLoan(req, res, next) {
   try {
@@ -345,7 +352,6 @@ export async function updateLoan(req, res, next) {
   }
 }
 
-
 export const getAllLoanApplications = async (req, res) => {
   try {
     const applications = await LoanApplication.find();
@@ -359,7 +365,7 @@ export const getLoanApplicationById = async (req, res) => {
   try {
     const { userid } = req.params;
 
-    const application = await LoanApplication.find({userid});
+    const application = await LoanApplication.find({ userid });
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
@@ -370,7 +376,7 @@ export const getLoanApplicationById = async (req, res) => {
 };
 export const getOneLoanApplicationById = async (req, res) => {
   try {
-    const  id  = req.params.id;
+    const id = req.params.id;
     const oneLoanManagement = await LoanApplication.findById(id);
     if (!oneLoanManagement) {
       return res.status(404).json({ message: "User id not found" });
@@ -389,6 +395,119 @@ export const getLoanByEmpId = async (req, res) => {
       return res.status(404).json({ message: "User id not found" });
     }
     res.status(200).json(loanManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getbyReferCode = async (req, res) => {
+  try {
+    const { referCode } = req.params;
+    const loanApplications = await LoanApplication.find({ referCode });
+
+    if (!loanApplications.length) {
+      return res
+        .status(404)
+        .json({ message: "No records found for this referCode" });
+    }
+
+    res.status(200).json(loanApplications);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const calculateReferralEarnings = async (req, res) => {
+  try {
+    const { referCode } = req.params;
+    const loanApplications = await LoanApplication.find({ referCode });
+
+    if (!loanApplications.length) {
+      return res
+        .status(404)
+        .json({ message: "No records found for this referCode" });
+    }
+
+    let homeLoanCount = 0;
+    let vehicleLoanCount = 0;
+    let businessLoanCount = 0;
+
+    // Count referrals for each loan type
+    loanApplications.forEach((loan) => {
+      const loanType = loan.loanType;
+      if (loanType === "Home Loan") {
+        homeLoanCount++;
+      } else if (loanType === "Vehicle Loan") {
+        vehicleLoanCount++;
+      } else if (loanType === "Business Loan") {
+        businessLoanCount++;
+      }
+    });
+
+    // Calculate earnings
+    const homeLoanEarnings = homeLoanCount * 5;
+    const vehicleLoanEarnings = vehicleLoanCount * 10;
+    const businessLoanEarnings = businessLoanCount * 2.5;
+    const totalEarnings =
+      homeLoanEarnings + vehicleLoanEarnings + businessLoanEarnings;
+
+    res.status(200).json({
+      referCode,
+      homeLoanCount,
+      vehicleLoanCount,
+      businessLoanCount,
+      homeLoanEarnings,
+      vehicleLoanEarnings,
+      businessLoanEarnings,
+      totalEarnings,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getCurrentMonthIncome = async (req, res) => {
+  try {
+    const { referCode } = req.params;
+
+    // Get the current month and year
+    const now = new Date();
+    const currentMonth = now.getMonth(); // 0-based index (Jan = 0, Feb = 1, ...)
+    const currentYear = now.getFullYear();
+
+    // Fetch all referrals with the given referCode
+    const loanApplications = await LoanApplication.find({ referCode });
+
+    // Define income per loan type
+    const incomeRates = {
+      "Home Loan": 5,
+      "Vehicle Loan": 10,
+      "Business Loan": 2.5,
+    };
+
+    // Filter and calculate income
+    let totalIncome = 0;
+    const currentMonthLoans = loanApplications.filter((loan) => {
+      const createdAt = new Date(loan.createdAt);
+      const isCurrentMonth =
+        createdAt.getMonth() === currentMonth &&
+        createdAt.getFullYear() === currentYear;
+
+      if (isCurrentMonth && incomeRates[loan.loanType]) {
+        totalIncome += incomeRates[loan.loanType];
+      }
+
+      return isCurrentMonth;
+    });
+
+    if (currentMonthLoans.length === 0) {
+      return res.status(404).json({
+        message: "No referrals found for this month.",
+        totalIncome: 0,
+      });
+    }
+
+    res.status(200).json({ referrals: currentMonthLoans, totalIncome });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
