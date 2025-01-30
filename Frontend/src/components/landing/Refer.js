@@ -111,7 +111,7 @@ const Refer = () => {
           body: JSON.stringify({
             token: "uiqso13q4dzwu5lr",
             to: contactNumber,
-            body: `Hi,\n Your Friend Refer to your for ${categoryTitle} \n  Click this link and use this code: ${referralCode} \n http://localhost:3000/refercode/${referralCode}`,
+            body: `Hi,\nYour friend referred you for ${categoryTitle}.\nClick the link below and use this code: ${referralCode}\n\nhttp://localhost:3000/refercode/${referralCode}`,
           }),
         }
       );
