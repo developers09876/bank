@@ -91,8 +91,6 @@ const userSchema = new mongoose.Schema({
   contactNumber: { type: String, unique: true },
   referType: { type: String }, // Added field
   loanType: { type: String }, // Added field
-  insuranceType: { type: String }, // Added field
-  cibilType: { type: String }, // Added field
   forgetPasswordCode: { type: String, default: null },
   address: { type: String },
   pinCode: { type: String },

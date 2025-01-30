@@ -73,6 +73,8 @@ import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
 import Refercode from "./components/landing/Refercode";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
+import ReferalLogin from "./components/auths/ReferalLogin";
+import HomeInsuranceForm from "./components/dashboard/user/HomeInsuranceForm";
 // import EmployeesIndex from "./components/dashboard/Employees";
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
@@ -136,6 +138,10 @@ function App() {
             element={<ProtectedRoutes Component={LoanForm} />}
           />
           <Route
+            path="/insuranceForms"
+            element={<ProtectedRoutes Component={HomeInsuranceForm} />}
+          />
+          <Route
             path="/insurancepolicy"
             // element={<ProtectedRoute Component={InsuranceForm} />}
             element={<InsuranceForm />}
@@ -153,6 +159,7 @@ function App() {
 
           {/* LOGIN */}
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/Referallogin" element={<ReferalLogin />} />
 
           <Route exact path="/userProfile" element={<UserDetails />} />
 

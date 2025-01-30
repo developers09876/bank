@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./refercode.css";
 import { Col, Row } from "react-bootstrap";
-import Header from "../Layout/Header";
+import Header from "../Layout/ReferalHeader.js";
 import Footer from "../Layout/Footer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Api from "../../Api";
 const ReferCode = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -80,36 +81,29 @@ const ReferCode = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/signup/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          contactNumber,
-          email,
-          referType,
-          loanType,
-          insuranceType,
-          cibilType,
-          referCode,
-        }),
+      const response = await Api.post("/signup/register", {
+        firstName,
+        lastName,
+        contactNumber,
+        email,
+        referType,
+        loanType,
+        insuranceType,
+        cibilType,
+        referCode,
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         toast.success("Registration successful!", { autoClose: 2000 });
         setTimeout(() => {
-          navigate("/user/rewards");
+          // navigate("/user/rewards");
         }, 2000);
-      } else {
-        console.error("Backend Error:", data);
-        toast.error(data.error || "Failed to register.");
       }
     } catch (error) {
-      console.error("Network or Server Error:", error);
-      toast.error("Something went wrong. Please try again.");
+      console.error("Error:", error.response?.data || error.message);
+      toast.error(
+        error.response?.data?.error || "Something went wrong. Please try again."
+      );
     }
   };
 
