@@ -32,101 +32,87 @@ ChartJS.register(
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-const [users, setUsers] = useState();
-const [employees, setEmployees] = useState();
-const [loans, setLoans] = useState();
-const [insurances, setInsurances] = useState();
-const [taxs, setTaxs] = useState();
-const user = "user"
-const fetchUsers = async () => {
-  try {
-    const response = await axios.get(`http://localhost:5000/signup/getbyUserType/${user}`);
-    console.log('response.data', response.data);
-    setUsers(response.data.length);
-    console.log('users', response.data.length)
-  } catch (error) {
-    console.log('error occurs while fetch users', error)
-  }
-};
-useEffect(() => {
-  fetchUsers();
-},[])
-const fetchEmployees = async () => {
-  try {
-    const response = await axios.get("http://localhost:5000/signup/getall");
-const filteredemployees = response.data.filter((employees) => employees.userType !== "user");
-console.log('filteredemployees', filteredemployees)
-setEmployees(filteredemployees.length)
-   
-  } catch (error) {
-    console.log('error occurs while fetch users', error)
-  }
-};
-useEffect(() => {
-  fetchEmployees();
-},[])
-const fetchLoans = async () => {
-  try {
-    const response = await axios.get(`http://localhost:5000/loanform/getall`);
-    console.log('response.data', response.data);
-    setLoans(response.data.length); 
-    console.log('loans', response.data.length);
-  } catch (error) {
-    console.log('Error occurs while fetching loans:', error);
-  }
-};
-useEffect(() => {
-  fetchLoans();
-}, []);
-const fetchInsurances = async () => {
-  try {
-    const response = await axios.get(`http://localhost:5000/insuranceManagement/getAllInsuranceManagement`);
-    console.log('response.data', response.data);
-    setInsurances(response.data.length); 
-    console.log('insurances', response.data.length);
-  } catch (error) {
-    console.log('Error occurs while fetching insurances:', error);
-  }
-};
+  const [users, setUsers] = useState();
+  const [employees, setEmployees] = useState();
+  const [loans, setLoans] = useState();
+  const [insurances, setInsurances] = useState();
+  const [taxs, setTaxs] = useState();
+  const user = "user";
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/signup/getbyUserType/${user}`
+      );
+      // console.log("response.data", response.data);
+      setUsers(response.data.length);
+      // console.log("users", response.data.length);
+    } catch (error) {
+      console.log("error occurs while fetch users", error);
+    }
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  const fetchEmployees = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/signup/getall");
+      const filteredemployees = response.data.filter(
+        (employees) => employees.userType !== "user"
+      );
+      // console.log("filteredemployees", filteredemployees);
+      setEmployees(filteredemployees.length);
+    } catch (error) {
+      console.log("error occurs while fetch users", error);
+    }
+  };
+  useEffect(() => {
+    fetchEmployees();
+  }, []);
+  const fetchLoans = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/loanform/getall`);
+      // console.log("response.data", response.data);
+      setLoans(response.data.length);
+      // console.log("loans", response.data.length);
+    } catch (error) {
+      console.log("Error occurs while fetching loans:", error);
+    }
+  };
+  useEffect(() => {
+    fetchLoans();
+  }, []);
+  const fetchInsurances = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/insuranceManagement/getAllInsuranceManagement`
+      );
+      // console.log("response.data", response.data);
+      setInsurances(response.data.length);
+      // console.log("insurances", response.data.length);
+    } catch (error) {
+      console.log("Error occurs while fetching insurances:", error);
+    }
+  };
 
-useEffect(() => {
-  fetchInsurances();
-}, []);
-const fetchTaxs = async () => {
-  try {
-    const response = await axios.get(`http://localhost:5000/taxManagement/getAllTaxManagement`);
-    console.log('response.data', response.data);
-    setTaxs(response.data.length); 
-    console.log('taxes', response.data.length);
-  } catch (error) {
-    console.log('Error occurs while fetching taxes:', error);
-  }
-};
+  useEffect(() => {
+    fetchInsurances();
+  }, []);
+  const fetchTaxs = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/taxManagement/getAllTaxManagement`
+      );
+      console.log("response.data", response.data);
+      setTaxs(response.data.length);
+      console.log("taxes", response.data.length);
+    } catch (error) {
+      console.log("Error occurs while fetching taxes:", error);
+    }
+  };
 
-useEffect(() => {
-  fetchTaxs();
-}, []);
-
-const fetchEmployee = async () => {
-  try {
-    const userTypes = [
-      "LoanEmployee",
-      "TaxEmployee",
-      "InsuranceEmployee",
-      "StockMarket",
-    ];
-
-    const response = await axios.post(
-      "http://localhost:5000/signup/getUserCounts",
-      { userTypes }
-    );
-
-    console.log("Employee counts:", response.data);
-  } catch (error) {
-    console.error("Error occurred while fetching employee counts", error);
-  }
-};
-
+  useEffect(() => {
+    fetchTaxs();
+  }, []);
 
   const stats = {
     totalUsers: 50,
@@ -143,40 +129,57 @@ const fetchEmployee = async () => {
 
   // Data for the chart
   const data = {
-    labels: ["Pending", "In Process", "Rejected", "Completed"],
+    labels: ["Pending", "Rejected", "Completed"],
     datasets: [
       {
         label: "Client Status",
-        data: [2, 1, 4, 3],
-        backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
-        borderColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
+        data: [2, 4, 3],
+        backgroundColor: ["#ffcd56", "lightcoral", "#4caf50"],
+        borderColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderWidth: 1,
       },
     ],
   };
 
   // Chart options
+  // const options = {
+  //   responsive: true,
+  //   plugins: {
+  //     legend: {
+  //       position: "top",
+  //     },
+  //     title: {
+  //       display: true,
+  //       text: "Client Status Chart",
+  //       font: {
+  //         size: 16,
+  //       },
+  //     },
+  //   },
+  //   scales: {
+  //     y: {
+  //       beginAtZero: true,
+  //       ticks: {
+  //         stepSize: 1,
+  //       },
+  //     },
+  //   },
+  // };
   const options = {
     responsive: true,
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        const index = elements[0].index;
+        const status = ["pending", "rejected", "completed"][index];
+        navigate(`/admin/client-statistics/${status}`);
+      }
+    },
     plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Client Status Chart",
-        font: {
-          size: 16,
-        },
-      },
+      legend: { position: "top" },
+      title: { display: true, text: "Client Status Chart", font: { size: 16 } },
     },
     scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 1,
-        },
-      },
+      y: { beginAtZero: true, ticks: { stepSize: 1 } },
     },
   };
   const handleCardClick = () => {

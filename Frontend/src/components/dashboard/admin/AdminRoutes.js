@@ -20,9 +20,19 @@ import TaxManagementDetails from "./CreateTaxManagementAdmin/TaxManagementDetail
 import CreateInsuranceManagement from "./CreateInsuranceManagement";
 import InsuranceManagementDetails from "./InsuranceManagementDetalis";
 import Subscription from "./Subscription";
+import ClientStatisticsPage from "./ClientStatsChart/ClientStatisticsPage";
+import ClientStatisticsTable from "./ClientStatsChart/ClientStatisticsTable";
 
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
+  {
+    path: "/admin/client-statistics/:status",
+    element: <ClientStatisticsPage />,
+  },
+  {
+    path: "/admin/client-statistics/:status/:category",
+    element: <ClientStatisticsTable />,
+  },
   { path: "userlist", element: <UserList /> },
   { path: "employeelist", element: <EmployeeList /> },
   { path: "/admin/addAdmin", element: <AddAdmin /> },
@@ -43,8 +53,10 @@ export const AdminRoutes = [
   { path: "contact", element: <ContactUs /> },
   { path: "leaddetails/:id", element: <LeadDetails /> },
   { path: "taxManagementdetails/:id", element: <TaxManagementDetails /> },
-  { path: "insuranceManagementdetails/:id", element: <InsuranceManagementDetails /> },
-
+  {
+    path: "insuranceManagementdetails/:id",
+    element: <InsuranceManagementDetails />,
+  },
 
   { path: "loandetails/:id", element: <LoanDetails /> },
 
