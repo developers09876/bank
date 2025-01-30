@@ -37,6 +37,7 @@ function LoanDetails() {
 
   const loanApplicationId = localStorage.getItem("loanApplicationId");
   const userType = localStorage.getItem("userType");
+  const referBycode = localStorage.getItem("referBycode");
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
@@ -100,6 +101,7 @@ function LoanDetails() {
         : null;
 
     const Details = {
+      referCode: "villu82200",
       loanAgentName: data.loanAgentName,
       loanAgentContactNumber: data.loanAgentContactNumber,
 
@@ -113,6 +115,8 @@ function LoanDetails() {
       financialProof: financialProofUrl,
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
+      loanType: data.loanType,
+
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
       nomineeAddress: data.nomineeAddress,
@@ -158,49 +162,48 @@ function LoanDetails() {
                   <Row>
                     {userType !== "user" && (
                       <>
-                      <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          loan Agent Name
-                        </label>
-                        <br />
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("loanAgentName", { required: true })}
-                          placeholder="loan Agent Name"
-                        />
-                        {errors.Name && (
-                          <p className="text-danger">
-                            loan Agent Name are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          loan Agent Contact Number
-                        </label>
-                        <br />
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("loanAgentContactNumber", {
-                            required: true,
-                          })}
-                          placeholder="loan Agent Contact Number"
-                        />
-                        {errors.loanAgentContactNumber && (
-                          <p className="text-danger">
-                            loanAgent Contact Number are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              loan Agent Name
+                            </label>
+                            <br />
+                            <input
+                              className="inputcolumn-ourProfile"
+                              type="text"
+                              {...register("loanAgentName", { required: true })}
+                              placeholder="loan Agent Name"
+                            />
+                            {errors.Name && (
+                              <p className="text-danger">
+                                loan Agent Name are required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              loan Agent Contact Number
+                            </label>
+                            <br />
+                            <input
+                              className="inputcolumn-ourProfile"
+                              type="text"
+                              {...register("loanAgentContactNumber", {
+                                required: true,
+                              })}
+                              placeholder="loan Agent Contact Number"
+                            />
+                            {errors.loanAgentContactNumber && (
+                              <p className="text-danger">
+                                loanAgent Contact Number are required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
                       </>
                     )}
-                    
 
                     <Col xs={12} md={6} lg={4}>
                       <div>
@@ -464,6 +467,34 @@ function LoanDetails() {
                           <p className="text-danger">
                             Property Details are required
                           </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Loan Type</label>
+                        <Controller
+                          name="loanType"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Purpose"
+                            >
+                              <Option value="Home Loan">Home Loan</Option>
+                              <Option value="Vehicle Loan">Vehicle Loan</Option>
+                              <Option value="Business Loan">
+                                Business Loan
+                              </Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.loanType && (
+                          <p className="text-danger">Loan Type is required</p>
                         )}
                       </div>
                     </Col>

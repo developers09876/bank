@@ -40,9 +40,7 @@ function LoanDetails() {
     setBusinessOwnerDoc(event.target.files[0]);
   };
 
-  const loanApplicationId = localStorage.getItem("loanApplicationId");
   const userType = localStorage.getItem("userType");
-  const userId = localStorage.getItem("id");
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);

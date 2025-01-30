@@ -1,9 +1,9 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./refercode.css";
 import { Col, Row } from "react-bootstrap";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import { useLocation, useNavigate,useParams  } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const ReferCode = () => {
   const location = useLocation();
@@ -19,6 +19,7 @@ const ReferCode = () => {
   const [insuranceType, setInsuranceType] = useState("");
   const [cibilType, setCibilType] = useState("");
   const { id } = useParams();
+  console.log("id", id);
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   useEffect(() => {
     if (id) {
@@ -86,7 +87,9 @@ const ReferCode = () => {
                 xs={12}
               >
                 <div className="referral-left animate-slide-in-left">
-                  <h1 className="refer-headings">Enter Your Referral Code and Login</h1>
+                  <h1 className="refer-headings">
+                    Login Here with Your Referral Code
+                  </h1>
 
                   {/* First and Last Name */}
                   <Row style={{ marginBottom: "15px" }}>
@@ -142,11 +145,13 @@ const ReferCode = () => {
                     <Col lg={6} md={6} sm={12}>
                       <label>Referral Type</label>
                       <select
-                      style={{width:"180px"}}
+                        style={{ width: "180px" }}
                         className="refer-input"
                         value={referType}
                         onChange={(e) => setReferType(e.target.value)}
                       >
+                        {/* <option value="">Select Here</option> */}
+
                         <option value="Loan">Loan</option>
                         <option value="Insurance">Insurance</option>
                         <option value="CIBIL">CIBIL</option>
@@ -158,7 +163,7 @@ const ReferCode = () => {
                       <Col lg={6} md={6} sm={12}>
                         <label>Loan Type</label>
                         <select
-                        style={{width:"180px"}}
+                          style={{ width: "180px" }}
                           className="refer-input"
                           value={loanType}
                           onChange={(e) => setLoanType(e.target.value)}
@@ -175,15 +180,19 @@ const ReferCode = () => {
                       <Col lg={6} md={6} sm={12}>
                         <label>Insurance Type</label>
                         <select
-                        style={{width:"180px"}}
+                          style={{ width: "180px" }}
                           className="refer-input"
                           value={insuranceType}
                           onChange={(e) => setInsuranceType(e.target.value)}
                         >
                           <option value="">Insurance Type</option>
-                          <option value="Health Insurance">Health Insurance</option>
+                          <option value="Health Insurance">
+                            Health Insurance
+                          </option>
                           <option value="Life Insurance">Life Insurance</option>
-                          <option value="Vehicle Insurance">Life Insurance</option>
+                          <option value="Vehicle Insurance">
+                            Life Insurance
+                          </option>
                         </select>
                       </Col>
                     )}
@@ -192,15 +201,15 @@ const ReferCode = () => {
                       <Col lg={6} md={6} sm={12}>
                         <label>CIBIL Type</label>
                         <select
-                          style={{width:"180px"}}
+                          style={{ width: "180px" }}
                           className="refer-input"
                           value={cibilType}
                           onChange={(e) => setCibilType(e.target.value)}
                         >
                           <option value="">CIBIL Type</option>
-                           <option value="Monthly Plan">Monthly Plan</option>
-      <option value="Quarterly Plan">Quarterly Plan</option>
-      <option value="Annual Plan">Annual Plan</option>
+                          <option value="Monthly Plan">Monthly Plan</option>
+                          <option value="Quarterly Plan">Quarterly Plan</option>
+                          <option value="Annual Plan">Annual Plan</option>
                         </select>
                       </Col>
                     )}
@@ -221,8 +230,11 @@ const ReferCode = () => {
                     </Col>
 
                     <Col lg={6} md={6} sm={12}>
-                      <button className="learn-more-button" onClick={handleSubmit}>
-                        Submit Code
+                      <button
+                        className="learn-more-button"
+                        onClick={handleSubmit}
+                      >
+                        Submit
                       </button>
                     </Col>
                   </Row>

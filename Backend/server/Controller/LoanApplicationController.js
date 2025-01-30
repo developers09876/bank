@@ -206,6 +206,9 @@ export async function updateLoanDetails(req, res, next) {
       financialProof: data.financialProof,
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
+      loanType: data.loanType,
+      referCode: data.referCode,
+
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
       nomineeAddress: data.nomineeAddress,
