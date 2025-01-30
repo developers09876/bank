@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "./refercode.css";
 import { Col, Row } from "react-bootstrap";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,useParams  } from "react-router-dom";
 
 const ReferCode = () => {
   const location = useLocation();
@@ -18,9 +18,13 @@ const ReferCode = () => {
   const [loanType, setLoanType] = useState("");
   const [insuranceType, setInsuranceType] = useState("");
   const [cibilType, setCibilType] = useState("");
-
+  const { id } = useParams();
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
-
+  useEffect(() => {
+    if (id) {
+      setReferCode(id);
+    }
+  }, [id]);
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     const alphanumericValue = inputValue.replace(/[^A-Za-z0-9]/g, "");
@@ -82,10 +86,10 @@ const ReferCode = () => {
                 xs={12}
               >
                 <div className="referral-left animate-slide-in-left">
-                  <h1 className="refer-headings">Referral Code</h1>
+                  <h1 className="refer-headings">Enter Your Referral Code and Login</h1>
 
                   {/* First and Last Name */}
-                  <Row>
+                  <Row style={{ marginBottom: "15px" }}>
                     <Col lg={6} md={6} sm={12}>
                       <label>First Name</label>
                       <input
@@ -109,7 +113,7 @@ const ReferCode = () => {
                   </Row>
 
                   {/* Contact and Email */}
-                  <Row>
+                  <Row style={{ marginBottom: "15px" }}>
                     <Col lg={6} md={6} sm={12}>
                       <label>Contact Number</label>
                       <input
@@ -138,7 +142,7 @@ const ReferCode = () => {
                     <Col lg={6} md={6} sm={12}>
                       <label>Referral Type</label>
                       <select
-                        style={{ width: "180px" }}
+                      style={{width:"180px"}}
                         className="refer-input"
                         value={referType}
                         onChange={(e) => setReferType(e.target.value)}
@@ -154,15 +158,15 @@ const ReferCode = () => {
                       <Col lg={6} md={6} sm={12}>
                         <label>Loan Type</label>
                         <select
-                          style={{ width: "180px" }}
+                        style={{width:"180px"}}
                           className="refer-input"
                           value={loanType}
                           onChange={(e) => setLoanType(e.target.value)}
                         >
-                          <option value="">Loan Type</option>
+                          {/* <option value="">Loan Type</option> */}
                           <option value="Home Loan">Home Loan</option>
-                          <option value="Personal Loan">Personal Loan</option>
-                          <option value="Car Loan">Vechile Loan</option>
+                          <option value="Business Loan">Business Loan</option>
+                          <option value="Vechile Loan">Vechile Loan</option>
                         </select>
                       </Col>
                     )}
@@ -171,19 +175,15 @@ const ReferCode = () => {
                       <Col lg={6} md={6} sm={12}>
                         <label>Insurance Type</label>
                         <select
-                          style={{ width: "180px" }}
+                        style={{width:"180px"}}
                           className="refer-input"
                           value={insuranceType}
                           onChange={(e) => setInsuranceType(e.target.value)}
                         >
                           <option value="">Insurance Type</option>
-                          <option value="Health Insurance">
-                            Health Insurance
-                          </option>
+                          <option value="Health Insurance">Health Insurance</option>
                           <option value="Life Insurance">Life Insurance</option>
-                          <option value="Vehicle Insurance">
-                            Life Insurance
-                          </option>
+                          <option value="Vehicle Insurance">Life Insurance</option>
                         </select>
                       </Col>
                     )}
@@ -192,22 +192,22 @@ const ReferCode = () => {
                       <Col lg={6} md={6} sm={12}>
                         <label>CIBIL Type</label>
                         <select
-                          style={{ width: "180px" }}
+                          style={{width:"180px"}}
                           className="refer-input"
                           value={cibilType}
                           onChange={(e) => setCibilType(e.target.value)}
                         >
                           <option value="">CIBIL Type</option>
-                          <option value="Monthly Plan">Monthly Plan</option>
-                          <option value="Quarterly Plan">Quarterly Plan</option>
-                          <option value="Annual Plan">Annual Plan</option>
+                           <option value="Monthly Plan">Monthly Plan</option>
+      <option value="Quarterly Plan">Quarterly Plan</option>
+      <option value="Annual Plan">Annual Plan</option>
                         </select>
                       </Col>
                     )}
                   </Row>
 
                   {/* Referral Code Input */}
-                  <Row>
+                  <Row style={{ marginBottom: "15px" }}>
                     <Col lg={6} md={6} sm={12}>
                       <label>Referral Code</label>
                       <input
@@ -221,10 +221,7 @@ const ReferCode = () => {
                     </Col>
 
                     <Col lg={6} md={6} sm={12}>
-                      <button
-                        className="learn-more-button"
-                        onClick={handleSubmit}
-                      >
+                      <button className="learn-more-button" onClick={handleSubmit}>
                         Submit Code
                       </button>
                     </Col>

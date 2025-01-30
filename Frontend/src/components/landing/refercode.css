@@ -58,7 +58,7 @@
   
   .refer-headings {
     font-weight: bold;
-    font-size: 36px;
+    font-size: 26px;
     color: transparent; 
     -webkit-text-stroke: 2px #2563eb; 
     background: linear-gradient(90deg, #2563eb 0%, #3b82f6 50%, transparent 100%);
@@ -71,6 +71,7 @@
  
   .referpage_labelCss {
     font-size: 15px;
+    font-weight: bold;
     margin-bottom: 5px;
     font-weight: 450;
   }
@@ -175,8 +176,8 @@
       box-shadow: 0 0 10px 2px #455e86;
       position: relative;
       align-content: center;
-      margin-left: auto;
-      margin-right: auto;
+      /* margin-left: auto;
+      margin-right: auto; */
       background-color: white;
     }
     .refer-secondcol img {
@@ -201,7 +202,7 @@
       z-index: -1;
     }
     
-    .refer-card {
+    /* .refer-card {
       height: 100%;
       width: 95%;
       box-shadow: 0 0 10px 2px #455e86;
@@ -214,7 +215,7 @@
     .refer-secondcol img {
       width: 100%;
       justify-self: center;
-    }
+    } */
   }
   .refer-input-boxes {
     display: flex;
