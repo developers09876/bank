@@ -361,10 +361,12 @@ import { useForm } from "react-hook-form"; // Import react-hook-form
 
 const ReferCode = () => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm(); // Hook Form methods
+  const location = useLocation();
   const navigate = useNavigate();
   const [referCode, setReferCode] = useState("");
   const [referType, setReferType] = useState("Loan");
   const [loanType, setLoanType] = useState("");
+  const [error, setError] = useState('');
   const { id } = useParams();
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -381,18 +383,20 @@ const ReferCode = () => {
   };
 
   const onSubmit = async (data) => {
+    // Validate referral code length
     if (referCode.length < 6) {
       alert("Please enter at least a 6-character referral code.");
       return;
     }
 
     try {
+      // Construct the body of the API request
       const response = await fetch(`${API_URL}/signup/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...data,
-          referCode,
+          ...data,  // Include the form data from react-hook-form
+          referCode, // Include the refer code manually
         }),
       });
 
@@ -404,8 +408,11 @@ const ReferCode = () => {
           navigate("/user/rewards");
         }, 2000);
       } else {
-        console.error("Backend Error:", responseData);
-        toast.error(responseData.error || "Failed to register.");
+        if (responseData.error === "Email is already in use") {
+          toast.error("The email is already in use. Please use a different email.");
+        } else {
+          toast.error(responseData.error || "Failed to register.");
+        }
       }
     } catch (error) {
       console.error("Network or Server Error:", error);
