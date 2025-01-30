@@ -152,8 +152,7 @@ export const registerUser = async (req, res) => {
     referCode,
     referType,
     loanType,
-    insuranceType,
-    cibilType,
+    
   } = req.body;
 
   try {
@@ -188,8 +187,7 @@ export const registerUser = async (req, res) => {
       userId,
       referType,
       loanType,
-      insuranceType,
-      cibilType,
+      referCode,
     });
 
     await newUser.save();
