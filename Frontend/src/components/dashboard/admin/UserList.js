@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import { Table, Button } from 'antd';
-import Sidebar from './Sidebar';
+import React, { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import { Table, Button } from "antd";
+import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 
 const UserList = ({ setAuth }) => {
   const [employees, setEmployees] = useState([]);
-
+  const navigate = useNavigate();
   // Function to fetch all users and filter for employees
   const getEmployees = async () => {
     try {
-      const response = await fetch('http://localhost:5000/signup/getall', {
-        method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+      const response = await fetch("http://localhost:5000/signup/getall", {
+        method: "GET",
+        headers: { Authorization: localStorage.getItem("token") },
       });
 
       const users = await response.json();
 
       // Filter only users with userType 'user'
-      const employeeUsers = users.filter((user) => user.userType === 'user');
+      const employeeUsers = users.filter((user) => user.userType === "user");
       setEmployees(employeeUsers);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleViewDetails = (record) => {
+    navigate(`/admin/userdetails/${record._id}`, { state: { record } });
   };
 
   // Delete Notification Function
@@ -33,9 +38,9 @@ const UserList = ({ setAuth }) => {
         }, 2000);
       }),
       {
-        pending: 'Deleting User...',
-        success: 'Deleted Successfully!',
-        error: 'Error!',
+        pending: "Deleting User...",
+        success: "Deleted Successfully!",
+        error: "Error!",
       },
       {
         autoClose: 2000,
@@ -50,29 +55,30 @@ const UserList = ({ setAuth }) => {
   // Ant Design Table columns
   const columns = [
     {
-      title: 'Full Name',
-      dataIndex: 'fullname',
-      key: 'fullname',
-      render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
+      title: "Full Name",
+      dataIndex: "fullname",
+      key: "fullname",
+      render: (_, record) => `${record.firstname} ${record.lastname}`,
     },
     {
-      title: 'Contact Number',
-      dataIndex: 'contactNumber',
-      key: 'contactNumber',
+      title: "Contact Number",
+      dataIndex: "contactNumber",
+      key: "contactNumber",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Action',
-      key: 'action',
-      render: (_, employee) => (
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
         <Button
-         type="primary" 
-         style={{color:'black'}}
-         onClick={() => console.log(`Viewing user: ${employee._id}`)}>
+          type="primary"
+          style={{ background: "#4096ff", color: "#fff" }}
+          onClick={() => handleViewDetails(record)}
+        >
           View
         </Button>
       ),

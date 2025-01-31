@@ -22,6 +22,8 @@ import InsuranceManagementDetails from "./InsuranceManagementDetalis";
 import Subscription from "./Subscription";
 import ClientStatisticsPage from "./ClientStatsChart/ClientStatisticsPage";
 import ClientStatisticsTable from "./ClientStatsChart/ClientStatisticsTable";
+import UserDetailsPage from "./UserDetailsPage";
+import EmployeeDetailsPage from "./EmployeeDetailsPage";
 
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
@@ -34,6 +36,8 @@ export const AdminRoutes = [
     element: <ClientStatisticsTable />,
   },
   { path: "userlist", element: <UserList /> },
+  { path: "userdetails/:id", element: <UserDetailsPage /> },
+  { path: "employeedetails/:id", element: <EmployeeDetailsPage /> },
   { path: "employeelist", element: <EmployeeList /> },
   { path: "/admin/addAdmin", element: <AddAdmin /> },
   { path: "createjobform", element: <CreateJobForm /> },
