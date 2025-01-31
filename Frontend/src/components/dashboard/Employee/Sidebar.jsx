@@ -1,25 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu } from "antd";
-import { CgProfile } from "react-icons/cg";
+import Api from "../../../Api";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Sidebar({ collapsed }) {
   const onClick = (e) => {
     console.log("click ", e);
   };
-  const role = localStorage.getItem("username");
+  const id = localStorage.getItem("id");
+  const [employee, setEmployee] = useState();
+
+  const service = employee?.services || [];
+  console.log("service", service);
+  useEffect(() => {
+    getemployee();
+  }, []);
+  const getemployee = async () => {
+    try {
+      const response = await Api.get(`signup/getby/${id}`);
+      setEmployee(response.data);
+      console.log("response", response);
+    } catch (error) {
+      console.error("Error fetching employee list:", error);
+      toast.error("Failed to fetch employee list.");
+    }
+  };
+
+  const menuItems = [
+    {
+      serviceName: "LoanEmployee",
+      label: "Loan Management",
+      path: "/employee/loanmanagement",
+    },
+    {
+      serviceName: "InsuranceEmployee",
+      label: "Insurance Management",
+      path: "/employee/insurancemanagement",
+    },
+    {
+      serviceName: "TaxEmployee",
+      label: "Tax Management",
+      path: "/employee/taxmanagement",
+    },
+    {
+      serviceName: "stockMarket",
+      label: "stock Market",
+      path: "/employee/taxmanagement",
+    },
+  ];
 
   return (
     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
-        <NavLink to="" activeClassName="main-nav-style">
-          <div className="Nav-Icon2">
-            <CgProfile />
-          </div>
-
-          <div className="name-tag">{role}</div>
-        </NavLink>
-
         {/* <NavLink
           to="/professional/professionalprofile"
           ClassName="main-nav-style"
@@ -31,53 +65,29 @@ function Sidebar({ collapsed }) {
           icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Freelancing"
         > */}
+
+        {/* </SubMenu> */}
         <NavLink
           to="/employee"
           ClassName="main-nav-style"
           style={{ marginTop: "70px" }}
         >
-          {/* <MdAreaChart className="Nav-Icon" /> */}
           Dashboard
         </NavLink>
+        <NavLink to="/employee/myprofile">My Profile</NavLink>
 
-        {/* </SubMenu> */}
-        <NavLink to="/employee/loan" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
-          Loan Application Review
-        </NavLink>
-
-        {/* <SubMenu
-          icon={<AiFillProject size={20} className="Nav-Icon1" />}
-          title="Jobs"
-        >
-          <NavLink to="/professional/jobs">
-            <MdRequestPage className="Nav-Icon" />
-            Jobs
-          </NavLink>
-          <NavLink to="/professional/jobrequests">
-            <MdSend className="Nav-Icon" />
-            Request
-          </NavLink>
-          <NavLink to="/professional/jobrequest">
-            <MdSend className="Nav-Icon" />
-            Response
-          </NavLink>
-        </SubMenu> */}
-
-        <NavLink to="/employee/tax" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
-          Tax Application Review
-        </NavLink>
-
-        <NavLink to="/employee/insurance" ClassName="main-nav-style">
-          {/* <MdMenuBook className="Nav-Icon" /> */}
-          Insurance Review
-        </NavLink>
-        <NavLink to="/employee/lead" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
-          Lead
-        </NavLink>
-
+        <NavLink to="/employee/leadmanagement">Lead Generation</NavLink>
+        <NavLink to="/employee/taskmanagement">Task Management</NavLink>
+        {menuItems
+          .filter((item) => service.includes(item.serviceName))
+          .map((item) => (
+            <NavLink key={item.path} to={item.path} className="main-nav-style">
+              {item.label}
+            </NavLink>
+          ))}
+        {/* <NavLink to="/user/leadgeneration" ClassName="main-nav-style">
+          Lead Generation
+        </NavLink> */}
       </Menu>
     </div>
   );

@@ -4,28 +4,81 @@ import TaxReview from "./TaxReview";
 import EmployeeDashboard from "./Dashboard";
 import LeadGeneration from "./LeadGeneration";
 
-const roles = localStorage.getItem("userType");
+import TabsProfile from "./ProfileTabs";
+import Dashboard from "./Dashboard";
+import LeadManagement from "./LeadManagement";
+import LeadDetails from "./LeadDetails";
+import CreateLead from "./CreateLead";
+import TaskManagement from "./TaskManagement";
+import LoanManagements from "./LoanManagement";
+import LoanDetails from "./LoanDetails";
+import Insurance from "./InsuranceManagement";
+import CreateInsuranceManagement from "./CreateInsuranceManagement";
+import InsuranceDetails from "./InsuranceDetails";
+import Tax from "./TaxManagement";
+import CreateTaxmangement from "./CreateTaxManagement";
+import TaxDetails from "./TaxDetails";
+import LoanFormProfileTab from "./LoanForm/LoanFormProfileTab";
+
 export const EmployeeRoutes = [
   {
     path: "/employee",
-    element: <EmployeeDashboard />,
+    element: <Dashboard />,
   },
   {
-    path: "/employee/loan",
-    element: <TaxReview />,
+    path: "/employee/myprofile",
+    element: <TabsProfile />,
   },
   {
-    path: "/employee/tax",
-    element: roles === "employee" ? <TaxReview /> : <Navigate to="/login" />,
+    path: "/employee/leadmanagement",
+    element: <LeadManagement />,
   },
   {
-    path: "/employee/insurance",
-    element:
-      roles === "employee" ? <InsuranceReview /> : <Navigate to="/login" />,
+    path: "/employee/leaddetails",
+    element: <LeadDetails />,
   },
   {
-    path: "/employee/lead",
-    element:
-      roles === "employee" ? <LeadGeneration /> : <Navigate to="/login" />,
+    path: "/employee/createlead",
+    element: <CreateLead />,
+  },
+  {
+    path: "/employee/taskmanagement",
+    element: <TaskManagement />,
+  },
+  {
+    path: "/employee/loanmanagement",
+    element: <LoanManagements />,
+  },
+  {
+    path: "/employee/loandetails/:id",
+    element: <LoanDetails />,
+  },
+  {
+    path: "/employee/insurancemanagement",
+    element: <Insurance />,
+  },
+  {
+    path: "/employee/createinsurance",
+    element: <CreateInsuranceManagement />,
+  },
+  {
+    path: "/employee/insurancedetails/:id",
+    element: <InsuranceDetails />,
+  },
+  {
+    path: "/employee/taxmanagement",
+    element: <Tax />,
+  },
+  {
+    path: "/employee/createtax",
+    element: <CreateTaxmangement />,
+  },
+  {
+    path: "/employee/taxdetails/:id",
+    element: <TaxDetails />,
+  },
+  {
+    path: "/employee/editloan",
+    element: <LoanFormProfileTab />,
   },
 ];

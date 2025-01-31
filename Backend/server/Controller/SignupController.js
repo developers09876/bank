@@ -74,6 +74,63 @@ const generateReferralCode = async () => {
   return referralCode;
 };
 
+// export const registerUser = async (req, res) => {
+//   const {
+//     userid,
+//     userType,
+//     empno,
+//     firstname,
+//     lastname,
+//     email,
+//     contactNumber,
+//     dateOfJoining,
+//     services,
+//     category,
+//     manager,
+//     branch,
+//     employeeCategory,
+//     subCategory,
+//     empCreatedBy,
+//   } = req.body;
+
+//   try {
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ error: "Email is already in use" });
+//     }
+
+//     let referralCode = null;
+//     if (userType === "user") {
+//       referralCode = await generateReferralCode();
+//     }
+
+//     const newUser = new User({
+//       userid,
+//       userType,
+//       empno,
+//       firstname,
+//       lastname,
+//       email,
+//       contactNumber,
+//       manager,
+//       dateOfJoining,
+//       services,
+//       category,
+//       branch,
+//       employeeCategory,
+//       subCategory,
+//       empCreatedBy,
+//       referralCode,
+//     });
+
+//     await newUser.save();
+
+//     res.status(201).json({ message: "User registered successfully", newUser });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
 export const registerUser = async (req, res) => {
   const {
     userid,
@@ -84,11 +141,18 @@ export const registerUser = async (req, res) => {
     email,
     contactNumber,
     dateOfJoining,
+    services,
+    categoryTitle,
+    subCategory,
     manager,
     branch,
     employeeCategory,
-    subCategory,
     empCreatedBy,
+    userId,
+    referCode,
+    referType,
+    loanType,
+    
   } = req.body;
 
   try {
@@ -97,8 +161,8 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ error: "Email is already in use" });
     }
 
-    let referralCode = null;
-    if (userType === "user") {
+    let referralCode = referCode;
+    if (userType === "user" && !referCode) {
       referralCode = await generateReferralCode();
     }
 
@@ -112,11 +176,18 @@ export const registerUser = async (req, res) => {
       contactNumber,
       manager,
       dateOfJoining,
+      services,
+      category: categoryTitle,
+      subCategory: subCategory?.title,
+      reward: subCategory?.rewards,
       branch,
       employeeCategory,
-      subCategory,
       empCreatedBy,
       referralCode,
+      userId,
+      referType,
+      loanType,
+      referCode,
     });
 
     await newUser.save();

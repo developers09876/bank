@@ -73,6 +73,7 @@ const loanApplicationSchema = new mongoose.Schema(
     incomeDetails: { type: String },
     loanAmount: { type: Number },
     loanPurpose: { type: String },
+    loanType: { type: String },
     loanAgentName: { type: String },
     loanAgentContactNumber: { type: String },
     referCode: { type: String, unique: true },

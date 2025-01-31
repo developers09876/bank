@@ -14,6 +14,7 @@ const Refer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { subCategory, categoryTitle } = location.state || {};
+  console.log("subCategory", subCategory);
   const [contactNumber, setContactNumber] = useState("");
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -111,7 +112,12 @@ const Refer = () => {
           body: JSON.stringify({
             token: "uiqso13q4dzwu5lr",
             to: contactNumber,
-            body: `Hi,\n Your Friend Refer to your for ${categoryTitle} \n  Click this link and use this code: ${referralCode} \n http://localhost:3000/refercode/${referralCode}`,
+            body: `Hi,\n\nYour friend referred you for ${
+              subCategory?.title
+            }.\n\nClick the link below and use this code: ${referralCode}\n\nhttp://localhost:3000/refercode/${referralCode}/${subCategory?.title.replace(
+              / /g,
+              "-"
+            )}/${categoryTitle.replace(/ /g, "-")}`,
           }),
         }
       );
@@ -123,7 +129,6 @@ const Refer = () => {
           whatsappResponse.status,
           errorData
         );
-        alert("Failed to send WhatsApp message.");
         return;
       }
 
@@ -132,7 +137,6 @@ const Refer = () => {
       navigate("/user/rewards");
     } catch (error) {
       console.error("Error submitting referral:", error);
-      alert("Error: Unable to submit referral.");
     }
   };
 
