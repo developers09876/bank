@@ -30,7 +30,7 @@ const ReferalLogin = () => {
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [step, setstep] = useState("first");
-
+  const referType = "Business-Loan"; 
   const navigate = useNavigate();
 
   const validateInputs = () => {
@@ -83,7 +83,7 @@ const ReferalLogin = () => {
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
       localStorage.setItem("referralCode", response.data.data.referralCode);
-
+      localStorage.setItem("referType",response.data.data.referType);
       console.log("response.data.data", response.data.data);
 
       toast.success("OTP sent successfully!", {
@@ -173,6 +173,72 @@ const ReferalLogin = () => {
   //   }
   // };
 
+  // const onSubmit1 = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/nodemailer/checkverification",
+  //       { email, code: otp }
+  //     );
+  
+  //     const { token, checkEmail } = response.data.data;
+  
+  //     // Store necessary data in localStorage
+  //     localStorage.setItem("token", token);
+  //     localStorage.setItem("email", checkEmail.email);
+  
+  //     if (checkEmail?.userType) {
+  //       localStorage.setItem("userType", checkEmail.userType);
+  //     }
+  
+  //     if (checkEmail?.employeeCategory) {
+  //       localStorage.setItem("employeeCategory", checkEmail.employeeCategory);
+  //     }
+  
+  //     if (checkEmail?.loanType) {
+  //       localStorage.setItem("loanType", checkEmail.loanType);
+  //     }
+  
+  //     toast.success("Verification successful!", {
+  //       position: "top-center",
+  //       autoClose: 3000,
+  //     });
+  
+  //     setTimeout(() => {
+  //       const userType = localStorage.getItem("userType");
+  //       const employeeCategory = localStorage.getItem("employeeCategory");
+  //       const loanType = localStorage.getItem("loanType");
+  
+  //       console.log("Navigating with:", { userType, loanType, employeeCategory });
+  
+  //       // Define default routes based on userType
+  //       const routes = {
+  //         employee: "/employee",
+  //         user: "/user",
+  //         LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+  //         TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
+  //         InsuranceEmployee: employeeCategory ? "/insuranceEmp" : "/employeeInsurance",
+  //         stockMarket: "/employeeStockMarket",
+  //       };
+  
+  //       // Navigate to /loanform or /insuranceForms based on loanType
+  //       if (loanType === "Vehicle Loan" || loanType === "Home Loan") {
+  //         navigate("/loanform");
+  //       } else if (loanType === "Insurance") {
+  //         navigate("/insuranceForms");
+  //       } else {
+  //         navigate(routes[userType] || "/login");
+  //       }
+  //     }, 3000);
+  //   } catch (error) {
+  //     console.error("Login error:", error.response?.data);
+  //     toast.error(error.response?.data?.error || "Login failed. Please try again.", {
+  //       position: "top-center",
+  //       autoClose: 3000,
+  //     });
+  //   }
+  // };
+  
+
   const onSubmit1 = async () => {
     try {
       const response = await axios.post(
@@ -181,44 +247,31 @@ const ReferalLogin = () => {
       );
   
       const { token, checkEmail } = response.data.data;
-      
+  
       localStorage.setItem("token", token);
       localStorage.setItem("email", checkEmail.email);
   
-      // Store employee category if available
-      if (checkEmail?.employeeCategory) {
-        localStorage.setItem("employeeCategory", checkEmail.employeeCategory);
-      }
-  
-      // Store loan type if available
       if (checkEmail?.loanType) {
         localStorage.setItem("loanType", checkEmail.loanType);
       }
-  
+      if (checkEmail?.referType) {
+        localStorage.setItem("referType", checkEmail.referType);
+      }
       toast.success("Verification successful!", {
         position: "top-center",
         autoClose: 3000,
       });
   
       setTimeout(() => {
-        const userType = localStorage.getItem("userType");
-        const employeeCategory = localStorage.getItem("employeeCategory");
         const loanType = localStorage.getItem("loanType");
   
-        const routes = {
-          employee: "/employee",
-          user: "/user",
-          LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
-          TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
-          InsuranceEmployee: employeeCategory ? "/insuranceEmp" : "/employeeInsurance",
-          stockMarket: "/employeeStockMarket",
-        };
-  
-        // If loanType exists, navigate dynamically to its specific page
-        if (userType === "loanType") {
-          navigate(`/user`);
+        console.log("Navigating with loanType:", loanType);
+        if (loanType === "Loans") {
+          navigate("/loanform");
+        } else if (loanType === "Insurance") {
+          navigate("/insuranceForms");
         } else {
-          navigate(routes[userType] || "/login");
+          navigate("/login"); 
         }
       }, 3000);
     } catch (error) {
@@ -229,6 +282,7 @@ const ReferalLogin = () => {
       });
     }
   };
+  
   
   
   
