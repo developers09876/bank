@@ -297,19 +297,16 @@ function TabsVendor() {
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">Gender</label>
-                      <br />
                       <Controller
                         name="gender"
                         control={control}
-                        defaultValue={[]} // Set defaultValue to an empty array for multi-select
+                        defaultValue=""
                         rules={{ required: true }}
                         render={({ field }) => (
                           <Select
                             {...field}
                             className="inputcolumn_drp"
                             placeholder="Select Gender"
-                            mode="multiple" // Enable multi-select
-                            allowClear
                           >
                             <Option value="Male">Male</Option>
                             <Option value="Female">Female</Option>

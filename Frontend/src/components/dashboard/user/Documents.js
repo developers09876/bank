@@ -1,70 +1,268 @@
-
-
-import React, { useState } from "react";
-import { Table } from "react-bootstrap";
-import Header from "../../Layout/Header";
-// import "./FileTable.css"; // Add CSS for styling
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Container, Row, Col } from "react-bootstrap";
+import "./Documents.css";
 
 const Documents = () => {
-  const [files, setFiles] = useState([
-    { name: "Aadhar.jpg", uploader: "Uploader Name", date: "2020.05.12 AM 8:34", type: "jpg" ,url: "https://i.pinimg.com/originals/d4/f5/13/d4f513c861886dd40f3e3d2e2012a3cd.jpg"},
-    { name: "Pan.png", uploader: "Uploader Name", date: "2020.05.12 AM 8:34", type: "png" ,url: "https://via.placeholder.com/150"},
-    { name: "VoterID.doc", uploader: "Uploader Name", date: "2020.05.12 AM 8:34", type: "doc" },
-    { name: "Photo.jpg", uploader: "Uploader Name", date: "2020.05.12 AM 8:34", type: "jpg" },
-    
-  ]);
-  const [selectedImage, setSelectedImage] = useState(null);
-  console.log('selectedImage', selectedImage)
+  const [hovered, setHovered] = useState(null);
+  const [hoveredLoan, setHoveredLoan] = useState(null);
+  const [hoveredInsurance, setHoveredInsurance] = useState(null);
+  const [hoveredTax, setHoveredTax] = useState(null);
+  const [showLoans, setShowLoans] = useState(false);
+  const [showInsurances, setShowInsurances] = useState(false);
+  const [showTaxes, setShowTaxes] = useState(false);
+  const [data, setData] = useState({});
+  const [loanData, setLoanData] = useState([]);
+  const [insuranceData, setInsuranceData] = useState([]);
+  const [taxData, setTaxData] = useState([]);
+  const navigate = useNavigate();
 
-  const handleDownload = (file) => {
-    if (file.type === "jpg" || file.type === "png") {
-      setSelectedImage(file.url); // Set the image URL for display
-      console.log('first', file.url)
-    } else {
-      alert(`${file.name} is not an image.`);
-    }
+  console.log("data", data);
+  console.log("loanData", loanData);
+  console.log("insuranceData", insuranceData);
+  console.log("taxData", taxData);
+
+  const userid = localStorage.getItem("id");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [userRes, loanRes, insuranceRes, taxRes] = await Promise.all([
+          axios.get(`http://localhost:5000/signup/getby/${userid}`),
+          axios.get(`http://localhost:5000/loanform/getbyid/${userid}`),
+          axios.get(
+            `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
+          ),
+          axios.get(
+            `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
+          ),
+        ]);
+        setData(userRes.data || {});
+        setLoanData(loanRes.data || []);
+        setInsuranceData(insuranceRes.data || []);
+        setTaxData(taxRes.data || []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [userid]);
+
+  const handleViewDetails = (item, type) => {
+    navigate(`/details`, { state: { item, type } });
   };
+
   return (
-    <div className="file-table-container">
-      <Header/>
-      <h2>Files</h2>
-      <Table className="file-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Uploader</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {files.map((file, index) => (
-            <tr key={index}>
-              <td>
-                <span className={`file-icon ${file.type}`}></span>
-                {file.name}
-              </td>
-              <td>{file.uploader}</td>
-              <td>{file.date}</td>
-              <td>
-                <button className="download-btn" onClick={() => handleDownload(file)}>
-                  View
-                </button>
-              
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      {selectedImage && (
-        <div className="image-preview">
-          <h3>Image Preview:</h3>
-          <img src={selectedImage} alt="Preview" />
-        </div>
+    <Container className="mt-4 d-block">
+      <Row className="g-4">
+        {/* Personal Details Card */}
+        <Col lg={3} md={6} sm={12}>
+          <div
+            className={`documentcard personal-card ${
+              hovered === "personal" ? "expanded" : ""
+            }`}
+            onMouseEnter={() => setHovered("personal")}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <h3 className="documentcard-title">Personal Details</h3>
+            {hovered === "personal" && (
+              <ul className="documentcard-list">
+                {[
+                  { label: "Profile", value: data?.photographs },
+                  { label: "Spouse Pay Slip", value: data?.coApplicantDocs },
+                  { label: "Aadhaar Or PAN", value: data?.panOrAdharUpload },
+                  { label: "Voter ID Proof", value: data?.voterIdUpload },
+                ].map((item, i) => (
+                  <li key={i} className="documentcard-item">
+                    <span>{item.label}: </span>
+                    {item.value ? (
+                      <a
+                        href={item.value}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="documentcard-link"
+                      >
+                        View Document
+                      </a>
+                    ) : (
+                      <span className="documentcardtext-gray">
+                        Not Available
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </Col>
+
+        {/* Loan Details Card */}
+        <Col lg={3} md={6} sm={12}>
+          <div
+            className="documentcard loan-card"
+            onClick={() => setShowLoans(!showLoans)}
+          >
+            <h3 className="documentcard-title">Loan Details</h3>
+          </div>
+        </Col>
+
+        {/* Insurance Details Card */}
+        <Col lg={3} md={6} sm={12}>
+          <div
+            className="documentcard insurance-card"
+            onClick={() => setShowInsurances(!showInsurances)}
+          >
+            <h3 className="documentcard-title">Insurance Details</h3>
+          </div>
+        </Col>
+
+        <Col lg={3} md={6} sm={12}>
+          <div
+            className="documentcard tax-card"
+            onClick={() => setShowTaxes(!showTaxes)}
+          >
+            <h3 className="documentcard-title">Tax Details</h3>
+          </div>
+        </Col>
+      </Row>
+
+      {/* Loan Cards (Shown Only When Loan Details Card is Clicked) */}
+      {showLoans && (
+        <>
+          <h3 className="mt-4">Loan Documents</h3>
+          <Row className="px-1 py-2">
+            {loanData.map((loan, index) => (
+              <Col key={index} lg={4} md={6} sm={12}>
+                <div
+                  className={`documentcard loan-details-card ${
+                    hoveredLoan === index ? "expanded" : ""
+                  }`}
+                  onMouseEnter={() => setHoveredLoan(index)}
+                  onMouseLeave={() => setHoveredLoan(null)}
+                >
+                  <h3 className="documentcard-title">Loan {index + 1}</h3>
+                  {hoveredLoan === index && (
+                    <ul className="documentcard-list">
+                      {[
+                        { label: "Address Proof", value: loan?.addressProof },
+                        {
+                          label: "Employee Pay Slip",
+                          value: loan?.employeePayslipProof,
+                        },
+                        { label: "Identity Proof", value: loan?.identityProof },
+                        { label: "Nominee Proof", value: loan?.nomineeDocs },
+                        { label: "Signature", value: loan?.signature },
+                        {
+                          label: "Property Ownership",
+                          value: loan?.propertyOwnershipProof,
+                        },
+                      ].map((item, i) => (
+                        <li key={i} className="documentcard-item">
+                          <span>{item.label}: </span>
+                          {item.value ? (
+                            <a
+                              href={item.value}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="documentcard-link"
+                            >
+                              View
+                            </a>
+                          ) : (
+                            <span className="documentcardtext-gray">
+                              Not Available
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </>
       )}
-    </div>
+
+      {/* Insurance Cards (Shown Only When Insurance Details Card is Clicked) */}
+      {showInsurances && (
+        <>
+          <h3 className="mt-4">Insurance Documents</h3>
+          <Row className="g-4">
+            {insuranceData.map((insurance, index) => (
+              <Col key={index} lg={4} md={6} sm={12}>
+                <div
+                  className={`documentcard insurance-details-card ${
+                    hoveredInsurance === index ? "expanded" : ""
+                  }`}
+                  onMouseEnter={() => setHoveredInsurance(index)}
+                  onMouseLeave={() => setHoveredInsurance(null)}
+                >
+                  <h3 className="documentcard-title">Insurance {index + 1}</h3>
+                  {hoveredInsurance === index && (
+                    <ul className="documentcard-list">
+                      {[
+                        { label: "Policy Type", value: insurance.PolicyType },
+                        {
+                          label: "Policy Term",
+                          value: insurance.policyTerm,
+                        },
+                        { label: "Sum Assured", value: insurance.sumAssured },
+                      ].map((item, i) => (
+                        <li key={i} className="documentcard-item">
+                          <span>{item.label}: </span>
+                          <span>{item.value || "Not Available"}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
+
+      {showTaxes && (
+        <>
+          <h3 className="mt-4">Tax Documents</h3>
+          <Row className="g-4">
+            {taxData.map((tax, index) => (
+              <Col key={index} lg={4} md={6} sm={12}>
+                <div
+                  className={`documentcard tax-details-card ${
+                    hoveredTax === index ? "expanded" : ""
+                  }`}
+                  onMouseEnter={() => setHoveredTax(index)}
+                  onMouseLeave={() => setHoveredTax(null)}
+                >
+                  <h3 className="documentcard-title">Tax {index + 1}</h3>
+                  {hoveredTax === index && (
+                    <ul className="documentcard-list">
+                      {[
+                        { label: "Business Type", value: tax.businessType },
+                        {
+                          label: "IncomeTax Status",
+                          value: tax.incomeTaxStatus,
+                        },
+                        { label: "Tax Paid", value: tax.taxPaid },
+                      ].map((item, i) => (
+                        <li key={i} className="documentcard-item">
+                          <span>{item.label}: </span>
+                          <span>{item.value || "Not Available"}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
+    </Container>
   );
 };
 
 export default Documents;
-
