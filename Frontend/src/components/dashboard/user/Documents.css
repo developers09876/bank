@@ -1,0 +1,54 @@
+
+
+.documentcard {
+    width: 260px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    height: 100px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.documentcard.expanded {
+    height: 250px;
+}
+
+.documentcard-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00397f;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.documentcard-list {
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.documentcard.expanded .documentcard-list {
+    opacity: 1;
+    visibility: visible;
+}
+
+.documentcard-item {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.documentcard-link {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.documentcardtext-gray {
+    color: gray;
+}
