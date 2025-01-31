@@ -411,7 +411,7 @@ const ReferCode = () => {
       if (response.ok) {
         toast.success("Registration successful!", { autoClose: 2000 });
         setTimeout(() => {
-          // navigate("/user/rewards");
+          navigate("/Referallogin");
         }, 2000);
       } else {
         if (responseData.error === "Email is already in use") {
