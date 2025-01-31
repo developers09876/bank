@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Api from "../../../../../Api";
 import { Controller, useForm } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
 import { Select } from "antd";
-import "../../../../dashboard/user/MyProfile.scss";
+// import "../../../../dashboard/user/MyProfile.scss";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation } from "react-router-dom";
+import Api from "../../../../Api";
 
 function LoanDetails() {
   const {

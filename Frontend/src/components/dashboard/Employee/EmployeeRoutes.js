@@ -12,6 +12,13 @@ import CreateLead from "./CreateLead";
 import TaskManagement from "./TaskManagement";
 import LoanManagements from "./LoanManagement";
 import LoanDetails from "./LoanDetails";
+import Insurance from "./InsuranceManagement";
+import CreateInsuranceManagement from "./CreateInsuranceManagement";
+import InsuranceDetails from "./InsuranceDetails";
+import Tax from "./TaxManagement";
+import CreateTaxmangement from "./CreateTaxManagement";
+import TaxDetails from "./TaxDetails";
+import LoanFormProfileTab from "./LoanForm/LoanFormProfileTab";
 
 const roles = localStorage.getItem("userType");
 export const EmployeeRoutes = [
@@ -48,8 +55,42 @@ export const EmployeeRoutes = [
        <LoanManagements /> 
   },
   {
-    path: "/employee/loandetails",
+    path: "/employee/loandetails/:id",
     element:
        <LoanDetails /> 
+  },
+  {
+    path: "/employee/insurancemanagement",
+    element:
+       <Insurance /> 
+  },
+  {
+    path: "/employee/createinsurance",
+    element:
+       <CreateInsuranceManagement /> 
+  },
+  {
+    path: "/employee/insurancedetails/:id",
+    element:
+       <InsuranceDetails /> 
+  },
+  {
+    path: "/employee/taxmanagement",
+    element:
+       <Tax /> 
+  },
+  {
+    path: "/employee/createtax",
+    element:
+       <CreateTaxmangement /> 
+  },
+  {
+    path: "/employee/taxdetails/:id",
+    element:
+       <TaxDetails /> 
+  },
+  {
+    path: "/employee/editloan",
+    element: <LoanFormProfileTab />,
   },
 ];

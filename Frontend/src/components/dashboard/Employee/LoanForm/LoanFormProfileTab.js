@@ -1,11 +1,11 @@
 import React from "react";
 import { Tabs } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import OurProfile from "./LoanForm";
-// import Popup from '../Popup/Popup';
-import KycComplaince from "./LoanKfc";
-// import AdminInfo from './AdminInfo.js';
 import LoanDetails from "./LoanDetails";
+import LoanForm from "./LoanForm";
+import Kycvendor from "./LoanKfc";
+// import Popup from '../Popup/Popup';
+// import AdminInfo from './AdminInfo.js';
 
 function LoanFormProfileTab() {
    const { state } = useLocation();
@@ -20,13 +20,13 @@ function LoanFormProfileTab() {
 
       <Tabs defaultActiveKey="1" centered className="p-3">
         <Tabs.TabPane tab="Personal Information" key="1">
-          <OurProfile />
+          <LoanForm />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Loan Form" key="2">
           <LoanDetails />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Bank Details" key="3">
-          <KycComplaince />
+          <Kycvendor/>
         </Tabs.TabPane>
       </Tabs>
     </div>

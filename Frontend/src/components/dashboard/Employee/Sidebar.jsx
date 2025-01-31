@@ -35,10 +35,10 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "InsuranceEmployee",
       label: "Insurance Management",
-      path: "/user/insu",
+      path: "/employee/insurancemanagement",
     },
-    { serviceName: "TaxEmployee", label: "Tax Management", path: "/user/tax" },
-    { serviceName: "stockMarket", label: "stock Market", path: "/user/tax" },
+    { serviceName: "TaxEmployee", label: "Tax Management", path: "/employee/taxmanagement" },
+    { serviceName: "stockMarket", label: "stock Market", path: "/employee/taxmanagement" },
 
   ];
 
