@@ -19,6 +19,9 @@ import Tax from "./TaxManagement";
 import CreateTaxmangement from "./CreateTaxManagement";
 import TaxDetails from "./TaxDetails";
 import LoanFormProfileTab from "./LoanForm/LoanFormProfileTab";
+import LoanTaskManagement from "./LoanTaskManagement";
+import InsuranceTaskManagement from "./InsuranceTaskManagement";
+import TaxTaskManagement from "./TaxTaskManagement";
 
 export const EmployeeRoutes = [
   {
@@ -80,5 +83,17 @@ export const EmployeeRoutes = [
   {
     path: "/employee/editloan",
     element: <LoanFormProfileTab />,
+  },
+  {
+    path: "/employee/loantaskmanagement",
+    element: <LoanTaskManagement/>,
+  },
+  {
+    path: "/employee/insurancetaskmanagement",
+    element: <InsuranceTaskManagement/>,
+  },
+  {
+    path: "/employee/taxtaskmanagement",
+    element: <TaxTaskManagement />,
   },
 ];
