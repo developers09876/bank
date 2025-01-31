@@ -37,7 +37,7 @@ function LoanDetails() {
 
   const loanApplicationId = localStorage.getItem("loanApplicationId");
   const userType = localStorage.getItem("userType");
-  const referBycode = localStorage.getItem("referBycode");
+  const referCode = localStorage.getItem("referCode");
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
@@ -101,10 +101,9 @@ function LoanDetails() {
         : null;
 
     const Details = {
-      referCode: "villu82200",
+      referCode: referCode || "",
       loanAgentName: data.loanAgentName,
       loanAgentContactNumber: data.loanAgentContactNumber,
-
       identityProof: identityProofUrl,
       addressProof: addressProofUrl,
       annualIncome: data.annualIncome,
@@ -116,7 +115,6 @@ function LoanDetails() {
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
       loanType: data.loanType,
-
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
       nomineeAddress: data.nomineeAddress,
