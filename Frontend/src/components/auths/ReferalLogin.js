@@ -110,68 +110,128 @@ const ReferalLogin = () => {
     console.log("formState", getValues());
   };
 
-  const onSubmit1 = async (data) => {
-    // checkCode();
-    console.log("OTP", otp);
-    const code = otp;
+  // const onSubmit1 = async (data) => {
+  //   // checkCode();
+  //   console.log("OTP", otp);
+  //   const code = otp;
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/nodemailer/checkverification",
+  //       {
+  //         email,
+  //         code,
+  //       }
+  //     );
+  //     console.log("response", response);
+  //     localStorage.setItem("token", response.data.data.token);
+  //     localStorage.setItem("token", response.data.data.token);
+
+  //     localStorage.setItem("email", response.data.data.checkEmail.email);
+  //     if (response.data.data.checkEmail?.employeeCategory) {
+  //       localStorage.setItem(
+  //         "employeeCategory",
+  //         response.data.data.checkEmail.employeeCategory
+  //       );
+  //     }
+  //     toast.success("Verification successfull!", {
+  //       position: "top-center",
+  //       autoClose: 3000,
+  //     });
+  //     const userType = localStorage.getItem("userType");
+  //     const employeeCategory = localStorage.getItem("employeeCategory");
+  //     console.log("userType", userType);
+
+  //     setTimeout(() => {
+  //       // const routes = {
+  //       //   employee: "/employee",
+  //       //   user: "/user",
+  //       //   // LoanEmployee: "/adminLoan",
+  //       //   LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+  //       //   // TaxEmployee: "/employeeTax",
+  //       //   TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
+  //       //   // InsuranceEmployee: "/employeeInsurance",
+  //       //   InsuranceEmployee: employeeCategory
+  //       //     ? "/insuranceEmply"
+  //       //     : "/employeeInsurance",
+  //       //   stockMarket: "/employeeStockMarket",
+  //       // };
+  //       // const route = routes[userType] || "/login";
+  //       // navigate(route);
+  //     }, 3000);
+
+  //     // console.log("first", response);
+  //     // setstep("second");
+  //   } catch (error) {
+  //     console.error("Login error:", error.response?.data);
+  //     toast.error(
+  //       error.response?.data?.error || "Login failed. Please try again.",
+  //       {
+  //         position: "top-center",
+  //         autoClose: 3000,
+  //       }
+  //     );
+  //   }
+  // };
+
+  const onSubmit1 = async () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/nodemailer/checkverification",
-        {
-          email,
-          code,
-        }
+        { email, code: otp }
       );
-      console.log("response", response);
-      localStorage.setItem("token", response.data.data.token);
-      localStorage.setItem("token", response.data.data.token);
-
-      localStorage.setItem("email", response.data.data.checkEmail.email);
-      if (response.data.data.checkEmail?.employeeCategory) {
-        localStorage.setItem(
-          "employeeCategory",
-          response.data.data.checkEmail.employeeCategory
-        );
+  
+      const { token, checkEmail } = response.data.data;
+      
+      localStorage.setItem("token", token);
+      localStorage.setItem("email", checkEmail.email);
+  
+      // Store employee category if available
+      if (checkEmail?.employeeCategory) {
+        localStorage.setItem("employeeCategory", checkEmail.employeeCategory);
       }
-      toast.success("Verification successfull!", {
+  
+      // Store loan type if available
+      if (checkEmail?.loanType) {
+        localStorage.setItem("loanType", checkEmail.loanType);
+      }
+  
+      toast.success("Verification successful!", {
         position: "top-center",
         autoClose: 3000,
       });
-      const userType = localStorage.getItem("userType");
-      const employeeCategory = localStorage.getItem("employeeCategory");
-      console.log("userType", userType);
-
+  
       setTimeout(() => {
-        // const routes = {
-        //   employee: "/employee",
-        //   user: "/user",
-        //   // LoanEmployee: "/adminLoan",
-        //   LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
-        //   // TaxEmployee: "/employeeTax",
-        //   TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
-        //   // InsuranceEmployee: "/employeeInsurance",
-        //   InsuranceEmployee: employeeCategory
-        //     ? "/insuranceEmply"
-        //     : "/employeeInsurance",
-        //   stockMarket: "/employeeStockMarket",
-        // };
-        // const route = routes[userType] || "/login";
-        // navigate(route);
+        const userType = localStorage.getItem("userType");
+        const employeeCategory = localStorage.getItem("employeeCategory");
+        const loanType = localStorage.getItem("loanType");
+  
+        const routes = {
+          employee: "/employee",
+          user: "/user",
+          LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+          TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
+          InsuranceEmployee: employeeCategory ? "/insuranceEmp" : "/employeeInsurance",
+          stockMarket: "/employeeStockMarket",
+        };
+  
+        // If loanType exists, navigate dynamically to its specific page
+        if (userType === "loanType") {
+          navigate(`/user`);
+        } else {
+          navigate(routes[userType] || "/login");
+        }
       }, 3000);
-
-      // console.log("first", response);
-      // setstep("second");
     } catch (error) {
       console.error("Login error:", error.response?.data);
-      toast.error(
-        error.response?.data?.error || "Login failed. Please try again.",
-        {
-          position: "top-center",
-          autoClose: 3000,
-        }
-      );
+      toast.error(error.response?.data?.error || "Login failed. Please try again.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
     }
   };
+  
+  
+  
   const { register, handleSubmit, getValues } = useForm();
   return (
     <>
