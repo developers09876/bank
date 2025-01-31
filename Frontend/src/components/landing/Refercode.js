@@ -366,21 +366,18 @@ const ReferCode = () => {
     formState: { errors },
     setValue,
   } = useForm(); // Hook Form methods
-  const location = useLocation();
   const navigate = useNavigate();
   const [referCode, setReferCode] = useState("");
   const [referType, setReferType] = useState("Loan");
-  const [loanType, setLoanType] = useState("");
-  const [error, setError] = useState("");
-  const { id } = useParams();
-  console.log("id", id);
+  // const { refercode } = useParams();
+  const { referralCode, subCategory, categoryTitle } = useParams();
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
-    if (id) {
-      setReferCode(id);
+    if (referralCode) {
+      setReferCode(referralCode);
     }
-  }, [id]);
+  }, [referralCode]);
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -389,20 +386,27 @@ const ReferCode = () => {
   };
 
   const onSubmit = async (data) => {
-    // Validate referral code length
+    const details = {
+      contactNumber: data.contactNumber,
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      referType: categoryTitle,
+      loanType: subCategory,
+      referCode: referralCode,
+    };
     if (referCode.length < 6) {
       alert("Please enter at least a 6-character referral code.");
       return;
     }
 
     try {
-      // Construct the body of the API request
       const response = await fetch(`${API_URL}/signup/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...data, // Include the form data from react-hook-form
-          referCode, // Include the refer code manually
+          ...details,
+          referCode,
         }),
       });
 
@@ -533,8 +537,7 @@ const ReferCode = () => {
                       </Col>
                     </Row>
 
-                    {/* Referral Type Based on Refer Type */}
-                    <Row>
+                    {/* <Row>
                       <Col lg={6} md={6} sm={12}>
                         <label>Referral Type</label>
                         <br />
@@ -558,7 +561,6 @@ const ReferCode = () => {
                         )}
                       </Col>
 
-                      {/* Loan, Insurance, or CIBIL Type Based on Refer Type */}
                       {referType === "Loan" && (
                         <Col lg={6} md={6} sm={12}>
                           <label>Loan Type</label>
@@ -621,9 +623,8 @@ const ReferCode = () => {
                           </select>
                         </Col>
                       )}
-                    </Row>
+                    </Row> */}
 
-                    {/* Referral Code Input */}
                     <Row style={{ marginBottom: "15px" }}>
                       <Col lg={6} md={6} sm={12}>
                         <label>Referral Code</label>
