@@ -368,9 +368,9 @@ const ReferCode = () => {
   } = useForm(); // Hook Form methods
   const navigate = useNavigate();
   const [referCode, setReferCode] = useState("");
-  const [referType, setReferType] = useState("Loan");
   // const { refercode } = useParams();
   const { referralCode, subCategory, categoryTitle } = useParams();
+  console.log("object", categoryTitle);
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
@@ -387,12 +387,13 @@ const ReferCode = () => {
 
   const onSubmit = async (data) => {
     const details = {
+      userType: "user",
       contactNumber: data.contactNumber,
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
-      referType: categoryTitle,
-      loanType: subCategory,
+      referType: subCategory,
+      loanType: categoryTitle,
       referCode: referralCode,
     };
     if (referCode.length < 6) {

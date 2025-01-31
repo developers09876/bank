@@ -30,7 +30,7 @@ const ReferalLogin = () => {
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [step, setstep] = useState("first");
-  const referType = "Business-Loan"; 
+  const referType = "Business-Loan";
   const navigate = useNavigate();
 
   const validateInputs = () => {
@@ -83,7 +83,7 @@ const ReferalLogin = () => {
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
       localStorage.setItem("referralCode", response.data.data.referralCode);
-      localStorage.setItem("referType",response.data.data.referType);
+      localStorage.setItem("referType", response.data.data.referType);
       console.log("response.data.data", response.data.data);
 
       toast.success("OTP sent successfully!", {
@@ -179,37 +179,37 @@ const ReferalLogin = () => {
   //       "http://localhost:5000/nodemailer/checkverification",
   //       { email, code: otp }
   //     );
-  
+
   //     const { token, checkEmail } = response.data.data;
-  
+
   //     // Store necessary data in localStorage
   //     localStorage.setItem("token", token);
   //     localStorage.setItem("email", checkEmail.email);
-  
+
   //     if (checkEmail?.userType) {
   //       localStorage.setItem("userType", checkEmail.userType);
   //     }
-  
+
   //     if (checkEmail?.employeeCategory) {
   //       localStorage.setItem("employeeCategory", checkEmail.employeeCategory);
   //     }
-  
+
   //     if (checkEmail?.loanType) {
   //       localStorage.setItem("loanType", checkEmail.loanType);
   //     }
-  
+
   //     toast.success("Verification successful!", {
   //       position: "top-center",
   //       autoClose: 3000,
   //     });
-  
+
   //     setTimeout(() => {
   //       const userType = localStorage.getItem("userType");
   //       const employeeCategory = localStorage.getItem("employeeCategory");
   //       const loanType = localStorage.getItem("loanType");
-  
+
   //       console.log("Navigating with:", { userType, loanType, employeeCategory });
-  
+
   //       // Define default routes based on userType
   //       const routes = {
   //         employee: "/employee",
@@ -219,7 +219,7 @@ const ReferalLogin = () => {
   //         InsuranceEmployee: employeeCategory ? "/insuranceEmp" : "/employeeInsurance",
   //         stockMarket: "/employeeStockMarket",
   //       };
-  
+
   //       // Navigate to /loanform or /insuranceForms based on loanType
   //       if (loanType === "Vehicle Loan" || loanType === "Home Loan") {
   //         navigate("/loanform");
@@ -237,7 +237,6 @@ const ReferalLogin = () => {
   //     });
   //   }
   // };
-  
 
   const onSubmit1 = async () => {
     try {
@@ -245,12 +244,12 @@ const ReferalLogin = () => {
         "http://localhost:5000/nodemailer/checkverification",
         { email, code: otp }
       );
-  
+
       const { token, checkEmail } = response.data.data;
-  
+
       localStorage.setItem("token", token);
       localStorage.setItem("email", checkEmail.email);
-  
+
       if (checkEmail?.loanType) {
         localStorage.setItem("loanType", checkEmail.loanType);
       }
@@ -261,31 +260,30 @@ const ReferalLogin = () => {
         position: "top-center",
         autoClose: 3000,
       });
-  
+
       setTimeout(() => {
         const loanType = localStorage.getItem("loanType");
-  
         console.log("Navigating with loanType:", loanType);
-        if (loanType === "Loans") {
-          navigate("/loanform");
-        } else if (loanType === "Insurance") {
-          navigate("/insuranceForms");
-        } else {
-          navigate("/login"); 
-        }
+
+        const routes = {
+          Loans: "/loanform",
+          Insurance: "/insuranceForms",
+        };
+
+        navigate(routes[referType] || "/");
       }, 3000);
     } catch (error) {
       console.error("Login error:", error.response?.data);
-      toast.error(error.response?.data?.error || "Login failed. Please try again.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      toast.error(
+        error.response?.data?.error || "Login failed. Please try again.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
     }
   };
-  
-  
-  
-  
+
   const { register, handleSubmit, getValues } = useForm();
   return (
     <>

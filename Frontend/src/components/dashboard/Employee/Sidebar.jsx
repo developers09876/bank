@@ -9,13 +9,11 @@ function Sidebar({ collapsed }) {
   const onClick = (e) => {
     console.log("click ", e);
   };
-  const role = localStorage.getItem("name");
   const id = localStorage.getItem("id");
   const [employee, setEmployee] = useState();
 
   const service = employee?.services || [];
-
-
+  console.log("service", service);
   useEffect(() => {
     getemployee();
   }, []);
@@ -31,18 +29,27 @@ function Sidebar({ collapsed }) {
   };
 
   const menuItems = [
-    { serviceName: "LoanEmployee", label: "Loan Management", path: "/employee/loanmanagement" },
+    {
+      serviceName: "LoanEmployee",
+      label: "Loan Management",
+      path: "/employee/loanmanagement",
+    },
     {
       serviceName: "InsuranceEmployee",
       label: "Insurance Management",
       path: "/employee/insurancemanagement",
     },
-    { serviceName: "TaxEmployee", label: "Tax Management", path: "/employee/taxmanagement" },
-    { serviceName: "stockMarket", label: "stock Market", path: "/employee/taxmanagement" },
-
+    {
+      serviceName: "TaxEmployee",
+      label: "Tax Management",
+      path: "/employee/taxmanagement",
+    },
+    {
+      serviceName: "stockMarket",
+      label: "stock Market",
+      path: "/employee/taxmanagement",
+    },
   ];
-
- 
 
   return (
     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
