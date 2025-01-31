@@ -20,7 +20,6 @@ import CreateTaxmangement from "./CreateTaxManagement";
 import TaxDetails from "./TaxDetails";
 import LoanFormProfileTab from "./LoanForm/LoanFormProfileTab";
 
-const roles = localStorage.getItem("userType");
 export const EmployeeRoutes = [
   {
     path: "/employee",
@@ -32,62 +31,51 @@ export const EmployeeRoutes = [
   },
   {
     path: "/employee/leadmanagement",
-    element:  <LeadManagement /> 
+    element: <LeadManagement />,
   },
   {
     path: "/employee/leaddetails",
-    element:
-       <LeadDetails /> 
+    element: <LeadDetails />,
   },
   {
     path: "/employee/createlead",
-    element:
-       <CreateLead /> 
+    element: <CreateLead />,
   },
   {
     path: "/employee/taskmanagement",
-    element:
-       <TaskManagement /> 
+    element: <TaskManagement />,
   },
   {
     path: "/employee/loanmanagement",
-    element:
-       <LoanManagements /> 
+    element: <LoanManagements />,
   },
   {
     path: "/employee/loandetails/:id",
-    element:
-       <LoanDetails /> 
+    element: <LoanDetails />,
   },
   {
     path: "/employee/insurancemanagement",
-    element:
-       <Insurance /> 
+    element: <Insurance />,
   },
   {
     path: "/employee/createinsurance",
-    element:
-       <CreateInsuranceManagement /> 
+    element: <CreateInsuranceManagement />,
   },
   {
     path: "/employee/insurancedetails/:id",
-    element:
-       <InsuranceDetails /> 
+    element: <InsuranceDetails />,
   },
   {
     path: "/employee/taxmanagement",
-    element:
-       <Tax /> 
+    element: <Tax />,
   },
   {
     path: "/employee/createtax",
-    element:
-       <CreateTaxmangement /> 
+    element: <CreateTaxmangement />,
   },
   {
     path: "/employee/taxdetails/:id",
-    element:
-       <TaxDetails /> 
+    element: <TaxDetails />,
   },
   {
     path: "/employee/editloan",
