@@ -1,14 +1,14 @@
 import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-// import "./AdminDashboard.scss"; // Custom SCSS styles
+// import "../AdminDashboard.scss"; // Custom SCSS styles
 import {
   FaMoneyBillWave,
   FaFileInvoice,
   FaChartLine,
   FaUsers,
 } from "react-icons/fa";
-import Sidebar from "./Sidebar";
+// import Sidebar from "../LoanAdmin/Loansidebar";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -19,6 +19,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Sidebar from "./Sidebar";
 
 ChartJS.register(
   CategoryScale,
@@ -29,16 +30,16 @@ ChartJS.register(
   Legend
 );
 
-const EmployeeDashboard = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const stats = {
-    totalUsers: 120,
+    totalUsers: 1200,
     loans: {
-      active: 32,
+      active: 320,
       pending: 50,
       closed: 150,
     },
-    employees: 150,
+    Users: 150,
     totalinsurance: 2000,
     revenue: "$50,000",
     invoices: 45,
@@ -46,16 +47,11 @@ const EmployeeDashboard = () => {
 
   // Data for the chart
   const data = {
-    labels: [
-      "Pending",
-      "In Process",
-      "Rejected",
-      "Completed",
-    ],
+    labels: ["Pending", "In Process", "Rejected", "Completed"],
     datasets: [
       {
-        label: "Application Status",
-        data: [2, 3, 1, 4],
+        label: "Client Status",
+        data: [2, 1, 4, 3],
         backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
         borderColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
         borderWidth: 1,
@@ -72,7 +68,7 @@ const EmployeeDashboard = () => {
       },
       title: {
         display: true,
-        text: "Status Chart",
+        text: "Client Status Chart",
         font: {
           size: 16,
         },
@@ -93,39 +89,45 @@ const EmployeeDashboard = () => {
       <Sidebar />
       <div className="admin-main-content">
         <header className="admin-dashboard-header">
-          <h1 className="admin-dashboard-title">Employee Dashboard</h1>
+          <h1 className="admin-dashboard-title" style={{ marginTop: "10px" }}>
+            Employee Dashboard
+          </h1>
         </header>
 
         <Row className="admin-dashboard-content">
-          <Col md={7} className="admin-chart-container">
+          <Col md={6} className="admin-chart-container">
             <div className="admin-chart-wrapper">
               <Bar data={data} options={options} />
             </div>
           </Col>
 
-          <Col md={4}>
+          <Col md={6}>
             <Row className="admin-stats-row">
-              <Col md={12} lg={12}>
-                <Card className="admin-stat-card">
-                  <Card.Body>
-                    <FaUsers className="admin-stat-icon" />
-                    <Card.Title>Total Users</Card.Title>
-                    <Card.Text>{stats.totalUsers}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col md={12} lg={12}>
-                <Card className="admin-stat-card">
+              <Col md={6} lg={6}>
+                <Card
+                  className="admin-stat-card"
+                  onClick={() => navigate("/admin/loancards")}
+                >
                   <Card.Body>
                     <FaChartLine className="admin-stat-icon" />
                     <Card.Title>Total Loans</Card.Title>
-                     <Card.Text>{stats.loans.active}</Card.Text>
+                    <Card.Text>{stats.loans.active}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
 
-             
+              <Col md={6} lg={6}>
+                <Card
+                  className="admin-stat-card"
+                  onClick={() => navigate("employeeuserlist")}
+                >
+                  <Card.Body>
+                    <FaMoneyBillWave className="admin-stat-icon" />
+                    <Card.Title>Total Users</Card.Title>
+                    <Card.Text>{stats.Users}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -134,4 +136,4 @@ const EmployeeDashboard = () => {
   );
 };
 
-export default EmployeeDashboard;
+export default Dashboard;

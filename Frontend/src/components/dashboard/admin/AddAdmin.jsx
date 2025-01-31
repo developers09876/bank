@@ -51,7 +51,7 @@ const AddAdmin = ({ setAuth }) => {
 
   const onSubmit = async (data) => {
     try {
-      const body = { ...data, userType: data.designation };
+      const body = { ...data, userType: "employee" };
 
       const response = await fetch("http://localhost:5000/signup/register", {
         method: "POST",
