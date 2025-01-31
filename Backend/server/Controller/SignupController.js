@@ -149,23 +149,25 @@ export const registerUser = async (req, res) => {
     employeeCategory,
     empCreatedBy,
     userId,
-    referCode,
+    referCode, // Manually entered code
     referType,
     loanType,
-    
   } = req.body;
 
   try {
+    // Check if the email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email is already in use" });
     }
 
-    let referralCode = referCode;
-    if (userType === "user" && !referCode) {
+    // Auto-generate referralCode only for users with userType "user"
+    let referralCode = "";
+    if (userType === "user") {
       referralCode = await generateReferralCode();
     }
 
+    // Create a new user
     const newUser = new User({
       userid,
       userType,
@@ -183,13 +185,14 @@ export const registerUser = async (req, res) => {
       branch,
       employeeCategory,
       empCreatedBy,
-      referralCode,
+      referralCode, // Auto-generated referral code
+      referCode, // Manually entered referral code
       userId,
       referType,
       loanType,
-      referCode,
     });
 
+    // Save the user to the database
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully", newUser });

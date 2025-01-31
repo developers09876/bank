@@ -407,7 +407,6 @@ const ReferCode = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...details,
-          referCode,
         }),
       });
 

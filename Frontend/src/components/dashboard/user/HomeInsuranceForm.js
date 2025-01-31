@@ -20,9 +20,12 @@ function HomeInsuranceForm() {
 
   const id = localStorage.getItem("regid");
   const userType = localStorage.getItem("role");
+  const referCode = localStorage.getItem("referCode");
 
   const onSubmit = async (data) => {
     const details = {
+      referCode: referCode || "",
+
       userId: id,
       userType: userType,
       firstname: data.firstname,
