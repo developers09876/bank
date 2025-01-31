@@ -28,9 +28,9 @@ function LoanDetails() {
   const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null);
   const [loanData, setLoanData] = useState([]);
 
-    const { state } = useLocation();
-    const record = state?.record;
-    console.log('record._id', record._id)
+  const { state } = useLocation();
+  const record = state?.record;
+  console.log("record._id", record._id);
 
   const handleSalaryPersonFileUpload = (event) => {
     setSalaryPersonDoc(event.target.files[0]);
@@ -147,17 +147,19 @@ function LoanDetails() {
     const fetchLoanApplicationData = async () => {
       try {
         const response = await Api.get(`/loanform/getbyid/${userId}`);
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
+        const filterOneApplication = response.data.filter(
+          (application) => application._id === record._id
+        );
+        console.log("Applicationresponse", response.data);
+        console.log("filterOneApplication", filterOneApplication[0]);
         if (filterOneApplication) {
           setLoanData(filterOneApplication[0]);
-          reset(filterOneApplication[0]); 
+          reset(filterOneApplication[0]);
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
   }, [userId, record._id, reset]);
 
@@ -180,49 +182,48 @@ function LoanDetails() {
                   <Row>
                     {userType !== "user" && (
                       <>
-                      <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          loan Agent Name
-                        </label>
-                        <br />
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("loanAgentName", { required: true })}
-                          placeholder="loan Agent Name"
-                        />
-                        {errors.Name && (
-                          <p className="text-danger">
-                            loan Agent Name are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          loan Agent Contact Number
-                        </label>
-                        <br />
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("loanAgentContactNumber", {
-                            required: true,
-                          })}
-                          placeholder="loan Agent Contact Number"
-                        />
-                        {errors.loanAgentContactNumber && (
-                          <p className="text-danger">
-                            loanAgent Contact Number are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              loan Agent Name
+                            </label>
+                            <br />
+                            <input
+                              className="inputcolumn-ourProfile"
+                              type="text"
+                              {...register("loanAgentName", { required: true })}
+                              placeholder="loan Agent Name"
+                            />
+                            {errors.Name && (
+                              <p className="text-danger">
+                                loan Agent Name are required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              loan Agent Contact Number
+                            </label>
+                            <br />
+                            <input
+                              className="inputcolumn-ourProfile"
+                              type="text"
+                              {...register("loanAgentContactNumber", {
+                                required: true,
+                              })}
+                              placeholder="loan Agent Contact Number"
+                            />
+                            {errors.loanAgentContactNumber && (
+                              <p className="text-danger">
+                                loanAgent Contact Number are required
+                              </p>
+                            )}
+                          </div>
+                        </Col>
                       </>
                     )}
-                    
 
                     <Col xs={12} md={6} lg={4}>
                       <div>
@@ -624,7 +625,6 @@ function LoanDetails() {
       <ToastContainer />
       <br />
       <br />
-
     </div>
   );
 }

@@ -125,7 +125,7 @@ const Landing = () => {
       description:
         "Get comprehensive health coverage to safeguard you and your family.",
       buttonText: "Get Best Offers",
-      link: "/user/insurancedetails",
+      link: "/insuranceForms",
       icon: "fas fa-heartbeat",
     },
     {
@@ -133,14 +133,14 @@ const Landing = () => {
       description:
         "Secure your family’s future with the best life insurance plans.",
       buttonText: "Check Plans",
-      link: "/user/insurancedetails",
+      link: "/insuranceForms",
       icon: "fas fa-user-shield",
     },
     {
       title: "CAR INSURANCE",
       description: "Protect your vehicle from accidents, theft, and damage.",
       buttonText: "Get Covered",
-      link: "/user/insurancedetails",
+      link: "/insuranceForms",
       icon: "fas fa-car-crash",
     },
     // {
@@ -373,9 +373,9 @@ const Landing = () => {
               <i className={product.icon}></i>
               <h3>{product.title}</h3>
               <p>{product.description}</p>
-              <a href={product.link} className="button">
+              <Link to={product.link} className="button">
                 {product.buttonText}
-              </a>
+              </Link>
             </div>
           ))}
         </div>
@@ -390,9 +390,9 @@ const Landing = () => {
               <i className={product.icon}></i>
               <h3>{product.title}</h3>
               <p>{product.description}</p>
-              <a href={product.link} className="button">
+              <Link to={product.link} className="button">
                 {product.buttonText}
-              </a>
+              </Link>
             </div>
           ))}
         </div>
@@ -405,9 +405,9 @@ const Landing = () => {
               <i className={product.icon}></i>
               <h3>{product.title}</h3>
               <p>{product.description}</p>
-              <a href={product.link} className="button">
+              <Link to={product.link} className="button">
                 {product.buttonText}
-              </a>
+              </Link>
             </div>
           ))}
         </div>

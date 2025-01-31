@@ -22,7 +22,9 @@ const userSchema = new mongoose.Schema({
   forgetPasswordCode: { type: String, default: null },
   address: { type: String },
   pinCode: { type: String },
-
+  referType: { type: String },
+  loanType: { type: String },
+  referCode: { type: String },
   city: { type: String },
   state: { type: String },
   district: { type: String },
