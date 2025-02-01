@@ -1,7 +1,8 @@
 .rewards-container {
   padding: 20px;
   background-color: #f5f5f5;
-  height: calc(100vh - 85px);
+  /* height: calc(100vh - 85px); */
+  height: calc(100vh - 50px);
 }
 
 
@@ -115,7 +116,7 @@
   padding: 15px;
 }
 .sub-cards-col{
-  height:170px;
+  height:200px;
 }
 
 .sub-card-full {

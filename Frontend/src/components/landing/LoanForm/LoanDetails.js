@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
-
+// const { Option, OptGroup } = Select;
 function LoanDetails() {
   const {
     register,
@@ -27,6 +27,7 @@ function LoanDetails() {
   const [employmentStatus, setEmploymentStatus] = useState("");
   const [salaryPersonDoc, setSalaryPersonDoc] = useState(null);
   const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null);
+  const [showVehicleOptions, setShowVehicleOptions] = useState(false);
   const handleSalaryPersonFileUpload = (event) => {
     setSalaryPersonDoc(event.target.files[0]);
   };
@@ -115,6 +116,8 @@ function LoanDetails() {
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
       loanType: data.loanType,
+      
+      vehicleType: data.vehicleType,
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
       nomineeAddress: data.nomineeAddress,
@@ -469,7 +472,7 @@ function LoanDetails() {
                       </div>
                     </Col>
 
-                    <Col xs={12} md={6} lg={4}>
+                    {/* <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">Loan Type</label>
                         <Controller
@@ -485,9 +488,8 @@ function LoanDetails() {
                             >
                               <Option value="Home Loan">Home Loan</Option>
                               <Option value="Vehicle Loan">Vehicle Loan</Option>
-                              <Option value="Business Loan">
-                                Business Loan
-                              </Option>
+                              <Option value="Business Loan"> Business Loan</Option>
+                              <Option value="Personal Loan"> Personal Loan</Option>
                             </Select>
                           )}
                         />
@@ -495,8 +497,64 @@ function LoanDetails() {
                           <p className="text-danger">Loan Type is required</p>
                         )}
                       </div>
-                    </Col>
+                    </Col> */}
+<Col xs={12} md={6} lg={4}>
+        <div>
+          <label className="vendorpage_labelCss">Loan Type</label>
+          <Controller
+            name="loanType"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                className="inputcolumn_drp"
+                placeholder="Select Purpose"
+                onChange={(value) => {
+                  field.onChange(value);
+                  setShowVehicleOptions(value === "Vehicle Loan");
+                }}
+              >
+                <Option value="Home Loan">Home Loan</Option>
+                <Option value="Vehicle Loan">Vehicle Loan</Option>
+                <Option value="Business Loan">Business Loan</Option>
+                <Option value="Personal Loan">Personal Loan</Option>
+              </Select>
+            )}
+          />
+          {errors.loanType && (
+            <p className="text-danger">Loan Type is required</p>
+          )}
+        </div>
+      </Col>
 
+      {showVehicleOptions && (
+        <Col xs={12} md={6} lg={4}>
+          <div>
+            <label className="vendorpage_labelCss">Vehicle Type</label>
+            <Controller
+              name="vehicleType"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  className="inputcolumn_drp"
+                  placeholder="Select Vehicle Type"
+                >
+                  <Option value="Car">Car</Option>
+                  <Option value="Bike">Bike</Option>
+                </Select>
+              )}
+            />
+            {errors.vehicleType && (
+              <p className="text-danger">Vehicle Type is required</p>
+            )}
+          </div>
+        </Col>
+      )}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">

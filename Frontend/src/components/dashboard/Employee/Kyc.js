@@ -135,7 +135,7 @@ function Kycvendor() {
                 )}
               </Col>
             </Row>
-            <Row>
+            <Row className="kycRow_Container">
               <Col sm={12} lg={4}>
                 <label>AadhaarCard Number: </label>
               </Col>
