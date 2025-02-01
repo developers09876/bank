@@ -62,47 +62,15 @@ const Refer = () => {
   //     alert("Error: Unable to submit referral.");
   //   }
   // };
-
   const submitReferral = async () => {
     if (!contactNumber) {
       alert("Please enter a contact number.");
       return;
     }
 
-    const userId = localStorage.getItem("id");
     const referralCode = localStorage.getItem("referralCode");
 
-    const referralData = {
-      category: categoryTitle,
-      subCategory: subCategory.title,
-      reward: subCategory.rewards,
-      userId,
-      contactNumber,
-    };
-
-    console.log("Submitting referral with data:", referralData);
-
     try {
-      // Submit referral
-      const referralResponse = await fetch(`${API_URL}/api/referrals/add`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(referralData),
-      });
-
-      if (!referralResponse.ok) {
-        const errorData = await referralResponse.json();
-        console.error(
-          "Referral API failed:",
-          referralResponse.status,
-          errorData
-        );
-        alert("Failed to submit referral.");
-        return;
-      }
-
-      console.log("Referral API response:", await referralResponse.json());
-
       // Send WhatsApp message
       const whatsappResponse = await fetch(
         "https://api.ultramsg.com/instance104991/messages/chat",
@@ -133,12 +101,87 @@ const Refer = () => {
       }
 
       console.log("WhatsApp API response:", await whatsappResponse.json());
-      alert("Referral submitted successfully!");
+      alert("Referral sent via WhatsApp successfully!");
       navigate("/user/rewards");
     } catch (error) {
-      console.error("Error submitting referral:", error);
+      console.error("Error sending WhatsApp message:", error);
     }
   };
+  // whatappp api
+  // const submitReferral = async () => {
+  //   if (!contactNumber) {
+  //     alert("Please enter a contact number.");
+  //     return;
+  //   }
+
+  //   const userId = localStorage.getItem("id");
+  //   const referralCode = localStorage.getItem("referralCode");
+
+  //   const referralData = {
+  //     category: categoryTitle,
+  //     subCategory: subCategory.title,
+  //     reward: subCategory.rewards,
+  //     userId,
+  //     contactNumber,
+  //   };
+
+  //   console.log("Submitting referral with data:", referralData);
+
+  //   try {
+  //     const referralResponse = await fetch(`${API_URL}/api/referrals/add`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(referralData),
+  //     });
+
+  //     if (!referralResponse.ok) {
+  //       const errorData = await referralResponse.json();
+  //       console.error(
+  //         "Referral API failed:",
+  //         referralResponse.status,
+  //         errorData
+  //       );
+  //       alert("Failed to submit referral.");
+  //       return;
+  //     }
+
+  //     console.log("Referral API response:", await referralResponse.json());
+
+  //     const whatsappResponse = await fetch(
+  //       "https://api.ultramsg.com/instance104991/messages/chat",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           token: "uiqso13q4dzwu5lr",
+  //           to: contactNumber,
+  //           body: `Hi,\n\nYour friend referred you for ${
+  //             subCategory?.title
+  //           }.\n\nClick the link below and use this code: ${referralCode}\n\nhttp://localhost:3000/refercode/${referralCode}/${subCategory?.title.replace(
+  //             / /g,
+  //             "-"
+  //           )}/${categoryTitle.replace(/ /g, "-")}`,
+  //         }),
+  //       }
+  //     );
+
+  //     if (!whatsappResponse.ok) {
+  //       const errorData = await whatsappResponse.json();
+  //       console.error(
+  //         "WhatsApp API failed:",
+  //         whatsappResponse.status,
+  //         errorData
+  //       );
+  //       return;
+  //     }
+
+  //     console.log("WhatsApp API response:", await whatsappResponse.json());
+  //     alert("Referral submitted successfully!");
+  //     navigate("/user/rewards");
+  //   } catch (error) {
+  //     console.error("Error submitting referral:", error);
+  //   }
+  // };
 
   return (
     <div>

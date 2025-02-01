@@ -185,7 +185,7 @@ function TabsVendor() {
           <div style={{ paddingLeft: "10px" }}>
             <center>
               {" "}
-              <h4 className="pages-title mt-3 mb-5"> User Detailsss</h4>
+              <h4 className="pages-title mt-3 mb-5"> User Details</h4>
             </center>
 
             <form onSubmit={handleSubmit(handleFormSubmit)}>
