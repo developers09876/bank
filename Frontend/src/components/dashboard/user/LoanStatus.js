@@ -32,7 +32,6 @@ const LoanStatusTable = ({ collapsed }) => {
   const handleEdit = (record) => {
     navigate(`/user/loanform/${record._id}`, { state: { record } });
   };
- 
 
   const columns = [
     {
@@ -83,32 +82,32 @@ const LoanStatusTable = ({ collapsed }) => {
           //   View
           // </Button>
           <>
-        <EyeOutlined
-          style={{
-            fontSize: "18px",
-            color: "#4096ff",
-            cursor: "pointer",
-            marginRight: "15px",
-          }}
-          onClick={() => handleViewDetails(record)}
-        />
-        <EditOutlined
-          style={{
-            fontSize: "18px",
-            color: "#ff4d4f",
-            marginRight: "15px",
-            cursor: "pointer",
-          }}
-          onClick={() => handleEdit(record)}
-        />
-         <DownloadOutlined
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+            {/* <DownloadOutlined
               style={{
                 fontSize: "18px",
                 color: "#52c41a",
             cursor: "pointer",
               }}
-          />
-      </>
+          /> */}
+          </>
         );
       },
     },
@@ -127,7 +126,7 @@ const LoanStatusTable = ({ collapsed }) => {
           <Table
             columns={columns}
             dataSource={loans}
-          rowKey="_id"
+            rowKey="_id"
             pagination={{ pageSize: 5 }}
           />
         </div>

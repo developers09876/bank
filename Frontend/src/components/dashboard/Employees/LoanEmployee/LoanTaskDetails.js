@@ -5,7 +5,8 @@ import {
   Card,
   Descriptions,
   Tag,
-  Space,Button,
+  Space,
+  Button,
   Divider,
   Modal,
   Input,
@@ -20,116 +21,120 @@ import {
 } from "@ant-design/icons";
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
-import Api from "../../../../Api"
-import '../../user/LoanDetails.css'
+import Api from "../../../../Api";
+import "../../user/LoanDetails.css";
 const { Option } = Select;
 
 function LoanTaskDetails() {
-      const { state } = useLocation();
-      const initialRecord = state?.record;
-      const [record, setRecord] = useState(initialRecord); 
-     const location = useLocation();
-     const userId = localStorage.getItem('id')
+  const { state } = useLocation();
+  const initialRecord = state?.record;
+  const [record, setRecord] = useState(initialRecord);
+  const location = useLocation();
+  const userId = localStorage.getItem("id");
 
-      const [selectedRecord, setSelectedRecord] = useState(null);
-       const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
-       const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
-       const [rejectionReason, setRejectionReason] = useState("");
-       const [pendingReason, setPendingReason] = useState("");
-       const [loan, setLoan] = useState([]);
-     const dateFormat = new Date(record.dob).toISOString().split("T")[0];
-     
-     const fetchUpdatedRecord = async () => {
-       try {
-         const response = await Api.get(
-           `http://localhost:5000/loanform/getbyEmployeeid/${userId}`
-         );
-         console.log("responseget.data", response.data);
-         const update = response.data;
-         console.log('update', update)
-         const updatedRecord = update.filter(
-           (loandata) => loandata._id === record._id
-         );
-         console.log('updatedRecord', updatedRecord)
-         if (updatedRecord) {
-           setRecord(updatedRecord[0]); 
-         }
-       } catch (error) {
-         console.error("Error fetching updated record:", error);
-       }
-     };
-    
-     const updateStatus = async (id, action, reason = "") => {
-        try {
-          const details = { action, reason };
-          const response = await Api.put(
-            `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
-            details
-          );
-          console.log("Response data:", response.data);
-          const updatedLoans = loan.map((item) =>
-            item._id === id
-              ? {
-                  ...item,
-                  status: action === "approve" ? "1" : action === "reject" ? "2" : "Pending" ,
-                  rejectionReason: action === "reject" ? reason : null,
-            pendingReason: action === "Pending" ? reason : null,
-                }
-              : item
-          );
-          setLoan(updatedLoans);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
+  const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState("");
+  const [pendingReason, setPendingReason] = useState("");
+  const [loan, setLoan] = useState([]);
+  const dateFormat = new Date(record.dob).toISOString().split("T")[0];
 
-          await fetchUpdatedRecord();
-        } catch (error) {
-          console.error("Error updating status:", error);
-        }
-      };
+  const fetchUpdatedRecord = async () => {
+    try {
+      const response = await Api.get(
+        `http://localhost:5000/loanform/getbyEmployeeid/${userId}`
+      );
+      console.log("responseget.data", response.data);
+      const update = response.data;
+      console.log("update", update);
+      const updatedRecord = update.filter(
+        (loandata) => loandata._id === record._id
+      );
+      console.log("updatedRecord", updatedRecord);
+      if (updatedRecord) {
+        setRecord(updatedRecord[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching updated record:", error);
+    }
+  };
 
-     const handleApprove = () => {
-        if (record) {
-          updateStatus(record._id, "approve");
-        }
-      };
-    
-      const handlePendingReasonChange = (e) => {
-        setPendingReason(e.target.value);
-      };
-    
-      const handlePending = () => {
-        if (record && pendingReason.trim()) {
-          updateStatus(record._id, "Pending", pendingReason.trim());
-          setIsPendingModalVisible(false);
-          setPendingReason("");
-        } else {
-          console.error("Pending reason is required.");
-        }
-      };
-      
-      const handleRejectionReasonChange = (e) => {
-        setRejectionReason(e.target.value);
-      };
-    
-      const handleReject = () => {
-        if (record && rejectionReason.trim()) {
-          updateStatus(record._id, "reject", rejectionReason.trim());
-          setIsRejectModalVisible(false);
-          setRejectionReason("");
-        } else {
-          console.error("Rejection reason is required.");
-        }
-      };
-    
-      const handleReset = () => {
-        setRejectionReason("");
-        setPendingReason("");
-      };
-    
+  const updateStatus = async (id, action, reason = "") => {
+    try {
+      const details = { action, reason };
+      const response = await Api.put(
+        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+        details
+      );
+      console.log("Response data:", response.data);
+      const updatedLoans = loan.map((item) =>
+        item._id === id
+          ? {
+              ...item,
+              status:
+                action === "approve"
+                  ? "1"
+                  : action === "reject"
+                  ? "2"
+                  : "Pending",
+              rejectionReason: action === "reject" ? reason : null,
+              pendingReason: action === "Pending" ? reason : null,
+            }
+          : item
+      );
+      setLoan(updatedLoans);
+
+      await fetchUpdatedRecord();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  const handleApprove = () => {
+    if (record) {
+      updateStatus(record._id, "approve");
+    }
+  };
+
+  const handlePendingReasonChange = (e) => {
+    setPendingReason(e.target.value);
+  };
+
+  const handlePending = () => {
+    if (record && pendingReason.trim()) {
+      updateStatus(record._id, "Pending", pendingReason.trim());
+      setIsPendingModalVisible(false);
+      setPendingReason("");
+    } else {
+      console.error("Pending reason is required.");
+    }
+  };
+
+  const handleRejectionReasonChange = (e) => {
+    setRejectionReason(e.target.value);
+  };
+
+  const handleReject = () => {
+    if (record && rejectionReason.trim()) {
+      updateStatus(record._id, "reject", rejectionReason.trim());
+      setIsRejectModalVisible(false);
+      setRejectionReason("");
+    } else {
+      console.error("Rejection reason is required.");
+    }
+  };
+
+  const handleReset = () => {
+    setRejectionReason("");
+    setPendingReason("");
+  };
 
   return (
-    <div style={{marginTop:'40px'}}>
-        <div className="loandetail-container">
-        <div >
-            <div>
+    <div style={{ marginTop: "40px" }}>
+      <div className="loandetail-container">
+        <div>
+          <div>
             <center>
               <h3>Loan Details</h3>
             </center>
@@ -192,10 +197,8 @@ function LoanTaskDetails() {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
-                              //   objectFit: "cover",
-                              borderRadius: "50%",
+                              width: "200px",
+                              height: "200px",
                               border: "6px solid #80808040",
                             }}
                           />
@@ -207,10 +210,8 @@ function LoanTaskDetails() {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
-                              //   objectFit: "cover",
-                              borderRadius: "50%",
+                              width: "200px",
+                              height: "200px",
                               border: "6px solid #80808040",
                             }}
                           />
@@ -517,182 +518,215 @@ function LoanTaskDetails() {
             </Row>
 
             <Row className="py-3">
-            {record.employeeType && (
+              {record.employeeType && (
                 <>
-                <center><h3>Update the Loan Status</h3></center>
-                <Col lg={12} md={12}>
-                  <Card className="loandetail-custom-card" title="Task Details">
-                    <Descriptions
-                      column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                  <center>
+                    <h3>Update the Loan Status</h3>
+                  </center>
+                  <Col lg={12} md={12}>
+                    <Card
+                      className="loandetail-custom-card"
+                      title="Task Details"
                     >
-                      <Descriptions.Item label="Loan Type">
-                        {record.loanType}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Start Date">
-                      {record.startDate ? new Date(record.startDate).toISOString().split("T")[0] : "N/A"}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="End Date">
-                      {record.endDate ? new Date(record.endDate).toISOString().split("T")[0] : "N/A"}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Description">
-                        {record.description}
-                      </Descriptions.Item>
-                     
-                      {(record.pendingReason === null || record.rejectionReason === null) && (
-                      <Descriptions.Item label="Your Approval Status">
-                      {record.status === "1" ? (
-                        <p color="green">Loan Approved</p>
-                      ) : record.status === "2" ? (
-                        <p color="red">Loan Rejected</p>
-                      ) : (<p style={{ color: "orange" }}>
-                      Loan is on Hold
-                    </p>
-                      )}
-                    </Descriptions.Item>
-                    )}
-                        
-                      {record.status === "2" && (
-                      <Descriptions.Item label="Reason for Your Rejection">
-                        {record.rejectionReason}
-                      </Descriptions.Item>
-                    )}
-                    {record.status === "Pending" && record.pendingReason &&(
-                      <Descriptions.Item label="Reason for Holding the Loan">
-                        {record.pendingReason}
-                      </Descriptions.Item>
-                    )}
-                    </Descriptions>
-
-                    <Row className="px-4 py-4" style={{justifySelf:'center'}}>
-                <Space>
-                  {record && record.status === "Pending" && (
-                    <Button
-                    type="primary"
-                      style={{ background: "#4096ff", color: "#fff" }}
-                      onClick={handleApprove}
-                    >
-                      Approve
-                    </Button>
-                  )}
-
-                  {record && record.status === "Pending" && (
-                    <>
-                      <Button
-                         type="primary" danger
-                        onClick={() => setIsRejectModalVisible(true)}
+                      <Descriptions
+                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
                       >
-                        Reject
-                      </Button>
-                      </>
-                  )}
+                        <Descriptions.Item label="Loan Type">
+                          {record.loanType}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Start Date">
+                          {record.startDate
+                            ? new Date(record.startDate)
+                                .toISOString()
+                                .split("T")[0]
+                            : "N/A"}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="End Date">
+                          {record.endDate
+                            ? new Date(record.endDate)
+                                .toISOString()
+                                .split("T")[0]
+                            : "N/A"}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Description">
+                          {record.description}
+                        </Descriptions.Item>
 
-                      <Modal
-                        title="Rejection Confirmation"
-                        visible={isRejectModalVisible}
-                        onCancel={() => setIsRejectModalVisible(false)}
-                        footer={null}
+                        {(record.pendingReason === null ||
+                          record.rejectionReason === null) && (
+                          <Descriptions.Item label="Your Approval Status">
+                            {record.status === "1" ? (
+                              <p color="green">Loan Approved</p>
+                            ) : record.status === "2" ? (
+                              <p color="red">Loan Rejected</p>
+                            ) : (
+                              <p style={{ color: "orange" }}>Loan is on Hold</p>
+                            )}
+                          </Descriptions.Item>
+                        )}
+
+                        {record.status === "2" && (
+                          <Descriptions.Item label="Reason for Your Rejection">
+                            {record.rejectionReason}
+                          </Descriptions.Item>
+                        )}
+                        {record.status === "Pending" &&
+                          record.pendingReason && (
+                            <Descriptions.Item label="Reason for Holding the Loan">
+                              {record.pendingReason}
+                            </Descriptions.Item>
+                          )}
+                      </Descriptions>
+
+                      <Row
+                        className="px-4 py-4"
+                        style={{ justifySelf: "center" }}
                       >
-                        <div>
-                          <p>Please provide a reason for rejection:</p>
-                          <Input.TextArea
-                            rows={3}
-                            placeholder="Enter rejection reason"
-                            value={rejectionReason}
-                            onChange={handleRejectionReasonChange}
-                          />
-                          <Space style={{ marginTop: "20px" }}>
+                        <Space>
+                          {record && record.status === "Pending" && (
                             <Button
-                               type="primary" 
-                              onClick={handleReject}
-                              disabled={!rejectionReason.trim()}
+                              type="primary"
+                              style={{ background: "#4096ff", color: "#fff" }}
+                              onClick={handleApprove}
                             >
-                              Submit
+                              Approve
                             </Button>
-                            <Button variant="secondary" onClick={handleReset}>Reset</Button>
-                          </Space>
-                        </div>
-                      </Modal>
+                          )}
 
-                      <Modal
-                        title="Pending Confirmation"
-                        visible={isPendingtModalVisible}
-                        onCancel={() => setIsPendingModalVisible(false)}
-                        footer={null}
-                      >
-                        <div>
-                          <p>Please provide a reason for holding the Loan application:</p>
-                          <Input.TextArea
-                            rows={3}
-                            placeholder="Enter Pending reason"
-                            value={pendingReason}
-                            onChange={handlePendingReasonChange}
-                          />
-                          <Space style={{ marginTop: "20px" }}>
-                            <Button
-                               type="primary" 
-                              onClick={handlePending}
-                              disabled={!pendingReason.trim()}
-                            >
-                              Submit
-                            </Button>
-                            <Button variant="secondary" onClick={handleReset}>Reset</Button>
-                          </Space>
-                        </div>
-                      </Modal>
+                          {record && record.status === "Pending" && (
+                            <>
+                              <Button
+                                type="primary"
+                                danger
+                                onClick={() => setIsRejectModalVisible(true)}
+                              >
+                                Reject
+                              </Button>
+                            </>
+                          )}
 
-                  {record && record.status === "1" && (
-                    <>
-                    <Button type="primary" disabled>
-                      Approved
-                    </Button>
-                    <Button
-                     type="primary" danger
-                    onClick={() => setIsRejectModalVisible(true)}
-                  >
-                    Reject
-                  </Button>
-                  <Button
-                     type="primary" ghost
-                    onClick={() => setIsPendingModalVisible(true)}
-                  >
-                    Hold
-                  </Button>
-                  </>
-                  )}
+                          <Modal
+                            title="Rejection Confirmation"
+                            visible={isRejectModalVisible}
+                            onCancel={() => setIsRejectModalVisible(false)}
+                            footer={null}
+                          >
+                            <div>
+                              <p>Please provide a reason for rejection:</p>
+                              <Input.TextArea
+                                rows={3}
+                                placeholder="Enter rejection reason"
+                                value={rejectionReason}
+                                onChange={handleRejectionReasonChange}
+                              />
+                              <Space style={{ marginTop: "20px" }}>
+                                <Button
+                                  type="primary"
+                                  onClick={handleReject}
+                                  disabled={!rejectionReason.trim()}
+                                >
+                                  Submit
+                                </Button>
+                                <Button
+                                  variant="secondary"
+                                  onClick={handleReset}
+                                >
+                                  Reset
+                                </Button>
+                              </Space>
+                            </div>
+                          </Modal>
 
-                  {record && record.status === "2" && (
-                    <>
-                    <Button
-                    type="primary"
-                    style={{ background: "#4096ff", color: "#fff" }}
-                    onClick={handleApprove}
-                  >
-                    Approve
-                  </Button>
-                    <Button  type="primary" danger disabled>
-                      Rejected
-                    </Button>
-                    <Button
-                     type="primary" ghost
-                    onClick={() => setIsPendingModalVisible(true)}
-                  >
-                    Hold
-                  </Button>
-                    </>
-                  )}
-                </Space>
-              </Row>
-                  </Card>
-                </Col>
+                          <Modal
+                            title="Pending Confirmation"
+                            visible={isPendingtModalVisible}
+                            onCancel={() => setIsPendingModalVisible(false)}
+                            footer={null}
+                          >
+                            <div>
+                              <p>
+                                Please provide a reason for holding the Loan
+                                application:
+                              </p>
+                              <Input.TextArea
+                                rows={3}
+                                placeholder="Enter Pending reason"
+                                value={pendingReason}
+                                onChange={handlePendingReasonChange}
+                              />
+                              <Space style={{ marginTop: "20px" }}>
+                                <Button
+                                  type="primary"
+                                  onClick={handlePending}
+                                  disabled={!pendingReason.trim()}
+                                >
+                                  Submit
+                                </Button>
+                                <Button
+                                  variant="secondary"
+                                  onClick={handleReset}
+                                >
+                                  Reset
+                                </Button>
+                              </Space>
+                            </div>
+                          </Modal>
+
+                          {record && record.status === "1" && (
+                            <>
+                              <Button type="primary" disabled>
+                                Approved
+                              </Button>
+                              <Button
+                                type="primary"
+                                danger
+                                onClick={() => setIsRejectModalVisible(true)}
+                              >
+                                Reject
+                              </Button>
+                              <Button
+                                type="primary"
+                                ghost
+                                onClick={() => setIsPendingModalVisible(true)}
+                              >
+                                Hold
+                              </Button>
+                            </>
+                          )}
+
+                          {record && record.status === "2" && (
+                            <>
+                              <Button
+                                type="primary"
+                                style={{ background: "#4096ff", color: "#fff" }}
+                                onClick={handleApprove}
+                              >
+                                Approve
+                              </Button>
+                              <Button type="primary" danger disabled>
+                                Rejected
+                              </Button>
+                              <Button
+                                type="primary"
+                                ghost
+                                onClick={() => setIsPendingModalVisible(true)}
+                              >
+                                Hold
+                              </Button>
+                            </>
+                          )}
+                        </Space>
+                      </Row>
+                    </Card>
+                  </Col>
                 </>
               )}
-
             </Row>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default LoanTaskDetails
+export default LoanTaskDetails;

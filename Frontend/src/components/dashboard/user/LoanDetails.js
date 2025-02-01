@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import React, { useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { Card, Descriptions, Tag, Button } from "antd";
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-import "./LoanDetails.css"; // External CSS for styles
+import "./LoanDetails.css";
 import { Col, Row } from "react-bootstrap";
-import { BorderRight, Pending } from "@mui/icons-material";
-
+import { DownloadOutlined } from "@ant-design/icons";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 const LoanDetails = ({ collapsed }) => {
-  const [loan, setLoan] = useState([]);
+  const pdfRef = useRef();
 
-  const navigate = useNavigate();
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
@@ -23,8 +23,22 @@ const LoanDetails = ({ collapsed }) => {
     return <div>Loading or No loan details available.</div>;
   }
 
+  const handleDownloadPDF = async () => {
+    const input = pdfRef.current;
+    if (!input) return;
+
+    const canvas = await html2canvas(input, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgWidth = 190;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+    pdf.save(`Loan_Details_${record._id}.pdf`);
+  };
   return (
-    <div>
+    <div ref={pdfRef}>
       <div className="loandetail-container">
         <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
@@ -90,10 +104,10 @@ const LoanDetails = ({ collapsed }) => {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
+                              width: "200px",
+                              height: "200px",
                               //   objectFit: "cover",
-                              borderRadius: "50%",
+                              // borderRadius: "50%",
                               border: "6px solid #80808040",
                             }}
                           />
@@ -107,10 +121,8 @@ const LoanDetails = ({ collapsed }) => {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
-                              //   objectFit: "cover",
-                              borderRadius: "50%",
+                              width: "200px",
+                              height: "200px",
                               border: "6px solid #80808040",
                             }}
                           />
@@ -180,63 +192,6 @@ const LoanDetails = ({ collapsed }) => {
             </Row>
 
             <Row className="px-2">
-              {/* <Col lg={6} md={12}>
-                <Card
-                  className="loandetail-custom-card"
-                  title="Personal Details"
-                >
-                  <Descriptions
-                    size="small"
-                    layout="vertical"
-                    column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
-                  >
-                    <Descriptions.Item label="Name">
-                      {record.firstname} {record.lastname}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Gender">
-                      {record.gender}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Date of Birth">
-                      {dateFormat}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Marital Status">
-                      {record.maritalStatus}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Nationality">
-                      {record.nationality}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              </Col> */}
-
-              {/* <Col lg={6} md={12}>
-                <Card
-                  className="loandetail-custom-card"
-                  title="Contact Details"
-                >
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Address">
-                      {record.address}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="City">
-                      {record.city}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="District">
-                      {record.district}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="State">
-                      {record.state}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Country">
-                      {record.country}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Pincode">
-                      {record.pinCode}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              </Col> */}
-
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
@@ -470,6 +425,14 @@ const LoanDetails = ({ collapsed }) => {
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
+                <Button
+                  type="primary"
+                  icon={<DownloadOutlined />}
+                  onClick={handleDownloadPDF}
+                  style={{ marginTop: "20px", marginBottom: "20px" }}
+                >
+                  Download as PDF
+                </Button>
               </Col>
             </Row>
           </div>

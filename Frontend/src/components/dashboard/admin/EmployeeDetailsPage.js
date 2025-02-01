@@ -63,10 +63,8 @@ const EmployeeDetailsPage = ({ collapsed }) => {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
-                              //   objectFit: "cover",
-                              borderRadius: "50%",
+                              width: "200px",
+                              height: "200px",
                               border: "6px solid #80808040",
                             }}
                           />
@@ -80,10 +78,9 @@ const EmployeeDetailsPage = ({ collapsed }) => {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
+                              width: "200px",
+                              height: "200px",
                               //   objectFit: "cover",
-                              borderRadius: "50%",
                               border: "6px solid #80808040",
                             }}
                           />
