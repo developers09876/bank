@@ -73,8 +73,8 @@ import { NavLink } from "react-router-dom";
 import { Menu } from "antd";
 import Api from "../../../Api";
 import { toast } from "react-toastify";
-
-const { SubMenu } = Menu; // Correctly importing SubMenu
+import SubMenu from "antd/lib/menu/SubMenu";
+// const { SubMenu } = Menu; 
 
 function Sidebar({ collapsed }) {
   const onClick = (e) => {
@@ -164,16 +164,15 @@ function Sidebar({ collapsed }) {
         {/* Conditionally render Task Management submenu */}
         {hasTasks && (
           <SubMenu
-            key="taskManagement"
             title="Task Management"
             className="main-nav-style"
           >
             {taskMenuItems
               .filter((task) => service.includes(task.serviceName))
               .map((task) => (
-                <Menu.Item key={task.path}>
+                // <Menu.Item key={task.path}>
                   <NavLink to={task.path}>{task.label}</NavLink>
-                </Menu.Item>
+                //  </Menu.Item>
               ))}
           </SubMenu>
         )}
