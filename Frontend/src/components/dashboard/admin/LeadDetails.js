@@ -11,9 +11,10 @@ function LeadDetails() {
   const { state } = useLocation();
   const record = state?.record;
   const [remarksFields, setRemarksFields] = useState([]);
-  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+  // const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
+  console.log('selectedEmployeeType', selectedEmployeeType)
   const [categories, setCategories] = useState([]);
   const { Option } = Select;
   const {
@@ -28,7 +29,7 @@ function LeadDetails() {
   const category = watch("loanType");
   console.log("category", category);
 
-  const employeeType = selectedEmployeeType;
+  const employeeType = "employee";
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
@@ -42,6 +43,13 @@ function LeadDetails() {
     };
     fetchEmployeeList();
   }, [employeeType]);
+
+  const filteredEmployeeList = employeeList.filter((employee) =>
+    employee.services.includes(selectedEmployeeType)
+  );
+  
+  console.log("Filtered Employees:", filteredEmployeeList);
+  
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -66,15 +74,15 @@ function LeadDetails() {
 
     fetchCategories();
   }, [selectedEmployeeType]);
-  useEffect(() => {
-    if (category) {
-      console.log("category", category);
-      const filtered = employeeList.filter(
-        (employee) => employee.employeeCategory === category
-      );
-      setFilteredEmployeeList(filtered);
-    }
-  }, [category, employeeList]);
+  // useEffect(() => {
+  //   if (category) {
+  //     console.log("category", category);
+  //     const filtered = employeeList.filter(
+  //       (employee) => employee.employeeCategory === category
+  //     );
+  //     setFilteredEmployeeList(filtered);
+  //   }
+  // }, [category, employeeList]);
 
   useEffect(() => {
     if (record) {
@@ -472,7 +480,7 @@ function LeadDetails() {
                 )}
               </div>
             </Col> */}
-            <Col xs={12} md={6} lg={4}>
+            {/* <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">
                   Employee Category:
@@ -505,26 +513,27 @@ function LeadDetails() {
                   <p className="text-danger">Employee category is required</p>
                 )}
               </div>
-            </Col>
+            </Col> */}
 
-            <Col xs={12} md={6} lg={4}>
-              <label>Employee List:</label>
-              <select
-                {...register("employeeId", { required: true })}
-                className="form-select"
-                placeholder="Select Employee"
-              >
-                <option value="">Select Employee</option>
-                {filteredEmployeeList?.map((employee) => (
-                  <option key={employee._id} value={employee._id}>
-                    {employee.firstname} {employee.lastname}
-                  </option>
-                ))}
-              </select>
-              {errors.employeeId && (
-                <p className="text-danger">Employee selection is required</p>
-              )}
-            </Col>
+<Col xs={12} md={6} lg={4}>
+  <label>Employee List:</label>
+  <select
+    {...register("employeeId", { required: true })}
+    className="form-select"
+    placeholder="Select Employee"
+  >
+    <option value="">Select Employee</option>
+    {filteredEmployeeList.map((employee) => (
+      <option key={employee._id} value={employee._id}>
+        {employee.firstname} {employee.lastname}
+      </option>
+    ))}
+  </select>
+  {errors.employeeId && (
+    <p className="text-danger">Employee selection is required</p>
+  )}
+</Col>
+
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Start Date:</label>

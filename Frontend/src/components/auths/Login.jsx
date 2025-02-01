@@ -146,14 +146,14 @@ const LoginPage = () => {
           employee: "/employee",
           user: "/user",
           // LoanEmployee: "/adminLoan",
-          LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
-          // TaxEmployee: "/employeeTax",
-          TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
-          // InsuranceEmployee: "/employeeInsurance",
-          InsuranceEmployee: employeeCategory
-            ? "/insuranceEmply"
-            : "/employeeInsurance",
-          stockMarket: "/employeeStockMarket",
+          // LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+          // // TaxEmployee: "/employeeTax",
+          // TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
+          // // InsuranceEmployee: "/employeeInsurance",
+          // InsuranceEmployee: employeeCategory
+          //   ? "/insuranceEmply"
+          //   : "/employeeInsurance",
+          // stockMarket: "/employeeStockMarket",
         };
         const route = routes[userType] || "/login";
         navigate(route);

@@ -154,7 +154,7 @@ const AddAdmin = ({ setAuth }) => {
                 </Col>
 
                 {/* Category - Filtered Based on Services */}
-                <Col lg={6} md={6}>
+                {/* <Col lg={6} md={6}>
                   <label htmlFor="category">Category:</label>
                   <Controller
                     name="category"
@@ -181,7 +181,7 @@ const AddAdmin = ({ setAuth }) => {
                   {errors.category && (
                     <p className="text-red-500">{errors.category.message}</p>
                   )}
-                </Col>
+                </Col> */}
 
                 {/* Other Fields */}
                 <Col lg={6} md={6}>
