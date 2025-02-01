@@ -187,76 +187,6 @@ export async function updateLoanApplication(req, res, next) {
     next(err);
   }
 }
-// export async function updateLoanDetails(req, res, next) {
-//   try {
-//     const { id } = req.params;
-//     console.log("updateLoanDetailsid", id);
-//     const data = req.body;
-
-//     const updatedDetails = {
-//       loanAgentName: data.loanAgentName,
-//       loanAgentContactNumber: data.loanAgentContactNumber,
-//       identityProof: data.identityProof,
-//       addressProof: data.addressProof,
-//       annualIncome: data.annualIncome,
-//       nomineeDocs: data.nomineeDocs,
-//       creditScore: data.creditScore,
-//       employmentStatus: data.employmentStatus,
-//       existingLoans: data.existingLoans,
-//       financialProof: data.financialProof,
-//       incomeDetails: data.incomeDetails,
-//       loanAmount: data.loanAmount,
-//       loanType: data.loanType,
-     
-//       referCode: data.referCode,
-
-//       loanPurpose: data.loanPurpose,
-//       nomineeName: data.nomineeName,
-//       nomineeAddress: data.nomineeAddress,
-//       nomineeRelationship: data.nomineeRelationship,
-//       propertyDetails: data.propertyDetails,
-//       propertyOwnershipProof: data.propertyOwnershipProof,
-//       signature: data.signature,
-//       employeePayslipProof: data.employeePayslipProof,
-//       businessOwnerStatementProof: data.businessOwnerStatementProof,
-//       panCardNumber: data.panCardNumber,
-//       GSTNumber: data.GSTNumber,
-//       accountNumber: data.accountNumber,
-//       IFSCCode: data.IFSCCode,
-//       bankName: data.bankName,
-//       aadhaarNumber: data.aadhaarNumber,
-//       bankBranch: data.bankBranch,
-//       panImageUpload: data.panImageUpload,
-//       aadharImageUpload: data.aadharImageUpload,
-//     };
-
-//     console.log("Updated Details:", updatedDetails);
-
-//     const updatedLoanApplication = await LoanApplication.findByIdAndUpdate(
-//       id,
-//       { $set: updatedDetails },
-//       { new: true, runValidators: true }
-//     );
-
-//     if (updatedLoanApplication) {
-//       return res.status(200).json({
-//         message: "Loan details updated successfully",
-//         data: updatedLoanApplication,
-//       });
-//     } else {
-//       return res.status(404).json({
-//         message: "Loan application not found",
-//       });
-//     }
-//   } catch (err) {
-//     console.error("Error updating loan details:", err);
-//     res.status(500).json({
-//       message: "An error occurred while updating the loan details.",
-//       error: err.message,
-//     });
-//     next(err);
-//   }
-// }
 export async function updateLoanDetails(req, res, next) {
   try {
     const { id } = req.params;
@@ -277,6 +207,7 @@ export async function updateLoanDetails(req, res, next) {
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
       loanType: data.loanType,
+      vehicleType: data.vehicleType,
       referCode: data.referCode,
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
@@ -297,11 +228,6 @@ export async function updateLoanDetails(req, res, next) {
       panImageUpload: data.panImageUpload,
       aadharImageUpload: data.aadharImageUpload,
     };
-
-    // Add vehicleType only if loanType is "Vehicle Loan"
-    if (data.loanType === "Vehicle Loan") {
-      updatedDetails.vehicleType = data.vehicleType;
-    }
 
     console.log("Updated Details:", updatedDetails);
 
@@ -330,6 +256,7 @@ export async function updateLoanDetails(req, res, next) {
     next(err);
   }
 }
+
 export async function updateLoanApplicationStatus(req, res, next) {
   try {
     const { id } = req.params;

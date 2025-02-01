@@ -116,7 +116,6 @@ function LoanDetails() {
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
       loanType: data.loanType,
-      
       vehicleType: data.vehicleType,
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
@@ -544,8 +543,8 @@ function LoanDetails() {
                   className="inputcolumn_drp"
                   placeholder="Select Vehicle Type"
                 >
-                  <Option value="Car">Car</Option>
-                  <Option value="Bike">Bike</Option>
+                  <Option value="Bike">Bike Loan</Option>
+                  <Option value="Car">Car Loan</Option>
                 </Select>
               )}
             />
