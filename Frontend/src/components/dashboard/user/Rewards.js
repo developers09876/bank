@@ -166,6 +166,12 @@ const Rewards = () => {
           rewards: 0.015,
           percentage: "Refer 4 members and Earn 1.5% rewards",
         },
+        {
+          key: "1-4",
+          title: "Personal Loan",
+          rewards: 0.005,
+          percentage: "Refer 2 members and Earn 0.5% rewards",
+        },
       ],
     },
     {
@@ -192,6 +198,12 @@ const Rewards = () => {
           title: "Vehicle Insurance",
           rewards: 0.1,
           percentage: "For Vehicle 10% of Total Premium",
+        },
+        {
+          key: "2-4",
+          title: "Travel Insurance",
+          rewards: 0.25,
+          percentage: "For Travel 20% of Total Premium",
         },
       ],
     },

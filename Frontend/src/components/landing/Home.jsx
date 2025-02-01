@@ -101,11 +101,12 @@ const Landing = () => {
     //   icon: "fas fa-building",
     // },
     {
-      title: "TRANSFER HOME LOAN",
-      description: "Get better interest rates on your existing home loan",
-      buttonText: "Reduce Your EMI",
+      title: "VEHICLE LOAN",
+      description: "Get better interest rates on your existing vehicle loan",
+      // buttonText: "Reduce Your EMI",
+      buttonText: "Check Eligibility",
       link: "/loanform",
-      icon: "fa-solid fa-handshake-simple",
+      icon:"fa-solid fa-van-shuttle",
     },
   ];
 
@@ -151,13 +152,13 @@ const Landing = () => {
     //   link: "/insurancepolicy",
     //   icon: "fas fa-home",
     // },
-    // {
-    //   title: "TRAVEL INSURANCE",
-    //   description: "Ensure a worry-free journey with travel insurance plans.",
-    //   buttonText: "Explore Options",
-    //   link: "/insurancepolicy",
-    //   icon: "fas fa-plane",
-    // },
+    {
+      title: "TRAVEL INSURANCE",
+      description: "Ensure a worry-free journey with travel insurance plans.",
+      buttonText: "Explore Options",
+      link: "/insurancepolicy",
+      icon: "fas fa-plane",
+    },
   ];
 
   const tax = [
