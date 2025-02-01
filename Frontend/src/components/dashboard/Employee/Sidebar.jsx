@@ -185,6 +185,8 @@ function Sidebar({ collapsed }) {
               {item.label}
             </NavLink>
           ))}
+        <NavLink to="/employee/leadtaskmanagement">Lead Task Management</NavLink>
+
       </Menu>
     </div>
   );
