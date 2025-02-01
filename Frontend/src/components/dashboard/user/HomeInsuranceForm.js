@@ -14,6 +14,8 @@ function HomeInsuranceForm() {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     control,
     formState: { errors },
   } = useForm();
@@ -37,6 +39,7 @@ function HomeInsuranceForm() {
       gst: data.gst,
       policyTerm: data.policyTerm,
       PolicyType: data.PolicyType,
+      VehicleType: data.VehicleType,
       annualIncome: data.annualIncome,
       sumAssured: data.sumAssured,
     };
@@ -222,7 +225,7 @@ function HomeInsuranceForm() {
               </div>
             </Col>
 
-            <Col xs={12} md={6} lg={4}>
+            {/* <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Policy Type</label>
                 <Controller
@@ -248,7 +251,60 @@ function HomeInsuranceForm() {
                   <p className="text-danger">Policy Type is required</p>
                 )}
               </div>
-            </Col>
+            </Col> */}
+<Col xs={12} md={6} lg={4}>
+  <div>
+    <label className="vendorpage_labelCss">Policy Type</label>
+    <Controller
+      name="PolicyType"
+      control={control}
+      defaultValue=""
+      rules={{ required: true }}
+      render={({ field }) => (
+        <Select
+          {...field}
+          className="inputcolumn_drp"
+          placeholder="Select Policy Type"
+          onChange={(value) => {
+            field.onChange(value);
+            setValue("VehicleType", ""); // Reset vehicle type if policy type changes
+          }}
+        >
+          <Option value="Life Insurance">Life Insurance</Option>
+          <Option value="Health Insurance">Health Insurance</Option>
+          <Option value="Vehicle Insurance">Vehicle Insurance</Option>
+        </Select>
+      )}
+    />
+    {errors.PolicyType && (
+      <p className="text-danger">Policy Type is required</p>
+    )}
+  </div>
+</Col>
+
+
+{watch("PolicyType") === "Vehicle Insurance" && (
+  <Col xs={12} md={6} lg={4}>
+    <div>
+      <label className="vendorpage_labelCss">Vehicle Type</label>
+      <Controller
+        name="VehicleType"
+        control={control}
+        defaultValue=""
+        rules={{ required: true }}
+        render={({ field }) => (
+          <Select {...field} className="inputcolumn_drp" placeholder="Select Vehicle Type">
+            <Option value="Bike Insurance">Bike Insurance</Option>
+            <Option value="Car Insurance">Car Insurance</Option>
+          </Select>
+        )}
+      />
+      {errors.VehicleType && (
+        <p className="text-danger">Vehicle Type is required</p>
+      )}
+    </div>
+  </Col>
+)}
 
             {/* Policy Term */}
             <Col xs={12} md={6} lg={4}>

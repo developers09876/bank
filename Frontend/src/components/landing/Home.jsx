@@ -138,7 +138,7 @@ const Landing = () => {
       icon: "fas fa-user-shield",
     },
     {
-      title: "CAR INSURANCE",
+      title: "VEHICLE INSURANCE",
       description: "Protect your vehicle from accidents, theft, and damage.",
       buttonText: "Get Covered",
       link: "/insuranceForms",

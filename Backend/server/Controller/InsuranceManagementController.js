@@ -15,6 +15,7 @@ export async function createInsuranceManagementDb(req, res, next) {
       gst: data.gst,
       policyTerm: data.policyTerm,
       PolicyType: data.PolicyType,
+      VehicleType: data.VehicleType,
       annualIncome: data.annualIncome,
       sumAssured: data.sumAssured,
       referCode: data.referCode,

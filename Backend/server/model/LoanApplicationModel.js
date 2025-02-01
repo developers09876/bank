@@ -132,21 +132,8 @@ const loanApplicationSchema = new mongoose.Schema(
     incomeDetails: { type: String },
     loanAmount: { type: Number },
     loanPurpose: { type: String },
-
-    loanType: { 
-      type: String, 
-      enum: ["Home Loan", "Vehicle Loan", "Business Loan", "Personal Loan"],
-      required: true
-    },
-
-    vehicleType: {
-      type: String,
-      enum: ["Car", "Bike"],
-      required: function () {
-        return this.loanType === "Vehicle Loan";
-      },
-    },
-
+    loanType: { type: String },
+    vehicleType: { type: String },
     loanAgentName: { type: String },
     loanAgentContactNumber: { type: String },
     referCode: { type: String, unique: true },
