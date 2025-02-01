@@ -140,6 +140,7 @@ export const calculateReferralEarnings = async (req, res) => {
     let lifeInsuranceCount = 0;
     let healthInsuranceCount = 0;
     let vehicleInsuranceCount = 0;
+    let travelInsuranceCount = 0;
 
     // Count referrals for each loan type
     loanApplications.forEach((loan) => {
@@ -150,6 +151,8 @@ export const calculateReferralEarnings = async (req, res) => {
         healthInsuranceCount++;
       } else if (loanType === "Vehicle Insurance") {
         vehicleInsuranceCount++;
+      } else if (loanType === "Travel Insurance") {
+        travelInsuranceCount++;
       }
     });
 
@@ -157,10 +160,13 @@ export const calculateReferralEarnings = async (req, res) => {
     const lifeInsuranceEarnings = lifeInsuranceCount * 5;
     const healthInsuranceEarnings = healthInsuranceCount * 10;
     const vehicleInsuranceEarnings = vehicleInsuranceCount * 2.5;
+    const travelInsuranceEarnings = vehicleInsuranceCount * 3.5;
+
     const totalEarnings =
       lifeInsuranceEarnings +
       healthInsuranceEarnings +
-      vehicleInsuranceEarnings;
+      vehicleInsuranceEarnings +
+      travelInsuranceEarnings;
 
     res.status(200).json({
       referCode,
@@ -170,6 +176,7 @@ export const calculateReferralEarnings = async (req, res) => {
       lifeInsuranceEarnings,
       healthInsuranceEarnings,
       vehicleInsuranceEarnings,
+      travelInsuranceEarnings,
       totalEarnings,
     });
   } catch (error) {
@@ -194,6 +201,7 @@ export const getCurrentMonthIncome = async (req, res) => {
       "Life Insurance": 5,
       "Health Insurance": 10,
       "Vehicle Insurance": 2.5,
+      "Travel Insurance": 3.5,
     };
 
     // Filter and calculate income

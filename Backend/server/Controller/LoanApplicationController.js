@@ -207,7 +207,7 @@ export async function updateLoanApplication(req, res, next) {
 //       incomeDetails: data.incomeDetails,
 //       loanAmount: data.loanAmount,
 //       loanType: data.loanType,
-     
+
 //       referCode: data.referCode,
 
 //       loanPurpose: data.loanPurpose,
@@ -507,7 +507,7 @@ export const calculateReferralEarnings = async (req, res) => {
     let homeLoanCount = 0;
     let vehicleLoanCount = 0;
     let businessLoanCount = 0;
-
+    let personalLoanCount = 0;
     // Count referrals for each loan type
     loanApplications.forEach((loan) => {
       const loanType = loan.loanType;
@@ -517,15 +517,22 @@ export const calculateReferralEarnings = async (req, res) => {
         vehicleLoanCount++;
       } else if (loanType === "Business Loan") {
         businessLoanCount++;
+      } else if (loanType === "Personal Loan") {
+        personalLoanCount++;
       }
     });
 
     // Calculate earnings
     const homeLoanEarnings = homeLoanCount * 5;
     const vehicleLoanEarnings = vehicleLoanCount * 10;
-    const businessLoanEarnings = businessLoanCount * 2.5;
+    const businessLoanEarnings = businessLoanCount * 15;
+    const personalLoanEarnings = personalLoanCount * 20;
+
     const totalEarnings =
-      homeLoanEarnings + vehicleLoanEarnings + businessLoanEarnings;
+      homeLoanEarnings +
+      vehicleLoanEarnings +
+      businessLoanEarnings +
+      personalLoanEarnings;
 
     res.status(200).json({
       referCode,
@@ -534,6 +541,7 @@ export const calculateReferralEarnings = async (req, res) => {
       businessLoanCount,
       homeLoanEarnings,
       vehicleLoanEarnings,
+      personalLoanEarnings,
       businessLoanEarnings,
       totalEarnings,
     });
@@ -558,7 +566,8 @@ export const getCurrentMonthIncome = async (req, res) => {
     const incomeRates = {
       "Home Loan": 5,
       "Vehicle Loan": 10,
-      "Business Loan": 2.5,
+      "Business Loan": 15,
+      "Personal Loan": 20,
     };
 
     // Filter and calculate income
