@@ -14,7 +14,7 @@ function LeadDetails() {
   // const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
-  console.log('selectedEmployeeType', selectedEmployeeType)
+  console.log("selectedEmployeeType", selectedEmployeeType);
   const [categories, setCategories] = useState([]);
   const { Option } = Select;
   const {
@@ -28,7 +28,26 @@ function LeadDetails() {
   } = useForm();
   const category = watch("loanType");
   console.log("category", category);
-
+  const employeeCategories = {
+    LoanEmployee: [
+      "Home Loan",
+      "Business Loan",
+      "Vehicle Loan",
+      "Personal Loan",
+    ],
+    InsuranceEmployee: [
+      "Life Insurance",
+      "Vehicle Insurance",
+      "Health Insurance",
+    ],
+    TaxEmployee: [
+      "Income Tax",
+      "TDS/TCS Services",
+      "GST Services",
+      "ESI & PF Services",
+    ],
+    StockMarket: ["Equity", "Mutual Funds"],
+  };
   const employeeType = "employee";
   useEffect(() => {
     const fetchEmployeeList = async () => {
@@ -47,9 +66,9 @@ function LeadDetails() {
   const filteredEmployeeList = employeeList.filter((employee) =>
     employee.services.includes(selectedEmployeeType)
   );
-  
+
   console.log("Filtered Employees:", filteredEmployeeList);
-  
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -191,15 +210,15 @@ function LeadDetails() {
   }
   return (
     <div
-    className="loandetail-container"
-    style={{ marginTop: "50px", padding: "20px" }}
-  >
-    <div >
-      <center>
-      <h3>Lead Details</h3>
-      </center>
+      className="loandetail-container"
+      style={{ marginTop: "50px", padding: "20px" }}
+    >
       <div>
-        {/* <Row>
+        <center>
+          <h3>Lead Details</h3>
+        </center>
+        <div>
+          {/* <Row>
           <Col xs={2}>
             <p>
               <strong>Name:</strong>
@@ -269,90 +288,90 @@ function LeadDetails() {
             <p>{record.purpose}</p>
           </Col>
         </Row> */}
-      <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
-              <Col lg={8}>
-                <Card>
-                  <Row className="personal_card_row">
-                    <Col
-                      className="firstrowcol px-1 py-1"
-                      lg={6}
-                      md={12}
-                      style={{
-                        height: "auto",
-                        alignContent: "center",
-                        borderRight: "1px #e5e7eb solid",
-                        textAlign: "-webkit-center",
-                      }}
-                    >
-                      <div className="photo-preview mb-2">
-                        <img
-                          src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
-                          //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
-                          // src={record.photographs}
-                          alt="Photograph"
-                          className="photo-image"
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            //   objectFit: "cover",
-                            borderRadius: "50%",
-                            border: "6px solid #80808040",
-                          }}
-                        />
-                      </div>
-                      <p>
-                        {record.firstname} {record.lastname}
-                      </p>
-                      <p>{record.email}</p>
-                      <p>{record.contactNumber}</p>
-                    </Col>
-      
-                    <Col lg={6} md={12} className="px-3 py-1">
-                      <center>
-                        <h6>Other Information</h6>
-                      </center>
-                      <Descriptions
-                        size="small"
-                        // layout="vertical"
+          <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
+            <Col lg={8}>
+              <Card>
+                <Row className="personal_card_row">
+                  <Col
+                    className="firstrowcol px-1 py-1"
+                    lg={6}
+                    md={12}
+                    style={{
+                      height: "auto",
+                      alignContent: "center",
+                      borderRight: "1px #e5e7eb solid",
+                      textAlign: "-webkit-center",
+                    }}
+                  >
+                    <div className="photo-preview mb-2">
+                      <img
+                        src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                        //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
+                        // src={record.photographs}
+                        alt="Photograph"
+                        className="photo-image"
                         style={{
-                          paddingBottom: "10px",
+                          width: "100px",
+                          height: "100px",
+                          //   objectFit: "cover",
+                          borderRadius: "50%",
+                          border: "6px solid #80808040",
                         }}
-                        column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
-                      >
-                        <Descriptions.Item label="Adhaar Number">
-                          {record.aadhar}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="PanCard Number">
-                          {record.panno}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="GST Number">
-                          {record.gst}
-                        </Descriptions.Item>
-                      </Descriptions>
-                    </Col>
-                  </Row>
-                </Card>
-              </Col>
-            </Row>
-        <Row style={{ textAlign: "-webkit-center" }}>
-          <Col lg={12} md={12}>
-            <Card
-              style={{ width: "60%" }}
-              className="loandetail-custom-card"
-              title="Loan Details"
-            >
-              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                <Descriptions.Item label="Loan Amount">
-                  {record.amount}
-                </Descriptions.Item>
-                <Descriptions.Item label="Purpose Of Loan">
-                  {record.purpose}
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          </Col>
-        </Row>
-        {/* <Row style={{ textAlign: "-webkit-center" }}>
+                      />
+                    </div>
+                    <p>
+                      {record.firstname} {record.lastname}
+                    </p>
+                    <p>{record.email}</p>
+                    <p>{record.contactNumber}</p>
+                  </Col>
+
+                  <Col lg={6} md={12} className="px-3 py-1">
+                    <center>
+                      <h6>Other Information</h6>
+                    </center>
+                    <Descriptions
+                      size="small"
+                      // layout="vertical"
+                      style={{
+                        paddingBottom: "10px",
+                      }}
+                      column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
+                    >
+                      <Descriptions.Item label="Adhaar Number">
+                        {record.aadhar}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="PanCard Number">
+                        {record.panno}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="GST Number">
+                        {record.gst}
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+          <Row style={{ textAlign: "-webkit-center" }}>
+            <Col lg={12} md={12}>
+              <Card
+                style={{ width: "60%" }}
+                className="loandetail-custom-card"
+                title="Loan Details"
+              >
+                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Loan Amount">
+                    {record.amount}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Purpose Of Loan">
+                    {record.purpose}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
+          {/* <Row style={{ textAlign: "-webkit-center" }}>
           <Col lg={12} md={12}>
             <Card
               style={{ width: "60%" }}
@@ -377,79 +396,85 @@ function LeadDetails() {
           </Col>
         </Row> */}
 
-        {/* <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3> */}
+          {/* <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3> */}
 
-        {/* {record.addremarks && record.addremarks.length > 0 ? (
+          {/* {record.addremarks && record.addremarks.length > 0 ? (
           record.addremarks.map((remark, index) => ( */}
-            {/* <div key={index} style={{ marginBottom: "10px" }}> */}
-              <Row style={{ textAlign: "-webkit-center" }}>
-                <Col lg={12} md={12}>
-                <Card
-                           style={{ width: "60%" }}
-                           className="loandetail-custom-card"
-                           title="Reminders"
-                         >
-             <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
-  {record.addremarks && record.addremarks.length > 0 ? (
-    record.addremarks.map((remark, index) => (
-      <React.Fragment key={index}>
-        <Descriptions.Item label="Date">{remark.date}</Descriptions.Item>
-        <Descriptions.Item label="Message">{remark.remarks}</Descriptions.Item>
-      </React.Fragment>
-    ))
-  ) : (
-    <Descriptions.Item>No reminders available.</Descriptions.Item>
-  )}
-</Descriptions>
+          {/* <div key={index} style={{ marginBottom: "10px" }}> */}
+          <Row style={{ textAlign: "-webkit-center" }}>
+            <Col lg={12} md={12}>
+              <Card
+                style={{ width: "60%" }}
+                className="loandetail-custom-card"
+                title="Reminders"
+              >
+                <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
+                  {record.addremarks && record.addremarks.length > 0 ? (
+                    record.addremarks.map((remark, index) => (
+                      <React.Fragment key={index}>
+                        <Descriptions.Item label="Date">
+                          {remark.date}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Message">
+                          {remark.remarks}
+                        </Descriptions.Item>
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <Descriptions.Item>
+                      No reminders available.
+                    </Descriptions.Item>
+                  )}
+                </Descriptions>
               </Card>
-              </Col>
-              </Row>
-            {/* </div> */}
+            </Col>
+          </Row>
+          {/* </div> */}
           {/* ))
         ) : (
           <p>No reminders available.</p>
         )} */}
-      </div>
-      <div className="py-2 px-2">
-        <h5>
-          <b>Assign To</b>
-        </h5>
-        <form onSubmit={(e) => onSubmit(watch(), e)}>
-          <Row>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Employee Type:</label>
-                <Controller
-                  name="employeeType"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      onChange={(value) => {
-                        field.onChange(value); // Update React Hook Form value
-                        setSelectedEmployeeType(value); // Update local state
-                      }}
-                    >
-                      <Option value="">Select Employee Type</Option>
+        </div>
+        <div className="py-2 px-2">
+          <h5>
+            <b>Assign To</b>
+          </h5>
+          <form onSubmit={(e) => onSubmit(watch(), e)}>
+            <Row>
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Employee Type:</label>
+                  <Controller
+                    name="employeeType"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className="inputcolumn_drp"
+                        onChange={(value) => {
+                          field.onChange(value); // Update React Hook Form value
+                          setSelectedEmployeeType(value); // Update local state
+                        }}
+                      >
+                        <Option value="">Select Employee Type</Option>
 
-                      <Option value="LoanEmployee">Loan Employee</Option>
-                      <Option value="TaxEmployee">Tax Employee</Option>
-                      <Option value="InsuranceEmployee">
-                        Insurance Employee
-                      </Option>
-                      <Option value="StockMarket">Stock Market</Option>
-                    </Select>
+                        <Option value="LoanEmployee">Loan Employee</Option>
+                        <Option value="TaxEmployee">Tax Employee</Option>
+                        <Option value="InsuranceEmployee">
+                          Insurance Employee
+                        </Option>
+                        <Option value="StockMarket">Stock Market</Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.employeeType && (
+                    <p className="text-danger">Employee type is required</p>
                   )}
-                />
-                {errors.employeeType && (
-                  <p className="text-danger">Employee type is required</p>
-                )}
-              </div>
-            </Col>
-            {/* <Col xs={12} md={6} lg={4}>
+                </div>
+              </Col>
+              {/* <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Loan Type:</label>
                 <Controller
@@ -480,137 +505,135 @@ function LeadDetails() {
                 )}
               </div>
             </Col> */}
-            {/* <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  Employee Category:
-                </label>
-                <Controller
-                  name="loanType"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
-                      onChange={(value) => {
-                        field.onChange(value); // Update React Hook Form value
-                        setValue("loanType", value); // Update field value in form
-                      }}
-                    >
-                      <Option value="">Select Employee Category</Option>
-                      {categories.map((category, index) => (
-                        <Option key={index} value={category}>
-                          {category}
-                        </Option>
-                      ))}
-                    </Select>
-                  )}
-                />
-                {errors.loanType && (
-                  <p className="text-danger">Employee category is required</p>
-                )}
-              </div>
-            </Col> */}
 
-<Col xs={12} md={6} lg={4}>
-  <label>Employee List:</label>
-  <select
-    {...register("employeeId", { required: true })}
-    className="form-select"
-    placeholder="Select Employee"
-  >
-    <option value="">Select Employee</option>
-    {filteredEmployeeList.map((employee) => (
-      <option key={employee._id} value={employee._id}>
-        {employee.firstname} {employee.lastname}
-      </option>
-    ))}
-  </select>
-  {errors.employeeId && (
-    <p className="text-danger">Employee selection is required</p>
-  )}
-</Col>
+              <Col xs={12} md={6} lg={4}>
+                <label>Employee List:</label>
+                <select
+                  {...register("employeeId", { required: true })}
+                  className="form-select"
+                  placeholder="Select Employee"
+                >
+                  <option value="">Select Employee</option>
+                  {filteredEmployeeList.map((employee) => (
+                    <option key={employee._id} value={employee._id}>
+                      {employee.firstname} {employee.lastname}
+                    </option>
+                  ))}
+                </select>
+                {errors.employeeId && (
+                  <p className="text-danger">Employee selection is required</p>
+                )}
+              </Col>
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Category:</label>
+                  <Controller
+                    name="loanType"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className="inputcolumn_drp"
+                        placeholder="Select Category"
+                        onChange={(value) => field.onChange(value)}
+                        disabled={!selectedEmployeeType} 
+                      >
+                        <Option value="">Select Category</Option>
+                        {selectedEmployeeType &&
+                          employeeCategories[selectedEmployeeType]?.map(
+                            (category, index) => (
+                              <Option key={index} value={category}>
+                                {category}
+                              </Option>
+                            )
+                          )}
+                      </Select>
+                    )}
+                  />
+                  {errors.loanType && (
+                    <p className="text-danger">Category is required</p>
+                  )}
+                </div>
+              </Col>
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Start Date:</label>
+                  <Controller
+                    name="startDate"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <input
+                        type="date"
+                        {...field}
+                        className="form-control"
+                        placeholder="Start Date"
+                      />
+                    )}
+                  />
+                  {errors.startDate && (
+                    <p className="text-danger">Start date is required</p>
+                  )}
+                </div>
+              </Col>
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">End Date:</label>
+                  <Controller
+                    name="endDate"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <input
+                        type="date"
+                        {...field}
+                        className="form-control"
+                        placeholder="End Date"
+                      />
+                    )}
+                  />
+                  {errors.endDate && (
+                    <p className="text-danger">End date is required</p>
+                  )}
+                </div>
+              </Col>
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Description:</label>
+                  <Controller
+                    name="description"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <textarea
+                        {...field}
+                        className="form-control"
+                        placeholder="Task description"
+                      />
+                    )}
+                  />
+                  {errors.description && (
+                    <p className="text-danger">Description is required</p>
+                  )}
+                </div>
+              </Col>
+            </Row>
 
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Start Date:</label>
-                <Controller
-                  name="startDate"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <input
-                      type="date"
-                      {...field}
-                      className="form-control"
-                      placeholder="Start Date"
-                    />
-                  )}
-                />
-                {errors.startDate && (
-                  <p className="text-danger">Start date is required</p>
-                )}
-              </div>
-            </Col>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">End Date:</label>
-                <Controller
-                  name="endDate"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <input
-                      type="date"
-                      {...field}
-                      className="form-control"
-                      placeholder="End Date"
-                    />
-                  )}
-                />
-                {errors.endDate && (
-                  <p className="text-danger">End date is required</p>
-                )}
-              </div>
-            </Col>
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Description:</label>
-                <Controller
-                  name="description"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <textarea
-                      {...field}
-                      className="form-control"
-                      placeholder="Task description"
-                    />
-                  )}
-                />
-                {errors.description && (
-                  <p className="text-danger">Description is required</p>
-                )}
-              </div>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col className="px-2 py-2">
-              <Button type="submit" variant="primary">
-                Submit
-              </Button>
-            </Col>
-          </Row>
-        </form>
+            <Row>
+              <Col className="px-2 py-2">
+                <Button type="submit" variant="primary">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 }
