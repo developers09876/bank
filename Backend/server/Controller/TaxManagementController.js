@@ -44,6 +44,7 @@ export async function updateTaxManagementDb(req, res, next) {
       endDate: data.endDate,
       employeeId: data.employeeId,
       employeeType: data.employeeType,
+      employeeCategory: data.employeeCategory,
     };
 
     const updatedRecord = await taxManagementDb.findByIdAndUpdate(
@@ -108,3 +109,27 @@ export const getTaxManagementEmployeeId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export async function getByTaxId(req, res, next) {
+  try {
+    const { id } = req.params;
+    const leads = await taxManagementDb.find({ _id: id });
+
+    if (leads && leads.length > 0) {
+      res.status(200).json({
+        message: "Leads fetched successfully",
+        data: leads,
+      });
+    } else {
+      res.status(404).json({
+        message: "No leads found for the given user ID",
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching leads by ID:", error);
+    res.status(500).json({
+      message: "An error occurred while fetching leads",
+      error: error.message,
+    });
+  }
+}

@@ -18,30 +18,56 @@ function TaskManagementDetails() {
   const [employeeList, setEmployeeList] = useState();
   const [employeeName, setEmployeeName] = useState();
   const [employeeCategory, setemployeeCategory] = useState();
+  const [selectedEmployeeType, setSelectedEmployeeType] =
+    useState("TaxEmployee");
+  const [assignValue, setAssignValue] = useState([]);
 
-  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const {
-    register,
+    control,
     handleSubmit,
     setValue,
+    reset,
     watch,
-    control,
+    register,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      employeeType: "",
+      employeeId: "",
+      loanType: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      employeeCategory: "",
+    },
+  });
 
   const category = watch("employeeCategory");
-  const employeeType = "TaxEmployee";
+  const employeeType = "employee";
+
+  const employeeCategories = {
+    TaxEmployee: [
+      "Income Tax",
+      "TDS/TCS Services",
+      "GST Services",
+      "ESI & PF Services",
+    ],
+  };
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
         const response = await Api.get(`signup/getbyUserType/${employeeType}`);
-        setEmployeeList(response.data);
-        console.log("responseemployee", response.data);
+        const filteredEmployees = response.data.filter((employee) =>
+          employee.services.includes("InsuranceEmployee")
+        );
+        setEmployeeList(filteredEmployees);
+        console.log("Filtered Employees:", filteredEmployees);
       } catch (error) {
         console.error("Error fetching employee list:", error);
         toast.error("Failed to fetch employee list.");
       }
     };
+
     fetchEmployeeList();
   }, [employeeType]);
 
@@ -67,20 +93,30 @@ function TaskManagementDetails() {
     };
     fetchEmployeeList();
   }, []);
-
   useEffect(() => {
-    if (category) {
-      // Filter employees based on selected category
-      const filtered = employeeList.filter(
-        (employee) => employee.employeeCategory === category
-      );
-      setFilteredEmployeeList(filtered);
-    }
-  }, [category, employeeList]);
+    getbyLeadId();
+  }, []);
+
+  const getbyLeadId = async () => {
+    await Api.get(`/taxManagement/getByTaxId/${record?._id}`).then((res) => {
+      const data = res.data.data[0];
+      setAssignValue(data);
+      reset({
+        employeeType: data?.employeeType || "",
+        employeeId: data?.employeeId || "",
+        loanType: data?.loanType || "",
+        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+        description: data?.description || "",
+        employeeCategory: data?.employeeCategory || "",
+      });
+      setSelectedEmployeeType(data?.employeeType || "");
+    });
+  };
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-
+    console.log("employeeType", data);
     const details = {
       AdminId: id,
       firstname: record.firstname,
@@ -99,7 +135,8 @@ function TaskManagementDetails() {
       startDate: data.startDate,
       endDate: data.endDate,
       employeeId: data.employeeId,
-      employeeType: data.employeeType,
+      employeeType: selectedEmployeeType,
+      employeeCategory: data.employeeCategory,
     };
 
     try {
@@ -270,43 +307,46 @@ function TaskManagementDetails() {
         <h5>
           <b>Assign To</b>
         </h5>
-        <form onSubmit={(e) => onSubmit(watch(), e)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Row>
+            {/* Employee Type */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Employee Type:</label>
                 <Controller
                   name="employeeType"
                   control={control}
-                  defaultValue="TaxEmployee"
-                  // value={employeeType}
+                  disabled
+                  defaultValue="TaxEmployee" // Ensure default value is set
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select {...field} disabled className="inputcolumn_drp">
-                      <Option value="LoanEmployee">Loan Employee</Option>
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setSelectedEmployeeType(value);
+                      }}
+                    >
                       <Option value="TaxEmployee">Tax Employee</Option>
-                      <Option value="InsuranceEmployee">
-                        Insurance Employee
-                      </Option>
-                      <Option value="StockMarket">Stock Market</Option>
                     </Select>
                   )}
                 />
                 {errors.employeeType && (
-                  <p className="text-danger">Service is required</p>
+                  <p className="text-danger">Employee type is required</p>
                 )}
               </div>
             </Col>
-           
+
+            {/* Employee List */}
             <Col xs={12} md={6} lg={4}>
               <label>Employee List:</label>
               <select
                 {...register("employeeId", { required: true })}
                 className="form-select"
-                placeholder="Select Employee"
               >
                 <option value="">Select Employee</option>
-                {filteredEmployeeList?.map((employee) => (
+                {employeeList?.map((employee) => (
                   <option key={employee._id} value={employee._id}>
                     {employee.firstname} {employee.lastname}
                   </option>
@@ -317,89 +357,50 @@ function TaskManagementDetails() {
               )}
             </Col>
 
+            {/* Category */}
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">
-                  Employee Category:
-                </label>
+                <label className="vendorpage_labelCss">Category:</label>
                 <Controller
                   name="employeeCategory"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
-                      onChange={(value) => {
-                        field.onChange(value);
-                        setValue("employeeCategory", value);
-                      }}
+                      placeholder="Select Category"
+                      onChange={(value) => field.onChange(value)}
+                      disabled={!selectedEmployeeType}
                     >
                       <Option value="">Select Category</Option>
-                      <Option value="IncomeTax">Income Tax</Option>
-                      <Option value="Tds&TcsServices">
-                        TDS / TCS Services
-                      </Option>
-                      <Option value="GSTservices">GST Services</Option>
-                      <Option value="Esi&PfServices">ESI & PF Services</Option>
+                      {selectedEmployeeType &&
+                        employeeCategories[selectedEmployeeType]?.map(
+                          (category, index) => (
+                            <Option key={index} value={category}>
+                              {category}
+                            </Option>
+                          )
+                        )}
                     </Select>
                   )}
                 />
                 {errors.employeeCategory && (
-                  <p className="text-danger">Employee category is required</p>
+                  <p className="text-danger">Category is required</p>
                 )}
               </div>
             </Col>
 
-            {category === "IncomeTax" && (
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Sub Category:</label>
-                  <Controller
-                    name="subCategory"
-                    control={control}
-                    defaultValue=""
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        className="inputcolumn_drp"
-                        placeholder="Select Sub Category"
-                        onChange={(value) => {
-                          field.onChange(value);
-                          setValue("subCategory", value);
-                        }}
-                      >
-                        <Option value="Company">Company</Option>
-                        <Option value="Individual">Individual</Option>
-                        <Option value="Firm">Firm</Option>
-                        <Option value="Other">Other</Option>
-                      </Select>
-                    )}
-                  />
-                  {errors.subCategory && (
-                    <p className="text-danger">Sub-category is required</p>
-                  )}
-                </div>
-              </Col>
-            )}
+            {/* Start Date */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Start Date:</label>
                 <Controller
                   name="startDate"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <input
-                      type="date"
-                      {...field}
-                      className="form-control"
-                      placeholder="Start Date"
-                    />
+                    <input type="date" {...field} className="form-control" />
                   )}
                 />
                 {errors.startDate && (
@@ -407,21 +408,17 @@ function TaskManagementDetails() {
                 )}
               </div>
             </Col>
+
+            {/* End Date */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">End Date:</label>
                 <Controller
                   name="endDate"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <input
-                      type="date"
-                      {...field}
-                      className="form-control"
-                      placeholder="End Date"
-                    />
+                    <input type="date" {...field} className="form-control" />
                   )}
                 />
                 {errors.endDate && (
@@ -429,13 +426,14 @@ function TaskManagementDetails() {
                 )}
               </div>
             </Col>
+
+            {/* Description */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Description:</label>
                 <Controller
                   name="description"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
                     <textarea

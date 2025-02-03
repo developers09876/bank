@@ -37,19 +37,30 @@ const LoanDetails = ({ collapsed }) => {
   const navigate = useNavigate();
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
   const [employeeList, setEmployeeList] = useState([]);
-  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [employeeName, setEmployeeName] = useState();
   const [employeeCategory, setemployeeCategory] = useState();
-   const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
-
+  const [selectedEmployeeType, setSelectedEmployeeType] =
+    useState("LoanEmployee");
+  const [assignValue, setAssignValue] = useState([]);
+  console.log("assignValue", assignValue);
   const {
-    register,
+    control,
     handleSubmit,
     setValue,
+    reset,
     watch,
-    control,
+    register,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      employeeType: "",
+      employeeId: "",
+      loanType: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    },
+  });
 
   const category = watch("loanType");
   console.log("category", category);
@@ -60,9 +71,8 @@ const LoanDetails = ({ collapsed }) => {
       "Vehicle Loan",
       "Personal Loan",
     ],
-    
   };
-  const employeeType = "LoanEmployee";
+  const employeeType = "employee";
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
@@ -76,39 +86,10 @@ const LoanDetails = ({ collapsed }) => {
     };
     fetchEmployeeList();
   }, [employeeType]);
+  const filteredEmployeeList = employeeList.filter((employee) =>
+    employee.services.includes(selectedEmployeeType)
+  );
 
-  useEffect(() => {
-    const fetchEmployeeName = async () => {
-      const employeeid = record.employeeId;
-      try {
-        const response = await Api.get(`signup/getby/${employeeid}`);
-        if (
-          response.data &&
-          response.data.firstname &&
-          response.data.lastname
-        ) {
-          setEmployeeName(
-            `${response.data.firstname} ${response.data.lastname}`
-          );
-        }
-        setemployeeCategory(response.data.employeeCategory);
-      } catch (error) {
-        console.error("Error fetching employee list:", error);
-        toast.error("Failed to fetch employee list.");
-      }
-    };
-    fetchEmployeeName();
-  }, []);
-
-  useEffect(() => {
-    if (category) {
-      console.log("category", category);
-      const filtered = employeeList.filter(
-        (employee) => employee.employeeCategory === category
-      );
-      setFilteredEmployeeList(filtered);
-    }
-  }, [category, employeeList]);
   const handleModalOk = () => {
     setSelectedRecord(null);
   };
@@ -116,7 +97,25 @@ const LoanDetails = ({ collapsed }) => {
   const handleModalCancel = () => {
     setSelectedRecord(null);
   };
+  useEffect(() => {
+    getbyLeadId();
+  }, []);
 
+  const getbyLeadId = async () => {
+    await Api.get(`/loanform/getby/${record._id}`).then((res) => {
+      const data = res.data;
+      setAssignValue(data);
+      reset({
+        employeeType: data?.employeeType || "",
+        employeeId: data?.employeeId || "",
+        loanType: data?.loanType || "",
+        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+        description: data?.description || "",
+      });
+      setSelectedEmployeeType(data?.employeeType || "");
+    });
+  };
   const updateStatus = async (id, action, reason = "") => {
     try {
       const details = { action, reason };
@@ -687,203 +686,176 @@ const LoanDetails = ({ collapsed }) => {
                 </Col>
               </Row>
             )}
-             <div className="py-2 px-2">
-                      <h5>
-                        <b>Assign To</b>
-                      </h5>
-                      <form onSubmit={(e) => onSubmit(watch(), e)}>
-                        <Row>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">Employee Type:</label>
-                              <Controller
-                                name="employeeType"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                  <Select
-                                    {...field}
-                                    className="inputcolumn_drp"
-                                    onChange={(value) => {
-                                      field.onChange(value); // Update React Hook Form value
-                                      setSelectedEmployeeType(value); // Update local state
-                                    }}
-                                  >
-                                    {/* <Option value="">Select Employee Type</Option> */}
-                                    <Option value="LoanEmployee">Loan Employee</Option>
-                                    {/* <Option value="TaxEmployee">Tax Employee</Option>
-                                    <Option value="InsuranceEmployee">
-                                      Insurance Employee
-                                    </Option>
-                                    <Option value="StockMarket">Stock Market</Option> */}
-                                  </Select>
-                                )}
-                              />
-                              {errors.employeeType && (
-                                <p className="text-danger">Employee type is required</p>
-                              )}
-                            </div>
-                          </Col>
-                          {/* <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label className="vendorpage_labelCss">Loan Type:</label>
-                            <Controller
-                              name="loanType"
-                              control={control}
-                              defaultValue=""
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <Select
-                                  {...field}
-                                  className="inputcolumn_drp"
-                                  placeholder="Select Loan Type"
-                                  onChange={(value) => {
-                                    field.onChange(value);
-                                    setValue("loanType", value);
-                                  }}
-                                >
-                                  <Option value="">Select Loan Type</Option>
-                                  <Option value="Home Loan">Home Loan</Option>
-                                  <Option value="Business Loan">Business Loan</Option>
-                                  <Option value="Vehicle Loan">Vechicle Loan</Option>
-                                  <Option value="Personal Loan">Personal Loan</Option>
-                                </Select>
-                              )}
-                            />
-                            {errors.loanType && (
-                              <p className="text-danger">Loan type is required</p>
-                            )}
-                          </div>
-                        </Col> */}
-            
-                          <Col xs={12} md={6} lg={4}>
-                            <label>Employee List:</label>
-                            <select
-                              {...register("employeeId", { required: true })}
-                              className="form-select"
-                              placeholder="Select Employee"
-                            >
-                              <option value="">Select Employee</option>
-                              {filteredEmployeeList.map((employee) => (
-                                <option key={employee._id} value={employee._id}>
-                                  {employee.firstname} {employee.lastname}
-                                </option>
-                              ))}
-                            </select>
-                            {errors.employeeId && (
-                              <p className="text-danger">Employee selection is required</p>
-                            )}
-                          </Col>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">Category:</label>
-                              <Controller
-                                name="loanType"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                  <Select
-                                    {...field}
-                                    className="inputcolumn_drp"
-                                    placeholder="Select Category"
-                                    onChange={(value) => field.onChange(value)}
-                                    disabled={!selectedEmployeeType} 
-                                  >
-                                    <Option value="">Select Category</Option>
-                                    {selectedEmployeeType &&
-                                      employeeCategories[selectedEmployeeType]?.map(
-                                        (category, index) => (
-                                          <Option key={index} value={category}>
-                                            {category}
-                                          </Option>
-                                        )
-                                      )}
-                                  </Select>
-                                )}
-                              />
-                              {errors.loanType && (
-                                <p className="text-danger">Category is required</p>
-                              )}
-                            </div>
-                          </Col>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">Start Date:</label>
-                              <Controller
-                                name="startDate"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                  <input
-                                    type="date"
-                                    {...field}
-                                    className="form-control"
-                                    placeholder="Start Date"
-                                  />
-                                )}
-                              />
-                              {errors.startDate && (
-                                <p className="text-danger">Start date is required</p>
-                              )}
-                            </div>
-                          </Col>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">End Date:</label>
-                              <Controller
-                                name="endDate"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                  <input
-                                    type="date"
-                                    {...field}
-                                    className="form-control"
-                                    placeholder="End Date"
-                                  />
-                                )}
-                              />
-                              {errors.endDate && (
-                                <p className="text-danger">End date is required</p>
-                              )}
-                            </div>
-                          </Col>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">Description:</label>
-                              <Controller
-                                name="description"
-                                control={control}
-                                defaultValue=""
-                                rules={{ required: true }}
-                                render={({ field }) => (
-                                  <textarea
-                                    {...field}
-                                    className="form-control"
-                                    placeholder="Task description"
-                                  />
-                                )}
-                              />
-                              {errors.description && (
-                                <p className="text-danger">Description is required</p>
-                              )}
-                            </div>
-                          </Col>
-                        </Row>
-            
-                        <Row>
-                          <Col className="px-2 py-2">
-                            <Button type="submit" variant="primary">
-                              Submit
-                            </Button>
-                          </Col>
-                        </Row>
-                      </form>
+            <div className="py-2 px-2">
+              <h5>
+                <b>Assign To</b>
+              </h5>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Row>
+                  {/* Employee Type */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Employee Type:
+                      </label>
+                      <Controller
+                        name="employeeType"
+                        control={control}
+                        disabled
+                        defaultValue="LoanEmployee" // Ensure default value is set
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setSelectedEmployeeType(value);
+                            }}
+                          >
+                            <Option value="LoanEmployee">Loan Employee</Option>
+                          </Select>
+                        )}
+                      />
+                      {errors.employeeType && (
+                        <p className="text-danger">Employee type is required</p>
+                      )}
                     </div>
+                  </Col>
+
+                  {/* Employee List */}
+                  <Col xs={12} md={6} lg={4}>
+                    <label>Employee List:</label>
+                    <select
+                      {...register("employeeId", { required: true })}
+                      className="form-select"
+                    >
+                      <option value="">Select Employee</option>
+                      {filteredEmployeeList.map((employee) => (
+                        <option key={employee._id} value={employee._id}>
+                          {employee.firstname} {employee.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.employeeId && (
+                      <p className="text-danger">
+                        Employee selection is required
+                      </p>
+                    )}
+                  </Col>
+
+                  {/* Category */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Category:</label>
+                      <Controller
+                        name="loanType"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            placeholder="Select Category"
+                            onChange={(value) => field.onChange(value)}
+                            disabled={!selectedEmployeeType}
+                          >
+                            <Option value="">Select Category</Option>
+                            {selectedEmployeeType &&
+                              employeeCategories[selectedEmployeeType]?.map(
+                                (category, index) => (
+                                  <Option key={index} value={category}>
+                                    {category}
+                                  </Option>
+                                )
+                              )}
+                          </Select>
+                        )}
+                      />
+                      {errors.loanType && (
+                        <p className="text-danger">Category is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* Start Date */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Start Date:</label>
+                      <Controller
+                        name="startDate"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <input
+                            type="date"
+                            {...field}
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      {errors.startDate && (
+                        <p className="text-danger">Start date is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* End Date */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">End Date:</label>
+                      <Controller
+                        name="endDate"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <input
+                            type="date"
+                            {...field}
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      {errors.endDate && (
+                        <p className="text-danger">End date is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* Description */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Description:
+                      </label>
+                      <Controller
+                        name="description"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <textarea
+                            {...field}
+                            className="form-control"
+                            placeholder="Task description"
+                          />
+                        )}
+                      />
+                      {errors.description && (
+                        <p className="text-danger">Description is required</p>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col className="px-2 py-2">
+                    <Button type="submit" variant="primary">
+                      Submit
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+            </div>
 
             {/* <Row className="px-4 py-5">
                 <Space>

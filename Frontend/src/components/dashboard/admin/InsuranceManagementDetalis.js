@@ -12,72 +12,85 @@ function InsuranceManagementDetails() {
   const { state } = useLocation();
   const record = state?.record || {};
   const id = localStorage.getItem("regid");
-
+  const [selectedEmployeeType, setSelectedEmployeeType] =
+    useState("InsuranceEmployee");
   // const [employeeType, setEmployeeType] = useState("");
   const [inputs, setInputs] = useState();
   const [employeeList, setEmployeeList] = useState();
+  console.log("employeeList", employeeList);
   const [employeeName, setEmployeeName] = useState();
-  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [employeeCategory, setemployeeCategory] = useState();
+  const [assignValue, setAssignValue] = useState([]);
 
-  console.log("employeeName", employeeName);
   const {
-    register,
+    control,
     handleSubmit,
     setValue,
+    reset,
     watch,
-    control,
+    register,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      employeeType: "",
+      employeeId: "",
+      loanType: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      employeeCategory: "",
+    },
+  });
 
   const category = watch("employeeCategory");
-  const employeeType = "InsuranceEmployee";
+  const employeeType = "employee";
+
+  const employeeCategories = {
+    InsuranceEmployee: [
+      "Life Insurance",
+      "Vehicle Insurance",
+      "Health Insurance",
+    ],
+  };
+  useEffect(() => {
+    getbyLeadId();
+  }, []);
+
+  const getbyLeadId = async () => {
+    await Api.get(`/insuranceManagement/getByInsurance/${record?._id}`).then(
+      (res) => {
+        const data = res.data.data[0];
+        setAssignValue(data);
+        reset({
+          employeeType: data?.employeeType || "",
+          employeeId: data?.employeeId || "",
+          loanType: data?.loanType || "",
+          startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+          endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+          description: data?.description || "",
+          employeeCategory: data?.employeeCategory || "",
+        });
+        setSelectedEmployeeType(data?.employeeType || "");
+      }
+    );
+  };
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
         const response = await Api.get(`signup/getbyUserType/${employeeType}`);
-        setEmployeeList(response.data);
-        console.log("responseemployee", response.data);
+        const filteredEmployees = response.data.filter((employee) =>
+          employee.services.includes("InsuranceEmployee")
+        );
+        setEmployeeList(filteredEmployees);
+        console.log("Filtered Employees:", filteredEmployees);
       } catch (error) {
         console.error("Error fetching employee list:", error);
         toast.error("Failed to fetch employee list.");
       }
     };
+
     fetchEmployeeList();
   }, [employeeType]);
-
-  useEffect(() => {
-    const fetchEmployeeName = async () => {
-      const employeeid = record.employeeId;
-      try {
-        const response = await Api.get(`signup/getby/${employeeid}`);
-        if (
-          response.data &&
-          response.data.firstname &&
-          response.data.lastname
-        ) {
-          setEmployeeName(
-            `${response.data.firstname} ${response.data.lastname}`
-          );
-        }
-        setemployeeCategory(response.data.employeeCategory);
-      } catch (error) {
-        console.error("Error fetching employee list:", error);
-        toast.error("Failed to fetch employee list.");
-      }
-    };
-    fetchEmployeeName();
-  }, []);
-
-  useEffect(() => {
-    if (category) {
-      // Filter employees based on selected category
-      const filtered = employeeList.filter(
-        (employee) => employee.employeeCategory === category
-      );
-      setFilteredEmployeeList(filtered);
-    }
-  }, [category, employeeList]);
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
@@ -101,6 +114,7 @@ function InsuranceManagementDetails() {
       endDate: data.endDate,
       employeeId: data.employeeId,
       employeeType: data.employeeType,
+      employeeCategory: data.employeeCategory,
     };
 
     try {
@@ -244,9 +258,9 @@ function InsuranceManagementDetails() {
               title="Task Assigned Details"
             >
               <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                <Descriptions.Item label="Employee Name">
+                {/* <Descriptions.Item label="Employee Name">
                   {employeeName}
-                </Descriptions.Item>
+                </Descriptions.Item> */}
                 <Descriptions.Item label="Employee Type">
                   {record.employeeType}
                 </Descriptions.Item>
@@ -272,44 +286,48 @@ function InsuranceManagementDetails() {
           <b>Assign To</b>
         </h5>
 
-        <form onSubmit={(e) => onSubmit(watch(), e)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Row>
+            {/* Employee Type */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Employee Type:</label>
                 <Controller
                   name="employeeType"
                   control={control}
-                  defaultValue="InsuranceEmployee"
-                  // value={employeeType}
+                  disabled
+                  defaultValue="InsuranceEmployee" // Ensure default value is set
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select {...field} disabled className="inputcolumn_drp">
-                      <Option value="LoanEmployee">Loan Employee</Option>
-                      <Option value="TaxEmployee">Tax Employee</Option>
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setSelectedEmployeeType(value);
+                      }}
+                    >
                       <Option value="InsuranceEmployee">
                         Insurance Employee
                       </Option>
-                      <Option value="StockMarket">Stock Market</Option>
                     </Select>
                   )}
                 />
                 {errors.employeeType && (
-                  <p className="text-danger">Service is required</p>
+                  <p className="text-danger">Employee type is required</p>
                 )}
               </div>
             </Col>
-           
 
+            {/* Employee List */}
             <Col xs={12} md={6} lg={4}>
               <label>Employee List:</label>
               <select
                 {...register("employeeId", { required: true })}
                 className="form-select"
-                placeholder="Select Employee"
               >
                 <option value="">Select Employee</option>
-                {filteredEmployeeList?.map((employee) => (
+                {employeeList?.map((employee) => (
                   <option key={employee._id} value={employee._id}>
                     {employee.firstname} {employee.lastname}
                   </option>
@@ -319,56 +337,51 @@ function InsuranceManagementDetails() {
                 <p className="text-danger">Employee selection is required</p>
               )}
             </Col>
+
+            {/* Category */}
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">
-                  Employee Category:
-                </label>
+                <label className="vendorpage_labelCss">Category:</label>
                 <Controller
                   name="employeeCategory"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Employee Category"
-                      onChange={(value) => {
-                        field.onChange(value);
-                        setValue("employeeCategory", value);
-                      }}
+                      placeholder="Select Category"
+                      onChange={(value) => field.onChange(value)}
+                      disabled={!selectedEmployeeType}
                     >
                       <Option value="">Select Category</Option>
-                      <Option value="Health Insurance">Health Insurance</Option>
-
-                      <Option value="Life Insurance">Life Insurance</Option>
-                      <Option value="Vehicle Insurance">
-                        Vehicle Insurance
-                      </Option>
+                      {selectedEmployeeType &&
+                        employeeCategories[selectedEmployeeType]?.map(
+                          (category, index) => (
+                            <Option key={index} value={category}>
+                              {category}
+                            </Option>
+                          )
+                        )}
                     </Select>
                   )}
                 />
                 {errors.employeeCategory && (
-                  <p className="text-danger">Employee category is required</p>
+                  <p className="text-danger">Category is required</p>
                 )}
               </div>
             </Col>
+
+            {/* Start Date */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Start Date:</label>
                 <Controller
                   name="startDate"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <input
-                      type="date"
-                      {...field}
-                      className="form-control"
-                      placeholder="Start Date"
-                    />
+                    <input type="date" {...field} className="form-control" />
                   )}
                 />
                 {errors.startDate && (
@@ -376,21 +389,17 @@ function InsuranceManagementDetails() {
                 )}
               </div>
             </Col>
+
+            {/* End Date */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">End Date:</label>
                 <Controller
                   name="endDate"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <input
-                      type="date"
-                      {...field}
-                      className="form-control"
-                      placeholder="End Date"
-                    />
+                    <input type="date" {...field} className="form-control" />
                   )}
                 />
                 {errors.endDate && (
@@ -398,13 +407,14 @@ function InsuranceManagementDetails() {
                 )}
               </div>
             </Col>
+
+            {/* Description */}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Description:</label>
                 <Controller
                   name="description"
                   control={control}
-                  defaultValue=""
                   rules={{ required: true }}
                   render={({ field }) => (
                     <textarea

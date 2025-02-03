@@ -146,6 +146,30 @@ export async function getById(req, res, next) {
     });
   }
 }
+
+export async function getByLeadId(req, res, next) {
+  try {
+    const { id } = req.params;
+    const leads = await Lead.find({ _id: id });
+
+    if (leads && leads.length > 0) {
+      res.status(200).json({
+        message: "Leads fetched successfully",
+        data: leads,
+      });
+    } else {
+      res.status(404).json({
+        message: "No leads found for the given user ID",
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching leads by ID:", error);
+    res.status(500).json({
+      message: "An error occurred while fetching leads",
+      error: error.message,
+    });
+  }
+}
 export const getByUserId = async (req, res) => {
   try {
     const { email } = req.params;
@@ -191,7 +215,7 @@ export const deleteRemark = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-export async function updateLeadAssign (req, res, next) {
+export async function updateLeadAssign(req, res, next) {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -209,14 +233,10 @@ export async function updateLeadAssign (req, res, next) {
     };
     console.log("Update Details:", updateDetails);
 
-    const updatedRecord = await Lead.findByIdAndUpdate(
-      id,
-      updateDetails,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const updatedRecord = await Lead.findByIdAndUpdate(id, updateDetails, {
+      new: true,
+      runValidators: true,
+    });
 
     if (updatedRecord) {
       res.status(200).json({
@@ -238,9 +258,8 @@ export async function updateLeadAssign (req, res, next) {
 }
 // export const getByEmployeeId = async (req, res) => {
 //   try {
-//     const { id } = req.params; 
+//     const { id } = req.params;
 
-   
 //     const lead = await Lead.findById(id);
 
 //     if (!lead) {
@@ -260,10 +279,10 @@ export const getByEmployeeId = async (req, res) => {
   try {
     const { employeeId } = req.params;
     const lead = await Lead.find({ employeeId });
-    if (!lead ) {
+    if (!lead) {
       return res.status(404).json({ message: "User id not found" });
     }
-    res.status(200).json(lead );
+    res.status(200).json(lead);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

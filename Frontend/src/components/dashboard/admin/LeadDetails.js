@@ -16,16 +16,27 @@ function LeadDetails() {
   const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
   console.log("selectedEmployeeType", selectedEmployeeType);
   const [categories, setCategories] = useState([]);
+  const [assignValue, setAssignValue] = useState([]);
+  console.log("assignValue", assignValue);
   const { Option } = Select;
   const {
-    register,
-    handleSubmit,
     control,
+    handleSubmit,
     setValue,
-    watch,
-    formState: { errors },
     reset,
-  } = useForm();
+    watch,
+    register,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      employeeType: "",
+      employeeId: "",
+      loanType: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    },
+  });
   const category = watch("loanType");
   console.log("category", category);
   const employeeCategories = {
@@ -139,43 +150,25 @@ function LeadDetails() {
     }, {});
     reset(defaultValues);
   };
+  useEffect(() => {
+    getbyLeadId();
+  }, []);
 
-  // const onSubmit = async (data) => {
-  //   const formattedRemarks = remarksFields.map((field, index) => ({
-  //     date: data[`date_${index}`],
-  //     remarks: data[`remarks_${index}`],
-  //     status: data[`status_${index}`],
-  //     // notiFicatioinStauts: "false",
-  //   }));
-
-  //   const details = {
-  //     firstname: record.firstname,
-  //     lastname: record.lastname,
-  //     userId: record.id,
-  //     contactNumber: record.phone,
-  //     email: record.email,
-  //     aadhar: record.aadhar,
-  //     purpose: record.purpose,
-  //     amount: record.amount,
-  //     addremarks: formattedRemarks,
-  //     panno: record.panno,
-  //   };
-
-  //   try {
-  //     await axios.put(
-  //       `http://localhost:5000/lead/updatelead/${record._id}`,
-  //       details
-  //     );
-  //     toast.success("Form submitted successfully");
-  //   } catch (error) {
-  //     console.error("Error:", error.message);
-  //     toast.error("An error occurred while submitting the form");
-  //   }
-  // };
-
-  // if (!record) {
-  //   return <p>No details available</p>;
-  // }
+  const getbyLeadId = async () => {
+    await Api.get(`/lead/getByLeadId/${record?._id}`).then((res) => {
+      const data = res.data.data[0];
+      setAssignValue(data);
+      reset({
+        employeeType: data?.employeeType || "",
+        employeeId: data?.employeeId || "",
+        loanType: data?.loanType || "",
+        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+        description: data?.description || "",
+      });
+      setSelectedEmployeeType(data?.employeeType || "");
+    });
+  };
   const onSubmit = async (data, event) => {
     event.preventDefault();
 
@@ -218,76 +211,6 @@ function LeadDetails() {
           <h3>Lead Details</h3>
         </center>
         <div>
-          {/* <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Name:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{`${record.firstname} ${record.lastname}`}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Email:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.email}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Phone:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.contactNumber}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Loan Amount:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.amount}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Aadhar Number:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.aadhar}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>PAN Card Number:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.panno}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={2}>
-            <p>
-              <strong>Purpose Of Loan:</strong>
-            </p>
-          </Col>
-          <Col xs={7}>
-            <p>{record.purpose}</p>
-          </Col>
-        </Row> */}
           <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
             <Col lg={8}>
               <Card>
@@ -371,36 +294,7 @@ function LeadDetails() {
               </Card>
             </Col>
           </Row>
-          {/* <Row style={{ textAlign: "-webkit-center" }}>
-          <Col lg={12} md={12}>
-            <Card
-              style={{ width: "60%" }}
-              className="loandetail-custom-card"
-              title="Insurance Details"
-            >
-              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                <Descriptions.Item label="Policy Type">
-                  {record.PolicyType}
-                </Descriptions.Item>
-                <Descriptions.Item label="Sum Assured">
-                  {record.sumAssured}
-                </Descriptions.Item>
-                <Descriptions.Item label="Policy Term">
-                  {record.policyTerm}
-                </Descriptions.Item>
-                <Descriptions.Item label="Annual Income">
-                  {record.annualIncome}
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          </Col>
-        </Row> */}
 
-          {/* <h3 style={{ marginBottom: "20px", marginTop: "20px" }}>Reminders</h3> */}
-
-          {/* {record.addremarks && record.addremarks.length > 0 ? (
-          record.addremarks.map((remark, index) => ( */}
-          {/* <div key={index} style={{ marginBottom: "10px" }}> */}
           <Row style={{ textAlign: "-webkit-center" }}>
             <Col lg={12} md={12}>
               <Card
@@ -439,27 +333,26 @@ function LeadDetails() {
           <h5>
             <b>Assign To</b>
           </h5>
-          <form onSubmit={(e) => onSubmit(watch(), e)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Row>
+              {/* Employee Type */}
               <Col xs={12} md={6} lg={4}>
                 <div>
                   <label className="vendorpage_labelCss">Employee Type:</label>
                   <Controller
                     name="employeeType"
                     control={control}
-                    defaultValue=""
                     rules={{ required: true }}
                     render={({ field }) => (
                       <Select
                         {...field}
                         className="inputcolumn_drp"
                         onChange={(value) => {
-                          field.onChange(value); // Update React Hook Form value
-                          setSelectedEmployeeType(value); // Update local state
+                          field.onChange(value);
+                          setSelectedEmployeeType(value);
                         }}
                       >
                         <Option value="">Select Employee Type</Option>
-
                         <Option value="LoanEmployee">Loan Employee</Option>
                         <Option value="TaxEmployee">Tax Employee</Option>
                         <Option value="InsuranceEmployee">
@@ -474,44 +367,13 @@ function LeadDetails() {
                   )}
                 </div>
               </Col>
-              {/* <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Loan Type:</label>
-                <Controller
-                  name="loanType"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Loan Type"
-                      onChange={(value) => {
-                        field.onChange(value);
-                        setValue("loanType", value);
-                      }}
-                    >
-                      <Option value="">Select Loan Type</Option>
-                      <Option value="Home Loan">Home Loan</Option>
-                      <Option value="Business Loan">Business Loan</Option>
-                      <Option value="Vehicle Loan">Vechicle Loan</Option>
-                      <Option value="Personal Loan">Personal Loan</Option>
-                    </Select>
-                  )}
-                />
-                {errors.loanType && (
-                  <p className="text-danger">Loan type is required</p>
-                )}
-              </div>
-            </Col> */}
 
+              {/* Employee List */}
               <Col xs={12} md={6} lg={4}>
                 <label>Employee List:</label>
                 <select
                   {...register("employeeId", { required: true })}
                   className="form-select"
-                  placeholder="Select Employee"
                 >
                   <option value="">Select Employee</option>
                   {filteredEmployeeList.map((employee) => (
@@ -524,13 +386,14 @@ function LeadDetails() {
                   <p className="text-danger">Employee selection is required</p>
                 )}
               </Col>
+
+              {/* Category */}
               <Col xs={12} md={6} lg={4}>
                 <div>
                   <label className="vendorpage_labelCss">Category:</label>
                   <Controller
                     name="loanType"
                     control={control}
-                    defaultValue=""
                     rules={{ required: true }}
                     render={({ field }) => (
                       <Select
@@ -538,7 +401,7 @@ function LeadDetails() {
                         className="inputcolumn_drp"
                         placeholder="Select Category"
                         onChange={(value) => field.onChange(value)}
-                        disabled={!selectedEmployeeType} 
+                        disabled={!selectedEmployeeType}
                       >
                         <Option value="">Select Category</Option>
                         {selectedEmployeeType &&
@@ -557,21 +420,17 @@ function LeadDetails() {
                   )}
                 </div>
               </Col>
+
+              {/* Start Date */}
               <Col xs={12} md={6} lg={4}>
                 <div>
                   <label className="vendorpage_labelCss">Start Date:</label>
                   <Controller
                     name="startDate"
                     control={control}
-                    defaultValue=""
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <input
-                        type="date"
-                        {...field}
-                        className="form-control"
-                        placeholder="Start Date"
-                      />
+                      <input type="date" {...field} className="form-control" />
                     )}
                   />
                   {errors.startDate && (
@@ -579,21 +438,17 @@ function LeadDetails() {
                   )}
                 </div>
               </Col>
+
+              {/* End Date */}
               <Col xs={12} md={6} lg={4}>
                 <div>
                   <label className="vendorpage_labelCss">End Date:</label>
                   <Controller
                     name="endDate"
                     control={control}
-                    defaultValue=""
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <input
-                        type="date"
-                        {...field}
-                        className="form-control"
-                        placeholder="End Date"
-                      />
+                      <input type="date" {...field} className="form-control" />
                     )}
                   />
                   {errors.endDate && (
@@ -601,13 +456,14 @@ function LeadDetails() {
                   )}
                 </div>
               </Col>
+
+              {/* Description */}
               <Col xs={12} md={6} lg={4}>
                 <div>
                   <label className="vendorpage_labelCss">Description:</label>
                   <Controller
                     name="description"
                     control={control}
-                    defaultValue=""
                     rules={{ required: true }}
                     render={({ field }) => (
                       <textarea

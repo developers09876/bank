@@ -8,6 +8,7 @@ import {
   getbyReferCode,
   calculateReferralEarnings,
   getCurrentMonthIncome,
+  getByInsuranceId,
 } from "../Controller/InsuranceManagementController.js";
 
 const router = Router();
@@ -16,6 +17,7 @@ router.post("/createinsuranceManagement", createInsuranceManagementDb);
 router.get("/referCode/:referCode", getbyReferCode);
 router.get("/calculateEarnings/:referCode", calculateReferralEarnings);
 router.get("/currentMonthIncome/:referCode", getCurrentMonthIncome);
+router.get("/getByInsurance/:id", getByInsuranceId);
 
 router.put("/updateInsuranceManagement/:id", updateInsuranceManagementDb);
 router.get("/getbyEmployeeid/:employeeId", getInsuranceManagementEmployeeId);

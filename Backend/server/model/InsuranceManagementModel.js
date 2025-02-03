@@ -14,9 +14,9 @@ const insuranceManagementSchema = new mongoose.Schema(
     gst: { type: String },
     policyTerm: { type: String },
     PolicyType: { type: String },
-    VehicleType: { type: String},
+    VehicleType: { type: String },
     referCode: { type: String, unique: true },
-
+    employeeCategory: { type: String },
     annualIncome: { type: String },
     sumAssured: { type: String },
     description: { type: String },
