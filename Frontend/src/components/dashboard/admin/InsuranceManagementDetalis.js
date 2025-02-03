@@ -299,6 +299,26 @@ function InsuranceManagementDetails() {
                 )}
               </div>
             </Col>
+           
+
+            <Col xs={12} md={6} lg={4}>
+              <label>Employee List:</label>
+              <select
+                {...register("employeeId", { required: true })}
+                className="form-select"
+                placeholder="Select Employee"
+              >
+                <option value="">Select Employee</option>
+                {filteredEmployeeList?.map((employee) => (
+                  <option key={employee._id} value={employee._id}>
+                    {employee.firstname} {employee.lastname}
+                  </option>
+                ))}
+              </select>
+              {errors.employeeId && (
+                <p className="text-danger">Employee selection is required</p>
+              )}
+            </Col>
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">
@@ -333,25 +353,6 @@ function InsuranceManagementDetails() {
                   <p className="text-danger">Employee category is required</p>
                 )}
               </div>
-            </Col>
-
-            <Col xs={12} md={6} lg={4}>
-              <label>Employee List:</label>
-              <select
-                {...register("employeeId", { required: true })}
-                className="form-select"
-                placeholder="Select Employee"
-              >
-                <option value="">Select Employee</option>
-                {filteredEmployeeList?.map((employee) => (
-                  <option key={employee._id} value={employee._id}>
-                    {employee.firstname} {employee.lastname}
-                  </option>
-                ))}
-              </select>
-              {errors.employeeId && (
-                <p className="text-danger">Employee selection is required</p>
-              )}
             </Col>
             <Col xs={12} md={6} lg={4}>
               <div>
