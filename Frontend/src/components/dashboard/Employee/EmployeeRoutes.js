@@ -22,6 +22,9 @@ import LoanFormProfileTab from "./LoanForm/LoanFormProfileTab";
 import LoanTaskManagement from "./LoanTaskManagement";
 import InsuranceTaskManagement from "./InsuranceTaskManagement";
 import TaxTaskManagement from "./TaxTaskManagement";
+import LeadTaskManagement from "./LeadTaskManagement";
+import LeadTaskViewDetails from "./LeadTaskViewDetails";
+import LoanTaskViewDetails from "./LoanTaskViewDetails";
 
 export const EmployeeRoutes = [
   {
@@ -86,14 +89,26 @@ export const EmployeeRoutes = [
   },
   {
     path: "/employee/loantaskmanagement",
-    element: <LoanTaskManagement/>,
+    element: <LoanTaskManagement />,
   },
   {
     path: "/employee/insurancetaskmanagement",
-    element: <InsuranceTaskManagement/>,
+    element: <InsuranceTaskManagement />,
   },
   {
     path: "/employee/taxtaskmanagement",
     element: <TaxTaskManagement />,
+  },
+  {
+    path: "/employee/leadtaskmanagement",
+    element: <LeadTaskManagement />,
+  },
+  {
+    path: "/employee/leadtaskdetails/:id",
+    element: <LeadTaskViewDetails />,
+  },
+  {
+    path: "/employee/loantaskdetails/:id",
+    element: <LoanTaskViewDetails />,
   },
 ];

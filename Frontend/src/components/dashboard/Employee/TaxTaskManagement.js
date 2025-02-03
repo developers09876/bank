@@ -21,7 +21,7 @@ function TaxTaskManagement() {
   const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
-    fetchLeads();
+    fetchTaxTasks();
   }, []);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function TaxTaskManagement() {
     setFilteredData(filtered);
   }, [searchText, data]);
 
-  const fetchLeads = async () => {
+  const fetchTaxTasks = async () => {
     setLoading(true);
     try {
       const response = await Api.get(`taxManagement/getbyEmployeeid/${userId}`);
@@ -132,7 +132,7 @@ function TaxTaskManagement() {
       <Container style={{ width: "90%" }}>
         <div style={{ width: "100%" }}>
           <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
-           Tax Task Management
+            Tax Task Management
           </h4>
           <br />
           <div style={{ justifyContent: "space-between" }}>
