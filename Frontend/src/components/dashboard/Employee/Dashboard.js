@@ -45,27 +45,26 @@ const Dashboard = () => {
     invoices: 45,
   };
 
-  // Data for the chart
+ 
+  // Chart options
   const data = {
-    labels: ["Pending", "Rejected", "Approval"],
+    labels: ["Pending", "Rejected", "Completed"],
     datasets: [
       {
         label: "Client Status",
-        data: [2, 1, 4, 3],
-        backgroundColor: ["#ff6384", "#ffcd56", "#4caf50"],
-        borderColor: ["#ff6384", "#ffcd56", "#4caf50"],
+        data: [2, 4, 3],
+        backgroundColor: ["#ffcd56", "lightcoral", "#4caf50"],
+        borderColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderWidth: 1,
       },
     ],
   };
-
-  // Chart options
   const options = {
     responsive: true,
     onClick: (event, elements) => {
       if (elements.length > 0) {
         const index = elements[0].index;
-        const status = ["pending", "rejected", "Approval"][index];
+        const status = ["pending", "rejected", "completed"][index];
         navigate(`/employee/client-statistics/${status}`);
       }
     },
