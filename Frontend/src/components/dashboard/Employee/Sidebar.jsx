@@ -139,7 +139,13 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "TaxEmployee",
       label: "Tax Task",
-      path: "/employee/taxtaskmanagement",
+      // path: "/employee/taxtaskmanagement",
+      path: "/employee/taxmanagement",
+    },
+    {
+      serviceName: "stockMarket",
+      label: "Stock Market",
+      path: "/employee/stockmarket",
     },
   ];
 

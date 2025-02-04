@@ -197,10 +197,9 @@ function LoanTaskViewDetails() {
                             alt="Photograph"
                             className="photo-image"
                             style={{
-                              width: "100px",
-                              height: "100px",
+                              width: "200px",
+                              height: "200px",
                               //   objectFit: "cover",
-                              borderRadius: "50%",
                               border: "6px solid #80808040",
                             }}
                           />
