@@ -65,8 +65,8 @@ const Dashboard = () => {
     onClick: (event, elements) => {
       if (elements.length > 0) {
         const index = elements[0].index;
-        const status = ["pending", "rejected", "completed"][index];
-        navigate(`/admin/client-statistics/${status}`);
+        const status = ["pending", "inprocess","rejected", "completed"][index];
+        navigate(`/employee/client-statistics/${status}`);
       }
     },
     plugins: {
