@@ -6,6 +6,7 @@ const LeadSchema = new mongoose.Schema({
   firstname: { type: String },
   lastname: { type: String },
   contactNumber: { type: String },
+  alternumber:{ type: String },
   email: { type: String },
   aadhaarNumber: { type: String },
   purpose: { type: String },
@@ -29,6 +30,7 @@ const LeadSchema = new mongoose.Schema({
   endDate: { type: Date},
   dob: { type: Date},          
   description:{ type: String },  
+  isApproved:{type: String},
   addremarks: [
     {
       date: { type: String },

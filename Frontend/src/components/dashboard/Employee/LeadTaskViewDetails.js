@@ -12,8 +12,10 @@ function LeadTaskDetails() {
   const navigate = useNavigate();
   //   const { record } = location.state || {};
   const [remarksFields, setRemarksFields] = useState([]);
+ 
   const { state } = useLocation();
   const record = state?.record;
+  const [isApproved, setIsApproved] = useState(record?.isApproved || false);
   console.log("recordsssss", record);
   const {
     register,
@@ -57,6 +59,19 @@ function LeadTaskDetails() {
     }, {});
     reset(defaultValues);
   };
+  const handleApprove = async () => {
+    try {
+      await axios.put(`http://localhost:5000/lead/updatelead/${record._id}`, {
+        ...record,
+        isApproved: true
+      });
+      setIsApproved(true);
+      toast.success("Lead approved successfully");
+    } catch (error) {
+      console.error("Error:", error.message);
+      toast.error("Error approving lead");
+    }
+  };
   const formatDate = (dateString) => {
     if (!dateString) return ""; // Handle null/undefined
     return new Date(dateString).toLocaleDateString("en-CA"); // "en-CA" gives "YYYY-MM-DD"
@@ -80,6 +95,7 @@ function LeadTaskDetails() {
       amount: record.amount,
       addremarks: formattedRemarks,
       panno: record.panno,
+      isApproved: true
     };
 
     try {
@@ -254,7 +270,16 @@ function LeadTaskDetails() {
           <p>No reminders available.</p>
         )} */}
         </div>
-
+        <div className="text-center my-3">
+        {!isApproved ? (
+          <Button variant="success" onClick={handleApprove}>
+            Approve
+          </Button>
+        ) : (
+          <h4 className="text-success">Approved</h4>
+        )}
+      </div>
+      {isApproved && (
         <div className="mt-3">
           <h3>Add Remarks</h3>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
@@ -327,6 +352,7 @@ function LeadTaskDetails() {
             </button>
           </form>
         </div>
+         )}
       </div>
     </div>
   );

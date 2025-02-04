@@ -31,6 +31,7 @@ function CreateLead() {
       userId: id,
       userType: userType,
       contactNumber: data.contactNumber,
+      alternumber:data.alternumber,
       email: data.email,
       aadhar: data.aadhar,
       purpose: data.purpose,
@@ -154,6 +155,28 @@ function CreateLead() {
                 )}
               </div>
             </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Alter Phone Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="alternumber"
+                  {...register("alternumber", {
+                    required: true,
+                    pattern: {
+                      // value: /^[0-9]{10}$/,
+                      message: "Invalid Phone Number",
+                    },
+                  })}
+                  placeholder="Phone Number"
+                />
+                {errors.alternumber && (
+                  <p className="text-danger">Enter Phone number</p>
+                )}
+              </div>
+            </Col>
+
 
             <Col xs={12} md={6} lg={4}>
               <div>
@@ -163,7 +186,6 @@ function CreateLead() {
                   type="number"
                   name="aadhar"
                   {...register("aadhar", {
-                    required: true,
                     pattern: {
                       // value: /^[0-9]{12}$/,
                       message: "Aadhaar must be 12 digits",
@@ -171,9 +193,7 @@ function CreateLead() {
                   })}
                   placeholder="Aadhaar Number"
                 />
-                {errors.aadhar && (
-                  <p className="text-danger">Enter Aadhaar Number</p>
-                )}
+                
               </div>
             </Col>
 
@@ -185,7 +205,6 @@ function CreateLead() {
                   type="text"
                   name="panno"
                   {...register("panno", {
-                    required: true,
                     pattern: {
                       // value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
                       message: "Invalid PAN Card Number",
@@ -196,9 +215,7 @@ function CreateLead() {
                     e.target.value = e.target.value.toUpperCase();
                   }}
                 />
-                {errors.panno && (
-                  <p className="text-danger">Enter PAN card number</p>
-                )}
+                
               </div>
             </Col>
             <Col xs={12} md={6} lg={4}>
