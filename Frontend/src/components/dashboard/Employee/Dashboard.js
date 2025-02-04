@@ -47,13 +47,13 @@ const Dashboard = () => {
 
   // Data for the chart
   const data = {
-    labels: ["Pending", "In Process", "Rejected", "Completed"],
+    labels: ["Pending", "Rejected", "Approval"],
     datasets: [
       {
         label: "Client Status",
         data: [2, 1, 4, 3],
-        backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
-        borderColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4caf50"],
+        backgroundColor: ["#ff6384", "#ffcd56", "#4caf50"],
+        borderColor: ["#ff6384", "#ffcd56", "#4caf50"],
         borderWidth: 1,
       },
     ],
@@ -65,7 +65,7 @@ const Dashboard = () => {
     onClick: (event, elements) => {
       if (elements.length > 0) {
         const index = elements[0].index;
-        const status = ["pending", "inprocess","rejected", "completed"][index];
+        const status = ["pending", "rejected", "Approval"][index];
         navigate(`/employee/client-statistics/${status}`);
       }
     },
