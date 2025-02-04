@@ -62,25 +62,19 @@ const Dashboard = () => {
   // Chart options
   const options = {
     responsive: true,
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        const index = elements[0].index;
+        const status = ["pending", "rejected", "completed"][index];
+        navigate(`/admin/client-statistics/${status}`);
+      }
+    },
     plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Client Status Chart",
-        font: {
-          size: 16,
-        },
-      },
+      legend: { position: "top" },
+      title: { display: true, text: "Client Status Chart", font: { size: 16 } },
     },
     scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          stepSize: 1,
-        },
-      },
+      y: { beginAtZero: true, ticks: { stepSize: 1 } },
     },
   };
 
