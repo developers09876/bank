@@ -29,6 +29,7 @@ const LeadSchema = new mongoose.Schema({
   endDate: { type: Date},
   dob: { type: Date},          
   description:{ type: String },  
+  isApproved:{type: String},
   addremarks: [
     {
       date: { type: String },
