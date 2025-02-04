@@ -701,7 +701,7 @@ const LoanDetails = ({ collapsed }) => {
                       <Controller
                         name="employeeType"
                         control={control}
-                        disabled
+                        // disabled
                         defaultValue="LoanEmployee" // Ensure default value is set
                         rules={{ required: true }}
                         render={({ field }) => (

@@ -25,6 +25,8 @@ import TaxTaskManagement from "./TaxTaskManagement";
 import LeadTaskManagement from "./LeadTaskManagement";
 import LeadTaskViewDetails from "./LeadTaskViewDetails";
 import LoanTaskViewDetails from "./LoanTaskViewDetails";
+import ClientStatisticsPage from "./ClientStatsChart/ClientStatisticsPage";
+import ClientStatisticsTable from "./ClientStatsChart/ClientStatisticsTable";
 
 export const EmployeeRoutes = [
   {
@@ -110,5 +112,13 @@ export const EmployeeRoutes = [
   {
     path: "/employee/loantaskdetails/:id",
     element: <LoanTaskViewDetails />,
+  },
+  {
+    path: "/employee/client-statistics/:status",
+    element: <ClientStatisticsPage />,
+  },
+  {
+    path: "/employee/client-statistics/:status/:category",
+    element: <ClientStatisticsTable />,
   },
 ];
