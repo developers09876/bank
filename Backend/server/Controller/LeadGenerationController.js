@@ -9,6 +9,7 @@ export async function createLead(req, res, next) {
       lastname: data.lastname,
       userId: data.userId,
       contactNumber: data.contactNumber,
+      alternumber:data.alternumber,
       email: data.email,
       aadhaarNumber: data.aadhaarNumber,
       purpose: data.purpose,
