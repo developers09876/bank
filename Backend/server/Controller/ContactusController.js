@@ -84,6 +84,7 @@ export async function createcontactus(req, res, next) {
         phonenumber: data.phonenumber,
         subject: data.subject,
         message: data.message,
+        serviceType:data.serviceType,
       };
   
       const createcontactus = await contactusDb.create(details);

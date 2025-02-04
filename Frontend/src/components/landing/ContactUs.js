@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Row, Col, Container } from "react-bootstrap";
 import Api from "../../Api";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const ContactUs = () => {
   const {
     register,
     handleSubmit,
     reset,
+    control,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm();
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("useridsss", userid);
   const [contactUsData, setContactUsData] = useState([]);
+  const serviceType = watch("serviceType");
 
   const handleFormSubmit = async (data) => {
     const contactusDetails = {
@@ -27,6 +34,7 @@ const ContactUs = () => {
       message: data.message,
       userId: userid,
       userType: userType,
+      serviceType:serviceType
     };
 
     try {
@@ -139,6 +147,31 @@ const ContactUs = () => {
                     />
                     {errors.subject && (
                       <p className="text-red-500">{errors.subject.message}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="vendorpage_labelCss">Service Type:</label>
+                    <Controller
+                      name="serviceType"
+                      control={control}
+                      // defaultValue="InsuranceEmployee"
+                      value={serviceType}
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          placeholder="Select Service Type"
+                        >
+                          <Option value="Loan">Loan </Option>
+                          <Option value="Tax">Tax </Option>
+                          <Option value="Insurance">Insurance</Option>
+                          <Option value="StockMarket">Stock Market</Option>
+                        </Select>
+                      )}
+                    />
+                    {errors.serviceType && (
+                      <p className="text-danger">Service is required</p>
                     )}
                   </div>
 
