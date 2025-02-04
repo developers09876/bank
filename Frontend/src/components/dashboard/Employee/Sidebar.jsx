@@ -74,7 +74,7 @@ import { Menu } from "antd";
 import Api from "../../../Api";
 import { toast } from "react-toastify";
 import SubMenu from "antd/lib/menu/SubMenu";
-// const { SubMenu } = Menu; 
+// const { SubMenu } = Menu;
 
 function Sidebar({ collapsed }) {
   const onClick = (e) => {
@@ -134,7 +134,7 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "InsuranceEmployee",
       label: "Insurance Task",
-      path: "/employee/insurancetaskmanagement",
+      path: "/employee/insurancemanagement",
     },
     {
       serviceName: "TaxEmployee",
@@ -163,30 +163,28 @@ function Sidebar({ collapsed }) {
 
         {/* Conditionally render Task Management submenu */}
         {hasTasks && (
-          <SubMenu
-            title="Task Management"
-            className="main-nav-style"
-          >
+          <SubMenu title="Task Management" className="main-nav-style">
             {taskMenuItems
               .filter((task) => service.includes(task.serviceName))
               .map((task) => (
                 // <Menu.Item key={task.path}>
-                  <NavLink to={task.path}>{task.label}</NavLink>
+                <NavLink to={task.path}>{task.label}</NavLink>
                 //  </Menu.Item>
               ))}
           </SubMenu>
         )}
 
         {/* Render dynamic menu items based on assigned services */}
-        {menuItems
+        {/* {menuItems
           .filter((item) => service.includes(item.serviceName))
           .map((item) => (
             <NavLink key={item.path} to={item.path} className="main-nav-style">
               {item.label}
             </NavLink>
-          ))}
-        <NavLink to="/employee/leadtaskmanagement">Lead Task Management</NavLink>
-
+          ))} */}
+        <NavLink to="/employee/leadtaskmanagement">
+          Lead Task Management
+        </NavLink>
       </Menu>
     </div>
   );
