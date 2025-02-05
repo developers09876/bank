@@ -14,10 +14,10 @@ export async function createTaxManagementDb(req, res, next) {
       panno: data.panno,
       gst: data.gst,
       taxType: data.taxType,
+      subCategory: data.subCategory,
       incomeTaxStatus: data.incomeTaxStatus,
       businessType: data.businessType,
       annualIncome: data.annualIncome,
-      taxPaid: data.taxPaid,
     };
     const taxManagement = await taxManagementDb.create(details);
     if (taxManagement) {
