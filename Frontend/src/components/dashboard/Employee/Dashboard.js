@@ -197,7 +197,7 @@ import { useNavigate } from "react-router-dom";
 import {
   FaUniversity,
   FaShieldAlt,
-  FaCalculator,
+  FaMoneyBill,
   FaUsers,
 } from "react-icons/fa";
 import { FaMoneyBillWave, FaChartLine } from "react-icons/fa";
@@ -229,11 +229,31 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const id = localStorage.getItem("id");
   const [employee, setEmployee] = useState(null);
+  const [loanStats, setLoanStats] = useState({
+    total: 0,
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  });
+  const [insuranceStats, setInsuranceStats] = useState({
+    total: 0,
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  });
+  const [taxStats, setTaxStats] = useState({
+    total: 0,
+    pending: 0,
+    approved: 0,
+    rejected: 0,
+  });
   const service = employee?.services || [];
 
   useEffect(() => {
     getEmployee();
-  }, []);
+    fetchData();
+    // getLoanApplicationById();
+  }, [id]);
 
   const getEmployee = async () => {
     try {
@@ -244,6 +264,40 @@ const Dashboard = () => {
       toast.error("Failed to fetch employee data.");
     }
   };
+
+  const fetchData = async () => {
+    try {
+      const [loanRes, insuranceRes, taxRes] = await Promise.all([
+        Api.get(`loanform/getbyid/${id}`),
+        Api.get(`insuranceManagement/getByIdInsuranceManagement/${id}`),
+        Api.get(`taxManagement/getByIdTaxManagement/${id}`),
+      ]);
+
+      const calculateStats = (data) => ({
+        total: data.length,
+        pending: data.filter((item) => item.status === "Pending").length,
+        approved: data.filter((item) => item.status === "1").length,
+        rejected: data.filter((item) => item.status === "2").length,
+      });
+
+      setLoanStats(calculateStats(loanRes.data));
+      setInsuranceStats(calculateStats(insuranceRes.data));
+      setTaxStats(calculateStats(taxRes.data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error("Failed to fetch forms data.");
+    }
+  };
+
+  // const getLoanApplicationById = async () => {
+  //   try {
+  //     const response = await Api.get(`loanform/getbyid/${id}`);
+  //     setloanCount(response.data);
+  //     console.log(" loanresponse.daata", response.data);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
 
   const stats = {
     loans: { active: 320, pending: 50, approved: 150, rejected: 30 },
@@ -281,7 +335,7 @@ const Dashboard = () => {
             <Card.Body>
               {icon}
               <Card.Title>{title}</Card.Title>
-              <Card.Text>{stats.active}</Card.Text>
+              <Card.Text>{stats.total}</Card.Text>
             </Card.Body>
           </Card>
           <Card className="flip-card-back">
@@ -322,7 +376,7 @@ const Dashboard = () => {
                     className="admin-stat-icon"
                     style={{ color: "#007bff", justifySelf: "center" }}
                   />,
-                  stats.loans
+                  loanStats
                 )}
               {service.includes("InsuranceEmployee") &&
                 renderCard(
@@ -332,17 +386,17 @@ const Dashboard = () => {
                     className="admin-stat-icon"
                     style={{ color: "#28a745", justifySelf: "center" }}
                   />,
-                  stats.loans
+                  insuranceStats
                 )}
               {service.includes("TaxEmployee") &&
                 renderCard(
                   "Total Taxes",
-                  <FaCalculator
+                  <FaMoneyBill
                     size={30}
                     className="admin-stat-icon"
                     style={{ color: "#ffc107", justifySelf: "center" }}
                   />,
-                  stats.loans
+                  taxStats
                 )}
             </Row>
           </Col>
