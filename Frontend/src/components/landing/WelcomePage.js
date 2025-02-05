@@ -23,7 +23,7 @@ const WelcomePage = () => {
                 <div className="referral-left animate-slide-in-left">
                   <h1 className="refer-heading">Welcome to Our <br/> Villu genius Family</h1>
                 </div>
-              
+                <h1>ggh</h1>
               </Col>
               <Col
                 className="refer-secondcol px-3 py-2"
