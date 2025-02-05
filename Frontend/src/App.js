@@ -72,10 +72,12 @@ import { TaxEmployeesRoutes } from "./components/dashboard/Employees/TaxEmployee
 import PersonalPlan from "./components/landing/PersonalPlan";
 import Refer from "./components/landing/Refer";
 import Refercode from "./components/landing/Refercode";
+import WelcomePage from "./components/landing/WelcomePage";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
 import ReferalLogin from "./components/auths/ReferalLogin";
 import HomeInsuranceForm from "./components/dashboard/user/HomeInsuranceForm";
 // import EmployeesIndex from "./components/dashboard/Employees";
+
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
@@ -117,6 +119,7 @@ function App() {
             path="/refercode/:referralCode/:categoryTitle/:subCategory"
             element={<Refercode />}
           />
+           <Route path="/welcome" element={<WelcomePage/>} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
           {/* <Route path="/insurance" element={<InsuranceFormProfileTab />} /> */}

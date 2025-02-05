@@ -4,10 +4,11 @@ import { Table } from "antd";
 import { useParams } from "react-router-dom";
 
 const ClientStatisticsTable = () => {
-  const { status, category } = useParams();
+  const { status, category} = useParams();
   const [loans, setLoans] = useState([]);
   const [insurances, setInsurances] = useState([]);
   const [taxes, setTaxes] = useState([]);
+  const userId = localStorage.getItem("id");
 
   console.log("URL Params - Status:", status);
   console.log("URL Params - Category:", category);
@@ -18,7 +19,7 @@ const ClientStatisticsTable = () => {
       try {
         if (category === "loan") {
           const response = await axios.get(
-            "http://localhost:5000/loanform/getall"
+           ` http://localhost:5000/loanform/getbyEmployeeid/${userId}`
           );
           let filteredLoans = response.data;
           console.log("API Response (All Loans):", response.data);
@@ -49,9 +50,9 @@ const ClientStatisticsTable = () => {
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
-        if (category === "insurance") {
+        if (category === "insurance" ) {
           const response = await axios.get(
-            "http://localhost:5000/insuranceManagement/getAllInsuranceManagement"
+            `http://localhost:5000/insuranceManagement/getbyEmployeeid/${userId}`
           );
           setInsurances(response.data);
           console.log("API Response (Insurances):", response.data);
@@ -69,7 +70,7 @@ const ClientStatisticsTable = () => {
       try {
         if (category === "tax") {
           const response = await axios.get(
-            "http://localhost:5000/taxManagement/getAllTaxManagement"
+           `http://localhost:5000/taxManagement/getbyEmployeeid/${userId}`
           );
           setTaxes(response.data);
           console.log("API Response (Taxes):", response.data);
