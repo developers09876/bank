@@ -105,7 +105,7 @@ const AddAdmin = ({ setAuth }) => {
             >
               <Row>
                 {/* Employee No */}
-                <Col lg={6} md={6}>
+                {/* <Col lg={6} md={6}>
                   <label htmlFor="empno">Employee No:</label>
                   <input
                     type="text"
@@ -118,7 +118,7 @@ const AddAdmin = ({ setAuth }) => {
                   {errors.empno && (
                     <p className="text-red-500">{errors.empno.message}</p>
                   )}
-                </Col>
+                </Col> */}
 
                 {/* Services */}
                 <Col lg={6} md={6}>
@@ -225,10 +225,11 @@ const AddAdmin = ({ setAuth }) => {
                     placeholder="contactNumber"
                   />
                   {errors.contactNumber && (
-                    <p className="text-red-500">{errors.contactNumber.message}</p>
+                    <p className="text-red-500">
+                      {errors.contactNumber.message}
+                    </p>
                   )}
                 </Col>
-
 
                 <Col lg={6} md={6}>
                   <label htmlFor="email">Email Address:</label>

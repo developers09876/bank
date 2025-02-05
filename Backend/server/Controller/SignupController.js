@@ -2,140 +2,37 @@ import User from "../model/signupModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Create a new user
-// export const registerUser = async (req, res) => {
-//   const {
-//     userid,
-//     userType,
-//     empno,
-//     firstname,
-//     lastname,
-//     email,
-//     // password,
-//     // confirmPassword,
-//     contactNumber,
-//     dateOfJoining,
-//     manager,
-//     branch,
-//     employeeCategory,
-//     subCategory,
-//     empCreatedBy,
-//   } = req.body;
-
-//   // if (password !== confirmPassword) {
-//   //   return res.status(400).json({ error: "Passwords do not match" });
-//   // }
-
-//   try {
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(400).json({ error: "Email is already in use" });
-//     }
-
-//     // const salt = await bcrypt.genSalt(10);
-//     // const hashedPassword = await bcrypt.hash(password, salt);
-
-//     const newUser = new User({
-//       userid,
-//       userType,
-//       empno,
-//       firstname,
-//       lastname,
-//       email,
-//       // password: hashedPassword,
-//       contactNumber,
-//       manager,
-//       dateOfJoining,
-//       branch,
-//       employeeCategory,
-//       subCategory,
-//       empCreatedBy
-//     });
-
-//     await newUser.save();
-
-//     res.status(201).json({ message: "User registered successfully" , newUser});
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 const generateReferralCode = async () => {
   let unique = false;
   let referralCode;
 
   while (!unique) {
     const randomNum = Math.floor(10000 + Math.random() * 90000);
-    referralCode = `VILLU${randomNum}`;
+    referralCode = `VGCR${randomNum}`;
 
     const existingUser = await User.findOne({ referralCode });
     if (!existingUser) unique = true;
   }
   return referralCode;
 };
+const generateEmployeeCode = async () => {
+  let unique = false;
+  let empno;
 
-// export const registerUser = async (req, res) => {
-//   const {
-//     userid,
-//     userType,
-//     empno,
-//     firstname,
-//     lastname,
-//     email,
-//     contactNumber,
-//     dateOfJoining,
-//     services,
-//     category,
-//     manager,
-//     branch,
-//     employeeCategory,
-//     subCategory,
-//     empCreatedBy,
-//   } = req.body;
+  while (!unique) {
+    const randomNum = Math.floor(10000 + Math.random() * 90000);
+    empno = `VGEM${randomNum}`;
 
-//   try {
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(400).json({ error: "Email is already in use" });
-//     }
+    const existingUser = await User.findOne({ empno });
+    if (!existingUser) unique = true;
+  }
+  return empno;
+};
 
-//     let referralCode = null;
-//     if (userType === "user") {
-//       referralCode = await generateReferralCode();
-//     }
-
-//     const newUser = new User({
-//       userid,
-//       userType,
-//       empno,
-//       firstname,
-//       lastname,
-//       email,
-//       contactNumber,
-//       manager,
-//       dateOfJoining,
-//       services,
-//       category,
-//       branch,
-//       employeeCategory,
-//       subCategory,
-//       empCreatedBy,
-//       referralCode,
-//     });
-
-//     await newUser.save();
-
-//     res.status(201).json({ message: "User registered successfully", newUser });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// };
 export const registerUser = async (req, res) => {
   const {
     userid,
     userType,
-    empno,
     firstname,
     lastname,
     email,
@@ -165,6 +62,10 @@ export const registerUser = async (req, res) => {
     let referralCode = "";
     if (userType === "user") {
       referralCode = await generateReferralCode();
+    }
+    let empno = "";
+    if (userType === "employee") {
+      empno = await generateEmployeeCode();
     }
 
     // Create a new user

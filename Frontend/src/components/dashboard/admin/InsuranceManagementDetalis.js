@@ -295,7 +295,7 @@ function InsuranceManagementDetails() {
                 <Controller
                   name="employeeType"
                   control={control}
-                  disabled
+                  // disabled
                   defaultValue="InsuranceEmployee" // Ensure default value is set
                   rules={{ required: true }}
                   render={({ field }) => (
