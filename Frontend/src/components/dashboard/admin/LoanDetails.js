@@ -53,7 +53,7 @@ const LoanDetails = ({ collapsed }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      employeeType: "",
+      // employeeType: "",
       employeeId: "",
       loanType: "",
       startDate: "",
@@ -106,14 +106,14 @@ const LoanDetails = ({ collapsed }) => {
       const data = res.data;
       setAssignValue(data);
       reset({
-        employeeType: data?.employeeType || "",
+        employeeType: data?.employeeType || "LoanEmployee",
         employeeId: data?.employeeId || "",
         loanType: data?.loanType || "",
         startDate: data?.startDate ? data.startDate.split("T")[0] : "",
         endDate: data?.endDate ? data.endDate.split("T")[0] : "",
         description: data?.description || "",
       });
-      setSelectedEmployeeType(data?.employeeType || "");
+      setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
     });
   };
   const updateStatus = async (id, action, reason = "") => {
@@ -713,7 +713,11 @@ const LoanDetails = ({ collapsed }) => {
                               setSelectedEmployeeType(value);
                             }}
                           >
+                            {/* <Option value="">Select Employee Type</Option> */}
                             <Option value="LoanEmployee">Loan Employee</Option>
+                            {/* <Option value="InsuranceEmployee">
+                              Insurance Employee
+                            </Option> */}
                           </Select>
                         )}
                       />
