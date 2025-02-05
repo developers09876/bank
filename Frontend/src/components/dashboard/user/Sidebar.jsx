@@ -97,6 +97,10 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           My Profile
         </NavLink>
+        <NavLink to="/user/rewards" ClassName="main-nav-style">
+          {/* <MdAreaChart className="Nav-Icon" /> */}
+          My Income
+        </NavLink>
         <NavLink to="/user/loanstatus" ClassName="main-nav-style">
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Loan
@@ -120,10 +124,7 @@ function Sidebar({ collapsed }) {
           {/* <MdAreaChart className="Nav-Icon" /> */}
           Feedback
         </NavLink>
-        <NavLink to="/user/rewards" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
-          Rewards
-        </NavLink>
+        
       </Menu>
     </div>
   );
