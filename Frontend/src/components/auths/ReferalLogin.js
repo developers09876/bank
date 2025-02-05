@@ -134,16 +134,19 @@ const ReferalLogin = () => {
         autoClose: 3000,
       });
 
+      // setTimeout(() => {
+      //   const referType = localStorage.getItem("referType"); // Ensure correct variable name
+
+      //   const routes = {
+      //     Loans: "/loanform",
+      //     Insurance: "/insuranceForms",
+      //   };
+
+      //   navigate(routes[referType] || "/");
+      // }, 3000);
+
       setTimeout(() => {
-        const referType = localStorage.getItem("referType"); // Ensure correct variable name
-        console.log("Navigating with referType:", referType);
-
-        const routes = {
-          Loans: "/loanform",
-          Insurance: "/insuranceForms",
-        };
-
-        navigate(routes[referType] || "/");
+        navigate("/welcome");
       }, 3000);
     } catch (error) {
       console.error("Login error:", error.response?.data);

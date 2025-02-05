@@ -703,9 +703,7 @@ import { Grid, Typography, Button, Box } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios"; // Import Axios
-import Header from "../Layout/Header";
-import { Col, Row } from "react-bootstrap";
+import Header from "../Layout/ReferalHeader.js";
 
 const ReferCode = ({ setAuth }) => {
   const { referralCode, subCategory, categoryTitle } = useParams();
