@@ -316,7 +316,7 @@ function TaskManagementDetails() {
                 <Controller
                   name="employeeType"
                   control={control}
-                  disabled
+                  // disabled
                   defaultValue="TaxEmployee" // Ensure default value is set
                   rules={{ required: true }}
                   render={({ field }) => (

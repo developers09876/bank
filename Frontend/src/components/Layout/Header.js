@@ -95,6 +95,13 @@ const Header = () => {
     localStorage.removeItem("id");
     localStorage.removeItem("userType");
     localStorage.removeItem("employeeCategory");
+    localStorage.removeItem("loanType");
+    localStorage.removeItem("referCode");
+    localStorage.removeItem("referType");
+    localStorage.removeItem("loanApplicationId");
+    localStorage.removeItem("email");
+    localStorage.removeItem("referralCode");
+
     navigate("/login");
   };
 

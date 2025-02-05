@@ -152,25 +152,25 @@ const Rewards = () => {
           key: "1-1",
           title: "Business Loan",
           rewards: 15,
-          percentage: "Refer 2 members and Earn 30 rs rewards",
+          percentage: "Refer 2 members and Earn 30 rs Income",
         },
         {
           key: "1-2",
           title: "Vehicle Loan",
           rewards: 10,
-          percentage: "Refer 3 members and Earn 30 rs rewards",
+          percentage: "Refer 3 members and Earn 30 rs Income",
         },
         {
           key: "1-3",
           title: "Home Loan",
           rewards: 5,
-          percentage: "Refer 4 members and Earn 20 rs rewards",
+          percentage: "Refer 4 members and Earn 20 rs Income",
         },
         {
           key: "1-4",
           title: "Personal Loan",
           rewards: 20,
-          percentage: "Refer 2 members and Earn 40 rs rewards",
+          percentage: "Refer 2 members and Earn 40 rs Income",
         },
       ],
     },
@@ -298,7 +298,7 @@ const Rewards = () => {
                           {subItem.title}
                         </Title>
                         <Text className="sub-card-rewards">
-                          Rewards: ₹{subItem.rewards}
+                          Income: ₹{subItem.rewards}
                         </Text>
                         <Text className="sub-card-rewards">
                           {subItem.percentage}
