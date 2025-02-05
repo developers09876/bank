@@ -32,7 +32,7 @@ function InsuranceManagementDetails() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      employeeType: "",
+      // employeeType: "",
       employeeId: "",
       loanType: "",
       startDate: "",
@@ -62,7 +62,7 @@ function InsuranceManagementDetails() {
         const data = res.data.data[0];
         setAssignValue(data);
         reset({
-          employeeType: data?.employeeType || "",
+          employeeType: data?.employeeType || "InsuranceEmployee",
           employeeId: data?.employeeId || "",
           loanType: data?.loanType || "",
           startDate: data?.startDate ? data.startDate.split("T")[0] : "",
@@ -70,7 +70,7 @@ function InsuranceManagementDetails() {
           description: data?.description || "",
           employeeCategory: data?.employeeCategory || "",
         });
-        setSelectedEmployeeType(data?.employeeType || "");
+        setSelectedEmployeeType(data?.employeeType || "InsuranceEmployee");
       }
     );
   };
@@ -265,7 +265,7 @@ function InsuranceManagementDetails() {
                   {record.employeeType}
                 </Descriptions.Item>
                 <Descriptions.Item label="Employee Category">
-                  {employeeCategory}
+                  {record.employeeCategory}
                 </Descriptions.Item>
                 <Descriptions.Item label="Description">
                   {record.description}
@@ -295,18 +295,22 @@ function InsuranceManagementDetails() {
                 <Controller
                   name="employeeType"
                   control={control}
-                  disabled
+                  // disabled
                   defaultValue="InsuranceEmployee" // Ensure default value is set
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
                       {...field}
+                      disabled
                       className="inputcolumn_drp"
+                      // value={field.value || "InsuranceEmployee"}
                       onChange={(value) => {
                         field.onChange(value);
                         setSelectedEmployeeType(value);
                       }}
                     >
+                      <Option value="">Select Employee Type</Option>
+                      <Option value="LoanEmployee">Loan Employee</Option>
                       <Option value="InsuranceEmployee">
                         Insurance Employee
                       </Option>

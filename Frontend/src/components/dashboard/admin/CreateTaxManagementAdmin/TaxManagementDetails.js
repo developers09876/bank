@@ -58,7 +58,7 @@ function TaskManagementDetails() {
       try {
         const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         const filteredEmployees = response.data.filter((employee) =>
-          employee.services.includes("InsuranceEmployee")
+          employee.services.includes("TaxEmployee")
         );
         setEmployeeList(filteredEmployees);
         console.log("Filtered Employees:", filteredEmployees);
@@ -102,7 +102,7 @@ function TaskManagementDetails() {
       const data = res.data.data[0];
       setAssignValue(data);
       reset({
-        employeeType: data?.employeeType || "",
+        employeeType: data?.employeeType || "TaxEmployee",
         employeeId: data?.employeeId || "",
         loanType: data?.loanType || "",
         startDate: data?.startDate ? data.startDate.split("T")[0] : "",
@@ -110,7 +110,7 @@ function TaskManagementDetails() {
         description: data?.description || "",
         employeeCategory: data?.employeeCategory || "",
       });
-      setSelectedEmployeeType(data?.employeeType || "");
+      setSelectedEmployeeType(data?.employeeType || "TaxEmployee");
     });
   };
 
@@ -287,7 +287,7 @@ function TaskManagementDetails() {
                   {record.employeeType}
                 </Descriptions.Item>
                 <Descriptions.Item label="Employee Category">
-                  {employeeCategory}
+                  {record.employeeCategory}
                 </Descriptions.Item>
                 <Descriptions.Item label="Description">
                   {record.description}
@@ -322,12 +322,18 @@ function TaskManagementDetails() {
                   render={({ field }) => (
                     <Select
                       {...field}
+                      disabled
                       className="inputcolumn_drp"
                       onChange={(value) => {
                         field.onChange(value);
                         setSelectedEmployeeType(value);
                       }}
                     >
+                      <Option value="">Select Employee Type</Option>
+                      <Option value="LoanEmployee">Loan Employee</Option>
+                      <Option value="InsuranceEmployee">
+                        Insurance Employee
+                      </Option>
                       <Option value="TaxEmployee">Tax Employee</Option>
                     </Select>
                   )}
