@@ -139,8 +139,7 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "TaxEmployee",
       label: "Tax Task",
-      // path: "/employee/taxtaskmanagement",
-      path: "/employee/taxmanagement",
+      path: "/employee/taxtaskmanagement",
     },
     {
       serviceName: "stockMarket",
@@ -179,7 +178,7 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
-         <NavLink to="/employee/leadtaskmanagement">
+        <NavLink to="/employee/leadtaskmanagement">
           Lead Task Management
         </NavLink>
 
@@ -191,7 +190,6 @@ function Sidebar({ collapsed }) {
               {item.label}
             </NavLink>
           ))}
-       
       </Menu>
     </div>
   );
