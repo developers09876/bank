@@ -177,6 +177,14 @@ const loanApplicationSchema = new mongoose.Schema(
     startDate: { type: Date },
     endDate: { type: Date },
     description: { type: String },
+    addremarks: [
+      {
+        date: { type: String },
+        remarks: { type: String },
+        status: { type: String },
+        notiFicatioinStauts: { type: String },
+      },
+    ],
 
     children: [
       {

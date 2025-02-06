@@ -13,6 +13,7 @@ import {
   getbyReferCode,
   calculateReferralEarnings,
   getCurrentMonthIncome,
+  updateLoanRemarks,
 } from "../Controller/LoanApplicationController.js";
 
 const router = Router();
@@ -30,5 +31,8 @@ router.get("/currentMonthIncome/:referCode", getCurrentMonthIncome);
 router.put("/updateloanapplicationsStaus/:id", updateLoanApplicationStatus);
 router.put("/updateloan/:id", updateLoan);
 router.delete("/deleteloanapplications/:id", deleteLoanApplication);
+
+router.put("/updateloanremarks/:id", updateLoanRemarks);
+
 
 export default router;
