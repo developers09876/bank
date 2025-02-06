@@ -134,7 +134,7 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "InsuranceEmployee",
       label: "Insurance Task",
-      path: "/employee/insurancemanagement",
+      path: "/employee/insurancetaskmanagement",
     },
     {
       serviceName: "TaxEmployee",
@@ -179,18 +179,19 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
+         <NavLink to="/employee/leadtaskmanagement">
+          Lead Task Management
+        </NavLink>
 
         {/* Render dynamic menu items based on assigned services */}
-        {/* {menuItems
+        {menuItems
           .filter((item) => service.includes(item.serviceName))
           .map((item) => (
             <NavLink key={item.path} to={item.path} className="main-nav-style">
               {item.label}
             </NavLink>
-          ))} */}
-        <NavLink to="/employee/leadtaskmanagement">
-          Lead Task Management
-        </NavLink>
+          ))}
+       
       </Menu>
     </div>
   );
