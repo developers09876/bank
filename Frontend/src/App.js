@@ -76,6 +76,7 @@ import WelcomePage from "./components/landing/WelcomePage";
 import TaxFormTab from "./components/landing/TaxFormTab/TaxFormTab";
 import ReferalLogin from "./components/auths/ReferalLogin";
 import HomeInsuranceForm from "./components/dashboard/user/HomeInsuranceForm";
+import TaxsForms from "./components/dashboard/user/TaxsForms";
 // import EmployeesIndex from "./components/dashboard/Employees";
 
 const ProtectedRoute = ({ Component, allowedUserTypes }) => {
@@ -119,7 +120,7 @@ function App() {
             path="/refercode/:referralCode/:categoryTitle/:subCategory"
             element={<Refercode />}
           />
-           <Route path="/welcome" element={<WelcomePage/>} />
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="*" element={<ErrorMessage />} />
           <Route path="/insuranceform" element={<Insurance />} />
           {/* <Route path="/insurance" element={<InsuranceFormProfileTab />} /> */}
@@ -146,6 +147,10 @@ function App() {
           <Route
             path="/insuranceForms"
             element={<ProtectedRoutes Component={HomeInsuranceForm} />}
+          />
+          <Route
+            path="/TaxForms"
+            element={<ProtectedRoutes Component={TaxsForms} />}
           />
           <Route
             path="/insurancepolicy"
