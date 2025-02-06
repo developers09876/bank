@@ -73,8 +73,8 @@ function InsuranceTaskManagement() {
   );
 
   const handleViewDetails = (record) => {
-    setSelectedRecord(record);
-    setIsModalVisible(true);
+    console.log("record", record);
+    navigate(`/employee/insurancedetails/${record._id}`, { state: { record } });
   };
 
   const handleModalOk = () => {
@@ -176,7 +176,7 @@ function InsuranceTaskManagement() {
           />
         </div>
       </Container>
-      <Modal
+      {/* <Modal
         title="Task Management Details"
         visible={isModalVisible}
         onOk={handleModalOk}
@@ -359,7 +359,7 @@ function InsuranceTaskManagement() {
             </Row>
           </div>
         )}
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

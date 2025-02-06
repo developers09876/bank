@@ -71,19 +71,19 @@ function TaxTaskManagement() {
   );
 
   const handleViewDetails = (record) => {
-    setSelectedRecord(record);
-    setIsModalVisible(true);
+    console.log("record", record);
+    navigate(`/employee/taxdetails/${record._id}`, { state: { record } });
   };
 
-  const handleModalOk = () => {
-    setIsModalVisible(false);
-    setSelectedRecord(null);
-  };
+  // const handleModalOk = () => {
+  //   setIsModalVisible(false);
+  //   setSelectedRecord(null);
+  // };
 
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
-    setSelectedRecord(null);
-  };
+  // const handleModalCancel = () => {
+  //   setIsModalVisible(false);
+  //   setSelectedRecord(null);
+  // };
 
   const columns = [
     {
@@ -174,7 +174,7 @@ function TaxTaskManagement() {
           />
         </div>
       </Container>
-      <Modal
+      {/* <Modal
         title="Task Management Details"
         visible={isModalVisible}
         onOk={handleModalOk}
@@ -357,7 +357,7 @@ function TaxTaskManagement() {
             </Row>
           </div>
         )}
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
