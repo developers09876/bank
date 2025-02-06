@@ -24,6 +24,13 @@ const insuranceManagementSchema = new mongoose.Schema(
     endDate: { type: String },
     employeeId: { type: String },
     employeeType: { type: String },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
+    },
+    rejectionReason: { type: String },
+    pendingReason: { type: String },
   },
   {
     timestamps: true,

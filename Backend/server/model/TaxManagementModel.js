@@ -23,6 +23,13 @@ const taxManagementSchema = new mongoose.Schema({
   endDate: { type: String },
   employeeId: { type: String },
   employeeType: { type: String },
+  status: {
+    type: String,
+    enum: ["Pending", "Approved", "Rejected"],
+    default: "Pending",
+  },
+  rejectionReason: { type: String },
+  pendingReason: { type: String },
 });
 const taxManagementDb = mongoose.model("taxManagementdb", taxManagementSchema);
 
