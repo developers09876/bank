@@ -3,7 +3,6 @@ import InsuranceReview from "./InsuranceReview";
 import TaxReview from "./TaxReview";
 import EmployeeDashboard from "./Dashboard";
 import LeadGeneration from "./LeadGeneration";
-
 import TabsProfile from "./ProfileTabs";
 import Dashboard from "./Dashboard";
 import LeadManagement from "./LeadManagement";
