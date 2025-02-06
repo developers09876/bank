@@ -213,7 +213,7 @@ const AddAdmin = ({ setAuth }) => {
                     <p className="text-red-500">{errors.lastname.message}</p>
                   )}
                 </Col>
-                <Col lg={6} md={6}>
+                {/* <Col lg={6} md={6}>
                   <label htmlFor="contactNumber">Contact Number:</label>
                   <input
                     type="number"
@@ -229,14 +229,68 @@ const AddAdmin = ({ setAuth }) => {
                       {errors.contactNumber.message}
                     </p>
                   )}
+                </Col> */}
+                <Col lg={6} md={6}>
+                  <label htmlFor="contactNumber">Contact Number:</label>
+                  <input
+                    type="text"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    name="contactNumber"
+                    {...register("contactNumber", {
+                      required: "Contact number is required",
+                      minLength: {
+                        value: 10,
+                        message: "Contact number must be exactly 10 digits",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "Contact number must be exactly 10 digits",
+                      },
+                      pattern: {
+                        value: /^[0-9]{10}$/, 
+                        message:
+                          "Only numbers are allowed (10 digits required)",
+                      },
+                    })}
+                    placeholder="Enter your 10-digit contact number"
+                    maxLength={10}
+                    onKeyPress={(e) => {
+                      if (!/[0-9]/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                  {errors.contactNumber && (
+                    <p className="text-red-500">
+                      {errors.contactNumber.message}
+                    </p>
+                  )}
                 </Col>
 
-                <Col lg={6} md={6}>
+                {/* <Col lg={6} md={6}>
                   <label htmlFor="email">Email Address:</label>
                   <input
                     type="email"
                     className="block border w-full p-3 rounded mb-4"
                     {...register("email", { required: "Email is required" })}
+                    placeholder="Email"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email.message}</p>
+                  )}
+                </Col> */}
+                <Col lg={6} md={6}>
+                  <label htmlFor="email">Email Address:</label>
+                  <input
+                    type="email"
+                    className="block border w-full p-3 rounded mb-4"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: {
+                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        message: "Enter a valid email address (e.g., name@example.com)",
+                      },
+                    })}
                     placeholder="Email"
                   />
                   {errors.email && (

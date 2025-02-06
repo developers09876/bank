@@ -165,14 +165,35 @@ const EmployeeDetailsPage = ({ collapsed }) => {
                         {record.employeeCategory}
                       </Descriptions.Item>
                     )}
+                     {/* <Descriptions.Item label="Employee Category">
+                      {record.employeeCategory}
+                    </Descriptions.Item> */}
                     <Descriptions.Item label=" Employee Number">
                       {record.empno}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Date of Joining">
+                      {record.dateOfJoining}
                     </Descriptions.Item>
                     <Descriptions.Item label="Manager">
                       {record.manager}
                     </Descriptions.Item>
                     <Descriptions.Item label="Branch">
                       {record.branch}
+                    </Descriptions.Item>
+                    <Descriptions.Item label=" Refer Type">
+                      {record.referType}
+                    </Descriptions.Item>
+                    <Descriptions.Item label=" Referral Code">
+                      {record.referralCode}
+                    </Descriptions.Item>
+                    <Descriptions.Item label=" Loan Type">
+                      {record.loanType}
+                    </Descriptions.Item>
+                    <Descriptions.Item label=" Insurance Type">
+                      {record.insuranceType}
+                    </Descriptions.Item>
+                    <Descriptions.Item label=" CIBIL Type">
+                      {record.cibilType}
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
