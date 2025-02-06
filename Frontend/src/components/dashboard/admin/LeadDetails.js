@@ -290,6 +290,15 @@ function LeadDetails() {
                   <Descriptions.Item label="Purpose Of Loan">
                     {record.purpose}
                   </Descriptions.Item>
+                  <Descriptions.Item label="User Type">
+                    {record.userType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Previously Applied">
+                    {record.previouslyapplied}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="How Immediate">
+                    {record.howimidiate}
+                  </Descriptions.Item>
                 </Descriptions>
               </Card>
             </Col>
@@ -311,6 +320,9 @@ function LeadDetails() {
                         </Descriptions.Item>
                         <Descriptions.Item label="Message">
                           {remark.remarks}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Status">
+                          {remark.status}
                         </Descriptions.Item>
                       </React.Fragment>
                     ))

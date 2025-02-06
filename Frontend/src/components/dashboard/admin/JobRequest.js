@@ -102,7 +102,7 @@ const JobRequest = ({ collapsed }) => {
     },
     {
       title: "Applied For",
-      dataIndex: "jobtitle",
+      dataIndex: "jobTitle",
       key: "jobtitle",
     },
     {
@@ -214,6 +214,20 @@ const JobRequest = ({ collapsed }) => {
               </Col>
               <Col span={10}>
                 <p style={{ fontSize: "15px" }}>{selectedRecord.role}</p>
+              </Col>
+            </Row>
+
+            <Row >
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>
+                  <strong>Job Tittle</strong>
+                </p>
+              </Col>
+              <Col span={2}>
+                <p style={{ fontSize: "15px" }}>:</p>
+              </Col>
+              <Col span={10}>
+                <p style={{ fontSize: "15px" }}>{selectedRecord.jobTitle}</p>
               </Col>
             </Row>
           

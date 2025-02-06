@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema({
   pinCode: { type: String },
   referType: { type: String },
   loanType: { type: String },
+  insuranceType: { type: String },
+  cibilType: { type: String },
   referCode: { type: String },
   city: { type: String },
   state: { type: String },
