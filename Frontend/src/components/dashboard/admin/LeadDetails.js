@@ -17,6 +17,8 @@ function LeadDetails() {
   console.log("selectedEmployeeType", selectedEmployeeType);
   const [categories, setCategories] = useState([]);
   const [assignValue, setAssignValue] = useState([]);
+  const [isApproved, setIsApproved] = useState(false);
+  console.log('isApproved', isApproved)
   console.log("assignValue", assignValue);
   const { Option } = Select;
   const {
@@ -158,6 +160,7 @@ function LeadDetails() {
     await Api.get(`/lead/getByLeadId/${record?._id}`).then((res) => {
       const data = res.data.data[0];
       setAssignValue(data);
+      setIsApproved(data?.isApproved || false);
       reset({
         employeeType: data?.employeeType || "",
         employeeId: data?.employeeId || "",
@@ -329,6 +332,7 @@ function LeadDetails() {
           <p>No reminders available.</p>
         )} */}
         </div>
+        {isApproved && <center><h4 className="text-success">Approved</h4></center>}
         <div className="py-2 px-2">
           <h5>
             <b>Assign To</b>

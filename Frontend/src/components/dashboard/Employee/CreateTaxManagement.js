@@ -17,7 +17,7 @@ function CreateTaxmangement() {
     formState: { errors },
   } = useForm();
 
-  const category = watch("employeeCategory");
+  const category = watch("taxType");
 
   const id = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
@@ -34,10 +34,10 @@ function CreateTaxmangement() {
       panno: data.panno,
       gst: data.gst,
       taxType: data.taxType,
+      subCategory: data.subCategory,
       incomeTaxStatus: data.incomeTaxStatus,
       businessType: data.businessType,
       annualIncome: data.annualIncome,
-      taxPaid: data.taxPaid,
     };
     console.log("details", details);
     try {
@@ -206,7 +206,7 @@ function CreateTaxmangement() {
               <div>
                 <label className="vendorpage_labelCss">Category:</label>
                 <Controller
-                  name="taxtype"
+                  name="taxType"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -217,7 +217,7 @@ function CreateTaxmangement() {
                       placeholder="Select taxtype"
                       onChange={(value) => {
                         field.onChange(value);
-                        setValue("taxtype", value);
+                        setValue("taxType", value);
                       }}
                     >
                       <Option value="">Select Category</Option>
@@ -230,8 +230,8 @@ function CreateTaxmangement() {
                     </Select>
                   )}
                 />
-                {errors.employeeCategory && (
-                  <p className="text-danger">Employee category is required</p>
+                {errors.taxType && (
+                  <p className="text-danger">tax category is required</p>
                 )}
               </div>
             </Col>
@@ -255,10 +255,17 @@ function CreateTaxmangement() {
                           setValue("subCategory", value);
                         }}
                       >
-                        <Option value="Company">Company</Option>
-                        <Option value="Individual">Individual</Option>
-                        <Option value="Firm">Firm</Option>
-                        <Option value="Other">Other</Option>
+                        <Option value="">Select Sub-category</Option>
+                        <Option value="Annual return Filling(Individual)">
+                          Annual return Filling(Individual)
+                        </Option>
+                        <Option value="Annual return Filling(Firm/Company)">
+                          Annual return Filling(Firm/Company)
+                        </Option>
+                        <Option value="Company Registration">
+                          Company Registration
+                        </Option>
+                        <Option value="Notice Services">Notice Services</Option>
                       </Select>
                     )}
                   />
@@ -268,7 +275,44 @@ function CreateTaxmangement() {
                 </div>
               </Col>
             )}
-
+            {/* Subcategory for GST Services */}
+            {(category === "GSTservices" ||
+              category === "Tds&TcsServices" ||
+              category === "Esi&PfServices") && (
+              <Col xs={12} md={6} lg={4}>
+                <label className="vendorpage_labelCss">Sub Category:</label>
+                <Controller
+                  name="subCategory"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Sub Category"
+                      onChange={(value) => setValue("subCategory", value)}
+                    >
+                      <Option value="">Select Sub-category</Option>
+                      <Option value="Registration">Registration</Option>
+                      <Option value="Monthly Return Filing">
+                        Monthly Return Filing
+                      </Option>
+                      <Option value="Quaterly Return Filing">
+                        Quaterly Return Filing
+                      </Option>
+                      <Option value="Annual Return Filing">
+                        Annual Return Filing
+                      </Option>
+                      <Option value="Notice Services">Notice Services</Option>
+                    </Select>
+                  )}
+                />
+                {errors.subCategory && (
+                  <p className="text-danger">Sub-category is required</p>
+                )}
+              </Col>
+            )}
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">
@@ -337,24 +381,6 @@ function CreateTaxmangement() {
                 />
                 {errors.annualIncome && (
                   <p className="text-danger">Enter annual income</p>
-                )}
-              </div>
-            </Col>
-
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  Tax Paid in Last Year
-                </label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="taxPaid"
-                  {...register("taxPaid", { required: true })}
-                  placeholder="Tax Paid"
-                />
-                {errors.taxPaid && (
-                  <p className="text-danger">Enter tax paid last year</p>
                 )}
               </div>
             </Col>
