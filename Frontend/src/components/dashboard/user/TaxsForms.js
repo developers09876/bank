@@ -4,6 +4,8 @@ import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import Api from "../../../Api";
+import Header from "../../Layout/Header";
+import Footer from "../../Layout/Footer";
 const { Option } = Select;
 
 function TaxsForms() {
@@ -54,7 +56,8 @@ function TaxsForms() {
   };
   return (
     <div>
-      <Container style={{ marginTop: "5%" }}>
+      <Header />
+      <Container style={{ marginTop: "115px", paddingBottom: "20px" }}>
         <form>
           <h4 style={{ textAlign: "center", color: "#00397f" }}>
             <b>Tax Mangement</b>
@@ -408,6 +411,7 @@ function TaxsForms() {
         </form>
         <ToastContainer />
       </Container>
+      <Footer />
     </div>
   );
 }
