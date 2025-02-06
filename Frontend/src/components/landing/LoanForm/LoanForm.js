@@ -303,9 +303,7 @@ function LoanForm() {
                     </Col>
                     <Col xs={12} md={6} lg={4}>
                       <div>
-                        <label className="vendorpage_labelCss">
-                          Last Name
-                        </label>
+                        <label className="vendorpage_labelCss">Last Name</label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
@@ -327,13 +325,32 @@ function LoanForm() {
                           className="inputcolumn-ourProfile"
                           type="date"
                           name="dob"
-                          max={new Date().toISOString().split("T")[0]}
-                          {...register("dob", { required: true })}
+                          max={
+                            new Date(
+                              new Date().setFullYear(
+                                new Date().getFullYear() - 18
+                              )
+                            )
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                          {...register("dob", {
+                            required: true,
+                            validate: (value) => {
+                              const selectedDate = new Date(value);
+                              const minAgeDate = new Date();
+                              minAgeDate.setFullYear(
+                                minAgeDate.getFullYear() - 18
+                              );
+                              return (
+                                selectedDate <= minAgeDate ||
+                                "You must be at least 18 years old"
+                              );
+                            },
+                          })}
                         />
                         {errors.dob && (
-                          <p className="text-danger">
-                            Date of Birth is required
-                          </p>
+                          <p className="text-danger">{errors.dob.message}</p>
                         )}
                       </div>
                     </Col>
@@ -698,14 +715,37 @@ function LoanForm() {
                         </label>
                         <input
                           className="inputcolumn-ourProfile"
-                          type="tel"
+                          type="text"
                           name="contactNumber"
-                          {...register("contactNumber", { required: true })}
-                          placeholder="Phone Number"
+                          {...register("contactNumber", {
+                            required: "Contact number is required",
+                            minLength: {
+                              value: 10,
+                              message:
+                                "Contact number must be exactly 10 digits",
+                            },
+                            maxLength: {
+                              value: 10,
+                              message:
+                                "Contact number must be exactly 10 digits",
+                            },
+                            pattern: {
+                              value: /^[0-9]{10}$/,
+                              message:
+                                "Only numbers are allowed (10 digits required)",
+                            },
+                          })}
+                          placeholder="Enter your 10-digit contact number"
+                          maxLength={10}
+                          onKeyPress={(e) => {
+                            if (!/[0-9]/.test(e.key)) {
+                              e.preventDefault();
+                            }
+                          }}
                         />
                         {errors.contactNumber && (
                           <p className="text-danger">
-                            Phone Number is required
+                            {errors.contactNumber.message}
                           </p>
                         )}
                       </div>

@@ -519,6 +519,7 @@ function LoanDetails() {
                 <Option value="Vehicle Loan">Vehicle Loan</Option>
                 <Option value="Business Loan">Business Loan</Option>
                 <Option value="Personal Loan">Personal Loan</Option>
+                <Option value="Construction Loan">Construction Loan</Option>
               </Select>
             )}
           />
@@ -543,8 +544,12 @@ function LoanDetails() {
                   className="inputcolumn_drp"
                   placeholder="Select Vehicle Type"
                 >
-                  <Option value="Bike">Bike Loan</Option>
-                  <Option value="Car">Car Loan</Option>
+                  <Option value="Bike Loan">Bike Loan</Option>
+                  <Option value="Car Loan">Car Loan</Option>
+                  <Option value="Used Vehicle">Used Vehicle</Option>
+                  <Option value="New Vehicle">New Vehicle</Option>
+                  <Option value="Heavy Vehicle">Heavy Vehicle</Option>
+                  <Option value="Any Vehicle">Any Vehicle</Option>
                 </Select>
               )}
             />
@@ -557,7 +562,7 @@ function LoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Purpose of the Loan
+                          Sub Category
                         </label>
                         <Controller
                           name="loanPurpose"

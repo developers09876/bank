@@ -202,10 +202,22 @@ const ReferalLogin = () => {
                     margin="normal"
                     value={email}
                     onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (e.target.value) setErrors({ email: "", mobile: "" });
+                      const value = e.target.value;
+                      setEmail(value);
+
+                      // Email validation regex
+                      const emailRegex =
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+                      if (emailRegex.test(value) || value === "") {
+                        setErrors({ ...errors, email: "" }); // Clear error if valid
+                      } else {
+                        setErrors({
+                          ...errors,
+                          email: "Enter a valid email address",
+                        });
+                      }
                     }}
-                    // onChange={(e) => setEmail(e.target.value)}
                     error={!!errors.email}
                     helperText={errors.email}
                   />
@@ -220,14 +232,22 @@ const ReferalLogin = () => {
                     margin="normal"
                     value={mobile}
                     onChange={(e) => {
-                      setMobile(e.target.value);
-                      if (e.target.value) setErrors({ email: "", mobile: "" });
+                      const value = e.target.value;
+
+                      if (/^\d*$/.test(value) && value.length <= 10) {
+                        setMobile(value);
+                        setErrors({ ...errors, mobile: "" }); // Clear error when valid
+                      } else if (value.length > 10) {
+                        setErrors({
+                          ...errors,
+                          mobile: "Only 10 digits allowed",
+                        });
+                      }
                     }}
-                    // onChange={(e) => setMobile(e.target.value)}
+                    inputProps={{ maxLength: 10 }} // Prevents typing more than 10 characters
                     error={!!errors.mobile}
                     helperText={errors.mobile}
                   />
-
                   <Button
                     variant="contained"
                     color="primary"

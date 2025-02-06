@@ -717,7 +717,7 @@ const ReferCode = ({ setAuth }) => {
     // confirmPassword: "",
     contactNumber: "",
   });
-
+ const [errors, setErrors] = useState({ contactNumber: "" });
   const navigate = useNavigate();
 
   const {
@@ -913,15 +913,26 @@ const ReferCode = ({ setAuth }) => {
                   Contact Number:
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="contactNumber"
                   value={contactNumber}
-                  onChange={onChange}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (/^\d*$/.test(value) && value.length <= 10) {
+                      onChange(e); 
+                      setErrors({ ...errors, contactNumber: "" });
+                    } else {
+                      setErrors({ ...errors, contactNumber: "Enter a valid 10-digit number" });
+                    }
+                  }}
+                  maxLength="10" 
                   className="register-form__input"
                   placeholder="Contact Number"
                   required
                 />
+                {errors.contactNumber && <p className="error-message">{errors.contactNumber}</p>}
               </div>
+
               <div className="register-form__group">
                 <label htmlFor="email" className="register-form__label">
                   Email:
@@ -930,7 +941,7 @@ const ReferCode = ({ setAuth }) => {
                   type="email"
                   name="email"
                   value={email}
-                  onChange={onChange}
+                  onChange={onChange} 
                   className="register-form__input"
                   placeholder="Input your email address"
                   required
