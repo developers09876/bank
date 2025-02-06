@@ -4,10 +4,12 @@ import { Col, Row } from "react-bootstrap";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import { useNavigate } from "react-router-dom";
+// import welcomepage from '../../Images/welcome-page.png';
+
 
 const WelcomePage = () => {
   const userType = localStorage.getItem("userType");
-  const referType = localStorage.getItem("referType"); // Ensure correct variable name
+  const referType = localStorage.getItem("referType"); 
 
   const navigate = useNavigate();
 
@@ -55,6 +57,8 @@ const WelcomePage = () => {
                 xs={12}
               >
                 <img src="https://cdni.iconscout.com/illustration/premium/thumb/business-agreement-illustration-download-in-svg-png-gif-file-formats--conference-deal-partners-aggrement-and-shaking-hands-pack-illustrations-3685784.png" />
+                {/* <img src={welcomepage} alt="Welcome" /> */}
+
               </Col>
             </Row>
             <div className="refer-svgpath">
