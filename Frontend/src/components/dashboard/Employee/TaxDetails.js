@@ -158,6 +158,38 @@ const TaxDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
+           {record.employeeId && (
+                  <Row style={{ textAlign: "-webkit-center" }}>
+                    <Col lg={12} md={12}>
+                      <Card
+                        style={{ width: "60%" }}
+                        className="loandetail-custom-card"
+                        title="Task Assigned Details"
+                      >
+                        <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                          {/* <Descriptions.Item label="Employee Name">
+                            {employeeName}
+                          </Descriptions.Item> */}
+                          <Descriptions.Item label="Employee Type">
+                            {record.employeeType}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Employee Category">
+                            {record.employeeCategory}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Description">
+                            {record.description}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="Start Date">
+                            {record.startDate ? record.startDate.split("T")[0] : "N/A"}
+                          </Descriptions.Item>
+                          <Descriptions.Item label="End Date">
+                            {record.endDate ? record.endDate.split("T")[0] : "N/A"}
+                          </Descriptions.Item>
+                        </Descriptions>
+                      </Card>
+                    </Col>
+                  </Row>
+                )}
         </div>
       </div>
     </div>
