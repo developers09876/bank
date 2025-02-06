@@ -80,7 +80,7 @@ const Register = ({ setAuth }) => {
     } catch (error) {
       console.error("Registration error:", error);
       const errorMessage =
-        error.response?.data?.message ||
+        error.response?.data?.error ||
         "Something went wrong. Please try again.";
       toast.error(errorMessage);
     }
@@ -130,7 +130,6 @@ const Register = ({ setAuth }) => {
               Sign Up
             </Typography> */}
             {/* <div className='register-form__row'> */}
-           
 
             {/* </div> */}
             <div className="register-form__row">

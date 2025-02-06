@@ -29,6 +29,79 @@ const generateEmployeeCode = async () => {
   return empno;
 };
 
+// export const registerUser = async (req, res) => {
+//   const {
+//     userid,
+//     userType,
+//     firstname,
+//     lastname,
+//     email,
+//     contactNumber,
+//     dateOfJoining,
+//     services,
+//     categoryTitle,
+//     subCategory,
+//     manager,
+//     branch,
+//     employeeCategory,
+//     empCreatedBy,
+//     userId,
+//     referCode, // Manually entered code
+//     referType,
+//     loanType,
+//   } = req.body;
+
+//   try {
+//     // Check if the email already exists
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ error: "Email is already in use" });
+//     }
+
+//     // Auto-generate referralCode only for users with userType "user"
+//     let referralCode = "";
+//     if (userType === "user") {
+//       referralCode = await generateReferralCode();
+//     }
+//     let empno = "";
+//     if (userType === "employee") {
+//       empno = await generateEmployeeCode();
+//     }
+
+//     // Create a new user
+//     const newUser = new User({
+//       userid,
+//       userType,
+//       empno,
+//       firstname,
+//       lastname,
+//       email,
+//       contactNumber,
+//       manager,
+//       dateOfJoining,
+//       services,
+//       category: categoryTitle,
+//       subCategory: subCategory?.title,
+//       reward: subCategory?.rewards,
+//       branch,
+//       employeeCategory,
+//       empCreatedBy,
+//       referralCode, // Auto-generated referral code
+//       referCode, // Manually entered referral code
+//       userId,
+//       referType,
+//       loanType,
+//     });
+
+//     // Save the user to the database
+//     await newUser.save();
+
+//     res.status(201).json({ message: "User registered successfully", newUser });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
 export const registerUser = async (req, res) => {
   const {
     userid,
@@ -52,10 +125,24 @@ export const registerUser = async (req, res) => {
   } = req.body;
 
   try {
-    // Check if the email already exists
-    const existingUser = await User.findOne({ email });
+    // Check if the email or contact number already exists
+    const existingUser = await User.findOne({
+      $or: [{ email }, { contactNumber }],
+    });
+
     if (existingUser) {
-      return res.status(400).json({ error: "Email is already in use" });
+      let errorMessage = "";
+      if (
+        existingUser.email === email &&
+        existingUser.contactNumber === contactNumber
+      ) {
+        errorMessage = "Email and Contact Number are already in use";
+      } else if (existingUser.email === email) {
+        errorMessage = "Email is already in use";
+      } else if (existingUser.contactNumber === contactNumber) {
+        errorMessage = "Contact Number is already in use";
+      }
+      return res.status(400).json({ error: errorMessage });
     }
 
     // Auto-generate referralCode only for users with userType "user"
