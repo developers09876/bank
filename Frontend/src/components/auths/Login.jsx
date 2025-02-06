@@ -141,30 +141,30 @@ const LoginPage = () => {
       const employeeCategory = localStorage.getItem("employeeCategory");
       console.log("userType", userType);
 
-      // setTimeout(() => {
-      //   const routes = {
-      //     employee: "/employee",
-      //     user: "/user",
-      //     // LoanEmployee: "/adminLoan",
-      //     // LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
-      //     // // TaxEmployee: "/employeeTax",
-      //     // TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
-      //     // // InsuranceEmployee: "/employeeInsurance",
-      //     // InsuranceEmployee: employeeCategory
-      //     //   ? "/insuranceEmply"
-      //     //   : "/employeeInsurance",
-      //     // stockMarket: "/employeeStockMarket",
-      //   };
-      //   const route = routes[userType] || "/login";
-      //   navigate(route);
-      // }, 3000);
-
-      // console.log("first", response);
-      // setstep("second");
-
       setTimeout(() => {
-        navigate("/welcome");
+        const routes = {
+          employee: "/employee",
+          user: "/user",
+          // LoanEmployee: "/adminLoan",
+          // LoanEmployee: employeeCategory ? "/loanEmp" : "/adminLoan",
+          // // TaxEmployee: "/employeeTax",
+          // TaxEmployee: employeeCategory ? "/taxEmp" : "/employeeTax",
+          // // InsuranceEmployee: "/employeeInsurance",
+          // InsuranceEmployee: employeeCategory
+          //   ? "/insuranceEmply"
+          //   : "/employeeInsurance",
+          // stockMarket: "/employeeStockMarket",
+        };
+        const route = routes[userType] || "/login";
+        navigate(route);
       }, 3000);
+
+      console.log("first", response);
+      setstep("second");
+
+      // setTimeout(() => {
+      //   navigate("/welcome");
+      // }, 3000);
     } catch (error) {
       console.error("Login error:", error.response?.data);
       toast.error(

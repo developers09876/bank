@@ -54,7 +54,7 @@ const Register = ({ setAuth }) => {
     } catch (error) {
       console.error("Registration error:", error);
       const errorMessage =
-        error.response?.data?.message ||
+        error.response?.data?.error ||
         "Something went wrong. Please try again.";
       toast.error(errorMessage);
     }
@@ -100,6 +100,13 @@ const Register = ({ setAuth }) => {
 
         <Grid item xs={12} md={6}>
           <form onSubmit={onSubmit} className="register-form">
+            {/* <Typography variant="h4" fontWeight="bold" style={{ textAlign: 'center', marginBottom: '30px', marginTop:'5px', fontSize:'30px' }}>
+              Sign Up
+            </Typography> */}
+            {/* <div className='register-form__row'> */}
+           
+
+            {/* </div> */}
             <div className="register-form__row">
               <div className="register-form__group">
                 <label htmlFor="firstname" className="register-form__label">

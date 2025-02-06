@@ -257,3 +257,56 @@ export async function getByInsuranceId(req, res, next) {
     });
   }
 }
+
+export async function updateInsApplicationStatus(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { action, reason } = req.body;
+    console.log("object", action);
+    if (!["approve", "reject", "Pending"].includes(action)) {
+      return res.status(400).json({
+        message:
+          "Invalid action. Allowed actions are 'approve' or 'reject' or 'Pending'.",
+      });
+    }
+
+    const status =
+      action === "approve" ? "1" : action === "reject" ? "2" : "Pending";
+
+    if ((action === "reject" || action === "Pending") && !reason) {
+      return res.status(400).json({
+        message: "Reason is required when marking the Insurance as '${action}'",
+      });
+    }
+    const updatedInsuranceApplication =
+      await insuranceManagementDb.findByIdAndUpdate(
+        id,
+        {
+          status,
+          rejectionReason: action === "reject" ? reason : null,
+          pendingReason: action === "Pending" ? reason : null,
+        },
+        { new: true }
+      );
+
+    if (!updatedInsuranceApplication) {
+      return res.status(404).json({
+        message: "Insurance application not found.",
+      });
+    }
+
+    res.status(200).json({
+      message: `Insurance application ${
+        action === "approve"
+          ? "approved"
+          : action === "reject"
+          ? "rejected"
+          : "marked as Pending"
+      } successfully.`,
+      data: updatedInsuranceApplication,
+    });
+  } catch (err) {
+    console.log(err);
+    next();
+  }
+}

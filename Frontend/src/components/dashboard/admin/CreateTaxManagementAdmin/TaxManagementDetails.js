@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
+import { Col, Row, Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Select, Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import {
+  Select,
+  Layout,
+  Button,
+  Card,
+  Descriptions,
+  Tag,
+  Space,
+  Divider,
+  Modal,
+  Input,
+} from "antd";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import "../../user/LoanDetails.css";
 import Api from "../../../../Api";
 const { Option } = Select;
@@ -21,6 +37,12 @@ function TaskManagementDetails() {
   const [selectedEmployeeType, setSelectedEmployeeType] =
     useState("TaxEmployee");
   const [assignValue, setAssignValue] = useState([]);
+
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
+  const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState("");
+  const [pendingReason, setPendingReason] = useState("");
+  const [loan, setLoan] = useState([]);
 
   const {
     control,
@@ -154,6 +176,77 @@ function TaskManagementDetails() {
     }
   };
 
+  const updateStatus = async (id, action, reason = "") => {
+    try {
+      const details = { action, reason };
+      const response = await Api.put(
+        `http://localhost:5000/taxManagement/updateTaxapplicationsStaus/${id}`,
+        details
+      );
+      console.log("Response data:", response.data);
+      const updatedLoans = loan.map((item) =>
+        item._id === id
+          ? {
+              ...item,
+              status:
+                action === "approve"
+                  ? "1"
+                  : action === "reject"
+                  ? "2"
+                  : "Pending",
+              rejectionReason: action === "reject" ? reason : null,
+              pendingReason: action === "Pending" ? reason : null,
+            }
+          : item
+      );
+      setLoan(updatedLoans);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
+  const handleApprove = () => {
+    if (record) {
+      // alert("approved");
+      updateStatus(record._id, "approve");
+    }
+  };
+
+  const handlePendingReasonChange = (e) => {
+    setPendingReason(e.target.value);
+  };
+
+  const handlePending = () => {
+    if (record && pendingReason.trim()) {
+      // alert("updated as pending");
+      updateStatus(record._id, "Pending", pendingReason.trim());
+      setIsPendingModalVisible(false);
+      setPendingReason("");
+    } else {
+      console.error("Pending reason is required.");
+    }
+  };
+
+  const handleRejectionReasonChange = (e) => {
+    setRejectionReason(e.target.value);
+  };
+
+  const handleReject = () => {
+    if (record && rejectionReason.trim()) {
+      // alert("rejected");
+      updateStatus(record._id, "reject", rejectionReason.trim());
+      setIsRejectModalVisible(false);
+      setRejectionReason("");
+    } else {
+      console.error("Rejection reason is required.");
+    }
+  };
+
+  const handleReset = () => {
+    setRejectionReason("");
+    setPendingReason("");
+  };
+
   if (!record) {
     return <p>No details available</p>;
   }
@@ -181,6 +274,43 @@ function TaskManagementDetails() {
         <center>
           <h3>Tax Details</h3>
         </center>
+        <div className="px-2" style={{ textAlign: "end" }}>
+          <Tag
+            icon={
+              record.status === "Pending" ? (
+                <ClockCircleOutlined />
+              ) : record.status === "2" ? (
+                <CloseCircleOutlined />
+              ) : record.status === "1" ? (
+                <CheckCircleOutlined />
+              ) : null
+            }
+            color={
+              record.status === "Pending"
+                ? "orange"
+                : record.status === "2"
+                ? "red"
+                : record.status === "1"
+                ? "green"
+                : null
+            }
+            className={`status-tag ${
+              record.status === "1"
+                ? "approved"
+                : record.status === "2"
+                ? "rejected"
+                : "pending"
+            }`}
+          >
+            {record.status === "1" ? (
+              <p style={{ display: "inline" }}>Approved</p>
+            ) : record.status === "2" ? (
+              <p style={{ display: "inline" }}>Rejected</p>
+            ) : (
+              <p style={{ display: "inline" }}>Pending</p>
+            )}
+          </Tag>
+        </div>
       </div>
       <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
         <Col lg={8}>
@@ -247,13 +377,9 @@ function TaskManagementDetails() {
           </Card>
         </Col>
       </Row>
-      <Row style={{ textAlign: "-webkit-center" }}>
+      <Row>
         <Col lg={12} md={12}>
-          <Card
-            style={{ width: "60%" }}
-            className="loandetail-custom-card"
-            title="Tax Details"
-          >
+          <Card className="loandetail-custom-card" title="Tax Details">
             <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
               <Descriptions.Item label="bussiness Type">
                 {record.businessType}
@@ -271,11 +397,39 @@ function TaskManagementDetails() {
           </Card>
         </Col>
       </Row>
+
+      <Row>
+        <Col lg={12} md={12}>
+          <Card className="loandetail-custom-card" title="Tax Status">
+            <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+              <Descriptions.Item label="Approval Status">
+                {record.status === "1" ? (
+                  <p color="green">Approved</p>
+                ) : record.status === "2" ? (
+                  <p color="red">Rejected</p>
+                ) : (
+                  <p color="orange">Pending</p>
+                )}
+              </Descriptions.Item>
+              {record.status === "2" && (
+                <Descriptions.Item label="Reason for Rejection">
+                  {record.rejectionReason}
+                </Descriptions.Item>
+              )}
+              {record.status === "Pending" && record.pendingReason && (
+                <Descriptions.Item label="Reason for Hold">
+                  {record.pendingReason}
+                </Descriptions.Item>
+              )}
+            </Descriptions>
+          </Card>
+        </Col>
+      </Row>
+
       {record.employeeId && (
-        <Row style={{ textAlign: "-webkit-center" }}>
+        <Row>
           <Col lg={12} md={12}>
             <Card
-              style={{ width: "60%" }}
               className="loandetail-custom-card"
               title="Task Assigned Details"
             >
@@ -303,6 +457,187 @@ function TaskManagementDetails() {
           </Col>
         </Row>
       )}
+      <Row className="py-3">
+        <center>
+          <h3>Update the Tax Status</h3>
+        </center>
+        <Col lg={12} md={12}>
+          {/* <Card className="loandetail-custom-card" title="Task Details"> */}
+          {/* <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+              <Descriptions.Item label="Loan Type">
+                {record.loanType}
+              </Descriptions.Item>
+              <Descriptions.Item label="Start Date">
+                {record.startDate
+                  ? new Date(record.startDate).toISOString().split("T")[0]
+                  : "N/A"}
+              </Descriptions.Item>
+              <Descriptions.Item label="End Date">
+                {record.endDate
+                  ? new Date(record.endDate).toISOString().split("T")[0]
+                  : "N/A"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Description">
+                {record.description}
+              </Descriptions.Item> */}
+
+          {/* {(record.pendingReason === null ||
+                record.rejectionReason === null) && (
+                <Descriptions.Item label="Your Approval Status">
+                  {record.status === "1" ? (
+                    <p color="green">Loan Approved</p>
+                  ) : record.status === "2" ? (
+                    <p color="red">Loan Rejected</p>
+                  ) : (
+                    <p style={{ color: "orange" }}>Loan is on Hold</p>
+                  )}
+                </Descriptions.Item>
+              )}
+
+              {record.status === "2" && (
+                <Descriptions.Item label="Reason for Your Rejection">
+                  {record.rejectionReason}
+                </Descriptions.Item>
+              )}
+              {record.status === "Pending" && record.pendingReason && (
+                <Descriptions.Item label="Reason for Holding the Loan">
+                  {record.pendingReason}
+                </Descriptions.Item>
+              )}
+            </Descriptions> */}
+
+          <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
+            <Space>
+              {record && record.status === "Pending" && (
+                <Button
+                  type="primary"
+                  style={{ background: "#4096ff", color: "#fff" }}
+                  onClick={handleApprove}
+                >
+                  Approve
+                </Button>
+              )}
+
+              {record && record.status === "Pending" && (
+                <>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => setIsRejectModalVisible(true)}
+                  >
+                    Reject
+                  </Button>
+                </>
+              )}
+
+              <Modal
+                title="Rejection Confirmation"
+                visible={isRejectModalVisible}
+                onCancel={() => setIsRejectModalVisible(false)}
+                footer={null}
+              >
+                <div>
+                  <p>Please provide a reason for rejection:</p>
+                  <Input.TextArea
+                    rows={3}
+                    placeholder="Enter rejection reason"
+                    value={rejectionReason}
+                    onChange={handleRejectionReasonChange}
+                  />
+                  <Space style={{ marginTop: "20px" }}>
+                    <Button
+                      type="primary"
+                      onClick={handleReject}
+                      disabled={!rejectionReason.trim()}
+                    >
+                      Submit
+                    </Button>
+                    <Button variant="secondary" onClick={handleReset}>
+                      Reset
+                    </Button>
+                  </Space>
+                </div>
+              </Modal>
+
+              <Modal
+                title="Pending Confirmation"
+                visible={isPendingtModalVisible}
+                onCancel={() => setIsPendingModalVisible(false)}
+                footer={null}
+              >
+                <div>
+                  <p>
+                    Please provide a reason for holding the Tax application:
+                  </p>
+                  <Input.TextArea
+                    rows={3}
+                    placeholder="Enter Pending reason"
+                    value={pendingReason}
+                    onChange={handlePendingReasonChange}
+                  />
+                  <Space style={{ marginTop: "20px" }}>
+                    <Button
+                      type="primary"
+                      onClick={handlePending}
+                      disabled={!pendingReason.trim()}
+                    >
+                      Submit
+                    </Button>
+                    <Button variant="secondary" onClick={handleReset}>
+                      Reset
+                    </Button>
+                  </Space>
+                </div>
+              </Modal>
+
+              {record && record.status === "1" && (
+                <>
+                  <Button type="primary" disabled>
+                    Approved
+                  </Button>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => setIsRejectModalVisible(true)}
+                  >
+                    Reject
+                  </Button>
+                  <Button
+                    type="primary"
+                    ghost
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    Hold
+                  </Button>
+                </>
+              )}
+
+              {record && record.status === "2" && (
+                <>
+                  <Button
+                    type="primary"
+                    style={{ background: "#4096ff", color: "#fff" }}
+                    onClick={handleApprove}
+                  >
+                    Approve
+                  </Button>
+                  <Button type="primary" danger disabled>
+                    Rejected
+                  </Button>
+                  <Button
+                    type="primary"
+                    ghost
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    Hold
+                  </Button>
+                </>
+              )}
+            </Space>
+          </Row>
+          {/* </Card> */}
+        </Col>
+      </Row>
       <div className="py-2 px-2">
         <h5>
           <b>Assign To</b>
@@ -458,7 +793,7 @@ function TaskManagementDetails() {
 
           <Row>
             <Col className="px-2 py-2">
-              <Button type="submit" variant="primary">
+              <Button type="primary" onClick={handleSubmit(onSubmit)}>
                 Submit
               </Button>
             </Col>
