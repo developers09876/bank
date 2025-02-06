@@ -547,7 +547,8 @@ function InsuranceManagementDetails() {
               >
                 <div>
                   <p>
-                    Please provide a reason for holding the Loan application:
+                    Please provide a reason for holding the Insurance
+                    application:
                   </p>
                   <Input.TextArea
                     rows={3}
