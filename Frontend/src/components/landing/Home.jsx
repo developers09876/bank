@@ -106,7 +106,7 @@ const Landing = () => {
       // buttonText: "Reduce Your EMI",
       buttonText: "Check Eligibility",
       link: "/loanform",
-      icon:"fa-solid fa-van-shuttle",
+      icon: "fa-solid fa-van-shuttle",
     },
   ];
 
@@ -169,7 +169,7 @@ const Landing = () => {
       buttonText: "File Now",
       // link: "/taxpage",
 
-      link: "/user/tax",
+      link: "/TaxForms",
       icon: "fas fa-file-invoice-dollar",
     },
     {
@@ -177,14 +177,14 @@ const Landing = () => {
       description:
         "Quick and easy GST registration services for businesses of all sizes.",
       buttonText: "Register Now",
-      link: "user/userTaxmangemnent",
+      link: "/TaxForms",
       icon: "fas fa-receipt",
     },
     {
       title: "TAX PLANNING",
       description: "Optimize your tax savings with expert tax planning advice.",
       buttonText: "Start Planning",
-      link: "user/userTaxmangemnent",
+      link: "/TaxForms",
       icon: "fas fa-chart-line",
     },
     {
@@ -192,7 +192,7 @@ const Landing = () => {
       description:
         "Ensure timely and accurate TDS return filing to avoid penalties.",
       buttonText: "File Returns",
-      link: "user/userTaxmangemnent",
+      link: "/TaxForms",
       icon: "fas fa-calculator",
     },
   ];

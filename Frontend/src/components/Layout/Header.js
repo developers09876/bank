@@ -101,7 +101,6 @@ const Header = () => {
     localStorage.removeItem("loanApplicationId");
     localStorage.removeItem("email");
     localStorage.removeItem("referralCode");
-
     navigate("/login");
   };
 
