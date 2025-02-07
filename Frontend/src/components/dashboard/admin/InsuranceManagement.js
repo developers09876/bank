@@ -78,25 +78,26 @@ function InsuranceManagement() {
 
   const columns = [
     {
-      title: "Name",
+      title: "Created On",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => new Date(text).toLocaleDateString(),
+    },
+    {
+      title: "Application ID",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
+      title: "Customer Name",
       dataIndex: "name",
       key: "name",
       render: (_, record) => `${record.firstname} ${record.lastname}`,
     },
     {
-      title: "Email Id",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
       title: "Phone Number",
       dataIndex: "contactNumber",
-      key: "phone",
-    },
-    {
-      title: "Created By",
-      dataIndex: "userType",
-      key: "userType",
+      key: "contactNumber",
     },
     {
       title: "Status",

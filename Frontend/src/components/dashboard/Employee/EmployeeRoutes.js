@@ -89,7 +89,7 @@ export const EmployeeRoutes = [
     element: <TaxDetails />,
   },
   {
-    path: "/employee/editloan",
+    path: "/employee/editloan/:id",
     element: <LoanFormProfileTab />,
   },
   {
