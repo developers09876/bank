@@ -9,7 +9,7 @@ import Header from "../../Layout/Header";
 
 const { Option } = Select;
 
-function HomeInsuranceForm() {
+function InsuranceManagementEdit() {
   const {
     register,
     handleSubmit,
@@ -25,44 +25,41 @@ function HomeInsuranceForm() {
   const referCode = localStorage.getItem("referCode");
 
   const onSubmit = async (data) => {
-    const details = {
-      referCode: referCode || "",
-
-      userId: id,
-      userType: userType,
-      firstname: data.firstname,
-      lastname: data.lastname,
-      contactNumber: data.contactNumber,
-      email: data.email,
-      aadhar: data.aadhar,
-      panno: data.panno,
-      gst: data.gst,
-      policyTerm: data.policyTerm,
-      PolicyType: data.PolicyType,
-      VehicleType: data.VehicleType,
-      annualIncome: data.annualIncome,
-      sumAssured: data.sumAssured,
-    };
-
-    try {
-      const response = await Api.post(
-        `/insuranceManagement/createinsuranceManagement`,
-        details
-      );
-      toast.success("Form submitted successfully");
-    } catch (error) {
-      console.error("Error:", error);
-
-      const errorMessage =
-        error.response?.data?.error ||
-        "An error occurred while submitting the form";
-      toast.error(errorMessage);
-    }
+    // const details = {
+    //   referCode: referCode || "",
+    //   userId: id,
+    //   userType: userType,
+    //   firstname: data.firstname,
+    //   lastname: data.lastname,
+    //   contactNumber: data.contactNumber,
+    //   email: data.email,
+    //   aadhar: data.aadhar,
+    //   panno: data.panno,
+    //   gst: data.gst,
+    //   policyTerm: data.policyTerm,
+    //   PolicyType: data.PolicyType,
+    //   VehicleType: data.VehicleType,
+    //   annualIncome: data.annualIncome,
+    //   sumAssured: data.sumAssured,
+    // };
+    // try {
+    //   const response = await Api.post(
+    //     `/insuranceManagement/createinsuranceManagement`,
+    //     details
+    //   );
+    //   toast.success("Form submitted successfully");
+    // } catch (error) {
+    //   console.error("Error:", error);
+    //   const errorMessage =
+    //     error.response?.data?.error ||
+    //     "An error occurred while submitting the form";
+    //   toast.error(errorMessage);
+    // }
   };
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <br />
 
       <Container style={{ marginTop: "5%" }}>
@@ -70,7 +67,7 @@ function HomeInsuranceForm() {
           <h4
             style={{ textAlign: "center", color: "#00397f", marginTop: "15px" }}
           >
-            <b>Insurance mangement</b>
+            <b>Edit Insurance mangement</b>
           </h4>
           <Row className="px-2 py-3">
             <Col xs={12} md={6} lg={4}>
@@ -356,9 +353,9 @@ function HomeInsuranceForm() {
         </form>
         <ToastContainer />
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
 
-export default HomeInsuranceForm;
+export default InsuranceManagementEdit;

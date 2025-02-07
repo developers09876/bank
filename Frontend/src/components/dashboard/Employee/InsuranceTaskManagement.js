@@ -22,7 +22,9 @@ function InsuranceTaskManagement() {
     fetchInsuranceTasks();
   }, []);
   const handleEdit = (record) => {
-    // navigate(`/user/loanform/${record._id}`, { state: { record } });
+    navigate(`/employee/editInsuranceManagement/${record._id}`, {
+      state: { record },
+    });
   };
   useEffect(() => {
     const filtered = data.filter((item) => {
