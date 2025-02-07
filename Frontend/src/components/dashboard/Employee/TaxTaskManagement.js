@@ -20,7 +20,9 @@ function TaxTaskManagement() {
     fetchTaxTasks();
   }, []);
   const handleEdit = (record) => {
-    // navigate(`/user/loanform/${record._id}`, { state: { record } });
+    navigate(`/employee/editTaxManagement/${record._id}`, {
+      state: { record },
+    });
   };
   useEffect(() => {
     const filtered = data.filter((item) => {
