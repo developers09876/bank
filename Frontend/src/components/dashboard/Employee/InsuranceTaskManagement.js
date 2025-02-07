@@ -21,11 +21,7 @@ function InsuranceTaskManagement() {
   useEffect(() => {
     fetchInsuranceTasks();
   }, []);
-  const handleEdit = (record) => {
-    navigate(`/employee/editInsuranceManagement/${record._id}`, {
-      state: { record },
-    });
-  };
+  
   useEffect(() => {
     const filtered = data.filter((item) => {
       const firstname = item.firstname || "";
@@ -49,7 +45,7 @@ function InsuranceTaskManagement() {
     setLoading(true);
     try {
       const response = await Api.get(
-        `insuranceManagement/getbyEmployeeid/${userId}`
+        `http://localhost:5000/insuranceManagement/getbyEmployeeid/${userId}`
       );
       setData(response.data);
       setFilteredData(response.data);
@@ -80,7 +76,9 @@ function InsuranceTaskManagement() {
       state: { record },
     });
   };
-
+  const handleEdit = (record) => {
+    navigate(`/employee/editInsuranceManagement/${record._id}`, {state: { record },});
+  };
   const handleModalOk = () => {
     setIsModalVisible(false);
     setSelectedRecord(null);
