@@ -30,6 +30,7 @@ import InsTaskViewDetails from "./InsTaskViewDetails";
 import TaxTaskViewDetails from "./TaxTaskViewDetails";
 import InsuranceManagementEdit from "./InsuranceManagementEdit";
 import TaxsManagementEdit from "./TaxManagementEdit";
+import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
 
 export const EmployeeRoutes = [
   {
@@ -139,5 +140,9 @@ export const EmployeeRoutes = [
   {
     path: "/employee/client-statistics/:status/:category",
     element: <ClientStatisticsTable />,
+  },
+  {
+    path: "/employee/editownloan/:id",
+    element: <LoanProfileTab />,
   },
 ];
