@@ -140,7 +140,7 @@ const { state } = useLocation();
   useEffect(() => {
     const fetchLoanApplicationData = async () => {
       try {
-        const response = await Api.get(`/loanform/getbyid/${userid}`);
+        const response = await Api.get(`/loanform/getbyEmployeeid/${userid}`);
         console.log('response', response)
         const filterOneApplication = response.data.filter((application) => application._id === record._id )
         console.log('Applicationresponse', response.data);
