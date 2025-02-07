@@ -31,6 +31,8 @@ import TaxTaskViewDetails from "./TaxTaskViewDetails";
 import InsuranceManagementEdit from "./InsuranceManagementEdit";
 import TaxsManagementEdit from "./TaxManagementEdit";
 import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
+import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
+import TaxManagementEdit from "./TaxManagementEdit";
 
 export const EmployeeRoutes = [
   {
@@ -110,8 +112,12 @@ export const EmployeeRoutes = [
     element: <InsuranceManagementEdit />,
   },
   {
-    path: "/employee/editTaxManagement/:id",
-    element: <TaxsManagementEdit />,
+    path: "/employee/editTaxTaskManagement/:id",
+    element: <TaxsTaskManagementEdit />,
+  },
+  {
+    path: "/employee/editTax/:id",
+    element: <TaxManagementEdit />,
   },
   {
     path: "/employee/leadtaskmanagement",

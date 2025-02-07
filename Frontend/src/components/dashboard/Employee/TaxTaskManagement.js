@@ -20,7 +20,7 @@ function TaxTaskManagement() {
     fetchTaxTasks();
   }, []);
   const handleEdit = (record) => {
-    navigate(`/employee/editTaxManagement/${record._id}`, {
+    navigate(`/employee/editTaxTaskManagement/${record._id}`, {
       state: { record },
     });
   };
