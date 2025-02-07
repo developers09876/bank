@@ -78,7 +78,7 @@ function InsuranceEditDetails() {
           <h4
             style={{ textAlign: "center", color: "#00397f", marginTop: "15px" }}
           >
-            <b> Edit Insurance Management</b>
+            <b> Editt Insurance Management</b>
           </h4>
           <Row className="px-2 py-3">
             <Col xs={12} md={6} lg={4}>
