@@ -11,6 +11,7 @@ import {
   getByInsuranceId,
   updateInsApplicationStatus,
   updateInsuranceRemarks,
+  updateInsuranceDetails,
 } from "../Controller/InsuranceManagementController.js";
 
 const router = Router();
@@ -26,5 +27,6 @@ router.get("/getbyEmployeeid/:employeeId", getInsuranceManagementEmployeeId);
 router.get("/getAllInsuranceManagement", getallInsuranceManagement);
 router.get("/getByIdInsuranceManagement/:userid", getInsuranceManagementUserId);
 router.put("/updateInsuranceremarks/:id", updateInsuranceRemarks);
+router.put("/updateInsurancedetails/:id", updateInsuranceDetails);
 
 export default router;

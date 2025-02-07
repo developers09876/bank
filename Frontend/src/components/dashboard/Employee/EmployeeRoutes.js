@@ -32,6 +32,9 @@ import InsuranceManagementEdit from "./InsuranceManagementEdit";
 import TaxsManagementEdit from "./TaxManagementEdit";
 import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
 import UserLoanFormProfileTab from "../../landing/LoanForm/LoanFormProfileTab";
+import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
+import TaxManagementEdit from "./TaxManagementEdit";
+import InsuranceEditDetails from "./InsuranceEditDetails";
 
 export const EmployeeRoutes = [
   {
@@ -69,6 +72,10 @@ export const EmployeeRoutes = [
   {
     path: "/employee/insurancemanagement",
     element: <Insurance />,
+  },
+  {
+    path: "/employee/insuranceEditdetails/:id",
+    element: <InsuranceEditDetails />,
   },
   {
     path: "/employee/createinsurance",
@@ -111,8 +118,12 @@ export const EmployeeRoutes = [
     element: <InsuranceManagementEdit />,
   },
   {
-    path: "/employee/editTaxManagement/:id",
-    element: <TaxsManagementEdit />,
+    path: "/employee/editTaxTaskManagement/:id",
+    element: <TaxsTaskManagementEdit />,
+  },
+  {
+    path: "/employee/editTax/:id",
+    element: <TaxManagementEdit />,
   },
   {
     path: "/employee/leadtaskmanagement",

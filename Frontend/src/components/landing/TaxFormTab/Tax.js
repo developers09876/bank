@@ -9,6 +9,7 @@ import {
   Descriptions,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import Api from "../../../Api";
@@ -34,6 +35,12 @@ const Tax = ({ collapsed }) => {
   const handleViewDetails = (record) => {
     navigate(`/user/TaxViewdetails/${record._id}`, { state: { record } });
   };
+  const handleEdit = (record) => {
+    navigate(`/user/TaxEditdetails/${record._id}`, {
+      state: { record },
+    });
+  };
+
   const handleAddTax = () => {
     navigate(`/user/userTaxmangemnent`);
   };
@@ -114,15 +121,30 @@ const Tax = ({ collapsed }) => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text, record) => (
-        <Button
-          type="primary"
-          style={{ background: "#4096ff", color: "#fff" }}
-          onClick={() => handleViewDetails(record)}
-        >
-          View
-        </Button>
-      ),
+      render: (text, record) => {
+        return (
+          <>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
+        );
+      },
     },
   ];
 

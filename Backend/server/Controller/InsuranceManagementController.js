@@ -357,3 +357,62 @@ export async function updateInsuranceRemarks(req, res, next) {
     next(err);
   }
 }
+export async function updateInsuranceDetails(req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+
+    console.log("Received Data:", data);
+
+    // Ensure all fields are properly retrieved from `data`
+    const updateDetails = {
+      firstname: data.firstname ,
+      lastname: data.lastname,
+      contactNumber: data.contactNumber ,
+      email: data.email ,
+      aadhar: data.aadhar ,
+      panno: data.panno,
+      gst: data.gst ,
+      policyTerm: data.policyTerm,
+      PolicyType: data.PolicyType ,
+      annualIncome: data.annualIncome,
+      sumAssured: data.sumAssured ,
+      // addremarks: data.addremarks, 
+    };
+
+    console.log("Update Details:", updateDetails);
+
+    // Ensure `id` is valid before querying
+    if (!id) {
+      return res.status(400).json({ message: "Invalid ID" });
+    }
+
+    // Update the record in the database
+    const updatedRecord = await insuranceManagementDb.findByIdAndUpdate(
+      id,
+      updateDetails,
+      {
+        new: true, // Return the updated record
+        runValidators: true, // Ensure validation
+      }
+    );
+
+    if (updatedRecord) {
+      return res.status(200).json({
+        message: "Updated Successfully",
+        data: updatedRecord,
+      });
+    } else {
+      return res.status(404).json({
+        message: "Record not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating record:", err);
+    return res.status(500).json({
+      message: "Failed to update record",
+      error: err.message, // Return detailed error message
+    });
+  }
+}
+

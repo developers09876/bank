@@ -1,22 +1,48 @@
 import { Select } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
-import Api from "../../../Api";
+import Api from "../../../../Api";
+import { useLocation } from "react-router-dom";
 const { Option } = Select;
 
-function CreateInsuranceManagement() {
+function TaxManagementEdit() {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm();
 
-  const id = localStorage.getItem("regid");
-  const userType = localStorage.getItem("role");
+  const category = watch("taxType");
+  const { state } = useLocation();
+  const record = state?.record;
+  const id = localStorage.getItem("id");
+  const userType = localStorage.getItem("userType");
+  const [taxDetails, settaxDetails] = useState();
+
+  useEffect(() => {
+    const fetchTaxApplication = async () => {
+      try {
+        const response = await Api.get(
+          `/taxManagement/getByTaxId/${record._id}`
+        );
+        console.log("tax edit record response", response.data.data[0]);
+
+        if (response.data.data.length > 0) {
+          reset(response.data.data[0]);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchTaxApplication();
+  }, [record._id, reset]);
 
   const onSubmit = async (data) => {
     const details = {
@@ -29,43 +55,30 @@ function CreateInsuranceManagement() {
       aadhar: data.aadhar,
       panno: data.panno,
       gst: data.gst,
-      policyTerm: data.policyTerm,
-      PolicyType: data.PolicyType,
+      taxType: data.taxType,
+      subCategory: data.subCategory,
+      incomeTaxStatus: data.incomeTaxStatus,
+      businessType: data.businessType,
       annualIncome: data.annualIncome,
-      sumAssured: data.sumAssured,
     };
-    // const detail = {
-    //   userType: "user",
-    //   firstname: data.firstname,
-    //   lastname: data.lastname,
-    //   userId: id,
-    //   contactNumber: data.contactNumber,
-    //   email: data.email,
-    // };
+    console.log("details", details);
     try {
-      // const res = await Api.post(`/signup/register`, detail);
-
-      const response = await Api.post(
-        `/insuranceManagement/createinsuranceManagement`,
+      const response = await Api.put(
+        `/taxManagement/updateTaxAplicationDetails/${record._id}`,
         details
       );
       toast.success("Form submitted successfully");
     } catch (error) {
-      console.error("Error:", error);
-
-      const errorMessage =
-        error.response?.data?.error ||
-        "An error occurred while submitting the form";
-      toast.error(errorMessage);
+      console.error("Error:", error.message);
+      toast.error("An error occurred while submitting the form");
     }
   };
-
   return (
     <div>
-      <Container style={{ marginTop: "5%" }}>
+      <Container style={{ marginTop: "115px", paddingBottom: "20px" }}>
         <form>
           <h4 style={{ textAlign: "center", color: "#00397f" }}>
-            <b>Insurance mangement</b>
+            <b>Edit Tax Mangement</b>
           </h4>
           <Row className="px-2 py-3">
             <Col xs={12} md={6} lg={4}>
@@ -105,20 +118,17 @@ function CreateInsuranceManagement() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="email"
+                  name="email"
+                  placeholder="Email Id"
                   {...register("email", {
-                    required: "Email is required",
+                    required: true,
                     pattern: {
-                      value:
-                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                      message:
-                        "Enter a valid email address (e.g., name@example.com)",
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Invalid Email Address",
                     },
                   })}
-                  placeholder="Email"
                 />
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
+                {errors.email && <p className="text-danger">Enter Email Id</p>}
               </div>
             </Col>
 
@@ -127,33 +137,19 @@ function CreateInsuranceManagement() {
                 <label className="vendorpage_labelCss">Phone Number</label>
                 <input
                   className="inputcolumn-ourProfile"
-                  type="text"
+                  type="number"
                   name="contactNumber"
                   {...register("contactNumber", {
-                    required: "Contact number is required",
-                    minLength: {
-                      value: 10,
-                      message: "Contact number must be exactly 10 digits",
-                    },
-                    maxLength: {
-                      value: 10,
-                      message: "Contact number must be exactly 10 digits",
-                    },
+                    required: true,
                     pattern: {
-                      value: /^[0-9]{10}$/,
-                      message: "Only numbers are allowed (10 digits required)",
+                      // value: /^[0-9]{10}$/,
+                      message: "Invalid Phone Number",
                     },
                   })}
-                  placeholder="Enter your 10-digit contact number"
-                  maxLength={10}
-                  onKeyPress={(e) => {
-                    if (!/[0-9]/.test(e.key)) {
-                      e.preventDefault();
-                    }
-                  }}
+                  placeholder="Phone Number"
                 />
-                {errors.contactNumber && (
-                  <p className="text-red-500">{errors.contactNumber.message}</p>
+                {errors.phone && (
+                  <p className="text-danger">Enter Phone number</p>
                 )}
               </div>
             </Col>
@@ -227,12 +223,11 @@ function CreateInsuranceManagement() {
                 )}
               </div>
             </Col>
-
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Policy Type</label>
+                <label className="vendorpage_labelCss">Category:</label>
                 <Controller
-                  name="PolicyType"
+                  name="taxType"
                   control={control}
                   defaultValue=""
                   rules={{ required: true }}
@@ -240,50 +235,131 @@ function CreateInsuranceManagement() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      placeholder="Select Gender"
+                      placeholder="Select taxType"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue("taxType", value);
+                      }}
                     >
-                      <Option value="Single">Life Insurance</Option>
-                      <Option value="Health Insurance">Health Insurance</Option>
-                      <Option value="Vehicle">Vehicle Insurance</Option>
+                      <Option value="">Select Category</Option>
+                      <Option value="IncomeTax">Income Tax</Option>
+                      <Option value="Tds&TcsServices">
+                        TDS / TCS Services
+                      </Option>
+                      <Option value="GSTservices">GST Services</Option>
+                      <Option value="Esi&PfServices">ESI & PF Services</Option>
                     </Select>
                   )}
                 />
-                {errors.PolicyType && (
-                  <p className="text-danger">Policy Type is required</p>
+                {errors.taxType && (
+                  <p className="text-danger">Employee category is required</p>
                 )}
               </div>
             </Col>
 
-            {/* Policy Term */}
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Policy Term</label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="policyTerm"
-                  {...register("policyTerm", { required: true })}
-                  placeholder="Policy Term (years)"
+            {category === "IncomeTax" && (
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Sub Category:</label>
+                  <Controller
+                    name="subCategory"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className="inputcolumn_drp"
+                        placeholder="Select Sub Category"
+                        onChange={(value) => {
+                          field.onChange(value);
+                          setValue("subCategory", value);
+                        }}
+                      >
+                        <Option value="">Select Sub-category</Option>
+                        <Option value="Annual return Filling(Individual)">
+                          Annual return Filling(Individual)
+                        </Option>
+                        <Option value="Annual return Filling(Firm/Company)">
+                          Annual return Filling(Firm/Company)
+                        </Option>
+                        <Option value="Company Registration">
+                          Company Registration
+                        </Option>
+                        <Option value="Notice Services">Notice Services</Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.subCategory && (
+                    <p className="text-danger">Sub-category is required</p>
+                  )}
+                </div>
+              </Col>
+            )}
+            {/* Subcategory for GST Services */}
+            {(category === "GSTservices" ||
+              category === "Tds&TcsServices" ||
+              category === "Esi&PfServices") && (
+              <Col xs={12} md={6} lg={4}>
+                <label className="vendorpage_labelCss">Sub Category:</label>
+                <Controller
+                  name="subCategory"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Sub Category"
+                      onChange={(value) => setValue("subCategory", value)}
+                    >
+                      <Option value="">Select Sub-category</Option>
+                      <Option value="Registration">Registration</Option>
+                      <Option value="Monthly Return Filing">
+                        Monthly Return Filing
+                      </Option>
+                      <Option value="Quaterly Return Filing">
+                        Quaterly Return Filing
+                      </Option>
+                      <Option value="Annual Return Filing">
+                        Annual Return Filing
+                      </Option>
+                      <Option value="Notice Services">Notice Services</Option>
+                    </Select>
+                  )}
                 />
-                {errors.policyTerm && (
-                  <p className="text-danger">Policy Term is required</p>
+                {errors.subCategory && (
+                  <p className="text-danger">Sub-category is required</p>
                 )}
-              </div>
-            </Col>
+              </Col>
+            )}
 
-            {/* Sum Assured */}
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">Sum Assured</label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="sumAssured"
-                  {...register("sumAssured", { required: true })}
-                  placeholder="Sum Assured"
+                <label className="vendorpage_labelCss">Business Type</label>
+                <Controller
+                  name="businessType"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="inputcolumn_drp"
+                      placeholder="Select Business Type"
+                    >
+                      <Option value="soleProprietorship">
+                        Sole Proprietorship
+                      </Option>
+                      <Option value="partnership">Partnership</Option>
+                      <Option value="privateLimited">Private Limited</Option>
+                      <Option value="publicLimited">Public Limited</Option>
+                    </Select>
+                  )}
                 />
-                {errors.sumAssured && (
-                  <p className="text-danger">Sum Assured is required</p>
+                {errors.businessType && (
+                  <p className="text-danger">Select business type</p>
                 )}
               </div>
             </Col>
@@ -330,4 +406,4 @@ function CreateInsuranceManagement() {
   );
 }
 
-export default CreateInsuranceManagement;
+export default TaxManagementEdit;
