@@ -7,7 +7,7 @@ import Api from "../../../Api";
 import { useLocation } from "react-router-dom";
 const { Option } = Select;
 
-function TaxManagementEdit() {
+function TaxsTaskManagementEdit() {
   const {
     register,
     handleSubmit,
@@ -406,4 +406,4 @@ function TaxManagementEdit() {
   );
 }
 
-export default TaxManagementEdit;
+export default TaxsTaskManagementEdit;
