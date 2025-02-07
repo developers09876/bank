@@ -105,6 +105,7 @@ function TaxmangementAdmin() {
             </Col>
 
             <Col xs={12} md={6} lg={4}>
+            <div>
               <label className="vendorpage_labelCss">Email Id</label>
               <input
                 className="inputcolumn-ourProfile"
@@ -122,9 +123,11 @@ function TaxmangementAdmin() {
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
               )}
+              </div>
             </Col>
 
             <Col xs={12} md={6} lg={4}>
+            <div>
               <label className="vendorpage_labelCss">Phone Number</label>
               <input
                 className="inputcolumn-ourProfile"
@@ -156,6 +159,7 @@ function TaxmangementAdmin() {
               {errors.contactNumber && (
                 <p className="text-red-500">{errors.contactNumber.message}</p>
               )}
+              </div>
             </Col>
 
             <Col xs={12} md={6} lg={4}>

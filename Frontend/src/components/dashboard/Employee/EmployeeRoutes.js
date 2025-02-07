@@ -33,6 +33,7 @@ import TaxsManagementEdit from "./TaxManagementEdit";
 import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
 import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
 import TaxManagementEdit from "./TaxManagementEdit";
+import InsuranceEditDetails from "./InsuranceEditDetails";
 
 export const EmployeeRoutes = [
   {
@@ -70,6 +71,10 @@ export const EmployeeRoutes = [
   {
     path: "/employee/insurancemanagement",
     element: <Insurance />,
+  },
+  {
+    path: "/employee/insuranceEditdetails/:id",
+    element: <InsuranceEditDetails />,
   },
   {
     path: "/employee/createinsurance",

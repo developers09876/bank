@@ -73,179 +73,207 @@ function InsuranceManagementEdit() {
 
   return (
     <div>
-    <Container style={{ marginTop: "5%" }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h4 style={{ textAlign: "center", color: "#00397f", marginTop: "15px" }}>
-          <b>Edit Insurance Management</b>
-        </h4>
-        <Row className="px-2 py-3">
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">First Name</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                {...register("firstname", { required: true })}
-                placeholder="First Name"
-              />
-              {errors.firstname && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
+      <Container style={{ marginTop: "5%" }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h4
+            style={{ textAlign: "center", color: "#00397f", marginTop: "15px" }}
+          >
+            <b>Edit Insurance Management</b>
+          </h4>
+          <Row className="px-2 py-3">
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">First Name</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  {...register("firstname", { required: true })}
+                  placeholder="First Name"
+                />
+                {errors.firstname && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
 
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Last Name</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                {...register("lastname", { required: true })}
-                placeholder="Last Name"
-              />
-              {errors.lastname && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Last Name</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  {...register("lastname", { required: true })}
+                  placeholder="Last Name"
+                />
+                {errors.lastname && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
 
-          <Col xs={12} md={6} lg={4}>
+            <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Email Id</label>
                 <input
                   className="inputcolumn-ourProfile"
-                   type="email"
-                   name="email"
-                  placeholder="Email Id"
+                  type="email"
                   {...register("email", {
-                     required: true,
+                    required: "Email is required",
                     pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                       message: "Invalid Email Address",
-                     },
+                      value:
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      message:
+                        "Enter a valid email address (e.g., name@example.com)",
+                    },
                   })}
+                  placeholder="Email"
                 />
-                {errors.email && <p className="text-danger">Enter Email Id</p>}
-               </div>
-             </Col>
-
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Phone Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="number"
-                {...register("contactNumber", { required: true })}
-                placeholder="Phone Number"
-              />
-              {errors.contactNumber && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
-
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Aadhaar Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="number"
-                {...register("aadhar", { required: true })}
-                placeholder="Aadhaar Number"
-              />
-              {errors.aadhar && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
-
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">PAN Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                {...register("panno", { required: true })}
-                placeholder="PAN Number"
-              />
-              {errors.panno && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
-
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">GST Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                {...register("gst", { required: true })}
-                placeholder="GST Number"
-              />
-              {errors.gst && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
-
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Policy Type</label>
-              <Controller
-                name="PolicyType"
-                control={control}
-                render={({ field }) => (
-                  <Select {...field} className="inputcolumn_drp">
-                    <Option value="Life Insurance">Life Insurance</Option>
-                    <Option value="Health Insurance">Health Insurance</Option>
-                    <Option value="Vehicle Insurance">Vehicle Insurance</Option>
-                  </Select>
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
                 )}
-              />
-              {errors.PolicyType && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
+              </div>
+            </Col>
 
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Annual Income</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="number"
-                {...register("annualIncome", { required: true })}
-                placeholder="Annual Income"
-              />
-              {errors.annualIncome && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Phone Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  name="contactNumber"
+                  {...register("contactNumber", {
+                    required: "Contact number is required",
+                    minLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    maxLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Only numbers are allowed (10 digits required)",
+                    },
+                  })}
+                  placeholder="Enter your 10-digit contact number"
+                  maxLength={10}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                {errors.contactNumber && (
+                  <p className="text-red-500">{errors.contactNumber.message}</p>
+                )}
+              </div>
+            </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Aadhaar Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  {...register("aadhar", { required: true })}
+                  placeholder="Aadhaar Number"
+                />
+                {errors.aadhar && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
 
-          <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Sum Assured</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="number"
-                {...register("sumAssured", { required: true })}
-                placeholder="Sum Assured"
-              />
-              {errors.sumAssured && <p className="text-danger">Required</p>}
-            </div>
-          </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">PAN Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  {...register("panno", { required: true })}
+                  placeholder="PAN Number"
+                />
+                {errors.panno && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">GST Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  {...register("gst", { required: true })}
+                  placeholder="GST Number"
+                />
+                {errors.gst && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Policy Type</label>
+                <Controller
+                  name="PolicyType"
+                  control={control}
+                  render={({ field }) => (
+                    <Select {...field} className="inputcolumn_drp">
+                      <Option value="Life Insurance">Life Insurance</Option>
+                      <Option value="Health Insurance">Health Insurance</Option>
+                      <Option value="Vehicle Insurance">
+                        Vehicle Insurance
+                      </Option>
+                    </Select>
+                  )}
+                />
+                {errors.PolicyType && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Annual Income</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  {...register("annualIncome", { required: true })}
+                  placeholder="Annual Income"
+                />
+                {errors.annualIncome && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Sum Assured</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  {...register("sumAssured", { required: true })}
+                  placeholder="Sum Assured"
+                />
+                {errors.sumAssured && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
           </Row>
           <div className="upgrade_column mb-3">
             <Button
-               className="button1 mx-2"
+              className="button1 mx-2"
               type="submit"
-               onClick={handleSubmit(onSubmit)}
-               style={{ backgroundColor: "#00397f", color: "white" }}
+              onClick={handleSubmit(onSubmit)}
+              style={{ backgroundColor: "#00397f", color: "white" }}
             >
-               Submit
+              Submit
             </Button>
             <Button
-               className="button1 mx-2"
-               // type="button"
+              className="button1 mx-2"
+              // type="button"
               variant="secondary"
-               onClick={() => reset()}
-               // style={{ backgroundColor: '#d9534f', color: 'white' }}
-             >
-               Reset
-             </Button>
-           </div>
-      </form>
-      <ToastContainer />
-    </Container>
+              onClick={() => reset()}
+              // style={{ backgroundColor: '#d9534f', color: 'white' }}
+            >
+              Reset
+            </Button>
+          </div>
+        </form>
+        <ToastContainer />
+      </Container>
     </div>
   );
 }
 
 export default InsuranceManagementEdit;
-

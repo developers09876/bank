@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Input, Space, Pagination, Button, Modal } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import Api from "../../../Api";
@@ -24,7 +25,11 @@ const Insurance = ({ collapsed }) => {
       state: { record },
     });
   };
-
+  const handleEdit = (record) => {
+    navigate(`/employee/insuranceEditdetails/${record._id}`, {
+      state: { record },
+    });
+  };
   const handleAddInsurance = () => {
     navigate(`/employee/createinsurance`);
   };
@@ -109,15 +114,30 @@ const Insurance = ({ collapsed }) => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text, record) => (
-        <Button
-          type="primary"
-          style={{ background: "#4096ff", color: "#fff" }}
-          onClick={() => handleViewDetails(record)}
-        >
-          View
-        </Button>
-      ),
+      render: (text, record) => {
+        return (
+          <>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
+        );
+      },
     },
   ];
 
