@@ -214,7 +214,6 @@ function InsuranceManagementDetails({ collapsed }) {
 
   const handleApprove = () => {
     if (record) {
-      alert("approved");
       updateStatus(record._id, "approve");
     }
   };
@@ -225,7 +224,6 @@ function InsuranceManagementDetails({ collapsed }) {
 
   const handlePending = () => {
     if (record && pendingReason.trim()) {
-      alert("updated as pending");
       updateStatus(record._id, "Pending", pendingReason.trim());
       setIsPendingModalVisible(false);
       setPendingReason("");
@@ -240,7 +238,6 @@ function InsuranceManagementDetails({ collapsed }) {
 
   const handleReject = () => {
     if (record && rejectionReason.trim()) {
-      alert("rejected");
       updateStatus(record._id, "reject", rejectionReason.trim());
       setIsRejectModalVisible(false);
       setRejectionReason("");
