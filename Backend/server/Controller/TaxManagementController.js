@@ -15,7 +15,7 @@ export async function createTaxManagementDb(req, res, next) {
       gst: data.gst,
       taxType: data.taxType,
       subCategory: data.subCategory,
-      incomeTaxStatus: data.incomeTaxStatus,
+      // incomeTaxStatus: data.incomeTaxStatus,
       businessType: data.businessType,
       annualIncome: data.annualIncome,
     };

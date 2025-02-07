@@ -11,7 +11,7 @@ const taxManagementSchema = new mongoose.Schema({
   aadhar: { type: String },
   panno: { type: String },
   gst: { type: String },
-  incomeTaxStatus: { type: String },
+  // incomeTaxStatus: { type: String },
   businessType: { type: String },
   annualIncome: { type: String },
   taxType: { type: String },

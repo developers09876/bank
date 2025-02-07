@@ -146,7 +146,7 @@ function LoanDetails() {
   useEffect(() => {
     const fetchLoanApplicationData = async () => {
       try {
-        const response = await Api.get(`/loanform/getbyid/${userId}`);
+        const response = await Api.get(`/loanform/getbyEmployeeid/${userId}`);
         const filterOneApplication = response.data.filter(
           (application) => application._id === record._id
         );
