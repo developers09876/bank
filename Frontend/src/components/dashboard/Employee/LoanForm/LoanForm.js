@@ -664,21 +664,45 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
+
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Contact Information
+                          Phone Number
                         </label>
                         <input
                           className="inputcolumn-ourProfile"
-                          type="tel"
+                          type="text"
                           name="contactNumber"
-                          {...register("contactNumber", { required: true })}
-                          placeholder="Phone Number"
+                          {...register("contactNumber", {
+                            required: "Contact number is required",
+                            minLength: {
+                              value: 10,
+                              message:
+                                "Contact number must be exactly 10 digits",
+                            },
+                            maxLength: {
+                              value: 10,
+                              message:
+                                "Contact number must be exactly 10 digits",
+                            },
+                            pattern: {
+                              value: /^[0-9]{10}$/,
+                              message:
+                                "Only numbers are allowed (10 digits required)",
+                            },
+                          })}
+                          placeholder="Enter your 10-digit contact number"
+                          maxLength={10}
+                          onKeyPress={(e) => {
+                            if (!/[0-9]/.test(e.key)) {
+                              e.preventDefault();
+                            }
+                          }}
                         />
                         {errors.contactNumber && (
-                          <p className="text-danger">
-                            Phone Number is required
+                          <p className="text-red-500">
+                            {errors.contactNumber.message}
                           </p>
                         )}
                       </div>

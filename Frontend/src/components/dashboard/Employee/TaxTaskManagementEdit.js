@@ -118,17 +118,20 @@ function TaxsTaskManagementEdit() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="email"
-                  name="email"
-                  placeholder="Email Id"
                   {...register("email", {
-                    required: true,
+                    required: "Email is required",
                     pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                      message: "Invalid Email Address",
+                      value:
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      message:
+                        "Enter a valid email address (e.g., name@example.com)",
                     },
                   })}
+                  placeholder="Email"
                 />
-                {errors.email && <p className="text-danger">Enter Email Id</p>}
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
               </div>
             </Col>
 
@@ -137,23 +140,36 @@ function TaxsTaskManagementEdit() {
                 <label className="vendorpage_labelCss">Phone Number</label>
                 <input
                   className="inputcolumn-ourProfile"
-                  type="number"
+                  type="text"
                   name="contactNumber"
                   {...register("contactNumber", {
-                    required: true,
+                    required: "Contact number is required",
+                    minLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    maxLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
                     pattern: {
-                      // value: /^[0-9]{10}$/,
-                      message: "Invalid Phone Number",
+                      value: /^[0-9]{10}$/,
+                      message: "Only numbers are allowed (10 digits required)",
                     },
                   })}
-                  placeholder="Phone Number"
+                  placeholder="Enter your 10-digit contact number"
+                  maxLength={10}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                 />
-                {errors.phone && (
-                  <p className="text-danger">Enter Phone number</p>
+                {errors.contactNumber && (
+                  <p className="text-red-500">{errors.contactNumber.message}</p>
                 )}
               </div>
             </Col>
-
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Aadhaar Number</label>

@@ -15,6 +15,7 @@ import LoanForm from "../user/LoanForm/LoanFormProfileTab";
 import InsuranceViewDetails from "../../landing/InsuranceForm/InsuranceViewDetails";
 import TaxViewDetails from "../../landing/TaxFormTab/TaxViewDetails";
 import TaxEditDetails from "../../landing/TaxFormTab/TaxEditDetails";
+import InsuranceEditDetails from "../../landing/InsuranceForm/InsuranceEditDetails";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -44,6 +45,10 @@ export const UserRoutes = [
   {
     path: "/user/InsuranceViewdetails/:id",
     element: <InsuranceViewDetails />,
+  },
+  {
+    path: "/user/insuranceEditdetails/:id",
+    element: <InsuranceEditDetails />,
   },
   {
     path: "/user/insuranceDetails",
