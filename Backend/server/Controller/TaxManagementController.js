@@ -184,3 +184,50 @@ export async function getByTaxId(req, res, next) {
     });
   }
 }
+
+export async function updateTaxRemarks(req, res, next) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    console.log("data", data);
+    const addremarks = Array.isArray(data.addremarks)
+      ? data.addremarks.map((child) => ({
+          date: child.date,
+          remarks: child.remarks,
+          status: child.status,
+          isApproved: child.isApproved,
+          // notiFicatioinStauts: child.notiFicatioinStauts,
+        }))
+      : [];
+    const updateDetails = {
+      addremarks: addremarks,
+    };
+    console.log("Update Details:", updateDetails);
+
+    const updatedRecord = await taxManagementDb.findByIdAndUpdate(
+      id,
+      updateDetails,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (updatedRecord) {
+      res.status(200).json({
+        message: "Updated Successfully",
+        data: updatedRecord,
+      });
+    } else {
+      res.status(404).json({
+        message: "Record not found",
+      });
+    }
+  } catch (err) {
+    console.error("Error updating record:", err);
+    res.status(500).json({
+      message: "Failed to update record",
+    });
+    next(err);
+  }
+}

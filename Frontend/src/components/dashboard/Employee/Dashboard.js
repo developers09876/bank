@@ -334,7 +334,7 @@ const Dashboard = () => {
     },
   };
   const renderCard = (title, icon, stats) => (
-    <Col md={6} lg={6}>
+    <Col md={6} lg={6} className="py-2">
       <Card className="flip-card">
         <div className="flip-card-inner">
           <Card className="flip-card-front">

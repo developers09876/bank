@@ -7,6 +7,7 @@ import {
   getTaxManagementEmployeeId,
   getByTaxId,
   updateTaxApplicationStatus,
+  updateTaxRemarks,
 } from "../Controller/TaxManagementController.js";
 
 const router = Router();
@@ -18,5 +19,6 @@ router.get("/getbyEmployeeid/:employeeId", getTaxManagementEmployeeId);
 router.get("/getAllTaxManagement", getallTaxManagement);
 router.get("/getByIdTaxManagement/:userId", getTaxManagementUserId);
 router.get("/getByTaxId/:id", getByTaxId);
+router.put("/updateTaxremarks/:id", updateTaxRemarks);
 
 export default router;

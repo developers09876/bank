@@ -159,7 +159,7 @@ const InsuranceDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          {record.employeeId && (
+          {/* {record.employeeId && (
             <Row className="px-2">
               <Col lg={12} md={12}>
                 <Card
@@ -168,9 +168,7 @@ const InsuranceDetails = ({ collapsed }) => {
                   title="Task Assigned Details"
                 >
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    {/* <Descriptions.Item label="Employee Name">
-                            {employeeName}
-                          </Descriptions.Item> */}
+                    
                     <Descriptions.Item label="Employee Type">
                       {record.employeeType}
                     </Descriptions.Item>
@@ -192,7 +190,7 @@ const InsuranceDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-          )}
+          )} */}
         </div>
       </div>
     </div>

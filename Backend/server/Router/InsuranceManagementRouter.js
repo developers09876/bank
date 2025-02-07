@@ -10,6 +10,7 @@ import {
   getCurrentMonthIncome,
   getByInsuranceId,
   updateInsApplicationStatus,
+  updateInsuranceRemarks,
 } from "../Controller/InsuranceManagementController.js";
 
 const router = Router();
@@ -24,5 +25,6 @@ router.put("/updateInsuranceManagement/:id", updateInsuranceManagementDb);
 router.get("/getbyEmployeeid/:employeeId", getInsuranceManagementEmployeeId);
 router.get("/getAllInsuranceManagement", getallInsuranceManagement);
 router.get("/getByIdInsuranceManagement/:userid", getInsuranceManagementUserId);
+router.put("/updateInsuranceremarks/:id", updateInsuranceRemarks);
 
 export default router;

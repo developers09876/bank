@@ -15,8 +15,6 @@ function TaxTaskManagement() {
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
@@ -72,18 +70,8 @@ function TaxTaskManagement() {
 
   const handleViewDetails = (record) => {
     console.log("record", record);
-    navigate(`/employee/taxdetails/${record._id}`, { state: { record } });
+    navigate(`/employee/Taxtaskdetails/${record._id}`, { state: { record } });
   };
-
-  // const handleModalOk = () => {
-  //   setIsModalVisible(false);
-  //   setSelectedRecord(null);
-  // };
-
-  // const handleModalCancel = () => {
-  //   setIsModalVisible(false);
-  //   setSelectedRecord(null);
-  // };
 
   const columns = [
     {
@@ -174,190 +162,6 @@ function TaxTaskManagement() {
           />
         </div>
       </Container>
-      {/* <Modal
-        title="Task Management Details"
-        visible={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={handleModalCancel}
-        footer={null}
-        style={{ fontSize: "18px" }}
-        // bodyStyle={{ maxHeight: "70vh", overflowY: "auto" }}
-      >
-        {selectedRecord && (
-          <div>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Name</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {`${selectedRecord.firstname} ${selectedRecord.lastname}`}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Email</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.email}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Phone</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.contactNumber}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Aadhar Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.aadhar}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>PAN Card Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.panno}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Business Type</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.businessType}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Income Tax Status</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.incomeTaxStatus}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>GST Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.gst}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Tax paid for last year</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.taxPaid}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Annual Income</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.annualIncome}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Admin Message</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.description}
-                </p>
-              </Col>
-            </Row>
-          </div>
-        )}
-      </Modal> */}
     </div>
   );
 }

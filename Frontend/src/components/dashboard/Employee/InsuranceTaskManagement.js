@@ -74,7 +74,9 @@ function InsuranceTaskManagement() {
 
   const handleViewDetails = (record) => {
     console.log("record", record);
-    navigate(`/employee/insurancedetails/${record._id}`, { state: { record } });
+    navigate(`/employee/Insurancetaskdetails/${record._id}`, {
+      state: { record },
+    });
   };
 
   const handleModalOk = () => {
