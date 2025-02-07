@@ -141,6 +141,7 @@ const { state } = useLocation();
     const fetchLoanApplicationData = async () => {
       try {
         const response = await Api.get(`/loanform/getbyid/${userid}`);
+        console.log('response', response)
         const filterOneApplication = response.data.filter((application) => application._id === record._id )
         console.log('Applicationresponse', response.data);
         console.log('filterOneApplication', filterOneApplication[0]);
