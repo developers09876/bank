@@ -42,7 +42,9 @@ function InsuranceManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await Api.get("/insuranceManagement/getAllInsuranceManagement");
+      const response = await Api.get(
+        "/insuranceManagement/getAllInsuranceManagement"
+      );
       console.log("getAllInsurance", response.data);
       setData(response.data);
       setFilteredData(response.data);

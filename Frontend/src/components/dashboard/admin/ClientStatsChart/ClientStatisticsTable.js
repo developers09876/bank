@@ -12,7 +12,7 @@ const ClientStatistics = () => {
   console.log("URL Params - Status:", status);
   console.log("URL Params - Category:", category);
 
-  // Fetch Loans
+  
   useEffect(() => {
     const fetchLoans = async () => {
       try {
@@ -23,7 +23,7 @@ const ClientStatistics = () => {
           let filteredLoans = response.data;
           console.log("API Response (All Loans):", response.data);
 
-          // Filter loans based on status
+         
           if (status === "completed") {
             filteredLoans = filteredLoans.filter((loan) => loan.status === "1");
           } else if (status === "rejected") {
@@ -45,7 +45,7 @@ const ClientStatistics = () => {
     fetchLoans();
   }, [status, category]);
 
-  // Fetch Insurances
+ 
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
@@ -53,17 +53,29 @@ const ClientStatistics = () => {
           const response = await axios.get(
             "http://localhost:5000/insuranceManagement/getAllInsuranceManagement"
           );
-          setInsurances(response.data);
+          let filteredInsurances = response.data;
           console.log("API Response (Insurances):", response.data);
+  
+          
+          if (status === "completed") {
+            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "1");
+          } else if (status === "rejected") {
+            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "2");
+          } else if (status === "pending") {
+            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "Pending");
+          }
+  
+          console.log("Filtered Insurances:", filteredInsurances);
+          setInsurances(filteredInsurances);
         }
       } catch (error) {
         console.error("Error fetching insurances:", error);
       }
     };
+  
     fetchInsurances();
-  }, [category]);
-
-  // Fetch Taxes
+  }, [status, category]);
+  
   useEffect(() => {
     const fetchTaxes = async () => {
       try {
@@ -71,16 +83,28 @@ const ClientStatistics = () => {
           const response = await axios.get(
             "http://localhost:5000/taxManagement/getAllTaxManagement"
           );
-          setTaxes(response.data);
+          let filteredTaxes = response.data;
           console.log("API Response (Taxes):", response.data);
+  
+         
+          if (status === "completed") {
+            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "1");
+          } else if (status === "rejected") {
+            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "2");
+          } else if (status === "pending") {
+            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "Pending");
+          }
+  
+          console.log("Filtered Taxes:", filteredTaxes);
+          setTaxes(filteredTaxes);
         }
       } catch (error) {
         console.error("Error fetching taxes:", error);
       }
     };
+  
     fetchTaxes();
-  }, [category]);
-
+  }, [status, category]);
   // Define columns for Loans Table
   const loancolumns = [
     { title: "ID", dataIndex: "_id", key: "_id" },
@@ -118,6 +142,19 @@ const ClientStatistics = () => {
     },
     { title: "Policy Type", dataIndex: "PolicyType", key: "PolicyType" },
     { title: "Sum Assured", dataIndex: "sumAssured", key: "sumAssured" },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
   ];
 
   // Define columns for Taxes Table
@@ -131,6 +168,19 @@ const ClientStatistics = () => {
     },
     { title: "Business Type", dataIndex: "businessType", key: "businessType" },
     { title: "Annual Income", dataIndex: "annualIncome", key: "annualIncome" },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
   ];
 
   return (
