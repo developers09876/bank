@@ -28,6 +28,8 @@ import ClientStatisticsPage from "./ClientStatsChart/ClientStatisticsPage";
 import ClientStatisticsTable from "./ClientStatsChart/ClientStatisticsTable";
 import InsTaskViewDetails from "./InsTaskViewDetails";
 import TaxTaskViewDetails from "./TaxTaskViewDetails";
+import InsuranceManagementEdit from "./InsuranceManagementEdit";
+import TaxsManagementEdit from "./TaxManagementEdit";
 
 export const EmployeeRoutes = [
   {
@@ -101,6 +103,14 @@ export const EmployeeRoutes = [
   {
     path: "/employee/taxtaskmanagement",
     element: <TaxTaskManagement />,
+  },
+  {
+    path: "/employee/editInsuranceManagement/:id",
+    element: <InsuranceManagementEdit />,
+  },
+  {
+    path: "/employee/editTaxManagement/:id",
+    element: <TaxsManagementEdit />,
   },
   {
     path: "/employee/leadtaskmanagement",
