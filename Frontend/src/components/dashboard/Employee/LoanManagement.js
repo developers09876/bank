@@ -42,7 +42,7 @@ const LoanManagements = ({ collapsed }) => {
    navigate(`/employee/loandetails/${record._id}`, {state: { record } })
   };
   const handleEdit = (record) => {
-    navigate(`/employee/editloan/${record._id}`, { state: { record } });
+    navigate(`/employee/editownloan/${record._id}`, { state: { record } });
   };
 
 
