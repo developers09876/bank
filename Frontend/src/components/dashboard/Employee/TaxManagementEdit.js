@@ -1,11 +1,10 @@
 import { Select } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import Api from "../../../Api";
-import Header from "../../Layout/Header";
-import Footer from "../../Layout/Footer";
+import { useLocation } from "react-router-dom";
 const { Option } = Select;
 
 function TaxsManagementEdit() {
@@ -20,42 +19,62 @@ function TaxsManagementEdit() {
   } = useForm();
 
   const category = watch("taxType");
-
+  const { state } = useLocation();
+  const record = state?.record;
   const id = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
+  const [taxDetails, settaxDetails] = useState();
+
+  useEffect(() => {
+    const fetchTaxApplication = async () => {
+      try {
+        const response = await Api.get(
+          `/taxManagement/getByTaxId/${record._id}`
+        );
+        console.log("tax edit record response", response.data.data[0]);
+
+        if (response.data.data.length > 0) {
+          reset(response.data.data[0]);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    fetchTaxApplication();
+  }, [record._id, reset]);
 
   const onSubmit = async (data) => {
-    // const details = {
-    //   userId: id,
-    //   userType: userType,
-    //   firstname: data.firstname,
-    //   lastname: data.lastname,
-    //   contactNumber: data.contactNumber,
-    //   email: data.email,
-    //   aadhar: data.aadhar,
-    //   panno: data.panno,
-    //   gst: data.gst,
-    //   taxType: data.taxType,
-    //   subCategory: data.subCategory,
-    //   incomeTaxStatus: data.incomeTaxStatus,
-    //   businessType: data.businessType,
-    //   annualIncome: data.annualIncome,
-    // };
-    // console.log("details", details);
-    // try {
-    //   const response = await Api.post(
-    //     `/taxManagement/createTaxManagement`,
-    //     details
-    //   );
-    //   toast.success("Form submitted successfully");
-    // } catch (error) {
-    //   console.error("Error:", error.message);
-    //   toast.error("An error occurred while submitting the form");
-    // }
+    const details = {
+      userId: id,
+      userType: userType,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      contactNumber: data.contactNumber,
+      email: data.email,
+      aadhar: data.aadhar,
+      panno: data.panno,
+      gst: data.gst,
+      taxType: data.taxType,
+      subCategory: data.subCategory,
+      incomeTaxStatus: data.incomeTaxStatus,
+      businessType: data.businessType,
+      annualIncome: data.annualIncome,
+    };
+    console.log("details", details);
+    try {
+      const response = await Api.put(
+        `/taxManagement/updateTaxAplicationDetails/${record._id}`,
+        details
+      );
+      toast.success("Form submitted successfully");
+    } catch (error) {
+      console.error("Error:", error.message);
+      toast.error("An error occurred while submitting the form");
+    }
   };
   return (
     <div>
-      <Header />
       <Container style={{ marginTop: "115px", paddingBottom: "20px" }}>
         <form>
           <h4 style={{ textAlign: "center", color: "#00397f" }}>
@@ -383,7 +402,6 @@ function TaxsManagementEdit() {
         </form>
         <ToastContainer />
       </Container>
-      <Footer />
     </div>
   );
 }
