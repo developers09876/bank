@@ -235,18 +235,19 @@ const LoginPage = () => {
                     onChange={(e) => {
                       const value = e.target.value;
                       setEmail(value);
-
-                      // Email validation regex
+                      setErrors({ ...errors, email: "" }); // Clear error while typing
+                    }}
+                    onBlur={() => {
                       const emailRegex =
                         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-                      if (emailRegex.test(value) || value === "") {
-                        setErrors({ ...errors, email: "" }); // Clear error if valid
-                      } else {
+                      if (!emailRegex.test(email)) {
                         setErrors({
                           ...errors,
                           email: "Enter a valid email address",
                         });
+                      } else {
+                        setErrors({ ...errors, email: "" }); // Clear error if valid
                       }
                     }}
                     error={!!errors.email}
@@ -254,8 +255,8 @@ const LoginPage = () => {
                   />
 
                   <Divider>Or</Divider>
-                  {/* 
-                  <TextField
+
+                  {/* <TextField
                     label="Phone Number"
                     type="tel"
                     variant="outlined"
@@ -284,7 +285,7 @@ const LoginPage = () => {
 
                       if (/^\d*$/.test(value) && value.length <= 10) {
                         setMobile(value);
-                        setErrors({ ...errors, mobile: "" }); // Clear error when valid
+                        setErrors({ ...errors, mobile: "" });
                       } else if (value.length > 10) {
                         setErrors({
                           ...errors,
@@ -292,7 +293,7 @@ const LoginPage = () => {
                         });
                       }
                     }}
-                    inputProps={{ maxLength: 10 }} // Prevents typing more than 10 characters
+                    inputProps={{ maxLength: 10 }}
                     error={!!errors.mobile}
                     helperText={errors.mobile}
                   />

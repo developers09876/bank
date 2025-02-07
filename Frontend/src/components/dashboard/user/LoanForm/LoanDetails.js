@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Api from "../../../../Api";
 import { Controller, useForm } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import { Select } from "antd";
 import "../../../dashboard/user/MyProfile.scss";
+import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation } from "react-router-dom";
-
+// import Header from "../../Layout/Header";
+// import Footer from "../../Layout/Footer";
+// const { Option, OptGroup } = Select;
 function LoanDetails() {
   const {
     register,
@@ -26,12 +27,7 @@ function LoanDetails() {
   const [employmentStatus, setEmploymentStatus] = useState("");
   const [salaryPersonDoc, setSalaryPersonDoc] = useState(null);
   const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null);
-  const [loanData, setLoanData] = useState([]);
-
-  const { state } = useLocation();
-  const record = state?.record;
-  console.log("record._id", record._id);
-
+  const [showVehicleOptions, setShowVehicleOptions] = useState(false);
   const handleSalaryPersonFileUpload = (event) => {
     setSalaryPersonDoc(event.target.files[0]);
   };
@@ -40,7 +36,9 @@ function LoanDetails() {
     setBusinessOwnerDoc(event.target.files[0]);
   };
 
+  const loanApplicationId = localStorage.getItem("loanApplicationId");
   const userType = localStorage.getItem("userType");
+  const referCode = localStorage.getItem("referCode");
 
   const handleFormSubmit = async (data) => {
     console.log("step1", data);
@@ -104,9 +102,9 @@ function LoanDetails() {
         : null;
 
     const Details = {
+      referCode: referCode || "",
       loanAgentName: data.loanAgentName,
       loanAgentContactNumber: data.loanAgentContactNumber,
-
       identityProof: identityProofUrl,
       addressProof: addressProofUrl,
       annualIncome: data.annualIncome,
@@ -117,6 +115,8 @@ function LoanDetails() {
       financialProof: financialProofUrl,
       incomeDetails: data.incomeDetails,
       loanAmount: data.loanAmount,
+      loanType: data.loanType,
+      vehicleType: data.vehicleType,
       loanPurpose: data.loanPurpose,
       nomineeName: data.nomineeName,
       nomineeAddress: data.nomineeAddress,
@@ -130,7 +130,7 @@ function LoanDetails() {
 
     try {
       const response = await Api.put(
-        `/loanform/updateloanapplications/${record._id}`,
+        `/loanform/updateloanapplications/${loanApplicationId}`,
         Details
       );
       console.log(response, "Form submitted successfully");
@@ -140,22 +140,6 @@ function LoanDetails() {
       toast.error("An error occurred while submitting the form");
     }
   };
-
-  useEffect(() => {
-    const fetchLoanApplicationData = async () => {
-      try {
-        const response = await Api.get(`/loanform/getby/${record._id}`);
-        const OneApplication = response.data;
-
-        if (OneApplication) {
-          reset(OneApplication);
-        }
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    fetchLoanApplicationData();
-  }, [record._id, reset]);
 
   return (
     <div>
@@ -485,10 +469,101 @@ function LoanDetails() {
                       </div>
                     </Col>
 
+                    {/* <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Loan Type</label>
+                        <Controller
+                          name="loanType"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Purpose"
+                            >
+                              <Option value="Home Loan">Home Loan</Option>
+                              <Option value="Vehicle Loan">Vehicle Loan</Option>
+                              <Option value="Business Loan"> Business Loan</Option>
+                              <Option value="Personal Loan"> Personal Loan</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.loanType && (
+                          <p className="text-danger">Loan Type is required</p>
+                        )}
+                      </div>
+                    </Col> */}
+<Col xs={12} md={6} lg={4}>
+        <div>
+          <label className="vendorpage_labelCss">Loan Type</label>
+          <Controller
+            name="loanType"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                className="inputcolumn_drp"
+                placeholder="Select Purpose"
+                onChange={(value) => {
+                  field.onChange(value);
+                  setShowVehicleOptions(value === "Vehicle Loan");
+                }}
+              >
+                <Option value="Home Loan">Home Loan( TopUp )</Option>
+                <Option value="Vehicle Loan">Vehicle Loan</Option>
+                <Option value="Business Loan">Business Loan( TopUp )</Option>
+                <Option value="Loan Transfer">Loan Transfer( BT TopUp )</Option>
+                <Option value="LAP">LAP( Loan against to property )</Option>
+                <Option value="Personal Loan">Personal Loan</Option>
+                <Option value="Construction Loan">Construction Loan</Option>
+              </Select>
+            )}
+          />
+          {errors.loanType && (
+            <p className="text-danger">Loan Type is required</p>
+          )}
+        </div>
+      </Col>
+
+      {showVehicleOptions && (
+        <Col xs={12} md={6} lg={4}>
+          <div>
+            <label className="vendorpage_labelCss">Vehicle Type</label>
+            <Controller
+              name="vehicleType"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  className="inputcolumn_drp"
+                  placeholder="Select Vehicle Type"
+                >
+                  <Option value="Bike Loan">Bike Loan</Option>
+                  <Option value="Car Loan">Car Loan</Option>
+                  <Option value="Lorry Loan">Lorry Loan</Option>
+                  <Option value="Used Vehicle">Used Vehicle</Option>
+                  <Option value="New Vehicle">New Vehicle</Option>
+                  <Option value="Heavy Vehicle">Heavy Vehicle</Option>
+                  <Option value="Other Vehicle">Other Vehicle</Option>
+                </Select>
+              )}
+            />
+            {errors.vehicleType && (
+              <p className="text-danger">Vehicle Type is required</p>
+            )}
+          </div>
+        </Col>
+      )}
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Purpose of the Loan
+                          Sub-Loan Type
                         </label>
                         <Controller
                           name="loanPurpose"
@@ -501,9 +576,9 @@ function LoanDetails() {
                               className="inputcolumn_drp"
                               placeholder="Select Purpose"
                             >
-                              <Option value="Purchase">Purchase</Option>
-                              <Option value="Construction">Construction</Option>
-                              <Option value="Renovation">Renovation</Option>
+                              <Option value="Home Purchase">Home Purchase</Option>
+                              <Option value="Home Construction"> Home Construction</Option>
+                              <Option value="Home Renovation">Home Renovation</Option>
                             </Select>
                           )}
                         />

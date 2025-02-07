@@ -1,17 +1,15 @@
-import { Table, Input, Space, Pagination, Modal, Row, Col } from "antd";
+import { Table, Input, Space } from "antd";
 import React, { useEffect, useState } from "react";
-import { Container, Button } from "react-bootstrap";
-import { FaPlus } from "react-icons/fa6";
+import { Container } from "react-bootstrap";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Api from "../../../Api";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 
 function InsuranceTaskManagement() {
   const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  console.log("step1", data);
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -23,7 +21,9 @@ function InsuranceTaskManagement() {
   useEffect(() => {
     fetchInsuranceTasks();
   }, []);
-
+  const handleEdit = (record) => {
+    // navigate(`/user/loanform/${record._id}`, { state: { record } });
+  };
   useEffect(() => {
     const filtered = data.filter((item) => {
       const firstname = item.firstname || "";
@@ -107,9 +107,22 @@ function InsuranceTaskManagement() {
       key: "phone",
     },
     {
-      title: "Business Type",
-      dataIndex: "businessType",
-      key: "businessType",
+      title: "Policy Type",
+      dataIndex: "PolicyType",
+      key: "PolicyType",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
     },
 
     {
@@ -118,14 +131,40 @@ function InsuranceTaskManagement() {
       key: "action",
       render: (text, record) => {
         return (
-          <Button
-            type="primary"
-            size="small"
-            style={{ background: "#4096ff", color: "#fff" }}
-            onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
+          // <Button
+          //   type="primary"
+          //   style={{ background: "#4096ff", color: "#fff" }}
+          //   onClick={() => handleViewDetails(record)}
+          // >
+          //   View
+          // </Button>
+          <>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+            {/* <DownloadOutlined
+              style={{
+                fontSize: "18px",
+                color: "#52c41a",
+            cursor: "pointer",
+              }}
+          /> */}
+          </>
         );
       },
     },
@@ -149,18 +188,6 @@ function InsuranceTaskManagement() {
                 prefix={<SearchOutlined />}
               />
             </Space>
-            {/* <Button
-              type="primary"
-              onClick={() => navigate("/adminLoan/createlead")}
-              style={{
-                display: "inline",
-                float: "right",
-                backgroundColor: "#00397f",
-              }}
-            >
-              <FaPlus style={{ display: "inline", color: "white" }} />
-              Add New
-            </Button> */}
           </div>
           <Table
             dataSource={paginatedData}
@@ -178,190 +205,6 @@ function InsuranceTaskManagement() {
           />
         </div>
       </Container>
-      {/* <Modal
-        title="Task Management Details"
-        visible={isModalVisible}
-        onOk={handleModalOk}
-        onCancel={handleModalCancel}
-        footer={null}
-        style={{ fontSize: "18px" }}
-        // bodyStyle={{ maxHeight: "70vh", overflowY: "auto" }}
-      >
-        {selectedRecord && (
-          <div>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Name</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {`${selectedRecord.firstname} ${selectedRecord.lastname}`}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Email</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.email}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Phone</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.contactNumber}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Aadhar Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.aadhar}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>PAN Card Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.panno}
-                </p>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Business Type</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.businessType}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Income Tax Status</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.incomeTaxStatus}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>GST Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.gst}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Tax paid for last year</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.taxPaid}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Annual Income</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.annualIncome}
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  <strong>Admin Message</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px", padding: "3px" }}>
-                  {selectedRecord.description}
-                </p>
-              </Col>
-            </Row>
-          </div>
-        )}
-      </Modal> */}
     </div>
   );
 }

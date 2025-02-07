@@ -194,7 +194,7 @@ const ReferalLogin = () => {
                     </Typography>
                   </Box>
 
-                  <TextField
+                  {/* <TextField
                     label="Email"
                     variant="outlined"
                     fullWidth
@@ -220,7 +220,34 @@ const ReferalLogin = () => {
                     }}
                     error={!!errors.email}
                     helperText={errors.email}
+                  /> */}
+                   <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    margin="normal"
+                    value={email}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setEmail(value);
+                      setErrors({ ...errors, email: "" }); // Clear error while typing
+                    }}
+                    onBlur={() => {
+                      const emailRegex =
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                  
+                      if (!emailRegex.test(email)) {
+                        setErrors({ ...errors, email: "Enter a valid email address" });
+                      } else {
+                        setErrors({ ...errors, email: "" }); // Clear error if valid
+                      }
+                    }}
+                    error={!!errors.email}
+                    helperText={errors.email}
                   />
+                  
+                  
                   <Divider>Or</Divider>
 
                   <TextField

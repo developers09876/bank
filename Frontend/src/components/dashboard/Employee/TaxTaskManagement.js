@@ -1,17 +1,15 @@
-import { Table, Input, Space, Pagination, Modal, Row, Col } from "antd";
+import { Table, Input, Space } from "antd";
 import React, { useEffect, useState } from "react";
-import { Container, Button } from "react-bootstrap";
-import { FaPlus } from "react-icons/fa6";
+import { Container } from "react-bootstrap";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Api from "../../../Api";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 
 function TaxTaskManagement() {
   const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  console.log("step1", data);
   const [loading, setLoading] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -21,7 +19,9 @@ function TaxTaskManagement() {
   useEffect(() => {
     fetchTaxTasks();
   }, []);
-
+  const handleEdit = (record) => {
+    // navigate(`/user/loanform/${record._id}`, { state: { record } });
+  };
   useEffect(() => {
     const filtered = data.filter((item) => {
       const firstname = item.firstname || "";
@@ -95,6 +95,19 @@ function TaxTaskManagement() {
       dataIndex: "businessType",
       key: "businessType",
     },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
 
     {
       title: "Action",
@@ -102,14 +115,26 @@ function TaxTaskManagement() {
       key: "action",
       render: (text, record) => {
         return (
-          <Button
-            type="primary"
-            size="small"
-            style={{ background: "#4096ff", color: "#fff" }}
-            onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
+          <>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
         );
       },
     },
