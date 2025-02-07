@@ -162,16 +162,16 @@ const Landing = () => {
   ];
 
   const tax = [
-    {
-      title: "INCOME TAX FILING",
-      description:
-        "Get assistance with filing your annual income tax returns accurately and on time.",
-      buttonText: "File Now",
-      // link: "/taxpage",
+    // {
+    //   title: "INCOME TAX FILING",
+    //   description:
+    //     "Get assistance with filing your annual income tax returns accurately and on time.",
+    //   buttonText: "File Now",
+    //   // link: "/taxpage",
 
-      link: "/TaxForms",
-      icon: "fas fa-file-invoice-dollar",
-    },
+    //   link: "/TaxForms",
+    //   icon: "fas fa-file-invoice-dollar",
+    // },
     {
       title: "GST REGISTRATION",
       description:
