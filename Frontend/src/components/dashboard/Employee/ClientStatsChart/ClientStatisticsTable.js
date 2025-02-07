@@ -13,7 +13,7 @@ const ClientStatisticsTable = () => {
   console.log("URL Params - Status:", status);
   console.log("URL Params - Category:", category);
 
-  // Fetch Loans
+
   useEffect(() => {
     const fetchLoans = async () => {
       try {
@@ -44,43 +44,68 @@ const ClientStatisticsTable = () => {
     };
 
     fetchLoans();
-  }, [status, category]);
+  }, [status, category, userId]);
 
-  // Fetch Insurances
+
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
-        if (category === "insurance" ) {
+        if (category === "insurance") {
           const response = await axios.get(
             `http://localhost:5000/insuranceManagement/getbyEmployeeid/${userId}`
           );
-          setInsurances(response.data);
+          let filteredInsurances = response.data;
           console.log("API Response (Insurances):", response.data);
+  
+          
+          if (status === "completed") {
+            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "1");
+          } else if (status === "rejected") {
+            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "2");
+          } else if (status === "pending") {
+            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "Pending");
+          }
+  
+          console.log("Filtered Insurances:", filteredInsurances);
+          setInsurances(filteredInsurances);
         }
       } catch (error) {
         console.error("Error fetching insurances:", error);
       }
     };
+  
     fetchInsurances();
-  }, [category]);
-
-  // Fetch Taxes
+  }, [status, category, userId]);
+  
   useEffect(() => {
     const fetchTaxes = async () => {
       try {
         if (category === "tax") {
           const response = await axios.get(
-           `http://localhost:5000/taxManagement/getbyEmployeeid/${userId}`
+            `http://localhost:5000/taxManagement/getbyEmployeeid/${userId}`
           );
-          setTaxes(response.data);
+          let filteredTaxes = response.data;
           console.log("API Response (Taxes):", response.data);
+  
+          
+          if (status === "completed") {
+            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "1");
+          } else if (status === "rejected") {
+            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "2");
+          } else if (status === "pending") {
+            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "Pending");
+          }
+  
+          console.log("Filtered Taxes:", filteredTaxes);
+          setTaxes(filteredTaxes);
         }
       } catch (error) {
         console.error("Error fetching taxes:", error);
       }
     };
+  
     fetchTaxes();
-  }, [category]);
+  }, [status, category, userId]);
 
   // Define columns for Loans Table
   const loancolumns = [
@@ -119,6 +144,19 @@ const ClientStatisticsTable = () => {
     },
     { title: "Policy Type", dataIndex: "PolicyType", key: "PolicyType" },
     { title: "Sum Assured", dataIndex: "sumAssured", key: "sumAssured" },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
   ];
 
   // Define columns for Taxes Table
@@ -132,6 +170,19 @@ const ClientStatisticsTable = () => {
     },
     { title: "Business Type", dataIndex: "businessType", key: "businessType" },
     { title: "Annual Income", dataIndex: "annualIncome", key: "annualIncome" },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
   ];
 
   return (
