@@ -2,7 +2,7 @@ import { Table, Input, Space, Pagination, Modal, Row, Col } from "antd";
 import React, { useEffect, useState } from "react";
 import { Container, Button } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
-import { SearchOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Api from "../../../Api";
@@ -71,11 +71,11 @@ function LoanTaskManagement() {
   );
 
   const handleViewDetails = (record) => {
-    console.log("record", record);
-    navigate(`/employee/loantaskdetails/${record._id}`, { state: { record } });
-    // navigate(`leadtaskdetails`);
-  };
-
+    navigate(`/employee/loandetails/${record._id}`, {state: { record } })
+   };
+   const handleEdit = (record) => {
+     navigate(`/employee/editloan/${record._id}`, { state: { record } });
+   };
   const columns = [
     {
       title: "Name",
@@ -110,14 +110,25 @@ function LoanTaskManagement() {
       key: "action",
       render: (text, record) => {
         return (
-          <Button
-            type="primary"
-            size="small"
-            style={{ background: "#4096ff", color: "#fff" }}
-            onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
+          <>
+          <EyeOutlined
+          style={{
+            fontSize: "18px",
+            color: "#4096ff",
+            cursor: "pointer",
+            marginRight: "15px",
+          }}
+          onClick={() => handleViewDetails(record)}
+        />
+        <EditOutlined
+          style={{
+            fontSize: "18px",
+            color: "#ff4d4f",
+            cursor: "pointer",
+          }}
+          onClick={() => handleEdit(record)}
+        />
+      </>
         );
       },
     },
