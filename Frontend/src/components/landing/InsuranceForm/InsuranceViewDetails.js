@@ -19,13 +19,13 @@ const InsuranceViewDetails = ({ collapsed }) => {
               <h3>Insurance Details</h3>
             </center>
           </div>
-          <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
-            <Col lg={7}>
+          <Row className="px-4 py-3">
+            <Col>
               <Card>
-                <Row className="personal_card_row">
+                <Row>
                   <Col
                     className="firstrowcol px-1 py-1"
-                    lg={4}
+                    lg={3}
                     style={{
                       height: "auto",
                       alignContent: "center",
@@ -81,7 +81,7 @@ const InsuranceViewDetails = ({ collapsed }) => {
                     </Descriptions>
                     </Col> */}
 
-                  <Col lg={8} className="px-3 py-1">
+                  <Col lg={9} className="px-3 py-1">
                     <center>
                       <h6>Other Information</h6>
                     </center>
@@ -108,7 +108,7 @@ const InsuranceViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2">
             {/* <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Personal Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
@@ -136,7 +136,7 @@ const InsuranceViewDetails = ({ collapsed }) => {
               </Col> */}
             <Col lg={12} md={12}>
               <Card
-                style={{ width: "60%" }}
+                style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Insurance Details"
               >
@@ -157,6 +157,40 @@ const InsuranceViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
+          {record.employeeId && (
+            <Row className="px-2">
+              <Col lg={12} md={12}>
+                <Card
+                  style={{ width: "100%" }}
+                  className="loandetail-custom-card"
+                  title="Task Assigned Details"
+                >
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                    {/* <Descriptions.Item label="Employee Name">
+                                      {employeeName}
+                                    </Descriptions.Item> */}
+                    <Descriptions.Item label="Employee Type">
+                      {record.employeeType}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Employee Category">
+                      {record.employeeCategory}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Description">
+                      {record.description}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Start Date">
+                      {record.startDate
+                        ? record.startDate.split("T")[0]
+                        : "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="End Date">
+                      {record.endDate ? record.endDate.split("T")[0] : "N/A"}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Col>
+            </Row>
+          )}
         </div>
       </div>
     </div>

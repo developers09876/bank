@@ -515,9 +515,11 @@ function LoanDetails() {
                   setShowVehicleOptions(value === "Vehicle Loan");
                 }}
               >
-                <Option value="Home Loan">Home Loan</Option>
+                <Option value="Home Loan">Home Loan( TopUp )</Option>
                 <Option value="Vehicle Loan">Vehicle Loan</Option>
-                <Option value="Business Loan">Business Loan</Option>
+                <Option value="Business Loan">Business Loan( TopUp )</Option>
+                <Option value="Loan Transfer">Loan Transfer( BT TopUp )</Option>
+                <Option value="LAP">LAP( Loan against to property )</Option>
                 <Option value="Personal Loan">Personal Loan</Option>
                 <Option value="Construction Loan">Construction Loan</Option>
               </Select>
@@ -546,10 +548,11 @@ function LoanDetails() {
                 >
                   <Option value="Bike Loan">Bike Loan</Option>
                   <Option value="Car Loan">Car Loan</Option>
+                  <Option value="Lorry Loan">Lorry Loan</Option>
                   <Option value="Used Vehicle">Used Vehicle</Option>
                   <Option value="New Vehicle">New Vehicle</Option>
                   <Option value="Heavy Vehicle">Heavy Vehicle</Option>
-                  <Option value="Any Vehicle">Any Vehicle</Option>
+                  <Option value="Other Vehicle">Other Vehicle</Option>
                 </Select>
               )}
             />
@@ -562,7 +565,7 @@ function LoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Sub Category
+                          Sub-Loan Type
                         </label>
                         <Controller
                           name="loanPurpose"
@@ -575,9 +578,9 @@ function LoanDetails() {
                               className="inputcolumn_drp"
                               placeholder="Select Purpose"
                             >
-                              <Option value="Purchase">Purchase</Option>
-                              <Option value="Construction">Construction</Option>
-                              <Option value="Renovation">Renovation</Option>
+                              <Option value="Home Purchase">Home Purchase</Option>
+                              <Option value="Home Construction"> Home Construction</Option>
+                              <Option value="Home Renovation">Home Renovation</Option>
                             </Select>
                           )}
                         />
