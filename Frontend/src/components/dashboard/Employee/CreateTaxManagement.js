@@ -327,7 +327,7 @@ function CreateTaxmangement() {
                 )}
               </Col>
             )}
-            <Col xs={12} md={6} lg={4}>
+            {/* <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">
                   Income Tax Filing Status
@@ -352,7 +352,7 @@ function CreateTaxmangement() {
                   <p className="text-danger">Select filing status</p>
                 )}
               </div>
-            </Col>
+            </Col> */}
 
             <Col xs={12} md={6} lg={4}>
               <div>
