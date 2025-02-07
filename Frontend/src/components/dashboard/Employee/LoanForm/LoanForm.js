@@ -21,13 +21,13 @@ function LoanForm() {
     control,
     formState: { errors },
   } = useForm();
-  
+
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
 
-const { state } = useLocation();
-    const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
 
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -141,25 +141,24 @@ const { state } = useLocation();
     const fetchLoanApplicationData = async () => {
       try {
         const response = await Api.get(`/loanform/getbyEmployeeid/${userid}`);
-        console.log('response', response)
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
+        console.log("response", response);
+        const filterOneApplication = response.data.filter(
+          (application) => application._id === record._id
+        );
+        console.log("Applicationresponse", response.data);
+        console.log("filterOneApplication", filterOneApplication[0]);
         const formattedDob = filterOneApplication[0].dob
-            ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
-            : "";
+          ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
+          : "";
         if (filterOneApplication) {
-          reset({...filterOneApplication[0],
-            dob: formattedDob
-          }); 
+          reset({ ...filterOneApplication[0], dob: formattedDob });
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
-
 
   const loanAmount = watch("totalChildren");
 
