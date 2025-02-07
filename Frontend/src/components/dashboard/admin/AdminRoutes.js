@@ -24,6 +24,7 @@ import ClientStatisticsPage from "./ClientStatsChart/ClientStatisticsPage";
 import ClientStatisticsTable from "./ClientStatsChart/ClientStatisticsTable";
 import UserDetailsPage from "./UserDetailsPage";
 import EmployeeDetailsPage from "./EmployeeDetailsPage";
+import InsuranceEditDetails from "./InsuranceEditDetails";
 
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
@@ -60,6 +61,10 @@ export const AdminRoutes = [
   {
     path: "insuranceManagementdetails/:id",
     element: <InsuranceManagementDetails />,
+  },
+  {
+    path: "insuranceEditdetails/:id",
+    element: <InsuranceEditDetails />,
   },
 
   { path: "loandetails/:id", element: <LoanDetails /> },
