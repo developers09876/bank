@@ -39,10 +39,10 @@ const LoanManagements = ({ collapsed }) => {
   };
 
    const handleViewDetails = (record) => {
-   navigate(`/adminLoan/loandetails/${record._id}`, {state: { record } })
+   navigate(`/employee/loandetails/${record._id}`, {state: { record } })
   };
   const handleEdit = (record) => {
-    navigate(`/adminLoan/loanform/${record._id}`, { state: { record } });
+    navigate(`/employee/editloan/${record._id}`, { state: { record } });
   };
 
 

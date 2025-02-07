@@ -76,27 +76,40 @@ function InsuranceManagement() {
 
   const columns = [
     {
-      title: "Name",
+      title: "Created On",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => new Date(text).toLocaleDateString(),
+    },
+    {
+      title: "Application ID",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
+      title: "Customer Name",
       dataIndex: "name",
       key: "name",
       render: (_, record) => `${record.firstname} ${record.lastname}`,
     },
     {
-      title: "Email Id",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
       title: "Phone Number",
       dataIndex: "contactNumber",
-      key: "phone",
+      key: "contactNumber",
     },
     {
-      title: "Created By",
-      dataIndex: "userType",
-      key: "userType",
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
     },
-
     {
       title: "Action",
       dataIndex: "action",
