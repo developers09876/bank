@@ -32,6 +32,66 @@ export async function createTaxManagementDb(req, res, next) {
   }
 }
 
+export async function updateTaxApplicationDetails(req, res, next) {
+  try {
+    const applicationId = req.params.id;
+
+    if (!applicationId) {
+      return res.status(400).json({
+        message: "Application ID is required.",
+      });
+    }
+
+    console.log("Application ID:", applicationId);
+
+    const data = req.body;
+    console.log("Request Data:", data);
+
+    const details = {
+      userId: data.userId,
+      userType: data.userType,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      contactNumber: data.contactNumber,
+      email: data.email,
+      aadhar: data.aadhar,
+      panno: data.panno,
+      gst: data.gst,
+      taxType: data.taxType,
+      subCategory: data.subCategory,
+      incomeTaxStatus: data.incomeTaxStatus,
+      businessType: data.businessType,
+      annualIncome: data.annualIncome,
+    };
+
+    console.log("Prepared Details:", details);
+
+    const loanApplication = await taxManagementDb.findByIdAndUpdate(
+      applicationId,
+      details,
+      { new: true } // Return the updated document
+    );
+
+    if (!loanApplication) {
+      return res.status(404).json({
+        message: "Tax application not found.",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Updated Successfully",
+      data: loanApplication,
+    });
+  } catch (err) {
+    console.error("Error updating loan application:", err);
+    res.status(500).json({
+      message: "An error occurred while processing your request.",
+      error: err.message,
+    });
+    next(err);
+  }
+}
+
 export async function updateTaxManagementDb(req, res, next) {
   try {
     const { id } = req.params;
