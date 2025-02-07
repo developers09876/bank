@@ -9,11 +9,12 @@ import LoanDetails from "./LoanDetails";
 import Rewards from "./Rewards";
 import Insurance from "../../landing/InsuranceForm/Insurance";
 import Tax from "../../landing/TaxFormTab/Tax";
-import LeadGeneration  from"./LeadGeneration";
+import LeadGeneration from "./LeadGeneration";
 import CreateLead from "./CreateLead";
-import LoanForm from "../user/LoanForm/LoanFormProfileTab"
+import LoanForm from "../user/LoanForm/LoanFormProfileTab";
 import InsuranceViewDetails from "../../landing/InsuranceForm/InsuranceViewDetails";
 import TaxViewDetails from "../../landing/TaxFormTab/TaxViewDetails";
+import TaxEditDetails from "../../landing/TaxFormTab/TaxEditDetails";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
   {
@@ -39,7 +40,8 @@ export const UserRoutes = [
   {
     path: "/user/insu",
     element: <Insurance />,
-  },{
+  },
+  {
     path: "/user/InsuranceViewdetails/:id",
     element: <InsuranceViewDetails />,
   },
@@ -57,6 +59,10 @@ export const UserRoutes = [
     element: <TaxViewDetails />,
   },
   {
+    path: "/user/TaxEditdetails/:id",
+    element: <TaxEditDetails />,
+  },
+  {
     path: "/user/taxDetails",
     element: <TaxDetails />,
   },
@@ -66,7 +72,7 @@ export const UserRoutes = [
   },
   {
     path: "/user/createlead",
-    element: <CreateLead/>,
+    element: <CreateLead />,
   },
   {
     path: "/user/feedback",
