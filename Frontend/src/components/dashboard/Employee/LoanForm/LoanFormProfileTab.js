@@ -10,6 +10,7 @@ import Kycvendor from "./LoanKfc";
 function LoanFormProfileTab() {
    const { state } = useLocation();
     const record = state?.record;
+    console.log('record', record)
   return (
     <div>
       <br />
