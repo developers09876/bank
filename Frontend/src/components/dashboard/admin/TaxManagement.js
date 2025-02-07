@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 
 function TaxManagementAdmin() {
@@ -19,6 +20,11 @@ function TaxManagementAdmin() {
   useEffect(() => {
     fetchLeads();
   }, []);
+  const handleEdit = (record) => {
+    navigate(`/admin/editTaxManagement/${record._id}`, {
+      state: { record },
+    });
+  };
 
   useEffect(() => {
     const filtered = data.filter((item) => {
@@ -113,15 +119,30 @@ function TaxManagementAdmin() {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text, record) => (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => handleViewDetails(record)}
-        >
-          View
-        </button>
-      ),
+      render: (text, record) => {
+        return (
+          <>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
+        );
+      },
     },
   ];
 
