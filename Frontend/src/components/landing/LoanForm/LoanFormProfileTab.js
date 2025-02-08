@@ -39,7 +39,7 @@ import OurProfile from "./LoanForm";
 import KycComplaince from "./LoanKfc";
 import LoanDetails from "./LoanDetails";
 import {TbCircleNumber1Filled,TbCircleNumber2Filled,TbCircleNumber3Filled} from "react-icons/tb";
-function LoanFormProfileTab() {
+function UserLoanFormProfileTab() {
   return (
     <div>
       <br />
@@ -118,4 +118,4 @@ function LoanFormProfileTab() {
   );
 }
 
-export default LoanFormProfileTab;
+export default UserLoanFormProfileTab;
