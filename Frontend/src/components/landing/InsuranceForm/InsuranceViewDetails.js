@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import { Layout, Card, Descriptions, Button } from "antd";
 import "../../dashboard/user/LoanDetails.css";
+import { DownloadOutlined } from "@ant-design/icons";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const InsuranceViewDetails = ({ collapsed }) => {
+  const pdfRef = useRef();
+
   const navigate = useNavigate();
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
+  const handleDownloadPDF = async () => {
+    const input = pdfRef.current;
+    if (!input) return;
 
+    const canvas = await html2canvas(input, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgWidth = 190;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+    pdf.save(`Insurance_Details_${record._id}.pdf`);
+  };
   return (
     <div>
-      <div className="loandetail-container">
+      <div className="loandetail-container" ref={pdfRef}>
         <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
             <center>
@@ -193,6 +211,14 @@ const InsuranceViewDetails = ({ collapsed }) => {
           )}
         </div>
       </div>
+      <Button
+        type="primary"
+        icon={<DownloadOutlined />}
+        onClick={handleDownloadPDF}
+        style={{ marginTop: "20px", marginBottom: "20px", marginLeft: "10px" }}
+      >
+        Download as PDF
+      </Button>
     </div>
   );
 };

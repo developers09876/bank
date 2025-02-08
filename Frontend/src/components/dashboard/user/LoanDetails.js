@@ -38,10 +38,10 @@ const LoanDetails = ({ collapsed }) => {
     pdf.save(`Loan_Details_${record._id}.pdf`);
   };
   return (
-    <div ref={pdfRef}>
+    <div>
       <div className="loandetail-container">
         <div className={collapsed ? "main-content.open" : "main-content"}>
-          <div>
+          <div ref={pdfRef}>
             <center>
               <h3>Loan Details</h3>
             </center>
@@ -425,19 +425,19 @@ const LoanDetails = ({ collapsed }) => {
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
-                <Button
-                  type="primary"
-                  icon={<DownloadOutlined />}
-                  onClick={handleDownloadPDF}
-                  style={{ marginTop: "20px", marginBottom: "20px" }}
-                >
-                  Download as PDF
-                </Button>
               </Col>
             </Row>
           </div>
         </div>
       </div>
+      <Button
+        type="primary"
+        icon={<DownloadOutlined />}
+        onClick={handleDownloadPDF}
+        style={{ marginTop: "20px", marginBottom: "20px", marginLeft: "10px" }}
+      >
+        Download as PDF
+      </Button>
     </div>
   );
 };

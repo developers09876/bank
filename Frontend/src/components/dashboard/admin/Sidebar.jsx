@@ -44,20 +44,6 @@ function Sidebar({ collapsed }) {
           Employees
         </NavLink>
         {/* <NavLink to="/admin/createjobform" className="main-nav-style">Job Post</NavLink> */}
-
-        <SubMenu
-          // icon={<AiFillProject size={20} className="Nav-Icon1" />}
-          title="Career Path"
-        >
-          <NavLink to="/admin/createjobform">
-            {/* <MdRequestPage className="Nav-Icon" /> */}
-            create job
-          </NavLink>
-          <NavLink to="/admin/jobrequest">
-            {/* <MdSend className="Nav-Icon" /> */}
-            job request
-          </NavLink>
-        </SubMenu>
         <SubMenu
           // icon={<AiFillProject size={20} className="Nav-Icon1" />}
           title="Management"
@@ -79,6 +65,20 @@ function Sidebar({ collapsed }) {
             StockMarket Management
           </NavLink> */}
         </SubMenu>
+        <SubMenu
+          // icon={<AiFillProject size={20} className="Nav-Icon1" />}
+          title="Career Path"
+        >
+          <NavLink to="/admin/createjobform">
+            {/* <MdRequestPage className="Nav-Icon" /> */}
+            create job
+          </NavLink>
+          <NavLink to="/admin/jobrequest">
+            {/* <MdSend className="Nav-Icon" /> */}
+            job request
+          </NavLink>
+        </SubMenu>
+
         <NavLink
           to="/admin/leadgeneration"
           ClassName="main-nav-style"

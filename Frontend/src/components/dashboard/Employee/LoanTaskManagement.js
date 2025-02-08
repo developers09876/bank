@@ -71,11 +71,11 @@ function LoanTaskManagement() {
   );
 
   const handleViewDetails = (record) => {
-    navigate(`/employee/loantaskdetails/${record._id}`, {state: { record } })
-   };
-   const handleEdit = (record) => {
-     navigate(`/employee/editloan/${record._id}`, { state: { record } });
-   };
+    navigate(`/employee/loantaskdetails/${record._id}`, { state: { record } });
+  };
+  const handleEdit = (record) => {
+    navigate(`/employee/editloan/${record._id}`, { state: { record } });
+  };
   const columns = [
     {
       title: "Name",
@@ -103,6 +103,19 @@ function LoanTaskManagement() {
       dataIndex: "loanAmount",
       key: "loanAmount",
     },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
 
     {
       title: "Action",
@@ -111,24 +124,24 @@ function LoanTaskManagement() {
       render: (text, record) => {
         return (
           <>
-          <EyeOutlined
-          style={{
-            fontSize: "18px",
-            color: "#4096ff",
-            cursor: "pointer",
-            marginRight: "15px",
-          }}
-          onClick={() => handleViewDetails(record)}
-        />
-        <EditOutlined
-          style={{
-            fontSize: "18px",
-            color: "#ff4d4f",
-            cursor: "pointer",
-          }}
-          onClick={() => handleEdit(record)}
-        />
-      </>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
         );
       },
     },

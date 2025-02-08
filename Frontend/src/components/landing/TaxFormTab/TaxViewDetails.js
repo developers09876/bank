@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import { Card, Descriptions, Button } from "antd";
 import "../../dashboard/user/LoanDetails.css";
+import { DownloadOutlined } from "@ant-design/icons";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const TaxViewDetails = ({ collapsed }) => {
-  const navigate = useNavigate();
+  const pdfRef = useRef();
+
   const { state } = useLocation();
   const record = state?.record;
-  console.log("record", record);
+  const handleDownloadPDF = async () => {
+    const input = pdfRef.current;
+    if (!input) return;
 
+    const canvas = await html2canvas(input, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgWidth = 190;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+    pdf.save(`Tax_Details_${record._id}.pdf`);
+  };
   return (
     <div>
       <div className="loandetail-container">
-        <div className={collapsed ? "main-content.open" : "main-content"}>
+        <div
+          className={collapsed ? "main-content.open" : "main-content"}
+          ref={pdfRef}
+        >
           <div>
             <center>
               <h3>Tax Details</h3>
@@ -160,6 +179,14 @@ const TaxViewDetails = ({ collapsed }) => {
           </Row>
         </div>
       </div>
+      <Button
+        type="primary"
+        icon={<DownloadOutlined />}
+        onClick={handleDownloadPDF}
+        style={{ marginTop: "20px", marginBottom: "20px", marginLeft: "10px" }}
+      >
+        Download as PDF
+      </Button>
     </div>
   );
 };

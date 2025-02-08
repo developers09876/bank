@@ -77,7 +77,7 @@ const CreateJobForm = () => {
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">Role</label>
-                    <br/>
+                    <br />
                     <select
                       className="inputcolumn-ourProfile"
                       {...register("designation", { required: true })}
@@ -127,6 +127,7 @@ const CreateJobForm = () => {
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">Salary</label>
+                    <br />
                     <input
                       className="inputcolumn-ourProfile"
                       type="number"
