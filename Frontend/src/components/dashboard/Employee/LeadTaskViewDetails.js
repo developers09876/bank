@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import "../user/LoanDetails.css";
 
-function LeadTaskDetails() {
+function LeadTaskDetails({ collapsed }) {
   const location = useLocation();
   const navigate = useNavigate();
   //   const { record } = location.state || {};
   const [remarksFields, setRemarksFields] = useState([]);
- 
+
   const { state } = useLocation();
   const record = state?.record;
   const [isApproved, setIsApproved] = useState(record?.isApproved || false);
@@ -63,7 +63,7 @@ function LeadTaskDetails() {
     try {
       await axios.put(`http://localhost:5000/lead/updatelead/${record._id}`, {
         ...record,
-        isApproved: true
+        isApproved: true,
       });
       setIsApproved(true);
       toast.success("Lead approved successfully");
@@ -95,7 +95,7 @@ function LeadTaskDetails() {
       amount: record.amount,
       addremarks: formattedRemarks,
       panno: record.panno,
-      isApproved: true
+      isApproved: true,
     };
 
     try {
@@ -115,23 +115,22 @@ function LeadTaskDetails() {
   }
 
   return (
-    <div
-      className="loandetail-container"
-      style={{ marginTop: "50px", padding: "20px" }}
-    >
-      <div>
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-          Lead Details
-        </h2>
-        <div>
-          <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
-            <Col lg={8}>
+    <div>
+      <div className="loandetail-container">
+        <div className={collapsed ? "main-content.open" : "main-content"}>
+          <div>
+            <center>
+              <h3>Lead Details</h3>
+            </center>
+          </div>
+          <Row className="px-4 py-3">
+            <Col>
               <Card>
-                <Row className="personal_card_row">
+                <Row>
                   <Col
                     className="firstrowcol px-1 py-1"
-                    lg={6}
-                    md={12}
+                    lg={3}
+                    // md={12}
                     style={{
                       height: "auto",
                       alignContent: "center",
@@ -162,7 +161,7 @@ function LeadTaskDetails() {
                     <p>{record.contactNumber}</p>
                   </Col>
 
-                  <Col lg={6} md={12} className="px-3 py-1">
+                  <Col lg={9} className="px-3 py-1">
                     <center>
                       <h6>Other Information</h6>
                     </center>
@@ -190,10 +189,10 @@ function LeadTaskDetails() {
             </Col>
           </Row>
           {record.amount && (
-            <Row style={{ textAlign: "-webkit-center" }}>
+            <Row className="px-2">
               <Col lg={12} md={12}>
                 <Card
-                  style={{ width: "60%" }}
+                  style={{ width: "100%" }}
                   className="loandetail-custom-card"
                   title="Loan Details"
                 >
@@ -210,10 +209,10 @@ function LeadTaskDetails() {
             </Row>
           )}
           {record.insuranceType && (
-            <Row style={{ textAlign: "-webkit-center" }}>
+            <Row className="px-2">
               <Col lg={12} md={12}>
                 <Card
-                  style={{ width: "60%" }}
+                  style={{ width: "100%" }}
                   className="loandetail-custom-card"
                   title="Insurance Details"
                 >
@@ -236,10 +235,10 @@ function LeadTaskDetails() {
           {/* {record.addremarks && record.addremarks.length > 0 ? (
           record.addremarks.map((remark, index) => ( */}
           {/* <div key={index} style={{ marginBottom: "10px" }}> */}
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2">
             <Col lg={12} md={12}>
               <Card
-                style={{ width: "60%" }}
+                style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Reminders"
               >
@@ -269,90 +268,90 @@ function LeadTaskDetails() {
         ) : (
           <p>No reminders available.</p>
         )} */}
-        </div>
-        <div className="text-center my-3">
-        {!isApproved ? (
-          <Button variant="success" onClick={handleApprove}>
-            Approve
-          </Button>
-        ) : (
-          <h4 className="text-success">Approved</h4>
-        )}
-      </div>
-      {isApproved && (
-        <div className="mt-3">
-          <h3>Add Remarks</h3>
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
-            {remarksFields.map((field, index) => (
-              <Row key={index} className="mb-3">
-                <Col lg={8} md={12}>
-                  <label>Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    {...register(`date_${index}`, { required: true })}
-                  />
-                  {errors[`date_${index}`] && (
-                    <p className="text-danger">Date is required</p>
-                  )}
-                </Col>
-                <Col xs={24} md={12} lg={8}>
-                  <label>Remarks</label>
-                  <textarea
-                    className="form-control"
-                    {...register(`remarks_${index}`, { required: true })}
-                    placeholder="Remarks"
-                  />
-                  {errors[`remarks_${index}`] && (
-                    <p className="text-danger">Remarks are required</p>
-                  )}
-                </Col>
-                <Col xs={24} md={12} lg={8}>
-                  <label>Status</label>
-                  <select
-                    className="form-control"
-                    {...register(`status_${index}`, { required: true })}
+
+          <div className="text-center my-3">
+            {!isApproved ? (
+              <Button variant="success" onClick={handleApprove}>
+                Approve
+              </Button>
+            ) : (
+              <h4 className="text-success">Approved</h4>
+            )}
+          </div>
+          <div className="mt-3">
+            <h3>Add Remarks</h3>
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-3 p-3">
+              {remarksFields.map((field, index) => (
+                <Row key={index} className="mb-3">
+                  <Col lg={4} md={6} xs={12}>
+                    <label>Date</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      {...register(`date_${index}`, { required: true })}
+                    />
+                    {errors[`date_${index}`] && (
+                      <p className="text-danger">Date is required</p>
+                    )}
+                  </Col>
+                  <Col lg={4} md={6} xs={12}>
+                    <label>Status</label>
+                    <select
+                      className="form-control"
+                      {...register(`status_${index}`, { required: true })}
+                    >
+                      <option value="">-- SELECT --</option>
+                      <option value="Rejected">Rejected</option>
+                      <option value="In-Progress">In-Progress</option>
+                      <option value="Approved">Approved</option>
+                    </select>
+                    {errors[`status_${index}`] && (
+                      <p className="text-danger">Status is required</p>
+                    )}
+                  </Col>
+                  <Col lg={4} md={6} xs={12}>
+                    <label>Remarks</label>
+                    <textarea
+                      className="form-control"
+                      {...register(`remarks_${index}`, { required: true })}
+                      placeholder="Remarks"
+                    />
+                    {errors[`remarks_${index}`] && (
+                      <p className="text-danger">Remarks are required</p>
+                    )}
+                  </Col>
+                  <Col
+                    lg={4}
+                    md={6}
+                    xs={12}
+                    className="d-flex align-items-center"
                   >
-                    <option value="">-- SELECT --</option>
-                    <option value="Rejected">Rejected</option>
-                    <option value="In-Progress">In-Progress</option>
-                    <option value="Approved">Approved</option>
-                  </select>
-                  {errors[`status_${index}`] && (
-                    <p className="text-danger">Status is required</p>
-                  )}
-                </Col>
-                <Col
-                  xs={24}
-                  md={12}
-                  lg={8}
-                  className="d-flex align-items-center"
-                >
-                  {!field.prefilled && remarksFields.length > 1 && (
+                    {!field.prefilled && remarksFields.length > 1 && (
+                      <button
+                        type="button"
+                        className="btn btn-danger me-2"
+                        onClick={() => removeRemarkField(index)}
+                      >
+                        -
+                      </button>
+                    )}
                     <button
                       type="button"
-                      className="btn btn-danger"
-                      onClick={() => removeRemarkField(index)}
+                      className="btn btn-success"
+                      onClick={addRemarkField}
                     >
-                      -
+                      +
                     </button>
-                  )}
-                  <button
-                    type="button"
-                    className="btn btn-success ms-2"
-                    onClick={addRemarkField}
-                  >
-                    +
-                  </button>
-                </Col>
-              </Row>
-            ))}
-            <button type="submit" className="btn btn-primary mt-3">
-              Submit
-            </button>
-          </form>
+                  </Col>
+                </Row>
+              ))}
+
+              <button type="submit" className="btn btn-primary mt-3">
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-         )}
       </div>
     </div>
   );

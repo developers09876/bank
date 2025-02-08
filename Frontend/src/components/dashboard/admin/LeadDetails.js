@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Api from "../../../Api";
 
-function LeadDetails() {
+function LeadDetails({ collapsed }) {
   const { state } = useLocation();
   const record = state?.record;
   const [remarksFields, setRemarksFields] = useState([]);
@@ -205,23 +205,22 @@ function LeadDetails() {
     return <p>No details available</p>;
   }
   return (
-    <div
-      className="loandetail-container"
-      style={{ marginTop: "50px", padding: "20px" }}
-    >
+    <div>
+      <div className="loandetail-container">
+      <div className={collapsed ? "main-content.open" : "main-content"}>
       <div>
         <center>
           <h3>Lead Details</h3>
         </center>
         <div>
-          <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
-            <Col lg={8}>
+          <Row className="px-4 py-3">
+            <Col>
               <Card>
-                <Row className="personal_card_row">
+                <Row>
                   <Col
                     className="firstrowcol px-1 py-1"
-                    lg={6}
-                    md={12}
+                    lg={3}
+                    // md={12}
                     style={{
                       height: "auto",
                       alignContent: "center",
@@ -252,7 +251,7 @@ function LeadDetails() {
                     <p>{record.contactNumber}</p>
                   </Col>
 
-                  <Col lg={6} md={12} className="px-3 py-1">
+                  <Col lg={9} className="px-3 py-1">
                     <center>
                       <h6>Other Information</h6>
                     </center>
@@ -279,10 +278,10 @@ function LeadDetails() {
               </Card>
             </Col>
           </Row>
-          <Row style={{ textAlign: "-webkit-center" }}>
+         <Row className="px-2">
             <Col lg={12} md={12}>
               <Card
-                style={{ width: "60%" }}
+                style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Loan Details"
               >
@@ -307,10 +306,10 @@ function LeadDetails() {
             </Col>
           </Row>
 
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2">
             <Col lg={12} md={12}>
               <Card
-                style={{ width: "60%" }}
+                style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Reminders"
               >
@@ -506,6 +505,8 @@ function LeadDetails() {
           </form>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }
