@@ -489,7 +489,8 @@ function CreateLead() {
                   required: "Email is required",
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                    message: "Enter a valid email address (e.g., name@example.com)",
+                    message:
+                      "Enter a valid email address (e.g., name@example.com)",
                   },
                 })}
                 placeholder="Email"
@@ -536,7 +537,7 @@ function CreateLead() {
                     message: "Contact number must be exactly 10 digits",
                   },
                   pattern: {
-                    value: /^[0-9]{10}$/, 
+                    value: /^[0-9]{10}$/,
                     message: "Only numbers are allowed (10 digits required)",
                   },
                 })}
@@ -642,10 +643,21 @@ function CreateLead() {
                           placeholder="Select Purpose of Loan"
                         >
                           <Option value="">Select Purpose</Option>
-                          <Option value="personal">Personal</Option>
-                          <Option value="business">Business</Option>
-                          <Option value="education">Education</Option>
-                          <Option value="home">Home</Option>
+                          <Option value="Home Loan">Home Loan( TopUp )</Option>
+                          <Option value="Vehicle Loan">Vehicle Loan</Option>
+                          <Option value="Business Loan">
+                            Business Loan( TopUp )
+                          </Option>
+                          <Option value="Loan Transfer">
+                            Loan Transfer( BT TopUp )
+                          </Option>
+                          <Option value="LAP">
+                            LAP( Loan against to property )
+                          </Option>
+                          <Option value="Personal Loan">Personal Loan</Option>
+                          <Option value="Construction Loan">
+                            Construction Loan
+                          </Option>
                         </Select>
                       )}
                     />

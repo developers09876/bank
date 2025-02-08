@@ -135,38 +135,38 @@ function CreateLead() {
             </Col>
 
             <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Phone Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                name="contactNumber"
-                {...register("contactNumber", {
-                  required: "Contact number is required",
-                  minLength: {
-                    value: 10,
-                    message: "Contact number must be exactly 10 digits",
-                  },
-                  maxLength: {
-                    value: 10,
-                    message: "Contact number must be exactly 10 digits",
-                  },
-                  pattern: {
-                    value: /^[0-9]{10}$/,
-                    message: "Only numbers are allowed (10 digits required)",
-                  },
-                })}
-                placeholder="Enter your 10-digit contact number"
-                maxLength={10}
-                onKeyPress={(e) => {
-                  if (!/[0-9]/.test(e.key)) {
-                    e.preventDefault();
-                  }
-                }}
-              />
-              {errors.contactNumber && (
-                <p className="text-red-500">{errors.contactNumber.message}</p>
-              )}
+              <div>
+                <label className="vendorpage_labelCss">Phone Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  name="contactNumber"
+                  {...register("contactNumber", {
+                    required: "Contact number is required",
+                    minLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    maxLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Only numbers are allowed (10 digits required)",
+                    },
+                  })}
+                  placeholder="Enter your 10-digit contact number"
+                  maxLength={10}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                {errors.contactNumber && (
+                  <p className="text-red-500">{errors.contactNumber.message}</p>
+                )}
               </div>
             </Col>
 
@@ -193,39 +193,42 @@ function CreateLead() {
                 )}
               </div>
             </Col> */}
-              <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss"> Alter Phone Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                name="alternumber"
-                {...register("alternumber", {
-                  required: "phone number is required",
-                  minLength: {
-                    value: 10,
-                    message: "phone number must be exactly 10 digits",
-                  },
-                  maxLength: {
-                    value: 10,
-                    message: "phone number must be exactly 10 digits",
-                  },
-                  pattern: {
-                    value: /^[0-9]{10}$/,
-                    message: "Only numbers are allowed (10 digits required)",
-                  },
-                })}
-                placeholder="Enter your 10-digit contact number"
-                maxLength={10}
-                onKeyPress={(e) => {
-                  if (!/[0-9]/.test(e.key)) {
-                    e.preventDefault();
-                  }
-                }}
-              />
-              {errors.alternumber  && (
-                <p className="text-red-500">{errors.alternumber .message}</p>
-              )}
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">
+                  {" "}
+                  Alter Phone Number
+                </label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  name="alternumber"
+                  {...register("alternumber", {
+                    required: "phone number is required",
+                    minLength: {
+                      value: 10,
+                      message: "phone number must be exactly 10 digits",
+                    },
+                    maxLength: {
+                      value: 10,
+                      message: "phone number must be exactly 10 digits",
+                    },
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Only numbers are allowed (10 digits required)",
+                    },
+                  })}
+                  placeholder="Enter your 10-digit contact number"
+                  maxLength={10}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                {errors.alternumber && (
+                  <p className="text-red-500">{errors.alternumber.message}</p>
+                )}
               </div>
             </Col>
 
@@ -311,10 +314,21 @@ function CreateLead() {
                           placeholder="Select Purpose of Loan"
                         >
                           <Option value="">Select Purpose</Option>
-                          <Option value="personal">Personal</Option>
-                          <Option value="business">Business</Option>
-                          <Option value="education">Education</Option>
-                          <Option value="home">Home</Option>
+                          <Option value="Home Loan">Home Loan( TopUp )</Option>
+                          <Option value="Vehicle Loan">Vehicle Loan</Option>
+                          <Option value="Business Loan">
+                            Business Loan( TopUp )
+                          </Option>
+                          <Option value="Loan Transfer">
+                            Loan Transfer( BT TopUp )
+                          </Option>
+                          <Option value="LAP">
+                            LAP( Loan against to property )
+                          </Option>
+                          <Option value="Personal Loan">Personal Loan</Option>
+                          <Option value="Construction Loan">
+                            Construction Loan
+                          </Option>
                         </Select>
                       )}
                     />

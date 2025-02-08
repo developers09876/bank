@@ -316,34 +316,6 @@ function TaxsForms() {
                 )}
               </Col>
             )}
-
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">
-                  Income Tax Filing Status
-                </label>
-                <Controller
-                  name="incomeTaxStatus"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Status"
-                    >
-                      <Option value="filed">Filed</Option>
-                      <Option value="notFiled">Not Filed</Option>
-                    </Select>
-                  )}
-                />
-                {errors.incomeTaxStatus && (
-                  <p className="text-danger">Select filing status</p>
-                )}
-              </div>
-            </Col>
-
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Business Type</label>
