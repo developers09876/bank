@@ -172,6 +172,24 @@ const Rewards = () => {
           rewards: 20,
           percentage: "Refer 2 members and Earn 40 rs Income",
         },
+        {
+          key: "1-5",
+          title: "Loan Against Property (LAP)",
+          rewards: 10,
+          percentage: "Refer 2 members and Earn 20 rs Income",
+        },
+        {
+          key: "1-6",
+          title: "Loan Transfer (BT TopUp)",
+          rewards: 12,
+          percentage: "Refer 2 members and Earn 24 rs Income",
+        },
+        {
+          key: "1-7",
+          title: "Construction Loan",
+          rewards: 15,
+          percentage: "Refer 2 members and Earn 30 rs Income",
+        },
       ],
     },
     {
@@ -283,7 +301,10 @@ const Rewards = () => {
                 >
                   Back
                 </Button>
-                <Row className="sub-cards-row-full">
+                <Row
+                  className="sub-cards-row-full"
+                  style={{ justifyContent: "center" }}
+                >
                   {item.subCategories.map((subItem) => (
                     <Col
                       xs={24}
