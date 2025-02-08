@@ -78,15 +78,13 @@ const Landing = () => {
       link: "/loanform",
       icon: "fas fa-briefcase",
     },
-    {
-      title: "VEHICLE LOAN",
-      description: "Get better interest rates on your existing vehicle loan",
-      // buttonText: "Reduce Your EMI",
-      buttonText: "Check Eligibility",
-      link: "/loanform",
-      icon: "fa-solid fa-van-shuttle",
-    },
-   
+    // {
+    //   title: "TRANSFER PERSONAL LOAN",
+    //   description: "Get better interest rates on your existing personal loan",
+    //   buttonText: "Reduce Your EMI",
+    //   link: "/loanform",
+    //   icon: "fas fa-exchange-alt",
+    // },
     {
       title: "HOME LOAN",
       description:
@@ -95,27 +93,20 @@ const Landing = () => {
       link: "/loanform",
       icon: "fas fa-home",
     },
+    // {
+    //   title: "LOAN AGAINST PROPERTY",
+    //   description: "Get liquidity against your property at best interest rates",
+    //   buttonText: "Check Eligibility",
+    //   link: "/loanform",
+    //   icon: "fas fa-building",
+    // },
     {
-      title: "LOAN AGAINST PROPERTY (LAP)",
-      description: "Get liquidity against your property at best interest rates",
-      buttonText: "Check Eligibility",
-      link: "/loanform",
-      icon: "fas fa-building",
-    },
-    {
-      title: "LOAN TRANSFER (BT TopUp) ",
-      description: "Get better interest rates on your existing personal loan",
-      buttonText: "Reduce Your EMI",
-      link: "/loanform",
-      icon: "fas fa-exchange-alt",
-    },
-    {
-      title: "CONSTRUCTION  LOAN",
+      title: "VEHICLE LOAN",
       description: "Get better interest rates on your existing vehicle loan",
       // buttonText: "Reduce Your EMI",
       buttonText: "Check Eligibility",
       link: "/loanform",
-      icon: "fa-solid fa-hard-hat",
+      icon: "fa-solid fa-van-shuttle",
     },
   ];
 
