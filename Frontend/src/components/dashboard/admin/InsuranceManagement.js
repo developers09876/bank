@@ -2,6 +2,7 @@ import { Table, Input, Space } from "antd";
 import React, { useState, useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
@@ -70,7 +71,11 @@ function InsuranceManagement() {
       state: { record },
     });
   };
-
+  const handleEdit = (record) => {
+    navigate(`/admin/insuranceEditdetails/${record._id}`, {
+      state: { record },
+    });
+  };
   const paginatedData = filteredData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
@@ -116,15 +121,30 @@ function InsuranceManagement() {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text, record) => (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => handleViewDetails(record)}
-        >
-          View
-        </button>
-      ),
+      render: (text, record) => {
+        return (
+          <>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                marginRight: "15px",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
+        );
+      },
     },
   ];
 

@@ -21,13 +21,13 @@ function LoanForm() {
     control,
     formState: { errors },
   } = useForm();
-
+  
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
 
-  const { state } = useLocation();
-  const record = state?.record;
+const { state } = useLocation();
+    const record = state?.record;
 
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -140,25 +140,26 @@ function LoanForm() {
   useEffect(() => {
     const fetchLoanApplicationData = async () => {
       try {
-        const response = await Api.get(`/loanform/getbyEmployeeid/${userid}`);
-        console.log("response", response);
-        const filterOneApplication = response.data.filter(
-          (application) => application._id === record._id
-        );
-        console.log("Applicationresponse", response.data);
-        console.log("filterOneApplication", filterOneApplication[0]);
+        const response = await Api.get(`/loanform/getbyid/${userid}`);
+        console.log('response', response)
+        const filterOneApplication = response.data.filter((application) => application._id === record._id )
+        console.log('Applicationresponse', response.data);
+        console.log('filterOneApplication', filterOneApplication[0]);
         const formattedDob = filterOneApplication[0].dob
-          ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
-          : "";
+            ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
+            : "";
         if (filterOneApplication) {
-          reset({ ...filterOneApplication[0], dob: formattedDob });
+          reset({...filterOneApplication[0],
+            dob: formattedDob
+          }); 
         }
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error)
       }
-    };
+    }
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
+
 
   const loanAmount = watch("totalChildren");
 
@@ -664,45 +665,21 @@ function LoanForm() {
                         )}
                       </div>
                     </Col>
-
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Phone Number
+                          Contact Information
                         </label>
                         <input
                           className="inputcolumn-ourProfile"
-                          type="text"
+                          type="tel"
                           name="contactNumber"
-                          {...register("contactNumber", {
-                            required: "Contact number is required",
-                            minLength: {
-                              value: 10,
-                              message:
-                                "Contact number must be exactly 10 digits",
-                            },
-                            maxLength: {
-                              value: 10,
-                              message:
-                                "Contact number must be exactly 10 digits",
-                            },
-                            pattern: {
-                              value: /^[0-9]{10}$/,
-                              message:
-                                "Only numbers are allowed (10 digits required)",
-                            },
-                          })}
-                          placeholder="Enter your 10-digit contact number"
-                          maxLength={10}
-                          onKeyPress={(e) => {
-                            if (!/[0-9]/.test(e.key)) {
-                              e.preventDefault();
-                            }
-                          }}
+                          {...register("contactNumber", { required: true })}
+                          placeholder="Phone Number"
                         />
                         {errors.contactNumber && (
-                          <p className="text-red-500">
-                            {errors.contactNumber.message}
+                          <p className="text-danger">
+                            Phone Number is required
                           </p>
                         )}
                       </div>

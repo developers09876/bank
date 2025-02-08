@@ -4,6 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import { FaPlus } from "react-icons/fa";
 
 const LoanManagements = ({ collapsed }) => {
  
@@ -42,9 +43,11 @@ const LoanManagements = ({ collapsed }) => {
    navigate(`/employee/loandetails/${record._id}`, {state: { record } })
   };
   const handleEdit = (record) => {
-    navigate(`/employee/editloan/${record._id}`, { state: { record } });
+    navigate(`/employee/editownloan/${record._id}`, { state: { record } });
   };
-
+  const handleAddLoan = () => {
+    navigate(`/employee/createloan`);
+  };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -135,7 +138,11 @@ const LoanManagements = ({ collapsed }) => {
       <div
         className={collapsed === true ? "main-content.open" : "main-content"}
       >
-        <Space style={{ marginBottom: 16 }} className="filter-actions">
+        <Space style={{
+            marginBottom: 16,
+            display: "flex",
+            justifyContent: "space-between",
+          }} className="filter-actions" >
           <Input
             placeholder="Search"
             value={searchText}
@@ -143,6 +150,19 @@ const LoanManagements = ({ collapsed }) => {
             style={{ width: 200 }}
             prefix={<SearchOutlined />}
           />
+            <Button
+                      type="primary"
+                      onClick={handleAddLoan}
+                      style={{
+                        display: "inline",
+                        float: "right",
+                        marginRight: "100px",
+                        backgroundColor: "#00397f",
+                      }}
+                    >
+                      <FaPlus style={{ display: "inline", color: "white" }} />
+                      Add New
+                    </Button>
         </Space>
 
         <Table

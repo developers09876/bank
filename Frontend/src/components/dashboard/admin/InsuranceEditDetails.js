@@ -1,27 +1,41 @@
 import { Select } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import Api from "../../../Api";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+
 const { Option } = Select;
 
-function CreateInsuranceManagement() {
+function InsuranceEditDetails() {
   const {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     control,
     formState: { errors },
   } = useForm();
 
-  const id = localStorage.getItem("regid");
-  const userType = localStorage.getItem("role");
+  const { state } = useLocation();
+  const record = state?.record;
+
+  useEffect(() => {
+    if (record) {
+      Object.keys(record).forEach((key) => setValue(key, record[key]));
+    }
+  }, [record, setValue]);
 
   const onSubmit = async (data) => {
-    const details = {
-      userId: id,
-      userType: userType,
+    if (!record?._id) {
+      toast.error("User ID is missing!");
+      return;
+    }
+
+    const updateDetails = {
       firstname: data.firstname,
       lastname: data.lastname,
       contactNumber: data.contactNumber,
@@ -34,68 +48,62 @@ function CreateInsuranceManagement() {
       annualIncome: data.annualIncome,
       sumAssured: data.sumAssured,
     };
-    // const detail = {
-    //   userType: "user",
-    //   firstname: data.firstname,
-    //   lastname: data.lastname,
-    //   userId: id,
-    //   contactNumber: data.contactNumber,
-    //   email: data.email,
-    // };
+
     try {
-      // const res = await Api.post(`/signup/register`, detail);
-
-      const response = await Api.post(
-        `/insuranceManagement/createinsuranceManagement`,
-        details
+      const response = await axios.put(
+        `http://localhost:5000/insuranceManagement/updateInsurancedetails/${record._id}`,
+        updateDetails,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
-      toast.success("Form submitted successfully");
-    } catch (error) {
-      console.error("Error:", error);
 
-      const errorMessage =
-        error.response?.data?.error ||
-        "An error occurred while submitting the form";
-      toast.error(errorMessage);
+      if (response.status === 200) {
+        toast.success("Details updated successfully!");
+      } else {
+        toast.error("Failed to update details. Try again.");
+      }
+    } catch (error) {
+      console.error("Error updating details:", error);
+      toast.error("An error occurred while updating details.");
     }
   };
 
   return (
     <div>
       <Container style={{ marginTop: "5%" }}>
-        <form>
-          <h4 style={{ textAlign: "center", color: "#00397f" }}>
-            <b>Insurance mangement</b>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h4
+            style={{ textAlign: "center", color: "#00397f", marginTop: "15px" }}
+          >
+            <b> Edit Insurance Management</b>
           </h4>
           <Row className="px-2 py-3">
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss"> First Name</label>
+                <label className="vendorpage_labelCss">First Name</label>
                 <input
                   className="inputcolumn-ourProfile"
                   type="text"
-                  name="firstname"
                   {...register("firstname", { required: true })}
-                  placeholder="Name"
+                  placeholder="First Name"
                 />
-                {errors.firstname && (
-                  <p className="text-danger"> First Name is required</p>
-                )}
+                {errors.firstname && <p className="text-danger">Required</p>}
               </div>
             </Col>
+
             <Col xs={12} md={6} lg={4}>
               <div>
                 <label className="vendorpage_labelCss">Last Name</label>
                 <input
                   className="inputcolumn-ourProfile"
                   type="text"
-                  name="lastname"
                   {...register("lastname", { required: true })}
-                  placeholder="Name"
+                  placeholder="Last Name"
                 />
-                {errors.lastname && (
-                  <p className="text-danger">Last Name is required</p>
-                )}
+                {errors.lastname && <p className="text-danger">Required</p>}
               </div>
             </Col>
 
@@ -164,44 +172,23 @@ function CreateInsuranceManagement() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="number"
-                  name="aadhar"
-                  {...register("aadhar", {
-                    required: true,
-                    pattern: {
-                      // value: /^[0-9]{12}$/,
-                      message: "Aadhaar must be 12 digits",
-                    },
-                  })}
+                  {...register("aadhar", { required: true })}
                   placeholder="Aadhaar Number"
                 />
-                {errors.aadhar && (
-                  <p className="text-danger">Enter Aadhaar Number</p>
-                )}
+                {errors.aadhar && <p className="text-danger">Required</p>}
               </div>
             </Col>
 
             <Col xs={12} md={6} lg={4}>
               <div>
-                <label className="vendorpage_labelCss">PAN Card Number</label>
+                <label className="vendorpage_labelCss">PAN Number</label>
                 <input
                   className="inputcolumn-ourProfile"
                   type="text"
-                  name="panno"
-                  {...register("panno", {
-                    required: true,
-                    pattern: {
-                      // value: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
-                      message: "Invalid PAN Card Number",
-                    },
-                  })}
+                  {...register("panno", { required: true })}
                   placeholder="PAN Number"
-                  onInput={(e) => {
-                    e.target.value = e.target.value.toUpperCase();
-                  }}
                 />
-                {errors.panno && (
-                  <p className="text-danger">Enter PAN card number</p>
-                )}
+                {errors.panno && <p className="text-danger">Required</p>}
               </div>
             </Col>
 
@@ -211,20 +198,10 @@ function CreateInsuranceManagement() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="text"
-                  name="gst"
-                  {...register("gst", {
-                    required: true,
-                    pattern: {
-                      // value:
-                      //   /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
-                      message: "Invalid GST Number",
-                    },
-                  })}
+                  {...register("gst", { required: true })}
                   placeholder="GST Number"
                 />
-                {errors.gst && (
-                  <p className="text-danger">Enter valid GST Number</p>
-                )}
+                {errors.gst && <p className="text-danger">Required</p>}
               </div>
             </Col>
 
@@ -234,57 +211,17 @@ function CreateInsuranceManagement() {
                 <Controller
                   name="PolicyType"
                   control={control}
-                  defaultValue=""
-                  rules={{ required: true }}
                   render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="inputcolumn_drp"
-                      placeholder="Select Gender"
-                    >
-                      <Option value="Single">Life Insurance</Option>
+                    <Select {...field} className="inputcolumn_drp">
+                      <Option value="Life Insurance">Life Insurance</Option>
                       <Option value="Health Insurance">Health Insurance</Option>
-                      <Option value="Vehicle">Vehicle Insurance</Option>
+                      <Option value="Vehicle Insurance">
+                        Vehicle Insurance
+                      </Option>
                     </Select>
                   )}
                 />
-                {errors.PolicyType && (
-                  <p className="text-danger">Policy Type is required</p>
-                )}
-              </div>
-            </Col>
-
-            {/* Policy Term */}
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Policy Term</label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="policyTerm"
-                  {...register("policyTerm", { required: true })}
-                  placeholder="Policy Term (years)"
-                />
-                {errors.policyTerm && (
-                  <p className="text-danger">Policy Term is required</p>
-                )}
-              </div>
-            </Col>
-
-            {/* Sum Assured */}
-            <Col xs={12} md={6} lg={4}>
-              <div>
-                <label className="vendorpage_labelCss">Sum Assured</label>
-                <input
-                  className="inputcolumn-ourProfile"
-                  type="number"
-                  name="sumAssured"
-                  {...register("sumAssured", { required: true })}
-                  placeholder="Sum Assured"
-                />
-                {errors.sumAssured && (
-                  <p className="text-danger">Sum Assured is required</p>
-                )}
+                {errors.PolicyType && <p className="text-danger">Required</p>}
               </div>
             </Col>
 
@@ -294,13 +231,23 @@ function CreateInsuranceManagement() {
                 <input
                   className="inputcolumn-ourProfile"
                   type="number"
-                  name="annualIncome"
                   {...register("annualIncome", { required: true })}
                   placeholder="Annual Income"
                 />
-                {errors.annualIncome && (
-                  <p className="text-danger">Enter annual income</p>
-                )}
+                {errors.annualIncome && <p className="text-danger">Required</p>}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Sum Assured</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  {...register("sumAssured", { required: true })}
+                  placeholder="Sum Assured"
+                />
+                {errors.sumAssured && <p className="text-danger">Required</p>}
               </div>
             </Col>
           </Row>
@@ -330,4 +277,4 @@ function CreateInsuranceManagement() {
   );
 }
 
-export default CreateInsuranceManagement;
+export default InsuranceEditDetails;

@@ -71,7 +71,7 @@ function LoanTaskManagement() {
   );
 
   const handleViewDetails = (record) => {
-    navigate(`/employee/loandetails/${record._id}`, {state: { record } })
+    navigate(`/employee/loantaskdetails/${record._id}`, {state: { record } })
    };
    const handleEdit = (record) => {
      navigate(`/employee/editloan/${record._id}`, { state: { record } });
