@@ -797,7 +797,7 @@ function LoanTaskViewDetails() {
                       >
                         {remarksFields.map((field, index) => (
                           <Row key={index} className="mb-3">
-                            <Col lg={8} md={12}>
+                            <Col lg={4} md={6} xs={12}>
                               <label>Date</label>
                               <input
                                 type="date"
@@ -810,22 +810,7 @@ function LoanTaskViewDetails() {
                                 <p className="text-danger">Date is required</p>
                               )}
                             </Col>
-                            <Col xs={24} md={12} lg={8}>
-                              <label>Remarks</label>
-                              <textarea
-                                className="form-control"
-                                {...register(`remarks_${index}`, {
-                                  required: true,
-                                })}
-                                placeholder="Remarks"
-                              />
-                              {errors[`remarks_${index}`] && (
-                                <p className="text-danger">
-                                  Remarks are required
-                                </p>
-                              )}
-                            </Col>
-                            <Col xs={24} md={12} lg={8}>
+                            <Col lg={4} md={6} xs={12}>
                               <label>Status</label>
                               <select
                                 className="form-control"
@@ -844,16 +829,31 @@ function LoanTaskViewDetails() {
                                 </p>
                               )}
                             </Col>
+                            <Col lg={4} md={6} xs={12}>
+                              <label>Remarks</label>
+                              <textarea
+                                className="form-control"
+                                {...register(`remarks_${index}`, {
+                                  required: true,
+                                })}
+                                placeholder="Remarks"
+                              />
+                              {errors[`remarks_${index}`] && (
+                                <p className="text-danger">
+                                  Remarks are required
+                                </p>
+                              )}
+                            </Col>
                             <Col
-                              xs={24}
-                              md={12}
-                              lg={8}
+                              lg={4}
+                              md={6}
+                              xs={12}
                               className="d-flex align-items-center"
                             >
                               {!field.prefilled && remarksFields.length > 1 && (
                                 <button
                                   type="button"
-                                  className="btn btn-danger"
+                                  className="btn btn-danger me-2"
                                   onClick={() => removeRemarkField(index)}
                                 >
                                   -
@@ -861,7 +861,7 @@ function LoanTaskViewDetails() {
                               )}
                               <button
                                 type="button"
-                                className="btn btn-success ms-2"
+                                className="btn btn-success"
                                 onClick={addRemarkField}
                               >
                                 +
@@ -869,6 +869,7 @@ function LoanTaskViewDetails() {
                             </Col>
                           </Row>
                         ))}
+
                         <button type="submit" className="btn btn-primary mt-3">
                           Submit
                         </button>

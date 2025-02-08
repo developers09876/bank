@@ -166,72 +166,65 @@ function LeadDetails() {
       </div>
 
       <div className="mt-3">
-        <h3>Add Remarks</h3>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
-          {remarksFields.map((field, index) => (
-            <Row key={index} className="mb-3">
-              <Col lg={8} md={12}>
-                <label>Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  {...register(`date_${index}`, { required: true })}
-                />
-                {errors[`date_${index}`] && (
-                  <p className="text-danger">Date is required</p>
-                )}
-              </Col>
-              <Col xs={24} md={12} lg={8}>
-                <label>Remarks</label>
-                <textarea
-                  className="form-control"
-                  {...register(`remarks_${index}`, { required: true })}
-                  placeholder="Remarks"
-                />
-                {errors[`remarks_${index}`] && (
-                  <p className="text-danger">Remarks are required</p>
-                )}
-              </Col>
-              <Col xs={24} md={12} lg={8}>
-                <label>Status</label>
-                <select
-                  className="form-control"
-                  {...register(`status_${index}`, { required: true })}
-                >
-                  <option value="">-- SELECT --</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="In-Progress">In-Progress</option>
-                  <option value="Approved">Approved</option>
-                </select>
-                {errors[`status_${index}`] && (
-                  <p className="text-danger">Status is required</p>
-                )}
-              </Col>
-              <Col xs={24} md={12} lg={8} className="d-flex align-items-center">
-                {!field.prefilled && remarksFields.length > 1 && (
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={() => removeRemarkField(index)}
-                  >
-                    -
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className="btn btn-success ms-2"
-                  onClick={addRemarkField}
-                >
-                  +
-                </button>
-              </Col>
-            </Row>
-          ))}
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
+  <h3>Add Remarks</h3>
+  <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
+    {remarksFields.map((field, index) => (
+    <Row key={index} className="mb-3">
+        <Col xs={24} md={8} className="pe-md-3">
+          <label>Date</label>
+          <input
+            type="date"
+            className="form-control"
+            {...register(`date_${index}`, { required: true })}
+          />
+          {errors[`date_${index}`] && (
+            <p className="text-danger">Date is required</p>
+          )}
+        </Col>
+        <Col xs={24} md={8} className="pe-md-3">
+          <label>Status</label>
+          <select
+            className="form-control"
+            {...register(`status_${index}`, { required: true })}
+          >
+            <option value="">-- SELECT --</option>
+            <option value="Rejected">Rejected</option>
+            <option value="In-Progress">In-Progress</option>
+            <option value="Approved">Approved</option>
+          </select>
+          {errors[`status_${index}`] && (
+            <p className="text-danger">Status is required</p>
+          )}
+        </Col>
+        <Col xs={24} md={8}>
+          <label>Remarks</label>
+          <textarea
+            className="form-control"
+            {...register(`remarks_${index}`, { required: true })}
+            placeholder="Remarks"
+          />
+          {errors[`remarks_${index}`] && (
+            <p className="text-danger">Remarks are required</p>
+          )}
+        </Col>
+      </Row>
+    ))}
+    <Row className="mb-3">
+      <Col>
+        <button type="button" className="btn btn-success me-2" onClick={addRemarkField}>
+          +
+        </button>
+        {remarksFields.length > 1 && (
+          <button type="button" className="btn btn-danger" onClick={() => removeRemarkField(remarksFields.length - 1)}>
+            -
           </button>
-        </form>
-      </div>
+        )}
+      </Col>
+    </Row>
+    <button type="submit" className="btn btn-primary mt-3">Submit</button>
+  </form>
+</div>
+
     </div>
   );
 }

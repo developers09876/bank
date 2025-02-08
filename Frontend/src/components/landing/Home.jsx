@@ -53,15 +53,8 @@ const Landing = () => {
     },
     // Add more cards as needed...
   ];
+ 
   const products = [
-    // {
-    //   title: "CREDIT CARDS",
-    //   description:
-    //     "From 50+ Options, Choose a card matching your lifestyle & needs",
-    //   buttonText: "Get Best Offers",
-    //   link: "/loanform",
-    //   icon: "fas fa-credit-card",
-    // },
     {
       title: "PERSONAL LOAN",
       description:
@@ -70,57 +63,55 @@ const Landing = () => {
       link: "/loanform",
       icon: "fas fa-hand-holding-usd",
     },
-
     {
-      title: "BUSINESS LOAN",
-      description: "Expand your business with loans at low interest rates",
-      buttonText: "Check Eligibility",
-      link: "/loanform",
-      icon: "fas fa-briefcase",
-    },
-    // {
-    //   title: "TRANSFER PERSONAL LOAN",
-    //   description: "Get better interest rates on your existing personal loan",
-    //   buttonText: "Reduce Your EMI",
-    //   link: "/loanform",
-    //   icon: "fas fa-exchange-alt",
-    // },
-    {
-      title: "HOME LOAN",
+      title: "HOME LOAN (TopUp)",
       description:
-        "Choose from lowest interest rates available for your dream home",
+        "Get additional funds on your existing home loan at attractive rates",
       buttonText: "Check Eligibility",
       link: "/loanform",
       icon: "fas fa-home",
     },
-    // {
-    //   title: "LOAN AGAINST PROPERTY",
-    //   description: "Get liquidity against your property at best interest rates",
-    //   buttonText: "Check Eligibility",
-    //   link: "/loanform",
-    //   icon: "fas fa-building",
-    // },
+    {
+      title: "BUSINESS LOAN (TopUp)",
+      description:
+        "Increase your business capital with a top-up on your business loan",
+      buttonText: "Check Eligibility",
+      link: "/loanform",
+      icon: "fas fa-briefcase",
+    },
     {
       title: "VEHICLE LOAN",
       description: "Get better interest rates on your existing vehicle loan",
-      // buttonText: "Reduce Your EMI",
       buttonText: "Check Eligibility",
       link: "/loanform",
       icon: "fa-solid fa-van-shuttle",
     },
+    {
+      title: "LOAN TRANSFER (BT TopUp)",
+      description:
+        "Transfer your existing loan to get better interest rates and top-up options",
+      buttonText: "Reduce Your EMI",
+      link: "/loanform",
+      icon: "fas fa-exchange-alt",
+    },
+    {
+      title: "LAP (Loan Against Property)",
+      description: "Get liquidity against your property at best interest rates",
+      buttonText: "Check Eligibility",
+      link: "/loanform",
+      icon: "fas fa-building",
+    },
+    {
+      title: "CONSTRUCTION LOAN",
+      description:
+        "Finance your construction project with tailored loan options",
+      buttonText: "Check Eligibility",
+      link: "/loanform",
+      icon: "fas fa-tools",
+    },
   ];
 
   const insurance = [
-    // {
-    //   title: "TERM INSURANCE",
-    //   description:
-    //     "Affordable term insurance plans to secure your loved ones financially.",
-    //   buttonText: "Check Eligibility",
-    //   // link: "/insurancepage",
-    //   link: "/insurancepolicy",
-
-    //   icon: "fas fa-file-alt",
-    // },
     {
       title: "HEALTH INSURANCE",
       description:
@@ -144,14 +135,7 @@ const Landing = () => {
       link: "/insuranceForms",
       icon: "fas fa-car-crash",
     },
-    // {
-    //   title: "HOME INSURANCE",
-    //   description:
-    //     "Safeguard your home and valuable possessions from unforeseen events.",
-    //   buttonText: "Get Protection",
-    //   link: "/insurancepolicy",
-    //   icon: "fas fa-home",
-    // },
+    
     {
       title: "TRAVEL INSURANCE",
       description: "Ensure a worry-free journey with travel insurance plans.",
@@ -162,40 +146,40 @@ const Landing = () => {
   ];
 
   const tax = [
-    // {
-    //   title: "INCOME TAX FILING",
-    //   description:
-    //     "Get assistance with filing your annual income tax returns accurately and on time.",
-    //   buttonText: "File Now",
-    //   // link: "/taxpage",
-
-    //   link: "/TaxForms",
-    //   icon: "fas fa-file-invoice-dollar",
-    // },
     {
-      title: "GST REGISTRATION",
+      title: "INCOME TAX SERVICES",
       description:
-        "Quick and easy GST registration services for businesses of all sizes.",
-      buttonText: "Register Now",
+        "Comprehensive income tax services including filing, consultation, and compliance.",
+      buttonText: "Get Services",
       link: "/TaxForms",
-      icon: "fas fa-receipt",
+      icon: "fas fa-money-check-alt",
     },
     {
-      title: "TAX PLANNING",
-      description: "Optimize your tax savings with expert tax planning advice.",
-      buttonText: "Start Planning",
+      title: "GST SERVICES",
+      description:
+        "Complete GST solutions including registration, return filing, and compliance.",
+      buttonText: "Explore Now",
       link: "/TaxForms",
-      icon: "fas fa-chart-line",
+      icon: "fas fa-file-alt",
     },
     {
-      title: "TDS RETURNS FILING",
+      title: "TDS/TCS SERVICES",
       description:
-        "Ensure timely and accurate TDS return filing to avoid penalties.",
-      buttonText: "File Returns",
+        "Expert assistance in managing TDS/TCS compliance and return filings.",
+      buttonText: "Avail Services",
       link: "/TaxForms",
-      icon: "fas fa-calculator",
+      icon: "fas fa-percent",
+    },
+    {
+      title: "ESI & PF SERVICES",
+      description:
+        "Manage employee benefits with expert ESI & PF registration and compliance services.",
+      buttonText: "Get Assistance",
+      link: "/TaxForms",
+      icon: "fas fa-user-shield",
     },
   ];
+
   const settingss = {
     dots: false,
     infinite: true,
