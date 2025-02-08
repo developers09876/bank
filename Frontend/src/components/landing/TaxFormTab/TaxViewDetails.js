@@ -28,24 +28,21 @@ const TaxViewDetails = ({ collapsed }) => {
   };
   return (
     <div>
-      <div className="loandetail-container">
-        <div
-          className={collapsed ? "main-content.open" : "main-content"}
-          ref={pdfRef}
-        >
+        <div className="loandetail-container" ref={pdfRef}>
+        <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
             <center>
               <h3>Tax Details</h3>
             </center>
           </div>
-          <Row className="px-4 py-3" style={{ justifyContent: "center" }}>
-            <Col lg={8}>
+           <Row className="px-4 py-3">
+                     <Col>
               <Card>
-                <Row className="personal_card_row">
+                <Row >
                   <Col
                     className="firstrowcol px-1 py-1"
-                    lg={6}
-                    md={12}
+                    lg={3}
+                    // md={12}
                     style={{
                       height: "auto",
                       alignContent: "center",
@@ -101,7 +98,7 @@ const TaxViewDetails = ({ collapsed }) => {
                     </Descriptions>
                     </Col> */}
 
-                  <Col lg={6} md={12} className="px-3 py-1">
+                  <Col lg={9} className="px-3 py-1">
                     <center>
                       <h6>Other Information</h6>
                     </center>
@@ -156,7 +153,7 @@ const TaxViewDetails = ({ collapsed }) => {
               </Col> */}
             <Col lg={12} md={12}>
               <Card
-                style={{ width: "60%" }}
+                style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Tax Details"
               >
@@ -167,17 +164,20 @@ const TaxViewDetails = ({ collapsed }) => {
                   <Descriptions.Item label="Annual Income">
                     {record.annualIncome}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Tax Paid">
-                    {record.taxPaid}
+                  <Descriptions.Item label="Tax Type">
+                    {record.taxType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Sub Category">
+                    {record.subCategory}
                   </Descriptions.Item>
                   <Descriptions.Item label="Income Tax Status">
-                    {record.incomeTaxStatus}
+                    {record.status}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>
             </Col>
           </Row>
-        </div>
+      
       </div>
       <Button
         type="primary"
@@ -187,6 +187,7 @@ const TaxViewDetails = ({ collapsed }) => {
       >
         Download as PDF
       </Button>
+      </div>
     </div>
   );
 };
