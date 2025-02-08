@@ -31,6 +31,7 @@ import TaxTaskViewDetails from "./TaxTaskViewDetails";
 import InsuranceManagementEdit from "./InsuranceManagementEdit";
 import TaxsManagementEdit from "./TaxManagementEdit";
 import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
+import UserLoanFormProfileTab from "../../landing/LoanForm/LoanFormProfileTab";
 import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
 import TaxManagementEdit from "./TaxManagementEdit";
 import InsuranceEditDetails from "./InsuranceEditDetails";
@@ -155,5 +156,9 @@ export const EmployeeRoutes = [
   {
     path: "/employee/editownloan/:id",
     element: <LoanProfileTab />,
+  },
+  {
+    path: "/employee/createloan",
+    element: <UserLoanFormProfileTab />,
   },
 ];

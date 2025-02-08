@@ -13,6 +13,7 @@ import {
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 const LoanManagement = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -70,6 +71,10 @@ const LoanManagement = ({ collapsed }) => {
     const end = start + pageSize;
     return sourceData.slice(start, end);
   };
+  const handleAddLoan = () => {
+    navigate(`/admin/createloan`);
+  };
+
 
   const columns = [
     {
@@ -143,15 +148,32 @@ const LoanManagement = ({ collapsed }) => {
       <div
         className={collapsed === true ? "main-content.open" : "main-content"}
       >
-        <Space style={{ marginBottom: 16 }} className="filter-actions">
-          <Input
-            placeholder="Search"
-            value={searchText}
-            onChange={handleSearch}
-            style={{ width: 200 }}
-            prefix={<SearchOutlined />}
-          />
-        </Space>
+         <Space style={{
+                  marginBottom: 16,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }} className="filter-actions" >
+                <Input
+                  placeholder="Search"
+                  value={searchText}
+                  onChange={handleSearch}
+                  style={{ width: 200 }}
+                  prefix={<SearchOutlined />}
+                />
+                  <Button
+                            type="primary"
+                            onClick={handleAddLoan}
+                            style={{
+                              display: "inline",
+                              float: "right",
+                              marginRight: "100px",
+                              backgroundColor: "#00397f",
+                            }}
+                          >
+                            <FaPlus style={{ display: "inline", color: "white" }} />
+                            Add New
+                          </Button>
+              </Space>
 
         <Table
           dataSource={getPaginatedData()}
