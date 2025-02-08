@@ -368,12 +368,11 @@ function CreateTaxmangement() {
                       className="inputcolumn_drp"
                       placeholder="Select Business Type"
                     >
-                      <Option value="soleProprietorship">
-                        Sole Proprietorship
-                      </Option>
+                      <Option value="salaryPerson">Salary Person</Option>
+                      <Option value="limitedCompany">Limited Company</Option>
+                      <Option value="soleProprietorship">Sole Proprietorship</Option>
+                      <Option value="selfEmployee">Self Employee</Option>
                       <Option value="partnership">Partnership</Option>
-                      <Option value="privateLimited">Private Limited</Option>
-                      <Option value="publicLimited">Public Limited</Option>
                     </Select>
                   )}
                 />

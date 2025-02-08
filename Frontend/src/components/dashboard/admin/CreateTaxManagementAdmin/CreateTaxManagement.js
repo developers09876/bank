@@ -105,60 +105,61 @@ function TaxmangementAdmin() {
             </Col>
 
             <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Email Id</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                    message:
-                      "Enter a valid email address (e.g., name@example.com)",
-                  },
-                })}
-                placeholder="Email"
-              />
-              {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
-              )}
+              <div>
+                <label className="vendorpage_labelCss">Email Id</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      message:
+                        "Enter a valid email address (e.g., name@example.com)",
+                    },
+                  })}
+                  placeholder="Email"
+                />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
               </div>
             </Col>
 
             <Col xs={12} md={6} lg={4}>
-            <div>
-              <label className="vendorpage_labelCss">Phone Number</label>
-              <input
-                className="inputcolumn-ourProfile"
-                type="text"
-                name="contactNumber"
-                {...register("contactNumber", {
-                  required: "Contact number is required",
-                  minLength: {
-                    value: 10,
-                    message: "Contact number must be exactly 10 digits",
-                  },
-                  maxLength: {
-                    value: 10,
-                    message: "Contact number must be exactly 10 digits",
-                  },
-                  pattern: {
-                    value: /^[0-9]{10}$/,
-                    message: "Only numbers are allowed (10 digits required)",
-                  },
-                })}
-                placeholder="Enter your 10-digit contact number"
-                maxLength={10}
-                onKeyPress={(e) => {
-                  if (!/[0-9]/.test(e.key)) {
-                    e.preventDefault();
-                  }
-                }}
-              />
-              {errors.contactNumber && (
-                <p className="text-red-500">{errors.contactNumber.message}</p>
-              )}
+              <div>
+                <label className="vendorpage_labelCss">Phone Number</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="text"
+                  name="contactNumber"
+                  {...register("contactNumber", {
+                    required: "Contact number is required",
+                    minLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    maxLength: {
+                      value: 10,
+                      message: "Contact number must be exactly 10 digits",
+                    },
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Only numbers are allowed (10 digits required)",
+                    },
+                  })}
+                  placeholder="Enter your 10-digit contact number"
+                  maxLength={10}
+                  onKeyPress={(e) => {
+                    if (!/[0-9]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
+                {errors.contactNumber && (
+                  <p className="text-red-500">{errors.contactNumber.message}</p>
+                )}
               </div>
             </Col>
 
@@ -383,12 +384,11 @@ function TaxmangementAdmin() {
                       className="inputcolumn_drp"
                       placeholder="Select Business Type"
                     >
-                      <Option value="soleProprietorship">
-                        Sole Proprietorship
-                      </Option>
+                      <Option value="salaryPerson">Salary Person</Option>
+                      <Option value="limitedCompany">Limited Company</Option>
+                      <Option value="soleProprietorship">Sole Proprietorship</Option>
+                      <Option value="selfEmployee">Self Employee</Option>
                       <Option value="partnership">Partnership</Option>
-                      <Option value="privateLimited">Private Limited</Option>
-                      <Option value="publicLimited">Public Limited</Option>
                     </Select>
                   )}
                 />
