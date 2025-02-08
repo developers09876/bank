@@ -1,10 +1,9 @@
 import React from "react";
 import { Tabs } from "antd";
 import { Link, useLocation } from "react-router-dom";
+import {TbCircleNumber1Filled,TbCircleNumber2Filled,TbCircleNumber3Filled} from "react-icons/tb";
 import OurProfile from "./LoanForm";
-// import Popup from '../Popup/Popup';
 import KycComplaince from "./LoanKfc";
-// import AdminInfo from './AdminInfo.js';
 import LoanDetails from "./LoanDetails";
 
 function LoanFormProfileTab() {
@@ -12,24 +11,74 @@ function LoanFormProfileTab() {
     const record = state?.record;
   return (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+    <br />
+    <Tabs defaultActiveKey="1" centered className="p-3">
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
+              <h6 style={{ margin: 0 }}>Step </h6>
+              <TbCircleNumber1Filled style={{ fontSize: "20px" }} />
+            </div>
+            <div>Personal Information</div>
+          </div>
+        }
+        key="1"
+      >
+        <OurProfile />
+      </Tabs.TabPane>
 
-      <Tabs defaultActiveKey="1" centered className="p-3">
-        <Tabs.TabPane tab="Personal Information" key="1">
-          <OurProfile />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Loan Form" key="2">
-          <LoanDetails />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Bank Details" key="3">
-          <KycComplaince />
-        </Tabs.TabPane>
-      </Tabs>
-    </div>
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
+              <h6 style={{ margin: 0 }}>Step </h6>
+              <TbCircleNumber2Filled style={{ fontSize: "20px" }} />
+            </div>
+            <div>Loan Form</div>
+          </div>
+        }
+        key="2"
+      >
+        <LoanDetails />
+      </Tabs.TabPane>
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+              }}
+            >
+              <h6 style={{ margin: 0 }}>Step </h6>
+              <TbCircleNumber3Filled style={{ fontSize: "20px" }} />
+            </div>
+            <div> Bank Details</div>
+          </div>
+        }
+        key="3"
+      >
+        <KycComplaince />
+      </Tabs.TabPane>
+    </Tabs>
+  </div>
   );
 }
 
