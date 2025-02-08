@@ -102,7 +102,6 @@
 // );
 // export default LoanApplication;
 
-
 import mongoose from "mongoose";
 
 const loanApplicationSchema = new mongoose.Schema(
@@ -170,9 +169,11 @@ const loanApplicationSchema = new mongoose.Schema(
     bankBranch: { type: String },
     panImageUpload: { type: String },
     aadharImageUpload: { type: String },
+    voterIdUpload: { type: String },
     aadhaarNumber: { type: String },
     employeeId: { type: String },
     employeeType: { type: String },
+    employeeCategory: { type: String },
     employeeList: { type: String },
     startDate: { type: Date },
     endDate: { type: Date },
@@ -207,5 +208,8 @@ const loanApplicationSchema = new mongoose.Schema(
   }
 );
 
-const LoanApplication = mongoose.model("LoanApplication", loanApplicationSchema);
+const LoanApplication = mongoose.model(
+  "LoanApplication",
+  loanApplicationSchema
+);
 export default LoanApplication;

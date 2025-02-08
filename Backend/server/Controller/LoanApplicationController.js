@@ -226,8 +226,9 @@ export async function updateLoanDetails(req, res, next) {
       bankName: data.bankName,
       aadhaarNumber: data.aadhaarNumber,
       bankBranch: data.bankBranch,
-      panImageUpload: data.panImageUpload,
-      aadharImageUpload: data.aadharImageUpload,
+      panImageUpload: data.panUpload,
+      aadharImageUpload: data.AdharUpload,
+      voterIdUpload: data.voterIdUpload,
     };
 
     console.log("Updated Details:", updatedDetails);
@@ -316,14 +317,14 @@ export async function updateLoanRemarks(req, res, next) {
     const data = req.body;
     console.log("data", data);
     const addremarks = Array.isArray(data.addremarks)
-    ? data.addremarks.map((child) => ({
-        date: child.date,
-        remarks: child.remarks,
-        status: child.status,
-        isApproved: child.isApproved
-        // notiFicatioinStauts: child.notiFicatioinStauts,
-      }))
-    : [];
+      ? data.addremarks.map((child) => ({
+          date: child.date,
+          remarks: child.remarks,
+          status: child.status,
+          isApproved: child.isApproved,
+          // notiFicatioinStauts: child.notiFicatioinStauts,
+        }))
+      : [];
     const updateDetails = {
       addremarks: addremarks,
     };
@@ -368,7 +369,7 @@ export async function updateLoan(req, res, next) {
       employeeId: data.employeeId,
       employeeType: data.employeeType,
       employeeList: data.employeeList,
-      loanType: data.loanType,
+      employeeCategory: data.employeeCategory,
       startDate: data.startDate || null,
       endDate: data.endDate || null,
       // dob: data.dob || null,

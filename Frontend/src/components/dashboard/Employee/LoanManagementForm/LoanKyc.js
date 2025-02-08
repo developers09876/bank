@@ -7,8 +7,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Api from "../../../../Api";
 function Kycvendor() {
-     const { state } = useLocation();
-      const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
   const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
@@ -24,23 +24,24 @@ function Kycvendor() {
   const id = localStorage.getItem("vendor_id");
   const loanApplicationId = localStorage.getItem("loanApplicationId");
 
-
   console.log("userKYCDetail", userKYCDetail);
 
   useEffect(() => {
     const fetchLoanApplicationData = async () => {
       try {
         const response = await Api.get(`/loanform/getbyid/${userid}`);
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
+        const filterOneApplication = response.data.filter(
+          (application) => application._id === record._id
+        );
+        console.log("Applicationresponse", response.data);
+        console.log("filterOneApplication", filterOneApplication[0]);
         if (filterOneApplication) {
-          reset(filterOneApplication[0]); 
+          reset(filterOneApplication[0]);
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
 
@@ -68,7 +69,7 @@ function Kycvendor() {
     const panUploadUrl = data.panUpload?.[0]
       ? await uploadFile(data.panUpload[0])
       : null;
-      const AdharUploadUrl = data.AdharUpload?.[0]
+    const AdharUploadUrl = data.AdharUpload?.[0]
       ? await uploadFile(data.AdharUpload[0])
       : null;
     const voterIdUploadUrl = data.voterIdUpload?.[0]
@@ -77,7 +78,7 @@ function Kycvendor() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
-      aadhaarNumber:data.aadhaarNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -229,10 +230,9 @@ function Kycvendor() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panUpload && (
-                    <p className="text-danger">Pan is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.panUpload && (
+                  <p className="text-danger">Pan is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>
@@ -254,10 +254,9 @@ function Kycvendor() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panOrAdharUpload && (
-                    <p className="text-danger"> Adhar is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.AdharUpload && (
+                  <p className="text-danger"> Adhar is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>

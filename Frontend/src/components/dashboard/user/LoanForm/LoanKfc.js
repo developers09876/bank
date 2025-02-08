@@ -30,17 +30,17 @@ function Kycvendor() {
       try {
         const response = await Api.get(`/loanform/getby/${record._id}`);
         const OneApplication = response.data;
-        console.log('Applicationresponse', OneApplication);
-        
+        console.log("Applicationresponse", OneApplication);
+
         if (OneApplication) {
-          reset(OneApplication); 
+          reset(OneApplication);
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
-  }, [ record._id, reset]);
+  }, [record._id, reset]);
 
   const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
@@ -251,10 +251,9 @@ function Kycvendor() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panOrAdharUpload && (
-                    <p className="text-danger"> Adhar is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.AdharUpload && (
+                  <p className="text-danger"> Adhar is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>

@@ -377,12 +377,15 @@ function TaskManagementDetails({ collapsed }) {
                   <Descriptions.Item label="Annual Income">
                     {record.annualIncome}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Tax Paid">
-                    {record.taxPaid}
+                  <Descriptions.Item label="Tax Type">
+                    {record.taxType}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Income Tax Status">
+                  <Descriptions.Item label="Tax Sub-Category">
+                    {record.subCategory}
+                  </Descriptions.Item>
+                  {/* <Descriptions.Item label="Income Tax Status">
                     {record.incomeTaxStatus}
-                  </Descriptions.Item>
+                  </Descriptions.Item> */}
                 </Descriptions>
               </Card>
             </Col>
@@ -394,7 +397,9 @@ function TaskManagementDetails({ collapsed }) {
                 <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="Approval Status">
                     {record.status === "1" ? (
-                      <p color="green">Approved</p>
+                      <p style={{ color: "green", fontSize: "14px" }}>
+                        Approved
+                      </p>
                     ) : record.status === "2" ? (
                       <p color="red">Rejected</p>
                     ) : (
