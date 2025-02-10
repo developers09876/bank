@@ -664,15 +664,17 @@ const LoanDetails = ({ collapsed }) => {
                         View
                       </a>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Business Ownership Proof">
-                      <a
-                        href={record.businessOwnerStatementProof}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View
-                      </a>
-                    </Descriptions.Item>
+                    {record.businessOwnerStatementProof && (
+                      <Descriptions.Item label="Business Ownership Proof">
+                        <a
+                          href={record.businessOwnerStatementProof}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View
+                        </a>
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Signature">
                       <a
                         href={record.signature}
