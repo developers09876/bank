@@ -303,7 +303,7 @@ const Rewards = () => {
                 </Button>
                 <Row
                   className="sub-cards-row-full"
-                  style={{ justifyContent: "center" }}
+                  // style={{ justifyContent: "center" }}
                 >
                   {item.subCategories.map((subItem) => (
                     <Col
