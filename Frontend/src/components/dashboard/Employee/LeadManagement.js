@@ -20,7 +20,6 @@ function LeadManagement() {
 
   useEffect(() => {
     fetchLeads();
-    fetchLead();
   }, []);
 
   useEffect(() => {
@@ -49,18 +48,7 @@ function LeadManagement() {
     }
   };
 
-  const fetchLead = async () => {
-    setLoading(true);
-    try {
-      const response = await Api.get(`http://localhost:5000/lead/getByleadEmployeeid/${userId}`);
-      setFetchedData(response.data);
-      console.log("response.data", response.data);
-    } catch (error) {
-      console.error("Error fetching leads:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
