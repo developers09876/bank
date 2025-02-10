@@ -253,10 +253,9 @@ function TaxFormKyc() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panOrAdharUpload && (
-                    <p className="text-danger"> Adhar is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.AdharUpload && (
+                  <p className="text-danger"> Adhar is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>
