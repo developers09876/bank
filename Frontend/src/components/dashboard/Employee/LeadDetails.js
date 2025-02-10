@@ -9,7 +9,9 @@ import axios from "axios";
 function LeadDetails({ collapsed }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { record } = location.state || {};
+  // const { record } = location.state || {};
+   const { state } = useLocation();
+    const record = state?.record;
   const [remarksFields, setRemarksFields] = useState([]);
 
   console.log("record", record);

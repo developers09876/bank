@@ -149,6 +149,18 @@ export async function getById(req, res, next) {
     });
   }
 }
+export const getByLeadEmployeeID= async (req, res) => {
+  try {
+    const { employeeId } = req.params;
+    const lead = await Lead.find({ employeeId });
+    if (!lead) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(lead);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 export async function getByLeadId(req, res, next) {
   try {
