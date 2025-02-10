@@ -24,6 +24,7 @@ import "../user/LoanDetails.css";
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
 import Api from "../../../Api";
+import axios from "axios";
 const { Option } = Select;
 
 const LoanDetails = ({ collapsed }) => {
@@ -38,7 +39,7 @@ const LoanDetails = ({ collapsed }) => {
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
   const [employeeList, setEmployeeList] = useState([]);
   const [employeeName, setEmployeeName] = useState();
-  const [employeeCategory, setemployeeCategory] = useState();
+  // const [employeeCategory, setemployeeCategory] = useState();
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
@@ -59,14 +60,14 @@ const LoanDetails = ({ collapsed }) => {
     defaultValues: {
       // employeeType: "",
       employeeId: "",
-      loanType: "",
+      employeeCategory: "",
       startDate: "",
       endDate: "",
       description: "",
     },
   });
 
-  const category = watch("loanType");
+  const category = watch("employeeCategory");
   console.log("category", category);
   const employeeCategories = {
     LoanEmployee: [
@@ -112,7 +113,7 @@ const LoanDetails = ({ collapsed }) => {
       reset({
         employeeType: data?.employeeType || "LoanEmployee",
         employeeId: data?.employeeId || "",
-        loanType: data?.loanType || "",
+        employeeCategory: data?.employeeCategory || "",
         startDate: data?.startDate ? data.startDate.split("T")[0] : "",
         endDate: data?.endDate ? data.endDate.split("T")[0] : "",
         description: data?.description || "",
@@ -191,13 +192,28 @@ const LoanDetails = ({ collapsed }) => {
     setPendingReason("");
   };
 
+  useEffect(() => {
+    const fetchEmployeeDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${record.employeeId}`
+        );
+        console.log("response employee data", response);
+        setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchEmployeeDetail();
+  }, [record.employeeId]);
+
   const onSubmit = async (data, event) => {
     event.preventDefault();
 
     const updateDetails = {
       AdminId: data.AdminId,
       employeeType: data.employeeType,
-      loanType: data.loanType,
+      employeeCategory: data.employeeCategory,
       employeeList: data.employeeList,
       employeeId: data.employeeId,
       description: data.description,
@@ -440,7 +456,7 @@ const LoanDetails = ({ collapsed }) => {
 
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 2, sm: 1 }}>
                     <Descriptions.Item label="Agent Name">
                       {record.loanAgentName}
                     </Descriptions.Item>
@@ -450,11 +466,22 @@ const LoanDetails = ({ collapsed }) => {
                     <Descriptions.Item label="Loan Amount">
                       {record.loanAmount}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Loan Type">
+                      {record.loanType}
+                    </Descriptions.Item>
+                    {record.vehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.vehicleType}
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Purpose">
                       {record.loanPurpose}
                     </Descriptions.Item>
                     <Descriptions.Item label="Employment Status">
                       {record.employmentStatus}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Income Details">
+                      {record.incomeDetails}
                     </Descriptions.Item>
                     <Descriptions.Item label="Annual Income">
                       {record.annualIncome}
@@ -547,6 +574,39 @@ const LoanDetails = ({ collapsed }) => {
                   </Card>
                 </Col>
               )}
+              {record.children && record.children.length > 0 && (
+                <Row className="px-2">
+                  <Col lg={12} md={12}>
+                    <Card
+                      className="loandetail-custom-card"
+                      title="Children Details"
+                    >
+                      <Descriptions
+                        column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
+                      >
+                        {record.children.map((child, index) => (
+                          <React.Fragment key={child._id}>
+                            <Descriptions.Item
+                              label={`Child ${index + 1} Name`}
+                            >
+                              {child.name}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Gender">
+                              {child.gender}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Age">
+                              {child.age}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="School Name">
+                              {child.schoolName}
+                            </Descriptions.Item>
+                          </React.Fragment>
+                        ))}
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                </Row>
+              )}
 
               {record.bankName && (
                 <Col lg={12} md={12}>
@@ -558,7 +618,7 @@ const LoanDetails = ({ collapsed }) => {
                         {record.bankName}
                       </Descriptions.Item>
                       <Descriptions.Item label="Branch Name">
-                        {record.branch}
+                        {record.bankBranch}
                       </Descriptions.Item>
                       <Descriptions.Item label="IFSC Code">
                         {record.IFSCCode}
@@ -604,6 +664,15 @@ const LoanDetails = ({ collapsed }) => {
                         View
                       </a>
                     </Descriptions.Item>
+                    <Descriptions.Item label="Business Ownership Proof">
+                      <a
+                        href={record.businessOwnerStatementProof}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View
+                      </a>
+                    </Descriptions.Item>
                     <Descriptions.Item label="Signature">
                       <a
                         href={record.signature}
@@ -625,6 +694,15 @@ const LoanDetails = ({ collapsed }) => {
                     <Descriptions.Item label="Aadhaar Image">
                       <a
                         href={record.aadharImageUpload}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View
+                      </a>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="VoterId Image">
+                      <a
+                        href={record.voterIdUpload}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -693,7 +771,7 @@ const LoanDetails = ({ collapsed }) => {
                         {record.employeeType}
                       </Descriptions.Item>
                       <Descriptions.Item label="Employee Category">
-                        {employeeCategory}
+                        {record.employeeCategory}
                       </Descriptions.Item>
                       <Descriptions.Item label="Description">
                         {record.description}
@@ -806,7 +884,7 @@ const LoanDetails = ({ collapsed }) => {
                     <div>
                       <label className="vendorpage_labelCss">Category:</label>
                       <Controller
-                        name="loanType"
+                        name="employeeCategory"
                         control={control}
                         rules={{ required: true }}
                         render={({ field }) => (
@@ -829,7 +907,7 @@ const LoanDetails = ({ collapsed }) => {
                           </Select>
                         )}
                       />
-                      {errors.loanType && (
+                      {errors.employeeCategory && (
                         <p className="text-danger">Category is required</p>
                       )}
                     </div>
@@ -906,7 +984,11 @@ const LoanDetails = ({ collapsed }) => {
 
                 <Row>
                   <Col className="px-2 py-2">
-                    <Button type="primary" variant="primary">
+                    <Button
+                      type="primary"
+                      variant="primary"
+                      onClick={handleSubmit(onSubmit)}
+                    >
                       Submit
                     </Button>
                   </Col>

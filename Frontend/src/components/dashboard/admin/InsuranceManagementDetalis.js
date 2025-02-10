@@ -22,6 +22,7 @@ import {
 } from "@ant-design/icons";
 import "../user/LoanDetails.css";
 import Api from "../../../Api";
+import axios from "axios";
 const { Option } = Select;
 
 function InsuranceManagementDetails({ collapsed }) {
@@ -39,7 +40,7 @@ function InsuranceManagementDetails({ collapsed }) {
   const [employeeList, setEmployeeList] = useState();
   console.log("employeeList", employeeList);
   const [employeeName, setEmployeeName] = useState();
-  const [employeeCategory, setemployeeCategory] = useState();
+  // const [employeeCategory, setemployeeCategory] = useState();
   const [assignValue, setAssignValue] = useState([]);
 
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
@@ -140,6 +141,21 @@ function InsuranceManagementDetails({ collapsed }) {
 
     fetchEmployeeList();
   }, [employeeType]);
+
+  useEffect(() => {
+    const fetchEmployeeDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${record.employeeId}`
+        );
+        console.log("response employee data", response);
+        setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchEmployeeDetail();
+  }, [record.employeeId]);
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
@@ -443,9 +459,9 @@ function InsuranceManagementDetails({ collapsed }) {
                   title="Task Assigned Details"
                 >
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    {/* <Descriptions.Item label="Employee Name">
-                  {employeeName}
-                </Descriptions.Item> */}
+                    <Descriptions.Item label="Employee Name">
+                      {employeeName}
+                    </Descriptions.Item>
                     <Descriptions.Item label="Employee Type">
                       {record.employeeType}
                     </Descriptions.Item>
