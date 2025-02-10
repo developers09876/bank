@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Descriptions, Card } from "antd";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-function LeadDetails() {
+function LeadDetails({ collapsed }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { record } = location.state || {};
@@ -97,75 +97,60 @@ function LeadDetails() {
   }
 
   return (
-    <div style={{ margin: "50px", padding: "20px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Lead Details
-      </h2>
-
+    <div className="loandetail-container">
+        <div className={collapsed ? "main-content.open" : "main-content"}>
       <div>
-        <Row>
-          <Col span={6}>
-            <strong>Name:</strong>
+        <center>
+          <h3>Lead Details</h3>
+        </center>
+      </div>
+      <div style={{marginTop:"20px"}}>
+        <Row className="px-2">
+          <Col lg={12} md={12}>
+            <Card
+              style={{ width: "200%" }}
+              className="loandetail-custom-card"
+              title="Lead Details"
+            >
+              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                <Descriptions.Item label="Name">{`${record.firstname} ${record.lastname}`}</Descriptions.Item>
+                <Descriptions.Item label="Email">
+                  {record.email}
+                </Descriptions.Item>
+                <Descriptions.Item label="Phone">
+                  {record.contactNumber}
+                </Descriptions.Item>
+                <Descriptions.Item label="Aadhar Number">
+                  {record.aadhar}
+                </Descriptions.Item>
+                <Descriptions.Item label="PAN Card Number">
+                  {record.panno}
+                </Descriptions.Item>
+                <Descriptions.Item label="How Immediate">
+                  {record.howimidiate}
+                </Descriptions.Item>
+                <Descriptions.Item label="Previously Applied">
+                  {record.previouslyapplied}
+                </Descriptions.Item>
+                <Descriptions.Item label="Loan Amount">
+                  {record.amount}
+                </Descriptions.Item>
+                <Descriptions.Item label="Purpose Of Loan">
+                  {record.purpose}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
           </Col>
-          <Col span={18}>{`${record.firstname} ${record.lastname}`}</Col>
         </Row>
-        <Row>
-          <Col span={6}>
-            <strong>Email:</strong>
-          </Col>
-          <Col span={18}>{record.email}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>Phone:</strong>
-          </Col>
-          <Col span={18}>{record.contactNumber}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>Loan Amount:</strong>
-          </Col>
-          <Col span={18}>{record.amount}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>Aadhar Number:</strong>
-          </Col>
-          <Col span={18}>{record.aadhar}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>PAN Card Number:</strong>
-          </Col>
-          <Col span={18}>{record.panno}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>Purpose Of Loan:</strong>
-          </Col>
-          <Col span={18}>{record.purpose}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>How Immediate:</strong>
-          </Col>
-          <Col span={18}>{record.howimidiate}</Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <strong>Previously Applied:</strong>
-          </Col>
-          <Col span={18}>{record.previouslyapplied}</Col>
-        </Row>
-
+        </div>
         <Button
           type="primary"
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "20px",marginLeft:"20px" }}
           onClick={() => navigate(-1)}
         >
           Back
         </Button>
-      </div>
+     
 
       <div className="mt-3">
         <ToastContainer position="top-right" autoClose={3000} />
@@ -237,6 +222,7 @@ function LeadDetails() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }
