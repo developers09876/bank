@@ -104,6 +104,7 @@ function Kycvendor() {
   return (
     <div>
       <Header />
+       <ToastContainer/>
       <Container>
         <div
           className="ourProfileParentdiv"
