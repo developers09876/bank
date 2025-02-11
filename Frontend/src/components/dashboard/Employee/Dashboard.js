@@ -235,6 +235,7 @@ const Dashboard = () => {
     approved: 0,
     rejected: 0,
   });
+  console.log('loanStats', loanStats)
   const [insuranceStats, setInsuranceStats] = useState({
     total: 0,
     pending: 0,
@@ -309,7 +310,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: "Client Status",
-        data: [2, 4, 3],
+        data: [loanStats.pending , loanStats.rejected , loanStats.approved],
         backgroundColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderWidth: 1,
