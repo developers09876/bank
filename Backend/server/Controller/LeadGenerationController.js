@@ -150,6 +150,42 @@ export async function getById(req, res, next) {
   }
 }
 
+export async function  getByLeadDetailsID(req, res, next) {
+  try {
+    const { id } = req.params;
+    const leads = await Lead.find({ _id: id });
+
+    if (leads && leads.length > 0) {
+      res.status(200).json({
+        message: "Leads fetched successfully",
+        data: leads,
+      });
+    } else {
+      res.status(404).json({
+        message: "No leads found for the given user ID",
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching leads by ID:", error);
+    res.status(500).json({
+      message: "An error occurred while fetching leads",
+      error: error.message,
+    });
+  }
+}
+// export const getByLeadEmployeeID= async (req, res) => {
+//   try {
+//     const { employeeId } = req.params;
+//     const lead = await Lead.find({ employeeId });
+//     if (!lead) {
+//       return res.status(404).json({ message: "User id not found" });
+//     }
+//     res.status(200).json(lead);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export async function getByLeadId(req, res, next) {
   try {
     const { id } = req.params;

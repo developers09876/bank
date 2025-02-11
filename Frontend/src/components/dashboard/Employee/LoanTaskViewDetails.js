@@ -40,6 +40,7 @@ function LoanTaskViewDetails() {
   const [rejectionReason, setRejectionReason] = useState("");
   const [pendingReason, setPendingReason] = useState("");
   const [loan, setLoan] = useState([]);
+  const [employeeName, setEmployeeName] = useState();
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
   const [remarksFields, setRemarksFields] = useState([]);
   const {
@@ -99,6 +100,21 @@ function LoanTaskViewDetails() {
       console.error("Error updating status:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchEmployeeDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${record.employeeId}`
+        );
+        console.log("response employee data", response);
+        setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchEmployeeDetail();
+  }, [record.employeeId]);
 
   const handleApprove = () => {
     if (record) {
@@ -354,7 +370,7 @@ function LoanTaskViewDetails() {
             <Row className="px-2">
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 2, sm: 1 }}>
                     <Descriptions.Item label="Agent Name">
                       {record.loanAgentName}
                     </Descriptions.Item>
@@ -364,11 +380,22 @@ function LoanTaskViewDetails() {
                     <Descriptions.Item label="Loan Amount">
                       {record.loanAmount}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Loan Type">
+                      {record.loanType}
+                    </Descriptions.Item>
+                    {record.vehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.vehicleType}
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Purpose">
                       {record.loanPurpose}
                     </Descriptions.Item>
                     <Descriptions.Item label="Employment Status">
                       {record.employmentStatus}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Income Details">
+                      {record.incomeDetails}
                     </Descriptions.Item>
                     <Descriptions.Item label="Annual Income">
                       {record.annualIncome}
@@ -461,6 +488,39 @@ function LoanTaskViewDetails() {
                   </Card>
                 </Col>
               )}
+              {record.children && record.children.length > 0 && (
+                <Row className="px-2">
+                  <Col lg={12} md={12}>
+                    <Card
+                      className="loandetail-custom-card"
+                      title="Children Details"
+                    >
+                      <Descriptions
+                        column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
+                      >
+                        {record.children.map((child, index) => (
+                          <React.Fragment key={child._id}>
+                            <Descriptions.Item
+                              label={`Child ${index + 1} Name`}
+                            >
+                              {child.name}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Gender">
+                              {child.gender}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Age">
+                              {child.age}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="School Name">
+                              {child.schoolName}
+                            </Descriptions.Item>
+                          </React.Fragment>
+                        ))}
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                </Row>
+              )}
 
               {record.bankName && (
                 <Col lg={12} md={12}>
@@ -472,7 +532,7 @@ function LoanTaskViewDetails() {
                         {record.bankName}
                       </Descriptions.Item>
                       <Descriptions.Item label="Branch Name">
-                        {record.branch}
+                        {record.bankBranch}
                       </Descriptions.Item>
                       <Descriptions.Item label="IFSC Code">
                         {record.IFSCCode}
@@ -518,6 +578,17 @@ function LoanTaskViewDetails() {
                         View
                       </a>
                     </Descriptions.Item>
+                    {record.businessOwnerStatementProof && (
+                      <Descriptions.Item label="Business Ownership Proof">
+                        <a
+                          href={record.businessOwnerStatementProof}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View
+                        </a>
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Signature">
                       <a
                         href={record.signature}
@@ -539,6 +610,15 @@ function LoanTaskViewDetails() {
                     <Descriptions.Item label="Aadhaar Image">
                       <a
                         href={record.aadharImageUpload}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View
+                      </a>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="VoterId Image">
+                      <a
+                        href={record.voterIdUpload}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -588,296 +668,148 @@ function LoanTaskViewDetails() {
               </Col>
             </Row>
 
-            <Row className="py-3">
-              {record.employeeType && (
-                <>
-                  <center>
-                    <h3>Loan Status</h3>
-                  </center>
-                  <Col lg={12} md={12}>
-                    <Card
-                      className="loandetail-custom-card"
-                      title="Task Details"
+            <Row style={{ textAlign: "-webkit-center" }}>
+              <h5>
+                <b>Task Details:</b>
+              </h5>
+              <Col lg={12} md={12}>
+                <Card
+                  className="loandetail-custom-card"
+                  title="Task Assigned Details"
+                >
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                    <Descriptions.Item label="Employee Name">
+                      {employeeName}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Employee Type">
+                      {record.employeeType}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Employee Category">
+                      {record.employeeCategory}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Description">
+                      {record.description}
+                    </Descriptions.Item>
+
+                    <Descriptions.Item label="Start Date">
+                      {record.startDate
+                        ? record.startDate.split("T")[0]
+                        : "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="End Date">
+                      {record.endDate ? record.endDate.split("T")[0] : "N/A"}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Col>
+              <Row style={{ textAlign: "-webkit-center" }}>
+                <Col lg={12} md={12}>
+                  <Card className="loandetail-custom-card" title="Reminders">
+                    <Descriptions
+                      column={{ xl: 3, lg: 3, xs: 1, md: 1, sm: 1 }}
                     >
-                      <Descriptions
-                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
-                      >
-                        <Descriptions.Item label="Loan Type">
-                          {record.loanType}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Start Date">
-                          {record.startDate
-                            ? new Date(record.startDate)
-                                .toISOString()
-                                .split("T")[0]
-                            : "N/A"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="End Date">
-                          {record.endDate
-                            ? new Date(record.endDate)
-                                .toISOString()
-                                .split("T")[0]
-                            : "N/A"}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Description">
-                          {record.description}
-                        </Descriptions.Item>
-
-                        {(record.pendingReason === null ||
-                          record.rejectionReason === null) && (
-                          <Descriptions.Item label="Your Approval Status">
-                            {record.status === "1" ? (
-                              <p color="green">Loan Approved</p>
-                            ) : record.status === "2" ? (
-                              <p color="red">Loan Rejected</p>
-                            ) : (
-                              <p style={{ color: "orange" }}>Loan is on Hold</p>
-                            )}
-                          </Descriptions.Item>
-                        )}
-
-                        {record.status === "2" && (
-                          <Descriptions.Item label="Reason for Your Rejection">
-                            {record.rejectionReason}
-                          </Descriptions.Item>
-                        )}
-                        {record.status === "Pending" &&
-                          record.pendingReason && (
-                            <Descriptions.Item label="Reason for Holding the Loan">
-                              {record.pendingReason}
+                      {record.addremarks && record.addremarks.length > 0 ? (
+                        record.addremarks.map((remark, index) => (
+                          <React.Fragment key={index}>
+                            <Descriptions.Item label="Date">
+                              {remark.date}
                             </Descriptions.Item>
-                          )}
-                      </Descriptions>
-
-                      {/* <Row
-                        className="px-4 py-4"
-                        style={{ justifySelf: "center" }}
+                            <Descriptions.Item label="Message">
+                              {remark.remarks}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Status">
+                              {remark.status}
+                            </Descriptions.Item>
+                          </React.Fragment>
+                        ))
+                      ) : (
+                        <Descriptions.Item>
+                          No reminders available.
+                        </Descriptions.Item>
+                      )}
+                    </Descriptions>
+                  </Card>
+                </Col>
+              </Row>
+              <div className="mt-3">
+                <h5>Add Reminders</h5>
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-3 p-3">
+                  {remarksFields.map((field, index) => (
+                    <Row key={index} className="mb-3">
+                      <Col lg={4} md={6} xs={12}>
+                        <label>Date</label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          {...register(`date_${index}`, {
+                            required: true,
+                          })}
+                        />
+                        {errors[`date_${index}`] && (
+                          <p className="text-danger">Date is required</p>
+                        )}
+                      </Col>
+                      <Col lg={4} md={6} xs={12}>
+                        <label>Status</label>
+                        <select
+                          className="form-control"
+                          {...register(`status_${index}`, {
+                            required: true,
+                          })}
+                        >
+                          <option value="">-- SELECT --</option>
+                          <option value="Rejected">Rejected</option>
+                          <option value="In-Progress">In-Progress</option>
+                          <option value="Approved">Approved</option>
+                        </select>
+                        {errors[`status_${index}`] && (
+                          <p className="text-danger">Status is required</p>
+                        )}
+                      </Col>
+                      <Col lg={4} md={6} xs={12}>
+                        <label>Remarks</label>
+                        <textarea
+                          className="form-control"
+                          {...register(`remarks_${index}`, {
+                            required: true,
+                          })}
+                          placeholder="Remarks"
+                        />
+                        {errors[`remarks_${index}`] && (
+                          <p className="text-danger">Remarks are required</p>
+                        )}
+                      </Col>
+                      <Col
+                        lg={4}
+                        md={6}
+                        xs={12}
+                        className="d-flex align-items-center"
                       >
-                        <Space>
-                          {record && record.status === "Pending" && (
-                            <Button
-                              type="primary"
-                              style={{ background: "#4096ff", color: "#fff" }}
-                              onClick={handleApprove}
-                            >
-                              Approve
-                            </Button>
-                          )}
-
-                          {record && record.status === "Pending" && (
-                            <>
-                              <Button
-                                type="primary"
-                                danger
-                                onClick={() => setIsRejectModalVisible(true)}
-                              >
-                                Reject
-                              </Button>
-                            </>
-                          )}
-
-                          <Modal
-                            title="Rejection Confirmation"
-                            visible={isRejectModalVisible}
-                            onCancel={() => setIsRejectModalVisible(false)}
-                            footer={null}
+                        {!field.prefilled && remarksFields.length > 1 && (
+                          <button
+                            type="button"
+                            className="btn btn-danger me-2"
+                            onClick={() => removeRemarkField(index)}
                           >
-                            <div>
-                              <p>Please provide a reason for rejection:</p>
-                              <Input.TextArea
-                                rows={3}
-                                placeholder="Enter rejection reason"
-                                value={rejectionReason}
-                                onChange={handleRejectionReasonChange}
-                              />
-                              <Space style={{ marginTop: "20px" }}>
-                                <Button
-                                  type="primary"
-                                  onClick={handleReject}
-                                  disabled={!rejectionReason.trim()}
-                                >
-                                  Submit
-                                </Button>
-                                <Button
-                                  variant="secondary"
-                                  onClick={handleReset}
-                                >
-                                  Reset
-                                </Button>
-                              </Space>
-                            </div>
-                          </Modal>
-
-                          <Modal
-                            title="Pending Confirmation"
-                            visible={isPendingtModalVisible}
-                            onCancel={() => setIsPendingModalVisible(false)}
-                            footer={null}
-                          >
-                            <div>
-                              <p>
-                                Please provide a reason for holding the Loan
-                                application:
-                              </p>
-                              <Input.TextArea
-                                rows={3}
-                                placeholder="Enter Pending reason"
-                                value={pendingReason}
-                                onChange={handlePendingReasonChange}
-                              />
-                              <Space style={{ marginTop: "20px" }}>
-                                <Button
-                                  type="primary"
-                                  onClick={handlePending}
-                                  disabled={!pendingReason.trim()}
-                                >
-                                  Submit
-                                </Button>
-                                <Button
-                                  variant="secondary"
-                                  onClick={handleReset}
-                                >
-                                  Reset
-                                </Button>
-                              </Space>
-                            </div>
-                          </Modal>
-
-                          {record && record.status === "1" && (
-                            <>
-                              <Button type="primary" disabled>
-                                Approved
-                              </Button>
-                              <Button
-                                type="primary"
-                                danger
-                                onClick={() => setIsRejectModalVisible(true)}
-                              >
-                                Reject
-                              </Button>
-                              <Button
-                                type="primary"
-                                ghost
-                                onClick={() => setIsPendingModalVisible(true)}
-                              >
-                                Hold
-                              </Button>
-                            </>
-                          )}
-
-                          {record && record.status === "2" && (
-                            <>
-                              <Button
-                                type="primary"
-                                style={{ background: "#4096ff", color: "#fff" }}
-                                onClick={handleApprove}
-                              >
-                                Approve
-                              </Button>
-                              <Button type="primary" danger disabled>
-                                Rejected
-                              </Button>
-                              <Button
-                                type="primary"
-                                ghost
-                                onClick={() => setIsPendingModalVisible(true)}
-                              >
-                                Hold
-                              </Button>
-                            </>
-                          )}
-                        </Space>
-                      </Row> */}
-                    </Card>
-                    <div className="mt-3">
-                      <h3>Add Remarks</h3>
-                      <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="mt-3 p-3"
-                      >
-                        {remarksFields.map((field, index) => (
-                          <Row key={index} className="mb-3">
-                            <Col lg={4} md={6} xs={12}>
-                              <label>Date</label>
-                              <input
-                                type="date"
-                                className="form-control"
-                                {...register(`date_${index}`, {
-                                  required: true,
-                                })}
-                              />
-                              {errors[`date_${index}`] && (
-                                <p className="text-danger">Date is required</p>
-                              )}
-                            </Col>
-                            <Col lg={4} md={6} xs={12}>
-                              <label>Status</label>
-                              <select
-                                className="form-control"
-                                {...register(`status_${index}`, {
-                                  required: true,
-                                })}
-                              >
-                                <option value="">-- SELECT --</option>
-                                <option value="Rejected">Rejected</option>
-                                <option value="In-Progress">In-Progress</option>
-                                <option value="Approved">Approved</option>
-                              </select>
-                              {errors[`status_${index}`] && (
-                                <p className="text-danger">
-                                  Status is required
-                                </p>
-                              )}
-                            </Col>
-                            <Col lg={4} md={6} xs={12}>
-                              <label>Remarks</label>
-                              <textarea
-                                className="form-control"
-                                {...register(`remarks_${index}`, {
-                                  required: true,
-                                })}
-                                placeholder="Remarks"
-                              />
-                              {errors[`remarks_${index}`] && (
-                                <p className="text-danger">
-                                  Remarks are required
-                                </p>
-                              )}
-                            </Col>
-                            <Col
-                              lg={4}
-                              md={6}
-                              xs={12}
-                              className="d-flex align-items-center"
-                            >
-                              {!field.prefilled && remarksFields.length > 1 && (
-                                <button
-                                  type="button"
-                                  className="btn btn-danger me-2"
-                                  onClick={() => removeRemarkField(index)}
-                                >
-                                  -
-                                </button>
-                              )}
-                              <button
-                                type="button"
-                                className="btn btn-success"
-                                onClick={addRemarkField}
-                              >
-                                +
-                              </button>
-                            </Col>
-                          </Row>
-                        ))}
-
-                        <button type="submit" className="btn btn-primary mt-3">
-                          Submit
+                            -
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          className="btn btn-success"
+                          onClick={addRemarkField}
+                        >
+                          +
                         </button>
-                      </form>
-                    </div>
-                  </Col>
-                </>
-              )}
+                      </Col>
+                    </Row>
+                  ))}
+
+                  <button type="submit" className="btn btn-primary mt-3">
+                    Submit
+                  </button>
+                </form>
+              </div>
             </Row>
           </div>
         </div>

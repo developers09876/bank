@@ -69,7 +69,7 @@
 // export default Sidebar;
 
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"; 
 import { Menu } from "antd";
 import Api from "../../../Api";
 import { toast } from "react-toastify";
@@ -163,8 +163,9 @@ function Sidebar({ collapsed }) {
         >
           Dashboard
         </NavLink>
-        <NavLink to="/employee/myprofile">My Profile</NavLink>
-        <NavLink to="/employee/leadmanagement">Lead Generation</NavLink>
+          
+          <NavLink to="/employee/myprofile" ClassName="main-nav-style">My Profile</NavLink>
+        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">Lead Generation</NavLink>
 
         {/* Conditionally render Task Management submenu */}
         {hasTasks && (
@@ -178,7 +179,7 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
-        <NavLink to="/employee/leadtaskmanagement">
+        <NavLink to="/employee/leadtaskmanagement"ClassName="main-nav-style">
           Lead Task Management
         </NavLink>
 

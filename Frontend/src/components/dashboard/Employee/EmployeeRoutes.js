@@ -50,7 +50,7 @@ export const EmployeeRoutes = [
     element: <LeadManagement />,
   },
   {
-    path: "/employee/leaddetails",
+    path: "/employee/leaddetails/:id",
     element: <LeadDetails />,
   },
   {
