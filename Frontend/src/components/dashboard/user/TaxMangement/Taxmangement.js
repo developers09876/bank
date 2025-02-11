@@ -3,6 +3,7 @@ import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import Api from "../../../../Api";
 const { Option } = Select;
 
@@ -18,7 +19,7 @@ function Taxmangement() {
   } = useForm();
 
   const category = watch("taxType");
-
+  const navigate = useNavigate();
   const id = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
 
@@ -47,6 +48,7 @@ function Taxmangement() {
       );
 
       toast.success("Form submitted successfully");
+      setTimeout(() => navigate(-1), 3000);
     } catch (error) {
       console.error("Error:", error.message);
       toast.error("An error occurred while submitting the form");

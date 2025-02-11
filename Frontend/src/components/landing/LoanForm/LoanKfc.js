@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Api from "../../Api";
 
@@ -23,7 +24,7 @@ function Kycvendor() {
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
   const loanApplicationId = localStorage.getItem("loanApplicationId");
-
+ const navigate = useNavigate();
   console.log("userKYCDetail", userKYCDetail);
 
   useEffect(() => {
@@ -94,7 +95,9 @@ function Kycvendor() {
         Details
       );
       console.log(response.data.data, "Form submitted successfully");
-      toast.success("Form submitted successfully");
+      toast.success("Form submitted successfully")
+      setTimeout(() => navigate(-1), 3000);
+
     } catch (error) {
       console.error("Form submission failed", error);
       toast.error("An error occurred while submitting the form");
