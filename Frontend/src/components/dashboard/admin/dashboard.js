@@ -35,6 +35,13 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState();
   const [employees, setEmployees] = useState();
   const [loans, setLoans] = useState();
+  const [loan, setLoan] = useState();
+  const [loanStatusCounts, setLoanStatusCounts] = useState({
+    pending: 0,
+    rejected: 0,
+    completed: 0,
+  });
+  console.log('loan', loan)
   const [insurances, setInsurances] = useState();
   const [taxs, setTaxs] = useState();
   const user = "user";
@@ -72,8 +79,17 @@ const AdminDashboard = () => {
     try {
       const response = await axios.get(`http://localhost:5000/loanform/getall`);
       // console.log("response.data", response.data);
+      setLoan(response.data)
       setLoans(response.data.length);
       // console.log("loans", response.data.length);
+      const statusCounts = { pending: 0, rejected: 0, completed: 0 };
+      response.data.forEach((loan) => {
+        if (loan.status === "Pending") statusCounts.pending++;
+        else if (loan.status === "2") statusCounts.rejected++;
+        else if (loan.status === "1") statusCounts.completed++;
+      });
+  
+      setLoanStatusCounts(statusCounts);
     } catch (error) {
       console.log("Error occurs while fetching loans:", error);
     }
@@ -133,7 +149,11 @@ const AdminDashboard = () => {
     datasets: [
       {
         label: "Client Status",
-        data: [2, 4, 3],
+        data: [
+          loanStatusCounts.pending,
+          loanStatusCounts.rejected,
+          loanStatusCounts.completed,
+        ],
         backgroundColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderWidth: 1,

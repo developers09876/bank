@@ -6,8 +6,14 @@ import "../../dashboard/user/LoanDetails.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import Api from "../../../Api";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 
-const InsuranceTaskViewDetails = ({ collapsed }) => {
+const TaxTaskViewDetails = ({ collapsed }) => {
   const {
     register,
     handleSubmit,
@@ -20,6 +26,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
   console.log("record", record);
 
   const [remarksFields, setRemarksFields] = useState([]);
+  const [employeeName, setEmployeeName] = useState();
 
   useEffect(() => {
     if (record) {
@@ -80,15 +87,73 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
       toast.error("An error occurred while submitting the form");
     }
   };
-
+  useEffect(() => {
+    const fetchEmployeeList = async () => {
+      const employeeid = record.employeeId;
+      try {
+        const response = await Api.get(`signup/getby/${employeeid}`);
+        if (
+          response.data &&
+          response.data.firstname &&
+          response.data.lastname
+        ) {
+          setEmployeeName(
+            `${response.data.firstname} ${response.data.lastname}`
+          );
+        }
+        // setemployeeCategory(response.data.employeeCategory);
+      } catch (error) {
+        console.error("Error fetching employee list:", error);
+        toast.error("Failed to fetch employee list.");
+      }
+    };
+    fetchEmployeeList();
+  }, []);
   return (
     <div>
       <div className="loandetail-container">
         <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
             <center>
-              <h3>Insurance Details</h3>
+              <h3>Tax Details</h3>
             </center>
+            <div className="px-2" style={{ textAlign: "end" }}>
+              <Tag
+                icon={
+                  record.status === "Pending" ? (
+                    <ClockCircleOutlined />
+                  ) : record.status === "2" ? (
+                    <CloseCircleOutlined />
+                  ) : record.status === "1" ? (
+                    <CheckCircleOutlined />
+                  ) : null
+                }
+                color={
+                  record.status === "Pending"
+                    ? "orange"
+                    : record.status === "2"
+                    ? "red"
+                    : record.status === "1"
+                    ? "green"
+                    : null
+                }
+                className={`status-tag ${
+                  record.status === "1"
+                    ? "approved"
+                    : record.status === "2"
+                    ? "rejected"
+                    : "pending"
+                }`}
+              >
+                {record.status === "1" ? (
+                  <p style={{ display: "inline" }}>Approved</p>
+                ) : record.status === "2" ? (
+                  <p style={{ display: "inline" }}>Rejected</p>
+                ) : (
+                  <p style={{ display: "inline" }}>Pending</p>
+                )}
+              </Tag>
+            </div>
           </div>
           <Row className="px-4 py-3">
             <Col>
@@ -154,13 +219,9 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row className="px-2">
+          <Row>
             <Col lg={12} md={12}>
-              <Card
-                style={{ width: "100%" }}
-                className="loandetail-custom-card"
-                title="Tax Details"
-              >
+              <Card className="loandetail-custom-card" title="Tax Details">
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="bussiness Type">
                     {record.businessType}
@@ -168,52 +229,109 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
                   <Descriptions.Item label="Annual Income">
                     {record.annualIncome}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Tax Paid">
-                    {record.taxPaid}
+                  <Descriptions.Item label="Tax Type">
+                    {record.taxType}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Income Tax Status">
-                    {record.incomeTaxStatus}
+                  <Descriptions.Item label="Tax Sub-Category">
+                    {record.subCategory}
+                  </Descriptions.Item>
+                  {/* <Descriptions.Item label="Income Tax Status">
+                              {record.incomeTaxStatus}
+                            </Descriptions.Item> */}
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Tax Status">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Approval Status">
+                    {record.status === "1" ? (
+                      <p style={{ color: "green", fontSize: "14px" }}>
+                        Approved
+                      </p>
+                    ) : record.status === "2" ? (
+                      <p color="red">Rejected</p>
+                    ) : (
+                      <p color="orange">Pending</p>
+                    )}
+                  </Descriptions.Item>
+                  {record.status === "2" && (
+                    <Descriptions.Item label="Reason for Rejection">
+                      {record.rejectionReason}
+                    </Descriptions.Item>
+                  )}
+                  {record.status === "Pending" && record.pendingReason && (
+                    <Descriptions.Item label="Reason for Hold">
+                      {record.pendingReason}
+                    </Descriptions.Item>
+                  )}
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
+          <Row style={{ textAlign: "-webkit-center" }}>
+            <h5>
+              <b>Task Details:</b>
+            </h5>
+            <Col lg={12} md={12}>
+              <Card
+                className="loandetail-custom-card"
+                title="Task Assigned Details"
+              >
+                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Employee Name">
+                    {employeeName}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Employee Type">
+                    {record.employeeType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Employee Category">
+                    {record.employeeCategory}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Description">
+                    {record.description}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Start Date">
+                    {record.startDate}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="End Date">
+                    {record.endDate}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>
             </Col>
           </Row>
-          {record.employeeId && (
-            <Row className="px-2">
-              <Col lg={12} md={12}>
-                <Card
-                  style={{ width: "100%" }}
-                  className="loandetail-custom-card"
-                  title="Task Assigned Details"
-                >
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    {/* <Descriptions.Item label="Employee Name">
-                                     {employeeName}
-                                   </Descriptions.Item> */}
-                    <Descriptions.Item label="Employee Type">
-                      {record.employeeType}
+          <Row style={{ textAlign: "-webkit-center" }}>
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Reminders">
+                <Descriptions column={{ xl: 3, lg: 3, xs: 1, md: 1, sm: 1 }}>
+                  {record.addremarks && record.addremarks.length > 0 ? (
+                    record.addremarks.map((remark, index) => (
+                      <React.Fragment key={index}>
+                        <Descriptions.Item label="Date">
+                          {remark.date}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Message">
+                          {remark.remarks}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Status">
+                          {remark.status}
+                        </Descriptions.Item>
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <Descriptions.Item>
+                      No reminders available.
                     </Descriptions.Item>
-                    <Descriptions.Item label="Employee Category">
-                      {record.employeeCategory}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Description">
-                      {record.description}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Start Date">
-                      {record.startDate
-                        ? record.startDate.split("T")[0]
-                        : "N/A"}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="End Date">
-                      {record.endDate ? record.endDate.split("T")[0] : "N/A"}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              </Col>
-            </Row>
-          )}
+                  )}
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
           <div className="mt-3">
-            <h3>Add Remarks</h3>
+            <h3>Add Reminders</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="mt-3 p-3">
               {remarksFields.map((field, index) => (
                 <Row key={index} className="mb-3">
@@ -291,4 +409,4 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
   );
 };
 
-export default InsuranceTaskViewDetails;
+export default TaxTaskViewDetails;
