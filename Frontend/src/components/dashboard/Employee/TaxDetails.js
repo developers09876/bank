@@ -148,11 +148,14 @@ const TaxDetails = ({ collapsed }) => {
                   <Descriptions.Item label="Annual Income">
                     {record.annualIncome}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Tax Paid">
-                    {record.taxPaid}
+                  <Descriptions.Item label="Tax Type">
+                    {record.taxType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Sub Category">
+                    {record.subCategory}
                   </Descriptions.Item>
                   <Descriptions.Item label="Income Tax Status">
-                    {record.incomeTaxStatus}
+                    {record.status}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>

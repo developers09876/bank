@@ -3,6 +3,7 @@ import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import Api from "../../../Api";
 const { Option } = Select;
 
@@ -17,7 +18,7 @@ function CreateInsuranceManagement() {
 
   const id = localStorage.getItem("regid");
   const userType = localStorage.getItem("role");
-
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     const details = {
       userId: id,
@@ -50,6 +51,7 @@ function CreateInsuranceManagement() {
         details
       );
       toast.success("Form submitted successfully");
+      setTimeout(() => navigate(-1), 3000);
     } catch (error) {
       console.error("Error:", error);
 
