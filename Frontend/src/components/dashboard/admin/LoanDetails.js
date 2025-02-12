@@ -457,12 +457,16 @@ const LoanDetails = ({ collapsed }) => {
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
                   <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 2, sm: 1 }}>
-                    <Descriptions.Item label="Agent Name">
-                      {record.loanAgentName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Agent Contact">
-                      {record.loanAgentContactNumber}
-                    </Descriptions.Item>
+                    {record.loanAgentName && (
+                      <Descriptions.Item label="Agent Name">
+                        {record.loanAgentName}
+                      </Descriptions.Item>
+                    )}
+                    {record.loanAgentContactNumber && (
+                      <Descriptions.Item label="Agent Contact">
+                        {record.loanAgentContactNumber}
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Loan Amount">
                       {record.loanAmount}
                     </Descriptions.Item>

@@ -31,10 +31,10 @@ import TaxTaskViewDetails from "./TaxTaskViewDetails";
 import InsuranceManagementEdit from "./InsuranceManagementEdit";
 import TaxsManagementEdit from "./TaxManagementEdit";
 import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
-import UserLoanFormProfileTab from "../../landing/LoanForm/LoanFormProfileTab";
 import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
 import TaxManagementEdit from "./TaxManagementEdit";
 import InsuranceEditDetails from "./InsuranceEditDetails";
+import CreateNewLoanForm from "./CreateNewLoanForm/CreateLoanProfileTab";
 
 export const EmployeeRoutes = [
   {
@@ -159,6 +159,6 @@ export const EmployeeRoutes = [
   },
   {
     path: "/employee/createloan",
-    element: <UserLoanFormProfileTab />,
+    element: <CreateNewLoanForm />,
   },
 ];

@@ -3,13 +3,11 @@ import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../../Layout/Header";
-import Footer from "../../Layout/Footer";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Api from "../../Api";
 
-function Kycvendor() {
+function CreateLoanKfc() {
   const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
@@ -21,7 +19,6 @@ function Kycvendor() {
     setValue,
   } = useForm();
 
-  const userType = localStorage.getItem("userType");
   const userid = localStorage.getItem("id");
   const id = localStorage.getItem("vendor_id");
   const loanApplicationId = localStorage.getItem("loanApplicationId");
@@ -31,14 +28,12 @@ function Kycvendor() {
   useEffect(() => {
     const fetchUserKYCDetails = async () => {
       try {
-        if (userType === "user") {
-          const response = await axios.get(
-            `http://localhost:5000/signup/getby/${userid}`
-          );
-          setUserKYCDetail(response.data);
-          const fetchedData = response.data;
-          reset(fetchedData);
-        }
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${userid}`
+        );
+        setUserKYCDetail(response.data);
+        const fetchedData = response.data;
+        reset(fetchedData);
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -108,7 +103,6 @@ function Kycvendor() {
 
   return (
     <div>
-      <Header />
       <ToastContainer />
       <Container>
         <div
@@ -349,9 +343,8 @@ function Kycvendor() {
         </div>
       </Container>
       {/* </Card> */}
-      <Footer />
     </div>
   );
 }
 
-export default Kycvendor;
+export default CreateLoanKfc;

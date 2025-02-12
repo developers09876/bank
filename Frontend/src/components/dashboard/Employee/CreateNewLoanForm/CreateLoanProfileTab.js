@@ -1,14 +1,14 @@
 import React from "react";
 import { Tabs } from "antd";
-import OurProfile from "./LoanForm";
-import KycComplaince from "./LoanKfc";
-import LoanDetails from "./LoanDetails";
+import OurProfile from "./CreateLoanForm";
+import KycComplaince from "./CreateLoanKfc";
+import LoanDetails from "./CreateLoanDetails";
 import {
   TbCircleNumber1Filled,
   TbCircleNumber2Filled,
   TbCircleNumber3Filled,
 } from "react-icons/tb";
-function UserLoanFormProfileTab() {
+function CreateLoanProfileTab() {
   return (
     <div>
       <br />
@@ -16,7 +16,7 @@ function UserLoanFormProfileTab() {
         defaultActiveKey="1"
         centered
         className="p-3"
-        style={{ marginTop: "100px" }}
+        // style={{ marginTop: "100px" }}
       >
         <Tabs.TabPane
           tab={
@@ -87,4 +87,4 @@ function UserLoanFormProfileTab() {
   );
 }
 
-export default UserLoanFormProfileTab;
+export default CreateLoanProfileTab;
