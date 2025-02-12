@@ -357,7 +357,7 @@ const LoanDetails = ({ collapsed }) => {
                         {record.bankName}
                       </Descriptions.Item>
                       <Descriptions.Item label="Branch Name">
-                        {record.branch}
+                        {record.bankBranch}
                       </Descriptions.Item>
                       <Descriptions.Item label="IFSC Code">
                         {record.IFSCCode}
