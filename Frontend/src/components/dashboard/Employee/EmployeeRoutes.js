@@ -34,7 +34,7 @@ import LoanProfileTab from "./LoanManagementForm/LoanProfileTabs";
 import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
 import TaxManagementEdit from "./TaxManagementEdit";
 import InsuranceEditDetails from "./InsuranceEditDetails";
-import CreateLoanProfileTab from "./CreateNewLoanForm/CreateLoanProfileTab";
+import CreateNewLoanForm from "./CreateNewLoanForm/CreateLoanProfileTab";
 
 export const EmployeeRoutes = [
   {
@@ -159,6 +159,6 @@ export const EmployeeRoutes = [
   },
   {
     path: "/employee/createloan",
-    element: <CreateLoanProfileTab />,
+    element: <CreateNewLoanForm />,
   },
 ];

@@ -26,7 +26,7 @@ import UserDetailsPage from "./UserDetailsPage";
 import EmployeeDetailsPage from "./EmployeeDetailsPage";
 import TaxManagementEdit from "./CreateTaxManagementAdmin/TaxManagementEdit";
 import InsuranceEditDetails from "./InsuranceEditDetails";
-import CreateLoanProfileTab from "./CreateNewLoanForm/CreateLoanProfileTab";
+import CreateNewLoanForm from "./CreateNewLoanForm/CreateLoanProfileTab";
 
 export const AdminRoutes = [
   { path: "", name: "", element: <AdminDashboard /> },
@@ -77,7 +77,7 @@ export const AdminRoutes = [
 
   {
     path: "/admin/createloan",
-    element: <CreateLoanProfileTab />,
+    element: <CreateNewLoanForm />,
   },
 
   // { path: "insurance", element: <InsuranceReview /> },
