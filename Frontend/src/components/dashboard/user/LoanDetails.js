@@ -194,21 +194,36 @@ const LoanDetails = ({ collapsed }) => {
             <Row className="px-2">
               <Col lg={12} md={12}>
                 <Card className="loandetail-custom-card" title="Loan Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Agent Name">
-                      {record.loanAgentName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Agent Contact">
-                      {record.loanAgentContactNumber}
-                    </Descriptions.Item>
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 2, sm: 1 }}>
+                    {record.loanAgentName && (
+                      <Descriptions.Item label="Agent Name">
+                        {record.loanAgentName}
+                      </Descriptions.Item>
+                    )}
+                    {record.loanAgentContactNumber && (
+                      <Descriptions.Item label="Agent Contact">
+                        {record.loanAgentContactNumber}
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Loan Amount">
                       {record.loanAmount}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Loan Type">
+                      {record.loanType}
+                    </Descriptions.Item>
+                    {record.vehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.vehicleType}
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Purpose">
                       {record.loanPurpose}
                     </Descriptions.Item>
                     <Descriptions.Item label="Employment Status">
                       {record.employmentStatus}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Income Details">
+                      {record.incomeDetails}
                     </Descriptions.Item>
                     <Descriptions.Item label="Annual Income">
                       {record.annualIncome}
@@ -301,6 +316,39 @@ const LoanDetails = ({ collapsed }) => {
                   </Card>
                 </Col>
               )}
+              {record.children && record.children.length > 0 && (
+                <Row className="px-2">
+                  <Col lg={12} md={12}>
+                    <Card
+                      className="loandetail-custom-card"
+                      title="Children Details"
+                    >
+                      <Descriptions
+                        column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
+                      >
+                        {record.children.map((child, index) => (
+                          <React.Fragment key={child._id}>
+                            <Descriptions.Item
+                              label={`Child ${index + 1} Name`}
+                            >
+                              {child.name}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Gender">
+                              {child.gender}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Age">
+                              {child.age}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="School Name">
+                              {child.schoolName}
+                            </Descriptions.Item>
+                          </React.Fragment>
+                        ))}
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                </Row>
+              )}
 
               {record.bankName && (
                 <Col lg={12} md={12}>
@@ -312,7 +360,7 @@ const LoanDetails = ({ collapsed }) => {
                         {record.bankName}
                       </Descriptions.Item>
                       <Descriptions.Item label="Branch Name">
-                        {record.branch}
+                        {record.bankBranch}
                       </Descriptions.Item>
                       <Descriptions.Item label="IFSC Code">
                         {record.IFSCCode}
@@ -358,6 +406,17 @@ const LoanDetails = ({ collapsed }) => {
                         View
                       </a>
                     </Descriptions.Item>
+                    {record.businessOwnerStatementProof && (
+                      <Descriptions.Item label="Business Ownership Proof">
+                        <a
+                          href={record.businessOwnerStatementProof}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View
+                        </a>
+                      </Descriptions.Item>
+                    )}
                     <Descriptions.Item label="Signature">
                       <a
                         href={record.signature}
@@ -379,6 +438,15 @@ const LoanDetails = ({ collapsed }) => {
                     <Descriptions.Item label="Aadhaar Image">
                       <a
                         href={record.aadharImageUpload}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        View
+                      </a>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="VoterId Image">
+                      <a
+                        href={record.voterIdUpload}
                         target="_blank"
                         rel="noopener noreferrer"
                       >

@@ -1,11 +1,16 @@
 import React, { useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Card, Descriptions, Button } from "antd";
+import { Card, Descriptions, Button, Tag } from "antd";
 import "../../dashboard/user/LoanDetails.css";
 import { DownloadOutlined } from "@ant-design/icons";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 
 const TaxViewDetails = ({ collapsed }) => {
   const pdfRef = useRef();
@@ -28,17 +33,54 @@ const TaxViewDetails = ({ collapsed }) => {
   };
   return (
     <div>
-        <div className="loandetail-container" ref={pdfRef}>
+      <div className="loandetail-container" ref={pdfRef}>
         <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
             <center>
               <h3>Tax Details</h3>
             </center>
+            <div className="px-2" style={{ textAlign: "end" }}>
+              <Tag
+                icon={
+                  record.status === "Pending" ? (
+                    <ClockCircleOutlined />
+                  ) : record.status === "2" ? (
+                    <CloseCircleOutlined />
+                  ) : record.status === "1" ? (
+                    <CheckCircleOutlined />
+                  ) : null
+                }
+                color={
+                  record.status === "Pending"
+                    ? "orange"
+                    : record.status === "2"
+                    ? "red"
+                    : record.status === "1"
+                    ? "green"
+                    : null
+                }
+                className={`status-tag ${
+                  record.status === "1"
+                    ? "approved"
+                    : record.status === "2"
+                    ? "rejected"
+                    : "pending"
+                }`}
+              >
+                {record.status === "1" ? (
+                  <p style={{ display: "inline" }}>Approved</p>
+                ) : record.status === "2" ? (
+                  <p style={{ display: "inline" }}>Rejected</p>
+                ) : (
+                  <p style={{ display: "inline" }}>Pending</p>
+                )}
+              </Tag>
+            </div>
           </div>
-           <Row className="px-4 py-3">
-                     <Col>
+          <Row className="px-4 py-3">
+            <Col>
               <Card>
-                <Row >
+                <Row>
                   <Col
                     className="firstrowcol px-1 py-1"
                     lg={3}
@@ -125,38 +167,9 @@ const TaxViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row style={{ textAlign: "-webkit-center" }}>
-            {/* <Col lg={12} md={12}>
-                <Card className="loandetail-custom-card" title="Personal Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                  <Descriptions.Item label="Name">
-                      {record.firstname}{" "}{record.lastname}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Email Id">
-                      {record.email}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Adhaar Number">
-                      {record.aadhar}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="PanCard Number">
-                      {record.panno}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="GST Number">
-                      {record.gst}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Contact ">
-                      {record.contactNumber}
-                    </Descriptions.Item>
-                    
-                  </Descriptions>
-                </Card>
-              </Col> */}
+          <Row>
             <Col lg={12} md={12}>
-              <Card
-                style={{ width: "100%" }}
-                className="loandetail-custom-card"
-                title="Tax Details"
-              >
+              <Card className="loandetail-custom-card" title="Tax Details">
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="bussiness Type">
                     {record.businessType}
@@ -167,26 +180,58 @@ const TaxViewDetails = ({ collapsed }) => {
                   <Descriptions.Item label="Tax Type">
                     {record.taxType}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Sub Category">
+                  <Descriptions.Item label="Tax Sub-Category">
                     {record.subCategory}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Income Tax Status">
-                    {record.status}
-                  </Descriptions.Item>
+                  {/* <Descriptions.Item label="Income Tax Status">
+                                        {record.incomeTaxStatus}
+                                      </Descriptions.Item> */}
                 </Descriptions>
               </Card>
             </Col>
           </Row>
-      
-      </div>
-      <Button
-        type="primary"
-        icon={<DownloadOutlined />}
-        onClick={handleDownloadPDF}
-        style={{ marginTop: "20px", marginBottom: "20px", marginLeft: "10px" }}
-      >
-        Download as PDF
-      </Button>
+          <Row>
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Tax Status">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Approval Status">
+                    {record.status === "1" ? (
+                      <p style={{ color: "green", fontSize: "14px" }}>
+                        Approved
+                      </p>
+                    ) : record.status === "2" ? (
+                      <p color="red">Rejected</p>
+                    ) : (
+                      <p color="orange">Pending</p>
+                    )}
+                  </Descriptions.Item>
+                  {record.status === "2" && (
+                    <Descriptions.Item label="Reason for Rejection">
+                      {record.rejectionReason}
+                    </Descriptions.Item>
+                  )}
+                  {record.status === "Pending" && record.pendingReason && (
+                    <Descriptions.Item label="Reason for Hold">
+                      {record.pendingReason}
+                    </Descriptions.Item>
+                  )}
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+        <Button
+          type="primary"
+          icon={<DownloadOutlined />}
+          onClick={handleDownloadPDF}
+          style={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            marginLeft: "10px",
+          }}
+        >
+          Download as PDF
+        </Button>
       </div>
     </div>
   );
