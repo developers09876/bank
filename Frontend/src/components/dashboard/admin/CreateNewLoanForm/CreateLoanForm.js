@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import "../../dashboard/user/MyProfile.scss";
+import "../../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 // import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../../Layout/Header";
-import Footer from "../../Layout/Footer";
 import axios from "axios";
-import Api from "../../../Api";
+import Api from "../../../../Api";
 const { Option } = Select;
 
-function LoanForm() {
+function CreateLoanForm() {
   const {
     register,
     handleSubmit,
@@ -211,9 +209,7 @@ function LoanForm() {
 
   return (
     <div>
-      <Header />
-
-      <Container>
+      <Container style={{ marginTop: "100px" }}>
         <Col xs={12} md={12} lg={12}>
           <div
             className="ourProfileParentdiv"
@@ -970,10 +966,8 @@ function LoanForm() {
       <ToastContainer />
       <br />
       <br />
-
-      <Footer />
     </div>
   );
 }
 
-export default LoanForm;
+export default CreateLoanForm;

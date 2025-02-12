@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Api from "../../../Api";
+import Api from "../../../../Api";
 import { Controller, useForm } from "react-hook-form";
 import { Row, Col, Button, Container } from "react-bootstrap";
-import "../../dashboard/user/MyProfile.scss";
+import "../../../dashboard/user/MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../../Layout/Header";
-import Footer from "../../Layout/Footer";
 // const { Option, OptGroup } = Select;
-function LoanDetails() {
+function CreateLoanDetails() {
   const {
     register,
     unregister,
@@ -144,8 +142,6 @@ function LoanDetails() {
 
   return (
     <div>
-      <Header />
-
       <Container style={{ marginTop: "1%" }}>
         <Col xs={12} md={12} lg={12}>
           <div
@@ -729,10 +725,8 @@ function LoanDetails() {
       <ToastContainer />
       <br />
       <br />
-
-      <Footer />
     </div>
   );
 }
 
-export default LoanDetails;
+export default CreateLoanDetails;
