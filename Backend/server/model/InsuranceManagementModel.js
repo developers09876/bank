@@ -18,6 +18,7 @@ const insuranceManagementSchema = new mongoose.Schema(
     referCode: { type: String, unique: true },
     employeeCategory: { type: String },
     annualIncome: { type: String },
+    policyAmount: { type: String },
     sumAssured: { type: String },
     description: { type: String },
     startDate: { type: String },

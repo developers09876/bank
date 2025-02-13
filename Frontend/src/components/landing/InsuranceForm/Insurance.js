@@ -40,7 +40,7 @@ const Insurance = ({ collapsed }) => {
       );
       setInsurance(response.data);
       setFilteredData(response.data);
-      console.log('insurance response.data', response.data)
+      console.log("insurance response.data", response.data);
     } catch (error) {
       console.error("Error fetching leads:", error);
     } finally {
@@ -106,7 +106,7 @@ const Insurance = ({ collapsed }) => {
     {
       title: "Policy Type",
       dataIndex: "PolicyType",
-      key: "policyType",
+      key: "PolicyType",
     },
     {
       title: "Action",
@@ -142,8 +142,14 @@ const Insurance = ({ collapsed }) => {
   return (
     <div>
       <div className={collapsed ? "main-content.open" : "main-content"}>
-        <Space style={{ marginBottom: 16, display: "flex",
-            justifyContent: "space-between", }} className="filter-actions">
+        <Space
+          style={{
+            marginBottom: 16,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+          className="filter-actions"
+        >
           <Input
             placeholder="Search"
             value={searchText}

@@ -146,6 +146,15 @@ const InsuranceDetails = ({ collapsed }) => {
                   <Descriptions.Item label="Policy Type">
                     {record.PolicyType}
                   </Descriptions.Item>
+                  {record.PolicyType === "Vehicle Insurance" &&
+                    record.VehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.VehicleType}
+                      </Descriptions.Item>
+                    )}
+                  <Descriptions.Item label="Policy Amount">
+                    {record.policyAmount}
+                  </Descriptions.Item>
                   <Descriptions.Item label="Sum Assured">
                     {record.sumAssured}
                   </Descriptions.Item>

@@ -13,6 +13,8 @@ function CreateInsuranceManagement() {
     handleSubmit,
     reset,
     control,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -31,6 +33,8 @@ function CreateInsuranceManagement() {
       panno: data.panno,
       gst: data.gst,
       policyTerm: data.policyTerm,
+      policyAmount: data.policyAmount,
+      VehicleType: data.VehicleType,
       PolicyType: data.PolicyType,
       annualIncome: data.annualIncome,
       sumAssured: data.sumAssured,
@@ -242,9 +246,15 @@ function CreateInsuranceManagement() {
                     <Select
                       {...field}
                       className="inputcolumn_drp"
-                      // placeholder="Select Policy Type"
+                      placeholder="Select Policy Type"
+                      onChange={(value) => {
+                        field.onChange(value);
+                        setValue("PolicyType", value);
+                        if (value !== "Vehicle Insurance") {
+                          setValue("VehicleType", null);
+                        }
+                      }}
                     >
-                      <Option value="">Select Policy Type</Option>
                       <Option value="Life Insurance">Life Insurance</Option>
                       <Option value="Health Insurance">Health Insurance</Option>
                       <Option value="Vehicle Insurance">
@@ -258,6 +268,43 @@ function CreateInsuranceManagement() {
                 )}
               </div>
             </Col>
+
+            {watch("PolicyType") === "Vehicle Insurance" && (
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">Vehicle Type</label>
+                  <Controller
+                    name="VehicleType"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className="inputcolumn_drp"
+                        // placeholder="Select Vehicle Type"
+                      >
+                        <Option value="">Select vehicle type</Option>
+                        <Option value="Bike Insurance">Bike Insurance</Option>
+                        <Option value="Car Insurance">Car Insurance</Option>
+                        <Option value=" Heavy vehicle Insurance">
+                          Heavy vehicle Insurance
+                        </Option>
+                        <Option value="Used Vechicle Insurance">
+                          Used Vechicle Insurance
+                        </Option>
+                        <Option value="Other Vechicle Insurance">
+                          Other Vechicle Insurance
+                        </Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.VehicleType && (
+                    <p className="text-danger">Vehicle Type is required</p>
+                  )}
+                </div>
+              </Col>
+            )}
 
             {/* Policy Term */}
             <Col xs={12} md={6} lg={4}>
@@ -305,6 +352,22 @@ function CreateInsuranceManagement() {
                 />
                 {errors.annualIncome && (
                   <p className="text-danger">Enter annual income</p>
+                )}
+              </div>
+            </Col>
+
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Policy Amount</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="policyAmount"
+                  {...register("policyAmount", { required: true })}
+                  placeholder="Policy Amount (Rs.)"
+                />
+                {errors.policyAmount && (
+                  <p className="text-danger">Policy Amount is required</p>
                 )}
               </div>
             </Col>
