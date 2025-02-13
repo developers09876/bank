@@ -24,6 +24,7 @@ const insuranceManagementSchema = new mongoose.Schema(
     endDate: { type: String },
     employeeId: { type: String },
     employeeType: { type: String },
+    policyAmount: { type: String },
     addremarks: [
       {
         date: { type: String },

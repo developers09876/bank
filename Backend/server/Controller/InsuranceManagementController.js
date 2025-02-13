@@ -144,25 +144,75 @@ export const calculateReferralEarnings = async (req, res) => {
     let vehicleInsuranceCount = 0;
     let travelInsuranceCount = 0;
 
-    // Count referrals for each loan type
+    let lifeInsuranceAmount = 0;
+    let healthInsuranceAmount = 0;
+    let vehicleInsuranceAmount = 0;
+    let travelInsuranceAmount = 0;
+
+    // Count referrals and accumulate policy amounts for each loan type
     loanApplications.forEach((loan) => {
       const loanType = loan.PolicyType;
+
+      // Log raw policyAmount to debug
+      console.log(
+        "Raw policyAmount:",
+        loan.policyAmount,
+        "Type:",
+        typeof loan.policyAmount
+      );
+
+      // Ensure policyAmount is a valid number
+      let policyAmount = parseFloat(
+        loan.policyAmount?.toString().trim() || "0"
+      );
+
+      // Log the parsed value
+      console.log(
+        "Parsed policyAmount:",
+        policyAmount,
+        "Final Type:",
+        typeof policyAmount
+      );
+
+      if (isNaN(policyAmount)) {
+        policyAmount = 0; // Set to 0 if NaN
+      }
+
       if (loanType === "Life Insurance") {
         lifeInsuranceCount++;
+        lifeInsuranceAmount += policyAmount;
       } else if (loanType === "Health Insurance") {
         healthInsuranceCount++;
+        healthInsuranceAmount += policyAmount;
       } else if (loanType === "Vehicle Insurance") {
         vehicleInsuranceCount++;
+        vehicleInsuranceAmount += policyAmount;
       } else if (loanType === "Travel Insurance") {
         travelInsuranceCount++;
+        travelInsuranceAmount += policyAmount;
       }
     });
 
-    // Calculate earnings
-    const lifeInsuranceEarnings = lifeInsuranceCount * 5;
-    const healthInsuranceEarnings = healthInsuranceCount * 10;
-    const vehicleInsuranceEarnings = vehicleInsuranceCount * 2.5;
-    const travelInsuranceEarnings = vehicleInsuranceCount * 3.5;
+    // Calculate earnings based on referral count and policy amount
+    const lifeInsuranceEarnings =
+      lifeInsuranceCount >= 2
+        ? lifeInsuranceAmount * Math.min(lifeInsuranceCount * 0.01, 0.25) // 2 referrals = 2% up to 25%
+        : 0;
+
+    const healthInsuranceEarnings =
+      healthInsuranceCount >= 5
+        ? healthInsuranceAmount * 0.15 // 5 referrals = 15% of the total amount
+        : 0;
+
+    const vehicleInsuranceEarnings =
+      vehicleInsuranceCount >= 9
+        ? vehicleInsuranceAmount * 0.2 // 9 referrals = 10% of the total amount
+        : 0;
+
+    const travelInsuranceEarnings =
+      travelInsuranceCount >= 9
+        ? travelInsuranceAmount * 0.2 // 9 referrals = 10% of the total amount
+        : 0;
 
     const totalEarnings =
       lifeInsuranceEarnings +
@@ -175,13 +225,15 @@ export const calculateReferralEarnings = async (req, res) => {
       lifeInsuranceCount,
       healthInsuranceCount,
       vehicleInsuranceCount,
-      lifeInsuranceEarnings,
+      travelInsuranceCount,
+      lifeInsuranceEarnings: lifeInsuranceEarnings || 0, // Default to 0 if null
       healthInsuranceEarnings,
       vehicleInsuranceEarnings,
       travelInsuranceEarnings,
-      totalEarnings,
+      totalEarnings: totalEarnings || 0, // Default to 0 if null
     });
   } catch (error) {
+    console.error("Error in calculating referral earnings:", error.message);
     res.status(500).json({ message: error.message });
   }
 };
@@ -366,18 +418,18 @@ export async function updateInsuranceDetails(req, res, next) {
 
     // Ensure all fields are properly retrieved from `data`
     const updateDetails = {
-      firstname: data.firstname ,
+      firstname: data.firstname,
       lastname: data.lastname,
-      contactNumber: data.contactNumber ,
-      email: data.email ,
-      aadhar: data.aadhar ,
+      contactNumber: data.contactNumber,
+      email: data.email,
+      aadhar: data.aadhar,
       panno: data.panno,
-      gst: data.gst ,
+      gst: data.gst,
       policyTerm: data.policyTerm,
-      PolicyType: data.PolicyType ,
+      PolicyType: data.PolicyType,
       annualIncome: data.annualIncome,
-      sumAssured: data.sumAssured ,
-      // addremarks: data.addremarks, 
+      sumAssured: data.sumAssured,
+      // addremarks: data.addremarks,
     };
 
     console.log("Update Details:", updateDetails);
@@ -415,4 +467,3 @@ export async function updateInsuranceDetails(req, res, next) {
     });
   }
 }
-
