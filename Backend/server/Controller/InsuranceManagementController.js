@@ -239,49 +239,110 @@ export const calculateReferralEarnings = async (req, res) => {
   }
 };
 
+// export const getCurrentMonthIncome = async (req, res) => {
+//   try {
+//     const { referCode } = req.params;
+
+//     // Get the current month and year
+//     const now = new Date();
+//     const currentMonth = now.getMonth(); // 0-based index (Jan = 0, Feb = 1, ...)
+//     const currentYear = now.getFullYear();
+
+//     // Fetch all referrals with the given referCode
+//     const loanApplications = await insuranceManagementDb.find({ referCode });
+
+//     // Define income per loan type
+//     const incomeRates = {
+//       "Life Insurance": 5,
+//       "Health Insurance": 10,
+//       "Vehicle Insurance": 2.5,
+//       "Travel Insurance": 3.5,
+//     };
+
+//     // Filter and calculate income
+//     let totalIncome = 0;
+//     const currentMonthLoans = loanApplications.filter((loan) => {
+//       const createdAt = new Date(loan.createdAt);
+//       const isCurrentMonth =
+//         createdAt.getMonth() === currentMonth &&
+//         createdAt.getFullYear() === currentYear;
+
+//       if (isCurrentMonth && incomeRates[loan.PolicyType]) {
+//         totalIncome += incomeRates[loan.PolicyType];
+//       }
+
+//       return isCurrentMonth;
+//     });
+
+//     if (currentMonthLoans.length === 0) {
+//       return res.status(404).json({
+//         message: "No referrals found for this month.",
+//         totalIncome: 0,
+//       });
+//     }
+
+//     res.status(200).json({ referrals: currentMonthLoans, totalIncome });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const getCurrentMonthIncome = async (req, res) => {
   try {
     const { referCode } = req.params;
 
     // Get the current month and year
     const now = new Date();
-    const currentMonth = now.getMonth(); // 0-based index (Jan = 0, Feb = 1, ...)
+    const currentMonth = now.getMonth(); // 0-based index (January = 0)
     const currentYear = now.getFullYear();
 
-    // Fetch all referrals with the given referCode
-    const loanApplications = await insuranceManagementDb.find({ referCode });
+    // Fetch all insurance policies with the given referCode
+    const insurancePolicies = await insuranceManagementDb.find({ referCode });
 
-    // Define income per loan type
-    const incomeRates = {
-      "Life Insurance": 5,
-      "Health Insurance": 10,
-      "Vehicle Insurance": 2.5,
-      "Travel Insurance": 3.5,
-    };
-
-    // Filter and calculate income
-    let totalIncome = 0;
-    const currentMonthLoans = loanApplications.filter((loan) => {
-      const createdAt = new Date(loan.createdAt);
-      const isCurrentMonth =
-        createdAt.getMonth() === currentMonth &&
-        createdAt.getFullYear() === currentYear;
-
-      if (isCurrentMonth && incomeRates[loan.PolicyType]) {
-        totalIncome += incomeRates[loan.PolicyType];
-      }
-
-      return isCurrentMonth;
-    });
-
-    if (currentMonthLoans.length === 0) {
+    if (!insurancePolicies.length) {
       return res.status(404).json({
-        message: "No referrals found for this month.",
+        message: "No insurance policies found for this referCode.",
         totalIncome: 0,
       });
     }
 
-    res.status(200).json({ referrals: currentMonthLoans, totalIncome });
+    let totalIncome = 0;
+    let policyTypeCounts = {}; // To count policies per insurance type
+    let currentMonthPolicies = []; // To store policies for the current month
+
+    // Process insurance policies to count and filter by current month
+    insurancePolicies.forEach((policy) => {
+      const { PolicyType, policyAmount, createdAt } = policy;
+      const policyDate = new Date(createdAt);
+      const isCurrentMonth =
+        policyDate.getMonth() === currentMonth &&
+        policyDate.getFullYear() === currentYear;
+
+      if (isCurrentMonth) {
+        currentMonthPolicies.push(policy);
+
+        // Count referrals per insurance type
+        if (!policyTypeCounts[PolicyType]) {
+          policyTypeCounts[PolicyType] = 0;
+        }
+        policyTypeCounts[PolicyType]++;
+      }
+    });
+
+    // Calculate income based on referral count and policy amount
+    currentMonthPolicies.forEach((policy) => {
+      const { PolicyType, policyAmount } = policy;
+
+      // Check if the policy type meets the threshold for income calculation
+      if (PolicyType) {
+        const income = policyAmount * 0.005; // 0.5% of policy amount
+        console.log("policy", policyAmount);
+
+        totalIncome += income;
+      }
+    });
+
+    res.status(200).json({ referrals: currentMonthPolicies, totalIncome });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
