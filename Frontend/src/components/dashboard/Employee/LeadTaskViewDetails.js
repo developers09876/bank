@@ -274,8 +274,8 @@ function LeadTaskDetails({ collapsed }) {
                 title="Reminders"
               >
                 <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
-                  {details.addremarks && details.addremarks.length > 0 ? (
-                    details.addremarks.map((remark, index) => (
+                  {details?.addremarks && details?.addremarks.length > 0 ? (
+                    details?.addremarks.map((remark, index) => (
                       <React.Fragment key={index}>
                         <Descriptions.Item label="Date">
                           {remark.date}
