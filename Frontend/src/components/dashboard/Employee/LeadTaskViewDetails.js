@@ -18,8 +18,6 @@ function LeadTaskDetails({ collapsed }) {
   const record = state?.record;
   const [isApproved, setIsApproved] = useState(record?.isApproved || false);
   const [details, setDetails] = useState();
-  console.log("details", details.addremarks);
-
 
   const {
     register,
@@ -65,11 +63,12 @@ function LeadTaskDetails({ collapsed }) {
   };
   useEffect(() => {
     getlead();
-  },[]
-)
+  }, []);
   const getlead = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/lead/getByLeadId/${record._id}`)
+      const response = await axios.get(
+        `http://localhost:5000/lead/getByLeadId/${record._id}`
+      );
       setDetails(response.data.data);
     } catch (error) {
       console.error("Error:", error.message);
@@ -95,15 +94,18 @@ function LeadTaskDetails({ collapsed }) {
 
   const deleteRemark = async (remarkId) => {
     try {
-      await axios.delete(`http://localhost:5000/lead/delete/${record._id}/remark/${remarkId}`);
-      setRemarksFields(remarksFields.filter((remark) => remark._id !== remarkId));
+      await axios.delete(
+        `http://localhost:5000/lead/delete/${record._id}/remark/${remarkId}`
+      );
+      setRemarksFields(
+        remarksFields.filter((remark) => remark._id !== remarkId)
+      );
       toast.success("Remark deleted successfully");
     } catch (error) {
       console.error("Error deleting remark:", error.message);
       toast.error("Failed to delete remark");
     }
   };
-
 
   const onSubmit = async (data) => {
     const formattedRemarks = remarksFields.map((field, index) => ({
@@ -271,7 +273,7 @@ function LeadTaskDetails({ collapsed }) {
                 className="loandetail-custom-card"
                 title="Reminders"
               >
-                <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
+                {/* <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
                   {record.addremarks && record.addremarks.length > 0 ? (
                     record.addremarks.map((remark, index) => (
                       <React.Fragment key={index}>
@@ -287,6 +289,25 @@ function LeadTaskDetails({ collapsed }) {
                     <Descriptions.Item>
                       No reminders available.
                     </Descriptions.Item>
+                  )}
+                </Descriptions> */}
+                <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
+                  {record.addremarks && record.addremarks.length > 0 ? (
+                    record.addremarks.map((remark, index) => (
+                      <React.Fragment key={remark._id || index}>
+                        <Descriptions.Item label="Date">
+                          {remark.date}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Message">
+                          {remark.remarks}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Status">
+                          {remark.status}
+                        </Descriptions.Item>
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <Descriptions.Item>No remarks available.</Descriptions.Item>
                   )}
                 </Descriptions>
               </Card>
@@ -349,21 +370,30 @@ function LeadTaskDetails({ collapsed }) {
                       <p className="text-danger">Remarks are required</p>
                     )}
                   </Col>
-                 
-                   {!field.prefilled && (
-                  <Col lg={4} className="d-flex align-items-center">
-                    <Button variant="danger" onClick={() => removeRemarkField(index)}>-</Button>
-                   
-                  
-                  </Col>
-                   )}
-                    {field.prefilled && (
-                  <Col lg={4} className="d-flex align-items-center">
-                    <Button variant="success" onClick={addRemarkField}>+</Button>
-                    {field._id && <FaTrash className="text-danger cursor-pointer ms-2" onClick={() => deleteRemark(field._id)} />}
-                  
-                  </Col>
-                   )}
+
+                  {!field.prefilled && (
+                    <Col lg={4} className="d-flex align-items-center">
+                      <Button
+                        variant="danger"
+                        onClick={() => removeRemarkField(index)}
+                      >
+                        -
+                      </Button>
+                    </Col>
+                  )}
+                  {field.prefilled && (
+                    <Col lg={4} className="d-flex align-items-center">
+                      <Button variant="success" onClick={addRemarkField}>
+                        +
+                      </Button>
+                      {field._id && (
+                        <FaTrash
+                          className="text-danger cursor-pointer ms-2"
+                          onClick={() => deleteRemark(field._id)}
+                        />
+                      )}
+                    </Col>
+                  )}
                 </Row>
               ))}
 
