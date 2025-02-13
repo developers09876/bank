@@ -171,6 +171,8 @@ function InsuranceManagementDetails({ collapsed }) {
       panno: record.panno,
       gstNo: record.gstNo,
       PolicyType: record.PolicyType,
+      VehicleType: data.VehicleType,
+      policyAmount: data.policyAmount,
       annualIncome: record.annualIncome,
       sumAssured: record.sumAssured,
       policyTerm: record.policyTerm,
@@ -405,6 +407,15 @@ function InsuranceManagementDetails({ collapsed }) {
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="Policy Type">
                     {record.PolicyType}
+                  </Descriptions.Item>
+                  {record.PolicyType === "Vehicle Insurance" &&
+                    record.VehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.VehicleType}
+                      </Descriptions.Item>
+                    )}
+                  <Descriptions.Item label="Policy Amount">
+                    {record.policyAmount}
                   </Descriptions.Item>
                   <Descriptions.Item label="Sum Assured">
                     {record.sumAssured}

@@ -16,6 +16,7 @@ export async function createInsuranceManagementDb(req, res, next) {
       policyTerm: data.policyTerm,
       PolicyType: data.PolicyType,
       VehicleType: data.VehicleType,
+      policyAmount: data.policyAmount,
       annualIncome: data.annualIncome,
       sumAssured: data.sumAssured,
       referCode: data.referCode,
@@ -366,18 +367,20 @@ export async function updateInsuranceDetails(req, res, next) {
 
     // Ensure all fields are properly retrieved from `data`
     const updateDetails = {
-      firstname: data.firstname ,
+      firstname: data.firstname,
       lastname: data.lastname,
-      contactNumber: data.contactNumber ,
-      email: data.email ,
-      aadhar: data.aadhar ,
+      contactNumber: data.contactNumber,
+      email: data.email,
+      aadhar: data.aadhar,
       panno: data.panno,
-      gst: data.gst ,
+      gst: data.gst,
       policyTerm: data.policyTerm,
-      PolicyType: data.PolicyType ,
+      PolicyType: data.PolicyType,
+      VehicleType: data.VehicleType,
+      policyAmount: data.policyAmount,
       annualIncome: data.annualIncome,
-      sumAssured: data.sumAssured ,
-      // addremarks: data.addremarks, 
+      sumAssured: data.sumAssured,
+      // addremarks: data.addremarks,
     };
 
     console.log("Update Details:", updateDetails);
@@ -415,4 +418,3 @@ export async function updateInsuranceDetails(req, res, next) {
     });
   }
 }
-

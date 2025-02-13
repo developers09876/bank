@@ -99,10 +99,15 @@ function InsuranceManagement() {
       key: "name",
       render: (_, record) => `${record.firstname} ${record.lastname}`,
     },
+    // {
+    //   title: "Phone Number",
+    //   dataIndex: "contactNumber",
+    //   key: "contactNumber",
+    // },
     {
-      title: "Phone Number",
-      dataIndex: "contactNumber",
-      key: "contactNumber",
+      title: "Policy Type",
+      dataIndex: "PolicyType",
+      key: "PolicyType",
     },
     {
       title: "Status",
