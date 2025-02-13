@@ -18,7 +18,7 @@ function LeadTaskDetails({ collapsed }) {
   const record = state?.record;
   const [isApproved, setIsApproved] = useState(record?.isApproved || false);
   const [details, setDetails] = useState();
-
+  console.log("details", details);
   const {
     register,
     handleSubmit,
@@ -69,7 +69,7 @@ function LeadTaskDetails({ collapsed }) {
       const response = await axios.get(
         `http://localhost:5000/lead/getByLeadId/${record._id}`
       );
-      setDetails(response.data.data);
+      setDetails(response.data.data[0]);
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -273,9 +273,9 @@ function LeadTaskDetails({ collapsed }) {
                 className="loandetail-custom-card"
                 title="Reminders"
               >
-                {/* <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
-                  {record.addremarks && record.addremarks.length > 0 ? (
-                    record.addremarks.map((remark, index) => (
+                <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
+                  {details?.addremarks && details?.addremarks.length > 0 ? (
+                    details?.addremarks.map((remark, index) => (
                       <React.Fragment key={index}>
                         <Descriptions.Item label="Date">
                           {remark.date}
@@ -289,25 +289,6 @@ function LeadTaskDetails({ collapsed }) {
                     <Descriptions.Item>
                       No reminders available.
                     </Descriptions.Item>
-                  )}
-                </Descriptions> */}
-                <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
-                  {record.addremarks && record.addremarks.length > 0 ? (
-                    record.addremarks.map((remark, index) => (
-                      <React.Fragment key={remark._id || index}>
-                        <Descriptions.Item label="Date">
-                          {remark.date}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Message">
-                          {remark.remarks}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Status">
-                          {remark.status}
-                        </Descriptions.Item>
-                      </React.Fragment>
-                    ))
-                  ) : (
-                    <Descriptions.Item>No remarks available.</Descriptions.Item>
                   )}
                 </Descriptions>
               </Card>
