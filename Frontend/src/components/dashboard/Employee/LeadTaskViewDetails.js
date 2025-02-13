@@ -26,22 +26,25 @@ function LeadTaskDetails({ collapsed }) {
     reset,
   } = useForm();
   useEffect(() => {
-    if (record) {
-      const initialRemarks = record.addremarks?.length
-        ? record.addremarks.map((field) => ({ ...field, prefilled: true }))
-        : [{ date: "", remarks: "", status: "", prefilled: false }];
+    if (details?.addremarks) {
+      const initialRemarks = details.addremarks.map((field) => ({
+        ...field,
+        prefilled: true,
+      }));
+  
       setRemarksFields(initialRemarks);
-
+  
       const defaultValues = initialRemarks.reduce((acc, field, index) => {
         acc[`date_${index}`] = field.date;
         acc[`remarks_${index}`] = field.remarks;
         acc[`status_${index}`] = field.status;
         return acc;
       }, {});
+  
       reset(defaultValues);
     }
-  }, [record, reset]);
-
+  }, [details, reset]); // Runs when `details` updates
+  
   const addRemarkField = () => {
     setRemarksFields([
       ...remarksFields,
