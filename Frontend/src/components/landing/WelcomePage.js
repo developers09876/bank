@@ -57,7 +57,7 @@ const WelcomePage = () => {
                 <div className="welcomes-left animate-slide-in-left">
                   <h1 className="welcome-greetheading">{greetings}</h1>
                   <h1 className="welcome-heading">
-                    Welcome to Our <br /> Villu genius Family
+                    Welcome to <br /> Vilu Genius Family
                   </h1>
                 </div>
               </Col>

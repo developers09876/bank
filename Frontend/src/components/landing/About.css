@@ -276,7 +276,7 @@ ul.counter-box-one li span {
     color: #b0c7de;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .whywe-card-section {
         flex-direction: column;
     }
@@ -285,6 +285,15 @@ ul.counter-box-one li span {
         margin: 10px 0;
     }
 }
+@media (max-width: 320px) {
+    .whywe-card-section {
+        flex-direction: column;
+    }
+
+    .whywecards-card {
+        margin: 10px 0;
+    }
+} */
 
 .aboutus-loan {
     background-image: linear-gradient(167deg, #f2f4f8, #ffffff);
@@ -293,4 +302,46 @@ ul.counter-box-one li span {
 .aboutus-loan h2 {
     font-weight: bold;
     font-size: 44px;
+}
+/* Laptop view (1024px) - Show all cards */
+@media (max-width: 1024px) {
+    .whywe-card-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .whywecards-card {
+        width: 45%; 
+        margin: 15px;
+    }
+}
+
+/* Tablet view (768px) - Show two cards per row */
+@media (max-width: 768px) {
+    .whywe-card-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .whywecards-card {
+        width: 48%; 
+        margin: 10px;
+    }
+}
+
+/* Mobile view (320px) - Show one card per row */
+@media (max-width: 320px) {
+    .whywe-card-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .whywecards-card {
+        width: 100%; 
+        margin: 15px 0; 
+    }
 }
