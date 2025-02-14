@@ -1,7 +1,7 @@
 .refer-parent {
   background-color: #5178e6ab;
-  height: 70vh;
-  margin-top: 106px;
+  height: 100%;
+  margin-top: 105px;
   align-content: center;
 }
 .refer-container {
@@ -10,13 +10,14 @@
   margin-right: auto;
 }
 .refer-card {
-  height: 60vh;
+  height: 100%;
   width: 70%;
   box-shadow: 0 0 10px 2px #455e86;
   position: relative;
   align-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 30px auto;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
   background-color: white;
 }
 /* .refer-card {
@@ -171,28 +172,33 @@
   .refer-heading {
 font-size: 46px;
   }
+  .refer-firstrow {
+    align-items: center;
+    height: auto;
+  }
   .refer-headings {
     font-size: 46px;
   }
   .refer-parent {
     background-color: #5178e6ab;
-    height: 85vh;
-    margin-top: 65px;
+    height: 100%;
+    margin-top: 65px ;
     align-content: center;
   }
   .refer-card {
-    height: 800px;
+    height: 100%;
     width: 95%;
     box-shadow: 0 0 10px 2px #455e86;
     position: relative;
     align-content: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 30px auto;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
     background-color: white;
   }
   .refer-secondcol img {
-    width: 60%;
-    justify-self: center;
+    width: 60% ;
+    justify-self: center ;
   }
 }
 
@@ -200,7 +206,7 @@ font-size: 46px;
   .refer-parent {
     position: relative;
     overflow: hidden;
-    height: 90vh;
+    height: 100%;
   }
   
   .refer-svg {
@@ -217,9 +223,10 @@ font-size: 46px;
     width: 95%;
     box-shadow: 0 0 10px 2px #455e86;
     position: relative;
+    margin: 30px auto;
     align-content: center;
-    margin-left: auto;
-    margin-right: auto;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
     background-color: white;
   }
   .refer-secondcol img {
@@ -291,13 +298,12 @@ font-size: 46px;
   background-color:#72a1eb;
 }
 
-.refer-secondcol img {
-  /* width: 100%; */
+/* .refer-secondcol img {
   width: 450px;
   height: 350px;
   justify-content: end;
   transition: transform 0.3s ease-in-out;
-}
+} */
 
 .refer-secondcol img:hover {
   transform: scale(1.1);
