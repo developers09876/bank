@@ -85,12 +85,13 @@ const Rewards = () => {
         ),
       ]);
 
-      if (!loanResponse.ok || !insuranceResponse.ok) {
-        console.error("Failed to fetch one or more income data.");
-        return;
-      }
+      // if (!loanResponse.ok || !insuranceResponse.ok) {
+      //   console.error("Failed to fetch one or more income data.");
+      //   return;
+      // }
 
       const loanData = await loanResponse.json();
+      console.log("loanData", loanData);
       const insuranceData = await insuranceResponse.json();
 
       // Calculate total earnings
