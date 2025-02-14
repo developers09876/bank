@@ -59,6 +59,20 @@
   font-family: serif;
   animation: fillLeftToRight 5s infinite;
   background-size: 200%; 
+  margin-bottom: 10px;
+}
+.refer-greetheading {
+  font-weight: bold;
+  font-size: 36px;
+  color: transparent; 
+  -webkit-text-stroke: 2px #00397f; 
+  background: linear-gradient(90deg, #00397f 0%, #1f69c4 50%, transparent 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: serif;
+  /* animation: fillLeftToRight 5s infinite; */
+  background-size: 200%; 
+  margin-bottom: 10px;
 }
 .referpage_labelCss {
   font-size: 15px;
