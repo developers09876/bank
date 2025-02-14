@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./WelcomePage.css";
 import { Col, Row } from "react-bootstrap";
 import Header from "../Layout/Header";
@@ -6,10 +6,10 @@ import Footer from "../Layout/Footer";
 import { useNavigate } from "react-router-dom";
 // import welcomepage from '../../Images/welcome-page.png';
 
-
 const WelcomePage = () => {
   const userType = localStorage.getItem("userType");
-  const referType = localStorage.getItem("referType"); 
+  const referType = localStorage.getItem("referType");
+  const [greetings, setGreetings] = useState();
 
   const navigate = useNavigate();
 
@@ -29,6 +29,17 @@ const WelcomePage = () => {
     navigate(route);
   }, 3000);
 
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+      setGreetings("Good Morning! ☀️");
+    } else if (currentHour < 18) {
+      setGreetings("Good Afternoon! 🌤️");
+    } else {
+      setGreetings("Good Evening! 🌙");
+    }
+  });
   return (
     <div>
       <Header />
@@ -44,6 +55,7 @@ const WelcomePage = () => {
                 xs={12}
               >
                 <div className="referral-left animate-slide-in-left">
+                  <h1 className="refer-greetheading">{greetings}</h1>
                   <h1 className="refer-heading">
                     Welcome to Our <br /> Villu genius Family
                   </h1>
@@ -58,7 +70,6 @@ const WelcomePage = () => {
               >
                 <img src="https://cdni.iconscout.com/illustration/premium/thumb/business-agreement-illustration-download-in-svg-png-gif-file-formats--conference-deal-partners-aggrement-and-shaking-hands-pack-illustrations-3685784.png" />
                 {/* <img src={welcomepage} alt="Welcome" /> */}
-
               </Col>
             </Row>
             <div className="refer-svgpath">
