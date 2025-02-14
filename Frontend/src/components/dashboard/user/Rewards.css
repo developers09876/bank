@@ -126,3 +126,72 @@
 .sub-card-full:hover {
   transform: scale(1.05); 
 }
+
+/* Laptop View (1024px) */
+@media (max-width: 1024px) {
+  .summary-cards, 
+  .rewards-row, 
+  .sub-cards-row-full {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .summary-card, 
+  .reward-card, 
+  .sub-card-full {
+      width: 100%; 
+      margin: 20px auto;
+      height: auto;
+  }
+
+  .reward-card-image {
+      width: 100%;
+      height: auto;
+  }
+}
+
+/* Tablet View (768px) - Show only one card with increased width */
+@media (max-width: 768px) {
+  .summary-cards, 
+  .rewards-row, 
+  .sub-cards-row-full {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .summary-card, 
+  .reward-card, 
+  .sub-card-full {
+      width: 100%; 
+      margin: 15px auto;
+      height: auto;
+  }
+
+  .reward-card-image {
+      width: 100%;
+      height: auto;
+  }
+}
+
+/* Mobile View (320px) - Show only one card at a time */
+@media (max-width: 320px) {
+  .summary-cards, 
+  .rewards-row, 
+  .sub-cards-row-full {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .summary-card, 
+  .reward-card, 
+  .sub-card-full {
+      width: 100%;
+      margin: 15px auto;
+  }
+
+  .reward-card-image {
+      width: 100%;
+      height: auto;
+  }
+}

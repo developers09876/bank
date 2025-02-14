@@ -736,3 +736,59 @@
         width: 48%;
     }
 }
+
+@media (max-width: 320px) {
+  .container {
+    width: 100% !important;
+    padding: 10px;
+  }
+
+  /* Ensure form elements are stacked one by one */
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin:5px;
+  }
+
+  .px-2,
+  .py-3,
+  .px-1,
+  .py-2 {
+    padding: 5px !important;
+  }
+
+  /* Label Styling */
+  .vendorpage_labelCss {
+    font-size: 14px;
+    display: block; /* Ensures label appears above input */
+    text-align: left;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  /* Input Field Full Width */
+  .inputcolumn-ourProfile {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+    display: block;
+  }
+
+  /* Stack buttons vertically and center align */
+  .upgrade_column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* Adjust button width */
+  .button1 {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+}
