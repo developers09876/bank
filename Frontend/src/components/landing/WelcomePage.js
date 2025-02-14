@@ -6,10 +6,9 @@ import Footer from "../Layout/Footer";
 import { useNavigate } from "react-router-dom";
 // import welcomepage from '../../Images/welcome-page.png';
 
-
 const WelcomePage = () => {
   const userType = localStorage.getItem("userType");
-  const referType = localStorage.getItem("referType"); 
+  const referType = localStorage.getItem("referType");
 
   const navigate = useNavigate();
 
@@ -45,7 +44,7 @@ const WelcomePage = () => {
               >
                 <div className="referral-left animate-slide-in-left">
                   <h1 className="refer-heading">
-                    Welcome to Our <br /> Villu genius Family
+                    Welcome to <br /> Vilu Genius Family
                   </h1>
                 </div>
               </Col>
@@ -58,7 +57,6 @@ const WelcomePage = () => {
               >
                 <img src="https://cdni.iconscout.com/illustration/premium/thumb/business-agreement-illustration-download-in-svg-png-gif-file-formats--conference-deal-partners-aggrement-and-shaking-hands-pack-illustrations-3685784.png" />
                 {/* <img src={welcomepage} alt="Welcome" /> */}
-
               </Col>
             </Row>
             <div className="refer-svgpath">
