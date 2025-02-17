@@ -260,9 +260,9 @@ function Carrier() {
         >
           Current Job Openings
         </h3>
-        <Row>
+        <Row> 
           {jobListings.map((job, index) => (
-            <Col key={index} lg={12} className="px-3" style={{ width: "100%" }}>
+            <Col key={index} lg={12} className="px-3" style={{ width: "100%"}}>
               <Card className=" jobcards">
                 <h5>
                   <strong>{job.jobTitle}</strong>

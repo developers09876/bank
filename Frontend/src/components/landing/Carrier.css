@@ -2,6 +2,8 @@
   max-width: 1200px;
   margin: auto;
   padding: 20px;
+  gap: 20px; 
+  grid-gap: 20px; 
 }
 
 p {
@@ -84,7 +86,7 @@ select {
   border: 1px solid #1a2a4162;
   padding: 5px;
   background-color: #f2f4f8;
-
+  margin-bottom: 20px; 
   &h5 {
     color: #1a2a41;
   }
@@ -212,13 +214,7 @@ select {
     font-size: 20px;
    
   }
-  :where(.css-dev-only-do-not-override-7ny38l).ant-card .ant-card-body {
-    padding: 34px;
-    border-radius: 0 0 8px 8px;
-}
-.job-card {
-  width: calc(30% - 20px);  
-}
+
 
 }
 
@@ -241,7 +237,7 @@ select {
   }
 
   .jobcards {
-    padding: 10px;
+    padding: 0px;
   }
 
   .job-role {
@@ -255,9 +251,6 @@ select {
   .applybtn {
     font-size: 12px;
     padding: 6px 10px;
-  }
-  .career-container {
-    padding: 15px;
   }
 
   .employee-testimonials h2 {
