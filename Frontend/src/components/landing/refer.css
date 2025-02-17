@@ -49,26 +49,7 @@
 .refer-firstcol {
   z-index: 1;
 }
-.refer-headings {
-  font-weight: bold;
-  font-size: 56px;
-  color: #2563eb; 
-  font-family: serif;
-  -webkit-text-stroke: 2px #2563eb; 
-}
 
-.refer-headings {
-  font-weight: bold;
-  font-size: 36px;
-  color: transparent; 
-  -webkit-text-stroke: 2px #2563eb; 
-  background: linear-gradient(90deg, #2563eb 0%, #3b82f6 50%, transparent 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  font-family: serif;
-  animation: fillLeftToRight 5s infinite;
-  background-size: 200%; 
-}
 .refer-heading {
   font-weight: bold;
   font-size: 56px;
