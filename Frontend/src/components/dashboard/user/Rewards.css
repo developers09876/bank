@@ -151,7 +151,7 @@
   }
 }
 
-/* Tablet View (768px) - Show only one card with increased width */
+/* Tablet View (768px) */
 @media (max-width: 768px) {
   .summary-cards, 
   .rewards-row, 
@@ -174,7 +174,7 @@
   }
 }
 
-/* Mobile View (320px) - Show only one card at a time */
+/* Mobile View (320px) */
 @media (max-width: 320px) {
   .summary-cards, 
   .rewards-row, 
@@ -194,4 +194,28 @@
       width: 100%;
       height: auto;
   }
+
+  .card-title {
+      font-size: 16px; 
+
+  .card-detail {
+      font-size: 12px; 
+  }
+
+  .sub-card-title {
+      font-size: 16px; 
+  }
+
+  .sub-card-rewards {
+      font-size: 12px; 
+  }
+
+  .dashboard-header {
+      font-size: 14px; 
+  }
+
+  .dashboard-title {
+      font-size: 16px; 
+  }
+}
 }

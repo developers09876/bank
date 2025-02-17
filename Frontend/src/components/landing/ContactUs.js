@@ -162,12 +162,18 @@ const ContactUs = () => {
                         control={control}
                         // defaultValue="InsuranceEmployee"
                         value={serviceType}
+                         
                         rules={{ required: true }}
                         render={({ field }) => (
                           <Select
                             {...field}
                             className="inputcolumn_drp"
                             placeholder="Select Service Type"
+                            style={{
+                              width: "100%", 
+                              padding: "2px", 
+                              height: "50px", 
+                            }}
                           >
                             <Option value="Loan">Loan </Option>
                             <Option value="Tax">Tax </Option>

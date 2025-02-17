@@ -305,35 +305,21 @@ ul.counter-box-one li span {
 }
 /* Laptop view (1024px) - Show all cards */
 @media (max-width: 1024px) {
-    .whywe-card-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
     .whywecards-card {
         width: 45%; 
         margin: 15px;
     }
 }
 
-/* Tablet view (768px) - Show two cards per row */
+/* Tablet view (768px)  */
 @media (max-width: 768px) {
-    .whywe-card-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-
     .whywecards-card {
-        width: 48%; 
+        width: 48%;
         margin: 10px;
     }
 }
 
-/* Mobile view (320px) - Show one card per row */
+/* Mobile view (320px)  */
 @media (max-width: 320px) {
     .whywe-card-section {
         flex-direction: column;
@@ -341,7 +327,99 @@ ul.counter-box-one li span {
     }
 
     .whywecards-card {
-        width: 100%; 
-        margin: 15px 0; 
+        width: 100%;
+        margin: 15px 0;
+    }
+}
+/* Tablet view (max-width: 768px) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.3rem;
+    }
+
+    h5 {
+        font-size: 1.2rem;
+    }
+
+    h6 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+    .aboutus-loan h2 {
+        font-size: 30px;
+    }
+
+    .aboutus-whywe .whywe-main-heading {
+        font-size: 2.5rem;
+    }
+
+    .aboutus-content .main-heading {
+        font-size: 2.5rem;
+    }
+
+    .aboutus-heading h2 {
+        font-size: 42px;
+    }
+}
+
+/* Mobile view (max-width: 320px) */
+@media (max-width: 320px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+    }
+
+    h6 {
+        font-size: 0.9rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+    }
+
+    .aboutus-loan h2 {
+        font-size: 27px;
+    }
+
+    .aboutus-whywe .whywe-main-heading {
+        font-size: 2.0rem;
+    }
+
+    .aboutus-content .main-heading {
+        font-size: 2.0rem;
+    }
+
+    .aboutus-heading h2 {
+        font-size: 38px;
     }
 }

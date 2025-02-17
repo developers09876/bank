@@ -2,6 +2,8 @@
   max-width: 1200px;
   margin: auto;
   padding: 20px;
+  gap: 20px; 
+  grid-gap: 20px; 
 }
 
 p {
@@ -84,7 +86,7 @@ select {
   border: 1px solid #1a2a4162;
   padding: 5px;
   background-color: #f2f4f8;
-
+  margin-bottom: 20px; 
   &h5 {
     color: #1a2a41;
   }
@@ -134,5 +136,128 @@ select {
     /* color: white; */
     transition: background-image 0.3s ease, color 0.3s ease;
 
+  }
+}
+/* Laptop View (1024px) */
+@media (max-width: 1024px) {
+  .career-intro h1 {
+    font-size: 32px;
+  }
+
+  .career-intro p {
+    font-size: 16px;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+
+  .job-role {
+    font-size: 14px;
+  }
+
+  .job-mini {
+    font-size: 13px;
+  }
+
+  .applybtn {
+    font-size: 14px;
+  }
+  .employee-testimonials h2 {
+    font-size: 28px;
+  }
+
+  .employee-testimonials blockquote {
+    font-size: 16px;
+  }
+}
+
+/* Tablet View (768px) */
+@media (max-width: 768px) {
+  .career-intro h1 {
+    font-size: 25px;
+  }
+
+  .career-intro p {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 28px;
+  }
+
+  .jobcards {
+    padding: 10px;
+  }
+
+  .job-role {
+    font-size: 15px;
+  }
+
+  .job-mini {
+    font-size: 15px;
+  }
+
+  .applybtn {
+    font-size: 13px;
+    padding: 7px 12px;
+  }
+  .career-container {
+    padding: 20px;
+  }
+
+  .employee-testimonials h2 {
+    font-size: 26px;
+  }
+
+  .employee-testimonials blockquote {
+    font-size: 20px;
+   
+  }
+
+
+}
+
+/* Mobile View (320px) */
+@media (max-width: 320px) {
+  .career-container {
+    padding: 15px;
+  }
+
+  .career-intro h1 {
+    font-size: 20px;
+  }
+
+  .career-intro p {
+    font-size: 12px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  .jobcards {
+    padding: 0px;
+  }
+
+  .job-role {
+    font-size: 12px;
+  }
+
+  .job-mini {
+    font-size: 11px;
+  }
+
+  .applybtn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .employee-testimonials h2 {
+    font-size: 20px;
+  }
+
+  .employee-testimonials blockquote {
+    font-size: 14px;
   }
 }
