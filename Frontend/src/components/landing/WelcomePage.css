@@ -1,15 +1,15 @@
-.refer-parent {
+.welcome-parent {
   background-color: #5178e6ab;
   height: 70vh;
   margin-top: 106px;
   align-content: center;
 }
-.refer-container {
+.welcome-container {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
-.refer-card {
+.welcome-card {
   height: 60vh;
   width: 70%;
   box-shadow: 0 0 10px 2px #455e86;
@@ -20,14 +20,14 @@
   background-color: white;
 }
 
-.refer-firstrow {
+.welcome-firstrow {
   align-items: center;
   height: 100%;
 }
-.refer-firstcol {
+.welcome-firstcol {
   z-index: 1;
 }
-.refer-headings {
+.welcome-headings {
   font-weight: bold;
   font-size: 56px;
   color: #2563eb; 
@@ -35,7 +35,7 @@
   -webkit-text-stroke: 2px #2563eb; 
 }
 
-.refer-headings {
+.welcome-headings {
   font-weight: bold;
   font-size: 36px;
   color: transparent; 
@@ -48,7 +48,7 @@
   background-size: 200%; 
  
 }
-.refer-heading {
+.welcome-heading {
   font-weight: bold;
   font-size: 56px;
   color: transparent; 
@@ -61,7 +61,7 @@
   background-size: 200%; 
   margin-bottom: 10px;
 }
-.refer-greetheading {
+.welcome-greetheading {
   font-weight: bold;
   font-size: 36px;
   color: transparent; 
@@ -97,7 +97,7 @@
   }
 }
 
-.refer-svgpath {
+.welcome-svgpath {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -112,10 +112,10 @@
   display: block;
 }
 
-.refer-secondcol {
+.welcome-secondcol {
  z-index: 1;
 }
-.refer-secondcol img {
+.welcome-secondcol img {
   width: 100%;
   justify-self: self-end;
 }

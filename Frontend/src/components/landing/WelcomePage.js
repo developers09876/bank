@@ -43,26 +43,26 @@ const WelcomePage = () => {
   return (
     <div>
       <Header />
-      <div className="refer-parent">
-        <div className="refer-container">
-          <div className="refer-card">
-            <Row className="refer-firstrow px-5 py-2">
+      <div className="welcome-parent">
+        <div className="welcome-container">
+          <div className="welcome-card">
+            <Row className="welcome-firstrow px-5 py-2">
               <Col
-                className="refer-firstcol px-1 py-2"
+                className="welcome-firstcol px-1 py-2"
                 lg={6}
                 md={12}
                 sm={12}
                 xs={12}
               >
-                <div className="referral-left animate-slide-in-left">
-                  <h1 className="refer-greetheading">{greetings}</h1>
-                  <h1 className="refer-heading">
+                <div className="welcomes-left animate-slide-in-left">
+                  <h1 className="welcome-greetheading">{greetings}</h1>
+                  <h1 className="welcome-heading">
                     Welcome to <br /> Vilu Genius Family
                   </h1>
                 </div>
               </Col>
               <Col
-                className="refer-secondcol px-3 py-2"
+                className="welcome-secondcol px-3 py-2"
                 lg={6}
                 md={12}
                 sm={12}
@@ -72,7 +72,7 @@ const WelcomePage = () => {
                 {/* <img src={welcomepage} alt="Welcome" /> */}
               </Col>
             </Row>
-            <div className="refer-svgpath">
+            <div className="welcome-svgpath">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 650 300"
