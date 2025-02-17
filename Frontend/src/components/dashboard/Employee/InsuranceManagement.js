@@ -108,7 +108,7 @@ const Insurance = ({ collapsed }) => {
     {
       title: "Policy Type",
       dataIndex: "PolicyType",
-      key: "policyType",
+      key: "PolicyType",
     },
     {
       title: "Action",

@@ -235,6 +235,7 @@ const Dashboard = () => {
     approved: 0,
     rejected: 0,
   });
+  console.log('loanStats', loanStats)
   const [insuranceStats, setInsuranceStats] = useState({
     total: 0,
     pending: 0,
@@ -303,13 +304,19 @@ const Dashboard = () => {
     loans: { active: 320, pending: 50, approved: 150, rejected: 30 },
     Users: 150,
   };
+  const totalPending = loanStats.pending + insuranceStats.pending + taxStats.pending;
+
+  const totalRejected = loanStats.rejected + insuranceStats.rejected + taxStats.rejected;
+
+  const totalApproved = loanStats.approved + insuranceStats.approved + taxStats.approved;
+
 
   const data = {
     labels: ["Pending", "Rejected", "Completed"],
     datasets: [
       {
         label: "Client Status",
-        data: [2, 4, 3],
+        data: [totalPending , totalRejected , totalApproved ],
         backgroundColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderWidth: 1,

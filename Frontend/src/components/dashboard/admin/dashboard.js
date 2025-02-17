@@ -41,6 +41,18 @@ const AdminDashboard = () => {
     rejected: 0,
     completed: 0,
   });
+  const [insuranceStatusCounts, setInsuranceStatusCounts] = useState({
+    pending: 0,
+    rejected: 0,
+    approved: 0,
+  });
+  
+  const [taxStatusCounts, setTaxStatusCounts] = useState({
+    pending: 0,
+    rejected: 0,
+    approved: 0,
+  });
+  
   console.log('loan', loan)
   const [insurances, setInsurances] = useState();
   const [taxs, setTaxs] = useState();
@@ -105,6 +117,14 @@ const AdminDashboard = () => {
       // console.log("response.data", response.data);
       setInsurances(response.data.length);
       // console.log("insurances", response.data.length);
+      const statusCounts = { pending: 0, rejected: 0, approved: 0 };
+      response.data.forEach((insurance) => {
+        if (insurance.status === "Pending") statusCounts.pending++;
+        else if (insurance.status === "2") statusCounts.rejected++;
+        else if (insurance.status === "1") statusCounts.approved++;
+      });
+  
+      setInsuranceStatusCounts(statusCounts);
     } catch (error) {
       console.log("Error occurs while fetching insurances:", error);
     }
@@ -121,6 +141,14 @@ const AdminDashboard = () => {
       console.log("response.data", response.data);
       setTaxs(response.data.length);
       console.log("taxes", response.data.length);
+      const statusCounts = { pending: 0, rejected: 0, approved: 0 };
+      response.data.forEach((tax) => {
+        if (tax.status === "Pending") statusCounts.pending++;
+        else if (tax.status === "2") statusCounts.rejected++;
+        else if (tax.status === "1") statusCounts.approved++;
+      });
+  
+      setTaxStatusCounts(statusCounts);
     } catch (error) {
       console.log("Error occurs while fetching taxes:", error);
     }
@@ -129,6 +157,20 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchTaxs();
   }, []);
+  const totalStatusCounts = {
+    pending:
+      loanStatusCounts.pending +
+      insuranceStatusCounts.pending +
+      taxStatusCounts.pending,
+    rejected:
+      loanStatusCounts.rejected +
+      insuranceStatusCounts.rejected +
+      taxStatusCounts.rejected,
+    approved:
+      loanStatusCounts.approved +
+      insuranceStatusCounts.approved +
+      taxStatusCounts.approved,
+  };
 
   const stats = {
     totalUsers: 50,
@@ -150,9 +192,9 @@ const AdminDashboard = () => {
       {
         label: "Client Status",
         data: [
-          loanStatusCounts.pending,
-          loanStatusCounts.rejected,
-          loanStatusCounts.completed,
+          totalStatusCounts.pending,
+          totalStatusCounts.rejected,
+          totalStatusCounts.completed,
         ],
         backgroundColor: ["#ffcd56", "lightcoral", "#4caf50"],
         borderColor: ["#ffcd56", "lightcoral", "#4caf50"],

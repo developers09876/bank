@@ -4,6 +4,7 @@ import { Col, Row, Button } from "react-bootstrap";
 import { Select, Card, Descriptions } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import "../user/LoanDetails.css";
 
@@ -16,7 +17,8 @@ function LeadTaskDetails({ collapsed }) {
   const { state } = useLocation();
   const record = state?.record;
   const [isApproved, setIsApproved] = useState(record?.isApproved || false);
-  console.log("recordsssss", record);
+  const [details, setDetails] = useState();
+  console.log("details", details);
   const {
     register,
     handleSubmit,
@@ -24,22 +26,25 @@ function LeadTaskDetails({ collapsed }) {
     reset,
   } = useForm();
   useEffect(() => {
-    if (record) {
-      const initialRemarks = record.addremarks?.length
-        ? record.addremarks.map((field) => ({ ...field, prefilled: true }))
-        : [{ date: "", remarks: "", status: "", prefilled: false }];
+    if (details?.addremarks) {
+      const initialRemarks = details.addremarks.map((field) => ({
+        ...field,
+        prefilled: true,
+      }));
+  
       setRemarksFields(initialRemarks);
-
+  
       const defaultValues = initialRemarks.reduce((acc, field, index) => {
         acc[`date_${index}`] = field.date;
         acc[`remarks_${index}`] = field.remarks;
         acc[`status_${index}`] = field.status;
         return acc;
       }, {});
+  
       reset(defaultValues);
     }
-  }, [record, reset]);
-
+  }, [details, reset]); // Runs when `details` updates
+  
   const addRemarkField = () => {
     setRemarksFields([
       ...remarksFields,
@@ -59,6 +64,19 @@ function LeadTaskDetails({ collapsed }) {
     }, {});
     reset(defaultValues);
   };
+  useEffect(() => {
+    getlead();
+  }, []);
+  const getlead = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/lead/getByLeadId/${record._id}`
+      );
+      setDetails(response.data.data[0]);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
   const handleApprove = async () => {
     try {
       await axios.put(`http://localhost:5000/lead/updatelead/${record._id}`, {
@@ -76,6 +94,22 @@ function LeadTaskDetails({ collapsed }) {
     if (!dateString) return ""; // Handle null/undefined
     return new Date(dateString).toLocaleDateString("en-CA"); // "en-CA" gives "YYYY-MM-DD"
   };
+
+  const deleteRemark = async (remarkId) => {
+    try {
+      await axios.delete(
+        `http://localhost:5000/lead/delete/${record._id}/remark/${remarkId}`
+      );
+      setRemarksFields(
+        remarksFields.filter((remark) => remark._id !== remarkId)
+      );
+      toast.success("Remark deleted successfully");
+    } catch (error) {
+      console.error("Error deleting remark:", error.message);
+      toast.error("Failed to delete remark");
+    }
+  };
+
   const onSubmit = async (data) => {
     const formattedRemarks = remarksFields.map((field, index) => ({
       date: data[`date_${index}`],
@@ -243,8 +277,8 @@ function LeadTaskDetails({ collapsed }) {
                 title="Reminders"
               >
                 <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
-                  {record.addremarks && record.addremarks.length > 0 ? (
-                    record.addremarks.map((remark, index) => (
+                  {details?.addremarks && details?.addremarks.length > 0 ? (
+                    details?.addremarks.map((remark, index) => (
                       <React.Fragment key={index}>
                         <Descriptions.Item label="Date">
                           {remark.date}
@@ -320,29 +354,30 @@ function LeadTaskDetails({ collapsed }) {
                       <p className="text-danger">Remarks are required</p>
                     )}
                   </Col>
-                  <Col
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    className="d-flex align-items-center"
-                  >
-                    {!field.prefilled && remarksFields.length > 1 && (
-                      <button
-                        type="button"
-                        className="btn btn-danger me-2"
+
+                  {!field.prefilled && (
+                    <Col lg={4} className="d-flex align-items-center">
+                      <Button
+                        variant="danger"
                         onClick={() => removeRemarkField(index)}
                       >
                         -
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      onClick={addRemarkField}
-                    >
-                      +
-                    </button>
-                  </Col>
+                      </Button>
+                    </Col>
+                  )}
+                  {field.prefilled && (
+                    <Col lg={4} className="d-flex align-items-center">
+                      <Button variant="success" onClick={addRemarkField}>
+                        +
+                      </Button>
+                      {field._id && (
+                        <FaTrash
+                          className="text-danger cursor-pointer ms-2"
+                          onClick={() => deleteRemark(field._id)}
+                        />
+                      )}
+                    </Col>
+                  )}
                 </Row>
               ))}
 

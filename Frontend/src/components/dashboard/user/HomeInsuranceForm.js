@@ -40,6 +40,7 @@ function HomeInsuranceForm() {
       policyTerm: data.policyTerm,
       PolicyType: data.PolicyType,
       VehicleType: data.VehicleType,
+      policyAmount: data.policyAmount,
       annualIncome: data.annualIncome,
       sumAssured: data.sumAssured,
     };
@@ -231,7 +232,10 @@ function HomeInsuranceForm() {
                       placeholder="Select Policy Type"
                       onChange={(value) => {
                         field.onChange(value);
-                        setValue("VehicleType", ""); // Reset vehicle type if policy type changes
+                        setValue("PolicyType", value);
+                        if (value !== "Vehicle Insurance") {
+                          setValue("VehicleType", null);
+                        }
                       }}
                     >
                       <Option value="Life Insurance">Life Insurance</Option>
@@ -261,8 +265,9 @@ function HomeInsuranceForm() {
                       <Select
                         {...field}
                         className="inputcolumn_drp"
-                        placeholder="Select Vehicle Type"
+                        // placeholder="Select Vehicle Type"
                       >
+                        <Option value="">Select vehicle type</Option>
                         <Option value="Bike Insurance">Bike Insurance</Option>
                         <Option value="Car Insurance">Car Insurance</Option>
                         <Option value=" Heavy vehicle Insurance">
@@ -330,6 +335,21 @@ function HomeInsuranceForm() {
                 />
                 {errors.annualIncome && (
                   <p className="text-danger">Enter annual income</p>
+                )}
+              </div>
+            </Col>
+            <Col xs={12} md={6} lg={4}>
+              <div>
+                <label className="vendorpage_labelCss">Policy Amount</label>
+                <input
+                  className="inputcolumn-ourProfile"
+                  type="number"
+                  name="policyAmount"
+                  {...register("policyAmount", { required: true })}
+                  placeholder="Policy Amount (Rs.)"
+                />
+                {errors.policyAmount && (
+                  <p className="text-danger">Policy Amount is required</p>
                 )}
               </div>
             </Col>

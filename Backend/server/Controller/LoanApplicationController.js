@@ -469,6 +469,63 @@ export const getbyReferCode = async (req, res) => {
   }
 };
 
+// export const calculateReferralEarnings = async (req, res) => {
+//   try {
+//     const { referCode } = req.params;
+//     const loanApplications = await LoanApplication.find({ referCode });
+
+//     if (!loanApplications.length) {
+//       return res
+//         .status(404)
+//         .json({ message: "No records found for this referCode" });
+//     }
+
+//     let homeLoanCount = 0;
+//     let vehicleLoanCount = 0;
+//     let businessLoanCount = 0;
+//     let personalLoanCount = 0;
+//     // Count referrals for each loan type
+//     loanApplications.forEach((loan) => {
+//       const loanType = loan.loanType;
+//       if (loanType === "Home Loan") {
+//         homeLoanCount++;
+//       } else if (loanType === "Vehicle Loan") {
+//         vehicleLoanCount++;
+//       } else if (loanType === "Business Loan") {
+//         businessLoanCount++;
+//       } else if (loanType === "Personal Loan") {
+//         personalLoanCount++;
+//       }
+//     });
+
+//     // Calculate earnings
+//     const homeLoanEarnings = homeLoanCount * 5;
+//     const vehicleLoanEarnings = vehicleLoanCount * 10;
+//     const businessLoanEarnings = businessLoanCount * 15;
+//     const personalLoanEarnings = personalLoanCount * 20;
+
+//     const totalEarnings =
+//       homeLoanEarnings +
+//       vehicleLoanEarnings +
+//       businessLoanEarnings +
+//       personalLoanEarnings;
+
+//     res.status(200).json({
+//       referCode,
+//       homeLoanCount,
+//       vehicleLoanCount,
+//       businessLoanCount,
+//       homeLoanEarnings,
+//       vehicleLoanEarnings,
+//       personalLoanEarnings,
+//       businessLoanEarnings,
+//       totalEarnings,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 export const calculateReferralEarnings = async (req, res) => {
   try {
     const { referCode } = req.params;
@@ -484,26 +541,41 @@ export const calculateReferralEarnings = async (req, res) => {
     let vehicleLoanCount = 0;
     let businessLoanCount = 0;
     let personalLoanCount = 0;
-    // Count referrals for each loan type
+
+    let homeLoanEarnings = 0;
+    let vehicleLoanEarnings = 0;
+    let businessLoanEarnings = 0;
+    let personalLoanEarnings = 0;
+
+    // Loop through loan applications and calculate referral earnings based on conditions
     loanApplications.forEach((loan) => {
-      const loanType = loan.loanType;
-      if (loanType === "Home Loan") {
+      const { loanType, loanAmount } = loan;
+      const commission = loanAmount * 0.005; // 0.5% of loan amount
+
+      if (loanType === "Business Loan") {
+        businessLoanCount++;
+        if (businessLoanCount >= 2) {
+          businessLoanEarnings += commission;
+        }
+      } else if (loanType === "Home Loan") {
         homeLoanCount++;
+        if (homeLoanCount >= 3) {
+          homeLoanEarnings += commission;
+        }
       } else if (loanType === "Vehicle Loan") {
         vehicleLoanCount++;
-      } else if (loanType === "Business Loan") {
-        businessLoanCount++;
+        if (vehicleLoanCount >= 4) {
+          vehicleLoanEarnings += commission;
+        }
       } else if (loanType === "Personal Loan") {
         personalLoanCount++;
+        if (personalLoanCount >= 10) {
+          personalLoanEarnings += commission;
+        }
       }
     });
 
-    // Calculate earnings
-    const homeLoanEarnings = homeLoanCount * 5;
-    const vehicleLoanEarnings = vehicleLoanCount * 10;
-    const businessLoanEarnings = businessLoanCount * 15;
-    const personalLoanEarnings = personalLoanCount * 20;
-
+    // Calculate total earnings
     const totalEarnings =
       homeLoanEarnings +
       vehicleLoanEarnings +
@@ -515,11 +587,12 @@ export const calculateReferralEarnings = async (req, res) => {
       homeLoanCount,
       vehicleLoanCount,
       businessLoanCount,
-      homeLoanEarnings,
-      vehicleLoanEarnings,
-      personalLoanEarnings,
-      businessLoanEarnings,
-      totalEarnings,
+      personalLoanCount,
+      homeLoanEarnings: homeLoanEarnings.toFixed(2),
+      vehicleLoanEarnings: vehicleLoanEarnings.toFixed(2),
+      personalLoanEarnings: personalLoanEarnings.toFixed(2),
+      businessLoanEarnings: businessLoanEarnings.toFixed(2),
+      totalEarnings: totalEarnings.toFixed(2),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -532,41 +605,64 @@ export const getCurrentMonthIncome = async (req, res) => {
 
     // Get the current month and year
     const now = new Date();
-    const currentMonth = now.getMonth(); // 0-based index (Jan = 0, Feb = 1, ...)
+    const currentMonth = now.getMonth(); // 0-based index (January = 0)
     const currentYear = now.getFullYear();
 
     // Fetch all referrals with the given referCode
     const loanApplications = await LoanApplication.find({ referCode });
 
-    // Define income per loan type
-    const incomeRates = {
-      "Home Loan": 5,
-      "Vehicle Loan": 10,
-      "Business Loan": 15,
-      "Personal Loan": 20,
-    };
-
-    // Filter and calculate income
-    let totalIncome = 0;
-    const currentMonthLoans = loanApplications.filter((loan) => {
-      const createdAt = new Date(loan.createdAt);
-      const isCurrentMonth =
-        createdAt.getMonth() === currentMonth &&
-        createdAt.getFullYear() === currentYear;
-
-      if (isCurrentMonth && incomeRates[loan.loanType]) {
-        totalIncome += incomeRates[loan.loanType];
-      }
-
-      return isCurrentMonth;
-    });
-
-    if (currentMonthLoans.length === 0) {
+    if (!loanApplications.length) {
       return res.status(404).json({
-        message: "No referrals found for this month.",
+        message: "No referrals found for this referCode.",
         totalIncome: 0,
       });
     }
+
+    // Referral thresholds for eligibility
+    const referralThresholds = {
+      "Business Loan": 2,
+      "Home Loan": 3,
+      "Vehicle Loan": 4,
+      "Personal Loan": 10,
+    };
+
+    let totalIncome = 0;
+    let loanTypeCounts = {}; // To count loans per loan type
+    let currentMonthLoans = []; // To store loans for the current month
+
+    // Process loan applications to count and filter by current month
+    loanApplications.forEach((loan) => {
+      const { loanType, loanAmount, createdAt } = loan;
+      const loanDate = new Date(createdAt);
+      const isCurrentMonth =
+        loanDate.getMonth() === currentMonth &&
+        loanDate.getFullYear() === currentYear;
+
+      if (isCurrentMonth) {
+        currentMonthLoans.push(loan);
+
+        // Count referrals per loan type
+        if (!loanTypeCounts[loanType]) {
+          loanTypeCounts[loanType] = 0;
+        }
+        loanTypeCounts[loanType]++;
+      }
+    });
+
+    // Log the loanTypeCounts and currentMonthLoans for debugging
+
+    // Calculate income based on referral count and loan amount
+    currentMonthLoans.forEach((loan) => {
+      const { loanType, loanAmount } = loan;
+
+      // Check if the loan type meets the threshold for income calculation
+      if (loanType) {
+        const income = loanAmount * 0.005; // 0.5% of loan amount
+        console.log("loan", loanAmount);
+
+        totalIncome += income;
+      }
+    });
 
     res.status(200).json({ referrals: currentMonthLoans, totalIncome });
   } catch (error) {
