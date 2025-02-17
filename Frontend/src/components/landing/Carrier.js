@@ -120,7 +120,7 @@ function Carrier() {
   return (
     <div>
       <Header />
-      <Row style={{ height: '90vh', padding: '30px', marginTop: '74px' }}>
+      {/* <Row style={{ height: '90vh', padding: '30px', marginTop: '74px' }}>
         <Col style={{ backgroundColor: '#4169E1', padding: '150px 200px 0px 50px', color: 'white' }} lg={12}>
           <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', fontSize: '48px' }}>
             Kickstart Your <br /> Career with <span style={{ color: '#800000' }}>Us</span>
@@ -133,7 +133,116 @@ function Carrier() {
         <Col style={{ backgroundColor: '#4169E1' }} lg={12}>
           <img src={img1} alt="Description of Image" style={{ width: '100%', height: 'auto' }} />
         </Col>
-      </Row>
+      </Row> */}
+           <Row
+      style={{
+        height: '90vh',
+        padding: '30px',
+        marginTop: '74px',
+        display: 'flex',
+        flexWrap: 'wrap',
+      }}
+    >
+      {/* Left Column */}
+      <Col
+        lg={12}
+        md={12}
+        sm={24}
+        xs={24}
+        className="career-text"
+        style={{
+          backgroundColor: '#4169E1',
+          padding: '150px 200px 0px 50px',
+          color: 'white',
+          textAlign: 'left',
+        }}
+      >
+        <h1 className="career-heading">
+          Kickstart Your <br /> Career with{' '}
+          <span style={{ color: '#800000' }}>Us</span>
+        </h1>
+        <h4 className="career-subtext">
+          Join our dynamic team and help people achieve their financial goals
+          through our innovative loan solutions.
+        </h4>
+      </Col>
+
+      {/* Right Column (Image) */}
+      <Col
+        lg={12}
+        md={12}
+        sm={24}
+        xs={24}
+        className="career-image"
+        style={{
+          backgroundColor: '#4169E1',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <img
+          src={img1}
+          alt="Career"
+          className="career-img"
+          style={{
+            width: '100%',
+            height: 'auto',
+            maxWidth: '600px', 
+          }}
+        />
+      </Col>
+
+      {/* Media Queries for Mobile (320px), Tablet (768px), and Laptop (1024px) */}
+      <style>
+        {`
+          @media (max-width: 1024px) { /* Laptop View */
+            .career-heading {
+              font-size: 40px !important;
+            }
+            .career-subtext {
+              font-size: 18px !important;
+            }
+            .career-text {
+              padding: 120px 100px 0px 40px !important;
+            }
+          }
+
+          @media (max-width: 768px) { /* Tablet View */
+            .career-heading {
+              font-size: 32px !important;
+            }
+            .career-subtext {
+              font-size: 16px !important;
+            }
+            .career-text {
+              padding: 80px 50px 0px 30px !important;
+              text-align: center !important;
+            }
+            .career-image img {
+              max-width: 500px !important;
+            }
+          }
+
+          @media (max-width: 320px) { /* Mobile View */
+            .career-text {
+              padding: 50px 20px !important;
+              text-align: center !important;
+            }
+            .career-heading {
+              font-size: 24px !important;
+            }
+            .career-subtext {
+              font-size: 14px !important;
+            }
+            .career-image img {
+              max-width: 100% !important;
+              height: auto !important;
+            }
+          }
+        `}
+      </style>
+    </Row>
       <br />
 
       <div className="career-container">
