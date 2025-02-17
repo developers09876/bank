@@ -27,7 +27,7 @@ h2 {
   border-radius: 8px;
   padding: 20px;
   width: 300px;
-  height: 188px;
+  height: 200px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
   cursor: pointer;
@@ -112,4 +112,50 @@ h2 {
 }
 .testimonial-slider_hrtag{
   border: 2px solid white;
+}
+@media (max-width: 320px) {
+  .container.cibil-container  {
+    width: 95% !important;
+    padding: 6px;
+  }
+  .cibil-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cibil-container img {
+    width: 100%; 
+    max-width: 280px; 
+    height: auto;
+  }
+
+  .banner {
+    margin-left: 0 !important;
+    padding: 20px;
+  }
+
+  .banner h1 {
+    font-size: 20px;
+  }
+
+  .banner p {
+    font-size: 14px;
+  }
+
+  .banner button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  .testimonial-slider {
+    width: 96%;
+    margin: 0 auto;
+  }
+  .testimonial-quote{
+  font-size: 20px;
+ }
+  .text-3xl{
+  font-size: 1.575rem;
+  }
 }
