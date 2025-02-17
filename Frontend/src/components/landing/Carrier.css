@@ -216,6 +216,9 @@ select {
     padding: 34px;
     border-radius: 0 0 8px 8px;
 }
+.job-card {
+  width: calc(30% - 20px);  
+}
 
 }
 
