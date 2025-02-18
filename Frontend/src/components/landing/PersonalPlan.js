@@ -43,7 +43,7 @@ function PersonalPlan() {
       <Header />
       <Row className="personal-plan-container">
         <Col lg={2}></Col>
-        <Col lg={20} className="personal-plan-content">
+        <Col lg={20} sm={24} xs={24} className="personal-plan-content">
           <h1>
           Give Wings to Your Dreams with a Personal Subscription Plan!
 </h1>
@@ -60,7 +60,7 @@ function PersonalPlan() {
       </Row>
       <Row className="personal-plan-container2">
         <Col lg={2}></Col>
-        <Col lg={12}>
+        <Col lg={12} sm={24} xs={24} >
           <Row>
             <Col lg={22}>
               <div className="personal-plan-content2">
@@ -80,7 +80,7 @@ function PersonalPlan() {
             <Col lg={2}></Col>
           </Row>
         </Col>
-        <Col lg={8}>
+        <Col lg={8} sm={24} xs={24} >
           <div className="personal-plan-box">
             <h2>Personal Subscription Plan</h2>
             <p className="price">
