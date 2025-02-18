@@ -222,42 +222,68 @@ select {
 @media (max-width: 320px) {
   .career-container {
     padding: 15px;
-  }
-
-  .career-intro h1 {
-    font-size: 20px;
-  }
-
-  .career-intro p {
-    font-size: 12px;
-  }
-
-  h3 {
-    font-size: 22px;
+    font-size: 14px;
   }
 
   .jobcards {
-    padding: 0px;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 5px;
   }
 
   .job-role {
-    font-size: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .job-role svg {
+    margin-right: 5px;
   }
 
   .job-mini {
-    font-size: 11px;
+    font-size: 13px;
+  }
+
+  .px-1 {
+    width: 100%;
+    text-align: left;
   }
 
   .applybtn {
-    font-size: 12px;
-    padding: 6px 10px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .career-container h3 {
+    font-size: 18px;
+    padding: 10px;
   }
 
-  .employee-testimonials h2 {
-    font-size: 20px;
+  .jobcards h5 {
+    font-size: 16px;
   }
 
-  .employee-testimonials blockquote {
+  .jobcards b {
     font-size: 14px;
   }
+
+  .jobcards p {
+    font-size: 12px;
+  }
+  .employee-testimonials h2 {
+    font-size: 23px;
 }
+  .employee-testimonials blockquote {
+    font-size: 15px;
+}
+.career-intro p {
+  font-size: 17px;
+}
+.career-intro h1 {
+  font-size: 23px;
+}
+}
+
+

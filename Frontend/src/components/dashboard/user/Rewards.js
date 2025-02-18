@@ -152,44 +152,37 @@ const Rewards = () => {
         {
           key: "1-1",
           title: "Business Loan",
-          rewards: 15,
-          percentage: "Refer 2 members and Earn 30 rs Income",
+          percentage: "Refer 2 members and Earn 0.5 % Income",
         },
         {
           key: "1-2",
           title: "Vehicle Loan",
-          rewards: 10,
-          percentage: "Refer 3 members and Earn 30 rs Income",
+          percentage: "Refer 4 members and Earn 0.5 % Income",
         },
         {
           key: "1-3",
           title: "Home Loan",
-          rewards: 5,
-          percentage: "Refer 4 members and Earn 20 rs Income",
+          percentage: "Refer 3 members and Earn 0.5 % Income",
         },
         {
           key: "1-4",
           title: "Personal Loan",
-          rewards: 20,
-          percentage: "Refer 2 members and Earn 40 rs Income",
+          percentage: "Refer 10 members and Earn 0.5 % Income",
         },
         {
           key: "1-5",
           title: "Loan Against Property (LAP)",
-          rewards: 10,
-          percentage: "Refer 2 members and Earn 20 rs Income",
+          percentage: "Refer 5 members and Earn 0.5 % Income",
         },
         {
           key: "1-6",
           title: "Loan Transfer (BT TopUp)",
-          rewards: 12,
-          percentage: "Refer 2 members and Earn 24 rs Income",
+          percentage: "Refer 5 members and Earn 0.5 % Income",
         },
         {
           key: "1-7",
           title: "Construction Loan",
-          rewards: 15,
-          percentage: "Refer 2 members and Earn 30 rs Income",
+          percentage: "Refer 5 members and Earn 0.5 % Income",
         },
       ],
     },
@@ -203,26 +196,22 @@ const Rewards = () => {
         {
           key: "2-1",
           title: "Life Insurance",
-          rewards: 5,
-          percentage: "Earn 10 rs of Total Premium  by refer 2",
+          percentage: "Earn 2 % to 25 % of Total Premium by refer 2",
         },
         {
           key: "2-2",
           title: "Health Insurance",
-          rewards: 10,
-          percentage: "Earn 20 rs of Total Premium  by refer 2",
+          percentage: "Earn 15 % of Total Premium by refer 5",
         },
         {
           key: "2-3",
           title: "Vehicle Insurance",
-          rewards: 2.5,
-          percentage: "Earn 5 rs of Total Premium  by refer 2",
+          percentage: "Earn 10 % of Total Premium by refer 9",
         },
         {
           key: "2-4",
           title: "Travel Insurance",
-          rewards: 3.5,
-          percentage: "Earn 7 rs of Total Premium  by refer 2 ",
+          percentage: "Earn 10 % of Total Premium by refer 9",
         },
       ],
     },
@@ -319,9 +308,9 @@ const Rewards = () => {
                         <Title level={5} className="sub-card-title">
                           {subItem.title}
                         </Title>
-                        <Text className="sub-card-rewards">
+                        {/* <Text className="sub-card-rewards">
                           Income: ₹{subItem.rewards}
-                        </Text>
+                        </Text> */}
                         <Text className="sub-card-rewards">
                           {subItem.percentage}
                         </Text>

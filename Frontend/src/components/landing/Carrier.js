@@ -268,7 +268,7 @@ function Carrier() {
                   <strong>{job.jobTitle}</strong>
                 </h5>
                 <b>{job.company}</b>
-                <p style={{ paddingTop: "5px" }}>
+                <p  className="job-role"style={{ paddingTop: "5px" }}>
                   <ImLocation style={{ display: "inline", color: "#1a2a41" }} />
                   <span>{job.location}</span>
                 </p>
