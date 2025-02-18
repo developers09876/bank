@@ -8,7 +8,9 @@
     font-weight: bold;
   }
 
-
+.firstrowcol {
+  border-right: 1px solid #e5e7eb;
+}
   .loandetail-custom-card {
     margin-bottom: 16px;
     border-radius: 8px;

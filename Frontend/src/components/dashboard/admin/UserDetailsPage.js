@@ -48,7 +48,7 @@ const UserDetailsPage = ({ collapsed }) => {
                       style={{
                         height: "auto",
                         alignContent: "center",
-                        borderRight: "1px #e5e7eb solid",
+                        // borderRight: "1px #e5e7eb solid",
                         textAlign: "-webkit-center",
                       }}
                     >
@@ -180,85 +180,6 @@ const UserDetailsPage = ({ collapsed }) => {
                 </Col>
               </Row>
             )}
-
-            {/* <Col lg={12} md={12}>
-                <Card className="loandetail-custom-card" title="Loan Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Agent Name">
-                      {record.loanAgentName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Agent Contact">
-                      {record.loanAgentContactNumber}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Loan Amount">
-                      {record.loanAmount}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Purpose">
-                      {record.loanPurpose}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Employment Status">
-                      {record.employmentStatus}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Annual Income">
-                      {record.annualIncome}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Existing Loans">
-                      {record.existingLoans}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Credit Score">
-                      {record.creditScore}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Property Details">
-                      {record.propertyDetails}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              </Col> */}
-
-            {/* <Col lg={12} md={12}>
-                <Card className="loandetail-custom-card" title="Loan Status">
-                  <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Approval Status">
-                      {record.status === "1" ? (
-                        <p color="green">Approved</p>
-                      ) : record.status === "2" ? (
-                        <p color="red">Rejected</p>
-                      ) : (
-                        <p color="orange">Pending</p>
-                      )}
-                    </Descriptions.Item>
-                    {record.status === "2" && (
-                      <Descriptions.Item label="Reason for Rejection">
-                        {record.rejectionReason}
-                      </Descriptions.Item>
-                    )}
-                    {record.status === "Pending" && record.pendingReason && (
-                      <Descriptions.Item label="Reason for Hold">
-                        {record.pendingReason}
-                      </Descriptions.Item>
-                    )}
-                  </Descriptions>
-                </Card>
-              </Col> */}
-
-            {/* <Col lg={12} md={12}>
-                <Card
-                  className="loandetail-custom-card"
-                  title="Nominee Details"
-                >
-                  <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Nominee Name">
-                      {record.nomineeName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Relationship">
-                      {record.nomineeRelationship}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Address">
-                      {record.nomineeAddress}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              </Col> */}
 
             {record.maritalStatus === "Married" && (
               <Row className="px-2">

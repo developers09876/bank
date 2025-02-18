@@ -41,17 +41,17 @@ const EmployeeDetailsPage = ({ collapsed }) => {
               <Tag>{record.userType && <p>{record.userType}</p>}</Tag>
             </div>
 
-            <Row className="px-4 py-3">
+            <Row className="px-3 py-3">
               <Col>
                 <Card>
                   <Row>
                     <Col
                       className="firstrowcol px-1 py-1"
-                      lg={3}
+                      lg={4}
                       style={{
                         height: "auto",
                         alignContent: "center",
-                        borderRight: "1px #e5e7eb solid",
+                        // borderRight: "1px #e5e7eb solid",
                         textAlign: "-webkit-center",
                       }}
                     >
@@ -86,13 +86,15 @@ const EmployeeDetailsPage = ({ collapsed }) => {
                           />
                         </div>
                       )}
-                      <p>
-                        {record.firstname} {record.lastname}
-                      </p>
-                      <p>{record.email}</p>
+                      <div>
+                        <p>
+                          {record.firstname} {record.lastname}
+                        </p>
+                        <p>{record.email}</p>
+                      </div>
                     </Col>
 
-                    <Col lg={9} className="px-3 py-1">
+                    <Col lg={8} className="px-3 py-1">
                       <h6>Personal Info</h6>
                       <Descriptions
                         size="small"
@@ -165,7 +167,7 @@ const EmployeeDetailsPage = ({ collapsed }) => {
                         {record.employeeCategory}
                       </Descriptions.Item>
                     )}
-                     {/* <Descriptions.Item label="Employee Category">
+                    {/* <Descriptions.Item label="Employee Category">
                       {record.employeeCategory}
                     </Descriptions.Item> */}
                     <Descriptions.Item label=" Employee Number">

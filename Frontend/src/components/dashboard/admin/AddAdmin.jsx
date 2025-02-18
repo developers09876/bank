@@ -80,10 +80,10 @@ const AddAdmin = ({ setAuth }) => {
 
       <div className="w-full border bg-white shadow-md rounded">
         <Container>
-          <div className="w-full px-8 pt-6 pb-8 mb-4 bg-white rounded">
+          <div className="w-full px-2 pt-6 pb-8 mb-4 bg-white rounded">
             {/* HEADER */}
             <div
-              className="flex items-center justify-between px-4 py-5 sm:px-6 rounded shadow-md"
+              className="flex items-center justify-between px-5 py-5 sm:px-6 rounded shadow-md"
               style={{
                 backgroundColor: "rgb(0 57 127 / var(--tw-bg-opacity))",
               }}
@@ -101,7 +101,7 @@ const AddAdmin = ({ setAuth }) => {
             {/* FORM */}
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500"
+              className="mt-5 p-2 rounded border shadow-md border-t-4 border-t-red-500"
             >
               <Row>
                 {/* Employee No */}
@@ -121,7 +121,7 @@ const AddAdmin = ({ setAuth }) => {
                 </Col> */}
 
                 {/* Services */}
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="services">Services:</label>
                   <Controller
                     name="services"
@@ -131,9 +131,10 @@ const AddAdmin = ({ setAuth }) => {
                       <Select
                         {...field}
                         mode="multiple"
-                        className="inputcolumn_drp"
+                        className="inputcolumn_drp w-full mb-4"
+                        style={{width:'100%'}}
                         placeholder="Select Services"
-                        style={{ height: "55%" }}
+                        // style={{ height: "55%" }}
                         onChange={(value) => {
                           setSelectedServices(value);
                           setValue("services", value);
@@ -184,11 +185,11 @@ const AddAdmin = ({ setAuth }) => {
                 </Col> */}
 
                 {/* Other Fields */}
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="firstname">First Name:</label>
                   <input
                     type="text"
-                    className="block border w-full p-3 rounded mb-4"
+                    className="block border w-full p-2 rounded mb-4"
                     {...register("firstname", {
                       required: "First Name is required",
                     })}
@@ -199,11 +200,11 @@ const AddAdmin = ({ setAuth }) => {
                   )}
                 </Col>
 
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="lastname">Last Name:</label>
                   <input
                     type="text"
-                    className="block border w-full p-3 rounded mb-4"
+                    className="block border w-full p-2 rounded mb-4"
                     {...register("lastname", {
                       required: "Last Name is required",
                     })}
@@ -230,11 +231,11 @@ const AddAdmin = ({ setAuth }) => {
                     </p>
                   )}
                 </Col> */}
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="contactNumber">Contact Number:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    className="block border border-grey-500 w-full p-2 rounded mb-4"
                     name="contactNumber"
                     {...register("contactNumber", {
                       required: "Contact number is required",
@@ -279,11 +280,11 @@ const AddAdmin = ({ setAuth }) => {
                     <p className="text-red-500">{errors.email.message}</p>
                   )}
                 </Col> */}
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="email">Email Address:</label>
                   <input
                     type="email"
-                    className="block border w-full p-3 rounded mb-4"
+                    className="block border w-full p-2 rounded mb-4"
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
@@ -298,11 +299,11 @@ const AddAdmin = ({ setAuth }) => {
                   )}
                 </Col>
 
-                <Col lg={6} md={6}>
+                <Col lg={4} md={6} sm={12}>
                   <label htmlFor="dateOfJoining">Date of Joining:</label>
                   <input
                     type="date"
-                    className="block border w-full p-3 rounded mb-4"
+                    className="block border w-full p-2 rounded mb-4"
                     {...register("dateOfJoining", {
                       required: "Date of Joining is required",
                     })}
@@ -313,11 +314,11 @@ const AddAdmin = ({ setAuth }) => {
                     </p>
                   )}
                 </Col>
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="Manager">Reporting Manager:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    className="block border border-grey-500 w-full p-2 rounded mb-4"
                     name="Manager"
                     {...register("manager", {
                       required: "Manager is required",
@@ -328,11 +329,11 @@ const AddAdmin = ({ setAuth }) => {
                     <p className="text-red-500">{errors.Manager.message}</p>
                   )}
                 </Col>
-                <Col lg={6} md={6}>
+                <Col  lg={4} md={6} sm={12}>
                   <label htmlFor="Branch">Reporting Branch:</label>
                   <input
                     type="text"
-                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    className="block border border-grey-500 w-full p-2 rounded mb-4"
                     name="Branch"
                     {...register("branch", {
                       required: "Branch is required",
