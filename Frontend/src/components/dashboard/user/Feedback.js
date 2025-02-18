@@ -82,8 +82,95 @@ const Feedback = ({ collapsed }) => {
         </div>
       </div>
       <ToastContainer />
+
+      {/* Inline Styles for Media Queries */}
+      <style jsx="true">{`
+        @media (max-width: 425px) {
+          .main-content {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+          }
+
+          .inputcolumn-ourProfile2 {
+            width: 95%!important;
+            height: 50px;
+            font-size: 14px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+          }
+
+          .button1 {
+            width: 50%!important;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+          }
+
+          h2 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+          }
+
+          .text-danger {
+            font-size: 12px;
+            text-align: center;
+          }
+
+          p {
+            font-size: 14px;
+            text-align: center;
+            color: #888;
+          }
+
+          .upgrade_column1 {
+            margin-top: 20px;
+          }
+        }
+
+        @media (max-width: 375px) {
+          .inputcolumn-ourProfile2 {
+            height: 45px;
+            font-size: 13px;
+          }
+
+          .button1 {
+            font-size: 15px;
+             width: 30%!important;
+          }
+
+          h2 {
+            font-size: 18px;
+          }
+        }
+
+        @media (max-width: 320px) {
+          .main-content {
+            padding: 10px;
+          }
+
+          .inputcolumn-ourProfile2 {
+            font-size: 12px;
+            height: 40px;
+            width: 95%!important;
+          }
+
+          .button1 {
+            font-size: 14px;
+             width: 50%!important;
+          }
+
+          h2 {
+            font-size: 16px;
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
 export default Feedback;
+

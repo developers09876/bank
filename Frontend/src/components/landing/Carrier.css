@@ -277,5 +277,127 @@ select {
   font-size: 23px;
 }
 }
+@media (max-width: 375px) {
+  .career-container {
+    padding: 12px;
+    font-size: 17px;
+  }
 
+  .jobcards {
+    padding: 8px;
+  }
 
+  .job-role {
+    font-size: 17px;
+  }
+
+  .job-mini {
+    font-size: 14px;
+  }
+
+  .applybtn {
+    font-size: 17px;
+  }
+
+  .career-container h3 {
+    font-size: 20px;
+  }
+
+  .jobcards h5 {
+    font-size: 18px;
+  }
+
+  .jobcards b {
+    font-size: 16px;
+  }
+
+  .jobcards p {
+    font-size: 15px;
+  }
+
+  .employee-testimonials h2 {
+    font-size: 24px;
+  }
+
+  .employee-testimonials blockquote {
+    font-size: 16px;
+  }
+
+  .career-intro p {
+    font-size: 18px;
+  }
+
+  .career-intro h1 {
+    font-size: 25px;
+  }
+}
+@media (max-width: 425px) {
+  .career-container {
+    padding: 15px;
+    font-size: 14px;
+  }
+
+  .jobcards {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 5px;
+  }
+
+  .job-role {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .job-role svg {
+    margin-right: 5px;
+  }
+
+  .job-mini {
+    font-size: 13px;
+  }
+
+  .px-1 {
+    width: 100%;
+    text-align: left;
+  }
+
+  .applybtn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .career-container h3 {
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .jobcards h5 {
+    font-size: 16px;
+  }
+
+  .jobcards b {
+    font-size: 14px;
+  }
+
+  .jobcards p {
+    font-size: 12px;
+  }
+
+  .employee-testimonials h2 {
+    font-size: 23px;
+  }
+
+  .employee-testimonials blockquote {
+    font-size: 15px;
+  }
+
+  .career-intro p {
+    font-size: 17px;
+  }
+
+  .career-intro h1 {
+    font-size: 23px;
+  }
+}
