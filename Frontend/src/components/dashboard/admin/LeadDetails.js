@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { Select, Card, Descriptions } from "antd";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Api from "../../../Api";
 
 function LeadDetails({ collapsed }) {
@@ -18,7 +18,7 @@ function LeadDetails({ collapsed }) {
   const [categories, setCategories] = useState([]);
   const [assignValue, setAssignValue] = useState([]);
   const [isApproved, setIsApproved] = useState(false);
-  console.log('isApproved', isApproved)
+  console.log("isApproved", isApproved);
   console.log("assignValue", assignValue);
   const { Option } = Select;
   const {
@@ -207,14 +207,14 @@ function LeadDetails({ collapsed }) {
   return (
     <div>
       <div className="loandetail-container">
-      <div className={collapsed ? "main-content.open" : "main-content"}>
-      <div>
-        <center>
-          <h3>Lead Details</h3>
-        </center>
-        <div>
-          <Row className="px-4 py-3">
-            <Col>
+        <div className={collapsed ? "main-content.open" : "main-content"}>
+          <div>
+            <center>
+              <h3>Lead Details</h3>
+            </center>
+            <div>
+              <Row className="px-2 py-3">
+                {/* <Col>
               <Card>
                 <Row>
                   <Col
@@ -276,237 +276,289 @@ function LeadDetails({ collapsed }) {
                   </Col>
                 </Row>
               </Card>
-            </Col>
-          </Row>
-         <Row className="px-2">
-            <Col lg={12} md={12}>
-              <Card
-                style={{ width: "100%" }}
-                className="loandetail-custom-card"
-                title="Loan Details"
-              >
-                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                  <Descriptions.Item label="Loan Amount">
-                    {record.amount}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Purpose Of Loan">
-                    {record.purpose}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="User Type">
-                    {record.userType}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Previously Applied">
-                    {record.previouslyapplied}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="How Immediate">
-                    {record.howimidiate}
-                  </Descriptions.Item>
-                </Descriptions>
-              </Card>
-            </Col>
-          </Row>
+            </Col> */}
+                <Col lg={12} md={12}>
+                  <Card
+                    className="loandetail-custom-card"
+                    title="Personal Details"
+                  >
+                    <Descriptions
+                      column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}
+                    >
+                      <Descriptions.Item label="Name">
+                        {record.firstname} {record.lastname}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Email Id">
+                        {record.email}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Contact ">
+                        {record.contactNumber}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Adhaar Number">
+                        {record.aadhar}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="PanCard Number">
+                        {record.panno}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="GST Number">
+                        {record.gst}
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </Card>
+                </Col>
+              </Row>
+              <Row className="px-2">
+                <Col lg={12} md={12}>
+                  <Card
+                    style={{ width: "100%" }}
+                    className="loandetail-custom-card"
+                    title="Loan Details"
+                  >
+                    <Descriptions
+                      column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                    >
+                      <Descriptions.Item label="Loan Amount">
+                        {record.amount}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Purpose Of Loan">
+                        {record.purpose}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="User Type">
+                        {record.userType}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Previously Applied">
+                        {record.previouslyapplied}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="How Immediate">
+                        {record.howimidiate}
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </Card>
+                </Col>
+              </Row>
 
-          <Row className="px-2">
-            <Col lg={12} md={12}>
-              <Card
-                style={{ width: "100%" }}
-                className="loandetail-custom-card"
-                title="Reminders"
-              >
-                <Descriptions column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}>
-                  {record.addremarks && record.addremarks.length > 0 ? (
-                    record.addremarks.map((remark, index) => (
-                      <React.Fragment key={index}>
-                        <Descriptions.Item label="Date">
-                          {remark.date}
+              <Row className="px-2">
+                <Col lg={12} md={12}>
+                  <Card
+                    style={{ width: "100%" }}
+                    className="loandetail-custom-card"
+                    title="Reminders"
+                  >
+                    <Descriptions
+                      column={{ xl: 3, lg: 3, xs: 1, md: 2, sm: 1 }}
+                    >
+                      {record.addremarks && record.addremarks.length > 0 ? (
+                        record.addremarks.map((remark, index) => (
+                          <React.Fragment key={index}>
+                            <Descriptions.Item label="Date">
+                              {remark.date}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Message">
+                              {remark.remarks}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Status">
+                              {remark.status}
+                            </Descriptions.Item>
+                          </React.Fragment>
+                        ))
+                      ) : (
+                        <Descriptions.Item>
+                          No reminders available.
                         </Descriptions.Item>
-                        <Descriptions.Item label="Message">
-                          {remark.remarks}
-                        </Descriptions.Item>
-                        <Descriptions.Item label="Status">
-                          {remark.status}
-                        </Descriptions.Item>
-                      </React.Fragment>
-                    ))
-                  ) : (
-                    <Descriptions.Item>
-                      No reminders available.
-                    </Descriptions.Item>
-                  )}
-                </Descriptions>
-              </Card>
-            </Col>
-          </Row>
-          {/* </div> */}
-          {/* ))
+                      )}
+                    </Descriptions>
+                  </Card>
+                </Col>
+              </Row>
+              {/* </div> */}
+              {/* ))
         ) : (
           <p>No reminders available.</p>
         )} */}
-        </div>
-        {isApproved && <center><h4 className="text-success">Approved</h4></center>}
-        <div className="py-2 px-2">
-          <h5>
-            <b>Assign To</b>
-          </h5>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Row>
-              {/* Employee Type */}
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Employee Type:</label>
-                  <Controller
-                    name="employeeType"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        className="inputcolumn_drp"
-                        onChange={(value) => {
-                          field.onChange(value);
-                          setSelectedEmployeeType(value);
-                        }}
-                      >
-                        <Option value="">Select Employee Type</Option>
-                        <Option value="LoanEmployee">Loan Employee</Option>
-                        <Option value="TaxEmployee">Tax Employee</Option>
-                        <Option value="InsuranceEmployee">
-                          Insurance Employee
-                        </Option>
-                        <Option value="StockMarket">Stock Market</Option>
-                      </Select>
-                    )}
-                  />
-                  {errors.employeeType && (
-                    <p className="text-danger">Employee type is required</p>
-                  )}
-                </div>
-              </Col>
-
-              {/* Employee List */}
-              <Col xs={12} md={6} lg={4}>
-                <label>Employee List:</label>
-                <select
-                  {...register("employeeId", { required: true })}
-                  className="form-select"
-                >
-                  <option value="">Select Employee</option>
-                  {filteredEmployeeList.map((employee) => (
-                    <option key={employee._id} value={employee._id}>
-                      {employee.firstname} {employee.lastname}
-                    </option>
-                  ))}
-                </select>
-                {errors.employeeId && (
-                  <p className="text-danger">Employee selection is required</p>
-                )}
-              </Col>
-
-              {/* Category */}
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Category:</label>
-                  <Controller
-                    name="loanType"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        className="inputcolumn_drp"
-                        placeholder="Select Category"
-                        onChange={(value) => field.onChange(value)}
-                        disabled={!selectedEmployeeType}
-                      >
-                        <Option value="">Select Category</Option>
-                        {selectedEmployeeType &&
-                          employeeCategories[selectedEmployeeType]?.map(
-                            (category, index) => (
-                              <Option key={index} value={category}>
-                                {category}
-                              </Option>
-                            )
-                          )}
-                      </Select>
-                    )}
-                  />
-                  {errors.loanType && (
-                    <p className="text-danger">Category is required</p>
-                  )}
-                </div>
-              </Col>
-
-              {/* Start Date */}
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Start Date:</label>
-                  <Controller
-                    name="startDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <input type="date" {...field} className="form-control" />
-                    )}
-                  />
-                  {errors.startDate && (
-                    <p className="text-danger">Start date is required</p>
-                  )}
-                </div>
-              </Col>
-
-              {/* End Date */}
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">End Date:</label>
-                  <Controller
-                    name="endDate"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <input type="date" {...field} className="form-control" />
-                    )}
-                  />
-                  {errors.endDate && (
-                    <p className="text-danger">End date is required</p>
-                  )}
-                </div>
-              </Col>
-
-              {/* Description */}
-              <Col xs={12} md={6} lg={4}>
-                <div>
-                  <label className="vendorpage_labelCss">Description:</label>
-                  <Controller
-                    name="description"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <textarea
-                        {...field}
-                        className="form-control"
-                        placeholder="Task description"
+            </div>
+            {isApproved && (
+              <center>
+                <h4 className="text-success">Approved</h4>
+              </center>
+            )}
+            <div className="py-2 px-2">
+              <h5>
+                <b>Assign To</b>
+              </h5>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Row>
+                  {/* Employee Type */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Employee Type:
+                      </label>
+                      <Controller
+                        name="employeeType"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setSelectedEmployeeType(value);
+                            }}
+                          >
+                            <Option value="">Select Employee Type</Option>
+                            <Option value="LoanEmployee">Loan Employee</Option>
+                            <Option value="TaxEmployee">Tax Employee</Option>
+                            <Option value="InsuranceEmployee">
+                              Insurance Employee
+                            </Option>
+                            <Option value="StockMarket">Stock Market</Option>
+                          </Select>
+                        )}
                       />
-                    )}
-                  />
-                  {errors.description && (
-                    <p className="text-danger">Description is required</p>
-                  )}
-                </div>
-              </Col>
-            </Row>
+                      {errors.employeeType && (
+                        <p className="text-danger">Employee type is required</p>
+                      )}
+                    </div>
+                  </Col>
 
-            <Row>
-              <Col className="px-2 py-2">
-                <Button type="submit" variant="primary">
-                  Submit
-                </Button>
-              </Col>
-            </Row>
-          </form>
+                  {/* Employee List */}
+                  <Col xs={12} md={6} lg={4}>
+                    <label>Employee List:</label>
+                    <select
+                      {...register("employeeId", { required: true })}
+                      className="form-select"
+                    >
+                      <option value="">Select Employee</option>
+                      {filteredEmployeeList.map((employee) => (
+                        <option key={employee._id} value={employee._id}>
+                          {employee.firstname} {employee.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.employeeId && (
+                      <p className="text-danger">
+                        Employee selection is required
+                      </p>
+                    )}
+                  </Col>
+
+                  {/* Category */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Category:</label>
+                      <Controller
+                        name="loanType"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            placeholder="Select Category"
+                            onChange={(value) => field.onChange(value)}
+                            disabled={!selectedEmployeeType}
+                          >
+                            <Option value="">Select Category</Option>
+                            {selectedEmployeeType &&
+                              employeeCategories[selectedEmployeeType]?.map(
+                                (category, index) => (
+                                  <Option key={index} value={category}>
+                                    {category}
+                                  </Option>
+                                )
+                              )}
+                          </Select>
+                        )}
+                      />
+                      {errors.loanType && (
+                        <p className="text-danger">Category is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* Start Date */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">Start Date:</label>
+                      <Controller
+                        name="startDate"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <input
+                            type="date"
+                            {...field}
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      {errors.startDate && (
+                        <p className="text-danger">Start date is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* End Date */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">End Date:</label>
+                      <Controller
+                        name="endDate"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <input
+                            type="date"
+                            {...field}
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      {errors.endDate && (
+                        <p className="text-danger">End date is required</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* Description */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label className="vendorpage_labelCss">
+                        Description:
+                      </label>
+                      <Controller
+                        name="description"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <textarea
+                            {...field}
+                            className="form-control"
+                            placeholder="Task description"
+                          />
+                        )}
+                      />
+                      {errors.description && (
+                        <p className="text-danger">Description is required</p>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col className="px-2 py-2">
+                    <Button type="submit" variant="primary">
+                      Submit
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+            </div>
+          </div>
         </div>
+        <ToastContainer />
       </div>
-    </div>
-    </div>
     </div>
   );
 }
