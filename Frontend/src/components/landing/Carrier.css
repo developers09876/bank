@@ -143,15 +143,12 @@ select {
   .career-intro h1 {
     font-size: 32px;
   }
-
   .career-intro p {
     font-size: 16px;
   }
-
   h3 {
     font-size: 30px;
   }
-
   .job-role {
     font-size: 14px;
   }
@@ -159,7 +156,6 @@ select {
   .job-mini {
     font-size: 13px;
   }
-
   .applybtn {
     font-size: 14px;
   }
@@ -177,7 +173,6 @@ select {
   .career-intro h1 {
     font-size: 25px;
   }
-
   .career-intro p {
     font-size: 18px;
   }
@@ -193,7 +188,6 @@ select {
   .job-role {
     font-size: 15px;
   }
-
   .job-mini {
     font-size: 15px;
   }
@@ -214,8 +208,6 @@ select {
     font-size: 20px;
    
   }
-
-
 }
 
 /* Mobile View (320px) */
