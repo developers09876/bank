@@ -149,8 +149,8 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
               </Tag>
             </div>
           </div>
-          <Row className="px-4 py-3">
-            <Col>
+          <Row className="px-2 py-4">
+            {/* <Col>
               <Card>
                 <Row>
                   <Col
@@ -177,7 +177,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
                           borderRadius: "50%",
                           border: "6px solid #80808040",
                         }}
-                      />
+                      /> 
                     </div>
                     <p>
                       {record.firstname} {record.lastname}
@@ -211,9 +211,31 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
                   </Col>
                 </Row>
               </Card>
+            </Col> */}
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Personal Details">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Name">
+                    {record.firstname} {record.lastname}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Email Id">
+                    {record.email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Contact ">
+                    {record.contactNumber}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Adhaar Number">
+                    {record.aadhar}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="PanCard Number">
+                    {record.panno}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="GST Number">
+                    {record.gst}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
             </Col>
-          </Row>
-          <Row className="px-2">
             <Col lg={12} md={12}>
               <Card
                 style={{ width: "100%" }}
@@ -245,8 +267,6 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
                 </Descriptions>
               </Card>
             </Col>
-          </Row>
-          <Row>
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Insurance Status">
                 <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
@@ -273,7 +293,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2 py-2" style={{ textAlign: "-webkit-center" }}>
             <h5>
               <b>Task Details:</b>
             </h5>
@@ -305,7 +325,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2 py-3" style={{ textAlign: "-webkit-center" }}>
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Reminders">
                 <Descriptions column={{ xl: 3, lg: 3, xs: 1, md: 1, sm: 1 }}>

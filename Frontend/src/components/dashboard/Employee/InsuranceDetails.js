@@ -2,6 +2,11 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import "../../dashboard/user/LoanDetails.css";
 
 const InsuranceDetails = ({ collapsed }) => {
@@ -18,8 +23,45 @@ const InsuranceDetails = ({ collapsed }) => {
             <center>
               <h3>Insurance Details</h3>
             </center>
+            <div className="px-2" style={{ textAlign: "end" }}>
+              <Tag
+                icon={
+                  record.status === "Pending" ? (
+                    <ClockCircleOutlined />
+                  ) : record.status === "2" ? (
+                    <CloseCircleOutlined />
+                  ) : record.status === "1" ? (
+                    <CheckCircleOutlined />
+                  ) : null
+                }
+                color={
+                  record.status === "Pending"
+                    ? "orange"
+                    : record.status === "2"
+                    ? "red"
+                    : record.status === "1"
+                    ? "green"
+                    : null
+                }
+                className={`status-tag ${
+                  record.status === "1"
+                    ? "approved"
+                    : record.status === "2"
+                    ? "rejected"
+                    : "pending"
+                }`}
+              >
+                {record.status === "1" ? (
+                  <p style={{ display: "inline" }}>Approved</p>
+                ) : record.status === "2" ? (
+                  <p style={{ display: "inline" }}>Rejected</p>
+                ) : (
+                  <p style={{ display: "inline" }}>Pending</p>
+                )}
+              </Tag>
+            </div>
           </div>
-          <Row className="px-4 py-3">
+          {/* <Row className="px-4 py-3">
             <Col>
               <Card>
                 <Row>
@@ -55,33 +97,7 @@ const InsuranceDetails = ({ collapsed }) => {
                     <p>{record.email}</p>
                     <p>{record.contactNumber}</p>
                   </Col>
-                  {/* <Col 
-                    className="firstrowcol px-1 py-1"
-                    lg={12}
-                    style={{
-                      height: "auto",
-                      alignContent: "center",
-                      textAlign: "-webkit-center",
-                    }}>
-                    <Descriptions
-                        size="small"
-                        // layout="vertical"
-                        style={{
-                          paddingBottom: "10px",
-                        }}
-                        column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
-                      >
-                       <Descriptions.Item label="Adhaar Number">
-                      {record.aadhar}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="PanCard Number">
-                      {record.panno}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="GST Number">
-                      {record.gst}
-                    </Descriptions.Item>
-                    </Descriptions>
-                    </Col> */}
+                  
 
                   <Col lg={9} className="px-3 py-1">
                     <center>
@@ -109,40 +125,39 @@ const InsuranceDetails = ({ collapsed }) => {
                 </Row>
               </Card>
             </Col>
-          </Row>
-          <Row className="px-2">
-            {/* <Col lg={12} md={12}>
-                <Card className="loandetail-custom-card" title="Personal Details">
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+          </Row> */}
+          <Row className="px-4 py-4">
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Personal Details">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="Name">
-                      {record.firstname}{" "}{record.lastname}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Email Id">
-                      {record.email}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Adhaar Number">
-                      {record.aadhar}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="PanCard Number">
-                      {record.panno}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="GST Number">
-                      {record.gst}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Contact ">
-                      {record.contactNumber}
-                    </Descriptions.Item>
-                    
-                  </Descriptions>
-                </Card>
-              </Col> */}
+                    {record.firstname} {record.lastname}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Email Id">
+                    {record.email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Contact ">
+                    {record.contactNumber}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Adhaar Number">
+                    {record.aadhar}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="PanCard Number">
+                    {record.panno}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="GST Number">
+                    {record.gst}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            </Col>
             <Col lg={12} md={12}>
               <Card
                 style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Insurance Details"
               >
-                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="Policy Type">
                     {record.PolicyType}
                   </Descriptions.Item>
@@ -164,6 +179,31 @@ const InsuranceDetails = ({ collapsed }) => {
                   <Descriptions.Item label="Annual Income">
                     {record.annualIncome}
                   </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            </Col>
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Insurance Status">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Approval Status">
+                    {record.status === "1" ? (
+                      <p color="green">Approved</p>
+                    ) : record.status === "2" ? (
+                      <p color="red">Rejected</p>
+                    ) : (
+                      <p color="orange">Pending</p>
+                    )}
+                  </Descriptions.Item>
+                  {record.status === "2" && (
+                    <Descriptions.Item label="Reason for Rejection">
+                      {record.rejectionReason}
+                    </Descriptions.Item>
+                  )}
+                  {record.status === "Pending" && record.pendingReason && (
+                    <Descriptions.Item label="Reason for Hold">
+                      {record.pendingReason}
+                    </Descriptions.Item>
+                  )}
                 </Descriptions>
               </Card>
             </Col>

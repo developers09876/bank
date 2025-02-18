@@ -333,8 +333,8 @@ function InsuranceManagementDetails({ collapsed }) {
               </Tag>
             </div>
           </div>
-          <Row className="px-4 py-3">
-            <Col>
+          <Row className="px-2 py-2">
+            {/* <Col>
               <Card>
                 <Row>
                   <Col
@@ -396,9 +396,33 @@ function InsuranceManagementDetails({ collapsed }) {
                   </Col>
                 </Row>
               </Card>
+            </Col> */}
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Personal Details">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Name">
+                    {record.firstname} {record.lastname}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Email Id">
+                    {record.email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Contact ">
+                    {record.contactNumber}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Adhaar Number">
+                    {record.aadhar}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="PanCard Number">
+                    {record.panno}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="GST Number">
+                    {record.gst}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
             </Col>
           </Row>
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card
                 className="loandetail-custom-card"
@@ -431,7 +455,7 @@ function InsuranceManagementDetails({ collapsed }) {
             </Col>
           </Row>
 
-          <Row>
+          <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Insurance Status">
                 <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
@@ -460,10 +484,12 @@ function InsuranceManagementDetails({ collapsed }) {
           </Row>
 
           {record.employeeId && (
-            <Row style={{ textAlign: "-webkit-center" }}>
-              <h5>
-                <b>Task Details:</b>
-              </h5>
+            <Row className="px-2 py-2">
+              <center>
+                <h5>
+                  <b>Task Details:</b>
+                </h5>
+              </center>
               <Col lg={12} md={12}>
                 <Card
                   className="loandetail-custom-card"
@@ -495,7 +521,7 @@ function InsuranceManagementDetails({ collapsed }) {
               </Col>
             </Row>
           )}
-          <Row style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Reminders">
                 <Descriptions column={{ xl: 3, lg: 3, xs: 1, md: 1, sm: 1 }}>
