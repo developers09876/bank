@@ -89,17 +89,12 @@ const Feedback = ({ collapsed }) => {
           .main-content {
             width: 100%;
             padding: 15px;
-            box-sizing: border-box;
+            
           }
-
           .inputcolumn-ourProfile2 {
             width: 95%!important;
             height: 50px;
             font-size: 14px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
           }
 
           .button1 {
@@ -134,6 +129,7 @@ const Feedback = ({ collapsed }) => {
         @media (max-width: 375px) {
           .inputcolumn-ourProfile2 {
             height: 45px;
+            width: 95%!important;
             font-size: 13px;
           }
 
