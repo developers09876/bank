@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Space,Modal , Row, Col} from "antd";
+import { Table, Input, Space, Modal, Row, Col, Descriptions } from "antd";
 import { useForm } from "react-hook-form";
 import { SearchOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
@@ -21,11 +21,12 @@ function ContactUs() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
-
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/contactus/getallcontactus");
+      const response = await axios.get(
+        "http://localhost:5000/contactus/getallcontactus"
+      );
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
@@ -51,7 +52,6 @@ function ContactUs() {
   }, []);
 
   const handleSearch = (e) => setSearchText(e.target.value);
-
 
   const handleTableChange = (pagination) => {
     setCurrentPage(pagination.current);
@@ -120,109 +120,86 @@ function ContactUs() {
 
   return (
     <div style={{ marginTop: "50px", width: "100%" }}>
-    <Container style={{ width: "90%" }}>
-    <div style={{ width: "100%" }}>
-      <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
-        Contact Us
-      </h4>
-      <br />
-      <div style={{ justifyContent: "space-between" }}>
-      <Space style={{ marginBottom: 16 }}className="filter-actions">
-        <Input
-          placeholder="Search"
-          style={{ width: 200 }}
-          prefix={<SearchOutlined />}
-          value={searchText}
-          onChange={handleSearch}
-        />
-      </Space>
-    
-      <Table
-        dataSource={paginatedData}
-        columns={columns}
-        loading={loading}
-        pagination={{
-          current: currentPage,
-          pageSize: pageSize,
-          total: filteredData.length,
-          showSizeChanger: true,
-        }}
-        onChange={handleTableChange}
-        rowKey="id"
-      />
-       </div>
-       </div>
-    </Container>
+      <Container>
+        <div style={{ width: "100%" }}>
+          <h4
+            style={{
+              textAlign: "center",
+              color: "#00397f",
+              marginTop: "15px",
+            }}
+          >
+            <b>Contact Us</b>
+          </h4>
+          <br />
+          <div style={{ justifyContent: "space-between" }}>
+            <Space style={{ marginBottom: 16 }} className="filter-actions">
+              <Input
+                placeholder="Search"
+                style={{ width: 200 }}
+                prefix={<SearchOutlined />}
+                value={searchText}
+                onChange={handleSearch}
+              />
+            </Space>
+            <div className="w-full px-2 mt-1">
+              <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+                <Table
+                  dataSource={paginatedData}
+                  columns={columns}
+                  scroll={{ x: "max-content" }} // Enables horizontal & vertical scrolling
+                  loading={loading}
+                  pagination={{
+                    current: currentPage,
+                    pageSize: pageSize,
+                    total: filteredData.length,
+                    showSizeChanger: true,
+                  }}
+                  onChange={handleTableChange}
+                  rowKey="id"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
 
-    <Modal
+      <Modal
         title="Contact Details"
         visible={isModalVisible}
         onCancel={handleCloseModal}
         footer={[
-          <button key="close" className="btn btn-secondary" onClick={handleCloseModal}>
+          <button
+            key="close"
+            className="btn btn-secondary"
+            onClick={handleCloseModal}
+          >
             Close
           </button>,
         ]}
       >
         {selectedRecord && (
-          <div>
-          <Row>
-            <Col span={10}>
-              <p style={{ fontSize: "15px" }}>
-                <strong>Email</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px" }}>:</p>
-            </Col>
-            <Col span={12}>
-              <p style={{ fontSize: "15px" }}>{selectedRecord.email}</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
-              <p style={{ fontSize: "15px" }}>
-                <strong>Phone Number</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px" }}>:</p>
-            </Col>
-            <Col span={12}>
-              <p style={{ fontSize: "15px" }}>{selectedRecord.phonenumber}</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
-              <p style={{ fontSize: "15px" }}>
-                <strong>Subject</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px" }}>:</p>
-            </Col>
-            <Col span={12}>
-              <p style={{ fontSize: "15px" }}>{selectedRecord.subject}</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
-              <p style={{ fontSize: "15px" }}>
-                <strong>Message</strong>
-              </p>
-            </Col>
-            <Col span={2}>
-              <p style={{ fontSize: "15px" }}>:</p>
-            </Col>
-            <Col span={12}>
-              <p style={{ fontSize: "15px" }}>{selectedRecord.message}</p>
-            </Col>
-          </Row>
-        </div>
+          <Descriptions
+            // title="Contact Details"
+            // bordered
+            column={{ lg: 1, md: 1, sm: 1 }}
+          >
+            <Descriptions.Item label="Email">
+              {selectedRecord.email}
+            </Descriptions.Item>
+            <Descriptions.Item label="Phone Number">
+              {selectedRecord.phonenumber}
+            </Descriptions.Item>
+            <Descriptions.Item label="Subject">
+              {selectedRecord.subject}
+            </Descriptions.Item>
+            <Descriptions.Item label="Message">
+              {selectedRecord.message}
+            </Descriptions.Item>
+          </Descriptions>
         )}
       </Modal>
-  </div>
-
+    </div>
   );
 }
 

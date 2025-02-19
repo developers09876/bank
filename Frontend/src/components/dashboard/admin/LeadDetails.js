@@ -279,6 +279,7 @@ function LeadDetails({ collapsed }) {
             </Col> */}
                 <Col lg={12} md={12}>
                   <Card
+                    style={{ width: "100%" }}
                     className="loandetail-custom-card"
                     title="Personal Details"
                   >
@@ -345,7 +346,7 @@ function LeadDetails({ collapsed }) {
                     title="Reminders"
                   >
                     <Descriptions
-                      column={{ xl: 3, lg: 3, xs: 1, md: 2, sm: 1 }}
+                      column={{ xl: 3, lg: 3, xs: 1, md: 1, sm: 1 }}
                     >
                       {record.addremarks && record.addremarks.length > 0 ? (
                         record.addremarks.map((remark, index) => (
@@ -401,6 +402,7 @@ function LeadDetails({ collapsed }) {
                           <Select
                             {...field}
                             className="inputcolumn_drp"
+                            style={{ width: "100%" }}
                             onChange={(value) => {
                               field.onChange(value);
                               setSelectedEmployeeType(value);
@@ -455,6 +457,7 @@ function LeadDetails({ collapsed }) {
                           <Select
                             {...field}
                             className="inputcolumn_drp"
+                            style={{ width: "100%" }}
                             placeholder="Select Category"
                             onChange={(value) => field.onChange(value)}
                             disabled={!selectedEmployeeType}

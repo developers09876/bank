@@ -515,7 +515,6 @@ function TaskManagementDetails({ collapsed }) {
             </h5>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Row>
-                {/* Employee Type */}
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">
@@ -532,6 +531,7 @@ function TaskManagementDetails({ collapsed }) {
                           {...field}
                           disabled
                           className="inputcolumn_drp"
+                          style={{ width: "100%" }}
                           onChange={(value) => {
                             field.onChange(value);
                             setSelectedEmployeeType(value);
@@ -552,7 +552,6 @@ function TaskManagementDetails({ collapsed }) {
                   </div>
                 </Col>
 
-                {/* Employee List */}
                 <Col xs={12} md={6} lg={4}>
                   <label>Employee List:</label>
                   <select
@@ -573,7 +572,6 @@ function TaskManagementDetails({ collapsed }) {
                   )}
                 </Col>
 
-                {/* Category */}
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">Category:</label>
@@ -585,6 +583,7 @@ function TaskManagementDetails({ collapsed }) {
                         <Select
                           {...field}
                           className="inputcolumn_drp"
+                          style={{ width: "100%" }}
                           placeholder="Select Category"
                           onChange={(value) => field.onChange(value)}
                           disabled={!selectedEmployeeType}
@@ -607,7 +606,6 @@ function TaskManagementDetails({ collapsed }) {
                   </div>
                 </Col>
 
-                {/* Start Date */}
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">Start Date:</label>
@@ -629,7 +627,6 @@ function TaskManagementDetails({ collapsed }) {
                   </div>
                 </Col>
 
-                {/* End Date */}
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">End Date:</label>
@@ -651,7 +648,6 @@ function TaskManagementDetails({ collapsed }) {
                   </div>
                 </Col>
 
-                {/* Description */}
                 <Col xs={12} md={6} lg={4}>
                   <div>
                     <label className="vendorpage_labelCss">Description:</label>
@@ -683,165 +679,162 @@ function TaskManagementDetails({ collapsed }) {
               </Row>
             </form>
           </div>
-          <Row className="py-3">
-            <Col lg={12} md={12}>
-              <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
-                <Space>
-                  {record && record.status === "Pending" && (
+
+          <Row className="py-4" style={{ justifySelf: "center" }}>
+            <Space>
+              {record && record.status === "Pending" && (
+                <Button
+                  type="primary"
+                  style={{ background: "#4096ff", color: "#fff" }}
+                  onClick={handleApprove}
+                >
+                  Approve
+                </Button>
+              )}
+
+              {record && record.status === "Pending" && (
+                <>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => setIsRejectModalVisible(true)}
+                  >
+                    Reject
+                  </Button>
+                </>
+              )}
+
+              {record &&
+                record.status === "Pending" &&
+                !record.pendingReason && (
+                  <Button
+                    color="yellow"
+                    variant="solid"
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    Hold
+                  </Button>
+                )}
+              {record &&
+                record.status === "Pending" &&
+                record.pendingReason && (
+                  <Button
+                    color="yellow"
+                    variant="solid"
+                    disabled
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    On Hold
+                  </Button>
+                )}
+
+              <Modal
+                title="Rejection Confirmation"
+                visible={isRejectModalVisible}
+                onCancel={() => setIsRejectModalVisible(false)}
+                footer={null}
+              >
+                <div>
+                  <p>Please provide a reason for rejection:</p>
+                  <Input.TextArea
+                    rows={3}
+                    placeholder="Enter rejection reason"
+                    value={rejectionReason}
+                    onChange={handleRejectionReasonChange}
+                  />
+                  <Space style={{ marginTop: "20px" }}>
                     <Button
                       type="primary"
-                      style={{ background: "#4096ff", color: "#fff" }}
-                      onClick={handleApprove}
+                      onClick={handleReject}
+                      disabled={!rejectionReason.trim()}
                     >
-                      Approve
+                      Submit
                     </Button>
-                  )}
+                    <Button variant="secondary" onClick={handleReset}>
+                      Reset
+                    </Button>
+                  </Space>
+                </div>
+              </Modal>
 
-                  {record && record.status === "Pending" && (
-                    <>
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={() => setIsRejectModalVisible(true)}
-                      >
-                        Reject
-                      </Button>
-                    </>
-                  )}
+              <Modal
+                title="Pending Confirmation"
+                visible={isPendingtModalVisible}
+                onCancel={() => setIsPendingModalVisible(false)}
+                footer={null}
+              >
+                <div>
+                  <p>
+                    Please provide a reason for holding the Insurance
+                    application:
+                  </p>
+                  <Input.TextArea
+                    rows={3}
+                    placeholder="Enter Pending reason"
+                    value={pendingReason}
+                    onChange={handlePendingReasonChange}
+                  />
+                  <Space style={{ marginTop: "20px" }}>
+                    <Button
+                      type="primary"
+                      onClick={handlePending}
+                      disabled={!pendingReason.trim()}
+                    >
+                      Submit
+                    </Button>
+                    <Button variant="secondary" onClick={handleReset}>
+                      Reset
+                    </Button>
+                  </Space>
+                </div>
+              </Modal>
 
-                  {record &&
-                    record.status === "Pending" &&
-                    !record.pendingReason && (
-                      <Button
-                        color="yellow"
-                        variant="solid"
-                        onClick={() => setIsPendingModalVisible(true)}
-                      >
-                        Hold
-                      </Button>
-                    )}
-                  {record &&
-                    record.status === "Pending" &&
-                    record.pendingReason && (
-                      <Button
-                        color="yellow"
-                        variant="solid"
-                        disabled
-                        onClick={() => setIsPendingModalVisible(true)}
-                      >
-                        On Hold
-                      </Button>
-                    )}
-
-                  <Modal
-                    title="Rejection Confirmation"
-                    visible={isRejectModalVisible}
-                    onCancel={() => setIsRejectModalVisible(false)}
-                    footer={null}
+              {record && record.status === "1" && (
+                <>
+                  <Button type="primary" disabled>
+                    Approved
+                  </Button>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => setIsRejectModalVisible(true)}
                   >
-                    <div>
-                      <p>Please provide a reason for rejection:</p>
-                      <Input.TextArea
-                        rows={3}
-                        placeholder="Enter rejection reason"
-                        value={rejectionReason}
-                        onChange={handleRejectionReasonChange}
-                      />
-                      <Space style={{ marginTop: "20px" }}>
-                        <Button
-                          type="primary"
-                          onClick={handleReject}
-                          disabled={!rejectionReason.trim()}
-                        >
-                          Submit
-                        </Button>
-                        <Button variant="secondary" onClick={handleReset}>
-                          Reset
-                        </Button>
-                      </Space>
-                    </div>
-                  </Modal>
-
-                  <Modal
-                    title="Pending Confirmation"
-                    visible={isPendingtModalVisible}
-                    onCancel={() => setIsPendingModalVisible(false)}
-                    footer={null}
+                    Reject
+                  </Button>
+                  <Button
+                    color="yellow"
+                    variant="solid"
+                    onClick={() => setIsPendingModalVisible(true)}
                   >
-                    <div>
-                      <p>
-                        Please provide a reason for holding the Insurance
-                        application:
-                      </p>
-                      <Input.TextArea
-                        rows={3}
-                        placeholder="Enter Pending reason"
-                        value={pendingReason}
-                        onChange={handlePendingReasonChange}
-                      />
-                      <Space style={{ marginTop: "20px" }}>
-                        <Button
-                          type="primary"
-                          onClick={handlePending}
-                          disabled={!pendingReason.trim()}
-                        >
-                          Submit
-                        </Button>
-                        <Button variant="secondary" onClick={handleReset}>
-                          Reset
-                        </Button>
-                      </Space>
-                    </div>
-                  </Modal>
+                    Hold
+                  </Button>
+                </>
+              )}
 
-                  {record && record.status === "1" && (
-                    <>
-                      <Button type="primary" disabled>
-                        Approved
-                      </Button>
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={() => setIsRejectModalVisible(true)}
-                      >
-                        Reject
-                      </Button>
-                      <Button
-                        color="yellow"
-                        variant="solid"
-                        onClick={() => setIsPendingModalVisible(true)}
-                      >
-                        Hold
-                      </Button>
-                    </>
-                  )}
-
-                  {record && record.status === "2" && (
-                    <>
-                      <Button
-                        type="primary"
-                        style={{ background: "#4096ff", color: "#fff" }}
-                        onClick={handleApprove}
-                      >
-                        Approve
-                      </Button>
-                      <Button type="primary" danger disabled>
-                        Rejected
-                      </Button>
-                      <Button
-                        color="yellow"
-                        variant="solid"
-                        onClick={() => setIsPendingModalVisible(true)}
-                      >
-                        Hold
-                      </Button>
-                    </>
-                  )}
-                </Space>
-              </Row>
-              {/* </Card> */}
-            </Col>
+              {record && record.status === "2" && (
+                <>
+                  <Button
+                    type="primary"
+                    style={{ background: "#4096ff", color: "#fff" }}
+                    onClick={handleApprove}
+                  >
+                    Approve
+                  </Button>
+                  <Button type="primary" danger disabled>
+                    Rejected
+                  </Button>
+                  <Button
+                    color="yellow"
+                    variant="solid"
+                    onClick={() => setIsPendingModalVisible(true)}
+                  >
+                    Hold
+                  </Button>
+                </>
+              )}
+            </Space>
           </Row>
+
           <ToastContainer />
         </div>
       </div>

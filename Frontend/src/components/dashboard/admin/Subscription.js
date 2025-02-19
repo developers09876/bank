@@ -24,11 +24,17 @@ function Subscription() {
     };
     try {
       if (fetchedData.length > 0) {
-        const putresponse = await Api.put(`/subscription/update/${fetchedData[0]._id}`,details);
+        const putresponse = await Api.put(
+          `/subscription/update/${fetchedData[0]._id}`,
+          details
+        );
         console.log("firstresponse", putresponse);
         toast.success("Price updated successfully");
       } else {
-        const response = await Api.post( "/subscription/createSubscription",details );
+        const response = await Api.post(
+          "/subscription/createSubscription",
+          details
+        );
         console.log("response.data", response.data.data);
         toast.success("Price created successfully");
       }
@@ -38,36 +44,41 @@ function Subscription() {
     }
   };
 
- 
-    const fetchSubscriptionPlan = async () => {
-      try {
-        const response = await Api.get("/subscription/getall");
-        setfetchedData(response.data);
-        reset(response.data[0]);
-        console.log("fetchedData", response.data);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    
-    useEffect(() => {
+  const fetchSubscriptionPlan = async () => {
+    try {
+      const response = await Api.get("/subscription/getall");
+      setfetchedData(response.data);
+      reset(response.data[0]);
+      console.log("fetchedData", response.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
     fetchSubscriptionPlan();
   }, [reset]);
 
   return (
-    <div style={{ marginTop: "50px", width: "100%" }}>
-      <Container style={{ width: "90%" }}>
+    <div style={{ width: "100%" }}>
+      <Container style={{ marginTop: "6%", width: "90%" }}>
         <div style={{ width: "100%" }}>
-          <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
-            Subscription Price
+          <h4
+            style={{
+              textAlign: "center",
+              color: "#00397f",
+              marginTop: "15px",
+            }}
+          >
+            <b>Subscription Price</b>
           </h4>
           <br />
           <div style={{ justifyContent: "space-between" }}>
             <form>
-              <Row className="px-2 py-3">
+              <Row className="px-2 py-2">
                 <Col className="px-1 py-2">
                   <label className="vendorpage_labelCss">Price</label>
-                  <br />
+                  {/* <br /> */}
                   <input
                     type="number"
                     className="inputcolumn-ourProfile"
@@ -96,7 +107,10 @@ function Subscription() {
                 </Col>
               </Row>
               <Row>
-                <div className="upgrade_column mb-3">
+                <div
+                  className="upgrade_column mb-3"
+                  style={{ flexDirection: "unset" }}
+                >
                   <Button
                     className="button1 mx-2"
                     type="submit"
