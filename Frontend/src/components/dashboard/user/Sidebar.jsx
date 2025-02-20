@@ -92,7 +92,7 @@ function Sidebar({ collapsed }) {
             // marginRight:"100px"
           }}
         >
-          <FaUserCircle style={{ fontSize: "24px", color: "#1890ff" }} />
+          <FaUserCircle style={{ fontSize: "28px", color: "#1890ff" }} />
           Welcome, {firstname}!
         </h3>
 
