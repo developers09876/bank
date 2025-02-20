@@ -18,6 +18,7 @@ function LeadDetails({ collapsed }) {
   const [categories, setCategories] = useState([]);
   const [assignValue, setAssignValue] = useState([]);
   const [isApproved, setIsApproved] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); 
   console.log("isApproved", isApproved);
   console.log("assignValue", assignValue);
   const { Option } = Select;
@@ -385,6 +386,15 @@ function LeadDetails({ collapsed }) {
               <h5>
                 <b>Assign To</b>
               </h5>
+              {assignValue.employeeId && !isEditing ? (
+    // Display assigned employee if lead is assigned and not in edit mode
+    <div className="alert alert-info d-flex justify-content-between align-items-center">
+      <b>This lead is assigned to:</b> {assignValue.firstname}
+      <Button variant="warning" size="sm" onClick={() => setIsEditing(true)}>
+        Edit
+      </Button>
+    </div>
+  ) : (
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
                   {/* Employee Type */}
@@ -554,6 +564,7 @@ function LeadDetails({ collapsed }) {
                   </Col>
                 </Row>
               </form>
+               )}
             </div>
           </div>
         </div>
