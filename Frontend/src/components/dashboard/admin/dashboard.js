@@ -46,14 +46,14 @@ const AdminDashboard = () => {
     rejected: 0,
     approved: 0,
   });
-  
+
   const [taxStatusCounts, setTaxStatusCounts] = useState({
     pending: 0,
     rejected: 0,
     approved: 0,
   });
-  
-  console.log('loan', loan)
+
+  console.log("loan", loan);
   const [insurances, setInsurances] = useState();
   const [taxs, setTaxs] = useState();
   const user = "user";
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
     try {
       const response = await axios.get(`http://localhost:5000/loanform/getall`);
       // console.log("response.data", response.data);
-      setLoan(response.data)
+      setLoan(response.data);
       setLoans(response.data.length);
       // console.log("loans", response.data.length);
       const statusCounts = { pending: 0, rejected: 0, completed: 0 };
@@ -100,7 +100,7 @@ const AdminDashboard = () => {
         else if (loan.status === "2") statusCounts.rejected++;
         else if (loan.status === "1") statusCounts.completed++;
       });
-  
+
       setLoanStatusCounts(statusCounts);
     } catch (error) {
       console.log("Error occurs while fetching loans:", error);
@@ -123,7 +123,7 @@ const AdminDashboard = () => {
         else if (insurance.status === "2") statusCounts.rejected++;
         else if (insurance.status === "1") statusCounts.approved++;
       });
-  
+
       setInsuranceStatusCounts(statusCounts);
     } catch (error) {
       console.log("Error occurs while fetching insurances:", error);
@@ -147,7 +147,7 @@ const AdminDashboard = () => {
         else if (tax.status === "2") statusCounts.rejected++;
         else if (tax.status === "1") statusCounts.approved++;
       });
-  
+
       setTaxStatusCounts(statusCounts);
     } catch (error) {
       console.log("Error occurs while fetching taxes:", error);
@@ -256,15 +256,18 @@ const AdminDashboard = () => {
         </header>
 
         <Row className="admin-dashboard-content">
-          <Col md={6} className="admin-chart-container">
-            <div className="admin-chart-wrapper">
+          <Col md={12} lg={6} className="admin-chart-container px-2 py-3">
+            <div
+              className="admin-chart-wrapper"
+              style={{ justifyItems: "center" }}
+            >
               <Bar data={data} options={options} />
             </div>
           </Col>
 
-          <Col md={6}>
+          <Col sm={12} md={12} lg={6} className=" px-2 py-3">
             <Row className="admin-stats-row">
-              <Col md={6} lg={6}>
+              <Col sm={12} md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
                   onClick={() => navigate("/admin/userlist")}
@@ -277,7 +280,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
 
-              <Col md={6} lg={6}>
+              <Col sm={12} md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
                   onClick={() => navigate("/admin/loancards")}
@@ -290,7 +293,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
 
-              <Col md={6} lg={6}>
+              <Col sm={12} md={6} lg={6}>
                 <Card
                   className="admin-stat-card"
                   onClick={() => navigate("/admin/employeelist")}
@@ -303,7 +306,7 @@ const AdminDashboard = () => {
                 </Card>
               </Col>
 
-              <Col md={6} lg={6}>
+              <Col sm={12} md={6} lg={6}>
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaFileInvoice className="admin-stat-icon" />
@@ -312,7 +315,7 @@ const AdminDashboard = () => {
                   </Card.Body>
                 </Card>
               </Col>
-              <Col md={6} lg={6}>
+              <Col sm={12} md={6} lg={6}>
                 <Card className="admin-stat-card">
                   <Card.Body>
                     <FaFileInvoice className="admin-stat-icon" />

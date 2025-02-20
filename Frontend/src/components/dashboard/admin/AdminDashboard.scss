@@ -1,4 +1,8 @@
 // Base container
+.admin-dashboard-content {
+  justify-items: center;
+  margin: 0;
+}
 .admin-dashboard-container {
   display: flex;
   overflow: hidden;
@@ -72,5 +76,12 @@
         }
       }
     }
+  }
+}
+@media screen and (max-width: 320px)  {
+  .admin-dashboard-content {
+    justify-items: center;
+    width: 99%;
+    margin: 1%;
   }
 }

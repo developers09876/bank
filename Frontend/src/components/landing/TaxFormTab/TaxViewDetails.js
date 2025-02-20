@@ -77,8 +77,8 @@ const TaxViewDetails = ({ collapsed }) => {
               </Tag>
             </div>
           </div>
-          <Row className="px-4 py-3">
-            <Col>
+          <Row className="px-2 py-2">
+            {/* <Col>
               <Card>
                 <Row>
                   <Col
@@ -112,33 +112,7 @@ const TaxViewDetails = ({ collapsed }) => {
                     <p>{record.email}</p>
                     <p>{record.contactNumber}</p>
                   </Col>
-                  {/* <Col 
-                    className="firstrowcol px-1 py-1"
-                    lg={12}
-                    style={{
-                      height: "auto",
-                      alignContent: "center",
-                      textAlign: "-webkit-center",
-                    }}>
-                    <Descriptions
-                        size="small"
-                        // layout="vertical"
-                        style={{
-                          paddingBottom: "10px",
-                        }}
-                        column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
-                      >
-                       <Descriptions.Item label="Adhaar Number">
-                      {record.aadhar}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="PanCard Number">
-                      {record.panno}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="GST Number">
-                      {record.gst}
-                    </Descriptions.Item>
-                    </Descriptions>
-                    </Col> */}
+                  
 
                   <Col lg={9} className="px-3 py-1">
                     <center>
@@ -165,9 +139,33 @@ const TaxViewDetails = ({ collapsed }) => {
                   </Col>
                 </Row>
               </Card>
+            </Col> */}
+            <Col lg={12} md={12}>
+              <Card className="loandetail-custom-card" title="Personal Details">
+                <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Name">
+                    {record.firstname} {record.lastname}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Email Id">
+                    {record.email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Contact ">
+                    {record.contactNumber}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Adhaar Number">
+                    {record.aadhar}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="PanCard Number">
+                    {record.panno}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="GST Number">
+                    {record.gst}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
             </Col>
           </Row>
-          <Row>
+          <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Tax Details">
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
@@ -190,7 +188,7 @@ const TaxViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row>
+          <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Tax Status">
                 <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>

@@ -89,19 +89,22 @@ const UserList = ({ setAuth }) => {
     <div className="w-full border bg-white shadow-md rounded mt-5 border-t-4 border-t-red-500">
       <Sidebar />
       <ToastContainer />
-      <div className="py-5 px-5">
+      <div className="py-5 ">
         {/* TITLE */}
         <div className="flex items-center justify-between border-b-2">
           <h3 className="text-lg font-medium text-gray px-1">Users List</h3>
         </div>
         {/* INFO */}
         <div className="w-full px-4 mt-5">
-          <Table
-            columns={columns}
-            dataSource={employees}
-            rowKey="_id"
-            pagination={{ pageSize: 5 }}
-          />
+          <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+            <Table
+              columns={columns}
+              dataSource={employees}
+              rowKey="_id"
+              pagination={{ pageSize: 5 }}
+              scroll={{ x: "max-content" }} // Enables horizontal & vertical scrolling
+            />
+          </div>
         </div>
       </div>
     </div>

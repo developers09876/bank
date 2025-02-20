@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
+import {
+  Table,
+  Input,
+  Space,
+  Pagination,
+  Button,
+  Modal,
+  Row,
+  Col,
+  Descriptions,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 const JobRequest = ({ collapsed }) => {
@@ -110,7 +120,7 @@ const JobRequest = ({ collapsed }) => {
       dataIndex: "email",
       key: "email",
     },
-   
+
     {
       title: "Action",
       dataIndex: "action",
@@ -147,7 +157,16 @@ const JobRequest = ({ collapsed }) => {
       <div
         className={collapsed === true ? "main-content.open" : "main-content"}
       >
-        <Space style={{ marginBottom: 16 }} className="filter-actions">
+        <h4
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+            color: "#00397f",
+          }}
+        >
+          <b>Job Requests</b>
+        </h4>
+        <Space style={{ margin: "10px" }} className="filter-actions">
           <Input
             placeholder="Search"
             value={searchText}
@@ -156,14 +175,18 @@ const JobRequest = ({ collapsed }) => {
             prefix={<SearchOutlined />}
           />
         </Space>
-
-        <Table
-          dataSource={getPaginatedData()}
-          columns={columns}
-          pagination={false}
-          className="loan-table"
-          rowKey="_id"
-        />
+        <div className="w-full px-2 mt-3">
+          <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+            <Table
+              dataSource={getPaginatedData()}
+              columns={columns}
+              pagination={false}
+              className="loan-table"
+              rowKey="_id"
+              scroll={{ x: "max-content" }} // Enables horizontal & vertical scrolling
+            />
+          </div>
+        </div>
 
         <Pagination
           current={currentPage}
@@ -188,114 +211,39 @@ const JobRequest = ({ collapsed }) => {
           // }}
         >
           {selectedRecord && (
-            <div>
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Name</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>{selectedRecord.name}</p>
-              </Col>
-            </Row>
-          
-            <Row >
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Applied For</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>{selectedRecord.role}</p>
-              </Col>
-            </Row>
-
-            <Row >
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Job Tittle</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>{selectedRecord.jobTitle}</p>
-              </Col>
-            </Row>
-          
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Email</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>{selectedRecord.email}</p>
-              </Col>
-            </Row>
-          
-            <Row >
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Phone Number</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>{selectedRecord.phone}</p>
-              </Col>
-            </Row>
-          
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Resume</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <a
-                    href={selectedRecord.resume}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: "#1890ff", textDecoration: "underline" }}
-                  >
-                    View
-                  </a>
-                </p>
-              </Col>
-            </Row>
-          
-            <Row>
-              <Col span={10}>
-                <p style={{ fontSize: "15px" }}>
-                  <strong>Status</strong>
-                </p>
-              </Col>
-              <Col span={2}>
-                <p style={{ fontSize: "15px" }}>:</p>
-              </Col>
-              </Row>
-              <Row>
-              <Col span={10}>
+            <Descriptions
+              className="jobrequest-des"
+              // title="Candidate Details"
+              column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
+            >
+              <Descriptions.Item label="Name">
+                {selectedRecord.name}
+              </Descriptions.Item>
+              <Descriptions.Item label="Applied For">
+                {selectedRecord.role}
+              </Descriptions.Item>
+              <Descriptions.Item label="Job Title">
+                {selectedRecord.jobTitle}
+              </Descriptions.Item>
+              <Descriptions.Item label="Email">
+                {selectedRecord.email}
+              </Descriptions.Item>
+              <Descriptions.Item label="Phone Number">
+                {selectedRecord.phone}
+              </Descriptions.Item>
+              <Descriptions.Item label="Resume">
+                <a
+                  href={selectedRecord.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#1890ff", textDecoration: "underline" }}
+                >
+                  View
+                </a>
+              </Descriptions.Item>
+              <Descriptions.Item label="Status">
                 <Space>
-                  {selectedRecord && selectedRecord.status !== "1" && (
+                  {selectedRecord.status !== "1" && (
                     <Button
                       type="primary"
                       style={{ background: "#4096ff", color: "#fff" }}
@@ -304,29 +252,24 @@ const JobRequest = ({ collapsed }) => {
                       Approve
                     </Button>
                   )}
-          
-                  {selectedRecord && selectedRecord.status !== "2" && (
+                  {selectedRecord.status !== "2" && (
                     <Button danger onClick={handleReject}>
                       Reject
                     </Button>
                   )}
-          
-                  {selectedRecord && selectedRecord.status === "1" && (
+                  {selectedRecord.status === "1" && (
                     <Button type="primary" disabled>
                       Approved
                     </Button>
                   )}
-          
-                  {selectedRecord && selectedRecord.status === "2" && (
+                  {selectedRecord.status === "2" && (
                     <Button danger disabled>
                       Rejected
                     </Button>
                   )}
                 </Space>
-              </Col>
-              </Row>
-            </div>
-          
+              </Descriptions.Item>
+            </Descriptions>
           )}
         </Modal>
       </div>

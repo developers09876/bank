@@ -230,3 +230,132 @@ padding-top: 130px;
     color: #666;
   }
    
+@media screen and (max-width: 1024px) {
+  .personal-plan-content h1,
+  .personal-plan-content h3 {
+    width: 100%;
+    margin-left: 0;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .personal-plan-content2 h2 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .personal-plan-content2 h5,
+  .personal-plan-content2 p {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .personal-plan-image {
+    height: 50vh;
+  }
+
+  .personal-plan-container2 {
+    margin-top: 200px;
+    height: auto;
+  }
+
+  .personal-plan-box {
+    height: auto;
+    padding: 20px;
+  }
+
+  .personal-plan-container3 {
+    height: auto;
+    padding: 30px;
+  }
+
+  .benefit-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .benefit-icon {
+    font-size: 3rem;
+  }
+
+  .how-it-works-card {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .personal-plan-container {
+    height: auto;
+    padding-top: 80px;
+  }
+
+  .personal-plan-content h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .personal-plan-content h3 {
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .personal-plan-image {
+    height: auto;
+    width: 100%;
+  }
+
+  .personal-plan-container2 {
+    height: auto;
+    margin-top: 100px;
+    padding: 20px;
+  }
+
+  .personal-plan-content2 {
+    padding-top: 50px;
+    text-align: center;
+  }
+
+  .personal-plan-content2 h2 {
+    font-size: 2rem;
+  }
+
+  .personal-plan-content2 h5 {
+    font-size: 1rem;
+  }
+
+  .personal-plan-box {
+    height: auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .features-list {
+    text-align: left;
+  }
+
+  .apply-now-btn {
+    width: 100%;
+  }
+
+  .personal-plan-container3 {
+    height: auto;
+    padding: 20px;
+  }
+
+  .benefit-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .benefit-icon {
+    font-size: 2.5rem;
+  }
+
+  .how-it-works-card {
+    text-align: center;
+  }
+}
