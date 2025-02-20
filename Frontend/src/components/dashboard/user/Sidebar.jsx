@@ -88,11 +88,12 @@ function Sidebar({ collapsed }) {
             fontSize: "18px",
             fontWeight: "bold",
             color: "#333",
-            marginRight:"100px"
+            textAlign:"center"
+            // marginRight:"100px"
           }}
         >
           <FaUserCircle style={{ fontSize: "24px", color: "#1890ff" }} />
-          Hi, {firstname}!
+          Welcome, {firstname}!
         </h3>
 
         <NavLink to="/user" className="main-nav-style" style={{ marginTop: "50px" }}>
