@@ -184,7 +184,7 @@ function TabsVendor() {
           className="ourProfileParentdiv"
           style={{ backgroundColor: "white", padding: "10px 20px" }}
         >
-          <div style={{ paddingLeft: "10px" }}>
+          <div style={{ paddingLeft: "35px" }}>
             <center>
               {" "}
               <h4 className="pages-title mt-3 mb-5"> User Details</h4>
