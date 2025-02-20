@@ -747,9 +747,8 @@ function LoanForm() {
                       </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
-                      <div>
+                      <div style={{ display: "grid" }}>
                         <label className="vendorpage_labelCss">State</label>
-                        <br />
                         <Controller
                           name="state"
                           control={control}
@@ -823,9 +822,8 @@ function LoanForm() {
                     </Col>
 
                     <Col xs={12} md={6} lg={4}>
-                      <div>
+                      <div style={{ display: "grid" }}>
                         <label className="vendorpage_labelCss">City</label>
-                        <br />
                         <Controller
                           name="city"
                           control={control}
@@ -914,7 +912,7 @@ function LoanForm() {
                   </Row> */}
                 </div>
 
-                <div className="upgrade_column mb-3 mt-3">
+                <div className="upgrade_column mb-3 px-5 mt-3">
                   <Button className="button1" type="submit">
                     Submit
                   </Button>

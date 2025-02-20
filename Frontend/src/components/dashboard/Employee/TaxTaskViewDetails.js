@@ -402,7 +402,7 @@ const TaxTaskViewDetails = ({ collapsed }) => {
                     lg={4}
                     md={6}
                     xs={12}
-                    className="d-flex align-items-center"
+                    className="px-1 py-1 d-flex align-items-center"
                   >
                     {!field.prefilled && remarksFields.length > 1 && (
                       <button

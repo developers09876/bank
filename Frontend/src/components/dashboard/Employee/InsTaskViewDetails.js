@@ -238,7 +238,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
             </Col>
             <Col lg={12} md={12}>
               <Card
-                style={{ width: "100%" }}
+                // style={{ width: "100%" }}
                 className="loandetail-custom-card"
                 title="Insurance Details"
               >
@@ -293,10 +293,12 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row className="px-2 py-2" style={{ textAlign: "-webkit-center" }}>
-            <h5>
-              <b>Task Details:</b>
-            </h5>
+          <Row className="px-2 py-2">
+            <center>
+              <h5>
+                <b>Task Details:</b>
+              </h5>
+            </center>
             <Col lg={12} md={12}>
               <Card
                 className="loandetail-custom-card"
@@ -325,7 +327,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
               </Card>
             </Col>
           </Row>
-          <Row className="px-2 py-3" style={{ textAlign: "-webkit-center" }}>
+          <Row className="px-2 py-3">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Reminders">
                 <Descriptions column={{ xl: 3, lg: 3, xs: 1, md: 1, sm: 1 }}>
@@ -398,7 +400,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
                     lg={4}
                     md={6}
                     xs={12}
-                    className="d-flex align-items-center"
+                    className="px-1 py-1  d-flex align-items-center"
                   >
                     {!field.prefilled && remarksFields.length > 1 && (
                       <button
