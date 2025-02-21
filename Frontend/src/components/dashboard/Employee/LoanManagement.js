@@ -7,15 +7,14 @@ import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { FaPlus } from "react-icons/fa";
 
 const LoanManagements = ({ collapsed }) => {
- 
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  
-  const navigate  =  useNavigate();
+
+  const navigate = useNavigate();
 
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
@@ -27,20 +26,22 @@ const LoanManagements = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      console.log('userId', userId)
-      const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userId}`)
+      console.log("userId", userId);
+      const response = await axios.get(
+        `http://localhost:5000/loanform/getbyid/${userId}`
+      );
       const loans = response.data;
       // const filterbyUserid = loans.filter(item => item.userid === userId);
       // console.log('filterbyUserid', filterbyUserid)
       setLoan(loans);
-      console.log('responseget', loans)
+      console.log("responseget", loans);
     } catch (error) {
       console.log(error);
     }
   };
 
-   const handleViewDetails = (record) => {
-   navigate(`/employee/loandetails/${record._id}`, {state: { record } })
+  const handleViewDetails = (record) => {
+    navigate(`/employee/loandetails/${record._id}`, { state: { record } });
   };
   const handleEdit = (record) => {
     navigate(`/employee/editownloan/${record._id}`, { state: { record } });
@@ -83,7 +84,6 @@ const LoanManagements = ({ collapsed }) => {
       dataIndex: "fullName",
       key: "fullName",
       render: (_, record) => `${record.firstname} ${record.lastname}`,
-
     },
     {
       title: "Phone Number",
@@ -110,24 +110,24 @@ const LoanManagements = ({ collapsed }) => {
       render: (text, record) => {
         return (
           <>
-          <EyeOutlined
-          style={{
-            fontSize: "18px",
-            color: "#4096ff",
-            cursor: "pointer",
-            marginRight: "15px",
-          }}
-          onClick={() => handleViewDetails(record)}
-        />
-        <EditOutlined
-          style={{
-            fontSize: "18px",
-            color: "#ff4d4f",
-            cursor: "pointer",
-          }}
-          onClick={() => handleEdit(record)}
-        />
-      </>
+            <EyeOutlined
+              style={{
+                fontSize: "18px",
+                color: "#4096ff",
+                cursor: "pointer",
+                marginRight: "15px",
+              }}
+              onClick={() => handleViewDetails(record)}
+            />
+            <EditOutlined
+              style={{
+                fontSize: "18px",
+                color: "#ff4d4f",
+                cursor: "pointer",
+              }}
+              onClick={() => handleEdit(record)}
+            />
+          </>
         );
       },
     },
@@ -138,11 +138,23 @@ const LoanManagements = ({ collapsed }) => {
       <div
         className={collapsed === true ? "main-content.open" : "main-content"}
       >
-        <Space style={{
+        <h4
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
+          Loan Management
+        </h4>
+        <Space
+          style={{
             marginBottom: 16,
             display: "flex",
             justifyContent: "space-between",
-          }} className="filter-actions" >
+          }}
+          className="filter-actions"
+        >
           <Input
             placeholder="Search"
             value={searchText}
@@ -150,19 +162,19 @@ const LoanManagements = ({ collapsed }) => {
             style={{ width: 200 }}
             prefix={<SearchOutlined />}
           />
-            <Button
-                      type="primary"
-                      onClick={handleAddLoan}
-                      style={{
-                        display: "inline",
-                        float: "right",
-                        marginRight: "100px",
-                        backgroundColor: "#00397f",
-                      }}
-                    >
-                      <FaPlus style={{ display: "inline", color: "white" }} />
-                      Add New
-                    </Button>
+          <Button
+            type="primary"
+            onClick={handleAddLoan}
+            style={{
+              display: "inline",
+              float: "right",
+              marginRight: "10px",
+              backgroundColor: "#00397f",
+            }}
+          >
+            <FaPlus style={{ display: "inline", color: "white" }} />
+            Add New
+          </Button>
         </Space>
 
         <Table
@@ -183,7 +195,6 @@ const LoanManagements = ({ collapsed }) => {
           }}
           className="pagination-control"
         />
-
       </div>
     </div>
   );

@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams,useLocation, useNavigate } from "react-router-dom";
-import { Row, Col, Button, Descriptions, Card } from "antd";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Button, Descriptions, Card } from "antd";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Api from "../../../Api";
 import axios from "axios";
+import "../user/LoanDetails.css";
+import { Col, Row } from "react-bootstrap";
 
 function LeadDetails({ collapsed }) {
   const userId = localStorage.getItem("id");
-  const { id } = useParams(); 
+  const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   // const { record } = location.state || {};
-   const { state } = useLocation();
-    const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
   const [remarksFields, setRemarksFields] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   console.log("record", record);
   const {
@@ -100,12 +102,14 @@ function LeadDetails({ collapsed }) {
   };
   useEffect(() => {
     fetchLead();
-  }, [id]);  // Fetch lead when ID changes
+  }, [id]); // Fetch lead when ID changes
 
   const fetchLead = async () => {
     setLoading(true);
     try {
-      const response = await Api.get(`http://localhost:5000/lead/getByleaddetails/${id}`);
+      const response = await Api.get(
+        `http://localhost:5000/lead/getByleaddetails/${id}`
+      );
       setFetchedData(response.data.data[0]);
       console.log("Fetched Lead Data:", response.data);
     } catch (error) {
@@ -120,131 +124,130 @@ function LeadDetails({ collapsed }) {
 
   return (
     <div className="loandetail-container">
-        <div className={collapsed ? "main-content.open" : "main-content"}>
-      <div>
-        <center>
-          <h3>Lead Details</h3>
-        </center>
-      </div>
-      <div style={{marginTop:"20px"}}>
-        <Row className="px-2">
-          <Col lg={12} md={12}>
-            <Card
-              style={{ width: "200%" }}
-              className="loandetail-custom-card"
-              title="Lead Details"
-            >
-              <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                <Descriptions.Item label="Name">{`${fetchedData.firstname} ${fetchedData.lastname}`}</Descriptions.Item>
-                <Descriptions.Item label="Email">
-                  {fetchedData.email}
-                </Descriptions.Item>
-                <Descriptions.Item label="Phone">
-                  {fetchedData.contactNumber}
-                </Descriptions.Item>
-                <Descriptions.Item label="Aadhar Number">
-                  {fetchedData.aadhar}
-                </Descriptions.Item>
-                <Descriptions.Item label="PAN Card Number">
-                  {fetchedData.panno}
-                </Descriptions.Item>
-                <Descriptions.Item label="How Immediate">
-                  {fetchedData.howimidiate}
-                </Descriptions.Item>
-                <Descriptions.Item label="Previously Applied">
-                  {fetchedData.previouslyapplied}
-                </Descriptions.Item>
-                <Descriptions.Item label="Loan Amount">
-                  {fetchedData.amount}
-                </Descriptions.Item>
-                <Descriptions.Item label="Purpose Of Loan">
-                  {fetchedData.purpose}
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          </Col>
-        </Row>
+      <div className={collapsed ? "main-content.open" : "main-content"}>
+        <div>
+          <center>
+            <h3>Lead Details</h3>
+          </center>
+        </div>
+        <div style={{ marginTop: "20px" }}>
+          <Row className="px-2">
+            <Col lg={12} md={12}>
+              <Card
+                style={{ width: "100%" }}
+                className="loandetail-custom-card"
+                title="Lead Details"
+              >
+                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Name">{`${fetchedData.firstname} ${fetchedData.lastname}`}</Descriptions.Item>
+                  <Descriptions.Item label="Email">
+                    {fetchedData.email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Phone">
+                    {fetchedData.contactNumber}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Aadhar Number">
+                    {fetchedData.aadhar}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="PAN Card Number">
+                    {fetchedData.panno}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="How Immediate">
+                    {fetchedData.howimidiate}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Previously Applied">
+                    {fetchedData.previouslyapplied}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Loan Amount">
+                    {fetchedData.amount}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Purpose Of Loan">
+                    {fetchedData.purpose}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
         </div>
         <Button
           type="primary"
-          style={{ marginTop: "20px",marginLeft:"20px" }}
+          style={{ marginTop: "20px", marginLeft: "20px" }}
           onClick={() => navigate(-1)}
         >
           Back
         </Button>
-     
 
-      <div className="mt-3">
-        <ToastContainer position="top-right" autoClose={3000} />
-        <h3>Add Remarks</h3>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
-          {remarksFields.map((field, index) => (
-            <Row key={index} className="mb-3">
-              <Col xs={24} md={8} className="pe-md-3">
-                <label>Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  {...register(`date_${index}`, { required: true })}
-                />
-                {errors[`date_${index}`] && (
-                  <p className="text-danger">Date is required</p>
-                )}
-              </Col>
-              <Col xs={24} md={8} className="pe-md-3">
-                <label>Status</label>
-                <select
-                  className="form-control"
-                  {...register(`status_${index}`, { required: true })}
+        <div className="mt-3">
+          <ToastContainer position="top-right" autoClose={3000} />
+          <h3>Add Remarks</h3>
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
+            {remarksFields.map((field, index) => (
+              <Row key={index} className="mb-3">
+                <Col xs={24} md={8} className="pe-md-3">
+                  <label>Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    {...register(`date_${index}`, { required: true })}
+                  />
+                  {errors[`date_${index}`] && (
+                    <p className="text-danger">Date is required</p>
+                  )}
+                </Col>
+                <Col xs={24} md={8} className="pe-md-3">
+                  <label>Status</label>
+                  <select
+                    className="form-control"
+                    {...register(`status_${index}`, { required: true })}
+                  >
+                    <option value="">-- SELECT --</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="In-Progress">In-Progress</option>
+                    <option value="Approved">Approved</option>
+                  </select>
+                  {errors[`status_${index}`] && (
+                    <p className="text-danger">Status is required</p>
+                  )}
+                </Col>
+                <Col xs={24} md={8}>
+                  <label>Remarks</label>
+                  <textarea
+                    className="form-control"
+                    {...register(`remarks_${index}`, { required: true })}
+                    placeholder="Remarks"
+                  />
+                  {errors[`remarks_${index}`] && (
+                    <p className="text-danger">Remarks are required</p>
+                  )}
+                </Col>
+              </Row>
+            ))}
+            <Row className="mb-3">
+              <Col>
+                <button
+                  type="button"
+                  className="btn btn-success me-2"
+                  onClick={addRemarkField}
                 >
-                  <option value="">-- SELECT --</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="In-Progress">In-Progress</option>
-                  <option value="Approved">Approved</option>
-                </select>
-                {errors[`status_${index}`] && (
-                  <p className="text-danger">Status is required</p>
-                )}
-              </Col>
-              <Col xs={24} md={8}>
-                <label>Remarks</label>
-                <textarea
-                  className="form-control"
-                  {...register(`remarks_${index}`, { required: true })}
-                  placeholder="Remarks"
-                />
-                {errors[`remarks_${index}`] && (
-                  <p className="text-danger">Remarks are required</p>
+                  +
+                </button>
+                {remarksFields.length > 1 && (
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => removeRemarkField(remarksFields.length - 1)}
+                  >
+                    -
+                  </button>
                 )}
               </Col>
             </Row>
-          ))}
-          <Row className="mb-3">
-            <Col>
-              <button
-                type="button"
-                className="btn btn-success me-2"
-                onClick={addRemarkField}
-              >
-                +
-              </button>
-              {remarksFields.length > 1 && (
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={() => removeRemarkField(remarksFields.length - 1)}
-                >
-                  -
-                </button>
-              )}
-            </Col>
-          </Row>
-          <button type="submit" className="btn btn-primary mt-3">
-            Submit
-          </button>
-        </form>
+            <button type="submit" className="btn btn-primary mt-3">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 }

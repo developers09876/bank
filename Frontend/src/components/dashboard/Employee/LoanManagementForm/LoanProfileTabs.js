@@ -8,15 +8,11 @@ import Kycvendor from "./LoanKyc";
 // import AdminInfo from './AdminInfo.js';
 
 function LoanProfileTab() {
-   const { state } = useLocation();
-    const record = state?.record;
-    console.log('record', record)
+  const { state } = useLocation();
+  const record = state?.record;
+  console.log("record", record);
   return (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
       <br />
 
       <Tabs defaultActiveKey="1" centered className="p-3">
@@ -27,7 +23,7 @@ function LoanProfileTab() {
           <LoanDetails />
         </Tabs.TabPane>
         <Tabs.TabPane tab="Bank Details" key="3">
-          <Kycvendor/>
+          <Kycvendor />
         </Tabs.TabPane>
       </Tabs>
     </div>

@@ -31,20 +31,20 @@ function LeadTaskDetails({ collapsed }) {
         ...field,
         prefilled: true,
       }));
-  
+
       setRemarksFields(initialRemarks);
-  
+
       const defaultValues = initialRemarks.reduce((acc, field, index) => {
         acc[`date_${index}`] = field.date;
         acc[`remarks_${index}`] = field.remarks;
         acc[`status_${index}`] = field.status;
         return acc;
       }, {});
-  
+
       reset(defaultValues);
     }
   }, [details, reset]); // Runs when `details` updates
-  
+
   const addRemarkField = () => {
     setRemarksFields([
       ...remarksFields,
@@ -168,7 +168,7 @@ function LeadTaskDetails({ collapsed }) {
                     style={{
                       height: "auto",
                       alignContent: "center",
-                      borderRight: "1px #e5e7eb solid",
+                      // borderRight: "1px #e5e7eb solid",
                       textAlign: "-webkit-center",
                     }}
                   >
@@ -366,7 +366,7 @@ function LeadTaskDetails({ collapsed }) {
                     </Col>
                   )}
                   {field.prefilled && (
-                    <Col lg={4} className="d-flex align-items-center">
+                    <Col lg={4} className="px-1 py-1 d-flex align-items-center">
                       <Button variant="success" onClick={addRemarkField}>
                         +
                       </Button>

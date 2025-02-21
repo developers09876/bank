@@ -25,10 +25,16 @@ function LeadManagement() {
   useEffect(() => {
     const filtered = data.filter((item) => {
       return (
-        (item.firstname || "").toLowerCase().includes(searchText.toLowerCase()) ||
-        (item.lastname || "").toLowerCase().includes(searchText.toLowerCase()) ||
+        (item.firstname || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (item.lastname || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
         (item.email || "").toLowerCase().includes(searchText.toLowerCase()) ||
-        (item.contactNumber || "").toLowerCase().includes(searchText.toLowerCase()) ||
+        (item.contactNumber || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
         (item.purpose || "").toLowerCase().includes(searchText.toLowerCase())
       );
     });
@@ -38,7 +44,9 @@ function LeadManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/lead/getById/${userId}`);
+      const response = await axios.get(
+        `http://localhost:5000/lead/getById/${userId}`
+      );
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
@@ -47,8 +55,6 @@ function LeadManagement() {
       setLoading(false);
     }
   };
-
-
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
@@ -59,13 +65,16 @@ function LeadManagement() {
     setPageSize(pagination.pageSize);
   };
 
-  const paginatedData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   // const handleViewDetails = (record) => {
   //   navigate(`/employee/leaddetails/${record.employeeId}`);
   // };
   const handleViewDetails = (record) => {
-    navigate(`/employee/leaddetails/${record._id}`, {state: { record } });
+    navigate(`/employee/leaddetails/${record._id}`, { state: { record } });
   };
   const columns = [
     {
@@ -115,7 +124,9 @@ function LeadManagement() {
     <div style={{ marginTop: "50px", width: "100%" }}>
       <Container style={{ width: "90%" }}>
         <div style={{ width: "100%" }}>
-          <h4 style={{ textAlign: "center", fontWeight: "bold" }}>Lead Management</h4>
+          <h4 style={{ textAlign: "center", fontWeight: "bold" }}>
+            Lead Management
+          </h4>
           <br />
           <div style={{ justifyContent: "space-between" }}>
             <Space style={{ marginBottom: 16 }} className="filter-actions">
@@ -130,7 +141,11 @@ function LeadManagement() {
             <Button
               type="primary"
               onClick={() => navigate("/employee/createlead")}
-              style={{ display: "inline", float: "right", backgroundColor: "#00397f" }}
+              style={{
+                display: "inline",
+                float: "right",
+                backgroundColor: "#00397f",
+              }}
             >
               <FaPlus style={{ display: "inline", color: "white" }} />
               Add New

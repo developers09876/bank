@@ -94,15 +94,14 @@ function Kycvendor() {
 
   return (
     <div>
-      <ToastContainer/>
-      <Container>
+      <ToastContainer />
+      <Container style={{ justifyContent: "center" }}>
         <div
           className="ourProfileParentdiv"
           style={{
             backgroundColor: "white",
             padding: "10px 20px",
             width: "80%",
-            marginLeft: "150px",
           }}
         >
           <center>
@@ -252,7 +251,10 @@ function Kycvendor() {
               </Col>
             </Row>
             <center>
-              <div className="submitbuttons px-4">
+              <div
+                className="submitbuttons px-4"
+                style={{ flexDirection: "unset" }}
+              >
                 <Button
                   className="button1 m-2 p-2"
                   type="submit"
