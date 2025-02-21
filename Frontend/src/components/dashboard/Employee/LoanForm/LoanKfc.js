@@ -107,11 +107,11 @@ function Kycvendor() {
     <div>
       <Container style={{ justifyContent: "center" }}>
         <div
-          className="ourProfileParentdiv"
+          className="ourProfileParentdiv py-1 px-1"
           style={{
             backgroundColor: "white",
-            padding: "10px 20px",
-            width: "80%",
+            // padding: "10px 20px",
+            // width: "80%",
             // marginLeft: "150px",
           }}
         >

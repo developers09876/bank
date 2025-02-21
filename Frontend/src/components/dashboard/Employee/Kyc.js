@@ -97,11 +97,11 @@ function Kycvendor() {
       <ToastContainer />
       <Container style={{ justifyContent: "center" }}>
         <div
-          className="ourProfileParentdiv"
+          className="ourProfileParentdiv px-1 py-1"
           style={{
             backgroundColor: "white",
-            padding: "10px 20px",
-            width: "80%",
+            // padding: "10px 20px",
+            // width: "80%",
           }}
         >
           <center>
