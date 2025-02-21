@@ -107,7 +107,7 @@ function Kycvendor() {
             backgroundColor: "white",
             padding: "10px 20px",
             width: "80%",
-            marginLeft: "150px",
+            marginLeft: "50px",
           }}
         >
           <center>

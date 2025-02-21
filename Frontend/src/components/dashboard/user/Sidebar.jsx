@@ -1,130 +1,124 @@
-// import React from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
-// import { PermIdentity, CreditScore, ReceiptLong, MailOutline } from '@mui/icons-material';
+// import React, { useEffect, useState } from "react";
+// import { NavLink } from "react-router-dom";
+// import { Menu } from "antd";
+// import axios from "axios";
 
-// export default function Sidebar() {
-//   const navigate = useNavigate();
+// function Sidebar({ collapsed }) {
+//   const [firstname, setfirstname] = useState("");
+//   const id = localStorage.getItem("id");
+//   useEffect(() => {
+//     const fetchUserData = async () => {
+//        {
+//         try {
+//           const response = await axios.get(`http://localhost:5000/signup/getby/${id}`);
+//           setfirstname (`${response.data.firstname} ${response.data.lastname}`)
+//             console.log ( "response.data", response.data.firstname)
+//         } catch (error) {
+//           console.error("Error fetching user data", error);
+//         }
+//       }
+//     };
+//     fetchUserData();
+
+//   }, [id]);
+
 //   return (
-//     <div className='fixed top-0 left-0 h-full w-72  px-5 py-5 bg-white border-r shadow-lg' >
-//       {/* LOGO */}
-//       <div className='my-10'onClick={() =>navigate("/")} style={{cursor:"pointer"}}>
-//         <h3 className='text-center text-2xl'>VILU GENIUS</h3>
-//         <p className='text-center text-sm'>private limited</p>
-//       </div>
-
-//       <hr className='h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent' />
-
-//       {/* MENU */}
-//       <div className='my-10'>
-//         <ul>
-//         <li className='text-sm font-medium no-underline text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <PermIdentity />
-//             <Link to='/user' className='ml-2.5'>
-//               Dashboard
-//             </Link>
-//           </li>
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <PermIdentity />
-//             <Link to='/userProfile' className='ml-2.5 no-underline'>
-//               My Profile
-//             </Link>
-//           </li>
-
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <CreditScore />
-//             <Link to='/loans' className='ml-2.5 no-underline'>
-//               Loans
-//             </Link>
-//           </li>
-
-//           {/* <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <ReceiptLong />
-//             <Link to='/payments' className='ml-2.5 no-underline'>
-//               Payments
-//             </Link>
-//           </li>
-
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <MailOutline />
-//             <Link to='/emailClient' className='ml-2.5 no-underline'>
-//               Email
-//             </Link>
-//           </li> */}
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-red-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <ReceiptLong />
-//             <Link to='/payments' className='ml-2.5 no-underline'>
-//               Insurance
-//             </Link>
-//           </li>
-//         </ul>
-//       </div>
+//     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
+//       <Menu mode="inline" className="nav-list">
+//         <h3 style={{marginTop:"100px",textAlign:"center"}}>Hi, {firstname}!</h3>
+//         <NavLink to="/user" className="main-nav-style" style={{ marginTop: "50px" }}>
+//           My Profile
+//         </NavLink>
+//         <NavLink to="/user/rewards" className="main-nav-style">
+//           My Income
+//         </NavLink>
+//         <NavLink to="/user/loanstatus" className="main-nav-style">
+//           Loan
+//         </NavLink>
+//         <NavLink to="/user/insu" className="main-nav-style">
+//           Insurance
+//         </NavLink>
+//         <NavLink to="/user/tax" className="main-nav-style">
+//           Tax
+//         </NavLink>
+//         <NavLink to="/user/feedback" className="main-nav-style">
+//           Feedback
+//         </NavLink>
+//       </Menu>
 //     </div>
 //   );
 // }
 
-import React from "react";
+// export default Sidebar;
+
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, Modal, Avatar } from "antd";
+import { FaUserCircle } from "react-icons/fa";
+import axios from "axios";
 
 function Sidebar({ collapsed }) {
-  const onClick = (e) => {
-    console.log("click ", e);
-  };
-  const role = localStorage.getItem("name");
-  const id = localStorage.getItem("regid");
+  const [firstname, setFirstname] = useState("");
+  const id = localStorage.getItem("id");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${id}`
+        );
+        setFirstname(response.data.firstname);
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    };
+    fetchUserData();
+  }, [id]);
 
   return (
-    <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
-      <Menu onClick={onClick} mode="inline" className="nav-list">
-        {/* <NavLink
-          to="/professional/professionalprofile"
-          ClassName="main-nav-style"
+    <div className={collapsed ? "sidebarcontent open" : "d-none"}>
+      <Menu mode="inline" className="nav-list">
+        <h3
+          style={{
+            marginTop: "45px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            fontSize: "18px",
+            fontWeight: "bold",
+            color: "#333",
+            textAlign: "center",
+            // marginRight:"100px"
+          }}
         >
-          <MdPerson className="Nav-Icon" />
-          My profile
-        </NavLink> */}
-        {/* <SubMenu
-          icon={<AiFillProject size={20} className="Nav-Icon1" />}
-          title="Freelancing"
-        > */}
+          <FaUserCircle style={{ fontSize: "28px", color: "#1890ff" }} />
+          Welcome, {firstname}!
+        </h3>
 
-        {/* </SubMenu> */}
         <NavLink
           to="/user"
-          ClassName="main-nav-style"
-          style={{ marginTop: "50px" }}
+          className="main-nav-style"
+          style={{ marginTop: "20px" }}
         >
-          {/* <MdAreaChart className="Nav-Icon" /> */}
           My Profile
         </NavLink>
-        <NavLink to="/user/rewards" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
+        <NavLink to="/user/rewards" className="main-nav-style">
           My Income
         </NavLink>
-        <NavLink to="/user/loanstatus" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
+        <NavLink to="/user/loanstatus" className="main-nav-style">
           Loan
         </NavLink>
-        <NavLink to="/user/insu" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
+        <NavLink to="/user/insu" className="main-nav-style">
           Insurance
         </NavLink>
-        {/* <NavLink to="/user/userTaxmangemnent" ClassName="main-nav-style">
-          Tax
-        </NavLink> */}
-
-        <NavLink to="/user/tax" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
+        <NavLink to="/user/tax" className="main-nav-style">
           Tax
         </NavLink>
-        {/* <NavLink to="/user/leadgeneration" ClassName="main-nav-style">
-          Lead Generation
-        </NavLink> */}
-        <NavLink to="/user/feedback" ClassName="main-nav-style">
-          {/* <MdAreaChart className="Nav-Icon" /> */}
+        <NavLink to="/user/feedback" className="main-nav-style">
           Feedback
         </NavLink>
-        
       </Menu>
     </div>
   );

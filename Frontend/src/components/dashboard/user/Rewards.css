@@ -140,7 +140,7 @@
   .summary-card, 
   .reward-card, 
   .sub-card-full {
-      width: 100%; 
+      width: 80%!important; 
       margin: 20px auto;
       height: auto;
   }
@@ -163,7 +163,7 @@
   .summary-card, 
   .reward-card, 
   .sub-card-full {
-      width: 100%; 
+      width: 80%!important;; 
       margin: 15px auto;
       height: auto;
   }
@@ -186,7 +186,7 @@
   .summary-card, 
   .reward-card, 
   .sub-card-full {
-      width: 100%;
+      width: 80%!important;
       margin: 15px auto;
   }
 

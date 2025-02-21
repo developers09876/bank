@@ -115,7 +115,13 @@ select {
   border-radius: 5px;
 
 }
-
+/* :where(.css-dev-only-do-not-override-7ny38l).ant-row {
+  display: flex
+;
+  flex-flow: row wrap;
+  min-width: 0;
+  flex-direction: column;
+} */
 .applybtn {
   border: 1px solid rgba(9, 36, 76, 1);
   border-radius: 30px;
@@ -400,4 +406,17 @@ select {
   .career-intro h1 {
     font-size: 23px;
   }
+}
+@media (max-width: 768px) {
+  p.job-role {
+      font-size: 15px!important;
+      text-align: center!important;
+          /* flex-direction: column; */
+      /* display: flex;
+      grid-column: auto; */
+  }
+  p.job-mini {
+    font-size: 15px!important;
+    text-align: center!important;
+}
 }
