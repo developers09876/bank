@@ -159,7 +159,7 @@ function Sidebar({ collapsed }) {
   return (
     <div className={collapsed ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
-      <div style={{ textAlign: "center", marginTop: "80px" }}>
+      <div style={{ textAlign: "center", marginTop: "45px"}}>
         <h3 style={{ 
           display: "flex", 
           alignItems: "center", 
@@ -186,7 +186,7 @@ function Sidebar({ collapsed }) {
         <NavLink
           to="/employee"
           className="main-nav-style"
-          style={{ marginTop: "50px" }}
+          style={{ marginTop: "30px" }}
         >
           Dashboard
         </NavLink>
