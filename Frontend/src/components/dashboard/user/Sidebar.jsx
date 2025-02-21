@@ -1,10 +1,10 @@
 // import React, { useEffect, useState } from "react";
 // import { NavLink } from "react-router-dom";
 // import { Menu } from "antd";
-// import axios from "axios"; 
+// import axios from "axios";
 
 // function Sidebar({ collapsed }) {
-//   const [firstname, setfirstname] = useState(""); 
+//   const [firstname, setfirstname] = useState("");
 //   const id = localStorage.getItem("id");
 //   useEffect(() => {
 //     const fetchUserData = async () => {
@@ -18,9 +18,9 @@
 //         }
 //       }
 //     };
-//     fetchUserData(); 
+//     fetchUserData();
 
-//   }, [id]); 
+//   }, [id]);
 
 //   return (
 //     <div className={collapsed === true ? "sidebarcontent open" : "d-none"}>
@@ -51,7 +51,6 @@
 
 // export default Sidebar;
 
-
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Modal, Avatar } from "antd";
@@ -65,7 +64,9 @@ function Sidebar({ collapsed }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/signup/getby/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${id}`
+        );
         setFirstname(response.data.firstname);
       } catch (error) {
         console.error("Error fetching user data", error);
@@ -79,16 +80,16 @@ function Sidebar({ collapsed }) {
       <Menu mode="inline" className="nav-list">
         <h3
           style={{
-            marginTop: "100px",
+            marginTop: "45px",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "8px",  
+            gap: "8px",
             fontSize: "18px",
             fontWeight: "bold",
             color: "#333",
-            textAlign:"center"
+            textAlign: "center",
             // marginRight:"100px"
           }}
         >
@@ -96,7 +97,11 @@ function Sidebar({ collapsed }) {
           Welcome, {firstname}!
         </h3>
 
-        <NavLink to="/user" className="main-nav-style" style={{ marginTop: "50px" }}>
+        <NavLink
+          to="/user"
+          className="main-nav-style"
+          style={{ marginTop: "20px" }}
+        >
           My Profile
         </NavLink>
         <NavLink to="/user/rewards" className="main-nav-style">
@@ -120,4 +125,3 @@ function Sidebar({ collapsed }) {
 }
 
 export default Sidebar;
-
