@@ -177,11 +177,7 @@ const TaxDetails = ({ collapsed }) => {
                 </Card>
               </Col> */}
             <Col lg={12} md={12}>
-              <Card
-                style={{ width: "100%" }}
-                className="loandetail-custom-card"
-                title="Tax Details"
-              >
+              <Card className="loandetail-custom-card" title="Tax Details">
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="bussiness Type">
                     {record.businessType}

@@ -187,7 +187,6 @@ function LoanDetails() {
                             <label className="vendorpage_labelCss">
                               loan Agent Name
                             </label>
-                            <br />
                             <input
                               className="inputcolumn-ourProfile"
                               type="text"
@@ -206,7 +205,6 @@ function LoanDetails() {
                             <label className="vendorpage_labelCss">
                               loan Agent Contact Number
                             </label>
-                            <br />
                             <input
                               className="inputcolumn-ourProfile"
                               type="text"
@@ -612,7 +610,7 @@ function LoanDetails() {
                   </Row>
                 </div>
 
-                <div className="upgrade_column mb-3 mt-3">
+                <div className="upgrade_column mb-3 px-5 mt-3">
                   <Button className="button1" type="submit">
                     Submit
                   </Button>

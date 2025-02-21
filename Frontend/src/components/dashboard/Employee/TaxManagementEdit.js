@@ -75,9 +75,11 @@ function TaxManagementEdit() {
   };
   return (
     <div>
-      <Container style={{ marginTop: "115px", paddingBottom: "20px" }}>
+      <Container style={{ marginTop: "6%", paddingBottom: "20px" }}>
         <form>
-          <h4 style={{ textAlign: "center", color: "#00397f" }}>
+          <h4
+            style={{ textAlign: "center", color: "#00397f", marginTop: "15px" }}
+          >
             <b>Edit Tax Mangement</b>
           </h4>
           <Row className="px-2 py-3">
@@ -368,7 +370,9 @@ function TaxManagementEdit() {
                     >
                       <Option value="salaryPerson">Salary Person</Option>
                       <Option value="limitedCompany">Limited Company</Option>
-                      <Option value="soleProprietorship">Sole Proprietorship</Option>
+                      <Option value="soleProprietorship">
+                        Sole Proprietorship
+                      </Option>
                       <Option value="selfEmployee">Self Employee</Option>
                       <Option value="partnership">Partnership</Option>
                     </Select>
@@ -396,7 +400,10 @@ function TaxManagementEdit() {
               </div>
             </Col>
           </Row>
-          <div className="upgrade_column mb-3">
+          <div
+            className="upgrade_column mb-3"
+            style={{ flexDirection: "unset" }}
+          >
             <Button
               className="button1 mx-2"
               type="submit"

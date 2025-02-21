@@ -78,7 +78,7 @@ const LoanDetails = ({ collapsed }) => {
                       style={{
                         height: "auto",
                         alignContent: "center",
-                        borderRight: "1px #e5e7eb solid",
+                        // borderRight: "1px #e5e7eb solid",
                         textAlign: "-webkit-center",
                       }}
                     >

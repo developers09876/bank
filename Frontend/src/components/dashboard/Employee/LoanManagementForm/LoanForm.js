@@ -21,13 +21,13 @@ function LoanForm() {
     control,
     formState: { errors },
   } = useForm();
-  
+
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
 
-const { state } = useLocation();
-    const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
 
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -141,25 +141,24 @@ const { state } = useLocation();
     const fetchLoanApplicationData = async () => {
       try {
         const response = await Api.get(`/loanform/getbyid/${userid}`);
-        console.log('response', response)
-        const filterOneApplication = response.data.filter((application) => application._id === record._id )
-        console.log('Applicationresponse', response.data);
-        console.log('filterOneApplication', filterOneApplication[0]);
+        console.log("response", response);
+        const filterOneApplication = response.data.filter(
+          (application) => application._id === record._id
+        );
+        console.log("Applicationresponse", response.data);
+        console.log("filterOneApplication", filterOneApplication[0]);
         const formattedDob = filterOneApplication[0].dob
-            ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
-            : "";
+          ? new Date(filterOneApplication[0].dob).toISOString().split("T")[0]
+          : "";
         if (filterOneApplication) {
-          reset({...filterOneApplication[0],
-            dob: formattedDob
-          }); 
+          reset({ ...filterOneApplication[0], dob: formattedDob });
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
-
 
   const loanAmount = watch("totalChildren");
 
@@ -203,7 +202,7 @@ const { state } = useLocation();
 
               <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div>
-                  <Row className="py-2">
+                  <Row className="px-2 py-3">
                     <Col xs={12} md={6} lg={4}>
                       {(userDetail?.photographs || watch("imagePreview")) && (
                         <>
@@ -724,9 +723,8 @@ const { state } = useLocation();
                       </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
-                      <div>
+                      <div style={{ display: "grid" }}>
                         <label className="vendorpage_labelCss">State</label>
-                        <br />
                         <Controller
                           name="state"
                           control={control}
@@ -800,9 +798,8 @@ const { state } = useLocation();
                     </Col>
 
                     <Col xs={12} md={6} lg={4}>
-                      <div>
+                      <div style={{ display: "grid" }}>
                         <label className="vendorpage_labelCss">City</label>
-                        <br />
                         <Controller
                           name="city"
                           control={control}
@@ -891,8 +888,11 @@ const { state } = useLocation();
                   </Row> */}
                 </div>
 
-                <div className="upgrade_column mb-3 mt-3">
-                  <Button className="button1" type="submit">
+                <div
+                  className="upgrade_column mb-3 px-5 mt-3"
+                  style={{ flexDirection: "unset" }}
+                >
+                  <Button className="button1 mx-2" type="submit">
                     Submit
                   </Button>
                 </div>
