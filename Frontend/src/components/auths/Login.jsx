@@ -180,23 +180,24 @@ const LoginPage = () => {
   return (
     <>
       <Header />
+      <div style={{marginTop:'105px', height: 'calc(100vh - 105px)',  alignContent:'center'}}>
       <Container
         maxWidth="lg"
         style={{
-          height: "88vh",
+          // height: "88vh",
           display: "flex",
           alignItems: "center",
-          marginTop: "5%",
+          // marginTop: "120px",
         }}
       >
         <Grid container>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} className="px-1 py-2">
             <Box
               display="flex"
               flexDirection="column"
               justifyContent="center"
               alignItems="center"
-              height="95%"
+              // height="95%"
               px={4}
             >
               {step === "first" ? (
@@ -321,7 +322,9 @@ const LoginPage = () => {
                   </Button> */}
 
                   <Box mt={2}>
-                    <Typography variant="body2">
+                    <Typography variant="body2"
+                     className="d-block"
+                    >
                       Don't have an account?{" "}
                       <Link href="/register">Register here</Link>
                     </Typography>
@@ -394,12 +397,12 @@ const LoginPage = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={false} md={6}>
+          <Grid item xs={false} md={6} className="px-1 py-2">
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                height: "95%",
+                // height: "95%",
               }}
             >
               <Carousel
@@ -441,6 +444,7 @@ const LoginPage = () => {
         </Grid>
         <ToastContainer />
       </Container>
+      </div>
     </>
   );
 };
