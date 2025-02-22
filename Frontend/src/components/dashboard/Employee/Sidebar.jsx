@@ -83,6 +83,7 @@ function Sidebar({ collapsed }) {
   };
 
   const id = localStorage.getItem("id");
+  const [empno, setEmployeeno] = useState("");
   const [firstname, setFirstname] = useState("");
   const [employee, setEmployee] = useState(null);
   const service = employee?.services || [];
@@ -96,6 +97,7 @@ function Sidebar({ collapsed }) {
       const response = await Api.get(`signup/getby/${id}`);
       setEmployee(response.data);
       setFirstname(response.data.firstname);
+      setEmployeeno(response.data.empno);
       console.log("Employee Data:", response);
     } catch (error) {
       console.error("Error fetching employee data:", error);
@@ -179,7 +181,7 @@ function Sidebar({ collapsed }) {
           color: "#666", 
           marginTop: "5px" 
         }}>
-          {id}
+          {empno}
         </h3>
       </div>
 
