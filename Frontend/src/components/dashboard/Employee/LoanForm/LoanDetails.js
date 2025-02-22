@@ -169,10 +169,10 @@ function LoanDetails() {
       <Container style={{ marginTop: "1%" }}>
         <Col xs={12} md={12} lg={12}>
           <div
-            className="ourProfileParentdiv"
-            style={{ backgroundColor: "white", padding: "10px 20px" }}
+            className="ourProfileParentdiv py-1 px-1"
+            style={{ backgroundColor: "white" }}
           >
-            <div style={{ paddingLeft: "10px" }}>
+            <div>
               <center>
                 {" "}
                 <h4 className="pages-title mt-3 mb-5"> Loan Details</h4>

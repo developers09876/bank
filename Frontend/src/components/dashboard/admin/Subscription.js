@@ -76,7 +76,7 @@ function Subscription() {
           <div style={{ justifyContent: "space-between" }}>
             <form>
               <Row className="px-2 py-2">
-                <Col className="px-1 py-2">
+                <Col className="px-1 py-2 d-grid">
                   <label className="vendorpage_labelCss">Price</label>
                   {/* <br /> */}
                   <input
