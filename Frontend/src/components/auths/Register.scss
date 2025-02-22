@@ -7,9 +7,9 @@
     margin: 0 auto;
     padding: 1rem;
   
-    @media (max-width: 768px) {
-      padding: 0.5rem;
-    }
+    // @media (max-width: 768px) {
+    //   padding: 0.5rem;
+    // }
   }
   
   .register-form {
@@ -26,9 +26,9 @@
       justify-content: space-between;
       gap: 1rem;
   
-      @media (max-width: 768px) {
-        flex-direction: column;
-      }
+      // @media (max-width: 768px) {
+      //   flex-direction: column;
+      // }
     }
   
     &__group {
@@ -97,6 +97,117 @@
       }
     }
   }
-  
- 
-  
+
+/* Mobile view (320px) */
+@media screen and (max-width: 320px) {
+  .image-reduced1 {
+    width: 100%;
+    height: 160px;
+    margin-top: 270px;
+    margin-left: 0;
+  }
+
+  .typoheading {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .getstart {
+    width: 100%;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Small phones (375px) */
+@media screen and (max-width: 375px) {
+  .image-reduced1 {
+    width: 100%;
+    height: 180px;
+    margin-top: 250px;
+    margin-left: 0;
+  }
+
+  .typoheading {
+    font-size: 22px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .getstart {
+    width: 100%;
+    font-size: 15px;
+    margin-left: 15px;
+    margin-bottom: 20px;
+  }
+  .register-form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+//   .css-933bpa-MuiTypography-root {
+//     margin: 0;
+//     font-weight: 200;
+//     font-size: 10px;
+//     text-align: center;
+//     margin-top: 48px;
+// }
+}
+
+/* Large phones (425px) */
+@media screen and (max-width: 425px) {
+  .image-reduced1 {
+    width: 100%;
+    height: 200px;
+    margin-top: 200px;
+    margin-left: 0;
+  }
+
+  .typoheading {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .getstart {
+    width: 100%;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  .register-form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Tablet view (768px) */
+@media screen and (max-width: 768px) {
+  .image-reduced1 {
+    width: 80%;
+    height: auto;
+    margin-top: 100px;
+    margin-left: 0;
+  }
+
+  .typoheading {
+    font-size: 26px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .getstart {
+    width: auto;
+    font-size: 18px;
+    margin-left: 25px;
+    margin-bottom: 30px;
+  }
+  .register-form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

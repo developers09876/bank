@@ -74,6 +74,7 @@ import { Menu } from "antd";
 import Api from "../../../Api";
 import { toast } from "react-toastify";
 import SubMenu from "antd/lib/menu/SubMenu";
+import { FaUserCircle } from "react-icons/fa";
 // const { SubMenu } = Menu;
 
 function Sidebar({ collapsed }) {
@@ -82,6 +83,8 @@ function Sidebar({ collapsed }) {
   };
 
   const id = localStorage.getItem("id");
+  const [empno, setEmployeeno] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [employee, setEmployee] = useState(null);
   const service = employee?.services || [];
 
@@ -93,6 +96,8 @@ function Sidebar({ collapsed }) {
     try {
       const response = await Api.get(`signup/getby/${id}`);
       setEmployee(response.data);
+      setFirstname(response.data.firstname);
+      setEmployeeno(response.data.empno);
       console.log("Employee Data:", response);
     } catch (error) {
       console.error("Error fetching employee data:", error);
@@ -156,10 +161,34 @@ function Sidebar({ collapsed }) {
   return (
     <div className={collapsed ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
+      <div style={{ textAlign: "center", marginTop: "45px"}}>
+        <h3 style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center", 
+          gap: "8px",  
+          fontSize: "18px", 
+          fontWeight: "bold", 
+          color: "#333",
+         
+        }}>
+          <FaUserCircle style={{ fontSize: "28px", color: "#1890ff" }} />
+          <span>Welcome, {firstname}!</span>
+        </h3>
+        <h3 style={{ 
+          fontSize: "15px", 
+          fontWeight: "bold", 
+          color: "#666", 
+          marginTop: "5px" 
+        }}>
+          {empno}
+        </h3>
+      </div>
+
         <NavLink
           to="/employee"
           className="main-nav-style"
-          style={{ marginTop: "70px" }}
+          style={{ marginTop: "30px" }}
         >
           Dashboard
         </NavLink>

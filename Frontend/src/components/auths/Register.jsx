@@ -41,9 +41,11 @@ const Register = () => {
               src="https://img.freepik.com/premium-photo/professional-bill-design-money-banking-finance-commerce-market_1316704-24000.jpg"
               alt="Personalized loans"
             />
-            <Button onClick={() => navigate("/")} style={{ marginLeft: "-100px" }}>
+            <div>
+            <Button onClick={() => navigate("/")} className="getstart" style={{ marginLeft: "45px",marginBottom:"49px" }}>
               Get Started
             </Button>
+            </div>
           </Box>
         </Grid>
 
