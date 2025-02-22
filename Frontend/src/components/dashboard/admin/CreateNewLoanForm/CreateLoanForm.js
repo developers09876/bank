@@ -209,13 +209,13 @@ function CreateLoanForm() {
 
   return (
     <div>
-      <Container style={{ marginTop: "100px" }}>
+      <Container style={{ marginTop: "10px" }}>
         <Col xs={12} md={12} lg={12}>
           <div
-            className="ourProfileParentdiv"
-            style={{ backgroundColor: "white", padding: "10px 20px" }}
+            className="ourProfileParentdiv px-1 py-1"
+            style={{ backgroundColor: "white" }}
           >
-            <div style={{ paddingLeft: "10px" }}>
+            <div>
               <center>
                 {" "}
                 <h4 className="pages-title mt-3 mb-5">Personal Information</h4>
@@ -786,9 +786,8 @@ function CreateLoanForm() {
                       </div>
                     </Col>
                     <Col xs={12} md={6} lg={4}>
-                      <div>
+                      <div style={{ display: "grid" }}>
                         <label className="vendorpage_labelCss">State</label>
-                        <br />
                         <Controller
                           name="state"
                           control={control}
@@ -862,9 +861,8 @@ function CreateLoanForm() {
                     </Col>
 
                     <Col xs={12} md={6} lg={4}>
-                      <div>
+                      <div style={{ display: "grid" }}>
                         <label className="vendorpage_labelCss">City</label>
-                        <br />
                         <Controller
                           name="city"
                           control={control}
@@ -953,7 +951,7 @@ function CreateLoanForm() {
                   </Row> */}
                 </div>
 
-                <div className="upgrade_column mb-3 mt-3">
+                <div className="upgrade_column mb-3 px-5 mt-3">
                   <Button className="button1" type="submit">
                     Submit
                   </Button>

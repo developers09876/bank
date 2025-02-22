@@ -106,12 +106,12 @@ function CreateLoanKfc() {
       <ToastContainer />
       <Container>
         <div
-          className="ourProfileParentdiv"
+          className="ourProfileParentdiv px-1 py-1"
           style={{
             backgroundColor: "white",
-            padding: "10px 20px",
-            width: "80%",
-            marginLeft: "150px",
+            // padding: "10px 20px",
+            // width: "80%",
+            // marginLeft: "150px",
           }}
         >
           <center>
@@ -132,7 +132,7 @@ function CreateLoanKfc() {
 
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="kycRow_Container">
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>PanCard Number: </label>
                 <input
                   {...register("panCardNumber", { required: true })}
@@ -142,7 +142,7 @@ function CreateLoanKfc() {
                   <p className="text-danger">pancard number is required</p>
                 )}
               </Col>
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Aadhar Number: </label>
                 <input
                   {...register("aadhaarNumber", { required: true })}
@@ -153,7 +153,7 @@ function CreateLoanKfc() {
                 )}
               </Col>
 
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>GST Number: </label>
 
                 <input
@@ -165,7 +165,7 @@ function CreateLoanKfc() {
                 )}
               </Col>
 
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Account Number: </label>
 
                 <input
@@ -177,7 +177,7 @@ function CreateLoanKfc() {
                   <p className="text-danger">Account number is required</p>
                 )}
               </Col>
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>IFSC Code</label>
 
                 <input
@@ -188,7 +188,7 @@ function CreateLoanKfc() {
                   <p className="text-danger">IFCE code is required</p>
                 )}
               </Col>
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Bank Name: </label>
 
                 <input
@@ -199,7 +199,7 @@ function CreateLoanKfc() {
                   <p className="text-danger">Bank Name is required</p>
                 )}
               </Col>
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Branch:</label>
 
                 <input
@@ -210,7 +210,7 @@ function CreateLoanKfc() {
                   <p className="text-danger">Branch is required</p>
                 )}
               </Col>
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Pan Upload: </label>
                 <input
                   className="inputcolumn-ourProfile"
@@ -234,7 +234,7 @@ function CreateLoanKfc() {
                 )}
               </Col>
 
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Adhar Upload : </label>
                 <input
                   className="inputcolumn-ourProfile"
@@ -258,7 +258,7 @@ function CreateLoanKfc() {
                 )}
               </Col>
 
-              <Col sm={10} md={4} lg={4}>
+              <Col sm={12} md={6} lg={4}>
                 <label>Voter ID: </label>
                 <input
                   className="inputcolumn-ourProfile"
@@ -326,7 +326,10 @@ function CreateLoanKfc() {
               </Col>
             </Row> */}
             <center>
-              <div className="submitbuttons px-4">
+              <div
+                className="submitbuttons px-4"
+                style={{ flexDirection: "unset" }}
+              >
                 <Button
                   className="button1 m-2 p-2"
                   type="submit"

@@ -145,10 +145,10 @@ function CreateLoanDetails() {
       <Container style={{ marginTop: "1%" }}>
         <Col xs={12} md={12} lg={12}>
           <div
-            className="ourProfileParentdiv"
-            style={{ backgroundColor: "white", padding: "10px 20px" }}
+            className="ourProfileParentdiv px-1 py-1"
+            style={{ backgroundColor: "white" }}
           >
-            <div style={{ paddingLeft: "10px" }}>
+            <div>
               <center>
                 {" "}
                 <h4 className="pages-title mt-3 mb-5"> Loan Details</h4>
@@ -164,7 +164,7 @@ function CreateLoanDetails() {
                             <label className="vendorpage_labelCss">
                               loan Agent Name
                             </label>
-                            <br />
+                            {/* <br /> */}
                             <input
                               className="inputcolumn-ourProfile"
                               type="text"
@@ -183,7 +183,7 @@ function CreateLoanDetails() {
                             <label className="vendorpage_labelCss">
                               loan Agent Contact Number
                             </label>
-                            <br />
+                            {/* <br /> */}
                             <input
                               className="inputcolumn-ourProfile"
                               type="text"
@@ -712,7 +712,7 @@ function CreateLoanDetails() {
                   </Row>
                 </div>
 
-                <div className="upgrade_column mb-3 mt-3">
+                <div className="upgrade_column mb-3 px-3 mt-3">
                   <Button className="button1" type="submit">
                     Submit
                   </Button>

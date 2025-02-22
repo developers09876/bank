@@ -1184,6 +1184,7 @@ const LoanDetails = ({ collapsed }) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
