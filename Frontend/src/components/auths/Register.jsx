@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Row, Col } from "react-bootstrap";
 import Header from "../Layout/Header";
 
 const Register = () => {
@@ -30,9 +31,10 @@ const Register = () => {
     <div className="register-container">
       <Header />
       <ToastContainer />
-      <Grid container style={{ marginTop: "6%" }}>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h4" fontWeight="bold" align="center" mt={6}>
+      <Row className="mt-5">
+      <Grid container >
+        <Grid item xs={12} md={6} >
+          <Typography  className="typoheading"variant="h4" fontWeight="bold" align="center" mt={6}>
             Easy. Quick. Efficient.
           </Typography>
           <Box sx={{ display: "grid", alignItems: "center", height: "80%", marginLeft: "50px" }}>
@@ -49,7 +51,7 @@ const Register = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} style={{marginTop:"5%"}}>
           <form onSubmit={handleSubmit(onSubmit)} className="register-form">
             <div className="register-form__row">
               <div className="register-form__group">
@@ -117,6 +119,7 @@ const Register = () => {
           </form>
         </Grid>
       </Grid>
+      </Row >
     </div>
   );
 };
