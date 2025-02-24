@@ -214,7 +214,7 @@ const JobRequest = ({ collapsed }) => {
             <Descriptions
               className="jobrequest-des"
               // title="Candidate Details"
-              column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
+              column={1}
             >
               <Descriptions.Item label="Name">
                 {selectedRecord.name}
