@@ -84,6 +84,7 @@ function LeadTaskDetails({ collapsed }) {
       });
       setIsApproved(true);
       toast.success("Lead approved successfully");
+      await getlead();
     } catch (error) {
       console.error("Error:", error.message);
       toast.error("Error approving lead");
@@ -408,80 +409,85 @@ function LeadTaskDetails({ collapsed }) {
               <h4 className="text-success">Approved</h4>
             )}
           </div>
-          <div className="mt-3">
-            <h3>Add Remarks</h3>
-            <form onSubmit={handleSubmit(onSubmit)} className="mt-3 p-3">
-              {remarksFields.map((field, index) => (
-                <Row key={index} className="mb-3">
-                  <Col lg={4} md={6} xs={12}>
-                    <label>Date</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      {...register(`date_${index}`, { required: true })}
-                    />
-                    {errors[`date_${index}`] && (
-                      <p className="text-danger">Date is required</p>
-                    )}
-                  </Col>
-                  <Col lg={4} md={6} xs={12}>
-                    <label>Status</label>
-                    <select
-                      className="form-control"
-                      {...register(`status_${index}`, { required: true })}
-                    >
-                      <option value="">-- SELECT --</option>
-                      <option value="Rejected">Rejected</option>
-                      <option value="In-Progress">In-Progress</option>
-                      <option value="Approved">Approved</option>
-                    </select>
-                    {errors[`status_${index}`] && (
-                      <p className="text-danger">Status is required</p>
-                    )}
-                  </Col>
-                  <Col lg={4} md={6} xs={12}>
-                    <label>Remarks</label>
-                    <textarea
-                      className="form-control"
-                      {...register(`remarks_${index}`, { required: true })}
-                      placeholder="Remarks"
-                    />
-                    {errors[`remarks_${index}`] && (
-                      <p className="text-danger">Remarks are required</p>
-                    )}
-                  </Col>
-
-                  {!field.prefilled && (
-                    <Col lg={4} className="d-flex align-items-center">
-                      <Button
-                        variant="danger"
-                        onClick={() => removeRemarkField(index)}
-                      >
-                        -
-                      </Button>
-                    </Col>
-                  )}
-                  {field.prefilled && (
-                    <Col lg={4} className="px-1 py-1 d-flex align-items-center">
-                      <Button variant="success" onClick={addRemarkField}>
-                        +
-                      </Button>
-                      {field._id && (
-                        <FaTrash
-                          className="text-danger cursor-pointer ms-2"
-                          onClick={() => deleteRemark(field._id)}
-                        />
+          {isApproved && (
+            <div className="mt-3">
+              <h3>Add Remarks</h3>
+              <form onSubmit={handleSubmit(onSubmit)} className="mt-3 p-3">
+                {remarksFields.map((field, index) => (
+                  <Row key={index} className="mb-3">
+                    <Col lg={4} md={6} xs={12}>
+                      <label>Date</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        {...register(`date_${index}`, { required: true })}
+                      />
+                      {errors[`date_${index}`] && (
+                        <p className="text-danger">Date is required</p>
                       )}
                     </Col>
-                  )}
-                </Row>
-              ))}
+                    <Col lg={4} md={6} xs={12}>
+                      <label>Status</label>
+                      <select
+                        className="form-control"
+                        {...register(`status_${index}`, { required: true })}
+                      >
+                        <option value="">-- SELECT --</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="In-Progress">In-Progress</option>
+                        <option value="Approved">Approved</option>
+                      </select>
+                      {errors[`status_${index}`] && (
+                        <p className="text-danger">Status is required</p>
+                      )}
+                    </Col>
+                    <Col lg={4} md={6} xs={12}>
+                      <label>Remarks</label>
+                      <textarea
+                        className="form-control"
+                        {...register(`remarks_${index}`, { required: true })}
+                        placeholder="Remarks"
+                      />
+                      {errors[`remarks_${index}`] && (
+                        <p className="text-danger">Remarks are required</p>
+                      )}
+                    </Col>
 
-              <button type="submit" className="btn btn-primary mt-3">
-                Submit
-              </button>
-            </form>
-          </div>
+                    {!field.prefilled && (
+                      <Col lg={4} className="d-flex align-items-center">
+                        <Button
+                          variant="danger"
+                          onClick={() => removeRemarkField(index)}
+                        >
+                          -
+                        </Button>
+                      </Col>
+                    )}
+                    {field.prefilled && (
+                      <Col
+                        lg={4}
+                        className="px-1 py-1 d-flex align-items-center"
+                      >
+                        <Button variant="success" onClick={addRemarkField}>
+                          +
+                        </Button>
+                        {field._id && (
+                          <FaTrash
+                            className="text-danger cursor-pointer ms-2"
+                            onClick={() => deleteRemark(field._id)}
+                          />
+                        )}
+                      </Col>
+                    )}
+                  </Row>
+                ))}
+
+                <button type="submit" className="btn btn-primary mt-3">
+                  Submit
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </div>
