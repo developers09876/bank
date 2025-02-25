@@ -230,8 +230,11 @@ function LeadDetails({ collapsed }) {
                       <Descriptions.Item label="Email Id">
                         {record.email}
                       </Descriptions.Item>
-                      <Descriptions.Item label="Contact ">
+                      <Descriptions.Item label="Contact Number">
                         {record.contactNumber}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Alter PhoneNumber ">
+                        {record.alternumber}
                       </Descriptions.Item>
                       <Descriptions.Item label="Adhaar Number">
                         {record.aadhar}

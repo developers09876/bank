@@ -147,6 +147,9 @@ function LeadDetails({ collapsed }) {
                 <Descriptions.Item label="Contact ">
                   {record.contactNumber}
                 </Descriptions.Item>
+                <Descriptions.Item label="Alter PhoneNumber ">
+                  {record.alternumber}
+                </Descriptions.Item>
                 <Descriptions.Item label="Adhaar Number">
                   {record.aadhar}
                 </Descriptions.Item>

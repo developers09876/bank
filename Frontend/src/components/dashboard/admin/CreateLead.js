@@ -380,6 +380,7 @@ function CreateLead() {
       userId: id,
       userType: userType,
       contactNumber: data.contactNumber,
+      alternumber: data.alternumber,
       email: data.email,
       aadhar: data.aadhar,
       purpose: data.purpose,
@@ -564,6 +565,45 @@ function CreateLead() {
                 {errors.contactNumber && (
                   <p className="text-red-500">{errors.contactNumber.message}</p>
                 )}
+              </Col>
+              <Col xs={12} md={6} lg={4}>
+                <div>
+                  <label className="vendorpage_labelCss">
+                    {" "}
+                    Alter Phone Number
+                  </label>
+                  <input
+                    className="inputcolumn-ourProfile"
+                    type="text"
+                    name="alternumber"
+                    {...register("alternumber", {
+                      required: "phone number is required",
+                      minLength: {
+                        value: 10,
+                        message: "phone number must be exactly 10 digits",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "phone number must be exactly 10 digits",
+                      },
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message:
+                          "Only numbers are allowed (10 digits required)",
+                      },
+                    })}
+                    placeholder="Enter your 10-digit contact number"
+                    maxLength={10}
+                    onKeyPress={(e) => {
+                      if (!/[0-9]/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                  {errors.alternumber && (
+                    <p className="text-red-500">{errors.alternumber.message}</p>
+                  )}
+                </div>
               </Col>
               <Col xs={12} md={6} lg={4}>
                 <div>
