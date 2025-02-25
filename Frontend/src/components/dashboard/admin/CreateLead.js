@@ -366,7 +366,8 @@ function CreateLead() {
     formState: { errors },
   } = useForm();
 
-  const category = watch("employeeCategory");
+  const category = watch("taxType");
+  const inscategory = watch("insuranceType");
   const serviceType = watch("serviceType");
   const navigate = useNavigate();
   const id = localStorage.getItem("id");
@@ -379,6 +380,7 @@ function CreateLead() {
       userId: id,
       userType: userType,
       contactNumber: data.contactNumber,
+      alternumber: data.alternumber,
       email: data.email,
       aadhar: data.aadhar,
       purpose: data.purpose,
@@ -393,6 +395,8 @@ function CreateLead() {
       taxType: data.taxType,
       businessType: data.businessType,
       serviceType: data.serviceType,
+      subCategory: data.subCategory,
+      VehicleType: data.VehicleType,
     };
     const detail = {
       userType: "user",
@@ -403,10 +407,10 @@ function CreateLead() {
       email: data.email,
     };
     try {
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
+      // const res = await axios.post(
+      //   `http://localhost:5000/signup/register`,
+      //   detail
+      // );
       const response = await axios.post(
         `http://localhost:5000/lead/createlead`,
         details
@@ -564,6 +568,45 @@ function CreateLead() {
               </Col>
               <Col xs={12} md={6} lg={4}>
                 <div>
+                  <label className="vendorpage_labelCss">
+                    {" "}
+                    Alter Phone Number
+                  </label>
+                  <input
+                    className="inputcolumn-ourProfile"
+                    type="text"
+                    name="alternumber"
+                    {...register("alternumber", {
+                      required: "phone number is required",
+                      minLength: {
+                        value: 10,
+                        message: "phone number must be exactly 10 digits",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "phone number must be exactly 10 digits",
+                      },
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message:
+                          "Only numbers are allowed (10 digits required)",
+                      },
+                    })}
+                    placeholder="Enter your 10-digit contact number"
+                    maxLength={10}
+                    onKeyPress={(e) => {
+                      if (!/[0-9]/.test(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                  />
+                  {errors.alternumber && (
+                    <p className="text-red-500">{errors.alternumber.message}</p>
+                  )}
+                </div>
+              </Col>
+              <Col xs={12} md={6} lg={4}>
+                <div>
                   <label className="vendorpage_labelCss">Aadhaar Number</label>
                   <input
                     className="inputcolumn-ourProfile"
@@ -635,7 +678,7 @@ function CreateLead() {
                   )}
                 </div>
               </Col>
-              {serviceType === "LoanEmployee" && (
+              {watch("serviceType") === "LoanEmployee" && (
                 <>
                   <Col xs={12} md={6} lg={4}>
                     <div>
@@ -746,7 +789,7 @@ function CreateLead() {
                   </Col>
                 </>
               )}
-              {serviceType === "InsuranceEmployee" && (
+              {watch("serviceType") === "InsuranceEmployee" && (
                 <>
                   <Col xs={12} md={6} lg={4}>
                     <div>
@@ -780,24 +823,68 @@ function CreateLead() {
                           </Select>
                         )}
                       />
-                      {errors.employeeCategory && (
+                      {errors.insuranceType && (
                         <p className="text-danger">
-                          Employee category is required
+                          Insurance category is required
                         </p>
                       )}
                     </div>
                   </Col>
+                  {inscategory === "Vehicle Insurance" && (
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Vehicle Type
+                        </label>
+                        <Controller
+                          name="VehicleType"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              // placeholder="Select Vehicle Type"
+                            >
+                              <Option value="">Select vehicle type</Option>
+                              <Option value="Bike Insurance">
+                                Bike Insurance
+                              </Option>
+                              <Option value="Car Insurance">
+                                Car Insurance
+                              </Option>
+                              <Option value=" Heavy vehicle Insurance">
+                                Heavy vehicle Insurance
+                              </Option>
+                              <Option value="Used Vechicle Insurance">
+                                Used Vechicle Insurance
+                              </Option>
+                              <Option value="Other Vechicle Insurance">
+                                Other Vechicle Insurance
+                              </Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.VehicleType && (
+                          <p className="text-danger">
+                            Vehicle Type is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+                  )}
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">Policy Term</label>
                       <input
                         className="inputcolumn-ourProfile"
                         type="number"
-                        name="policyTerm"
-                        {...register("policyTerm", { required: true })}
+                        name="PolicyTerm"
+                        {...register("PolicyTerm", { required: true })}
                         placeholder="Policy Term (years)"
                       />
-                      {errors.policyTerm && (
+                      {errors.PolicyTerm && (
                         <p className="text-danger">Policy Term is required</p>
                       )}
                     </div>
@@ -821,13 +908,13 @@ function CreateLead() {
                   </Col>
                 </>
               )}
-              {serviceType === "TaxEmployee" && (
+              {watch("serviceType") === "TaxEmployee" && (
                 <>
                   <Col xs={12} md={6} lg={4}>
                     <div>
                       <label className="vendorpage_labelCss">Category:</label>
                       <Controller
-                        name="taxtype"
+                        name="taxType"
                         control={control}
                         defaultValue=""
                         rules={{ required: true }}
@@ -835,10 +922,10 @@ function CreateLead() {
                           <Select
                             {...field}
                             className="inputcolumn_drp"
-                            placeholder="Select taxtype"
+                            placeholder="Select Tax Category"
                             onChange={(value) => {
                               field.onChange(value);
-                              setValue("taxtype", value);
+                              setValue("taxType", value);
                             }}
                           >
                             <Option value="">Select Category</Option>
@@ -853,10 +940,8 @@ function CreateLead() {
                           </Select>
                         )}
                       />
-                      {errors.employeeCategory && (
-                        <p className="text-danger">
-                          Employee category is required
-                        </p>
+                      {errors.taxType && (
+                        <p className="text-danger">Tax category is required</p>
                       )}
                     </div>
                   </Col>
@@ -882,10 +967,19 @@ function CreateLead() {
                                 setValue("subCategory", value);
                               }}
                             >
-                              <Option value="Company">Company</Option>
-                              <Option value="Individual">Individual</Option>
-                              <Option value="Firm">Firm</Option>
-                              <Option value="Other">Other</Option>
+                              <Option value="">Select Sub-category</Option>
+                              <Option value="Annual return Filling(Individual)">
+                                Annual return Filling(Individual)
+                              </Option>
+                              <Option value="Annual return Filling(Firm/Company)">
+                                Annual return Filling(Firm/Company)
+                              </Option>
+                              <Option value="Company Registration">
+                                Company Registration
+                              </Option>
+                              <Option value="Notice Services">
+                                Notice Services
+                              </Option>
                             </Select>
                           )}
                         />
@@ -895,6 +989,48 @@ function CreateLead() {
                           </p>
                         )}
                       </div>
+                    </Col>
+                  )}
+                  {/* Subcategory for GST Services */}
+                  {(category === "GSTservices" ||
+                    category === "Tds&TcsServices" ||
+                    category === "Esi&PfServices") && (
+                    <Col xs={12} md={6} lg={4}>
+                      <label className="vendorpage_labelCss">
+                        Sub Category:
+                      </label>
+                      <Controller
+                        name="subCategory"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            placeholder="Select Sub Category"
+                            onChange={(value) => setValue("subCategory", value)}
+                          >
+                            <Option value="">Select Sub-category</Option>
+                            <Option value="Registration">Registration</Option>
+                            <Option value="Monthly Return Filing">
+                              Monthly Return Filing
+                            </Option>
+                            <Option value="Quaterly Return Filing">
+                              Quaterly Return Filing
+                            </Option>
+                            <Option value="Annual Return Filing">
+                              Annual Return Filing
+                            </Option>
+                            <Option value="Notice Services">
+                              Notice Services
+                            </Option>
+                          </Select>
+                        )}
+                      />
+                      {errors.subCategory && (
+                        <p className="text-danger">Sub-category is required</p>
+                      )}
                     </Col>
                   )}
                   <Col xs={12} md={6} lg={4}>

@@ -182,7 +182,7 @@ function ContactUs() {
           <Descriptions
             // title="Contact Details"
             // bordered
-            column={{ lg: 1, md: 1, sm: 1 }}
+            column={1}
           >
             <Descriptions.Item label="Email">
               {selectedRecord.email}
@@ -195,6 +195,9 @@ function ContactUs() {
             </Descriptions.Item>
             <Descriptions.Item label="Message">
               {selectedRecord.message}
+            </Descriptions.Item>
+            <Descriptions.Item label="Service Type">
+              {selectedRecord.serviceType}
             </Descriptions.Item>
           </Descriptions>
         )}

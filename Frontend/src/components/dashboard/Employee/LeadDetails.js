@@ -130,8 +130,41 @@ function LeadDetails({ collapsed }) {
             <h3>Lead Details</h3>
           </center>
         </div>
-        <div style={{ marginTop: "20px" }}>
-          <Row className="px-2">
+        <Row className="px-2 py-3">
+          <Col lg={12} md={12}>
+            <Card
+              style={{ width: "100%" }}
+              className="loandetail-custom-card"
+              title="Personal Details"
+            >
+              <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                <Descriptions.Item label="Name">
+                  {record.firstname} {record.lastname}
+                </Descriptions.Item>
+                <Descriptions.Item label="Email Id">
+                  {record.email}
+                </Descriptions.Item>
+                <Descriptions.Item label="Contact ">
+                  {record.contactNumber}
+                </Descriptions.Item>
+                <Descriptions.Item label="Alter PhoneNumber ">
+                  {record.alternumber}
+                </Descriptions.Item>
+                <Descriptions.Item label="Adhaar Number">
+                  {record.aadhar}
+                </Descriptions.Item>
+                <Descriptions.Item label="PanCard Number">
+                  {record.panno}
+                </Descriptions.Item>
+                {/* <Descriptions.Item label="GST Number">
+                               {record.gst}
+                             </Descriptions.Item> */}
+              </Descriptions>
+            </Card>
+          </Col>
+        </Row>
+        <Row className="px-2">
+          {record.serviceType === "LoanEmployee" && (
             <Col lg={12} md={12}>
               <Card
                 style={{ width: "100%" }}
@@ -139,36 +172,104 @@ function LeadDetails({ collapsed }) {
                 title="Lead Details"
               >
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                  <Descriptions.Item label="Name">{`${fetchedData.firstname} ${fetchedData.lastname}`}</Descriptions.Item>
-                  <Descriptions.Item label="Email">
-                    {fetchedData.email}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Phone">
-                    {fetchedData.contactNumber}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Aadhar Number">
-                    {fetchedData.aadhar}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="PAN Card Number">
-                    {fetchedData.panno}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="How Immediate">
-                    {fetchedData.howimidiate}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Previously Applied">
-                    {fetchedData.previouslyapplied}
+                  <Descriptions.Item label="Service Type">
+                    Loan
                   </Descriptions.Item>
                   <Descriptions.Item label="Loan Amount">
-                    {fetchedData.amount}
+                    {record.amount}
                   </Descriptions.Item>
                   <Descriptions.Item label="Purpose Of Loan">
-                    {fetchedData.purpose}
+                    {record.purpose}
+                  </Descriptions.Item>
+                  {record.userType && (
+                    <Descriptions.Item label="User Type">
+                      {record.userType}
+                    </Descriptions.Item>
+                  )}
+                  <Descriptions.Item label="Previously Applied">
+                    {record.previouslyapplied}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="How Immediate">
+                    {record.howimidiate}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>
             </Col>
-          </Row>
-        </div>
+          )}
+          {record.serviceType === "TaxEmployee" && (
+            <Col lg={12} md={12}>
+              <Card
+                style={{ width: "100%" }}
+                className="loandetail-custom-card"
+                title="Lead Details"
+              >
+                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Service Type">
+                    Tax
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Tax Category">
+                    {record.taxType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Sub-Category">
+                    {record.subCategory}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="IncomeTax Filling Status">
+                    {record.incomeTaxStatus}
+                  </Descriptions.Item>
+                  {record.userType && (
+                    <Descriptions.Item label="User Type">
+                      {record.userType}
+                    </Descriptions.Item>
+                  )}
+                  <Descriptions.Item label="Business Type">
+                    {record.businessType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Previously Applied">
+                    {record.previouslyapplied}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            </Col>
+          )}
+          {record.serviceType === "InsuranceEmployee" && (
+            <Col lg={12} md={12}>
+              <Card
+                style={{ width: "100%" }}
+                className="loandetail-custom-card"
+                title="Lead Details"
+              >
+                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Service Type">
+                    Insurance
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Insurance Category">
+                    {record.insuranceType}
+                  </Descriptions.Item>
+                  {record.insuranceType === "Vehicle Insurance" &&
+                    record.VehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.VehicleType}
+                      </Descriptions.Item>
+                    )}
+                  <Descriptions.Item label="Policy Term">
+                    {record.PolicyTerm}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Sum Assured">
+                    {record.sumAssured}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Previously Applied">
+                    {record.previouslyapplied}
+                  </Descriptions.Item>
+                  {record.userType && (
+                    <Descriptions.Item label="User Type">
+                      {record.userType}
+                    </Descriptions.Item>
+                  )}
+                </Descriptions>
+              </Card>
+            </Col>
+          )}
+        </Row>
         <Button
           type="primary"
           style={{ marginTop: "20px", marginLeft: "20px" }}
@@ -180,7 +281,7 @@ function LeadDetails({ collapsed }) {
         <div className="mt-3">
           <ToastContainer position="top-right" autoClose={3000} />
           <h3>Add Remarks</h3>
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-5 p-3">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-2 p-3">
             {remarksFields.map((field, index) => (
               <Row key={index} className="mb-3">
                 <Col xs={24} md={8} className="pe-md-3">

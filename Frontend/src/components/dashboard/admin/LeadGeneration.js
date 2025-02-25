@@ -88,15 +88,25 @@ function LoanLeadManagement() {
       key: "phone",
     },
     {
-      title: "Loan Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Service Type",
+      dataIndex: "serviceType",
+      key: "serviceType",
+      render: (text) => {
+        const serviceMap = {
+          LoanEmployee: "Loan",
+          TaxEmployee: "Tax",
+          InsuranceEmployee: "Insurance",
+          StockMarket: "Stock Market",
+        };
+
+        return serviceMap[text] || text;
+      },
     },
-    {
-      title: "Purpose",
-      dataIndex: "purpose",
-      key: "purpose",
-    },
+    // {
+    //   title: "Purpose",
+    //   dataIndex: "purpose",
+    //   key: "purpose",
+    // },
     {
       title: "Action",
       dataIndex: "action",

@@ -53,6 +53,16 @@ function LeadTaskManagement() {
       title: "Service Type",
       dataIndex: "serviceType",
       key: "serviceType",
+      render: (text) => {
+        const serviceMap = {
+          LoanEmployee: "Loan",
+          TaxEmployee: "Tax",
+          InsuranceEmployee: "Insurance",
+          StockMarket: "Stock Market",
+        };
+
+        return serviceMap[text] || text;
+      },
     },
     {
       title: "Action",

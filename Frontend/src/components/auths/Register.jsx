@@ -31,7 +31,7 @@ const Register = () => {
     <div className="register-container">
       <Header />
       <ToastContainer />
-      <Row className="mt-5">
+      <Row className="mt-5 registerpageRow">
       <Grid container >
         <Grid item xs={12} md={6} >
           <Typography  className="typoheading"variant="h4" fontWeight="bold" align="center" mt={6}>
