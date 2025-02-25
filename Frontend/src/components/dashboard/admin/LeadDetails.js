@@ -215,69 +215,6 @@ function LeadDetails({ collapsed }) {
             </center>
             <div>
               <Row className="px-2 py-3">
-                {/* <Col>
-              <Card>
-                <Row>
-                  <Col
-                    className="firstrowcol px-1 py-1"
-                    lg={3}
-                    // md={12}
-                    style={{
-                      height: "auto",
-                      alignContent: "center",
-                      borderRight: "1px #e5e7eb solid",
-                      textAlign: "-webkit-center",
-                    }}
-                  >
-                    <div className="photo-preview mb-2">
-                      <img
-                        src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
-                        //   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeM_uVhUxuWMjezl0rV0KPIad0chGa4Pw6aA&s"
-                        // src={record.photographs}
-                        alt="Photograph"
-                        className="photo-image"
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          //   objectFit: "cover",
-                          borderRadius: "50%",
-                          border: "6px solid #80808040",
-                        }}
-                      />
-                    </div>
-                    <p>
-                      {record.firstname} {record.lastname}
-                    </p>
-                    <p>{record.email}</p>
-                    <p>{record.contactNumber}</p>
-                  </Col>
-
-                  <Col lg={9} className="px-3 py-1">
-                    <center>
-                      <h6>Other Information</h6>
-                    </center>
-                    <Descriptions
-                      size="small"
-                      // layout="vertical"
-                      style={{
-                        paddingBottom: "10px",
-                      }}
-                      column={{ xl: 1, lg: 1, xs: 1, md: 1, sm: 1 }}
-                    >
-                      <Descriptions.Item label="Adhaar Number">
-                        {record.aadhar}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="PanCard Number">
-                        {record.panno}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="GST Number">
-                        {record.gst}
-                      </Descriptions.Item>
-                    </Descriptions>
-                  </Col>
-                </Row>
-              </Card>
-            </Col> */}
                 <Col lg={12} md={12}>
                   <Card
                     style={{ width: "100%" }}
@@ -302,41 +239,125 @@ function LeadDetails({ collapsed }) {
                       <Descriptions.Item label="PanCard Number">
                         {record.panno}
                       </Descriptions.Item>
-                      <Descriptions.Item label="GST Number">
+                      {/* <Descriptions.Item label="GST Number">
                         {record.gst}
-                      </Descriptions.Item>
+                      </Descriptions.Item> */}
                     </Descriptions>
                   </Card>
                 </Col>
               </Row>
               <Row className="px-2">
-                <Col lg={12} md={12}>
-                  <Card
-                    style={{ width: "100%" }}
-                    className="loandetail-custom-card"
-                    title="Loan Details"
-                  >
-                    <Descriptions
-                      column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                {record.serviceType === "LoanEmployee" && (
+                  <Col lg={12} md={12}>
+                    <Card
+                      style={{ width: "100%" }}
+                      className="loandetail-custom-card"
+                      title="Lead Details"
                     >
-                      <Descriptions.Item label="Loan Amount">
-                        {record.amount}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Purpose Of Loan">
-                        {record.purpose}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="User Type">
-                        {record.userType}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="Previously Applied">
-                        {record.previouslyapplied}
-                      </Descriptions.Item>
-                      <Descriptions.Item label="How Immediate">
-                        {record.howimidiate}
-                      </Descriptions.Item>
-                    </Descriptions>
-                  </Card>
-                </Col>
+                      <Descriptions
+                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                      >
+                        <Descriptions.Item label="Service Type">
+                          Loan
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Loan Amount">
+                          {record.amount}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Purpose Of Loan">
+                          {record.purpose}
+                        </Descriptions.Item>
+                        {record.userType && (
+                          <Descriptions.Item label="User Type">
+                            {record.userType}
+                          </Descriptions.Item>
+                        )}
+                        <Descriptions.Item label="Previously Applied">
+                          {record.previouslyapplied}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="How Immediate">
+                          {record.howimidiate}
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                )}
+                {record.serviceType === "TaxEmployee" && (
+                  <Col lg={12} md={12}>
+                    <Card
+                      style={{ width: "100%" }}
+                      className="loandetail-custom-card"
+                      title="Lead Details"
+                    >
+                      <Descriptions
+                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                      >
+                        <Descriptions.Item label="Service Type">
+                          Tax
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Tax Category">
+                          {record.taxType}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Sub-Category">
+                          {record.subCategory}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="IncomeTax Filling Status">
+                          {record.incomeTaxStatus}
+                        </Descriptions.Item>
+                        {record.userType && (
+                          <Descriptions.Item label="User Type">
+                            {record.userType}
+                          </Descriptions.Item>
+                        )}
+                        <Descriptions.Item label="Business Type">
+                          {record.businessType}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Previously Applied">
+                          {record.previouslyapplied}
+                        </Descriptions.Item>
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                )}
+                {record.serviceType === "InsuranceEmployee" && (
+                  <Col lg={12} md={12}>
+                    <Card
+                      style={{ width: "100%" }}
+                      className="loandetail-custom-card"
+                      title="Lead Details"
+                    >
+                      <Descriptions
+                        column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}
+                      >
+                        <Descriptions.Item label="Service Type">
+                          Insurance
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Insurance Category">
+                          {record.insuranceType}
+                        </Descriptions.Item>
+                        {record.insuranceType === "Vehicle Insurance" &&
+                          record.VehicleType && (
+                            <Descriptions.Item label="Vehicle Type">
+                              {record.VehicleType}
+                            </Descriptions.Item>
+                          )}
+                        <Descriptions.Item label="Policy Term">
+                          {record.PolicyTerm}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Sum Assured">
+                          {record.sumAssured}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Previously Applied">
+                          {record.previouslyapplied}
+                        </Descriptions.Item>
+                        {record.userType && (
+                          <Descriptions.Item label="User Type">
+                            {record.userType}
+                          </Descriptions.Item>
+                        )}
+                      </Descriptions>
+                    </Card>
+                  </Col>
+                )}
               </Row>
 
               <Row className="px-2">

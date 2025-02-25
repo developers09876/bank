@@ -9,9 +9,9 @@ export async function createLead(req, res, next) {
       lastname: data.lastname,
       userId: data.userId,
       contactNumber: data.contactNumber,
-      alternumber:data.alternumber,
+      alternumber: data.alternumber,
       email: data.email,
-      aadhaarNumber: data.aadhaarNumber,
+      aadhar: data.aadhar,
       purpose: data.purpose,
       amount: data.amount,
       howimidiate: data.howimidiate,
@@ -24,6 +24,8 @@ export async function createLead(req, res, next) {
       taxType: data.taxType,
       businessType: data.businessType,
       serviceType: data.serviceType,
+      subCategory: data.subCategory,
+      VehicleType: data.VehicleType,
       panCardNumber: data.panCardNumber,
     };
     const lead = await Lead.create(details);
@@ -49,7 +51,7 @@ export async function updateLead(req, res, next) {
           date: child.date,
           remarks: child.remarks,
           status: child.status,
-          isApproved: child.isApproved
+          isApproved: child.isApproved,
           // notiFicatioinStauts: child.notiFicatioinStauts,
         }))
       : [];
@@ -67,7 +69,7 @@ export async function updateLead(req, res, next) {
       previouslyapplied: data.previouslyapplied,
       panCardNumber: data.panCardNumber,
       addremarks: addremarks,
-      isApproved:data.isApproved
+      isApproved: data.isApproved,
     };
 
     const updatedLead = await Lead.findByIdAndUpdate(leadId, updatedDetails, {
@@ -150,7 +152,7 @@ export async function getById(req, res, next) {
   }
 }
 
-export async function  getByLeadDetailsID(req, res, next) {
+export async function getByLeadDetailsID(req, res, next) {
   try {
     const { id } = req.params;
     const leads = await Lead.find({ _id: id });
