@@ -52,7 +52,7 @@ export async function updateLead(req, res, next) {
           remarks: child.remarks,
           status: child.status,
           isApproved: child.isApproved,
-          // notiFicatioinStauts: child.notiFicatioinStauts,
+          notiFicatioinStauts: child.notiFicatioinStauts,
         }))
       : [];
     console.log("addremarks", addremarks);
