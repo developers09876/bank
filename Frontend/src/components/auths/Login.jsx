@@ -107,7 +107,7 @@ const LoginPage = () => {
 
   const onSubmit = (data) => {
     handleFormSubmit();
-    console.log("formState", getValues());
+    console.log("formStates", getValues());
   };
 
   const onSubmit1 = async (data) => {
@@ -180,38 +180,44 @@ const LoginPage = () => {
   return (
     <>
       <Header />
-      <div style={{marginTop:'105px', height: 'calc(100vh - 105px)',  alignContent:'center'}}>
-      <Container
-        maxWidth="lg"
+      <div
         style={{
-          // height: "88vh",
-          display: "flex",
-          alignItems: "center",
-          // marginTop: "120px",
+          marginTop: "105px",
+          height: "calc(100vh - 105px)",
+          alignContent: "center",
         }}
       >
-        <Grid container>
-          <Grid item xs={12} md={6} className="px-1 py-2">
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              // height="95%"
-              px={4}
-            >
-              {step === "first" ? (
-                <form>
-                  <Box mb={4}>
-                    <Typography variant="h4" fontWeight="bold">
-                      Welcome back!
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                      Welcome back! Please enter your details
-                    </Typography>
-                  </Box>
+        <Container
+          maxWidth="lg"
+          style={{
+            // height: "88vh",
+            display: "flex",
+            alignItems: "center",
+            // marginTop: "120px",
+          }}
+        >
+          <Grid container>
+            <Grid item xs={12} md={6} className="px-1 py-2">
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                // height="95%"
+                px={4}
+              >
+                {step === "first" ? (
+                  <form>
+                    <Box mb={4}>
+                      <Typography variant="h4" fontWeight="bold">
+                        Welcome back!
+                      </Typography>
+                      <Typography variant="body1" color="textSecondary">
+                        Welcome back! Please enter your details
+                      </Typography>
+                    </Box>
 
-                  {/* <TextField
+                    {/* <TextField
                     label="Email"
                     variant="outlined"
                     fullWidth
@@ -226,38 +232,38 @@ const LoginPage = () => {
                     error={!!errors.email}
                     helperText={errors.email}
                   /> */}
-                  <TextField
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                    required
-                    margin="normal"
-                    value={email}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      setEmail(value);
-                      setErrors({ ...errors, email: "" }); // Clear error while typing
-                    }}
-                    onBlur={() => {
-                      const emailRegex =
-                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    <TextField
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      margin="normal"
+                      value={email}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setEmail(value);
+                        setErrors({ ...errors, email: "" }); // Clear error while typing
+                      }}
+                      onBlur={() => {
+                        const emailRegex =
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-                      if (!emailRegex.test(email)) {
-                        setErrors({
-                          ...errors,
-                          email: "Enter a valid email address",
-                        });
-                      } else {
-                        setErrors({ ...errors, email: "" }); // Clear error if valid
-                      }
-                    }}
-                    error={!!errors.email}
-                    helperText={errors.email}
-                  />
+                        if (!emailRegex.test(email)) {
+                          setErrors({
+                            ...errors,
+                            email: "Enter a valid email address",
+                          });
+                        } else {
+                          setErrors({ ...errors, email: "" }); // Clear error if valid
+                        }
+                      }}
+                      error={!!errors.email}
+                      helperText={errors.email}
+                    />
 
-                  <Divider>Or</Divider>
+                    <Divider>Or</Divider>
 
-                  {/* <TextField
+                    {/* <TextField
                     label="Phone Number"
                     type="tel"
                     variant="outlined"
@@ -273,45 +279,45 @@ const LoginPage = () => {
                     error={!!errors.mobile}
                     helperText={errors.mobile}
                   /> */}
-                  <TextField
-                    label="Phone Number"
-                    type="tel"
-                    variant="outlined"
-                    fullWidth
-                    required
-                    margin="normal"
-                    value={mobile}
-                    onChange={(e) => {
-                      const value = e.target.value;
+                    <TextField
+                      label="Phone Number"
+                      type="tel"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      margin="normal"
+                      value={mobile}
+                      onChange={(e) => {
+                        const value = e.target.value;
 
-                      if (/^\d*$/.test(value) && value.length <= 10) {
-                        setMobile(value);
-                        setErrors({ ...errors, mobile: "" });
-                      } else if (value.length > 10) {
-                        setErrors({
-                          ...errors,
-                          mobile: "Only 10 digits allowed",
-                        });
-                      }
-                    }}
-                    inputProps={{ maxLength: 10 }}
-                    error={!!errors.mobile}
-                    helperText={errors.mobile}
-                  />
+                        if (/^\d*$/.test(value) && value.length <= 10) {
+                          setMobile(value);
+                          setErrors({ ...errors, mobile: "" });
+                        } else if (value.length > 10) {
+                          setErrors({
+                            ...errors,
+                            mobile: "Only 10 digits allowed",
+                          });
+                        }
+                      }}
+                      inputProps={{ maxLength: 10 }}
+                      error={!!errors.mobile}
+                      helperText={errors.mobile}
+                    />
 
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={handleSubmit(onSubmit)}
-                  >
-                    Send OTP
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      size="large"
+                      type="submit"
+                      sx={{ mt: 3, mb: 2 }}
+                      onClick={handleSubmit(onSubmit)}
+                    >
+                      Send OTP
+                    </Button>
 
-                  {/* <Button
+                    {/* <Button
                     variant="outlined"
                     startIcon={<GoogleIcon />}
                     fullWidth
@@ -321,129 +327,135 @@ const LoginPage = () => {
                     Sign up with Google
                   </Button> */}
 
-                  <Box mt={2}>
-                    <Typography variant="body2"
-                     className="d-block"
-                    >
-                      Don't have an account?{" "}
-                      <Link href="/register">Register here</Link>
-                    </Typography>
-                  </Box>
-                </form>
-              ) : (
-                <div style={{ textAlign: "center" }}>
-                  <Box mb={4}>
+                    <Box mt={2}>
+                      <Typography variant="body2" className="d-block">
+                        Don't have an account?{" "}
+                        <Link href="/register">Register here</Link>
+                      </Typography>
+                    </Box>
+                  </form>
+                ) : (
+                  <div style={{ textAlign: "center" }}>
+                    <Box mb={4}>
+                      <div
+                        style={{
+                          textAlign: "center",
+                          justifyContent: "center",
+                          display: "flex",
+                          color: "#00397f",
+                          fontSize: "60px",
+                        }}
+                      >
+                        <MdVerified />
+                      </div>
+                      <br />
+                      <Typography variant="h4" fontWeight="bold">
+                        Verification Code
+                      </Typography>
+                      <Typography variant="body1" color="textSecondary">
+                        Enter the 4 digit verification code that was sent to
+                        your Email or PhoneNumber
+                      </Typography>
+                    </Box>
                     <div
+                      className="otp"
                       style={{
                         textAlign: "center",
                         justifyContent: "center",
                         display: "flex",
-                        color: "#00397f",
-                        fontSize: "60px",
                       }}
                     >
-                      <MdVerified />
+                      <OtpInput
+                        value={otp}
+                        onChange={setOtp}
+                        numInputs={4}
+                        renderSeparator={<span>-</span>}
+                        renderInput={(props) => <input {...props} />}
+                        inputStyle={{
+                          width: "3rem",
+                          justifyContent: "center",
+                          height: "3rem",
+                          margin: "0 0.5rem",
+                          fontSize: "1.5rem",
+                          borderRadius: "8px",
+                          border: "1px solid #ccc",
+                          textAlign: "center",
+                        }}
+                      />
                     </div>
-                    <br />
-                    <Typography variant="h4" fontWeight="bold">
-                      Verification Code
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                      Enter the 4 digit verification code that was sent to your
-                      Email or PhoneNumber
-                    </Typography>
-                  </Box>
-                  <div
-                    className="otp"
-                    style={{
-                      textAlign: "center",
-                      justifyContent: "center",
-                      display: "flex",
-                    }}
-                  >
-                    <OtpInput
-                      value={otp}
-                      onChange={setOtp}
-                      numInputs={4}
-                      renderSeparator={<span>-</span>}
-                      renderInput={(props) => <input {...props} />}
-                      inputStyle={{
-                        width: "3rem",
-                        justifyContent: "center",
-                        height: "3rem",
-                        margin: "0 0.5rem",
-                        fontSize: "1.5rem",
-                        borderRadius: "8px",
-                        border: "1px solid #ccc",
-                        textAlign: "center",
+                    <p
+                      className="resend-otp"
+                      // onClick={handleSubmit(onSubmit1)}
+                    >
+                      Resend OTP
+                    </p>
+                    <Button
+                      className="forget_button mt-3 justify-content-center"
+                      onClick={handleSubmit(onSubmit1)}
+                      style={{ backgroundColor: "#00397f", color: "white" }}
+                    >
+                      Verify OTP
+                    </Button>
+                  </div>
+                )}
+              </Box>
+            </Grid>
+
+            <Grid item xs={false} md={6} className="px-1 py-2">
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  // height: "95%",
+                }}
+              >
+                <Carousel
+                  autoPlay
+                  infiniteLoop
+                  showThumbs={false}
+                  showStatus={false}
+                  interval={3000}
+                  style={{ width: "100%", height: "50%" }}
+                >
+                  <div>
+                    <img
+                      src="https://fundingguru.com/wp-content/uploads/2024/03/business-loans-tax-implications.jpg"
+                      style={{
+                        width: "100%",
+                        height: "65vh",
+                        objectFit: "fill",
                       }}
+                      alt="Slide 1"
                     />
                   </div>
-                  <p
-                    className="resend-otp"
-                    // onClick={handleSubmit(onSubmit1)}
-                  >
-                    Resend OTP
-                  </p>
-                  <Button
-                    className="forget_button mt-3 justify-content-center"
-                    onClick={handleSubmit(onSubmit1)}
-                    style={{ backgroundColor: "#00397f", color: "white" }}
-                  >
-                    Verify OTP
-                  </Button>
-                </div>
-              )}
-            </Box>
+                  <div>
+                    <img
+                      src="https://www.shutterstock.com/shutterstock/photos/2426984001/display_1500/stock-photo-businessman-using-laptop-in-data-management-with-a-networked-copy-space-vertical-2426984001.jpg"
+                      style={{
+                        width: "100%",
+                        height: "65vh",
+                        objectFit: "cover",
+                      }}
+                      alt="Slide 2"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2stczE5LWljZS0zNjQ5LWx5ajIwNTQtMDktaW5jb21ldGF4cmV0dXJuLmpwZw.jpg"
+                      style={{
+                        width: "100%",
+                        height: "65vh",
+                        objectFit: "fill",
+                      }}
+                      alt="Slide 3"
+                    />
+                  </div>
+                </Carousel>
+              </Box>
+            </Grid>
           </Grid>
-
-          <Grid item xs={false} md={6} className="px-1 py-2">
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                // height: "95%",
-              }}
-            >
-              <Carousel
-                autoPlay
-                infiniteLoop
-                showThumbs={false}
-                showStatus={false}
-                interval={3000}
-                style={{ width: "100%", height: "50%" }}
-              >
-                <div>
-                  <img
-                    src="https://fundingguru.com/wp-content/uploads/2024/03/business-loans-tax-implications.jpg"
-                    style={{ width: "100%", height: "65vh", objectFit: "fill" }}
-                    alt="Slide 1"
-                  />
-                </div>
-                <div>
-                  <img
-                    src="https://www.shutterstock.com/shutterstock/photos/2426984001/display_1500/stock-photo-businessman-using-laptop-in-data-management-with-a-networked-copy-space-vertical-2426984001.jpg"
-                    style={{
-                      width: "100%",
-                      height: "65vh",
-                      objectFit: "cover",
-                    }}
-                    alt="Slide 2"
-                  />
-                </div>
-                <div>
-                  <img
-                    src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA2L2stczE5LWljZS0zNjQ5LWx5ajIwNTQtMDktaW5jb21ldGF4cmV0dXJuLmpwZw.jpg"
-                    style={{ width: "100%", height: "65vh", objectFit: "fill" }}
-                    alt="Slide 3"
-                  />
-                </div>
-              </Carousel>
-            </Box>
-          </Grid>
-        </Grid>
-        <ToastContainer />
-      </Container>
+          <ToastContainer />
+        </Container>
       </div>
     </>
   );
