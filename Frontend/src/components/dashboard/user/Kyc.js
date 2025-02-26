@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, button, Card, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Header from "../../Layout/Header";
 import "./MyProfile.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -98,16 +97,16 @@ function Kycvendor() {
 
   return (
     <div>
-      <Header/>
-       <ToastContainer/>
-      <Container>
+      {/* <Header/> */}
+      <ToastContainer />
+      <Container style={{ justifyContent: "center" }}>
         <div
-          className="ourProfileParentdiv"
+          className="ourProfileParentdiv px-1 py-1"
           style={{
             backgroundColor: "white",
-            padding: "10px 20px",
-            width: "80%",
-            marginLeft: "50px",
+            // padding: "10px 20px",
+            // width: "80%",
+            // marginLeft: "50px",
           }}
         >
           <center>
@@ -117,7 +116,7 @@ function Kycvendor() {
               style={{
                 backgroundColor: "#fccc55",
                 padding: "10px",
-                width: "100%",
+                width: "80%",
                 fontSize: "18px",
               }}
             >
@@ -303,7 +302,10 @@ function Kycvendor() {
               </Col>
             </Row>
             <center>
-              <div className="submitbuttons px-4">
+              <div
+                className="submitbuttons px-4"
+                style={{ flexDirection: "unset" }}
+              >
                 <Button
                   className="button1 m-2 p-2"
                   type="submit"

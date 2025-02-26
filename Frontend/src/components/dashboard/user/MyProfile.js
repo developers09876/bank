@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 // import Api from "../../Api";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container } from "react-bootstrap";
 import "./MyProfile.scss";
 import { Select } from "antd";
 import { Option } from "antd/lib/mentions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../../Layout/Header";
 import axios from "axios";
 import Api from "../../../Api";
 
@@ -178,481 +177,486 @@ function TabsVendor() {
 
   return (
     <div>
-      <Header />
-      <Col xs={12} md={12} lg={12}>
-        <div
-          className="ourProfileParentdiv"
-          style={{ backgroundColor: "white", padding: "10px 20px" }}
-        >
-          <div style={{ paddingLeft: "35px" }}>
-            <center>
-              {" "}
-              <h4 className="pages-title mt-3 mb-5"> User Details</h4>
-            </center>
+      <Container style={{ marginTop: "1%" }}>
+        {/* <Header /> */}
+        <Col xs={12} md={12} lg={12}>
+          <div
+            className="ourProfileParentdiv px-1 py-1"
+            style={{ backgroundColor: "white", justifySelf: "center" }}
+          >
+            <div>
+              <center>
+                {" "}
+                <h4 className="pages-title mt-3 mb-5"> User Details</h4>
+              </center>
 
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
-              <div>
-                <Row>
-                  <Row className="py-2">
-                    <Col lg={3}>
-                      {(userDetail?.photographs || watch("imagePreview")) && (
-                        <>
-                          <img
-                            src={
-                              watch("imagePreview") || userDetail.photographs
+              <form onSubmit={handleSubmit(handleFormSubmit)}>
+                <div>
+                  <Row>
+                    <Row className="py-1">
+                      <Col lg={3}>
+                        {(userDetail?.photographs || watch("imagePreview")) && (
+                          <>
+                            <img
+                              src={
+                                watch("imagePreview") || userDetail.photographs
+                              }
+                              alt="Preview"
+                              style={{
+                                width: "150px",
+                                height: "150px",
+                                objectFit: "contain",
+                                marginTop: "10px",
+                              }}
+                            />
+                            <p>Photographs</p>
+                          </>
+                        )}
+                      </Col>
+                    </Row>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Photographs (Passport size)
+                        </label>
+
+                        <input
+                          type="file"
+                          className="inputcolumn-ourProfile"
+                          id="photographsInput"
+                          accept="image/*"
+                          {...register("photographs", {
+                            required: !userDetail?.photographs,
+                          })}
+                          onChange={(e) => {
+                            if (e.target.files[0]) {
+                              const fileUrl = URL.createObjectURL(
+                                e.target.files[0]
+                              );
+                              setValue("imagePreview", fileUrl);
+                              setValue(
+                                "photographsFileName",
+                                e.target.files[0].name
+                              );
                             }
-                            alt="Preview"
-                            style={{
-                              width: "150px",
-                              height: "150px",
-                              objectFit: "contain",
-                              marginTop: "10px",
-                            }}
-                          />
-                          <p>Photographs</p>
-                        </>
-                      )}
+                          }}
+                        />
+
+                        {!userDetail?.photographs && errors.photographs && (
+                          <p className="text-danger">
+                            Photographs are required
+                          </p>
+                        )}
+                      </div>
                     </Col>
-                  </Row>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Photographs (Passport size)
-                      </label>
-
-                      <input
-                        type="file"
-                        className="inputcolumn-ourProfile"
-                        id="photographsInput"
-                        accept="image/*"
-                        {...register("photographs", {
-                          required: !userDetail?.photographs,
-                        })}
-                        onChange={(e) => {
-                          if (e.target.files[0]) {
-                            const fileUrl = URL.createObjectURL(
-                              e.target.files[0]
-                            );
-                            setValue("imagePreview", fileUrl);
-                            setValue(
-                              "photographsFileName",
-                              e.target.files[0].name
-                            );
-                          }
-                        }}
-                      />
-
-                      {!userDetail?.photographs && errors.photographs && (
-                        <p className="text-danger">Photographs are required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">First Name</label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="text"
-                        name="firstname"
-                        {...register("firstname", { required: true })}
-                        placeholder="First Name"
-                      />
-                      {errors.firstname && (
-                        <p className="text-danger">First Name is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Last Name</label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="text"
-                        name="lastname"
-                        {...register("lastname", { required: true })}
-                        placeholder="Last Name"
-                      />
-                      {errors.lastname && (
-                        <p className="text-danger">Last Name is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Date of Birth
-                      </label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="date"
-                        name="dob"
-                        max={
-                          new Date(
-                            new Date().setFullYear(
-                              new Date().getFullYear() - 18
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          First Name
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="firstname"
+                          {...register("firstname", { required: true })}
+                          placeholder="First Name"
+                        />
+                        {errors.firstname && (
+                          <p className="text-danger">First Name is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Last Name</label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="lastname"
+                          {...register("lastname", { required: true })}
+                          placeholder="Last Name"
+                        />
+                        {errors.lastname && (
+                          <p className="text-danger">Last Name is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Date of Birth
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="date"
+                          name="dob"
+                          max={
+                            new Date(
+                              new Date().setFullYear(
+                                new Date().getFullYear() - 18
+                              )
                             )
-                          )
-                            .toISOString()
-                            .split("T")[0]
-                        }
-                        {...register("dob", {
-                          required: true,
-                          validate: (value) => {
-                            const selectedDate = new Date(value);
-                            const minAgeDate = new Date();
-                            minAgeDate.setFullYear(
-                              minAgeDate.getFullYear() - 18
-                            );
-                            return (
-                              selectedDate <= minAgeDate ||
-                              "You must be at least 18 years old"
-                            );
-                          },
-                        })}
-                      />
-                      {errors.dob && (
-                        <p className="text-danger">{errors.dob.message}</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Gender</label>
-                      <Controller
-                        name="gender"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            placeholder="Select Gender"
-                          >
-                            <Option value="Male">Male</Option>
-                            <Option value="Female">Female</Option>
-                            <Option value="Other">Other</Option>
-                          </Select>
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                          {...register("dob", {
+                            required: true,
+                            validate: (value) => {
+                              const selectedDate = new Date(value);
+                              const minAgeDate = new Date();
+                              minAgeDate.setFullYear(
+                                minAgeDate.getFullYear() - 18
+                              );
+                              return (
+                                selectedDate <= minAgeDate ||
+                                "You must be at least 18 years old"
+                              );
+                            },
+                          })}
+                        />
+                        {errors.dob && (
+                          <p className="text-danger">{errors.dob.message}</p>
                         )}
-                      />
-                      {errors.gender && (
-                        <p className="text-danger">Gender is required</p>
-                      )}
-                    </div>
-                  </Col>
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Gender</label>
+                        <Controller
+                          name="gender"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Gender"
+                            >
+                              <Option value="Male">Male</Option>
+                              <Option value="Female">Female</Option>
+                              <Option value="Other">Other</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.gender && (
+                          <p className="text-danger">Gender is required</p>
+                        )}
+                      </div>
+                    </Col>
 
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Marital Status
-                      </label>
-                      <Controller
-                        name="maritalStatus"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            placeholder="Select Marital Status"
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setValue("maritalStatus", value);
-                            }}
-                          >
-                            <Option value="Single">Single</Option>
-                            <Option value="Married">Married</Option>
-                            <Option value="Divorced">Divorced</Option>
-                          </Select>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Marital Status
+                        </label>
+                        <Controller
+                          name="maritalStatus"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Marital Status"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("maritalStatus", value);
+                              }}
+                            >
+                              <Option value="Single">Single</Option>
+                              <Option value="Married">Married</Option>
+                              <Option value="Divorced">Divorced</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.maritalStatus && (
+                          <p className="text-danger">
+                            Marital Status is required
+                          </p>
                         )}
-                      />
-                      {errors.maritalStatus && (
-                        <p className="text-danger">
-                          Marital Status is required
-                        </p>
-                      )}
-                    </div>
-                  </Col>
-                  {watch("maritalStatus") === "Married" && (
-                    <>
-                      <Col xs={12} md={6} lg={4}>
-                        <div>
-                          <label className="vendorpage_labelCss">
-                            Spouse Name
-                          </label>
-                          <Controller
-                            name="spouseName"
-                            control={control}
-                            defaultValue=""
-                            // rules={{ required: true }}
-                            render={({ field }) => (
-                              <input
-                                {...field}
-                                type="text"
-                                className="inputcolumn-ourProfile"
-                                placeholder="Enter Spouse Name"
-                              />
-                            )}
-                          />
-                          {/* {errors.WifeName && (
+                      </div>
+                    </Col>
+                    {watch("maritalStatus") === "Married" && (
+                      <>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              Spouse Name
+                            </label>
+                            <Controller
+                              name="spouseName"
+                              control={control}
+                              defaultValue=""
+                              // rules={{ required: true }}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="text"
+                                  className="inputcolumn-ourProfile"
+                                  placeholder="Enter Spouse Name"
+                                />
+                              )}
+                            />
+                            {/* {errors.WifeName && (
                             <p className="text-danger">
                               Spouse Name is required
                             </p>
                           )} */}
-                        </div>
-                      </Col>
-                      <Col xs={12} md={6} lg={4}>
-                        <div>
-                          <label className="vendorpage_labelCss">
-                            Spouse Occupation
-                          </label>
-                          <Controller
-                            name="spouseOccupation"
-                            control={control}
-                            defaultValue=""
-                            // rules={{ required: true }}
-                            render={({ field }) => (
-                              <Select
-                                {...field}
-                                className="inputcolumn_drp"
-                                placeholder="Select Spouse Occupation"
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValue("spouseOccupation", value);
-                                }}
-                              >
-                                <Option value="Working Person">
-                                  Working Person
-                                </Option>
-                                <Option value="Housewife">Housewife</Option>
-                              </Select>
-                            )}
-                          />
-                          {/* {errors.spouseOccupation && (
+                          </div>
+                        </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              Spouse Occupation
+                            </label>
+                            <Controller
+                              name="spouseOccupation"
+                              control={control}
+                              defaultValue=""
+                              // rules={{ required: true }}
+                              render={({ field }) => (
+                                <Select
+                                  {...field}
+                                  className="inputcolumn_drp"
+                                  placeholder="Select Spouse Occupation"
+                                  onChange={(value) => {
+                                    field.onChange(value);
+                                    setValue("spouseOccupation", value);
+                                  }}
+                                >
+                                  <Option value="Working Person">
+                                    Working Person
+                                  </Option>
+                                  <Option value="Housewife">Housewife</Option>
+                                </Select>
+                              )}
+                            />
+                            {/* {errors.spouseOccupation && (
                             <p className="text-danger">
                               Spouse Occupation is required
                             </p>
                           )} */}
-                        </div>
-                      </Col>
-                      <Col xs={12} md={6} lg={4}>
-                        <div>
-                          <label className="vendorpage_labelCss">
-                            How Many Children?
-                          </label>
-                          <input
-                            className="inputcolumn-ourProfile"
-                            type="number"
-                            {...register(
-                              "totalChildren"
-                              // { required: true }
-                            )}
-                            placeholder="How Many Children?"
-                          />
-                          {/* {errors.totalChildren && (
+                          </div>
+                        </Col>
+                        <Col xs={12} md={6} lg={4}>
+                          <div>
+                            <label className="vendorpage_labelCss">
+                              How Many Children?
+                            </label>
+                            <input
+                              className="inputcolumn-ourProfile"
+                              type="number"
+                              {...register(
+                                "totalChildren"
+                                // { required: true }
+                              )}
+                              placeholder="How Many Children?"
+                            />
+                            {/* {errors.totalChildren && (
                             <p className="text-danger">
                               How Many Children? is required
                             </p>
                           )} */}
-                        </div>
-                      </Col>
-                      {fields.map((field, index) => (
-                        <React.Fragment key={field.id}>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label>Child Gender {index + 1}</label>
-                              <Controller
-                                name={`children.${index}.gender`}
-                                control={control}
-                                // rules={{ required: true }}
-                                render={({ field }) => (
-                                  <Select
-                                    {...field}
-                                    className="inputcolumn_drp"
-                                    placeholder="Select Child Gender"
-                                    options={[
-                                      { value: "Male", label: "Male" },
-                                      { value: "Female", label: "Female" },
-                                    ]}
-                                  />
-                                )}
-                              />
-                              {/* {errors.children?.[index]?.gender && (
+                          </div>
+                        </Col>
+                        {fields.map((field, index) => (
+                          <React.Fragment key={field.id}>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child Gender {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.gender`}
+                                  control={control}
+                                  // rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <Select
+                                      {...field}
+                                      className="inputcolumn_drp"
+                                      placeholder="Select Child Gender"
+                                      options={[
+                                        { value: "Male", label: "Male" },
+                                        { value: "Female", label: "Female" },
+                                      ]}
+                                    />
+                                  )}
+                                />
+                                {/* {errors.children?.[index]?.gender && (
                                 <p className="text-danger">
                                   Child Gender is required
                                 </p>
                               )} */}
-                            </div>
-                          </Col>
+                              </div>
+                            </Col>
 
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label>Child Name {index + 1}</label>
-                              <Controller
-                                name={`children.${index}.name`}
-                                control={control}
-                                // rules={{ required: true }}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    type="text"
-                                    className="inputcolumn-ourProfile"
-                                    placeholder="Enter Child Name"
-                                  />
-                                )}
-                              />
-                              {/* {errors.children?.[index]?.name && (
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child Name {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.name`}
+                                  control={control}
+                                  // rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="inputcolumn-ourProfile"
+                                      placeholder="Enter Child Name"
+                                    />
+                                  )}
+                                />
+                                {/* {errors.children?.[index]?.name && (
                                 <p className="text-danger">
                                   Child Name is required
                                 </p>
                               )} */}
-                            </div>
-                          </Col>
+                              </div>
+                            </Col>
 
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label>Child Age {index + 1}</label>
-                              <Controller
-                                name={`children.${index}.age`}
-                                control={control}
-                                // rules={{ required: true, min: 1 }}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    type="number"
-                                    className="inputcolumn-ourProfile"
-                                    placeholder="Enter Child Age"
-                                  />
-                                )}
-                              />
-                              {/* {errors.children?.[index]?.age && (
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child Age {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.age`}
+                                  control={control}
+                                  // rules={{ required: true, min: 1 }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="number"
+                                      className="inputcolumn-ourProfile"
+                                      placeholder="Enter Child Age"
+                                    />
+                                  )}
+                                />
+                                {/* {errors.children?.[index]?.age && (
                                 <p className="text-danger">
                                   Child Age is required and must be greater than
                                   0
                                 </p>
                               )} */}
-                            </div>
-                          </Col>
+                              </div>
+                            </Col>
 
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label>Child School Name {index + 1}</label>
-                              <Controller
-                                name={`children.${index}.schoolName`}
-                                control={control}
-                                // rules={{ required: true }}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    type="text"
-                                    className="inputcolumn-ourProfile"
-                                    placeholder="Enter Child School Name"
-                                  />
-                                )}
-                              />
-                              {/* {errors.children?.[index]?.schoolName && (
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label>Child School Name {index + 1}</label>
+                                <Controller
+                                  name={`children.${index}.schoolName`}
+                                  control={control}
+                                  // rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="inputcolumn-ourProfile"
+                                      placeholder="Enter Child School Name"
+                                    />
+                                  )}
+                                />
+                                {/* {errors.children?.[index]?.schoolName && (
                                 <p className="text-danger">
                                   Child School Name is required
                                 </p>
                               )} */}
-                            </div>
-                          </Col>
-                        </React.Fragment>
-                      ))}
+                              </div>
+                            </Col>
+                          </React.Fragment>
+                        ))}
 
-                      {watch("spouseOccupation") === "Working Person" && (
-                        <>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">
-                                Spouse Designation
-                              </label>
-                              <Controller
-                                name="spouseDesignation"
-                                control={control}
-                                defaultValue=""
-                                // rules={{ required: true }}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    type="text"
-                                    className="inputcolumn-ourProfile"
-                                    // className="form-control"
-                                    placeholder="Enter Wife's Designation"
-                                  />
-                                )}
-                              />
-                              {/* {errors.spouseDesignation && (
+                        {watch("spouseOccupation") === "Working Person" && (
+                          <>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Spouse Designation
+                                </label>
+                                <Controller
+                                  name="spouseDesignation"
+                                  control={control}
+                                  defaultValue=""
+                                  // rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="text"
+                                      className="inputcolumn-ourProfile"
+                                      // className="form-control"
+                                      placeholder="Enter Wife's Designation"
+                                    />
+                                  )}
+                                />
+                                {/* {errors.spouseDesignation && (
                                 <p className="text-danger">
                                   Spouse Designation is required
                                 </p>
                               )} */}
-                            </div>
-                          </Col>
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">
-                                Spouse Income
-                              </label>
-                              <Controller
-                                name="spouseIncome"
-                                control={control}
-                                defaultValue=""
-                                // rules={{ required: true }}
-                                render={({ field }) => (
-                                  <input
-                                    {...field}
-                                    type="number"
-                                    className="inputcolumn-ourProfile"
-                                    // className="form-control"
-                                    placeholder="Enter spouse Income"
-                                  />
-                                )}
-                              />
-                              {/* {errors.WifeIncome && (
+                              </div>
+                            </Col>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Spouse Income
+                                </label>
+                                <Controller
+                                  name="spouseIncome"
+                                  control={control}
+                                  defaultValue=""
+                                  // rules={{ required: true }}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="number"
+                                      className="inputcolumn-ourProfile"
+                                      // className="form-control"
+                                      placeholder="Enter spouse Income"
+                                    />
+                                  )}
+                                />
+                                {/* {errors.WifeIncome && (
                                 <p className="text-danger">
                                   Spouse Income is required
                                 </p>
                               )} */}
-                            </div>
-                          </Col>
+                              </div>
+                            </Col>
 
-                          <Col xs={12} md={6} lg={4}>
-                            <div>
-                              <label className="vendorpage_labelCss">
-                                Upload Your Spouse Pay Slip
-                              </label>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Upload Your Spouse Pay Slip
+                                </label>
 
-                              <input
-                                type="file"
-                                className="inputcolumn-ourProfile"
-                                id="coApplicantDocsInput"
-                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                                {...register("coApplicantDocs", {
-                                  required: !userDetail?.coApplicantDocs,
-                                })}
-                                onChange={(e) => {
-                                  if (e.target.files[0]) {
-                                    const previewUrl = URL.createObjectURL(
-                                      e.target.files[0]
-                                    );
-                                    setValue("spousePreview", previewUrl);
-                                    setValue(
-                                      "coApplicantDocsUrl",
-                                      e.target.files[0].name
-                                    );
-                                  }
-                                }}
-                              />
+                                <input
+                                  type="file"
+                                  className="inputcolumn-ourProfile"
+                                  id="coApplicantDocsInput"
+                                  accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                                  {...register("coApplicantDocs", {
+                                    required: !userDetail?.coApplicantDocs,
+                                  })}
+                                  onChange={(e) => {
+                                    if (e.target.files[0]) {
+                                      const previewUrl = URL.createObjectURL(
+                                        e.target.files[0]
+                                      );
+                                      setValue("spousePreview", previewUrl);
+                                      setValue(
+                                        "coApplicantDocsUrl",
+                                        e.target.files[0].name
+                                      );
+                                    }
+                                  }}
+                                />
 
-                              {!userDetail?.coApplicantDocs &&
-                                errors.coApplicantDocs && (
-                                  <p className="text-danger">
-                                    Spouse Pay Slip is required
-                                  </p>
-                                )}
-                              {/* {(userDetail?.coApplicantDocs ||
+                                {!userDetail?.coApplicantDocs &&
+                                  errors.coApplicantDocs && (
+                                    <p className="text-danger">
+                                      Spouse Pay Slip is required
+                                    </p>
+                                  )}
+                                {/* {(userDetail?.coApplicantDocs ||
                                 watch("spousePreview")) && (
                                 <>
                                   <img
@@ -671,261 +675,265 @@ function TabsVendor() {
                                   <p>Spouse pay slip</p>
                                 </>
                               )} */}
-                            </div>
-                          </Col>
-                        </>
-                      )}
-                    </>
-                  )}
+                              </div>
+                            </Col>
+                          </>
+                        )}
+                      </>
+                    )}
 
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Nationality</label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="text"
-                        name="nationality"
-                        {...register("nationality", { required: true })}
-                        placeholder="Nationality"
-                      />
-                      {errors.nationality && (
-                        <p className="text-danger">Nationality is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Contact Information
-                      </label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="text"
-                        name="contactNumber"
-                        {...register("contactNumber", {
-                          required: "Contact number is required",
-                          minLength: {
-                            value: 10,
-                            message: "Contact number must be exactly 10 digits",
-                          },
-                          maxLength: {
-                            value: 10,
-                            message: "Contact number must be exactly 10 digits",
-                          },
-                          pattern: {
-                            value: /^[0-9]{10}$/,
-                            message:
-                              "Only numbers are allowed (10 digits required)",
-                          },
-                        })}
-                        placeholder="Enter your 10-digit contact number"
-                        maxLength={10}
-                        onKeyPress={(e) => {
-                          if (!/[0-9]/.test(e.key)) {
-                            e.preventDefault();
-                          }
-                        }}
-                      />
-                      {errors.contactNumber && (
-                        <p className="text-danger">
-                          {errors.contactNumber.message}
-                        </p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Country</label>
-                      <Controller
-                        name="country"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            showSearch
-                            placeholder="Select Country"
-                            optionFilterProp="children"
-                            onChange={(value, option) => {
-                              field.onChange(value);
-                              setValue("country", value); // Update form state
-                              getState(option.key); // Pass the country ID to getState
-                            }}
-                            filterOption={(input, option) =>
-                              option?.children
-                                ?.toLowerCase()
-                                .includes(input.toLowerCase())
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Nationality
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="nationality"
+                          {...register("nationality", { required: true })}
+                          placeholder="Nationality"
+                        />
+                        {errors.nationality && (
+                          <p className="text-danger">Nationality is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Contact Information
+                        </label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="text"
+                          name="contactNumber"
+                          {...register("contactNumber", {
+                            required: "Contact number is required",
+                            minLength: {
+                              value: 10,
+                              message:
+                                "Contact number must be exactly 10 digits",
+                            },
+                            maxLength: {
+                              value: 10,
+                              message:
+                                "Contact number must be exactly 10 digits",
+                            },
+                            pattern: {
+                              value: /^[0-9]{10}$/,
+                              message:
+                                "Only numbers are allowed (10 digits required)",
+                            },
+                          })}
+                          placeholder="Enter your 10-digit contact number"
+                          maxLength={10}
+                          onKeyPress={(e) => {
+                            if (!/[0-9]/.test(e.key)) {
+                              e.preventDefault();
                             }
-                          >
-                            {countryList.map(({ id, name }) => (
-                              <Select.Option key={id} value={name}>
-                                {name}
-                              </Select.Option>
-                            ))}
-                          </Select>
+                          }}
+                        />
+                        {errors.contactNumber && (
+                          <p className="text-danger">
+                            {errors.contactNumber.message}
+                          </p>
                         )}
-                      />
-                      {errors.Country && (
-                        <p className="text-danger">Country is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">State</label>
-                      <br />
-                      <Controller
-                        name="state"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            showSearch
-                            className="inputcolumn_drp"
-                            placeholder="Select State"
-                            onChange={(value, option) => {
-                              field.onChange(value);
-                              setValue("state", value); // Update form state
-                              getDistrict(option.key);
-                            }}
-                          >
-                            {stateList.map(({ id, name }) => (
-                              <Select.Option key={id} value={name}>
-                                {name}
-                              </Select.Option>
-                            ))}
-                          </Select>
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Country</label>
+                        <Controller
+                          name="country"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              showSearch
+                              placeholder="Select Country"
+                              optionFilterProp="children"
+                              onChange={(value, option) => {
+                                field.onChange(value);
+                                setValue("country", value); // Update form state
+                                getState(option.key); // Pass the country ID to getState
+                              }}
+                              filterOption={(input, option) =>
+                                option?.children
+                                  ?.toLowerCase()
+                                  .includes(input.toLowerCase())
+                              }
+                            >
+                              {countryList.map(({ id, name }) => (
+                                <Select.Option key={id} value={name}>
+                                  {name}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
+                        />
+                        {errors.Country && (
+                          <p className="text-danger">Country is required</p>
                         )}
-                      />
-                      {errors.state && (
-                        <p className="text-danger">State is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">District</label>
-                      <br />
-                      <Controller
-                        name="district"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: "District is required" }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            showSearch
-                            className="inputcolumn_drp"
-                            placeholder="Select District"
-                            optionFilterProp="children"
-                            onChange={(value, option) => {
-                              field.onChange(value);
-                              setValue("district", value);
-                              getCity(option.key);
-                            }}
-                            filterOption={(input, option) =>
-                              option?.children
-                                ?.toLowerCase()
-                                .includes(input.toLowerCase())
-                            }
-                          >
-                            {districtList.map(({ id, name }) => (
-                              <Select.Option key={id} value={name}>
-                                {name}
-                              </Select.Option>
-                            ))}
-                          </Select>
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div style={{ display: "grid" }}>
+                        <label className="vendorpage_labelCss">State</label>
+                        <Controller
+                          name="state"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              showSearch
+                              className="inputcolumn_drp"
+                              placeholder="Select State"
+                              onChange={(value, option) => {
+                                field.onChange(value);
+                                setValue("state", value); // Update form state
+                                getDistrict(option.key);
+                              }}
+                            >
+                              {stateList.map(({ id, name }) => (
+                                <Select.Option key={id} value={name}>
+                                  {name}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
+                        />
+                        {errors.state && (
+                          <p className="text-danger">State is required</p>
                         )}
-                      />
-                      {errors.district && (
-                        <p className="text-danger">{errors.district.message}</p>
-                      )}
-                    </div>
-                  </Col>
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div style={{ display: "grid" }}>
+                        <label className="vendorpage_labelCss">District</label>
+                        <Controller
+                          name="district"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: "District is required" }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              showSearch
+                              className="inputcolumn_drp"
+                              placeholder="Select District"
+                              optionFilterProp="children"
+                              onChange={(value, option) => {
+                                field.onChange(value);
+                                setValue("district", value);
+                                getCity(option.key);
+                              }}
+                              filterOption={(input, option) =>
+                                option?.children
+                                  ?.toLowerCase()
+                                  .includes(input.toLowerCase())
+                              }
+                            >
+                              {districtList.map(({ id, name }) => (
+                                <Select.Option key={id} value={name}>
+                                  {name}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
+                        />
+                        {errors.district && (
+                          <p className="text-danger">
+                            {errors.district.message}
+                          </p>
+                        )}
+                      </div>
+                    </Col>
 
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">City</label>
-                      <br />
-                      <Controller
-                        name="city"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            placeholder="Select City"
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setValue("city", value);
-                            }}
-                          >
-                            {cityList.map(({ id, cityName }) => (
-                              <Select.Option key={id} value={cityName}>
-                                {cityName}
-                              </Select.Option>
-                            ))}
-                          </Select>
+                    <Col xs={12} md={6} lg={4}>
+                      <div style={{ display: "grid" }}>
+                        <label className="vendorpage_labelCss">City</label>
+                        <Controller
+                          name="city"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select City"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("city", value);
+                              }}
+                            >
+                              {cityList.map(({ id, cityName }) => (
+                                <Select.Option key={id} value={cityName}>
+                                  {cityName}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
+                        />
+                        {errors.city && (
+                          <p className="text-danger">City is required</p>
                         )}
-                      />
-                      {errors.city && (
-                        <p className="text-danger">City is required</p>
-                      )}
-                    </div>
-                  </Col>
+                      </div>
+                    </Col>
 
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Residential Address
-                      </label>
-                      <textarea
-                        className="inputcolumn-ourProfile"
-                        style={{ height: "60px" }}
-                        name="address"
-                        {...register("address", { required: true })}
-                        placeholder="Residential Address"
-                      />
-                      {errors.address && (
-                        <p className="text-danger">Address is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Pin Code</label>
-                      <input
-                        className="inputcolumn-ourProfile"
-                        type="number"
-                        name="pinCode"
-                        {...register("pinCode", { required: true })}
-                        placeholder="Pin Code"
-                      />
-                      {errors.pinCode && (
-                        <p className="text-danger">Pin Code is required</p>
-                      )}
-                    </div>
-                  </Col>
-                </Row>
-              </div>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Residential Address
+                        </label>
+                        <textarea
+                          className="inputcolumn-ourProfile"
+                          style={{ height: "60px" }}
+                          name="address"
+                          {...register("address", { required: true })}
+                          placeholder="Residential Address"
+                        />
+                        {errors.address && (
+                          <p className="text-danger">Address is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Pin Code</label>
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          name="pinCode"
+                          {...register("pinCode", { required: true })}
+                          placeholder="Pin Code"
+                        />
+                        {errors.pinCode && (
+                          <p className="text-danger">Pin Code is required</p>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
 
-              <div className="upgrade_column mb-3 mt-3">
-                <Button className="button1" type="submit">
-                  Submit
-                </Button>
-              </div>
-            </form>
+                <div className="upgrade_column px-4 mb-3 mt-3">
+                  <Button className="button1" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-        {/* </Card> */}
-      </Col>
-      <ToastContainer />
+          {/* </Card> */}
+        </Col>
+        <ToastContainer />
+      </Container>
     </div>
   );
 }

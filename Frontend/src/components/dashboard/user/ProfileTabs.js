@@ -10,7 +10,7 @@ import Documents from "./Documents";
 function TabsProfile() {
   return (
     <div>
-      <Tabs defaultActiveKey="1" centered className="p-3">
+      <Tabs defaultActiveKey="1" centered className="p-3 mt-2">
         <Tabs.TabPane tab="User Information" key="1">
           <OurProfile />
         </Tabs.TabPane>

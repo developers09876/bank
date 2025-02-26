@@ -39,8 +39,9 @@ const User = () => {
   };
 
   return (
-    <div>
-      <header className="dashboards__headerNavs">
+    // <div>
+    <div style={{ minHeight: "100vh" }}>
+    <header className="dashboards__headerNavs">
         <div className="dashboards__headerNavs--container">
           <span className="navMenu p-2" onClick={toggleSidebar}>
             {collapsed ? <AiOutlineClose /> : <GiHamburgerMenu />}
@@ -55,7 +56,7 @@ const User = () => {
 
           <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3" onClick={handleLogout}>
             Logout
-          </button>
+          </button> 
         </div>
       </header>
       <Sidebar collapsed={collapsed} />
