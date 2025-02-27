@@ -8,6 +8,7 @@ import Imageh1 from "../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5
 
 import "../HeaderNavbar.scss";
 import "../Sidebar.scss";
+import "./indexHeader.css";
 
 const User = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -54,9 +55,11 @@ const User = () => {
             />
           </span>
 
-          <button className="bg-[#00397f] text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline mr-3" onClick={handleLogout}>
-            Logout
-          </button> 
+          <div className="indexlogout-buttondiv">
+  <button className="indexlogout-button" onClick={handleLogout}>
+    Logout
+  </button>
+</div>
         </div>
       </header>
       <Sidebar collapsed={collapsed} />

@@ -1,0 +1,39 @@
+.indexlogout-buttondiv {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+  }
+  
+  .indexlogout-button {
+    background-color: #00397f;
+    color: white;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .indexlogout-button:hover {
+    background-color: #002b5c;
+  }
+  
+  .indexlogout-button:focus {
+    box-shadow: 0 0 5px rgba(0, 57, 127, 0.5);
+  }
+  
+  .logoutbutton-sidebar {
+    display: none;
+  }
+  
+  @media screen and (min-width: 320px) and (max-width: 425px) {
+    .indexlogout-buttondiv {
+        display:none;
+    }
+    .logoutbutton-sidebar {
+        display: block;
+    }
+    .dashboards__headerNavs--container {
+        padding-inline: 0rem;
+    }
+  }

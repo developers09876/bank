@@ -60,6 +60,7 @@ import axios from "axios";
 function Sidebar({ collapsed }) {
   const [firstname, setFirstname] = useState("");
   const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -74,6 +75,12 @@ function Sidebar({ collapsed }) {
     };
     fetchUserData();
   }, [id]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userType");
+
+  };
 
   return (
     <div className={collapsed ? "sidebarcontent open" : "d-none"}>
@@ -119,6 +126,11 @@ function Sidebar({ collapsed }) {
         <NavLink to="/user/feedback" className="main-nav-style">
           Feedback
         </NavLink>
+        <div className="logoutbutton-sidebar">
+        {token && (<NavLink to="/login" className="main-nav-style" onClick={handleLogout}>
+          Logout
+        </NavLink>)}
+        </div>
       </Menu>
     </div>
   );
