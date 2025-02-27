@@ -13,6 +13,9 @@ export async function forgetPassword(req, res, next) {
         user: "ferilcrosshurdle@gmail.com",
         pass: "ntjlgqizfbebdshd",
       },
+      tls: {
+        rejectUnauthorized: false, // Ignore self-signed certificate errors
+      },
     });
 
     const otp = Math.floor(Math.random() * 9000 + 1000);
