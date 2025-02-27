@@ -115,7 +115,7 @@ function LeadTaskDetails({ collapsed }) {
       date: data[`date_${index}`],
       remarks: data[`remarks_${index}`],
       status: data[`status_${index}`],
-      // notiFicatioinStauts: "false",
+      notiFicatioinStauts: "false",
     }));
 
     const details = {
