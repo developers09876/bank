@@ -21,7 +21,7 @@
   .indexlogout-button:focus {
     box-shadow: 0 0 5px rgba(0, 57, 127, 0.5);
   }
-  
+  /* in sidebar logout navlink */
   .logoutbutton-sidebar {
     display: none;
   }
