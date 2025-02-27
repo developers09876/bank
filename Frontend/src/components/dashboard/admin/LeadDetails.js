@@ -14,13 +14,10 @@ function LeadDetails({ collapsed }) {
   // const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
-  console.log("selectedEmployeeType", selectedEmployeeType);
   const [categories, setCategories] = useState([]);
   const [assignValue, setAssignValue] = useState([]);
   const [isApproved, setIsApproved] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  console.log("isApproved", isApproved);
-  console.log("assignValue", assignValue);
   const { Option } = Select;
   const {
     control,
