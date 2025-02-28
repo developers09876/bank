@@ -35,6 +35,9 @@ import TaxsTaskManagementEdit from "./TaxTaskManagementEdit";
 import TaxManagementEdit from "./TaxManagementEdit";
 import InsuranceEditDetails from "./InsuranceEditDetails";
 import CreateNewLoanForm from "./CreateNewLoanForm/CreateLoanProfileTab";
+import Loanlist from "./Loanlist";
+import Insurancelist from "./Insurancelist";
+import Taxlist from "./Taxlist";
 
 export const EmployeeRoutes = [
   {
@@ -160,5 +163,17 @@ export const EmployeeRoutes = [
   {
     path: "/employee/createloan",
     element: <CreateNewLoanForm />,
+  },
+  {
+    path: "/employee/loanlist",
+    element: <Loanlist/>,
+  },
+  {
+    path: "/employee/insurancelist",
+    element: <Insurancelist/>,
+  },
+  {
+    path: "/employee/taxlist",
+    element: <Taxlist/>,
   },
 ];

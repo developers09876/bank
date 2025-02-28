@@ -340,9 +340,9 @@ const Dashboard = () => {
       y: { beginAtZero: true, ticks: { stepSize: 1 } },
     },
   };
-  const renderCard = (title, icon, stats) => (
+  const renderCard = (title, icon, stats,navigateTo) => (
     <Col md={6} lg={6} className="py-2">
-      <Card className="flip-card">
+      <Card className="flip-card"onClick={() => navigate(navigateTo)} style={{ cursor: "pointer" }}>
         <div className="flip-card-inner">
           <Card className="flip-card-front">
             <Card.Body>
@@ -388,8 +388,10 @@ const Dashboard = () => {
                     size={30}
                     className="admin-stat-icon"
                     style={{ color: "#007bff", justifySelf: "center" }}
+                    
                   />,
-                  loanStats
+                  loanStats,
+                  "/employee/loanlist"
                 )}
               {service.includes("InsuranceEmployee") &&
                 renderCard(
@@ -399,7 +401,8 @@ const Dashboard = () => {
                     className="admin-stat-icon"
                     style={{ color: "#28a745", justifySelf: "center" }}
                   />,
-                  insuranceStats
+                  insuranceStats,
+                  "/employee/insurancelist"
                 )}
               {service.includes("TaxEmployee") &&
                 renderCard(
@@ -409,7 +412,8 @@ const Dashboard = () => {
                     className="admin-stat-icon"
                     style={{ color: "#ffc107", justifySelf: "center" }}
                   />,
-                  taxStats
+                  taxStats,
+                  "/employee/taxlist" 
                 )}
             </Row>
           </Col>
