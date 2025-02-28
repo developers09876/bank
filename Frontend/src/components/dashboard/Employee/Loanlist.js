@@ -111,61 +111,58 @@
 
 // export default UserList;
 import React, { useEffect, useState } from "react";
-import { Table, Input, Space, Pagination, Button, Modal, Row, Col } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import axios from "axios";
+import { Table, Input, Space, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
-import { EyeOutlined, EditOutlined } from "@ant-design/icons";
-import { FaPlus } from "react-icons/fa";
+import { SearchOutlined, EyeOutlined, EditOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const LoanList = ({ collapsed }) => {
-  const [searchText, setSearchText] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-
-  const navigate = useNavigate();
-
-  console.log("selectedRecord", selectedRecord);
-  const [loan, setLoan] = useState([]);
-  const userid = localStorage.getItem("id");
-
-  useEffect(() => {
-    getAll();
-  }, [selectedRecord]);
-
-  const getAll = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/loanform/getbyEmployeeid/${userid}`
-      );
-      const loans = response.data;
-      // const filterbyUserid = loans.filter(item => item.userid === userId);
-      // console.log('filterbyUserid', filterbyUserid)
-      setLoan(loans);
-      console.log("responseget", loans);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const [searchText, setSearchText] = useState("");
+    const [filteredData, setFilteredData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedRecord, setSelectedRecord] = useState(null);
+  
+    const navigate = useNavigate();
+  
+    console.log("selectedRecord", selectedRecord);
+    const [loan, setLoan] = useState([]);
+    const userId = localStorage.getItem("id");
+  
+    useEffect(() => {
+      getAll();
+    }, [selectedRecord]);
+  
+    const getAll = async () => {
+      try {
+        console.log("userId", userId);
+        const response = await axios.get(
+          `http://localhost:5000/loanform/getbyid/${userId}`
+        );
+        const loans = response.data;
+        setLoan(loans);
+        console.log("responseget", loans);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   const handleViewDetails = (record) => {
     navigate(`/employee/loandetails/${record._id}`, { state: { record } });
   };
+
   const handleEdit = (record) => {
     navigate(`/employee/editownloan/${record._id}`, { state: { record } });
-  };
-  const handleAddLoan = () => {
-    navigate(`/employee/createloan`);
   };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);
-    const filtered = loan.filter((item) =>
-      item.fullName.toLowerCase().includes(searchTerm)
+    const filtered = loan.filter(
+      (item) =>
+        item.firstname.toLowerCase().includes(searchTerm) ||
+        item.lastname.toLowerCase().includes(searchTerm)
     );
     setFilteredData(filtered);
     setCurrentPage(1);
@@ -174,8 +171,7 @@ const LoanList = ({ collapsed }) => {
   const getPaginatedData = () => {
     const sourceData = searchText ? filteredData : loan;
     const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-    return sourceData.slice(start, end);
+    return sourceData.slice(start, start + pageSize);
   };
 
   const columns = [
@@ -192,9 +188,8 @@ const LoanList = ({ collapsed }) => {
     },
     {
       title: "Customer Name",
-      dataIndex: "fullName",
       key: "fullName",
-      render: (_, record) => `${record.firstname} ${record.lastname}`,
+      render: (_, record) => `${record.firstname || ""} ${record.lastname || ""}`,
     },
     {
       title: "Phone Number",
@@ -206,107 +201,74 @@ const LoanList = ({ collapsed }) => {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        if (status === "1") {
-          return <span style={{ color: "green" }}>Approved</span>;
-        } else if (status === "2") {
-          return <span style={{ color: "red" }}>Rejected</span>;
-        }
-        return <span style={{ color: "orange" }}>Pending</span>;
+        const statusColors = {
+          "1": { text: "Approved", color: "green" },
+          "2": { text: "Rejected", color: "red" },
+        };
+        return (
+          <span style={{ color: statusColors[status]?.color || "orange" }}>
+            {statusColors[status]?.text || "Pending"}
+          </span>
+        );
       },
     },
     {
       title: "Action",
-      dataIndex: "action",
       key: "action",
-      render: (text, record) => {
-        return (
-          <>
-            <EyeOutlined
-              style={{
-                fontSize: "18px",
-                color: "#4096ff",
-                cursor: "pointer",
-                marginRight: "15px",
-              }}
-              onClick={() => handleViewDetails(record)}
-            />
-            <EditOutlined
-              style={{
-                fontSize: "18px",
-                color: "#ff4d4f",
-                cursor: "pointer",
-              }}
-              onClick={() => handleEdit(record)}
-            />
-          </>
-        );
-      },
+      render: (_, record) => (
+        <>
+          <EyeOutlined
+            style={{ fontSize: "18px", color: "#4096ff", cursor: "pointer", marginRight: "15px" }}
+            onClick={() => handleViewDetails(record)}
+          />
+          <EditOutlined
+            style={{ fontSize: "18px", color: "#ff4d4f", cursor: "pointer" }}
+            onClick={() => handleEdit(record)}
+          />
+        </>
+      ),
     },
   ];
 
   return (
-    <div>
-      <div
-        className={collapsed === true ? "main-content.open" : "main-content"}
+    <div className={collapsed ? "main-content open" : "main-content"}>
+      <h4 style={{ textAlign: "center", fontWeight: "bold", marginBottom: "20px" }}>Loan List</h4>
+      <Space
+        style={{
+          marginBottom: 16,
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "0 40px",
+        }}
+        className="filter-actions"
       >
-        <h4
-          style={{
-            textAlign: "center",
-            fontWeight: "bold",
-            marginBottom: "20px",
-          }}
-        >
-          Loan List
-        </h4>
-        <Space
-          style={{
-            marginBottom: 16,
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-          className="filter-actions"
-        >
-          <Input
-            placeholder="Search"
-            value={searchText}
-            onChange={handleSearch}
-            style={{ width: 200,marginLeft:"40px " }}
-            prefix={<SearchOutlined />}
-          />
-          {/* <Button
-            type="primary"
-            onClick={handleAddLoan}
-            style={{
-              display: "inline",
-              float: "right",
-              marginRight: "10px",
-              backgroundColor: "#00397f",
-            }}
-          >
-            <FaPlus style={{ display: "inline", color: "white" }} />
-            Add New
-          </Button> */}
-        </Space>
-
-        <Table
-          dataSource={getPaginatedData()}
-          columns={columns}
-          pagination={false}
-          className="loan-table"
-          rowKey="_id"
+        <Input
+          placeholder="Search by Name"
+          value={searchText}
+          onChange={handleSearch}
+          style={{ width: 200 }}
+          prefix={<SearchOutlined />}
         />
+      </Space>
 
-        <Pagination
-          current={currentPage}
-          pageSize={pageSize}
-          total={searchText ? filteredData.length : loan.length}
-          onChange={(page, pageSize) => {
-            setCurrentPage(page);
-            setPageSize(pageSize);
-          }}
-          className="pagination-control"
-        />
-      </div>
+      <Table
+        dataSource={getPaginatedData()}
+        columns={columns}
+        pagination={false}
+        className="loan-table"
+        rowKey="_id"
+      />
+
+      <Pagination
+        current={currentPage}
+        pageSize={pageSize}
+        total={searchText ? filteredData.length : loan.length}
+        onChange={(page, pageSize) => {
+          setCurrentPage(page);
+          setPageSize(pageSize);
+        }}
+        className="pagination-control"
+      />
     </div>
   );
 };

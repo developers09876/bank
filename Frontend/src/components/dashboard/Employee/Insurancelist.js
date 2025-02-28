@@ -5,37 +5,41 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { FaPlus } from "react-icons/fa";
+import Api from "../../../Api";
 
 const InsuranceList = ({ collapsed }) => {
-  const [searchText, setSearchText] = useState("");
-  const [filteredData, setFilteredData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
+   const [searchText, setSearchText] = useState("");
+   const [filteredData, setFilteredData] = useState([]);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [pageSize, setPageSize] = useState(5);
+   const [insurance, setInsurance] = useState([]);
+   const [loading, setLoading] = useState(false);
+   const [data, setData] = useState([]);
+   const [isModalVisible, setIsModalVisible] = useState(false);
+   const [selectedRecord, setSelectedRecord] = useState(null);
+ 
+   const navigate = useNavigate();
+   const userid = localStorage.getItem("id");
 
-  const navigate = useNavigate();
-
-  console.log("selectedRecord", selectedRecord);
-  const [insurance, setInsurance] = useState([]);
-  const userid = localStorage.getItem("id");
-
-  useEffect(() => {
-    getAll();
-  }, [selectedRecord]);
-
-  const getAll = async () => {
+  const fetchLeads = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/insuranceManagement/getbyEmployeeid/${userid}`
+      const response = await Api.get(
+        `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
       );
-      const insurances = response.data;
-      setInsurance(insurances);
-      console.log("responseget", insurances);
+      setInsurance(response.data);
+      setFilteredData(response.data);
+      console.log("insurance response.data", response.data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching leads:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchLeads();
+  }, []);
 
   const handleViewDetails = (record) => {
     navigate(`/employee/insurancedetails/${record._id}`, {

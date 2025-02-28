@@ -5,38 +5,40 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { FaPlus } from "react-icons/fa";
+import Api from "../../../Api";
 
 const TaxList = ({ collapsed }) => {
-  const [searchText, setSearchText] = useState("");
+ const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-
-  const navigate = useNavigate();
-
-  console.log("selectedRecord", selectedRecord);
   const [tax, setTax] = useState([]);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigate = useNavigate();
   const userid = localStorage.getItem("id");
 
   useEffect(() => {
-    getAll();
-  }, [selectedRecord]);
+     fetchLeads();
+   }, []);
 
-  const getAll = async () => {
+  const fetchLeads = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/taxManagement/getbyEmployeeid/${userid}`
+      const response = await Api.get(
+        `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
       );
-      const taxs = response.data;
-      setTax(taxs);
-      console.log("responseget", taxs);
+      console.log("Fetched Data:", response.data);
+      setTax(response.data);
+      setFilteredData(response.data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching leads:", error);
+    } finally {
+      setLoading(false);
     }
   };
-
   const handleViewDetails = (record) => {
     navigate(`/employee/taxdetails/${record._id}`, { state: { record } });
   };
