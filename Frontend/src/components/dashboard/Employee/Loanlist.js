@@ -130,7 +130,7 @@ const LoanList = ({ collapsed }) => {
 
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
-  const userId = localStorage.getItem("id");
+  const userid = localStorage.getItem("id");
 
   useEffect(() => {
     getAll();
@@ -139,7 +139,7 @@ const LoanList = ({ collapsed }) => {
   const getAll = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/loanform/getall`
+        `http://localhost:5000/loanform/getbyEmployeeid/${userid}`
       );
       const loans = response.data;
       // const filterbyUserid = loans.filter(item => item.userid === userId);

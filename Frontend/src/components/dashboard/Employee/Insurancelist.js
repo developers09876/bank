@@ -18,7 +18,7 @@ const InsuranceList = ({ collapsed }) => {
 
   console.log("selectedRecord", selectedRecord);
   const [insurance, setInsurance] = useState([]);
-  const userId = localStorage.getItem("id");
+  const userid = localStorage.getItem("id");
 
   useEffect(() => {
     getAll();
@@ -27,7 +27,7 @@ const InsuranceList = ({ collapsed }) => {
   const getAll = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/insuranceManagement/getAllInsuranceManagement`
+        `http://localhost:5000/insuranceManagement/getbyEmployeeid/${userid}`
       );
       const insurances = response.data;
       setInsurance(insurances);

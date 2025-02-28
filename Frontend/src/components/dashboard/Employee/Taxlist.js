@@ -18,7 +18,7 @@ const TaxList = ({ collapsed }) => {
 
   console.log("selectedRecord", selectedRecord);
   const [tax, setTax] = useState([]);
-  const userId = localStorage.getItem("id");
+  const userid = localStorage.getItem("id");
 
   useEffect(() => {
     getAll();
@@ -27,7 +27,7 @@ const TaxList = ({ collapsed }) => {
   const getAll = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/taxManagement/getAllTaxManagement`
+        `http://localhost:5000/taxManagement/getbyEmployeeid/${userid}`
       );
       const taxs = response.data;
       setTax(taxs);
