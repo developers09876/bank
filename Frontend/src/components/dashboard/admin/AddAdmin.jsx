@@ -37,7 +37,11 @@ const AddAdmin = ({ setAuth }) => {
   const [cityList, setCityList] = useState([]);
   const [reportingManagerList, setReportingManagerList] = useState();
   const [salesManagerList, setSalesManagerList] = useState();
+  const [districtName, setDistrictName] = useState("");
+  const [BranchName, setBranchName] = useState("");
 
+  const [filteredManagers, setFilteredManagers] = useState([]);
+  const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
   const employeeType = "employee";
 
   const {
@@ -62,7 +66,7 @@ const AddAdmin = ({ setAuth }) => {
   }, [selectedServices]);
 
   useEffect(() => {
-    const fetchReportingManager = async () => {
+    const fetchManagers = async () => {
       try {
         const response = await axios.get(
           `http://localhost:5000/signup/getbyUserType/${employeeType}`
@@ -73,12 +77,40 @@ const AddAdmin = ({ setAuth }) => {
         );
         console.log("filteredEmployees", filteredEmployees);
         setReportingManagerList(filteredEmployees);
+
+        const filteredSalesEmployees = response.data.filter((salesemployee) =>
+          salesemployee.services.includes("SalesManager")
+        );
+        console.log("filteredSalesEmployees", filteredSalesEmployees);
+        setSalesManagerList(filteredSalesEmployees);
       } catch (error) {
         console.log("error", error);
       }
     };
-    fetchReportingManager();
+    fetchManagers();
   }, [employeeType]);
+
+  useEffect(() => {
+    if (districtName) {
+      const filtered = reportingManagerList.filter(
+        (manager) => manager.district === districtName
+      );
+      setFilteredManagers(filtered);
+    } else {
+      setFilteredManagers(reportingManagerList);
+    }
+  }, [districtName, reportingManagerList]);
+
+  useEffect(() => {
+    if (BranchName) {
+      const filtered = salesManagerList.filter(
+        (manager) => manager.Branch === BranchName
+      );
+      setFilteredSalesManagers(filtered);
+    } else {
+      setFilteredSalesManagers(salesManagerList);
+    }
+  }, [BranchName, salesManagerList]);
 
   const getCountry = async () => {
     try {
@@ -449,6 +481,7 @@ const AddAdmin = ({ setAuth }) => {
                           onChange={(value, option) => {
                             field.onChange(value);
                             setValue("district", value);
+                            setDistrictName(value);
                             getCity(option.key);
                           }}
                           filterOption={(input, option) =>
@@ -487,6 +520,7 @@ const AddAdmin = ({ setAuth }) => {
                           onChange={(value) => {
                             field.onChange(value);
                             setValue("city", value);
+                            setBranchName(value);
                           }}
                         >
                           {cityList.map(({ id, cityName }) => (
@@ -522,7 +556,7 @@ const AddAdmin = ({ setAuth }) => {
                               setValue("report_Manager", value);
                             }}
                           >
-                            {reportingManagerList?.map((employee) => (
+                            {filteredManagers?.map((employee) => (
                               <Select.Option
                                 key={employee._id}
                                 value={employee._id}
@@ -543,14 +577,32 @@ const AddAdmin = ({ setAuth }) => {
                     {!selectedServices.includes("SalesManager") && (
                       <Col lg={4} md={6} sm={12}>
                         <label htmlFor="sale_Manager">Sales Manager:</label>
-                        <input
-                          type="text"
-                          className="block border border-grey-500 w-full p-2 rounded mb-4"
+                        <Controller
                           name="sale_Manager"
-                          {...register("sale_Manager", {
-                            required: "sale_Manager is required",
-                          })}
-                          placeholder="sale_Manager"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              style={{ width: "100%" }}
+                              placeholder="Select Sales Manager"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("sale_Manager", value);
+                              }}
+                            >
+                              {filteredSalesManagers?.map((employee) => (
+                                <Select.Option
+                                  key={employee._id}
+                                  value={employee._id}
+                                >
+                                  {employee.firstname} {employee.lastname}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
                         />
                         {errors.sale_Manager && (
                           <p className="text-red-500">
