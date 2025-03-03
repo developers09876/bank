@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "./UserDashboard.css"; 
 import {
   FaMoneyBillWave,
-  FaFileInvoice,
-  FaChartLine,
+  FaMoneyBill,
+  FaUniversity,
+  FaShieldAlt,
   FaUsers,
 } from "react-icons/fa";
 import Sidebar from "./Sidebar";
@@ -178,7 +179,7 @@ const UserDashboard = () => {
       if (elements.length > 0) {
         const index = elements[0].index;
         const status = ["pending", "rejected", "completed"][index];
-        navigate(`/admin/client-statistics/${status}`);
+        navigate(`/user/client-statistics/${status}`);
       }
     },
     plugins: {
@@ -217,28 +218,36 @@ const UserDashboard = () => {
               <Col sm={12} md={6} lg={6}>
                 <Card
                   className="user-stat-card"
-                  onClick={() => navigate("/admin/loancards")}
+                  onClick={() => navigate("/user/loanstatus")}
                 >
                   <Card.Body>
-                    <FaChartLine className="user-stat-icon" />
+                    <FaUniversity size={30}
+                    className="user-stat-icon"
+                    style={{ color: "#007bff", justifySelf: "center" }}/>
                     <Card.Title>Total Loans</Card.Title>
                     <Card.Text>{loans}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <Card className="user-stat-card">
+                <Card className="user-stat-card"
+                onClick={() => navigate("/user/insu")}>
                   <Card.Body>
-                    <FaFileInvoice className="user-stat-icon" />
+                    <FaShieldAlt  size={30}
+                    className="user-stat-icon"
+                    style={{ color: "#28a745", justifySelf: "center" }} />
                     <Card.Title>Total Insurance</Card.Title>
                     <Card.Text>{insurances}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <Card className="user-stat-card">
+                <Card className="user-stat-card"
+                onClick={() => navigate("/user/tax")}>
                   <Card.Body>
-                    <FaFileInvoice className="user-stat-icon" />
+                    <FaMoneyBill  size={30}
+                    className="user-stat-icon"
+                    style={{ color: "#ffc107", justifySelf: "center" }}/>
                     <Card.Title>Total Tax</Card.Title>
                     <Card.Text>{taxs}</Card.Text>
                   </Card.Body>
@@ -247,10 +256,12 @@ const UserDashboard = () => {
               <Col sm={12} md={6} lg={6}>
                 <Card
                   className="user-stat-card"
-                  onClick={() => navigate("/admin/employeelist")}
+                 
                 >
                   <Card.Body>
-                    <FaMoneyBillWave className="user-stat-icon" />
+                    <FaMoneyBillWave size={30}
+                     className="user-stat-icon"
+                     style={{ color: "red", justifySelf: "center" }}/>
                     <Card.Title>Total StockMarket</Card.Title>
                     <Card.Text>{stockmarket}</Card.Text>
                   </Card.Body>
