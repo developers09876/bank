@@ -16,8 +16,13 @@ import InsuranceViewDetails from "../../landing/InsuranceForm/InsuranceViewDetai
 import TaxViewDetails from "../../landing/TaxFormTab/TaxViewDetails";
 import TaxEditDetails from "../../landing/TaxFormTab/TaxEditDetails";
 import InsuranceEditDetails from "../../landing/InsuranceForm/InsuranceEditDetails";
+import UserDashboard  from "./UserDashboard";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
+  {
+    path: "/user/userdashboard",
+    element: <UserDashboard />,
+  },
   {
     path: "/user",
     element: <TabsProfile />,
