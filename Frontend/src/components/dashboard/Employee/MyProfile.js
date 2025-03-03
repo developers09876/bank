@@ -42,6 +42,7 @@ function TabsVendor() {
   const getState = (country_id) => {
     Api.get(`state/stateById/${country_id}`).then((res) => {
       setStateList(res.data.data);
+      console.log("statelist", res.data.data);
     });
   };
 
