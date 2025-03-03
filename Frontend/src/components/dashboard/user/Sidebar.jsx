@@ -103,11 +103,17 @@ function Sidebar({ collapsed }) {
           <FaUserCircle style={{ fontSize: "28px", color: "#1890ff" }} />
           Welcome, {firstname}!
         </h3>
-
+        <NavLink
+          to="/user/userdashboard"
+          className="main-nav-style"
+          style={{ marginTop: "20px" }}
+        >
+          Dashboard
+        </NavLink>
         <NavLink
           to="/user"
           className="main-nav-style"
-          style={{ marginTop: "20px" }}
+          // style={{ marginTop: "20px" }}
         >
           My Profile
         </NavLink>
