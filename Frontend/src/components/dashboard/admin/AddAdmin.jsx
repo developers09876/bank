@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./Sidebar";
 import { Col, Container, Row } from "react-bootstrap";
 import { Select } from "antd";
+import Api from "../../../Api";
+import axios from "axios";
 const { Option } = Select;
 
 const serviceToCategoryMap = {
@@ -29,15 +31,25 @@ const AddAdmin = ({ setAuth }) => {
   const navigate = useNavigate();
   const [selectedServices, setSelectedServices] = useState([]);
   const [filteredCategories, setFilteredCategories] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [reportingManagerList, setReportingManagerList] = useState();
+  const [salesManagerList, setSalesManagerList] = useState();
+
+  const employeeType = "employee";
 
   const {
     register,
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm();
 
+  const Service = watch("services");
   useEffect(() => {
     // Get categories based on selected services
     let categories = new Set();
@@ -48,6 +60,63 @@ const AddAdmin = ({ setAuth }) => {
     });
     setFilteredCategories([...categories]);
   }, [selectedServices]);
+
+  useEffect(() => {
+    const fetchReportingManager = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+        );
+        console.log("Employee response.data", response.data);
+        const filteredEmployees = response.data.filter((employee) =>
+          employee.services.includes("ReportingManager")
+        );
+        console.log("filteredEmployees", filteredEmployees);
+        setReportingManagerList(filteredEmployees);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchReportingManager();
+  }, [employeeType]);
+
+  const getCountry = async () => {
+    try {
+      const response = await Api.get("country/getallcountry");
+      console.log("country response.data", response.data.data);
+      setCountryList(response.data.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  const getState = () => {
+    const country_id = 101;
+
+    Api.get(`state/stateById/${country_id}`).then((res) => {
+      setStateList(res.data.data);
+      console.log("state res.data.data", res.data.data);
+    });
+  };
+  // const state_id = 4026;
+  const getDistrict = (state_id) => {
+    Api.get(`district/districtById/${state_id}`).then((res) => {
+      setDistrictList(res.data.data);
+      console.log("dist res.data.data", res.data.data);
+    });
+  };
+
+  const getCity = (districtId) => {
+    Api.get(`city/cityById/${districtId}`).then((res) => {
+      setCityList(res.data.data);
+      console.log("city res.data.data", res.data.data);
+    });
+  };
+
+  useEffect(() => {
+    getCountry();
+    getState();
+    // getDistrict();
+  }, []);
 
   const onSubmit = async (data) => {
     try {
@@ -121,7 +190,7 @@ const AddAdmin = ({ setAuth }) => {
                 </Col> */}
 
                 {/* Services */}
-                <Col  lg={4} md={6} sm={12}>
+                <Col lg={4} md={6} sm={12}>
                   <label htmlFor="services">Services:</label>
                   <Controller
                     name="services"
@@ -132,7 +201,7 @@ const AddAdmin = ({ setAuth }) => {
                         {...field}
                         mode="multiple"
                         className="inputcolumn_drp w-full mb-4"
-                        style={{width:'100%'}}
+                        style={{ width: "100%" }}
                         placeholder="Select Services"
                         // style={{ height: "55%" }}
                         onChange={(value) => {
@@ -146,6 +215,10 @@ const AddAdmin = ({ setAuth }) => {
                           Insurance Employee
                         </Option>
                         <Option value="stockMarket">Stock Market</Option>
+                        <Option value="ReportingManager">
+                          Reporting Manager
+                        </Option>
+                        <Option value="SalesManager">Sales Manager</Option>
                       </Select>
                     )}
                   />
@@ -185,7 +258,7 @@ const AddAdmin = ({ setAuth }) => {
                 </Col> */}
 
                 {/* Other Fields */}
-                <Col  lg={4} md={6} sm={12}>
+                <Col lg={4} md={6} sm={12}>
                   <label htmlFor="firstname">First Name:</label>
                   <input
                     type="text"
@@ -200,7 +273,7 @@ const AddAdmin = ({ setAuth }) => {
                   )}
                 </Col>
 
-                <Col  lg={4} md={6} sm={12}>
+                <Col lg={4} md={6} sm={12}>
                   <label htmlFor="lastname">Last Name:</label>
                   <input
                     type="text"
@@ -231,7 +304,7 @@ const AddAdmin = ({ setAuth }) => {
                     </p>
                   )}
                 </Col> */}
-                <Col  lg={4} md={6} sm={12}>
+                <Col lg={4} md={6} sm={12}>
                   <label htmlFor="contactNumber">Contact Number:</label>
                   <input
                     type="text"
@@ -248,7 +321,7 @@ const AddAdmin = ({ setAuth }) => {
                         message: "Contact number must be exactly 10 digits",
                       },
                       pattern: {
-                        value: /^[0-9]{10}$/, 
+                        value: /^[0-9]{10}$/,
                         message:
                           "Only numbers are allowed (10 digits required)",
                       },
@@ -280,7 +353,7 @@ const AddAdmin = ({ setAuth }) => {
                     <p className="text-red-500">{errors.email.message}</p>
                   )}
                 </Col> */}
-                <Col  lg={4} md={6} sm={12}>
+                <Col lg={4} md={6} sm={12}>
                   <label htmlFor="email">Email Address:</label>
                   <input
                     type="email"
@@ -288,8 +361,10 @@ const AddAdmin = ({ setAuth }) => {
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                        message: "Enter a valid email address (e.g., name@example.com)",
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                        message:
+                          "Enter a valid email address (e.g., name@example.com)",
                       },
                     })}
                     placeholder="Email"
@@ -314,36 +389,178 @@ const AddAdmin = ({ setAuth }) => {
                     </p>
                   )}
                 </Col>
-                <Col  lg={4} md={6} sm={12}>
-                  <label htmlFor="Manager">Reporting Manager:</label>
-                  <input
-                    type="text"
-                    className="block border border-grey-500 w-full p-2 rounded mb-4"
-                    name="Manager"
-                    {...register("manager", {
-                      required: "Manager is required",
-                    })}
-                    placeholder="Manager"
-                  />
-                  {errors.Manager && (
-                    <p className="text-red-500">{errors.Manager.message}</p>
-                  )}
+
+                <Col xs={12} md={6} lg={4}>
+                  <div>
+                    <label>State</label>
+                    <Controller
+                      name="state"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          style={{ width: "100%" }}
+                          showSearch
+                          placeholder="Select State"
+                          optionFilterProp="childer"
+                          onChange={(value, option) => {
+                            field.onChange(value);
+                            setValue("state", value);
+                            getDistrict(option.key);
+                          }}
+                          filterOption={(input, option) =>
+                            option?.children
+                              ?.toLowerCase()
+                              .includes(input.toLowerCase())
+                          }
+                        >
+                          {stateList.map(({ id, name }) => (
+                            <Select.Option key={id} value={name}>
+                              {name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                    {errors.state && (
+                      <p className="text-danger">State is required</p>
+                    )}
+                  </div>
                 </Col>
-                <Col  lg={4} md={6} sm={12}>
-                  <label htmlFor="Branch">Reporting Branch:</label>
-                  <input
-                    type="text"
-                    className="block border border-grey-500 w-full p-2 rounded mb-4"
-                    name="Branch"
-                    {...register("branch", {
-                      required: "Branch is required",
-                    })}
-                    placeholder="Branch"
-                  />
-                  {errors.Branch && (
-                    <p className="text-red-500">{errors.Branch.message}</p>
-                  )}
+                <Col lg={4} md={6} xs={12}>
+                  <div>
+                    <label>District</label>
+                    <Controller
+                      name="district"
+                      defaultValue=""
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          optionFilterProp="childer"
+                          placeholder="Select District"
+                          showSearch
+                          style={{ width: "100%" }}
+                          onChange={(value, option) => {
+                            field.onChange(value);
+                            setValue("district", value);
+                            getCity(option.key);
+                          }}
+                          filterOption={(input, option) =>
+                            option?.children
+                              ?.toLowerCase()
+                              .includes(input.toLowerCase())
+                          }
+                        >
+                          {districtList.map(({ id, name }) => (
+                            <Select.Option key={id} value={name}>
+                              {name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                    {errors.district && (
+                      <p className="text-danger">{errors.district.message}</p>
+                    )}
+                  </div>
                 </Col>
+                <Col xs={12} md={6} lg={4}>
+                  <div style={{ display: "grid" }}>
+                    <label className="vendorpage_labelCss">Branch</label>
+                    <Controller
+                      name="Branch"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="inputcolumn_drp"
+                          style={{ width: "100%" }}
+                          placeholder="Select Branch"
+                          onChange={(value) => {
+                            field.onChange(value);
+                            setValue("city", value);
+                          }}
+                        >
+                          {cityList.map(({ id, cityName }) => (
+                            <Select.Option key={id} value={cityName}>
+                              {cityName}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                    {errors.Branch && (
+                      <p className="text-danger">Branch is required</p>
+                    )}
+                  </div>
+                </Col>
+                {!selectedServices.includes("ReportingManager") && (
+                  <>
+                    <Col lg={4} md={6} sm={12}>
+                      <label htmlFor="report_Manager">Reporting Manager:</label>
+                      <Controller
+                        name="report_Manager"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            style={{ width: "100%" }}
+                            placeholder="Select Reporting Manager"
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValue("report_Manager", value);
+                            }}
+                          >
+                            {reportingManagerList?.map((employee) => (
+                              <Select.Option
+                                key={employee._id}
+                                value={employee._id}
+                              >
+                                {employee.firstname} {employee.lastname}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                      {errors.report_Manager && (
+                        <p className="text-red-500">
+                          {errors.report_Manager.message}
+                        </p>
+                      )}
+                    </Col>
+
+                    {!selectedServices.includes("SalesManager") && (
+                      <Col lg={4} md={6} sm={12}>
+                        <label htmlFor="sale_Manager">Sales Manager:</label>
+                        <input
+                          type="text"
+                          className="block border border-grey-500 w-full p-2 rounded mb-4"
+                          name="sale_Manager"
+                          {...register("sale_Manager", {
+                            required: "sale_Manager is required",
+                          })}
+                          placeholder="sale_Manager"
+                        />
+                        {errors.sale_Manager && (
+                          <p className="text-red-500">
+                            {errors.sale_Manager.message}
+                          </p>
+                        )}
+                      </Col>
+                    )}
+                  </>
+                )}
               </Row>
 
               <button type="submit" className="btn btn-primary mr-3">
