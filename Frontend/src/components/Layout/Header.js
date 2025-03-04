@@ -543,7 +543,7 @@ const NotificationModal = ({ isOpen, setIsOpen, setNotificationCount }) => {
       // Filter notifications: Include only those with no `notiFicatioinStauts` or where it is "false"
       const unreadNotifications = remarks.filter(
         (remark) =>
-          !remark.notiFicatioinStauts || remark.notiFicatioinStauts === "false"
+           remark.notiFicatioinStauts === "false"
       );
 
       setNotifications(remarks);
