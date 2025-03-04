@@ -96,8 +96,6 @@ const AddAdmin = ({ setAuth }) => {
         (manager) => manager.district === districtName
       );
       setFilteredManagers(filtered);
-    } else {
-      setFilteredManagers(reportingManagerList);
     }
   }, [districtName, reportingManagerList]);
 
@@ -107,8 +105,6 @@ const AddAdmin = ({ setAuth }) => {
         (manager) => manager.Branch === BranchName
       );
       setFilteredSalesManagers(filtered);
-    } else {
-      setFilteredSalesManagers(salesManagerList);
     }
   }, [BranchName, salesManagerList]);
 
