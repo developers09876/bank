@@ -16,8 +16,15 @@ import InsuranceViewDetails from "../../landing/InsuranceForm/InsuranceViewDetai
 import TaxViewDetails from "../../landing/TaxFormTab/TaxViewDetails";
 import TaxEditDetails from "../../landing/TaxFormTab/TaxEditDetails";
 import InsuranceEditDetails from "../../landing/InsuranceForm/InsuranceEditDetails";
+import UserDashboard  from "./UserDashboard";
+import ClientStatisticsPage from "./ClientStatisticsPage";
+import ClientStatisticsTable from "./ClientStatisticsTable";
 const roles = localStorage.getItem("userType");
 export const UserRoutes = [
+  {
+    path: "/user/userdashboard",
+    element: <UserDashboard />,
+  },
   {
     path: "/user",
     element: <TabsProfile />,
@@ -86,5 +93,13 @@ export const UserRoutes = [
   {
     path: "/user/rewards",
     element: <Rewards />,
+  },
+  {
+    path: "/user/client-statistics/:status",
+    element: <ClientStatisticsPage />,
+  },
+  {
+    path: "/user/client-statistics/:status/:category",
+    element: <ClientStatisticsTable />,
   },
 ];
