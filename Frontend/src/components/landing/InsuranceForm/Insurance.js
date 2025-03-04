@@ -109,6 +109,19 @@ const Insurance = ({ collapsed }) => {
       key: "PolicyType",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "1") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "2") {
+          return <span style={{ color: "red" }}>Rejected</span>;
+        }
+        return <span style={{ color: "orange" }}>Pending</span>;
+      },
+    },
+    {
       title: "Action",
       dataIndex: "action",
       key: "action",
