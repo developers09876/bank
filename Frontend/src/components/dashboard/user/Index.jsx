@@ -5,13 +5,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { HiUserCircle } from "react-icons/hi";
 import Sidebar from "./Sidebar";
 import Imageh1 from "../../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
-
 import "../HeaderNavbar.scss";
 import "../Sidebar.scss";
 import "./indexHeader.css";
 
 const User = () => {
   const [collapsed, setCollapsed] = useState(true);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const User = () => {
   return (
     // <div>
     <div style={{ minHeight: "100vh" }}>
-    <header className="dashboards__headerNavs">
+      <header className="dashboards__headerNavs">
         <div className="dashboards__headerNavs--container">
           <span className="navMenu p-2" onClick={toggleSidebar}>
             {collapsed ? <AiOutlineClose /> : <GiHamburgerMenu />}
@@ -55,11 +55,38 @@ const User = () => {
             />
           </span>
 
-          <div className="indexlogout-buttondiv">
+          {/* <div className="indexlogout-buttondiv">
   <button className="indexlogout-button" onClick={handleLogout}>
     Logout
   </button>
-</div>
+</div> */}
+          <div
+            className="live-icon cursor-pointer"
+            onClick={() => setDropdownVisible(true)}
+          >
+            <img
+              src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
+              alt="User Avatar"
+              className="avatar"
+            />
+            <div className="live-badge">100%</div>
+            {dropdownVisible && (
+              <div className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded">
+                <button
+                  onClick={() => navigate("/profile")}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  My Profile
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </header>
       <Sidebar collapsed={collapsed} />
