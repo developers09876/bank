@@ -104,6 +104,19 @@ function LeadManagement() {
       key: "purpose",
     },
     {
+      title: "Task Status",
+      dataIndex: "isApproved",
+      key: "isApproved",
+      render: (isApproved) => {
+        return isApproved === "true" ? (
+          <span style={{ color: "green" }}>Approved</span>
+        ) : (
+          <span style={{ color: "orange" }}>Pending</span>
+        );
+      },
+    },
+    
+    {
       title: "Action",
       dataIndex: "action",
       key: "action",

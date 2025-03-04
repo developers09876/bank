@@ -102,11 +102,18 @@ function LoanLeadManagement() {
         return serviceMap[text] || text;
       },
     },
-    // {
-    //   title: "Purpose",
-    //   dataIndex: "purpose",
-    //   key: "purpose",
-    // },
+    {
+      title: "Task Status",
+      dataIndex: "employeeType",
+      key: "employeeType",
+      render: (employeeType) => {
+        return employeeType ? (
+          <span style={{ color: "green"  }}>Task Assigned</span>
+        ) : (
+          <span style={{ color: "red" }}>Task Not Assigned</span>
+        );
+      },
+    },
     {
       title: "Action",
       dataIndex: "action",
