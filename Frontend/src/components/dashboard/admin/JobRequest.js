@@ -8,9 +8,9 @@ import {
   Modal,
   Descriptions,
 } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined,EyeOutlined, DeleteOutlined  } from "@ant-design/icons";
 import Api from "../../../Api";
-
+const { confirm } = Modal;
 const JobRequest = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -41,7 +41,27 @@ const JobRequest = ({ collapsed }) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
   };
-
+  const showDeleteConfirm = (id) => {
+    confirm({
+      title: "Are you sure you want to delete this job request?",
+      icon: < DeleteOutlined style={{ fontSize: "18px", color: "#ff4d4f",marginTop:"2px"}}/>,
+      content: "This action cannot be undone.",
+      okText: "Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk() {
+        handleDelete(id);
+      },
+    });
+  };
+  const handleDelete = async (id) => {
+    try {
+      await Api.delete(`http://localhost:5000/jobrequest/delete/${id}`);
+      getAll();
+    } catch (error) {
+      console.error("Error deleting record:", error);
+    }
+  };
   const handleModalOk = () => {
     setIsModalVisible(false);
     setSelectedRecord(null);
@@ -91,9 +111,6 @@ const JobRequest = ({ collapsed }) => {
       handleModalOk();
     }
   };
-
-  
-
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);
@@ -140,21 +157,38 @@ const JobRequest = ({ collapsed }) => {
         return <span style={{ color: "red" }}>Rejected</span>;
       },
     },
+    // {
+    //   title: "Action",
+    //   dataIndex: "action",
+    //   key: "action",
+    //   render: (text, record) => {
+    //     return (
+    //       <Button
+    //         type="primary"
+    //         style={{ background: "#4096ff", color: "#fff" }}
+    //         onClick={() => handleViewDetails(record)}
+    //       >
+    //         View
+    //       </Button>
+    //     );
+    //   },
+    // },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text, record) => {
-        return (
-          <Button
-            type="primary"
-            style={{ background: "#4096ff", color: "#fff" }}
+      render: (_, record) => (
+        <>
+          <EyeOutlined
+            style={{ fontSize: "18px", color: "#4096ff", cursor: "pointer", marginRight: "15px" }}
             onClick={() => handleViewDetails(record)}
-          >
-            View
-          </Button>
-        );
-      },
+          />
+          <DeleteOutlined
+            style={{ fontSize: "18px", color: "#ff4d4f", cursor: "pointer" }}
+            onClick={() => showDeleteConfirm(record._id)}
+          />
+        </>
+      ),
     },
   ];
 
