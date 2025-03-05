@@ -6,12 +6,11 @@ import {
   Pagination,
   Button,
   Modal,
-  Row,
-  Col,
   Descriptions,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
+
 const JobRequest = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -19,7 +18,6 @@ const JobRequest = ({ collapsed }) => {
   const [pageSize, setPageSize] = useState(5);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
 
   useEffect(() => {
@@ -55,18 +53,16 @@ const JobRequest = ({ collapsed }) => {
   };
 
   const updateStatus = async (id, action) => {
-    if (!selectedRecord) return; 
+    if (!selectedRecord) return;
     try {
-    const details = {
-      name: selectedRecord.name,
-      phone: selectedRecord.phone,
-      email: selectedRecord.email,
-      jobTitle: selectedRecord.jobTitle,
-      resume: selectedRecord.resume,
-      status: action, 
-    };
-    console.log("Updated Data:", details);
-      // const details = { action };
+      const details = {
+        name: selectedRecord.name,
+        phone: selectedRecord.phone,
+        email: selectedRecord.email,
+        jobTitle: selectedRecord.jobTitle,
+        resume: selectedRecord.resume,
+        status: action,
+      };
       const response = await Api.put(
         `http://localhost:5000/jobrequest/update/${id}`,
         details
@@ -79,23 +75,24 @@ const JobRequest = ({ collapsed }) => {
 
   const handleApprove = () => {
     if (selectedRecord) {
-      updateStatus(selectedRecord._id, "approve");
-      handleModalOk();
-    }
-  };
-
-  const handleReject = () => {
-    if (selectedRecord) {
-      updateStatus(selectedRecord._id, "reject");
+      updateStatus(selectedRecord._id, "Approved"); 
       handleModalOk();
     }
   };
   const handleHold = () => {
     if (selectedRecord) {
-      updateStatus(selectedRecord._id, "hold");
+      updateStatus(selectedRecord._id, "Hold"); 
       setIsModalVisible(false);
     }
   };
+  const handleReject = () => {
+    if (selectedRecord) {
+      updateStatus(selectedRecord._id, "Rejected"); 
+      handleModalOk();
+    }
+  };
+
+  
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -115,12 +112,6 @@ const JobRequest = ({ collapsed }) => {
   };
 
   const columns = [
-    // {
-    //   title: "Created On",
-    //   dataIndex: "createdAt",
-    //   key: "createdAt",
-    //   render: (text) => new Date(text).toLocaleDateString(),
-    // },
     {
       title: "Name",
       dataIndex: "name",
@@ -136,25 +127,24 @@ const JobRequest = ({ collapsed }) => {
       dataIndex: "email",
       key: "email",
     },
-
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        if (status === "Approved") {
+          return <span style={{ color: "green" }}>Approved</span>;
+        } else if (status === "Hold") {
+          return <span style={{ color: "orange" }}>Hold</span>;
+        }
+        return <span style={{ color: "red" }}>Rejected</span>;
+      },
+    },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
       render: (text, record) => {
-        if (record.status === "approve") {
-          return (
-            <Button type="primary" disabled>
-              Approve
-            </Button>
-          );
-        } else if (record.status === "reject") {
-          return (
-            <Button danger disabled>
-              Reject
-            </Button>
-          );
-        }
         return (
           <Button
             type="primary"
@@ -199,7 +189,7 @@ const JobRequest = ({ collapsed }) => {
               pagination={false}
               className="loan-table"
               rowKey="_id"
-              scroll={{ x: "max-content" }} // Enables horizontal & vertical scrolling
+              scroll={{ x: "max-content" }}
             />
           </div>
         </div>
@@ -221,17 +211,9 @@ const JobRequest = ({ collapsed }) => {
           onOk={handleModalOk}
           onCancel={handleModalCancel}
           footer={null}
-          // bodyStyle={{
-          //   maxHeight: "70vh",
-          //   overflowY: "auto",
-          // }}
         >
           {selectedRecord && (
-            <Descriptions
-              className="jobrequest-des"
-              // title="Candidate Details"
-              column={1}
-            >
+            <Descriptions column={1}>
               <Descriptions.Item label="Name">
                 {selectedRecord.name}
               </Descriptions.Item>
@@ -259,35 +241,48 @@ const JobRequest = ({ collapsed }) => {
               </Descriptions.Item>
               <Descriptions.Item label="Status">
                 <Space>
-                  {selectedRecord.status!== "1" && (
+                  {selectedRecord.status !== "Approved" && (
                     <Button
                       type="primary"
                       style={{ background: "#4096ff", color: "#fff" }}
                       onClick={handleApprove}
+                      disabled={selectedRecord.status === "Approved"}
                     >
                       Approve
                     </Button>
                   )}
-                  {selectedRecord.status!== "3" && (
-                    <Button 
-                     type="primary"
-                     style={{ background: "#FFA500", color: "#fff" }} onClick={handleHold }>
+                  {selectedRecord.status !== "Hold" && (
+                    <Button
+                      type="primary"
+                      style={{ background: "#FFA500", color: "#fff" }}
+                      onClick={handleHold}
+                      disabled={selectedRecord.status === "Hold"}
+                    >
                       Hold
                     </Button>
                   )}
-                  {selectedRecord.status!== "2" && (
-                    <Button danger onClick={handleReject}>
+                  {selectedRecord.status !== "Rejected" && (
+                    <Button
+                      danger
+                      onClick={handleReject}
+                      disabled={selectedRecord.status === "Rejected"}
+                    >
                       Reject
                     </Button>
                   )}
-                  {selectedRecord.status === "1" && (
+                  {selectedRecord.status === "Approved" && (
                     <Button type="primary" disabled>
-                      Approved
+                      Approve
                     </Button>
                   )}
-                  {selectedRecord.status === "2" && (
+                  {selectedRecord.status === "Hold" && (
+                    <Button type="primary" disabled>
+                      Hold
+                    </Button>
+                  )}
+                  {selectedRecord.status === "Rejected" && (
                     <Button danger disabled>
-                      Rejected
+                      Reject
                     </Button>
                   )}
                 </Space>
