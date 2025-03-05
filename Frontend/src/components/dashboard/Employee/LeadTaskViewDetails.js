@@ -13,6 +13,7 @@ function LeadTaskDetails({ collapsed }) {
   const navigate = useNavigate();
   //   const { record } = location.state || {};
   const [remarksFields, setRemarksFields] = useState([]);
+  console.log('remarksFields', remarksFields)
 
   const { state } = useLocation();
   const record = state?.record;
@@ -29,7 +30,7 @@ function LeadTaskDetails({ collapsed }) {
     if (details) {
       const initialRemarks = details.addremarks?.length
         ? details.addremarks.map((field) => ({ ...field, prefilled: true }))
-        : [{ date: "", remarks: "", status: "", prefilled: false }];
+        : [{ date: "", remarks: "", status: "", notiFicatioinStauts: "" , prefilled: false }];
 
       setRemarksFields(initialRemarks);
 
@@ -37,6 +38,8 @@ function LeadTaskDetails({ collapsed }) {
         acc[`date_${index}`] = field.date;
         acc[`remarks_${index}`] = field.remarks;
         acc[`status_${index}`] = field.status;
+      acc[`notiFicatioinStauts_${index}`] = field.notiFicatioinStauts;
+
         return acc;
       }, {});
 
@@ -47,7 +50,7 @@ function LeadTaskDetails({ collapsed }) {
   const addRemarkField = () => {
     setRemarksFields([
       ...remarksFields,
-      { date: "", remarks: "", status: "", prefilled: false },
+      { date: "", remarks: "", status: "", notiFicatioinStauts: "" , prefilled: false },
     ]);
   };
 
@@ -59,6 +62,8 @@ function LeadTaskDetails({ collapsed }) {
       acc[`date_${i}`] = field.date;
       acc[`remarks_${i}`] = field.remarks;
       acc[`status_${i}`] = field.status;
+      acc[`notiFicatioinStauts_${i}`] = field.notiFicatioinStauts;
+
       return acc;
     }, {});
     reset(defaultValues);
@@ -111,12 +116,21 @@ function LeadTaskDetails({ collapsed }) {
   };
 
   const onSubmit = async (data) => {
-    const formattedRemarks = remarksFields.map((field, index) => ({
-      date: data[`date_${index}`],
-      remarks: data[`remarks_${index}`],
-      status: data[`status_${index}`],
-      notiFicatioinStauts: "false",
-    }));
+    const formattedRemarks = remarksFields.map((field, index) => {
+      const updatedRemark = {
+        date: data[`date_${index}`],
+        remarks: data[`remarks_${index}`],
+        status: data[`status_${index}`],
+        notiFicatioinStauts: data[`notiFicatioinStauts_${index}`], 
+      };
+  
+      if (index === remarksFields.length - 1) {
+        updatedRemark.notiFicatioinStauts = "false"; 
+      }
+  
+      return updatedRemark;
+    });
+  
 
     const details = {
       firstname: record.firstname,
