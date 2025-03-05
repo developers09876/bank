@@ -45,7 +45,6 @@ const JobRequest = ({ collapsed }) => {
     confirm({
       title: "Are you sure you want to delete this job request?",
       icon: < DeleteOutlined style={{ fontSize: "18px", color: "#ff4d4f",marginTop:"2px"}}/>,
-      content: "This action cannot be undone.",
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
