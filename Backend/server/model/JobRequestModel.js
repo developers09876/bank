@@ -7,6 +7,7 @@ const jobRequestSchema = new mongoose.Schema({
     email: { type: String },
     jobTitle: { type: String },
     resume: { type: String },
+    status: { type: String },
 
 });
 const applyjob = mongoose.model("jobRequest", jobRequestSchema);
