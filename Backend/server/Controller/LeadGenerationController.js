@@ -270,6 +270,10 @@ export async function updateLeadAssign(req, res, next) {
       loanType: data.loanType,
       startDate: data.startDate || null,
       endDate: data.endDate || null,
+      state: data.state,
+      district: data.district,
+      Branch: data.Branch,
+      report_Manager: data.report_Manager,
       // dob: data.dob || null,
     };
     console.log("Update Details:", updateDetails);

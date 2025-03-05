@@ -32,6 +32,10 @@ const LeadSchema = new mongoose.Schema({
   endDate: { type: Date },
   dob: { type: Date },
   description: { type: String },
+  report_Manager: { type: String },
+  Branch: { type: String },
+  state: { type: String },
+  district: { type: String },
   isApproved: { type: String },
   addremarks: [
     {
