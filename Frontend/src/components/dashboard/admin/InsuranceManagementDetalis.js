@@ -58,7 +58,7 @@ function InsuranceManagementDetails({ collapsed }) {
   const [salesManagerList, setSalesManagerList] = useState([]);
   const [filteredManagers, setFilteredManagers] = useState([]);
   const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
-
+  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   // const dateFormat = new Date(record.dob).toISOString().split("T")[0];
 
   const {
@@ -78,6 +78,7 @@ function InsuranceManagementDetails({ collapsed }) {
       endDate: "",
       description: "",
       employeeCategory: "",
+      // employeeList:""
     },
   });
 
@@ -133,6 +134,16 @@ function InsuranceManagementDetails({ collapsed }) {
       setFilteredSalesManagers(filtered);
     }
   }, [BranchName, salesManagerList]);
+  useEffect(() => {
+    if (BranchName) {
+      const filtered = employeeList.filter(
+        (employee) => employee.Branch === BranchName
+      );
+      setFilteredEmployeeList(filtered);
+    } else {
+      setFilteredEmployeeList(employeeList);
+    }
+  }, [BranchName, employeeList]);
 
   const getCountry = async () => {
     try {
@@ -227,12 +238,7 @@ function InsuranceManagementDetails({ collapsed }) {
 
     fetchEmployeeList();
   }, [employeeType]);
-  // const filteredEmployeeList = employeeList.filter((employee) => {
-  //   const matchesBranch = employee.Branch === BranchName;
-  //   const matchesEmployeeType = employee.services.includes(selectedEmployeeType);
 
-  //   return matchesBranch && matchesEmployeeType;
-  // });
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
@@ -272,6 +278,7 @@ function InsuranceManagementDetails({ collapsed }) {
       endDate: data.endDate,
       employeeId: data.employeeId,
       employeeType: data.employeeType,
+      // employeeList: data.employeeList,
       employeeCategory: data.employeeCategory,
       state: data.state,
       district: data.district,
@@ -899,7 +906,7 @@ function InsuranceManagementDetails({ collapsed }) {
                   </Col>
 
                   {/* Employee List */}
-                  <Col xs={12} md={6} lg={4}>
+                  {/* <Col xs={12} md={6} lg={4}>
                     <label>Employee List:</label>
                     <select
                       {...register("employeeId", {
@@ -909,6 +916,25 @@ function InsuranceManagementDetails({ collapsed }) {
                     >
                       <option value="">Select Employee</option>
                       {employeeList?.map((employee) => (
+                        <option key={employee._id} value={employee._id}>
+                          {employee.firstname} {employee.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.employeeId && (
+                      <p className="text-danger">{errors.employeeId.message}</p>
+                    )}
+                  </Col> */}
+                  <Col xs={12} md={6} lg={4}>
+                    <label>Employee List:</label>
+                    <select
+                      {...register("employeeId", {
+                        required: "Employee selection is required",
+                      })}
+                      className="form-select"
+                    >
+                      <option value="">Select Employee</option>
+                      {filteredEmployeeList?.map((employee) => (
                         <option key={employee._id} value={employee._id}>
                           {employee.firstname} {employee.lastname}
                         </option>

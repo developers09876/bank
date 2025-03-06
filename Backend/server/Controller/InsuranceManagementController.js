@@ -47,6 +47,7 @@ export async function updateInsuranceManagementDb(req, res, next) {
       employeeId: data.employeeId,
       employeeType: data.employeeType,
       employeeCategory: data.employeeCategory,
+      employeeList: data.employeeList,
       state: data.state,
       district: data.district,
       Branch: data.Branch,
