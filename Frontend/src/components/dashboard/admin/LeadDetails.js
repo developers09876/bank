@@ -18,18 +18,18 @@ function LeadDetails({ collapsed }) {
   const [assignValue, setAssignValue] = useState([]);
   const [isApproved, setIsApproved] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-    const [selectedServices, setSelectedServices] = useState([]);
-   const [countryList, setCountryList] = useState([]);
-    const [stateList, setStateList] = useState([]);
-    const [districtList, setDistrictList] = useState([]);
-    const [cityList, setCityList] = useState([]);
-    const [reportingManagerList, setReportingManagerList] = useState();
-    const [salesManagerList, setSalesManagerList] = useState();
-    const [districtName, setDistrictName] = useState("");
-    const [BranchName, setBranchName] = useState("");
-    
-      const [filteredManagers, setFilteredManagers] = useState([]);
-      const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [reportingManagerList, setReportingManagerList] = useState();
+  const [salesManagerList, setSalesManagerList] = useState();
+  const [districtName, setDistrictName] = useState("");
+  const [BranchName, setBranchName] = useState("");
+
+  const [filteredManagers, setFilteredManagers] = useState([]);
+  const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
   const { Option } = Select;
   const {
     control,
@@ -86,17 +86,17 @@ function LeadDetails({ collapsed }) {
     fetchEmployeeList();
   }, [employeeType]);
 
- const filteredEmployeeList = employeeList.filter((employee) => {
-  const matchesBranch = employee.Branch === BranchName;  
-  const matchesEmployeeType = employee.services.includes(selectedEmployeeType);  
+  const filteredEmployeeList = employeeList.filter((employee) => {
+    const matchesBranch = employee.Branch === BranchName;
+    const matchesEmployeeType =
+      employee.services.includes(selectedEmployeeType);
 
-  return matchesBranch && matchesEmployeeType;
-});
+    return matchesBranch && matchesEmployeeType;
+  });
 
-console.log("Branch Name:", BranchName);
-console.log("Employee Type:", selectedEmployeeType);
+  console.log("Branch Name:", BranchName);
+  console.log("Employee Type:", selectedEmployeeType);
 
-  
   console.log("Filtered Employees:", filteredEmployeeList);
 
   useEffect(() => {
@@ -271,8 +271,6 @@ console.log("Employee Type:", selectedEmployeeType);
         district: data?.district || "",
         report_Manager: data?.report_Manager || "",
         sale_Manager: data?.sale_Manager || "",
-
-
       });
       setSelectedEmployeeType(data?.employeeType || "");
     });
@@ -293,7 +291,7 @@ console.log("Employee Type:", selectedEmployeeType);
       district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager:data.sale_Manager,
+      sale_Manager: data.sale_Manager,
     };
 
     try {
@@ -536,7 +534,7 @@ console.log("Employee Type:", selectedEmployeeType);
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Row>
-                  <Col xs={12} md={6} lg={4}>
+                    <Col xs={12} md={6} lg={4}>
                       <div>
                         <label>State</label>
                         <Controller
@@ -692,7 +690,7 @@ console.log("Employee Type:", selectedEmployeeType);
                           )}
                         </Col>
 
-                         {!selectedServices.includes("SalesManager") && (
+                        {!selectedServices.includes("SalesManager") && (
                           <Col lg={4} md={6} sm={12}>
                             <label htmlFor="sale_Manager">Sales Manager:</label>
                             <Controller
@@ -728,7 +726,7 @@ console.log("Employee Type:", selectedEmployeeType);
                               </p>
                             )}
                           </Col>
-                        )} 
+                        )}
                       </>
                     )}
                     {/* Employee Type */}
@@ -826,7 +824,6 @@ console.log("Employee Type:", selectedEmployeeType);
                         )}
                       </div>
                     </Col>
-                    
 
                     {/* Start Date */}
                     <Col xs={12} md={6} lg={4}>

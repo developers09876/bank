@@ -78,7 +78,7 @@ function InsuranceManagementDetails({ collapsed }) {
       endDate: "",
       description: "",
       employeeCategory: "",
-      employeeList:"",
+      employeeList: "",
     },
   });
 
@@ -935,13 +935,15 @@ function InsuranceManagementDetails({ collapsed }) {
                     >
                       <option value="">Select Employee</option>
                       {filteredEmployeeList?.map((employee) => (
-                        <option key={employee._firstname} value={employee._lastname}>
+                        <option key={employee._id} value={employee._id}>
                           {employee.firstname} {employee.lastname}
                         </option>
                       ))}
                     </select>
                     {errors.employeeList && (
-                      <p className="text-danger">{errors.employeeList.message}</p>
+                      <p className="text-danger">
+                        {errors.employeeList.message}
+                      </p>
                     )}
                   </Col>
 

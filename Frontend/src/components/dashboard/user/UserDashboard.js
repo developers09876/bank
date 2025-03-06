@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "./UserDashboard.css"; 
+import "./UserDashboard.css";
 import {
   FaMoneyBillWave,
   FaMoneyBill,
@@ -65,7 +65,9 @@ const UserDashboard = () => {
   const userid = localStorage.getItem("id");
   const fetchLoans = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/loanform/getbyid/${userId}`);
+      const response = await axios.get(
+        `http://localhost:5000/loanform/getbyid/${userId}`
+      );
       setLoan(response.data);
       setLoans(response.data.length);
       const statusCounts = { pending: 0, rejected: 0, completed: 0 };
@@ -108,7 +110,7 @@ const UserDashboard = () => {
   const fetchTaxs = async () => {
     try {
       const response = await axios.get(
-       `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
+        `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
       );
       console.log("response.data", response.data);
       setTaxs(response.data.length);
@@ -143,6 +145,7 @@ const UserDashboard = () => {
       insuranceStatusCounts.approved +
       taxStatusCounts.approved,
   };
+  console.log("approved", totalStatusCounts);
 
   const stats = {
     loans: {
@@ -213,55 +216,62 @@ const UserDashboard = () => {
 
           <Col sm={12} md={12} lg={6} className=" px-2 py-3">
             <Row className="user-stats-row">
-             
-
               <Col sm={12} md={6} lg={6}>
                 <Card
                   className="user-stat-card"
                   onClick={() => navigate("/user/loanstatus")}
                 >
                   <Card.Body>
-                    <FaUniversity size={30}
-                    className="user-stat-icon"
-                    style={{ color: "#007bff", justifySelf: "center" }}/>
+                    <FaUniversity
+                      size={30}
+                      className="user-stat-icon"
+                      style={{ color: "#007bff", justifySelf: "center" }}
+                    />
                     <Card.Title>Total Loans</Card.Title>
                     <Card.Text>{loans}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <Card className="user-stat-card"
-                onClick={() => navigate("/user/insu")}>
+                <Card
+                  className="user-stat-card"
+                  onClick={() => navigate("/user/insu")}
+                >
                   <Card.Body>
-                    <FaShieldAlt  size={30}
-                    className="user-stat-icon"
-                    style={{ color: "#28a745", justifySelf: "center" }} />
+                    <FaShieldAlt
+                      size={30}
+                      className="user-stat-icon"
+                      style={{ color: "#28a745", justifySelf: "center" }}
+                    />
                     <Card.Title>Total Insurance</Card.Title>
                     <Card.Text>{insurances}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <Card className="user-stat-card"
-                onClick={() => navigate("/user/tax")}>
+                <Card
+                  className="user-stat-card"
+                  onClick={() => navigate("/user/tax")}
+                >
                   <Card.Body>
-                    <FaMoneyBill  size={30}
-                    className="user-stat-icon"
-                    style={{ color: "#ffc107", justifySelf: "center" }}/>
+                    <FaMoneyBill
+                      size={30}
+                      className="user-stat-icon"
+                      style={{ color: "#ffc107", justifySelf: "center" }}
+                    />
                     <Card.Title>Total Tax</Card.Title>
                     <Card.Text>{taxs}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <Card
-                  className="user-stat-card"
-                 
-                >
+                <Card className="user-stat-card">
                   <Card.Body>
-                    <FaMoneyBillWave size={30}
-                     className="user-stat-icon"
-                     style={{ color: "red", justifySelf: "center" }}/>
+                    <FaMoneyBillWave
+                      size={30}
+                      className="user-stat-icon"
+                      style={{ color: "red", justifySelf: "center" }}
+                    />
                     <Card.Title>Total StockMarket</Card.Title>
                     <Card.Text>{stockmarket}</Card.Text>
                   </Card.Body>
