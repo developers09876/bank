@@ -30,7 +30,6 @@ function InsuranceManagementDetails({ collapsed }) {
   const initialRecord = state?.record;
   // const record = state?.record || {};
   const [record, setRecord] = useState(initialRecord);
-
   console.log("recorddetails", record);
   const id = localStorage.getItem("regid");
   const [selectedEmployeeType, setSelectedEmployeeType] =
@@ -43,12 +42,23 @@ function InsuranceManagementDetails({ collapsed }) {
   // const [employeeCategory, setemployeeCategory] = useState();
   const [assignValue, setAssignValue] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
   const [pendingReason, setPendingReason] = useState("");
   const [loan, setLoan] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [districtName, setDistrictName] = useState("");
+  const [BranchName, setBranchName] = useState("");
+  const [reportingManagerList, setReportingManagerList] = useState([]);
+  const [salesManagerList, setSalesManagerList] = useState([]);
+  const [filteredManagers, setFilteredManagers] = useState([]);
+  const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
+
   // const dateFormat = new Date(record.dob).toISOString().split("T")[0];
 
   const {
@@ -82,7 +92,82 @@ function InsuranceManagementDetails({ collapsed }) {
     ],
   };
   useEffect(() => {
-    getbyLeadId();
+    const fetchManagers = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+        );
+        console.log("Employee response.data", response.data);
+        const filteredEmployees = response.data.filter((employee) =>
+          employee.services.includes("ReportingManager")
+        );
+        console.log("filteredEmployees", filteredEmployees);
+        setReportingManagerList(filteredEmployees);
+
+        const filteredSalesEmployees = response.data.filter((salesemployee) =>
+          salesemployee.services.includes("SalesManager")
+        );
+        console.log("filteredSalesEmployees", filteredSalesEmployees);
+        setSalesManagerList(filteredSalesEmployees);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchManagers();
+  }, [employeeType]);
+
+  useEffect(() => {
+    if (districtName) {
+      const filtered = reportingManagerList.filter(
+        (manager) => manager.district === districtName
+      );
+      setFilteredManagers(filtered);
+    }
+  }, [districtName, reportingManagerList]);
+
+  useEffect(() => {
+    if (BranchName) {
+      const filtered = salesManagerList.filter(
+        (manager) => manager.Branch === BranchName
+      );
+      setFilteredSalesManagers(filtered);
+    }
+  }, [BranchName, salesManagerList]);
+
+  const getCountry = async () => {
+    try {
+      const response = await Api.get("country/getallcountry");
+      console.log("country response.data", response.data.data);
+      setCountryList(response.data.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  const getState = () => {
+    const country_id = 101;
+
+    Api.get(`state/stateById/${country_id}`).then((res) => {
+      setStateList(res.data.data);
+      console.log("state res.data.data", res.data.data);
+    });
+  };
+  const getDistrict = (state_id) => {
+    Api.get(`district/districtById/${state_id}`).then((res) => {
+      setDistrictList(res.data.data);
+      console.log("dist res.data.data", res.data.data);
+    });
+  };
+
+  const getCity = (districtId) => {
+    Api.get(`city/cityById/${districtId}`).then((res) => {
+      setCityList(res.data.data);
+      console.log("city res.data.data", res.data.data);
+    });
+  };
+  useEffect(() => {
+    getCountry();
+    getState();
+    // getDistrict();
   }, []);
 
   // const fetchUpdatedRecord = async () => {
@@ -142,7 +227,12 @@ function InsuranceManagementDetails({ collapsed }) {
 
     fetchEmployeeList();
   }, [employeeType]);
+  // const filteredEmployeeList = employeeList.filter((employee) => {
+  //   const matchesBranch = employee.Branch === BranchName;
+  //   const matchesEmployeeType = employee.services.includes(selectedEmployeeType);
 
+  //   return matchesBranch && matchesEmployeeType;
+  // });
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
@@ -183,11 +273,16 @@ function InsuranceManagementDetails({ collapsed }) {
       employeeId: data.employeeId,
       employeeType: data.employeeType,
       employeeCategory: data.employeeCategory,
+      state: data.state,
+      district: data.district,
+      Branch: data.Branch,
+      report_Manager: data.report_Manager,
+      sale_Manager: data.sale_Manager,
     };
 
     try {
       await Api.put(
-        `/insuranceManagement/updateInsuranceManagement/${record._id}`,
+        `http://localhost:5000/insuranceManagement/updateInsuranceManagement/${record._id}`,
         details
       );
       toast.success("Task Assigned successfully");
@@ -573,40 +668,232 @@ function InsuranceManagementDetails({ collapsed }) {
             ) : (
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Row>
-                  {/* Employee Type */}
+                  {/* State */}
                   <Col xs={12} md={6} lg={4}>
                     <div>
-                      <label className="vendorpage_labelCss">
-                        Employee Type:
-                      </label>
+                      <label>State</label>
+                      <Controller
+                        name="state"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            style={{ width: "100%" }}
+                            showSearch
+                            placeholder="Select State"
+                            optionFilterProp="childer"
+                            onChange={(value, option) => {
+                              field.onChange(value);
+                              setValue("state", value);
+                              getDistrict(option.key);
+                            }}
+                            filterOption={(input, option) =>
+                              option?.children
+                                ?.toLowerCase()
+                                .includes(input.toLowerCase())
+                            }
+                          >
+                            {stateList.map(({ id, name }) => (
+                              <Select.Option key={id} value={name}>
+                                {name}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                      {errors.state && (
+                        <p className="text-danger">State is required</p>
+                      )}
+                    </div>
+                  </Col>
+                  <Col lg={4} md={6} xs={12}>
+                    <div>
+                      <label>District</label>
+                      <Controller
+                        name="district"
+                        defaultValue=""
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            optionFilterProp="childer"
+                            placeholder="Select District"
+                            showSearch
+                            style={{ width: "100%" }}
+                            onChange={(value, option) => {
+                              field.onChange(value);
+                              setValue("district", value);
+                              setDistrictName(value);
+                              getCity(option.key);
+                            }}
+                            filterOption={(input, option) =>
+                              option?.children
+                                ?.toLowerCase()
+                                .includes(input.toLowerCase())
+                            }
+                          >
+                            {districtList.map(({ id, name }) => (
+                              <Select.Option key={id} value={name}>
+                                {name}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                      {errors.district && (
+                        <p className="text-danger">{errors.district.message}</p>
+                      )}
+                    </div>
+                  </Col>
+
+                  {/* Branch */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div style={{ display: "grid" }}>
+                      <label className="vendorpage_labelCss">Branch</label>
+                      <Controller
+                        name="Branch"
+                        control={control}
+                        defaultValue=""
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            {...field}
+                            className="inputcolumn_drp"
+                            style={{ width: "100%" }}
+                            placeholder="Select Branch"
+                            onChange={(value) => {
+                              field.onChange(value);
+                              setValue("city", value);
+                              setBranchName(value);
+                            }}
+                          >
+                            {cityList.map(({ id, cityName }) => (
+                              <Select.Option key={id} value={cityName}>
+                                {cityName}
+                              </Select.Option>
+                            ))}
+                          </Select>
+                        )}
+                      />
+                      {errors.Branch && (
+                        <p className="text-danger">Branch is required</p>
+                      )}
+                    </div>
+                  </Col>
+                  {!selectedServices.includes("ReportingManager") && (
+                    <>
+                      <Col lg={4} md={6} sm={12}>
+                        <label htmlFor="report_Manager">
+                          Reporting Manager:
+                        </label>
+                        <Controller
+                          name="report_Manager"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              style={{ width: "100%" }}
+                              placeholder="Select Reporting Manager"
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setValue("report_Manager", value);
+                              }}
+                            >
+                              {filteredManagers?.map((employee) => (
+                                <Select.Option
+                                  key={employee._id}
+                                  value={employee._id}
+                                >
+                                  {employee.firstname} {employee.lastname}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
+                        />
+                        {errors.report_Manager && (
+                          <p className="text-red-500">
+                            {errors.report_Manager.message}
+                          </p>
+                        )}
+                      </Col>
+
+                      {!selectedServices.includes("SalesManager") && (
+                        <Col lg={4} md={6} sm={12}>
+                          <label htmlFor="sale_Manager">Sales Manager:</label>
+                          <Controller
+                            name="sale_Manager"
+                            control={control}
+                            defaultValue=""
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                              <Select
+                                {...field}
+                                className="inputcolumn_drp"
+                                style={{ width: "100%" }}
+                                placeholder="Select Sales Manager"
+                                onChange={(value) => {
+                                  field.onChange(value);
+                                  setValue("sale_Manager", value);
+                                }}
+                              >
+                                {filteredSalesManagers?.map((employee) => (
+                                  <Select.Option
+                                    key={employee._id}
+                                    value={employee._id}
+                                  >
+                                    {employee.firstname} {employee.lastname}
+                                  </Select.Option>
+                                ))}
+                              </Select>
+                            )}
+                          />
+                          {errors.sale_Manager && (
+                            <p className="text-red-500">
+                              {errors.sale_Manager.message}
+                            </p>
+                          )}
+                        </Col>
+                      )}
+                    </>
+                  )}
+
+                  {/* Employee Type (Disabled) */}
+                  <Col xs={12} md={6} lg={4}>
+                    <div>
+                      <label>Employee Type:</label>
                       <Controller
                         name="employeeType"
                         control={control}
-                        // disabled
-                        defaultValue="InsuranceEmployee" // Ensure default value is set
-                        rules={{ required: true }}
+                        defaultValue="InsuranceEmployee"
+                        rules={{ required: "Employee type is required" }}
                         render={({ field }) => (
                           <Select
                             {...field}
                             disabled
                             className="inputcolumn_drp"
                             style={{ width: "100%" }}
-                            // value={field.value || "InsuranceEmployee"}
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setSelectedEmployeeType(value);
-                            }}
                           >
-                            <Option value="">Select Employee Type</Option>
-                            <Option value="LoanEmployee">Loan Employee</Option>
-                            <Option value="InsuranceEmployee">
+                            <Select.Option value="LoanEmployee">
+                              Loan Employee
+                            </Select.Option>
+                            <Select.Option value="InsuranceEmployee">
                               Insurance Employee
-                            </Option>
+                            </Select.Option>
                           </Select>
                         )}
                       />
                       {errors.employeeType && (
-                        <p className="text-danger">Employee type is required</p>
+                        <p className="text-danger">
+                          {errors.employeeType.message}
+                        </p>
                       )}
                     </div>
                   </Col>
@@ -615,7 +902,9 @@ function InsuranceManagementDetails({ collapsed }) {
                   <Col xs={12} md={6} lg={4}>
                     <label>Employee List:</label>
                     <select
-                      {...register("employeeId", { required: true })}
+                      {...register("employeeId", {
+                        required: "Employee selection is required",
+                      })}
                       className="form-select"
                     >
                       <option value="">Select Employee</option>
@@ -626,43 +915,40 @@ function InsuranceManagementDetails({ collapsed }) {
                       ))}
                     </select>
                     {errors.employeeId && (
-                      <p className="text-danger">
-                        Employee selection is required
-                      </p>
+                      <p className="text-danger">{errors.employeeId.message}</p>
                     )}
                   </Col>
 
                   {/* Category */}
                   <Col xs={12} md={6} lg={4}>
                     <div>
-                      <label className="vendorpage_labelCss">Category:</label>
+                      <label>Category:</label>
                       <Controller
                         name="employeeCategory"
                         control={control}
-                        rules={{ required: true }}
+                        rules={{ required: "Category is required" }}
                         render={({ field }) => (
                           <Select
                             {...field}
                             className="inputcolumn_drp"
                             placeholder="Select Category"
                             style={{ width: "100%" }}
-                            onChange={(value) => field.onChange(value)}
-                            disabled={!selectedEmployeeType}
                           >
-                            <Option value="">Select Category</Option>
                             {selectedEmployeeType &&
                               employeeCategories[selectedEmployeeType]?.map(
                                 (category, index) => (
-                                  <Option key={index} value={category}>
+                                  <Select.Option key={index} value={category}>
                                     {category}
-                                  </Option>
+                                  </Select.Option>
                                 )
                               )}
                           </Select>
                         )}
                       />
                       {errors.employeeCategory && (
-                        <p className="text-danger">Category is required</p>
+                        <p className="text-danger">
+                          {errors.employeeCategory.message}
+                        </p>
                       )}
                     </div>
                   </Col>
@@ -670,11 +956,11 @@ function InsuranceManagementDetails({ collapsed }) {
                   {/* Start Date */}
                   <Col xs={12} md={6} lg={4}>
                     <div>
-                      <label className="vendorpage_labelCss">Start Date:</label>
+                      <label>Start Date:</label>
                       <Controller
                         name="startDate"
                         control={control}
-                        rules={{ required: true }}
+                        rules={{ required: "Start date is required" }}
                         render={({ field }) => (
                           <input
                             type="date"
@@ -684,7 +970,9 @@ function InsuranceManagementDetails({ collapsed }) {
                         )}
                       />
                       {errors.startDate && (
-                        <p className="text-danger">Start date is required</p>
+                        <p className="text-danger">
+                          {errors.startDate.message}
+                        </p>
                       )}
                     </div>
                   </Col>
@@ -692,11 +980,11 @@ function InsuranceManagementDetails({ collapsed }) {
                   {/* End Date */}
                   <Col xs={12} md={6} lg={4}>
                     <div>
-                      <label className="vendorpage_labelCss">End Date:</label>
+                      <label>End Date:</label>
                       <Controller
                         name="endDate"
                         control={control}
-                        rules={{ required: true }}
+                        rules={{ required: "End date is required" }}
                         render={({ field }) => (
                           <input
                             type="date"
@@ -706,7 +994,7 @@ function InsuranceManagementDetails({ collapsed }) {
                         )}
                       />
                       {errors.endDate && (
-                        <p className="text-danger">End date is required</p>
+                        <p className="text-danger">{errors.endDate.message}</p>
                       )}
                     </div>
                   </Col>
@@ -714,13 +1002,11 @@ function InsuranceManagementDetails({ collapsed }) {
                   {/* Description */}
                   <Col xs={12} md={6} lg={4}>
                     <div>
-                      <label className="vendorpage_labelCss">
-                        Description:
-                      </label>
+                      <label>Description:</label>
                       <Controller
                         name="description"
                         control={control}
-                        rules={{ required: true }}
+                        rules={{ required: "Description is required" }}
                         render={({ field }) => (
                           <textarea
                             {...field}
@@ -730,15 +1016,18 @@ function InsuranceManagementDetails({ collapsed }) {
                         )}
                       />
                       {errors.description && (
-                        <p className="text-danger">Description is required</p>
+                        <p className="text-danger">
+                          {errors.description.message}
+                        </p>
                       )}
                     </div>
                   </Col>
                 </Row>
 
+                {/* Submit Button */}
                 <Row>
                   <Col className="px-2 py-2">
-                    <Button type="primary" onClick={handleSubmit(onSubmit)}>
+                    <Button type="primary" htmlType="submit">
                       Submit
                     </Button>
                   </Col>
