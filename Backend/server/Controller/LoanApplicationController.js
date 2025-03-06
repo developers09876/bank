@@ -372,6 +372,11 @@ export async function updateLoan(req, res, next) {
       employeeCategory: data.employeeCategory,
       startDate: data.startDate || null,
       endDate: data.endDate || null,
+      state: data.state,
+      district: data.district,
+      Branch: data.Branch,
+      report_Manager: data.report_Manager,
+      sale_Manager:data.sale_Manager,
       // dob: data.dob || null,
     };
     console.log("Update Details:", updateDetails);
