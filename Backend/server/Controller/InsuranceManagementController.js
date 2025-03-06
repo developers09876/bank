@@ -47,6 +47,11 @@ export async function updateInsuranceManagementDb(req, res, next) {
       employeeId: data.employeeId,
       employeeType: data.employeeType,
       employeeCategory: data.employeeCategory,
+      state: data.state,
+      district: data.district,
+      Branch: data.Branch,
+      report_Manager: data.report_Manager,
+      sale_Manager: data?.sale_Manager ,
     };
 
     const updatedRecord = await insuranceManagementDb.findByIdAndUpdate(
