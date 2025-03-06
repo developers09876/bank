@@ -86,10 +86,17 @@ function LeadDetails({ collapsed }) {
     fetchEmployeeList();
   }, [employeeType]);
 
-  const filteredEmployeeList = employeeList.filter((employee) =>
-    employee.services.includes(selectedEmployeeType)
-  );
+ const filteredEmployeeList = employeeList.filter((employee) => {
+  const matchesBranch = employee.Branch === BranchName;  
+  const matchesEmployeeType = employee.services.includes(selectedEmployeeType);  
 
+  return matchesBranch && matchesEmployeeType;
+});
+
+console.log("Branch Name:", BranchName);
+console.log("Employee Type:", selectedEmployeeType);
+
+  
   console.log("Filtered Employees:", filteredEmployeeList);
 
   useEffect(() => {
@@ -263,6 +270,8 @@ function LeadDetails({ collapsed }) {
         state: data?.state || "",
         district: data?.district || "",
         report_Manager: data?.report_Manager || "",
+        sale_Manager: data?.sale_Manager || "",
+
 
       });
       setSelectedEmployeeType(data?.employeeType || "");
@@ -284,6 +293,7 @@ function LeadDetails({ collapsed }) {
       district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
+      sale_Manager:data.sale_Manager,
     };
 
     try {
@@ -526,102 +536,7 @@ function LeadDetails({ collapsed }) {
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Row>
-                    {/* Employee Type */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Employee Type:
-                        </label>
-                        <Controller
-                          name="employeeType"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              style={{ width: "100%" }}
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setSelectedEmployeeType(value);
-                              }}
-                            >
-                              <Option value="">Select Employee Type</Option>
-                              <Option value="LoanEmployee">
-                                Loan Employee
-                              </Option>
-                              <Option value="TaxEmployee">Tax Employee</Option>
-                              <Option value="InsuranceEmployee">
-                                Insurance Employee
-                              </Option>
-                              <Option value="StockMarket">Stock Market</Option>
-                            </Select>
-                          )}
-                        />
-                        {errors.employeeType && (
-                          <p className="text-danger">
-                            Employee type is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    {/* Employee List */}
-                    <Col xs={12} md={6} lg={4}>
-                      <label>Employee List:</label>
-                      <select
-                        {...register("employeeId", { required: true })}
-                        className="form-select"
-                      >
-                        <option value="">Select Employee</option>
-                        {filteredEmployeeList.map((employee) => (
-                          <option key={employee._id} value={employee._id}>
-                            {employee.firstname} {employee.lastname}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.employeeId && (
-                        <p className="text-danger">
-                          Employee selection is required
-                        </p>
-                      )}
-                    </Col>
-
-                    {/* Category */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">Category:</label>
-                        <Controller
-                          name="loanType"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              style={{ width: "100%" }}
-                              placeholder="Select Category"
-                              onChange={(value) => field.onChange(value)}
-                              disabled={!selectedEmployeeType}
-                            >
-                              <Option value="">Select Category</Option>
-                              {selectedEmployeeType &&
-                                employeeCategories[selectedEmployeeType]?.map(
-                                  (category, index) => (
-                                    <Option key={index} value={category}>
-                                      {category}
-                                    </Option>
-                                  )
-                                )}
-                            </Select>
-                          )}
-                        />
-                        {errors.loanType && (
-                          <p className="text-danger">Category is required</p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
+                  <Col xs={12} md={6} lg={4}>
                       <div>
                         <label>State</label>
                         <Controller
@@ -777,7 +692,7 @@ function LeadDetails({ collapsed }) {
                           )}
                         </Col>
 
-                        {/* {!selectedServices.includes("SalesManager") && (
+                         {!selectedServices.includes("SalesManager") && (
                           <Col lg={4} md={6} sm={12}>
                             <label htmlFor="sale_Manager">Sales Manager:</label>
                             <Controller
@@ -813,9 +728,105 @@ function LeadDetails({ collapsed }) {
                               </p>
                             )}
                           </Col>
-                        )} */}
+                        )} 
                       </>
                     )}
+                    {/* Employee Type */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Employee Type:
+                        </label>
+                        <Controller
+                          name="employeeType"
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              style={{ width: "100%" }}
+                              onChange={(value) => {
+                                field.onChange(value);
+                                setSelectedEmployeeType(value);
+                              }}
+                            >
+                              <Option value="">Select Employee Type</Option>
+                              <Option value="LoanEmployee">
+                                Loan Employee
+                              </Option>
+                              <Option value="TaxEmployee">Tax Employee</Option>
+                              <Option value="InsuranceEmployee">
+                                Insurance Employee
+                              </Option>
+                              <Option value="StockMarket">Stock Market</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.employeeType && (
+                          <p className="text-danger">
+                            Employee type is required
+                          </p>
+                        )}
+                      </div>
+                    </Col>
+
+                    {/* Employee List */}
+                    <Col xs={12} md={6} lg={4}>
+                      <label>Employee List:</label>
+                      <select
+                        {...register("employeeId", { required: true })}
+                        className="form-select"
+                      >
+                        <option value="">Select Employee</option>
+                        {filteredEmployeeList.map((employee) => (
+                          <option key={employee._id} value={employee._id}>
+                            {employee.firstname} {employee.lastname}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.employeeId && (
+                        <p className="text-danger">
+                          Employee selection is required
+                        </p>
+                      )}
+                    </Col>
+
+                    {/* Category */}
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">Category:</label>
+                        <Controller
+                          name="loanType"
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              style={{ width: "100%" }}
+                              placeholder="Select Category"
+                              onChange={(value) => field.onChange(value)}
+                              disabled={!selectedEmployeeType}
+                            >
+                              <Option value="">Select Category</Option>
+                              {selectedEmployeeType &&
+                                employeeCategories[selectedEmployeeType]?.map(
+                                  (category, index) => (
+                                    <Option key={index} value={category}>
+                                      {category}
+                                    </Option>
+                                  )
+                                )}
+                            </Select>
+                          )}
+                        />
+                        {errors.loanType && (
+                          <p className="text-danger">Category is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    
 
                     {/* Start Date */}
                     <Col xs={12} md={6} lg={4}>

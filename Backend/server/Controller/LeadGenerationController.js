@@ -274,6 +274,8 @@ export async function updateLeadAssign(req, res, next) {
       district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
+      sale_Manager: data?.sale_Manager ,
+
       // dob: data.dob || null,
     };
     console.log("Update Details:", updateDetails);
