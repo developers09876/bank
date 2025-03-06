@@ -55,10 +55,20 @@ const JobRequest = ({ collapsed }) => {
   };
 
   const updateStatus = async (id, action) => {
+    if (!selectedRecord) return; 
     try {
-      const details = { action };
+    const details = {
+      name: selectedRecord.name,
+      phone: selectedRecord.phone,
+      email: selectedRecord.email,
+      jobTitle: selectedRecord.jobTitle,
+      resume: selectedRecord.resume,
+      status: action, 
+    };
+    console.log("Updated Data:", details);
+      // const details = { action };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplications/${id}`,
+        `http://localhost:5000/jobrequest/update/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -78,6 +88,12 @@ const JobRequest = ({ collapsed }) => {
     if (selectedRecord) {
       updateStatus(selectedRecord._id, "reject");
       handleModalOk();
+    }
+  };
+  const handleHold = () => {
+    if (selectedRecord) {
+      updateStatus(selectedRecord._id, "hold");
+      setIsModalVisible(false);
     }
   };
 
@@ -243,7 +259,7 @@ const JobRequest = ({ collapsed }) => {
               </Descriptions.Item>
               <Descriptions.Item label="Status">
                 <Space>
-                  {selectedRecord.status !== "1" && (
+                  {selectedRecord.status!== "1" && (
                     <Button
                       type="primary"
                       style={{ background: "#4096ff", color: "#fff" }}
@@ -252,7 +268,14 @@ const JobRequest = ({ collapsed }) => {
                       Approve
                     </Button>
                   )}
-                  {selectedRecord.status !== "2" && (
+                  {selectedRecord.status!== "3" && (
+                    <Button 
+                     type="primary"
+                     style={{ background: "#FFA500", color: "#fff" }} onClick={handleHold }>
+                      Hold
+                    </Button>
+                  )}
+                  {selectedRecord.status!== "2" && (
                     <Button danger onClick={handleReject}>
                       Reject
                     </Button>
