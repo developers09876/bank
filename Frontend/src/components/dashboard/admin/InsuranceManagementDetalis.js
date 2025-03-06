@@ -78,7 +78,7 @@ function InsuranceManagementDetails({ collapsed }) {
       endDate: "",
       description: "",
       employeeCategory: "",
-      // employeeList:""
+      employeeList:"",
     },
   });
 
@@ -278,7 +278,7 @@ function InsuranceManagementDetails({ collapsed }) {
       endDate: data.endDate,
       employeeId: data.employeeId,
       employeeType: data.employeeType,
-      // employeeList: data.employeeList,
+      employeeList: data.employeeList,
       employeeCategory: data.employeeCategory,
       state: data.state,
       district: data.district,
@@ -928,20 +928,20 @@ function InsuranceManagementDetails({ collapsed }) {
                   <Col xs={12} md={6} lg={4}>
                     <label>Employee List:</label>
                     <select
-                      {...register("employeeId", {
+                      {...register("employeeList", {
                         required: "Employee selection is required",
                       })}
                       className="form-select"
                     >
                       <option value="">Select Employee</option>
                       {filteredEmployeeList?.map((employee) => (
-                        <option key={employee._id} value={employee._id}>
+                        <option key={employee._firstname} value={employee._lastname}>
                           {employee.firstname} {employee.lastname}
                         </option>
                       ))}
                     </select>
-                    {errors.employeeId && (
-                      <p className="text-danger">{errors.employeeId.message}</p>
+                    {errors.employeeList && (
+                      <p className="text-danger">{errors.employeeList.message}</p>
                     )}
                   </Col>
 
