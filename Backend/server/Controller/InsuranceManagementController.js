@@ -52,7 +52,7 @@ export async function updateInsuranceManagementDb(req, res, next) {
       district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager: data?.sale_Manager ,
+      sale_Manager: data?.sale_Manager,
     };
 
     const updatedRecord = await insuranceManagementDb.findByIdAndUpdate(
@@ -95,6 +95,7 @@ export async function getallInsuranceManagement(req, res, next) {
 export const getInsuranceManagementUserId = async (req, res) => {
   try {
     const { userId } = req.params;
+
     console.log("object", userId);
     const taxManagement = await insuranceManagementDb.find({ userId });
     if (!taxManagement) {

@@ -226,7 +226,7 @@ function Sidebar({ collapsed }) {
         <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
           Lead Generation
         </NavLink>
-        {managementMenuItems && (
+        {hasManagement && (
           <SubMenu title="Management" className="main-nav-style">
             {managementMenuItems
               .filter((task) => service.includes(task.serviceName))

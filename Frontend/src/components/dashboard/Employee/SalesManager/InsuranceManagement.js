@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
-import Api from "../../../Api";
+import Api from "../../../../Api";
 
 const Insurance = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
@@ -19,7 +19,7 @@ const Insurance = ({ collapsed }) => {
 
   const navigate = useNavigate();
   const userid = localStorage.getItem("id");
-
+  console.log("userid", userid);
   const handleViewDetails = (record) => {
     navigate(`/employee/insurancedetails/${record._id}`, {
       state: { record },
