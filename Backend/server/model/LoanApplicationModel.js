@@ -181,8 +181,8 @@ const loanApplicationSchema = new mongoose.Schema(
     report_Manager: { type: String },
     sale_Manager: { type: String },
     Branch: { type: String },
-    state: { type: String },
-    district: { type: String },
+    statename: { type: String },
+    districtname: { type: String },
     addremarks: [
       {
         date: { type: String },
