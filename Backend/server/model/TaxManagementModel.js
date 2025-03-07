@@ -17,7 +17,11 @@ const taxManagementSchema = new mongoose.Schema({
   taxType: { type: String },
   subCategory: { type: String },
   employeeCategory: { type: String },
-
+  statename: { type: String },
+  districtname: { type: String },
+  Branch:{ type: String },
+  report_Manager: { type: String },
+  sale_Manager:{ type: String },
   description: { type: String },
   startDate: { type: String },
   endDate: { type: String },

@@ -105,6 +105,11 @@ export async function updateTaxManagementDb(req, res, next) {
       employeeId: data.employeeId,
       employeeType: data.employeeType,
       employeeCategory: data.employeeCategory,
+      statename: data.statename,
+      districtname: data.districtname,
+      Branch: data.Branch,
+      report_Manager: data.report_Manager,
+      sale_Manager:data.sale_Manager,
     };
 
     const updatedRecord = await taxManagementDb.findByIdAndUpdate(
