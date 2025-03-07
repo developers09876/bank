@@ -106,6 +106,19 @@ export const getInsuranceManagementUserId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const getSalesManagerId = async (req, res) => {
+  try {
+    const { sale_Manager } = req.params;
+
+    const taxManagement = await insuranceManagementDb.find({ sale_Manager });
+    if (!taxManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(taxManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const getInsuranceManagementEmployeeId = async (req, res) => {
   try {
     const { employeeId } = req.params;

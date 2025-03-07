@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { FaPlus } from "react-icons/fa";
+import Api from "../../../../Api";
 
 const LoanManagements = ({ collapsed }) => {
   const [searchText, setSearchText] = useState("");
@@ -27,8 +28,8 @@ const LoanManagements = ({ collapsed }) => {
   const getAll = async () => {
     try {
       console.log("userId", userId);
-      const response = await axios.get(
-        `http://localhost:5000/loanform/getbyid/${userId}`
+      const response = await Api.get(
+        `/loanform/getByIdSalesManagerId/${userId}`
       );
       const loans = response.data;
       // const filterbyUserid = loans.filter(item => item.userid === userId);

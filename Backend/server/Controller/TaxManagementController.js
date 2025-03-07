@@ -109,7 +109,7 @@ export async function updateTaxManagementDb(req, res, next) {
       districtname: data.districtname,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager:data.sale_Manager,
+      sale_Manager: data.sale_Manager,
     };
 
     const updatedRecord = await taxManagementDb.findByIdAndUpdate(
@@ -205,6 +205,18 @@ export const getTaxManagementUserId = async (req, res) => {
     const { userId } = req.params;
     console.log("object", userId);
     const taxManagement = await taxManagementDb.find({ userId });
+    if (!taxManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(taxManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const getSalesManagerId = async (req, res) => {
+  try {
+    const { sale_Manager } = req.params;
+    const taxManagement = await taxManagementDb.find({ sale_Manager });
     if (!taxManagement) {
       return res.status(404).json({ message: "User id not found" });
     }

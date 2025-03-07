@@ -376,7 +376,7 @@ export async function updateLoan(req, res, next) {
       districtname: data.districtname,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager:data.sale_Manager,
+      sale_Manager: data.sale_Manager,
       // dob: data.dob || null,
     };
     console.log("Update Details:", updateDetails);
@@ -456,7 +456,18 @@ export const getLoanByEmpId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
+export const getSalesManagerId = async (req, res) => {
+  try {
+    const { sale_Manager } = req.params;
+    const taxManagement = await LoanApplication.find({ sale_Manager });
+    if (!taxManagement) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json(taxManagement);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const getbyReferCode = async (req, res) => {
   try {
     const { referCode } = req.params;

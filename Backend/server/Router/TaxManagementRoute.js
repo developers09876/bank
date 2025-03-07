@@ -9,6 +9,7 @@ import {
   updateTaxApplicationStatus,
   updateTaxRemarks,
   updateTaxApplicationDetails,
+  getSalesManagerId,
 } from "../Controller/TaxManagementController.js";
 
 const router = Router();
@@ -22,5 +23,6 @@ router.get("/getAllTaxManagement", getallTaxManagement);
 router.get("/getByIdTaxManagement/:userId", getTaxManagementUserId);
 router.get("/getByTaxId/:id", getByTaxId);
 router.put("/updateTaxremarks/:id", updateTaxRemarks);
+router.get("/getByIdSalesManagerId/:sale_Manager", getSalesManagerId);
 
 export default router;
