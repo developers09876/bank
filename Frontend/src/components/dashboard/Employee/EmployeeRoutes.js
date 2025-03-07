@@ -38,6 +38,9 @@ import CreateNewLoanForm from "./CreateNewLoanForm/CreateLoanProfileTab";
 import Loanlist from "./Loanlist";
 import Insurancelist from "./Insurancelist";
 import Taxlist from "./Taxlist";
+import Salesloanmangement from "./SalesManager/LoanManagement";
+import Salesinsurancenmangement from "./SalesManager/LoanManagement";
+import Salestaxmangement from "./SalesManager/TaxManagement";
 
 export const EmployeeRoutes = [
   {
@@ -175,5 +178,17 @@ export const EmployeeRoutes = [
   {
     path: "/employee/taxlist",
     element: <Taxlist/>,
+  },
+  {
+    path: "/employee/salesloanmangement",
+    element: <Salesloanmangement/>,
+  },
+  {
+    path: "/employee/salesinsurancenmangement",
+    element: <Salesinsurancenmangement/>,
+  },
+  {
+    path: "/employee/salestaxmangement",
+    element: <Salestaxmangement/>,
   },
 ];

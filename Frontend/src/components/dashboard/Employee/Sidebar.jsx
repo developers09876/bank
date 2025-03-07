@@ -156,17 +156,17 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "SalesManager",
       label: "Loan Management",
-      // path: "/employee/loantaskmanagement",
+      path: "/employee/salesloanmangement",
     },
     {
       serviceName: "SalesManager",
       label: "Insurance Management",
-      // path: "/employee/insurancetaskmanagement",
+      path: "/employee/salesinsurancenmangement",
     },
     {
       serviceName: "SalesManager",
       label: "Tax Management",
-      // path: "/employee/taxtaskmanagement",
+      path: "/employee/salestaxmangement",
     },
     // {
     //   serviceName: "SalesManager",
