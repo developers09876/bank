@@ -69,7 +69,7 @@
 // export default Sidebar;
 
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
 import { Menu } from "antd";
 import Api from "../../../Api";
 import { toast } from "react-toastify";
@@ -152,38 +152,65 @@ function Sidebar({ collapsed }) {
       path: "/employee/stockmarket",
     },
   ];
-
+  const managementMenuItems = [
+    {
+      serviceName: "SalesManager",
+      label: "Loan Management",
+      // path: "/employee/loantaskmanagement",
+    },
+    {
+      serviceName: "SalesManager",
+      label: "Insurance Management",
+      // path: "/employee/insurancetaskmanagement",
+    },
+    {
+      serviceName: "SalesManager",
+      label: "Tax Management",
+      // path: "/employee/taxtaskmanagement",
+    },
+    // {
+    //   serviceName: "SalesManager",
+    //   label: "Stock Management",
+    //   path: "/employee/stockmarket",
+    // },
+  ];
   // Check if the employee has task-related services
   const hasTasks = taskMenuItems.some((task) =>
+    service.includes(task.serviceName)
+  );
+  const hasManagement = managementMenuItems.some((task) =>
     service.includes(task.serviceName)
   );
 
   return (
     <div className={collapsed ? "sidebarcontent open" : "d-none"}>
       <Menu onClick={onClick} mode="inline" className="nav-list">
-      <div style={{ textAlign: "center", marginTop: "45px"}}>
-        <h3 style={{ 
-          display: "flex", 
-          alignItems: "center", 
-          justifyContent: "center", 
-          gap: "8px",  
-          fontSize: "18px", 
-          fontWeight: "bold", 
-          color: "#333",
-         
-        }}>
-          <FaUserCircle style={{ fontSize: "28px", color: "#1890ff" }} />
-          <span>hi, {firstname}!</span>
-        </h3>
-        <h3 style={{ 
-          fontSize: "15px", 
-          fontWeight: "bold", 
-          color: "#666", 
-          marginTop: "5px" 
-        }}>
-          {empno}
-        </h3>
-      </div>
+        <div style={{ textAlign: "center", marginTop: "45px" }}>
+          <h3
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              fontSize: "18px",
+              fontWeight: "bold",
+              color: "#333",
+            }}
+          >
+            <FaUserCircle style={{ fontSize: "28px", color: "#1890ff" }} />
+            <span>hi, {firstname}!</span>
+          </h3>
+          <h3
+            style={{
+              fontSize: "15px",
+              fontWeight: "bold",
+              color: "#666",
+              marginTop: "5px",
+            }}
+          >
+            {empno}
+          </h3>
+        </div>
 
         <NavLink
           to="/employee"
@@ -192,10 +219,24 @@ function Sidebar({ collapsed }) {
         >
           Dashboard
         </NavLink>
-          
-          <NavLink to="/employee/myprofile" ClassName="main-nav-style">My Profile</NavLink>
-        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">Lead Generation</NavLink>
 
+        <NavLink to="/employee/myprofile" ClassName="main-nav-style">
+          My Profile
+        </NavLink>
+        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
+          Lead Generation
+        </NavLink>
+        {managementMenuItems && (
+          <SubMenu title="Management" className="main-nav-style">
+            {managementMenuItems
+              .filter((task) => service.includes(task.serviceName))
+              .map((task) => (
+                // <Menu.Item key={task.path}>
+                <NavLink to={task.path}>{task.label}</NavLink>
+                //  </Menu.Item>
+              ))}
+          </SubMenu>
+        )}
         {/* Conditionally render Task Management submenu */}
         {hasTasks && (
           <SubMenu title="Task Management" className="main-nav-style">
@@ -208,7 +249,7 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
-        <NavLink to="/employee/leadtaskmanagement"ClassName="main-nav-style">
+        <NavLink to="/employee/leadtaskmanagement" ClassName="main-nav-style">
           Lead Task Management
         </NavLink>
 
