@@ -41,6 +41,8 @@ import Taxlist from "./Taxlist";
 import Salesloanmangement from "./SalesManager/LoanManagement";
 import Salesinsurancenmangement from "./SalesManager/InsuranceManagement";
 import Salestaxmangement from "./SalesManager/TaxManagement";
+import Insurancemanagementdetails from "./SalesManager/Insurancemanagementdetails";
+import Taxmanagementdetails from "./SalesManager/TaxManagementdetails";
 
 export const EmployeeRoutes = [
   {
@@ -179,6 +181,7 @@ export const EmployeeRoutes = [
     path: "/employee/taxlist",
     element: <Taxlist />,
   },
+
   {
     path: "/employee/salesloanmangement",
     element: <Salesloanmangement />,
@@ -190,5 +193,13 @@ export const EmployeeRoutes = [
   {
     path: "/employee/salestaxmangement",
     element: <Salestaxmangement />,
+  },
+  {
+    path: "/employee/insurancemanagementdetails/:id",
+    element: <Insurancemanagementdetails />,
+  },
+  {
+    path: "/employee/taxmanagementdetails/:id",
+    element: <Taxmanagementdetails/>,
   },
 ];

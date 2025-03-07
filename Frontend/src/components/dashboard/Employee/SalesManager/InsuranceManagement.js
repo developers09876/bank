@@ -21,7 +21,7 @@ const Insurance = ({ collapsed }) => {
   const userid = localStorage.getItem("id");
   console.log("userid", userid);
   const handleViewDetails = (record) => {
-    navigate(`/employee/insurancedetails/${record._id}`, {
+    navigate(`/employee/insurancemanagementdetails/${record._id}`, {
       state: { record },
     });
   };

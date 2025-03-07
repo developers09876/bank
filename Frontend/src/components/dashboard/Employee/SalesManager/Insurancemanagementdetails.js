@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import {
   Select,
   Layout,
-  Button,
   Card,
   Descriptions,
   Tag,
+  Button,
   Space,
   Divider,
   Modal,
@@ -20,45 +20,46 @@ import {
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-import "../../user/LoanDetails.css";
+import "../SalesManager/Details.css";
 import Api from "../../../../Api";
 import axios from "axios";
 const { Option } = Select;
 
-function TaskManagementDetails({ collapsed }) {
+function InsuranceManagementDetails({ collapsed }) {
   const { state } = useLocation();
   const initialRecord = state?.record;
   // const record = state?.record || {};
   const [record, setRecord] = useState(initialRecord);
-
+  console.log("recorddetails", record);
   const id = localStorage.getItem("regid");
-
+  const [selectedEmployeeType, setSelectedEmployeeType] =
+    useState("InsuranceEmployee");
   // const [employeeType, setEmployeeType] = useState("");
   const [inputs, setInputs] = useState();
   const [employeeList, setEmployeeList] = useState();
+  console.log("employeeList", employeeList);
   const [employeeName, setEmployeeName] = useState();
-  const [employeeCategory, setemployeeCategory] = useState();
-  const [selectedEmployeeType, setSelectedEmployeeType] =
-    useState("TaxEmployee");
+  // const [employeeCategory, setemployeeCategory] = useState();
   const [assignValue, setAssignValue] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
   const [pendingReason, setPendingReason] = useState("");
   const [loan, setLoan] = useState([]);
+  const [selectedServices, setSelectedServices] = useState([]);
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [cityList, setCityList] = useState([]);
-  const [reportingManagerList, setReportingManagerList] = useState();
-  const [salesManagerList, setSalesManagerList] = useState();
   const [districtName, setDistrictName] = useState("");
   const [BranchName, setBranchName] = useState("");
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [reportingManagerList, setReportingManagerList] = useState([]);
+  const [salesManagerList, setSalesManagerList] = useState([]);
   const [filteredManagers, setFilteredManagers] = useState([]);
   const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
+  const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
+  // const dateFormat = new Date(record.dob).toISOString().split("T")[0];
 
   const {
     control,
@@ -70,13 +71,14 @@ function TaskManagementDetails({ collapsed }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      employeeType: "",
+      // employeeType: "", v
       employeeId: "",
       loanType: "",
       startDate: "",
       endDate: "",
       description: "",
       employeeCategory: "",
+      employeeList: "",
     },
   });
 
@@ -84,33 +86,12 @@ function TaskManagementDetails({ collapsed }) {
   const employeeType = "employee";
 
   const employeeCategories = {
-    TaxEmployee: [
-      "Income Tax",
-      "TDS/TCS Services",
-      "GST Services",
-      "ESI & PF Services",
+    InsuranceEmployee: [
+      "Life Insurance",
+      "Vehicle Insurance",
+      "Health Insurance",
     ],
   };
-  useEffect(() => {
-    const fetchEmployeeList = async () => {
-      try {
-        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
-        setEmployeeList(response.data);
-        console.log("responseemployee", response.data);
-      } catch (error) {
-        console.error("Error fetching employee list:", error);
-        toast.error("Failed to fetch employee list.");
-      }
-    };
-    fetchEmployeeList();
-  }, [employeeType]);
-  const filteredEmployeeList = employeeList?.filter((employee) => {
-    const matchesBranch = employee.Branch === BranchName;
-    const matchesEmployeeType =
-      employee.services.includes(selectedEmployeeType);
-
-    return matchesBranch && matchesEmployeeType;
-  });
   useEffect(() => {
     const fetchManagers = async () => {
       try {
@@ -118,13 +99,13 @@ function TaskManagementDetails({ collapsed }) {
           `http://localhost:5000/signup/getbyUserType/${employeeType}`
         );
         console.log("Employee response.data", response.data);
-        const filteredEmployees = response.data?.filter((employee) =>
+        const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
         );
         console.log("filteredEmployees", filteredEmployees);
         setReportingManagerList(filteredEmployees);
 
-        const filteredSalesEmployees = response.data?.filter((salesemployee) =>
+        const filteredSalesEmployees = response.data.filter((salesemployee) =>
           salesemployee.services.includes("SalesManager")
         );
         console.log("filteredSalesEmployees", filteredSalesEmployees);
@@ -138,7 +119,7 @@ function TaskManagementDetails({ collapsed }) {
 
   useEffect(() => {
     if (districtName) {
-      const filtered = reportingManagerList?.filter(
+      const filtered = reportingManagerList.filter(
         (manager) => manager.district === districtName
       );
       setFilteredManagers(filtered);
@@ -147,12 +128,22 @@ function TaskManagementDetails({ collapsed }) {
 
   useEffect(() => {
     if (BranchName) {
-      const filtered = salesManagerList?.filter(
+      const filtered = salesManagerList.filter(
         (manager) => manager.Branch === BranchName
       );
       setFilteredSalesManagers(filtered);
     }
   }, [BranchName, salesManagerList]);
+  useEffect(() => {
+    if (BranchName) {
+      const filtered = employeeList.filter(
+        (employee) => employee.Branch === BranchName
+      );
+      setFilteredEmployeeList(filtered);
+    } else {
+      setFilteredEmployeeList(employeeList);
+    }
+  }, [BranchName, employeeList]);
 
   const getCountry = async () => {
     try {
@@ -171,7 +162,6 @@ function TaskManagementDetails({ collapsed }) {
       console.log("state res.data.data", res.data.data);
     });
   };
-  // const state_id = 4026;
   const getDistrict = (state_id) => {
     Api.get(`district/districtById/${state_id}`).then((res) => {
       setDistrictList(res.data.data);
@@ -185,65 +175,88 @@ function TaskManagementDetails({ collapsed }) {
       console.log("city res.data.data", res.data.data);
     });
   };
-
   useEffect(() => {
     getCountry();
     getState();
     // getDistrict();
   }, []);
 
+  // const fetchUpdatedRecord = async () => {
+  //   try {
+  //     const response = await Api.get(
+  //       `http://localhost:5000/insuranceManagement/getByInsurance/${record?._id}`
+  //     );
+  //     console.log("responseget.data", response.data);
+  //     const update = response.data;
+  //     console.log("update", update);
+  //     const updatedRecord = update.filter(
+  //       (loandata) => loandata._id === record._id
+  //     );
+  //     console.log("updatedRecord", updatedRecord);
+  //     if (updatedRecord) {
+  //       setRecord(updatedRecord[0]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching updated record:", error);
+  //   }
+  // };
+  const getbyLeadId = async () => {
+    await Api.get(`/insuranceManagement/getByInsurance/${record?._id}`).then(
+      (res) => {
+        const data = res.data.data[0];
+        console.log("lead insu data", data);
+        setAssignValue(data);
+        reset({
+          employeeType: data?.employeeType || "InsuranceEmployee",
+          employeeId: data?.employeeId || "",
+          loanType: data?.loanType || "",
+          startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+          endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+          description: data?.description || "",
+          employeeCategory: data?.employeeCategory || "",
+        });
+        setRecord(data);
+
+        setSelectedEmployeeType(data?.employeeType || "InsuranceEmployee");
+      }
+    );
+  };
   useEffect(() => {
     const fetchEmployeeList = async () => {
-      const employeeid = record.employeeId;
       try {
-        const response = await Api.get(`signup/getby/${employeeid}`);
-        if (
-          response.data &&
-          response.data.firstname &&
-          response.data.lastname
-        ) {
-          setEmployeeName(
-            `${response.data.firstname} ${response.data.lastname}`
-          );
-        }
-        setemployeeCategory(response.data.employeeCategory);
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
+        const filteredEmployees = response.data.filter((employee) =>
+          employee.services.includes("InsuranceEmployee")
+        );
+        setEmployeeList(filteredEmployees);
+        console.log("Filtered Employees:", filteredEmployees);
       } catch (error) {
         console.error("Error fetching employee list:", error);
-        // toast.error("Failed to fetch employee list.");
+        toast.error("Failed to fetch employee list.");
       }
     };
-    fetchEmployeeList();
-  }, []);
-  useEffect(() => {
-    getbyLeadId();
-  }, []);
 
-  const getbyLeadId = async () => {
-    await Api.get(`/taxManagement/getByTaxId/${record?._id}`).then((res) => {
-      const data = res.data.data[0];
-      setAssignValue(data);
-      reset({
-        employeeType: data?.employeeType || "TaxEmployee",
-        employeeId: data?.employeeId || "",
-        loanType: data?.loanType || "",
-        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-        description: data?.description || "",
-        employeeCategory: data?.employeeCategory || "",
-        Branch: data?.Branch || "",
-        state: data?.statename || "",
-        district: data?.districtname || "",
-        report_Manager: data?.report_Manager || "",
-        sale_Manager: data?.sale_Manager || "",
-      });
-      setRecord(data);
-      setSelectedEmployeeType(data?.employeeType || "TaxEmployee");
-    });
-  };
+    fetchEmployeeList();
+  }, [employeeType]);
+
+  useEffect(() => {
+    const fetchEmployeeDetail = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/signup/getby/${record.employeeId}`
+        );
+        console.log("response employee data", response);
+        setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchEmployeeDetail();
+  }, [record.employeeId]);
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    console.log("employeeType", data);
+
     const details = {
       AdminId: id,
       firstname: record.firstname,
@@ -255,6 +268,8 @@ function TaskManagementDetails({ collapsed }) {
       panno: record.panno,
       gstNo: record.gstNo,
       PolicyType: record.PolicyType,
+      VehicleType: data.VehicleType,
+      policyAmount: data.policyAmount,
       annualIncome: record.annualIncome,
       sumAssured: record.sumAssured,
       policyTerm: record.policyTerm,
@@ -262,10 +277,11 @@ function TaskManagementDetails({ collapsed }) {
       startDate: data.startDate,
       endDate: data.endDate,
       employeeId: data.employeeId,
-      employeeType: selectedEmployeeType,
+      employeeType: data.employeeType,
+      employeeList: data.employeeList,
       employeeCategory: data.employeeCategory,
-      statename: data.state,
-      districtname: data.district,
+      state: data.state,
+      district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
       sale_Manager: data.sale_Manager,
@@ -273,7 +289,7 @@ function TaskManagementDetails({ collapsed }) {
 
     try {
       await Api.put(
-        `/taxManagement/updateTaxManagement/${record._id}`,
+        `http://localhost:5000/insuranceManagement/updateInsuranceManagement/${record._id}`,
         details
       );
       toast.success("Task Assigned successfully");
@@ -290,7 +306,7 @@ function TaskManagementDetails({ collapsed }) {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/taxManagement/updateTaxapplicationsStaus/${id}`,
+        `http://localhost:5000/insuranceManagement/updateInsapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -310,6 +326,7 @@ function TaskManagementDetails({ collapsed }) {
           : item
       );
       setLoan(updatedLoans);
+
       await getbyLeadId();
     } catch (error) {
       console.error("Error updating status:", error);
@@ -318,7 +335,6 @@ function TaskManagementDetails({ collapsed }) {
 
   const handleApprove = () => {
     if (record) {
-      // alert("approved");
       updateStatus(record._id, "approve");
     }
   };
@@ -329,7 +345,6 @@ function TaskManagementDetails({ collapsed }) {
 
   const handlePending = () => {
     if (record && pendingReason.trim()) {
-      // alert("updated as pending");
       updateStatus(record._id, "Pending", pendingReason.trim());
       setIsPendingModalVisible(false);
       setPendingReason("");
@@ -344,7 +359,6 @@ function TaskManagementDetails({ collapsed }) {
 
   const handleReject = () => {
     if (record && rejectionReason.trim()) {
-      // alert("rejected");
       updateStatus(record._id, "reject", rejectionReason.trim());
       setIsRejectModalVisible(false);
       setRejectionReason("");
@@ -366,9 +380,23 @@ function TaskManagementDetails({ collapsed }) {
     <div>
       <div className="loandetail-container">
         <div className={collapsed ? "main-content.open" : "main-content"}>
+          {/* <div>
+        {Object.entries(record).map(([key, value]) => (
+          <Row key={key}>
+            <Col xs={2}>
+              <p>
+                <strong>{key.replace(/([A-Z])/g, " $1")}: </strong>
+              </p>
+            </Col>
+            <Col xs={7}>
+              <p>{value}</p>
+            </Col>
+          </Row>
+        ))}
+      </div> */}
           <div>
             <center>
-              <h3>Tax Details</h3>
+              <h3>Insurance Management Details</h3>
             </center>
             <div className="px-2" style={{ textAlign: "end" }}>
               <Tag
@@ -408,7 +436,7 @@ function TaskManagementDetails({ collapsed }) {
               </Tag>
             </div>
           </div>
-          <Row className="px-2 py-3">
+          <Row className="px-2 py-2">
             {/* <Col>
               <Card>
                 <Row>
@@ -446,7 +474,7 @@ function TaskManagementDetails({ collapsed }) {
                     <p>{record.contactNumber}</p>
                   </Col>
 
-                  <Col lg={6} md={12} className="px-3 py-1">
+                  <Col lg={9} className="px-3 py-1">
                     <center>
                       <h6>Other Information</h6>
                     </center>
@@ -499,23 +527,32 @@ function TaskManagementDetails({ collapsed }) {
           </Row>
           <Row className="px-2 py-2">
             <Col lg={12} md={12}>
-              <Card className="loandetail-custom-card" title="Tax Details">
+              <Card
+                className="loandetail-custom-card"
+                title="Insurance Details"
+              >
                 <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                  <Descriptions.Item label="bussiness Type">
-                    {record.businessType}
+                  <Descriptions.Item label="Policy Type">
+                    {record.PolicyType}
+                  </Descriptions.Item>
+                  {record.PolicyType === "Vehicle Insurance" &&
+                    record.VehicleType && (
+                      <Descriptions.Item label="Vehicle Type">
+                        {record.VehicleType}
+                      </Descriptions.Item>
+                    )}
+                  <Descriptions.Item label="Policy Amount">
+                    {record.policyAmount}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Sum Assured">
+                    {record.sumAssured}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Policy Term">
+                    {record.policyTerm}
                   </Descriptions.Item>
                   <Descriptions.Item label="Annual Income">
                     {record.annualIncome}
                   </Descriptions.Item>
-                  <Descriptions.Item label="Tax Type">
-                    {record.taxType}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="Tax Sub-Category">
-                    {record.subCategory}
-                  </Descriptions.Item>
-                  {/* <Descriptions.Item label="Income Tax Status">
-                    {record.incomeTaxStatus}
-                  </Descriptions.Item> */}
                 </Descriptions>
               </Card>
             </Col>
@@ -523,13 +560,11 @@ function TaskManagementDetails({ collapsed }) {
 
           <Row className="px-2 py-2">
             <Col lg={12} md={12}>
-              <Card className="loandetail-custom-card" title="Tax Status">
+              <Card className="loandetail-custom-card" title="Insurance Status">
                 <Descriptions column={{ xl: 3, lg: 2, xs: 1, md: 1, sm: 1 }}>
                   <Descriptions.Item label="Approval Status">
                     {record.status === "1" ? (
-                      <p style={{ color: "green", fontSize: "14px" }}>
-                        Approved
-                      </p>
+                      <p color="green">Approved</p>
                     ) : record.status === "2" ? (
                       <p color="red">Rejected</p>
                     ) : (
@@ -577,10 +612,12 @@ function TaskManagementDetails({ collapsed }) {
                       {record.description}
                     </Descriptions.Item>
                     <Descriptions.Item label="Start Date">
-                      {record.startDate}
+                      {record.startDate
+                        ? record.startDate.split("T")[0]
+                        : "N/A"}
                     </Descriptions.Item>
                     <Descriptions.Item label="End Date">
-                      {record.endDate}
+                      {record.endDate ? record.endDate.split("T")[0] : "N/A"}
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
@@ -615,391 +652,53 @@ function TaskManagementDetails({ collapsed }) {
             </Col>
           </Row>
 
-          <div className="py-2 px-2">
-            <h5>
-              <b>Assign To</b>
-            </h5>
-            {assignValue.employeeId && !isEditing ? (
-              // Display assigned employee if lead is assigned and not in edit mode
-              <div className="alert alert-info d-flex justify-content-between align-items-center">
-                <b>Task Already assigned</b>
-                {/* {assignValue.firstname} */}
-                <Button
-                  style={{
-                    color: "black",
-                    backgroundColor: "#ffc107",
-                    borderColor: "#ffc107",
-                  }}
-                  onClick={() => setIsEditing(true)}
-                >
-                  Edit
-                </Button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Row>
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label>State</label>
-                      <Controller
-                        name="state"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            style={{ width: "100%" }}
-                            showSearch
-                            placeholder="Select State"
-                            optionFilterProp="childer"
-                            onChange={(value, option) => {
-                              field.onChange(value);
-                              setValue("state", value);
-                              getDistrict(option.key);
-                            }}
-                            filterOption={(input, option) =>
-                              option?.children
-                                ?.toLowerCase()
-                                .includes(input.toLowerCase())
-                            }
-                          >
-                            {stateList.map(({ id, name }) => (
-                              <Select.Option key={id} value={name}>
-                                {name}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        )}
-                      />
-                      {errors.state && (
-                        <p className="text-danger">State is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col lg={4} md={6} xs={12}>
-                    <div>
-                      <label>District</label>
-                      <Controller
-                        name="district"
-                        defaultValue=""
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            optionFilterProp="childer"
-                            placeholder="Select District"
-                            showSearch
-                            style={{ width: "100%" }}
-                            onChange={(value, option) => {
-                              field.onChange(value);
-                              setValue("district", value);
-                              setDistrictName(value);
-                              getCity(option.key);
-                            }}
-                            filterOption={(input, option) =>
-                              option?.children
-                                ?.toLowerCase()
-                                .includes(input.toLowerCase())
-                            }
-                          >
-                            {districtList.map(({ id, name }) => (
-                              <Select.Option key={id} value={name}>
-                                {name}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        )}
-                      />
-                      {errors.district && (
-                        <p className="text-danger">{errors.district.message}</p>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={6} lg={4}>
-                    <div style={{ display: "grid" }}>
-                      <label className="vendorpage_labelCss">Branch</label>
-                      <Controller
-                        name="Branch"
-                        control={control}
-                        defaultValue=""
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            style={{ width: "100%" }}
-                            placeholder="Select Branch"
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setValue("city", value);
-                              setBranchName(value);
-                            }}
-                          >
-                            {cityList.map(({ id, cityName }) => (
-                              <Select.Option key={id} value={cityName}>
-                                {cityName}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        )}
-                      />
-                      {errors.Branch && (
-                        <p className="text-danger">Branch is required</p>
-                      )}
-                    </div>
-                  </Col>
-                  {!selectedServices.includes("ReportingManager") && (
-                    <>
-                      <Col lg={4} md={6} sm={12}>
-                        <label htmlFor="report_Manager">
-                          Reporting Manager:
-                        </label>
-                        <Controller
-                          name="report_Manager"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              style={{ width: "100%" }}
-                              placeholder="Select Reporting Manager"
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setValue("report_Manager", value);
-                              }}
-                            >
-                              {filteredManagers?.map((employee) => (
-                                <Select.Option
-                                  key={employee._id}
-                                  value={employee._id}
-                                >
-                                  {employee.firstname} {employee.lastname}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          )}
-                        />
-                        {errors.report_Manager && (
-                          <p className="text-red-500">
-                            {errors.report_Manager.message}
-                          </p>
-                        )}
-                      </Col>
+          
 
-                      {!selectedServices.includes("SalesManager") && (
-                        <Col lg={4} md={6} sm={12}>
-                          <label htmlFor="sale_Manager">Sales Manager:</label>
-                          <Controller
-                            name="sale_Manager"
-                            control={control}
-                            defaultValue=""
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <Select
-                                {...field}
-                                className="inputcolumn_drp"
-                                style={{ width: "100%" }}
-                                placeholder="Select Sales Manager"
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValue("sale_Manager", value);
-                                }}
-                              >
-                                {filteredSalesManagers?.map((employee) => (
-                                  <Select.Option
-                                    key={employee._id}
-                                    value={employee._id}
-                                  >
-                                    {employee.firstname} {employee.lastname}
-                                  </Select.Option>
-                                ))}
-                              </Select>
-                            )}
-                          />
-                          {errors.sale_Manager && (
-                            <p className="text-red-500">
-                              {errors.sale_Manager.message}
-                            </p>
-                          )}
-                        </Col>
-                      )}
-                    </>
+          {/* <Card className="loandetail-custom-card" title="Task Details"> */}
+          {/* <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+              <Descriptions.Item label="Loan Type">
+                {record.loanType}
+              </Descriptions.Item>
+              <Descriptions.Item label="Start Date">
+                {record.startDate
+                  ? new Date(record.startDate).toISOString().split("T")[0]
+                  : "N/A"}
+              </Descriptions.Item>
+              <Descriptions.Item label="End Date">
+                {record.endDate
+                  ? new Date(record.endDate).toISOString().split("T")[0]
+                  : "N/A"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Description">
+                {record.description}
+              </Descriptions.Item> */}
+
+          {/* {(record.pendingReason === null ||
+                record.rejectionReason === null) && (
+                <Descriptions.Item label="Your Approval Status">
+                  {record.status === "1" ? (
+                    <p color="green">Loan Approved</p>
+                  ) : record.status === "2" ? (
+                    <p color="red">Loan Rejected</p>
+                  ) : (
+                    <p style={{ color: "orange" }}>Loan is on Hold</p>
                   )}
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Employee Type:
-                      </label>
-                      <Controller
-                        name="employeeType"
-                        control={control}
-                        // disabled
-                        defaultValue="TaxEmployee" // Ensure default value is set
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            disabled
-                            className="inputcolumn_drp"
-                            style={{ width: "100%" }}
-                            onChange={(value) => {
-                              field.onChange(value);
-                              setSelectedEmployeeType(value);
-                            }}
-                          >
-                            <Option value="">Select Employee Type</Option>
-                            <Option value="LoanEmployee">Loan Employee</Option>
-                            <Option value="InsuranceEmployee">
-                              Insurance Employee
-                            </Option>
-                            <Option value="TaxEmployee">Tax Employee</Option>
-                          </Select>
-                        )}
-                      />
-                      {errors.employeeType && (
-                        <p className="text-danger">Employee type is required</p>
-                      )}
-                    </div>
-                  </Col>
+                </Descriptions.Item>
+              )}
 
-                  <Col xs={12} md={6} lg={4}>
-                    <label>Employee List:</label>
-                    <select
-                      {...register("employeeId", { required: true })}
-                      className="form-select"
-                    >
-                      <option value="">Select Employee</option>
-                      {filteredEmployeeList?.map((employee) => (
-                        <option key={employee._id} value={employee._id}>
-                          {employee.firstname} {employee.lastname}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.employeeId && (
-                      <p className="text-danger">
-                        Employee selection is required
-                      </p>
-                    )}
-                  </Col>
+              {record.status === "2" && (
+                <Descriptions.Item label="Reason for Your Rejection">
+                  {record.rejectionReason}
+                </Descriptions.Item>
+              )}
+              {record.status === "Pending" && record.pendingReason && (
+                <Descriptions.Item label="Reason for Holding the Loan">
+                  {record.pendingReason}
+                </Descriptions.Item>
+              )}
+            </Descriptions> */}
 
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Category:</label>
-                      <Controller
-                        name="employeeCategory"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            {...field}
-                            className="inputcolumn_drp"
-                            style={{ width: "100%" }}
-                            placeholder="Select Category"
-                            onChange={(value) => field.onChange(value)}
-                            disabled={!selectedEmployeeType}
-                          >
-                            <Option value="">Select Category</Option>
-                            {selectedEmployeeType &&
-                              employeeCategories[selectedEmployeeType]?.map(
-                                (category, index) => (
-                                  <Option key={index} value={category}>
-                                    {category}
-                                  </Option>
-                                )
-                              )}
-                          </Select>
-                        )}
-                      />
-                      {errors.employeeCategory && (
-                        <p className="text-danger">Category is required</p>
-                      )}
-                    </div>
-                  </Col>
-
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">Start Date:</label>
-                      <Controller
-                        name="startDate"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <input
-                            type="date"
-                            {...field}
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      {errors.startDate && (
-                        <p className="text-danger">Start date is required</p>
-                      )}
-                    </div>
-                  </Col>
-
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">End Date:</label>
-                      <Controller
-                        name="endDate"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <input
-                            type="date"
-                            {...field}
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      {errors.endDate && (
-                        <p className="text-danger">End date is required</p>
-                      )}
-                    </div>
-                  </Col>
-
-                  <Col xs={12} md={6} lg={4}>
-                    <div>
-                      <label className="vendorpage_labelCss">
-                        Description:
-                      </label>
-                      <Controller
-                        name="description"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <textarea
-                            {...field}
-                            className="form-control"
-                            placeholder="Task description"
-                          />
-                        )}
-                      />
-                      {errors.description && (
-                        <p className="text-danger">Description is required</p>
-                      )}
-                    </div>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col className="px-2 py-2">
-                    <Button type="primary" onClick={handleSubmit(onSubmit)}>
-                      Submit
-                    </Button>
-                  </Col>
-                </Row>
-              </form>
-            )}
-          </div>
-
-          {/* <Row className="py-4" style={{ justifySelf: "center" }}>
+          <Row className="py-4" style={{ justifySelf: "center" }}>
             <Space>
               {record && record.status === "Pending" && (
                 <Button
@@ -1152,8 +851,8 @@ function TaskManagementDetails({ collapsed }) {
                 </>
               )}
             </Space>
-          </Row> */}
-
+          </Row>
+          {/* </Card> */}
           <ToastContainer />
         </div>
       </div>
@@ -1161,4 +860,4 @@ function TaskManagementDetails({ collapsed }) {
   );
 }
 
-export default TaskManagementDetails;
+export default InsuranceManagementDetails;

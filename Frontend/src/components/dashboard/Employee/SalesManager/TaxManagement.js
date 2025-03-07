@@ -33,7 +33,7 @@ const Tax = ({ collapsed }) => {
   //   setIsModalVisible(true);
   // };
   const handleViewDetails = (record) => {
-    navigate(`/employee/taxdetails/${record._id}`, { state: { record } });
+    navigate(`/employee/taxmanagementdetails/${record._id}`, { state: { record } });
   };
   const handleEdit = (record) => {
     navigate(`/employee/editTax/${record._id}`, {

@@ -1108,7 +1108,7 @@ function InsuranceManagementDetails({ collapsed }) {
               )}
             </Descriptions> */}
 
-          <Row className="py-4" style={{ justifySelf: "center" }}>
+          {/* <Row className="py-4" style={{ justifySelf: "center" }}>
             <Space>
               {record && record.status === "Pending" && (
                 <Button
@@ -1261,7 +1261,7 @@ function InsuranceManagementDetails({ collapsed }) {
                 </>
               )}
             </Space>
-          </Row>
+          </Row> */}
           {/* </Card> */}
           <ToastContainer />
         </div>
