@@ -104,10 +104,11 @@ function TaskManagementDetails({ collapsed }) {
     };
     fetchEmployeeList();
   }, [employeeType]);
-  const filteredEmployeeList = employeeList.filter((employee) => {
-    const matchesBranch = employee.Branch === BranchName;  
-    const matchesEmployeeType = employee.services.includes(selectedEmployeeType);  
-  
+  const filteredEmployeeList = employeeList?.filter((employee) => {
+    const matchesBranch = employee.Branch === BranchName;
+    const matchesEmployeeType =
+      employee.services.includes(selectedEmployeeType);
+
     return matchesBranch && matchesEmployeeType;
   });
   useEffect(() => {
@@ -117,13 +118,13 @@ function TaskManagementDetails({ collapsed }) {
           `http://localhost:5000/signup/getbyUserType/${employeeType}`
         );
         console.log("Employee response.data", response.data);
-        const filteredEmployees = response.data.filter((employee) =>
+        const filteredEmployees = response.data?.filter((employee) =>
           employee.services.includes("ReportingManager")
         );
         console.log("filteredEmployees", filteredEmployees);
         setReportingManagerList(filteredEmployees);
 
-        const filteredSalesEmployees = response.data.filter((salesemployee) =>
+        const filteredSalesEmployees = response.data?.filter((salesemployee) =>
           salesemployee.services.includes("SalesManager")
         );
         console.log("filteredSalesEmployees", filteredSalesEmployees);
@@ -137,7 +138,7 @@ function TaskManagementDetails({ collapsed }) {
 
   useEffect(() => {
     if (districtName) {
-      const filtered = reportingManagerList.filter(
+      const filtered = reportingManagerList?.filter(
         (manager) => manager.district === districtName
       );
       setFilteredManagers(filtered);
@@ -146,7 +147,7 @@ function TaskManagementDetails({ collapsed }) {
 
   useEffect(() => {
     if (BranchName) {
-      const filtered = salesManagerList.filter(
+      const filtered = salesManagerList?.filter(
         (manager) => manager.Branch === BranchName
       );
       setFilteredSalesManagers(filtered);
@@ -208,7 +209,7 @@ function TaskManagementDetails({ collapsed }) {
         setemployeeCategory(response.data.employeeCategory);
       } catch (error) {
         console.error("Error fetching employee list:", error);
-        toast.error("Failed to fetch employee list.");
+        // toast.error("Failed to fetch employee list.");
       }
     };
     fetchEmployeeList();
