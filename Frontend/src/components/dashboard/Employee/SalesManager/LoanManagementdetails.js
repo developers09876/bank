@@ -19,15 +19,14 @@ import {
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-// import "../../user/LoanDetails.css";
-import "../user/LoanDetails.css";
+import "../SalesManager/Details.css"
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
-import Api from "../../../Api";
+import Api from "../../../../Api";
 import axios from "axios";
 const { Option } = Select;
 
-const LoanDetails = ({ collapsed }) => {
+const LoanManagementDetails = ({ collapsed }) => {
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
@@ -198,30 +197,30 @@ const LoanDetails = ({ collapsed }) => {
   const handleModalCancel = () => {
     setSelectedRecord(null);
   };
-  useEffect(() => {
-    getbyLeadId();
-  }, []);
+//   useEffect(() => {
+//     getbyLeadId();
+//   }, []);
 
-  const getbyLeadId = async () => {
-    await Api.get(`/loanform/getby/${record._id}`).then((res) => {
-      const data = res.data;
-      setAssignValue(data);
-      reset({
-        employeeType: data?.employeeType || "LoanEmployee",
-        employeeId: data?.employeeId || "",
-        employeeCategory: data?.employeeCategory || "",
-        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-        description: data?.description || "",
-        Branch: data?.Branch || "",
-        state: data?.statename || "",
-        district: data?.districtname || "",
-        report_Manager: data?.report_Manager || "",
-        sale_Manager: data?.sale_Manager || "",
-      });
-      setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
-    });
-  };
+//   const getbyLeadId = async () => {
+//     await Api.get(`/loanform/getby/${record._id}`).then((res) => {
+//       const data = res.data;
+//       setAssignValue(data);
+//       reset({
+//         employeeType: data?.employeeType || "LoanEmployee",
+//         employeeId: data?.employeeId || "",
+//         employeeCategory: data?.employeeCategory || "",
+//         startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+//         endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+//         description: data?.description || "",
+//         Branch: data?.Branch || "",
+//         state: data?.statename || "",
+//         district: data?.districtname || "",
+//         report_Manager: data?.report_Manager || "",
+//         sale_Manager: data?.sale_Manager || "",
+//       });
+//       setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
+//     });
+//   };
 
   const updateStatus = async (id, action, reason = "") => {
     try {
@@ -353,7 +352,7 @@ const LoanDetails = ({ collapsed }) => {
         <div className={collapsed ? "main-content.open" : "main-content"}>
           <div>
             <center>
-              <h3>Loan Details</h3>
+              <h3>Loan Management Details</h3>
             </center>
 
             <div className="px-2" style={{ textAlign: "end" }}>
@@ -929,405 +928,9 @@ const LoanDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-            <div className="py-2 px-2">
-              <h5>
-                <b>Assign To</b>
-              </h5>
-              {assignValue.employeeId && !isEditing ? (
-                // Display assigned employee if lead is assigned and not in edit mode
-                <div className="alert alert-info d-flex justify-content-between align-items-center">
-                  <b>Task Already assigned</b>
-                  {/* {assignValue.firstname} */}
-                  <Button
-                    style={{
-                      color: "black",
-                      backgroundColor: "#ffc107",
-                      borderColor: "#ffc107",
-                    }}
-                    onClick={() => setIsEditing(true)}
-                  >
-                    Edit
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Row>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label>State</label>
-                        <Controller
-                          name="state"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              style={{ width: "100%" }}
-                              showSearch
-                              placeholder="Select State"
-                              optionFilterProp="childer"
-                              onChange={(value, option) => {
-                                field.onChange(value);
-                                setValue("state", value);
-                                getDistrict(option.key);
-                              }}
-                              filterOption={(input, option) =>
-                                option?.children
-                                  ?.toLowerCase()
-                                  .includes(input.toLowerCase())
-                              }
-                            >
-                              {stateList.map(({ id, name }) => (
-                                <Select.Option key={id} value={name}>
-                                  {name}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          )}
-                        />
-                        {errors.state && (
-                          <p className="text-danger">State is required</p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col lg={4} md={6} xs={12}>
-                      <div>
-                        <label>District</label>
-                        <Controller
-                          name="district"
-                          defaultValue=""
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              optionFilterProp="childer"
-                              placeholder="Select District"
-                              showSearch
-                              style={{ width: "100%" }}
-                              onChange={(value, option) => {
-                                field.onChange(value);
-                                setValue("district", value);
-                                setDistrictName(value);
-                                getCity(option.key);
-                              }}
-                              filterOption={(input, option) =>
-                                option?.children
-                                  ?.toLowerCase()
-                                  .includes(input.toLowerCase())
-                              }
-                            >
-                              {districtList.map(({ id, name }) => (
-                                <Select.Option key={id} value={name}>
-                                  {name}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          )}
-                        />
-                        {errors.district && (
-                          <p className="text-danger">
-                            {errors.district.message}
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
-                      <div style={{ display: "grid" }}>
-                        <label className="vendorpage_labelCss">Branch</label>
-                        <Controller
-                          name="Branch"
-                          control={control}
-                          defaultValue=""
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              style={{ width: "100%" }}
-                              placeholder="Select Branch"
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setValue("city", value);
-                                setBranchName(value);
-                              }}
-                            >
-                              {cityList.map(({ id, cityName }) => (
-                                <Select.Option key={id} value={cityName}>
-                                  {cityName}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                          )}
-                        />
-                        {errors.Branch && (
-                          <p className="text-danger">Branch is required</p>
-                        )}
-                      </div>
-                    </Col>
-                    {!selectedServices.includes("ReportingManager") && (
-                      <>
-                        <Col lg={4} md={6} sm={12}>
-                          <label htmlFor="report_Manager">
-                            Reporting Manager:
-                          </label>
-                          <Controller
-                            name="report_Manager"
-                            control={control}
-                            defaultValue=""
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <Select
-                                {...field}
-                                className="inputcolumn_drp"
-                                style={{ width: "100%" }}
-                                placeholder="Select Reporting Manager"
-                                onChange={(value) => {
-                                  field.onChange(value);
-                                  setValue("report_Manager", value);
-                                }}
-                              >
-                                {filteredManagers?.map((employee) => (
-                                  <Select.Option
-                                    key={employee._id}
-                                    value={employee._id}
-                                  >
-                                    {employee.firstname} {employee.lastname}
-                                  </Select.Option>
-                                ))}
-                              </Select>
-                            )}
-                          />
-                          {errors.report_Manager && (
-                            <p className="text-red-500">
-                              {errors.report_Manager.message}
-                            </p>
-                          )}
-                        </Col>
+           
 
-                        {!selectedServices.includes("SalesManager") && (
-                          <Col lg={4} md={6} sm={12}>
-                            <label htmlFor="sale_Manager">Sales Manager:</label>
-                            <Controller
-                              name="sale_Manager"
-                              control={control}
-                              defaultValue=""
-                              rules={{ required: true }}
-                              render={({ field }) => (
-                                <Select
-                                  {...field}
-                                  className="inputcolumn_drp"
-                                  style={{ width: "100%" }}
-                                  placeholder="Select Sales Manager"
-                                  onChange={(value) => {
-                                    field.onChange(value);
-                                    setValue("sale_Manager", value);
-                                  }}
-                                >
-                                  {filteredSalesManagers?.map((employee) => (
-                                    <Select.Option
-                                      key={employee._id}
-                                      value={employee._id}
-                                    >
-                                      {employee.firstname} {employee.lastname}
-                                    </Select.Option>
-                                  ))}
-                                </Select>
-                              )}
-                            />
-                            {errors.sale_Manager && (
-                              <p className="text-red-500">
-                                {errors.sale_Manager.message}
-                              </p>
-                            )}
-                          </Col>
-                        )}
-                      </>
-                    )}
-                    {/* Employee Type */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Employee Type:
-                        </label>
-                        <Controller
-                          name="employeeType"
-                          control={control}
-                          // disabled
-                          defaultValue="LoanEmployee" // Ensure default value is set
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              onChange={(value) => {
-                                field.onChange(value);
-                                setSelectedEmployeeType(value);
-                              }}
-                            >
-                              {/* <Option value="">Select Employee Type</Option> */}
-                              <Option value="LoanEmployee">
-                                Loan Employee
-                              </Option>
-                              {/* <Option value="InsuranceEmployee">
-                              Insurance Employee
-                            </Option> */}
-                            </Select>
-                          )}
-                        />
-                        {errors.employeeType && (
-                          <p className="text-danger">
-                            Employee type is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    {/* Employee List */}
-                    <Col xs={12} md={6} lg={4}>
-                      <label>Employee List:</label>
-                      <select
-                        {...register("employeeId", { required: true })}
-                        className="form-select"
-                      >
-                        <option value="">Select Employee</option>
-                        {filteredEmployeeList.map((employee) => (
-                          <option key={employee._id} value={employee._id}>
-                            {employee.firstname} {employee.lastname}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.employeeId && (
-                        <p className="text-danger">
-                          Employee selection is required
-                        </p>
-                      )}
-                    </Col>
-
-                    {/* Category */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">Category:</label>
-                        <Controller
-                          name="employeeCategory"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <Select
-                              {...field}
-                              className="inputcolumn_drp"
-                              placeholder="Select Category"
-                              onChange={(value) => field.onChange(value)}
-                              disabled={!selectedEmployeeType}
-                            >
-                              <Option value="">Select Category</Option>
-                              {selectedEmployeeType &&
-                                employeeCategories[selectedEmployeeType]?.map(
-                                  (category, index) => (
-                                    <Option key={index} value={category}>
-                                      {category}
-                                    </Option>
-                                  )
-                                )}
-                            </Select>
-                          )}
-                        />
-                        {errors.employeeCategory && (
-                          <p className="text-danger">Category is required</p>
-                        )}
-                      </div>
-                    </Col>
-
-                    {/* Start Date */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Start Date:
-                        </label>
-                        <Controller
-                          name="startDate"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <input
-                              type="date"
-                              {...field}
-                              className="form-control"
-                            />
-                          )}
-                        />
-                        {errors.startDate && (
-                          <p className="text-danger">Start date is required</p>
-                        )}
-                      </div>
-                    </Col>
-
-                    {/* End Date */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">End Date:</label>
-                        <Controller
-                          name="endDate"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <input
-                              type="date"
-                              {...field}
-                              className="form-control"
-                            />
-                          )}
-                        />
-                        {errors.endDate && (
-                          <p className="text-danger">End date is required</p>
-                        )}
-                      </div>
-                    </Col>
-
-                    {/* Description */}
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Description:
-                        </label>
-                        <Controller
-                          name="description"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field }) => (
-                            <textarea
-                              {...field}
-                              className="form-control"
-                              placeholder="Task description"
-                            />
-                          )}
-                        />
-                        {errors.description && (
-                          <p className="text-danger">Description is required</p>
-                        )}
-                      </div>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col className="px-2 py-2">
-                      <Button
-                        type="primary"
-                        variant="primary"
-                        onClick={handleSubmit(onSubmit)}
-                      >
-                        Submit
-                      </Button>
-                    </Col>
-                  </Row>
-                </form>
-              )}
-            </div>
-
-            {/* <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
+            <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
               <Space>
                 {record && record.status === "Pending" && (
                   <Button
@@ -1480,7 +1083,7 @@ const LoanDetails = ({ collapsed }) => {
                   </>
                 )}
               </Space>
-            </Row> */}
+            </Row>
           </div>
         </div>
       </div>
@@ -1489,4 +1092,4 @@ const LoanDetails = ({ collapsed }) => {
   );
 };
 
-export default LoanDetails;
+export default LoanManagementDetails;

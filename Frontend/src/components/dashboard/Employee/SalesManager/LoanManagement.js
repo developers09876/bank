@@ -42,7 +42,7 @@ const LoanManagements = ({ collapsed }) => {
   };
 
   const handleViewDetails = (record) => {
-    navigate(`/employee/loandetails/${record._id}`, { state: { record } });
+    navigate(`/employee/loanmanagementdetails/${record._id}`, { state: { record } });
   };
   const handleEdit = (record) => {
     navigate(`/employee/editownloan/${record._id}`, { state: { record } });
