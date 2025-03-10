@@ -1,0 +1,85 @@
+.loandetail-container {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 2px;
+  }
+  .loandetail-container h6 , .loandetail-container h3{
+    color: #00397f;
+    font-weight: bold;
+  }
+
+.firstrowcol {
+  border-right: 1px solid #e5e7eb;
+}
+  .loandetail-custom-card {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+                
+  .loantaskdetail-custom-card {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: #00397f;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .loandetail-custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .status-tag {
+    transition: color 0.3s ease, background-color 0.3s ease;
+    text-align: end;
+  }
+  
+  .status-tag.approved:hover {
+    color: #fff;
+    background-color: #52c41a;
+  }
+  
+  .status-tag.rejected:hover {
+    color: #fff;
+    background-color: #ff4d4f;
+  }
+  
+  .status-tag.pending:hover {
+    color: #fff;
+    background-color: #fa8c16;
+  }
+  
+  .loandetail-custom-card.ant-card {
+    background-color: #f7f7f7;
+    &:hover {
+    border: 1px solid #00397fed;
+    }
+  }
+  
+  .loandetail-custom-card .ant-card-head {
+    background-color: #00397fed; 
+    color: white;
+  }
+  
+  .loandetail-custom-card .ant-card-body {
+    background-color: #fafafa;
+  }
+  
+  .ant-descriptions-item-label {
+    font-weight: bold;
+  }
+  
+  .ant-descriptions-item-content {
+    font-size: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    .loandetail-custom-card {
+      margin: 10px;
+    }
+    .firstrowcol {
+        border-right: none;
+    }
+  }
+  

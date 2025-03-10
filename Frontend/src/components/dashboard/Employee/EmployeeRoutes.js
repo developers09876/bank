@@ -44,7 +44,8 @@ import Salestaxmangement from "./SalesManager/TaxManagement";
 import Loanmanagementdetails from "./SalesManager/LoanManagementdetails";
 import Insurancemanagementdetails from "./SalesManager/Insurancemanagementdetails";
 import Taxmanagementdetails from "./SalesManager/TaxManagementdetails";
-
+import AreaManagerList from "./AreaManager/AreaManagerList";
+import AreaManagerdetails from "./AreaManager/AreaManagerdetails";
 export const EmployeeRoutes = [
   {
     path: "/employee",
@@ -206,5 +207,14 @@ export const EmployeeRoutes = [
   {
     path: "/employee/taxmanagementdetails/:id",
     element: <Taxmanagementdetails/>,
+  },
+     /*Areamanager*/
+  {
+    path: "/employee/areamangerdetails",
+    element: <AreaManagerList/>,
+  },
+  {
+    path: "/employee/areamangerdetail/:id",
+    element: <AreaManagerdetails/>,
   },
 ];

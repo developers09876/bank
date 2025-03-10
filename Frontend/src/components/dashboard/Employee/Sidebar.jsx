@@ -132,7 +132,7 @@ function Sidebar({ collapsed }) {
     {
       serviceName: "ReportingManager",
       label: "Area Manager List",
-      // path: "/employee/loanmanagement",
+      path: "/employee/areamangerdetails",
     },
     {
       serviceName: "ReportingManager",
