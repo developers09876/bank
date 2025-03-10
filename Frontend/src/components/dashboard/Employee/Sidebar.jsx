@@ -128,6 +128,13 @@ function Sidebar({ collapsed }) {
       path: "/employee/stockmarket",
     },
   ];
+  const ReportingManagerItems = [
+    {
+      serviceName: "ReportingManager",
+      label: "Area Manager List",
+      // path: "/employee/loanmanagement",
+    },
+  ];
 
   // Define task-related menu items
   const taskMenuItems = [
@@ -261,6 +268,14 @@ function Sidebar({ collapsed }) {
               {item.label}
             </NavLink>
           ))}
+
+        {ReportingManagerItems.filter((item) =>
+          service.includes(item.serviceName)
+        ).map((item) => (
+          <NavLink key={item.path} to={item.path} className="main-nav-style">
+            {item.label}
+          </NavLink>
+        ))}
       </Menu>
     </div>
   );
