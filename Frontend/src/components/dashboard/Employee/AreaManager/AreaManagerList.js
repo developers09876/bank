@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Table, Button } from "antd";
 // import Sidebar from "./Sidebar";
-
+import Api from "../../../../Api";
 const AreaManagerList = ({ setAuth }) => {
-  const [employees, setEmployees] = useState([]);
+  const [employee, setEmployee] = useState([]);
   const navigate = useNavigate();
- const id = localStorage.getItem("id");
+  const userId = localStorage.getItem("id");
+
 //   const getEmployees = async () => {
 //     try {
 //       const response = await fetch("http://localhost:5000/signup/getall", {
@@ -24,56 +25,25 @@ const AreaManagerList = ({ setAuth }) => {
 //       console.log(error);
 //     }
 //   };
-// const getEmployees = async () => {
-//     try {
-//       const response = await fetch(`http://localhost:5000/signup/getby/${id}`, {
-//         method: "GET",
-//         headers: { Authorization: localStorage.getItem("token") },
-//       });
-
-//       const users = await response.json();
-
-//       // Filter only users with userType 'employee'
-//     //   const employeeUsers = users.filter((user) => user.userType != "user");
-//     //   setEmployees(employeeUsers);
-//     setEmployees();
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
 const getEmployeeById = async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/signup/getby/${id}`, {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("token") },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-    //   const data = await response.json();
-    const user = await response.json();
-
-    //   console.log("Full API Response:", data);
-    //   if (Array.isArray(data)) {
-    //     setEmployees(data); 
-    //   } else if (data && typeof data === "object") {
-    //     setEmployees([data]); 
-    //   } else {
-    //     console.error("Unexpected API response format:", data);
-    //   }
-    if (user.userType === "employee" || user.servicesType === "reportmanager") {
-        setEmployees([user]); // Set filtered user in state
-      } else {
-        setEmployees([]); // If not an employee or report manager, set empty array
-      }
-    } catch (error) {
-      console.error("Error fetching employees:", error);
-    }
+  try {
+    console.log("userId", userId);
+    const response = await Api.get(
+      `/employeesignup/getByIdReportingManagerId/${userId}`
+    );
+    const employee = response.data;
+    // const filterbyUserid = loans.filter(item => item.userid === userId);
+    // console.log('filterbyUserid', filterbyUserid)
+    setEmployee(employee);
+    console.log("responseget", employee);
+  } catch (error) {
+    console.log(error);
+  }
   };
   
   useEffect(() => {
     getEmployeeById();
-  }, []);
+  }, [userId]);
 
   const handleViewDetails = (record) => {
     navigate(`/employee/areamangerdetail/${record._id}`, { state: { record } });
@@ -159,7 +129,7 @@ const getEmployeeById = async () => {
           <div style={{ maxWidth: "100%", overflowX: "auto" }}>
             <Table
               columns={columns}
-              dataSource={employees}
+              dataSource={employee}
               rowKey="_id"
               pagination={{ pageSize: 5 }}
               scroll={{ x: "max-content" }} // Enables horizontal & vertical scrolling

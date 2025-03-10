@@ -102,3 +102,15 @@ export const employeegetById = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+export const getReportingManagerId= async (req, res) => {
+  try {
+    const {report_Manager} = req.params;
+    const users = await User.find({  report_Manager});
+    if (! users) {
+      return res.status(404).json({ message: "User id not found" });
+    }
+    res.status(200).json( users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
