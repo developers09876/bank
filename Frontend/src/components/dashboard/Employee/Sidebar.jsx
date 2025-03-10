@@ -134,6 +134,21 @@ function Sidebar({ collapsed }) {
       label: "Area Manager List",
       // path: "/employee/loanmanagement",
     },
+    {
+      serviceName: "ReportingManager",
+      label: "Loan Management",
+      path: "/employee/loanmanagement",
+    },
+    {
+      serviceName: "ReportingManager",
+      label: "Insurance Management",
+      path: "/employee/insurancemanagement",
+    },
+    {
+      serviceName: "ReportingManager",
+      label: "Tax Management",
+      path: "/employee/taxmanagement",
+    },
   ];
 
   // Define task-related menu items
@@ -233,6 +248,13 @@ function Sidebar({ collapsed }) {
         <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
           Lead Generation
         </NavLink>
+        {ReportingManagerItems.filter((item) =>
+          service.includes(item.serviceName)
+        ).map((item) => (
+          <NavLink key={item.path} to={item.path} className="main-nav-style">
+            {item.label}
+          </NavLink>
+        ))}
         {hasManagement && (
           <SubMenu title="Management" className="main-nav-style">
             {managementMenuItems
@@ -268,14 +290,6 @@ function Sidebar({ collapsed }) {
               {item.label}
             </NavLink>
           ))}
-
-        {ReportingManagerItems.filter((item) =>
-          service.includes(item.serviceName)
-        ).map((item) => (
-          <NavLink key={item.path} to={item.path} className="main-nav-style">
-            {item.label}
-          </NavLink>
-        ))}
       </Menu>
     </div>
   );
