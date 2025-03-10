@@ -245,9 +245,7 @@ function Sidebar({ collapsed }) {
         <NavLink to="/employee/myprofile" ClassName="main-nav-style">
           My Profile
         </NavLink>
-        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
-          Lead Generation
-        </NavLink>
+
         {ReportingManagerItems.filter((item) =>
           service.includes(item.serviceName)
         ).map((item) => (
@@ -278,6 +276,9 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
+        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
+          Lead Generation
+        </NavLink>
         <NavLink to="/employee/leadtaskmanagement" ClassName="main-nav-style">
           Lead Task Management
         </NavLink>
