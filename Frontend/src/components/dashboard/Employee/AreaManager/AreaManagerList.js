@@ -25,7 +25,7 @@ const AreaManagerList = ({ setAuth }) => {
 //       console.log(error);
 //     }
 //   };
-const getEmployeeById = async () => {
+const getEmployee = async () => {
   try {
     console.log("userId", userId);
     const response = await Api.get(
@@ -42,7 +42,7 @@ const getEmployeeById = async () => {
   };
   
   useEffect(() => {
-    getEmployeeById();
+    getEmployee();
   }, [userId]);
 
   const handleViewDetails = (record) => {
