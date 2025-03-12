@@ -48,17 +48,17 @@ const LoanDetails = ({ collapsed }) => {
     useState("LoanEmployee");
   const [isEditing, setIsEditing] = useState(false);
   const [assignValue, setAssignValue] = useState([]);
-   const [countryList, setCountryList] = useState([]);
-      const [stateList, setStateList] = useState([]);
-      const [districtList, setDistrictList] = useState([]);
-      const [cityList, setCityList] = useState([]);
-      const [reportingManagerList, setReportingManagerList] = useState();
-      const [salesManagerList, setSalesManagerList] = useState();
-      const [districtName, setDistrictName] = useState("");
-      const [BranchName, setBranchName] = useState("");
-          const [selectedServices, setSelectedServices] = useState([]);
-        const [filteredManagers, setFilteredManagers] = useState([]);
-        const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [reportingManagerList, setReportingManagerList] = useState();
+  const [salesManagerList, setSalesManagerList] = useState();
+  const [districtName, setDistrictName] = useState("");
+  const [BranchName, setBranchName] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [filteredManagers, setFilteredManagers] = useState([]);
+  const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
   console.log("assignValue", assignValue);
   const {
     control,
@@ -104,9 +104,10 @@ const LoanDetails = ({ collapsed }) => {
     fetchEmployeeList();
   }, [employeeType]);
   const filteredEmployeeList = employeeList.filter((employee) => {
-    const matchesBranch = employee.Branch === BranchName;  
-    const matchesEmployeeType = employee.services.includes(selectedEmployeeType);  
-  
+    const matchesBranch = employee.Branch === BranchName;
+    const matchesEmployeeType =
+      employee.services.includes(selectedEmployeeType);
+
     return matchesBranch && matchesEmployeeType;
   });
 
@@ -217,7 +218,9 @@ const LoanDetails = ({ collapsed }) => {
         state: data?.statename || "",
         district: data?.districtname || "",
         report_Manager: data?.report_Manager || "",
+        report_ManagerName: data?.report_ManagerName || "",
         sale_Manager: data?.sale_Manager || "",
+        sale_ManagerName: data.sale_ManagerName || "",
       });
       setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
     });
@@ -324,7 +327,9 @@ const LoanDetails = ({ collapsed }) => {
       districtname: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager:data.sale_Manager,
+      report_ManagerName: data.report_ManagerName,
+      sale_Manager: data.sale_Manager,
+      sale_ManagerName: data.sale_ManagerName,
     };
 
     try {
@@ -1085,15 +1090,17 @@ const LoanDetails = ({ collapsed }) => {
                                 className="inputcolumn_drp"
                                 style={{ width: "100%" }}
                                 placeholder="Select Reporting Manager"
-                                onChange={(value) => {
+                                onChange={(value, option) => {
                                   field.onChange(value);
                                   setValue("report_Manager", value);
+                                  setValue("report_ManagerName", option?.label);
                                 }}
                               >
                                 {filteredManagers?.map((employee) => (
                                   <Select.Option
                                     key={employee._id}
                                     value={employee._id}
+                                    label={`${employee.firstname} ${employee.lastname}`}
                                   >
                                     {employee.firstname} {employee.lastname}
                                   </Select.Option>
@@ -1122,15 +1129,17 @@ const LoanDetails = ({ collapsed }) => {
                                   className="inputcolumn_drp"
                                   style={{ width: "100%" }}
                                   placeholder="Select Sales Manager"
-                                  onChange={(value) => {
+                                  onChange={(value, option) => {
                                     field.onChange(value);
                                     setValue("sale_Manager", value);
+                                    setValue("sale_ManagerName", option?.label);
                                   }}
                                 >
                                   {filteredSalesManagers?.map((employee) => (
                                     <Select.Option
                                       key={employee._id}
                                       value={employee._id}
+                                      label={`${employee.firstname} ${employee.lastname}`}
                                     >
                                       {employee.firstname} {employee.lastname}
                                     </Select.Option>

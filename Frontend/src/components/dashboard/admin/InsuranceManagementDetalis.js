@@ -214,6 +214,10 @@ function InsuranceManagementDetails({ collapsed }) {
           endDate: data?.endDate ? data.endDate.split("T")[0] : "",
           description: data?.description || "",
           employeeCategory: data?.employeeCategory || "",
+          report_Manager: data?.report_Manager|| "",
+          report_ManagerName: data?.report_ManagerName|| "",
+          sale_Manager: data?.sale_Manager||"",
+         sale_ManagerName: data?.sale_ManagerName||"",
         });
         setRecord(data);
 
@@ -284,7 +288,9 @@ function InsuranceManagementDetails({ collapsed }) {
       district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
+      report_ManagerName: data.report_ManagerName,
       sale_Manager: data.sale_Manager,
+      sale_ManagerName: data.sale_ManagerName,
     };
 
     try {
@@ -809,15 +815,17 @@ function InsuranceManagementDetails({ collapsed }) {
                               className="inputcolumn_drp"
                               style={{ width: "100%" }}
                               placeholder="Select Reporting Manager"
-                              onChange={(value) => {
+                              onChange={(value, option) => {
                                 field.onChange(value);
                                 setValue("report_Manager", value);
+                                setValue("report_ManagerName", option?.label);
                               }}
                             >
                               {filteredManagers?.map((employee) => (
                                 <Select.Option
                                   key={employee._id}
                                   value={employee._id}
+                                  label={`${employee.firstname} ${employee.lastname}`}
                                 >
                                   {employee.firstname} {employee.lastname}
                                 </Select.Option>
@@ -846,15 +854,17 @@ function InsuranceManagementDetails({ collapsed }) {
                                 className="inputcolumn_drp"
                                 style={{ width: "100%" }}
                                 placeholder="Select Sales Manager"
-                                onChange={(value) => {
+                                onChange={(value,option) => {
                                   field.onChange(value);
                                   setValue("sale_Manager", value);
+                                  setValue("sale_ManagerName", option?.label);
                                 }}
                               >
                                 {filteredSalesManagers?.map((employee) => (
                                   <Select.Option
                                     key={employee._id}
                                     value={employee._id}
+                                    label={`${employee.firstname} ${employee.lastname}`}
                                   >
                                     {employee.firstname} {employee.lastname}
                                   </Select.Option>

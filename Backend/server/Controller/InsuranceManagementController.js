@@ -52,7 +52,9 @@ export async function updateInsuranceManagementDb(req, res, next) {
       district: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager: data?.sale_Manager,
+      report_ManagerName: data.  report_ManagerName,
+      sale_Manager: data.sale_Manager,
+      sale_ManagerName:data.sale_ManagerName,
     };
 
     const updatedRecord = await insuranceManagementDb.findByIdAndUpdate(

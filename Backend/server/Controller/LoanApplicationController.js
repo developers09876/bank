@@ -376,7 +376,10 @@ export async function updateLoan(req, res, next) {
       districtname: data.districtname,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
+      report_ManagerName: data.  report_ManagerName,
       sale_Manager: data.sale_Manager,
+      sale_ManagerName:data.sale_ManagerName,
+
       // dob: data.dob || null,
     };
     console.log("Update Details:", updateDetails);
