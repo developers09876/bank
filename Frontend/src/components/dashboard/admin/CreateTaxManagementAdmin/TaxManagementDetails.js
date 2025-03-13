@@ -66,17 +66,18 @@ function TaskManagementDetails({ collapsed }) {
     setValue,
     reset,
     watch,
+    getValues,
     register,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      employeeType: "",
-      employeeId: "",
-      loanType: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-      employeeCategory: "",
+      employeeType: record?.employeeType || "",
+      employeeId: record?.employeeId || "",
+      loanType: record?.loanType || "",
+      startDate: record?.startDate || "",
+      endDate: record?.endDate || "",
+      description: record?.description || "",
+      employeeCategory: record?.employeeCategory || "",
     },
   });
 
@@ -762,7 +763,7 @@ function TaskManagementDetails({ collapsed }) {
                         <label htmlFor="report_Manager">
                           Reporting Manager:
                         </label>
-                        <Controller
+                        {/* <Controller
                           name="report_Manager"
                           control={control}
                           defaultValue=""
@@ -773,10 +774,48 @@ function TaskManagementDetails({ collapsed }) {
                               className="inputcolumn_drp"
                               style={{ width: "100%" }}
                               placeholder="Select Reporting Manager"
-                              onChange={(value,option) => {
+                              onChange={(value, option) => {
                                 field.onChange(value);
                                 setValue("report_Manager", value);
                                 setValue("report_ManagerName", option?.label);
+                              }}
+                            >
+                              {filteredManagers?.map((employee) => (
+                                <Select.Option
+                                  key={employee._id}
+                                  value={employee._id}
+                                  label={`${employee.firstname} ${employee.lastname}`}
+                                >
+                                  {employee.firstname} {employee.lastname}
+                                </Select.Option>
+                              ))}
+                            </Select>
+                          )}
+                        /> */}
+                        <Controller
+                          name="report_Manager"
+                          control={control}
+                          defaultValue={record?.report_Manager || ""}
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              style={{ width: "100%" }}
+                              placeholder="Select Reporting Manager"
+                              value={
+                                field.value
+                                  ? {
+                                      value: field.value,
+                                      label: getValues("report_ManagerName"),
+                                    }
+                                  : undefined
+                              }
+                              labelInValue
+                              onChange={(option) => {
+                                field.onChange(option.value);
+                                setValue("report_Manager", option.value);
+                                setValue("report_ManagerName", option.label);
                               }}
                             >
                               {filteredManagers?.map((employee) => (
@@ -801,7 +840,7 @@ function TaskManagementDetails({ collapsed }) {
                       {!selectedServices.includes("SalesManager") && (
                         <Col lg={4} md={6} sm={12}>
                           <label htmlFor="sale_Manager">Sales Manager:</label>
-                          <Controller
+                          {/* <Controller
                             name="sale_Manager"
                             control={control}
                             defaultValue=""
@@ -812,7 +851,7 @@ function TaskManagementDetails({ collapsed }) {
                                 className="inputcolumn_drp"
                                 style={{ width: "100%" }}
                                 placeholder="Select Sales Manager"
-                                onChange={(value,option) => {
+                                onChange={(value, option) => {
                                   field.onChange(value);
                                   setValue("sale_Manager", value);
                                   setValue("sale_ManagerName", option?.label);
@@ -829,7 +868,48 @@ function TaskManagementDetails({ collapsed }) {
                                 ))}
                               </Select>
                             )}
+                          /> */}
+
+                          <Controller
+                            name="sale_Manager"
+                            control={control}
+                            defaultValue={record?.sale_Manager || ""}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                              <Select
+                                {...field}
+                                className="inputcolumn_drp"
+                                style={{ width: "100%" }}
+                                placeholder="Select Sales Manager"
+                                value={
+                                  field.value
+                                    ? {
+                                        value: field.value,
+                                        label:
+                                          getValues("sale_ManagerName") || "",
+                                      }
+                                    : undefined
+                                }
+                                labelInValue
+                                onChange={(option) => {
+                                  field.onChange(option.value);
+                                  setValue("sale_Manager", option.value);
+                                  setValue("sale_ManagerName", option.label);
+                                }}
+                              >
+                                {filteredSalesManagers?.map((employee) => (
+                                  <Select.Option
+                                    key={employee._id}
+                                    value={employee._id}
+                                    label={`${employee.firstname} ${employee.lastname}`}
+                                  >
+                                    {employee.firstname} {employee.lastname}
+                                  </Select.Option>
+                                ))}
+                              </Select>
+                            )}
                           />
+
                           {errors.sale_Manager && (
                             <p className="text-red-500">
                               {errors.sale_Manager.message}
@@ -862,10 +942,6 @@ function TaskManagementDetails({ collapsed }) {
                             }}
                           >
                             <Option value="">Select Employee Type</Option>
-                            <Option value="LoanEmployee">Loan Employee</Option>
-                            <Option value="InsuranceEmployee">
-                              Insurance Employee
-                            </Option>
                             <Option value="TaxEmployee">Tax Employee</Option>
                           </Select>
                         )}

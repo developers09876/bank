@@ -41,6 +41,7 @@ function InsuranceManagementDetails({ collapsed }) {
   const [employeeName, setEmployeeName] = useState();
   // const [employeeCategory, setemployeeCategory] = useState();
   const [assignValue, setAssignValue] = useState([]);
+  console.log("assignValue", assignValue);
   const [isEditing, setIsEditing] = useState(false);
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
@@ -200,6 +201,10 @@ function InsuranceManagementDetails({ collapsed }) {
   //     console.error("Error fetching updated record:", error);
   //   }
   // };
+  useEffect(() => {
+    getbyLeadId();
+  }, []);
+
   const getbyLeadId = async () => {
     await Api.get(`/insuranceManagement/getByInsurance/${record?._id}`).then(
       (res) => {
@@ -214,10 +219,10 @@ function InsuranceManagementDetails({ collapsed }) {
           endDate: data?.endDate ? data.endDate.split("T")[0] : "",
           description: data?.description || "",
           employeeCategory: data?.employeeCategory || "",
-          report_Manager: data?.report_Manager|| "",
-          report_ManagerName: data?.report_ManagerName|| "",
-          sale_Manager: data?.sale_Manager||"",
-         sale_ManagerName: data?.sale_ManagerName||"",
+          report_Manager: data?.report_Manager || "",
+          report_ManagerName: data?.report_ManagerName || "",
+          sale_Manager: data?.sale_Manager || "",
+          sale_ManagerName: data?.sale_ManagerName || "",
         });
         setRecord(data);
 
@@ -662,7 +667,7 @@ function InsuranceManagementDetails({ collapsed }) {
             <h5>
               <b>Assign To</b>
             </h5>
-            {assignValue.employeeId && !isEditing ? (
+            {assignValue.employeeList && !isEditing ? (
               // Display assigned employee if lead is assigned and not in edit mode
               <div className="alert alert-info d-flex justify-content-between align-items-center">
                 <b>Task Already assigned</b>
@@ -854,7 +859,7 @@ function InsuranceManagementDetails({ collapsed }) {
                                 className="inputcolumn_drp"
                                 style={{ width: "100%" }}
                                 placeholder="Select Sales Manager"
-                                onChange={(value,option) => {
+                                onChange={(value, option) => {
                                   field.onChange(value);
                                   setValue("sale_Manager", value);
                                   setValue("sale_ManagerName", option?.label);
