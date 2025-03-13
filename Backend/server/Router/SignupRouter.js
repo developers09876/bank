@@ -8,6 +8,7 @@ import {
   updateUserDetails,
   getByUserType,
   getUserCreatedById,
+  getByReportMangagerId,
 } from "../Controller/SignupController.js";
 
 const router = Router();
@@ -16,6 +17,8 @@ router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/getall").get(getAllUsers);
 router.route("/getbyUserType/:userType").get(getByUserType);
+router.route("/getbyReport_Manager/:report_Manager").get(getByReportMangagerId);
+
 router.route("/getby/:id").get(getUserById);
 router.route("/getCreatedbyId/:empCreatedBy").get(getUserCreatedById);
 router.route("/update/:id").put(updateUserDetails);

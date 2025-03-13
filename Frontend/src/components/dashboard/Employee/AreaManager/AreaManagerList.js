@@ -9,38 +9,36 @@ const AreaManagerList = ({ setAuth }) => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("id");
 
-//   const getEmployees = async () => {
-//     try {
-//       const response = await fetch("http://localhost:5000/signup/getall", {
-//         method: "GET",
-//         headers: { Authorization: localStorage.getItem("token") },
-//       });
+  //   const getEmployees = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:5000/signup/getall", {
+  //         method: "GET",
+  //         headers: { Authorization: localStorage.getItem("token") },
+  //       });
 
-//       const users = await response.json();
+  //       const users = await response.json();
 
-//       // Filter only users with userType 'employee'
-//       const employeeUsers = users.filter((user) => user.userType != "user");
-//       setEmployees(employeeUsers);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-const getEmployee = async () => {
-  try {
-    console.log("userId", userId);
-    const response = await Api.get(
-      `/employeesignup/getByIdReportingManagerId/${userId}`
-    );
-    const employee = response.data;
-    // const filterbyUserid = loans.filter(item => item.userid === userId);
-    // console.log('filterbyUserid', filterbyUserid)
-    setEmployee(employee);
-    console.log("responseget", employee);
-  } catch (error) {
-    console.log(error);
-  }
+  //       // Filter only users with userType 'employee'
+  //       const employeeUsers = users.filter((user) => user.userType != "user");
+  //       setEmployees(employeeUsers);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  const getEmployee = async () => {
+    try {
+      console.log("userId", userId);
+      const response = await Api.get(`/signup/getbyReport_Manager/${userId}`);
+      const employee = response.data;
+      // const filterbyUserid = loans.filter(item => item.userid === userId);
+      // console.log('filterbyUserid', filterbyUserid)
+      setEmployee(employee);
+      console.log("responseget", employee);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  
+
   useEffect(() => {
     getEmployee();
   }, [userId]);

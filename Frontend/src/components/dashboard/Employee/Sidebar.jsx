@@ -151,6 +151,24 @@ function Sidebar({ collapsed }) {
     },
   ];
 
+  const salesMangerItems = [
+    {
+      serviceName: "SalesManager",
+      label: "Loan Management",
+      path: "/employee/loanmanagement",
+    },
+    {
+      serviceName: "SalesManager",
+      label: "Insurance Management",
+      path: "/employee/insurancemanagement",
+    },
+    {
+      serviceName: "SalesManager",
+      label: "Tax Management",
+      path: "/employee/taxmanagement",
+    },
+  ];
+
   // Define task-related menu items
   const taskMenuItems = [
     {
@@ -253,6 +271,15 @@ function Sidebar({ collapsed }) {
             {item.label}
           </NavLink>
         ))}
+
+        {salesMangerItems
+          .filter((item) => service.includes(item.serviceName))
+          .map((item) => (
+            <NavLink key={item.path} to={item.path} className="main-nav-style">
+              {item.label}
+            </NavLink>
+          ))}
+
         {hasManagement && (
           <SubMenu title="Management" className="main-nav-style">
             {managementMenuItems
