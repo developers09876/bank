@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
   // district:{type:String},
   report_Manager: { type: String },
   sale_Manager: { type: String },
+  report_ManagerName: { type: String },
+  sale_ManagerName: { type: String },  
   services: { type: [String] },
   category: { type: [String] },
   dateOfJoining: { type: String },

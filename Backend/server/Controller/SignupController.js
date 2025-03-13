@@ -120,6 +120,8 @@ export const registerUser = async (req, res) => {
     district,
     report_Manager,
     sale_Manager,
+    report_ManagerName,
+    sale_ManagerName,
     employeeCategory,
     empCreatedBy,
     userId,
@@ -179,6 +181,8 @@ export const registerUser = async (req, res) => {
       district,
       report_Manager,
       sale_Manager,
+      report_ManagerName,
+      sale_ManagerName,
       employeeCategory,
       empCreatedBy,
       referralCode, // Auto-generated referral code

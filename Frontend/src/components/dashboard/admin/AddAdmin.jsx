@@ -547,15 +547,17 @@ const AddAdmin = ({ setAuth }) => {
                             className="inputcolumn_drp"
                             style={{ width: "100%" }}
                             placeholder="Select Reporting Manager"
-                            onChange={(value) => {
+                            onChange={(value,option) => {
                               field.onChange(value);
                               setValue("report_Manager", value);
+                              setValue("report_ManagerName", option?.label);
                             }}
                           >
                             {filteredManagers?.map((employee) => (
                               <Select.Option
                                 key={employee._id}
                                 value={employee._id}
+                                label={`${employee.firstname} ${employee.lastname}`}
                               >
                                 {employee.firstname} {employee.lastname}
                               </Select.Option>
@@ -584,15 +586,17 @@ const AddAdmin = ({ setAuth }) => {
                               className="inputcolumn_drp"
                               style={{ width: "100%" }}
                               placeholder="Select Sales Manager"
-                              onChange={(value) => {
+                              onChange={(value,option) => {
                                 field.onChange(value);
                                 setValue("sale_Manager", value);
+                                setValue("sale_ManagerName", option?.label);
                               }}
                             >
                               {filteredSalesManagers?.map((employee) => (
                                 <Select.Option
                                   key={employee._id}
                                   value={employee._id}
+                                  label={`${employee.firstname} ${employee.lastname}`}
                                 >
                                   {employee.firstname} {employee.lastname}
                                 </Select.Option>
