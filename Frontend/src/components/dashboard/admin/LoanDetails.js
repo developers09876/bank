@@ -191,7 +191,17 @@ const LoanDetails = ({ collapsed }) => {
     getState();
     // getDistrict();
   }, []);
+  useEffect(() => {
+    if (watch("state")) {
+      getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
+    }
+  }, [watch("state")]);
 
+  useEffect(() => {
+    if (watch("district")) {
+      getCity(districtList.find((d) => d.name === watch("district"))?.id);
+    }
+  }, [watch("district")]);
   const handleModalOk = () => {
     setSelectedRecord(null);
   };
@@ -202,7 +212,17 @@ const LoanDetails = ({ collapsed }) => {
   useEffect(() => {
     getbyLeadId();
   }, []);
-
+  useEffect(() => {
+    if (watch("state")) {
+      getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
+    }
+  }, [watch("state")]);
+  
+  useEffect(() => {
+    if (watch("district")) {
+      getCity(districtList.find((d) => d.name === watch("district"))?.id);
+    }
+  }, [watch("district")]);
   const getbyLeadId = async () => {
     await Api.get(`/loanform/getby/${record._id}`).then((res) => {
       const data = res.data;
@@ -871,7 +891,7 @@ const LoanDetails = ({ collapsed }) => {
             {record.employeeId && (
               <Row style={{ textAlign: "-webkit-center" }}>
                 <h5>
-                  <b>Task Details:</b>
+                  {/* <b>Task Details:</b> */}
                 </h5>
                 <Col lg={12} md={12}>
                   <Card
@@ -901,6 +921,15 @@ const LoanDetails = ({ collapsed }) => {
                       </Descriptions.Item>
                       <Descriptions.Item label="End Date">
                         {record.endDate ? record.endDate.split("T")[0] : "N/A"}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Report Manager">
+                        {record.report_ManagerName}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Sales Manager">
+                        {record.sale_ManagerName}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Created By">
+                        {record.userType}
                       </Descriptions.Item>
                     </Descriptions>
                   </Card>

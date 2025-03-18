@@ -229,6 +229,7 @@ function TaskManagementDetails({ collapsed }) {
       getCity(districtList.find((d) => d.name === watch("district"))?.id);
     }
   }, [watch("district")]);
+
   const getbyLeadId = async () => {
     await Api.get(`/taxManagement/getByTaxId/${record?._id}`).then((res) => {
       const data = res.data.data[0];
@@ -570,7 +571,7 @@ function TaskManagementDetails({ collapsed }) {
             <Row className="px-2 py-2">
               <center>
                 <h5>
-                  <b>Task Details:</b>
+                  {/* <b>Task Details:</b> */}
                 </h5>
               </center>
               <Col lg={12} md={12}>
@@ -596,6 +597,15 @@ function TaskManagementDetails({ collapsed }) {
                     </Descriptions.Item>
                     <Descriptions.Item label="End Date">
                       {record.endDate}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Report Manager">
+                      {record.report_ManagerName}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sales Manager">
+                      {record.sale_ManagerName}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Created By">
+                      {record.userType}
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>

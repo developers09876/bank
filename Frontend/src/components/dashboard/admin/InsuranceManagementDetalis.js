@@ -204,7 +204,17 @@ function InsuranceManagementDetails({ collapsed }) {
   useEffect(() => {
     getbyLeadId();
   }, []);
-
+  useEffect(() => {
+    if (watch("state")) {
+      getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
+    }
+  }, [watch("state")]);
+  
+  useEffect(() => {
+    if (watch("district")) {
+      getCity(districtList.find((d) => d.name === watch("district"))?.id);
+    }
+  }, [watch("district")]);
   const getbyLeadId = async () => {
     await Api.get(`/insuranceManagement/getByInsurance/${record?._id}`).then(
       (res) => {
@@ -218,6 +228,9 @@ function InsuranceManagementDetails({ collapsed }) {
           startDate: data?.startDate ? data.startDate.split("T")[0] : "",
           endDate: data?.endDate ? data.endDate.split("T")[0] : "",
           description: data?.description || "",
+          Branch: data?.Branch || "",
+          state: data?.state || "",
+          district: data?.district || "",
           employeeCategory: data?.employeeCategory || "",
           report_Manager: data?.report_Manager || "",
           report_ManagerName: data?.report_ManagerName || "",
@@ -569,6 +582,50 @@ function InsuranceManagementDetails({ collapsed }) {
             </Col>
           </Row>
 
+            <Row className="px-2 py-2">
+              <center>
+                <h5>
+                  {/* <b>Task Details</b> */}
+                </h5>
+              </center>
+              <Col lg={12} md={12}>
+                <Card
+                  className="loandetail-custom-card"
+                  title="Task Assigned Details"
+                >
+                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                    <Descriptions.Item label="Employee Name">
+                      {employeeName}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Employee Type">
+                      {record.employeeType}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Employee Category">
+                      {record.employeeCategory}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Description">
+                      {record.description}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Start Date">
+                      {record.startDate}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="End Date">
+                      {record.endDate}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Report Manager">
+                      {record.report_ManagerName}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sales Manager">
+                      {record.sale_ManagerName}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Created By">
+                      {record.userType}
+                    </Descriptions.Item>
+                  </Descriptions>
+                </Card>
+              </Col>
+            </Row>
+          
           <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Insurance Status">
