@@ -218,7 +218,17 @@ function TaskManagementDetails({ collapsed }) {
   useEffect(() => {
     getbyLeadId();
   }, []);
-
+  useEffect(() => {
+    if (watch("state")) {
+      getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
+    }
+  }, [watch("state")]);
+  
+  useEffect(() => {
+    if (watch("district")) {
+      getCity(districtList.find((d) => d.name === watch("district"))?.id);
+    }
+  }, [watch("district")]);
   const getbyLeadId = async () => {
     await Api.get(`/taxManagement/getByTaxId/${record?._id}`).then((res) => {
       const data = res.data.data[0];
@@ -278,7 +288,7 @@ function TaskManagementDetails({ collapsed }) {
 
     try {
       await Api.put(
-        `/taxManagement/updateTaxManagement/${record._id}`,
+        `http://localhost:5000/taxManagement/updateTaxManagement/${record._id}`,
         details
       );
       toast.success("Task Assigned successfully");
