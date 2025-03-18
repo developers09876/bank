@@ -618,8 +618,8 @@ function InsuranceManagementDetails({ collapsed }) {
                     <Descriptions.Item label="Sales Manager">
                       {record.sale_ManagerName}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Created By">
-                      {record.userType}
+                    <Descriptions.Item label="Assign to">
+                      {record.employeeList}
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
@@ -1007,9 +1007,9 @@ function InsuranceManagementDetails({ collapsed }) {
                     >
                       <option value="">Select Employee</option>
                       {filteredEmployeeList?.map((employee) => (
-                        <option key={employee._id} value={employee._id}>
-                          {employee.firstname} {employee.lastname}
-                        </option>
+                       <option key={employee._id} value={`${employee.firstname} ${employee.lastname}`}>
+                       {employee.firstname} {employee.lastname}
+                     </option>
                       ))}
                     </select>
                     {errors.employeeList && (

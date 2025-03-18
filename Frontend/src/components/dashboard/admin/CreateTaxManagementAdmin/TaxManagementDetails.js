@@ -78,6 +78,7 @@ function TaskManagementDetails({ collapsed }) {
       endDate: record?.endDate || "",
       description: record?.description || "",
       employeeCategory: record?.employeeCategory || "",
+      employeeList: record?.employeeList || "",
     },
   });
 
@@ -276,8 +277,9 @@ function TaskManagementDetails({ collapsed }) {
       startDate: data.startDate,
       endDate: data.endDate,
       employeeId: data.employeeId,
-      employeeType: selectedEmployeeType,
+      employeeType: data.employeeType,
       employeeCategory: data.employeeCategory,
+      employeeList: data.employeeList,
       statename: data.state,
       districtname: data.district,
       Branch: data.Branch,
@@ -604,8 +606,8 @@ function TaskManagementDetails({ collapsed }) {
                     <Descriptions.Item label="Sales Manager">
                       {record.sale_ManagerName}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Created By">
-                      {record.userType}
+                    <Descriptions.Item label="Assign to">
+                      {record.employeeId}
                     </Descriptions.Item>
                   </Descriptions>
                 </Card>
@@ -980,9 +982,12 @@ function TaskManagementDetails({ collapsed }) {
                     >
                       <option value="">Select Employee</option>
                       {filteredEmployeeList?.map((employee) => (
-                        <option key={employee._id} value={employee._id}>
-                          {employee.firstname} {employee.lastname}
-                        </option>
+                        // <option key={employee._id} value={employee._id}>
+                        //   {employee.firstname} {employee.lastname}
+                        // </option>
+                        <option key={employee._id} value={`${employee.firstname} ${employee.lastname}`}>
+                       {employee.firstname} {employee.lastname}
+                     </option>
                       ))}
                     </select>
                     {errors.employeeId && (
