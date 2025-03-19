@@ -182,25 +182,6 @@ function InsuranceManagementDetails({ collapsed }) {
     // getDistrict();
   }, []);
 
-  // const fetchUpdatedRecord = async () => {
-  //   try {
-  //     const response = await Api.get(
-  //       `http://localhost:5000/insuranceManagement/getByInsurance/${record?._id}`
-  //     );
-  //     console.log("responseget.data", response.data);
-  //     const update = response.data;
-  //     console.log("update", update);
-  //     const updatedRecord = update.filter(
-  //       (loandata) => loandata._id === record._id
-  //     );
-  //     console.log("updatedRecord", updatedRecord);
-  //     if (updatedRecord) {
-  //       setRecord(updatedRecord[0]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching updated record:", error);
-  //   }
-  // };
   useEffect(() => {
     getbyLeadId();
   }, []);
@@ -209,7 +190,7 @@ function InsuranceManagementDetails({ collapsed }) {
       getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
     }
   }, [watch("state")]);
-  
+
   useEffect(() => {
     if (watch("district")) {
       getCity(districtList.find((d) => d.name === watch("district"))?.id);
@@ -582,50 +563,48 @@ function InsuranceManagementDetails({ collapsed }) {
             </Col>
           </Row>
 
-            <Row className="px-2 py-2">
-              <center>
-                <h5>
-                  {/* <b>Task Details</b> */}
-                </h5>
-              </center>
-              <Col lg={12} md={12}>
-                <Card
-                  className="loandetail-custom-card"
-                  title="Task Assigned Details"
-                >
-                  <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
-                    <Descriptions.Item label="Employee Name">
-                      {employeeName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Employee Type">
-                      {record.employeeType}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Employee Category">
-                      {record.employeeCategory}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Description">
-                      {record.description}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Start Date">
-                      {record.startDate}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="End Date">
-                      {record.endDate}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Report Manager">
-                      {record.report_ManagerName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Sales Manager">
-                      {record.sale_ManagerName}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Assign to">
-                      {record.employeeList}
-                    </Descriptions.Item>
-                  </Descriptions>
-                </Card>
-              </Col>
-            </Row>
-          
+          <Row className="px-2 py-2">
+            <center>
+              <h5>{/* <b>Task Details</b> */}</h5>
+            </center>
+            <Col lg={12} md={12}>
+              <Card
+                className="loandetail-custom-card"
+                title="Task Assigned Details"
+              >
+                <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>
+                  <Descriptions.Item label="Employee Name">
+                    {employeeName}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Employee Type">
+                    {record.employeeType}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Employee Category">
+                    {record.employeeCategory}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Description">
+                    {record.description}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Start Date">
+                    {record.startDate}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="End Date">
+                    {record.endDate}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Report Manager">
+                    {record.report_ManagerName}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Sales Manager">
+                    {record.sale_ManagerName}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Assign to">
+                    {record.employeeList}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            </Col>
+          </Row>
+
           <Row className="px-2 py-2">
             <Col lg={12} md={12}>
               <Card className="loandetail-custom-card" title="Insurance Status">
@@ -1007,9 +986,12 @@ function InsuranceManagementDetails({ collapsed }) {
                     >
                       <option value="">Select Employee</option>
                       {filteredEmployeeList?.map((employee) => (
-                       <option key={employee._id} value={`${employee.firstname} ${employee.lastname}`}>
-                       {employee.firstname} {employee.lastname}
-                     </option>
+                        <option
+                          key={employee._id}
+                          value={`${employee.firstname} ${employee.lastname}`}
+                        >
+                          {employee.firstname} {employee.lastname}
+                        </option>
                       ))}
                     </select>
                     {errors.employeeList && (
