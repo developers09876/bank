@@ -93,7 +93,7 @@ const LoanDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
+        const response = await Api.get(`http://localhost:5000/signup/getbyUserType/${employeeType}`);
         setEmployeeList(response.data);
         console.log("responseemployee", response.data);
       } catch (error) {
@@ -163,29 +163,60 @@ const LoanDetails = ({ collapsed }) => {
       console.log("error", error);
     }
   };
-  const getState = () => {
-    const country_id = 101;
+  // const getState = () => {
+  //   const country_id = 101;
 
-    Api.get(`state/stateById/${country_id}`).then((res) => {
-      setStateList(res.data.data);
-      console.log("state res.data.data", res.data.data);
-    });
-  };
-  // const state_id = 4026;
-  const getDistrict = (state_id) => {
-    Api.get(`district/districtById/${state_id}`).then((res) => {
-      setDistrictList(res.data.data);
-      console.log("dist res.data.data", res.data.data);
-    });
-  };
+  //   Api.get(`state/stateById/${country_id}`).then((res) => {
+  //     setStateList(res.data.data);
+  //     console.log("state res.data.data", res.data.data);
+  //   });
+  // };
+  // // const state_id = 4026;
+  // const getDistrict = (state_id) => {
+  //   Api.get(`district/districtById/${state_id}`).then((res) => {
+  //     setDistrictList(res.data.data);
+  //     console.log("dist res.data.data", res.data.data);
+  //   });
+  // };
 
-  const getCity = (districtId) => {
-    Api.get(`city/cityById/${districtId}`).then((res) => {
-      setCityList(res.data.data);
-      console.log("city res.data.data", res.data.data);
-    });
-  };
+  // const getCity = (districtId) => {
+  //   Api.get(`city/cityById/${districtId}`).then((res) => {
+  //     setCityList(res.data.data);
+  //     console.log("city res.data.data", res.data.data);
+  //   });
+  // };
 
+  const getState = async () => {
+    try {
+      const country_id = 101;
+      const response = await Api.get(`state/stateById/${country_id}`);
+      console.log("State API Response:", response.data);
+      setStateList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching states:", error.response?.status, error.message);
+    }
+  };
+  
+  const getDistrict = async (state_id) => {
+    try {
+      const response = await Api.get(`district/districtById/${state_id}`);
+      console.log("District API Response:", response.data);
+      setDistrictList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching districts:", error.response?.status, error.message);
+    }
+  };
+  
+  const getCity = async (districtId) => {
+    try {
+      const response = await Api.get(`city/cityById/${districtId}`);
+      console.log("City API Response:", response.data);
+      setCityList(response.data.data);
+    } catch (error) {
+      console.error("Error fetching cities:", error.response?.status, error.message);
+    }
+  };
+  
   useEffect(() => {
     getCountry();
     getState();
@@ -224,7 +255,7 @@ const LoanDetails = ({ collapsed }) => {
     }
   }, [watch("district")]);
   const getbyLeadId = async () => {
-    await Api.get(`/loanform/getby/${record._id}`).then((res) => {
+    await Api.get(`http://localhost:5000/loanform/getby/${record._id}`).then((res) => {
       const data = res.data;
       setAssignValue(data);
       reset({
