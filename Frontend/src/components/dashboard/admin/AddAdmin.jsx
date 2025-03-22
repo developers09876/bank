@@ -218,8 +218,40 @@ const AddAdmin = ({ setAuth }) => {
                 </Col> */}
 
                 {/* Services */}
+                {/* 
                 <Col lg={4} md={6} sm={12}>
-                  <label htmlFor="services">Services:</label>
+                  <label htmlFor="services">Domain </label>
+                  <Controller
+                    name="Domain"
+                    control={control}
+                    rules={{ required: "Please select at least one service" }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        mode="multiple"
+                        className="inputcolumn_drp w-full mb-4"
+                        style={{ width: "100%" }}
+                        placeholder="Select Domain"
+                        // style={{ height: "55%" }}
+                        onChange={(value) => {
+                          setSelectedServices(value);
+                          setValue("Domain", value);
+                        }}
+                      >
+                        <Option value="ReportingManager">
+                          Reporting Manager
+                        </Option>
+                        <Option value="SalesManager">Sales Manager</Option>
+                        <Option value="Employee">Employee</Option>
+                      </Select>
+                    )}
+                  />
+                  {errors.services && (
+                    <p className="text-red-500">{errors.services.message}</p>
+                  )}
+                </Col> */}
+                <Col lg={4} md={6} sm={12}>
+                  <label htmlFor="services">Employee Designation:</label>
                   <Controller
                     name="services"
                     control={control}
@@ -230,7 +262,7 @@ const AddAdmin = ({ setAuth }) => {
                         mode="multiple"
                         className="inputcolumn_drp w-full mb-4"
                         style={{ width: "100%" }}
-                        placeholder="Select Services"
+                        placeholder="Select Domain"
                         // style={{ height: "55%" }}
                         onChange={(value) => {
                           setSelectedServices(value);
@@ -246,7 +278,7 @@ const AddAdmin = ({ setAuth }) => {
                         <Option value="ReportingManager">
                           Reporting Manager
                         </Option>
-                        <Option value="SalesManager">Sales Manager</Option>
+                        {/* <Option value="SalesManager">Sales Manager</Option> */}
                       </Select>
                     )}
                   />
@@ -547,7 +579,7 @@ const AddAdmin = ({ setAuth }) => {
                             className="inputcolumn_drp"
                             style={{ width: "100%" }}
                             placeholder="Select Reporting Manager"
-                            onChange={(value,option) => {
+                            onChange={(value, option) => {
                               field.onChange(value);
                               setValue("report_Manager", value);
                               setValue("report_ManagerName", option?.label);
@@ -572,7 +604,7 @@ const AddAdmin = ({ setAuth }) => {
                       )}
                     </Col>
 
-                    {!selectedServices.includes("SalesManager") && (
+                    {/* {!selectedServices.includes("SalesManager") && (
                       <Col lg={4} md={6} sm={12}>
                         <label htmlFor="sale_Manager">Sales Manager:</label>
                         <Controller
@@ -610,7 +642,7 @@ const AddAdmin = ({ setAuth }) => {
                           </p>
                         )}
                       </Col>
-                    )}
+                    )} */}
                   </>
                 )}
               </Row>
