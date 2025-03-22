@@ -185,12 +185,12 @@ const EmployeeDetailsPage = ({ collapsed }) => {
                     <Descriptions.Item label="Report Manager Name">
                       {record.report_ManagerName}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Sale Manager">
+                    {/* <Descriptions.Item label="Sale Manager">
                       {record.sale_Manager}
                     </Descriptions.Item>
                     <Descriptions.Item label="Sale Manager Name">
                       {record.sale_ManagerName}
-                    </Descriptions.Item>
+                    </Descriptions.Item> */}
                     <Descriptions.Item label="Branch">
                       {record.branch}
                     </Descriptions.Item>
