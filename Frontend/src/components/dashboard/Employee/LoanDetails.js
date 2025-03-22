@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Card, Descriptions, Tag, Space, Divider } from "antd";
+import { Layout, Card, Descriptions, Tag, Space, Divider , Modal, Input,Button} from "antd";
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -8,17 +8,65 @@ import {
 } from "@ant-design/icons";
 import "../user/LoanDetails.css";
 import { Col, Row } from "react-bootstrap";
+import Api from "../../../Api";
 import { BorderRight } from "@mui/icons-material";
 
 const LoanDetails = ({ collapsed }) => {
   const [loan, setLoan] = useState([]);
-
+ const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
+  const [isPendingtModalVisible, setIsPendingModalVisible] = useState(false);
+    const [pendingReason, setPendingReason] = useState("");
   const navigate = useNavigate();
   const { state } = useLocation();
   const record = state?.record;
   console.log("record", record);
   const dateFormat = new Date(record.dob).toISOString().split("T")[0];
+  const updateStatus = async (id, action, reason = "") => {
+    try {
+      const details = { action, reason };
+      const response = await Api.put(
+        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+        details
+      );
+      console.log("Response data:", response.data);
+      const updatedLoans = loan.map((item) =>
+        item._id === id
+          ? {
+              ...item,
+              status:
+                action === "approve"
+                  ? "1"
+                  : action === "reject"
+                  ? "2"
+                  : "Pending",
+              rejectionReason: action === "reject" ? reason : null,
+              pendingReason: action === "Pending" ? reason : null,
+            }
+          : item
+      );
+      setLoan(updatedLoans);
 
+      // await fetchUpdatedRecord();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+  const handlePendingReasonChange = (e) => {
+    setPendingReason(e.target.value);
+  };
+
+  const handlePending = () => {
+    if (record && pendingReason.trim()) {
+      updateStatus(record._id, "Pending", pendingReason.trim());
+      setIsPendingModalVisible(false);
+      setPendingReason("");
+    } else {
+      console.error("Pending reason is required.");
+    }
+  };
+  const handleReset = () => {
+    setPendingReason("");
+  };
   if (!record) {
     return <div>Loading or No loan details available.</div>;
   }
@@ -472,6 +520,160 @@ const LoanDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
+             <Row className="py-4" style={{ justifySelf: "center" }}>
+                        <Space>
+                          {/* {record && record.status === "Pending" && (
+                            <Button
+                              type="primary"
+                              style={{ background: "#4096ff", color: "#fff" }}
+                              onClick={handleApprove}
+                            >
+                              Approve
+                            </Button>
+                          )}
+            
+                          {record && record.status === "Pending" && (
+                            <>
+                              <Button
+                                type="primary"
+                                danger
+                                onClick={() => setIsRejectModalVisible(true)}
+                              >
+                                Reject
+                              </Button>
+                            </>
+                          )} */}
+            
+                          {record &&
+                            record.status === "Pending" &&
+                            !record.pendingReason && (
+                              <Button
+                                color="yellow"
+                                variant="solid"
+                                onClick={() => setIsPendingModalVisible(true)}
+                              >
+                                Hold
+                              </Button>
+                            )}
+                          {record &&
+                            record.status === "Pending" &&
+                            record.pendingReason && (
+                              <Button
+                                color="yellow"
+                                variant="solid"
+                                disabled
+                                onClick={() => setIsPendingModalVisible(true)}
+                              >
+                                On Hold
+                              </Button>
+                            )}
+            
+                          {/* <Modal
+                            title="Rejection Confirmation"
+                            visible={isRejectModalVisible}
+                            onCancel={() => setIsRejectModalVisible(false)}
+                            footer={null}
+                          >
+                            <div>
+                              <p>Please provide a reason for rejection:</p>
+                              <Input.TextArea
+                                rows={3}
+                                placeholder="Enter rejection reason"
+                                value={rejectionReason}
+                                onChange={handleRejectionReasonChange}
+                              />
+                              <Space style={{ marginTop: "20px" }}>
+                                <Button
+                                  type="primary"
+                                  onClick={handleReject}
+                                  disabled={!rejectionReason.trim()}
+                                >
+                                  Submit
+                                </Button>
+                                <Button variant="secondary" onClick={handleReset}>
+                                  Reset
+                                </Button>
+                              </Space>
+                            </div>
+                          </Modal> */}
+            
+                          <Modal
+                            title="Pending Confirmation"
+                            visible={isPendingtModalVisible}
+                            onCancel={() => setIsPendingModalVisible(false)}
+                            footer={null}
+                          >
+                            <div>
+                              <p>
+                                Please provide a reason for holding the Insurance
+                                application:
+                              </p>
+                              <Input.TextArea
+                                rows={3}
+                                placeholder="Enter Pending reason"
+                                value={pendingReason}
+                                onChange={handlePendingReasonChange}
+                              />
+                              <Space style={{ marginTop: "20px" }}>
+                                <Button
+                                  type="primary"
+                                  onClick={handlePending}
+                                  disabled={!pendingReason.trim()}
+                                >
+                                  Submit
+                                </Button>
+                                <Button variant="secondary" onClick={handleReset}>
+                                  Reset
+                                </Button>
+                              </Space>
+                            </div>
+                          </Modal>
+            
+                          {record && record.status === "1" && (
+                            <>
+                              {/* <Button type="primary" disabled>
+                                Approved
+                              </Button>
+                              <Button
+                                type="primary"
+                                danger
+                                onClick={() => setIsRejectModalVisible(true)}
+                              >
+                                Reject
+                              </Button> */}
+                              <Button
+                                color="yellow"
+                                variant="solid"
+                                onClick={() => setIsPendingModalVisible(true)}
+                              >
+                                Hold
+                              </Button>
+                            </>
+                          )}
+            
+                          {record && record.status === "2" && (
+                            <>
+                              {/* <Button
+                                type="primary"
+                                style={{ background: "#4096ff", color: "#fff" }}
+                                onClick={handleApprove}
+                              >
+                                Approve
+                              </Button>
+                              <Button type="primary" danger disabled>
+                                Rejected
+                              </Button> */}
+                              <Button
+                                color="yellow"
+                                variant="solid"
+                                onClick={() => setIsPendingModalVisible(true)}
+                              >
+                                Hold
+                              </Button>
+                            </>
+                          )}
+                        </Space>
+                      </Row>
           </div>
         </div>
       </div>

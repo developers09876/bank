@@ -1108,7 +1108,7 @@ function TaskManagementDetails({ collapsed }) {
             )}
           </div>
 
-          {/* <Row className="py-4" style={{ justifySelf: "center" }}>
+          <Row className="py-4" style={{ justifySelf: "center" }}>
             <Space>
               {record && record.status === "Pending" && (
                 <Button
@@ -1132,7 +1132,7 @@ function TaskManagementDetails({ collapsed }) {
                 </>
               )}
 
-              {record &&
+              {/* {record &&
                 record.status === "Pending" &&
                 !record.pendingReason && (
                   <Button
@@ -1154,7 +1154,7 @@ function TaskManagementDetails({ collapsed }) {
                   >
                     On Hold
                   </Button>
-                )}
+                )} */}
 
               <Modal
                 title="Rejection Confirmation"
@@ -1229,13 +1229,13 @@ function TaskManagementDetails({ collapsed }) {
                   >
                     Reject
                   </Button>
-                  <Button
+                  {/* <Button
                     color="yellow"
                     variant="solid"
                     onClick={() => setIsPendingModalVisible(true)}
                   >
                     Hold
-                  </Button>
+                  </Button> */}
                 </>
               )}
 
@@ -1251,17 +1251,17 @@ function TaskManagementDetails({ collapsed }) {
                   <Button type="primary" danger disabled>
                     Rejected
                   </Button>
-                  <Button
+                  {/* <Button
                     color="yellow"
                     variant="solid"
                     onClick={() => setIsPendingModalVisible(true)}
                   >
                     Hold
-                  </Button>
+                  </Button> */}
                 </>
               )}
             </Space>
-          </Row> */}
+          </Row>
 
           <ToastContainer />
         </div>
