@@ -1162,7 +1162,7 @@ function InsuranceManagementDetails({ collapsed }) {
               )}
             </Descriptions> */}
 
-          {/* <Row className="py-4" style={{ justifySelf: "center" }}>
+          <Row className="py-4" style={{ justifySelf: "center" }}>
             <Space>
               {record && record.status === "Pending" && (
                 <Button
@@ -1283,13 +1283,13 @@ function InsuranceManagementDetails({ collapsed }) {
                   >
                     Reject
                   </Button>
-                  <Button
+                  {/* <Button
                     color="yellow"
                     variant="solid"
                     onClick={() => setIsPendingModalVisible(true)}
                   >
                     Hold
-                  </Button>
+                  </Button> */}
                 </>
               )}
 
@@ -1305,17 +1305,17 @@ function InsuranceManagementDetails({ collapsed }) {
                   <Button type="primary" danger disabled>
                     Rejected
                   </Button>
-                  <Button
+                  {/* <Button
                     color="yellow"
                     variant="solid"
                     onClick={() => setIsPendingModalVisible(true)}
                   >
                     Hold
-                  </Button>
+                  </Button> */}
                 </>
               )}
             </Space>
-          </Row> */}
+          </Row>
           {/* </Card> */}
           <ToastContainer />
         </div>

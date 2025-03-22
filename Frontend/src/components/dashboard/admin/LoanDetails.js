@@ -1368,7 +1368,7 @@ const LoanDetails = ({ collapsed }) => {
               )}
             </div>
 
-            {/* <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
+            <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
               <Space>
                 {record && record.status === "Pending" && (
                   <Button
@@ -1489,13 +1489,13 @@ const LoanDetails = ({ collapsed }) => {
                     >
                       Reject
                     </Button>
-                    <Button
+                    {/* <Button
                       color="yellow"
                       variant="solid"
                       onClick={() => setIsPendingModalVisible(true)}
                     >
                       Hold
-                    </Button>
+                    </Button> */}
                   </>
                 )}
 
@@ -1511,17 +1511,17 @@ const LoanDetails = ({ collapsed }) => {
                     <Button type="primary" danger disabled>
                       Rejected
                     </Button>
-                    <Button
+                    {/* <Button
                       color="yellow"
                       variant="solid"
                       onClick={() => setIsPendingModalVisible(true)}
                     >
                       Hold
-                    </Button>
+                    </Button> */}
                   </>
                 )}
               </Space>
-            </Row> */}
+            </Row>
           </div>
         </div>
       </div>
