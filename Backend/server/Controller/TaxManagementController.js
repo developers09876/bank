@@ -217,8 +217,8 @@ export const getTaxManagementUserId = async (req, res) => {
 };
 export const getSalesManagerId = async (req, res) => {
   try {
-    const { sale_Manager } = req.params;
-    const taxManagement = await taxManagementDb.find({ sale_Manager });
+    const { report_Manager } = req.params;
+    const taxManagement = await taxManagementDb.find({ report_Manager });
     if (!taxManagement) {
       return res.status(404).json({ message: "User id not found" });
     }

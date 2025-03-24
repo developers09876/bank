@@ -23,6 +23,6 @@ router.get("/getAllTaxManagement", getallTaxManagement);
 router.get("/getByIdTaxManagement/:userId", getTaxManagementUserId);
 router.get("/getByTaxId/:id", getByTaxId);
 router.put("/updateTaxremarks/:id", updateTaxRemarks);
-router.get("/getByIdSalesManagerId/:sale_Manager", getSalesManagerId);
+router.get("/getByIdSalesManagerId/:report_Manager", getSalesManagerId);
 
 export default router;

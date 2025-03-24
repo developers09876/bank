@@ -32,7 +32,7 @@ router.get("/currentMonthIncome/:referCode", getCurrentMonthIncome);
 router.put("/updateloanapplicationsStaus/:id", updateLoanApplicationStatus);
 router.put("/updateloan/:id", updateLoan);
 router.delete("/deleteloanapplications/:id", deleteLoanApplication);
-router.get("/getByIdSalesManagerId/:sale_Manager", getSalesManagerId);
+router.get("/getByIdSalesManagerId/:report_Manager", getSalesManagerId);
 router.put("/updateloanremarks/:id", updateLoanRemarks);
 
 export default router;

@@ -27,7 +27,7 @@ router.put("/updateInsuranceManagement/:id", updateInsuranceManagementDb);
 router.get("/getbyEmployeeid/:employeeId", getInsuranceManagementEmployeeId);
 router.get("/getAllInsuranceManagement", getallInsuranceManagement);
 router.get("/getByIdInsuranceManagement/:userId", getInsuranceManagementUserId);
-router.get("/getByIdSalesManagerId/:sale_Manager", getSalesManagerId);
+router.get("/getByIdSalesManagerId/:report_Manager", getSalesManagerId);
 
 router.put("/updateInsuranceremarks/:id", updateInsuranceRemarks);
 router.put("/updateInsurancedetails/:id", updateInsuranceDetails);
