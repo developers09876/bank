@@ -224,7 +224,7 @@ function TaskManagementDetails({ collapsed }) {
       getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
     }
   }, [watch("state")]);
-  
+
   useEffect(() => {
     if (watch("district")) {
       getCity(districtList.find((d) => d.name === watch("district"))?.id);
@@ -572,9 +572,7 @@ function TaskManagementDetails({ collapsed }) {
           {record.employeeId && (
             <Row className="px-2 py-2">
               <center>
-                <h5>
-                  {/* <b>Task Details:</b> */}
-                </h5>
+                <h5>{/* <b>Task Details:</b> */}</h5>
               </center>
               <Col lg={12} md={12}>
                 <Card
@@ -985,9 +983,12 @@ function TaskManagementDetails({ collapsed }) {
                         // <option key={employee._id} value={employee._id}>
                         //   {employee.firstname} {employee.lastname}
                         // </option>
-                        <option key={employee._id} value={`${employee.firstname} ${employee.lastname}`}>
-                       {employee.firstname} {employee.lastname}
-                     </option>
+                        <option
+                          key={employee._id}
+                          value={`${employee.firstname} ${employee.lastname}`}
+                        >
+                          {employee.firstname} {employee.lastname}
+                        </option>
                       ))}
                     </select>
                     {errors.employeeId && (
