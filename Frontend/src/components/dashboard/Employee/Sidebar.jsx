@@ -129,11 +129,11 @@ function Sidebar({ collapsed }) {
     },
   ];
   const ReportingManagerItems = [
-    {
-      serviceName: "ReportingManager",
-      label: "Area Manager List",
-      path: "/employee/areamangerdetails",
-    },
+    // {
+    //   serviceName: "ReportingManager",
+    //   label: "Area Manager List",
+    //   path: "/employee/areamangerdetails",
+    // },
     {
       serviceName: "ReportingManager",
       label: "Loan Management",
@@ -194,18 +194,18 @@ function Sidebar({ collapsed }) {
   ];
   const managementMenuItems = [
     {
-      serviceName: "SalesManager",
-      label: "Loan Management",
+      serviceName: "ReportingManager",
+      label: "Loan Task",
       path: "/employee/salesloanmangement",
     },
     {
-      serviceName: "SalesManager",
-      label: "Insurance Management",
+      serviceName: "ReportingManager",
+      label: "Insurance Task",
       path: "/employee/salesinsurancenmangement",
     },
     {
-      serviceName: "SalesManager",
-      label: "Tax Management",
+      serviceName: "ReportingManager",
+      label: "Tax Task",
       path: "/employee/salestaxmangement",
     },
     // {
@@ -264,14 +264,6 @@ function Sidebar({ collapsed }) {
           My Profile
         </NavLink>
 
-        {ReportingManagerItems.filter((item) =>
-          service.includes(item.serviceName)
-        ).map((item) => (
-          <NavLink key={item.path} to={item.path} className="main-nav-style">
-            {item.label}
-          </NavLink>
-        ))}
-
         {salesMangerItems
           .filter((item) => service.includes(item.serviceName))
           .map((item) => (
@@ -281,7 +273,7 @@ function Sidebar({ collapsed }) {
           ))}
 
         {hasManagement && (
-          <SubMenu title="Management" className="main-nav-style">
+          <SubMenu title="Task Management" className="main-nav-style">
             {managementMenuItems
               .filter((task) => service.includes(task.serviceName))
               .map((task) => (
@@ -291,6 +283,13 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
+        {ReportingManagerItems.filter((item) =>
+          service.includes(item.serviceName)
+        ).map((item) => (
+          <NavLink key={item.path} to={item.path} className="main-nav-style">
+            {item.label}
+          </NavLink>
+        ))}
         {/* Conditionally render Task Management submenu */}
         {hasTasks && (
           <SubMenu title="Task Management" className="main-nav-style">
