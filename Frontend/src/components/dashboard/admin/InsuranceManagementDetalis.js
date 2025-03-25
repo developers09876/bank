@@ -184,30 +184,42 @@ function InsuranceManagementDetails({ collapsed }) {
       console.log("State API Response:", response.data);
       setStateList(response.data.data);
     } catch (error) {
-      console.error("Error fetching states:", error.response?.status, error.message);
+      console.error(
+        "Error fetching states:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   const getDistrict = async (state_id) => {
     try {
       const response = await Api.get(`district/districtById/${state_id}`);
       console.log("District API Response:", response.data);
       setDistrictList(response.data.data);
     } catch (error) {
-      console.error("Error fetching districts:", error.response?.status, error.message);
+      console.error(
+        "Error fetching districts:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   const getCity = async (districtId) => {
     try {
       const response = await Api.get(`city/cityById/${districtId}`);
       console.log("City API Response:", response.data);
       setCityList(response.data.data);
     } catch (error) {
-      console.error("Error fetching cities:", error.response?.status, error.message);
+      console.error(
+        "Error fetching cities:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   useEffect(() => {
     getCountry();
     getState();
@@ -229,37 +241,39 @@ function InsuranceManagementDetails({ collapsed }) {
     }
   }, [watch("district")]);
   const getbyLeadId = async () => {
-    await Api.get(`http://localhost:5000/insuranceManagement/getByInsurance/${record?._id}`).then(
-      (res) => {
-        const data = res.data.data[0];
-        console.log("lead insu data", data);
-        setAssignValue(data);
-        reset({
-          employeeType: data?.employeeType || "InsuranceEmployee",
-          employeeId: data?.employeeId || "",
-          loanType: data?.loanType || "",
-          startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-          endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-          description: data?.description || "",
-          Branch: data?.Branch || "",
-          state: data?.state || "",
-          district: data?.district || "",
-          employeeCategory: data?.employeeCategory || "",
-          report_Manager: data?.report_Manager || "",
-          report_ManagerName: data?.report_ManagerName || "",
-          sale_Manager: data?.sale_Manager || "",
-          sale_ManagerName: data?.sale_ManagerName || "",
-        });
-        setRecord(data);
+    await Api.get(
+      `http://localhost:5000/insuranceManagement/getByInsurance/${record?._id}`
+    ).then((res) => {
+      const data = res.data.data[0];
+      console.log("lead insu data", data);
+      setAssignValue(data);
+      reset({
+        employeeType: data?.employeeType || "InsuranceEmployee",
+        employeeId: data?.employeeId || "",
+        loanType: data?.loanType || "",
+        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+        description: data?.description || "",
+        Branch: data?.Branch || "",
+        state: data?.state || "",
+        district: data?.district || "",
+        employeeCategory: data?.employeeCategory || "",
+        report_Manager: data?.report_Manager || "",
+        report_ManagerName: data?.report_ManagerName || "",
+        sale_Manager: data?.sale_Manager || "",
+        sale_ManagerName: data?.sale_ManagerName || "",
+      });
+      setRecord(data);
 
-        setSelectedEmployeeType(data?.employeeType || "InsuranceEmployee");
-      }
-    );
+      setSelectedEmployeeType(data?.employeeType || "InsuranceEmployee");
+    });
   };
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(`http://localhost:5000/signup/getbyUserType/${employeeType}`);
+        const response = await Api.get(
+          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+        );
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("InsuranceEmployee")
         );
@@ -913,7 +927,7 @@ function InsuranceManagementDetails({ collapsed }) {
                         )}
                       </Col>
 
-                      {!selectedServices.includes("SalesManager") && (
+                      {/* {!selectedServices.includes("SalesManager") && (
                         <Col lg={4} md={6} sm={12}>
                           <label htmlFor="sale_Manager">Sales Manager:</label>
                           <Controller
@@ -951,7 +965,7 @@ function InsuranceManagementDetails({ collapsed }) {
                             </p>
                           )}
                         </Col>
-                      )}
+                      )} */}
                     </>
                   )}
 

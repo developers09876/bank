@@ -93,7 +93,9 @@ const LoanDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(`http://localhost:5000/signup/getbyUserType/${employeeType}`);
+        const response = await Api.get(
+          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+        );
         setEmployeeList(response.data);
         console.log("responseemployee", response.data);
       } catch (error) {
@@ -163,28 +165,6 @@ const LoanDetails = ({ collapsed }) => {
       console.log("error", error);
     }
   };
-  // const getState = () => {
-  //   const country_id = 101;
-
-  //   Api.get(`state/stateById/${country_id}`).then((res) => {
-  //     setStateList(res.data.data);
-  //     console.log("state res.data.data", res.data.data);
-  //   });
-  // };
-  // // const state_id = 4026;
-  // const getDistrict = (state_id) => {
-  //   Api.get(`district/districtById/${state_id}`).then((res) => {
-  //     setDistrictList(res.data.data);
-  //     console.log("dist res.data.data", res.data.data);
-  //   });
-  // };
-
-  // const getCity = (districtId) => {
-  //   Api.get(`city/cityById/${districtId}`).then((res) => {
-  //     setCityList(res.data.data);
-  //     console.log("city res.data.data", res.data.data);
-  //   });
-  // };
 
   const getState = async () => {
     try {
@@ -193,30 +173,42 @@ const LoanDetails = ({ collapsed }) => {
       console.log("State API Response:", response.data);
       setStateList(response.data.data);
     } catch (error) {
-      console.error("Error fetching states:", error.response?.status, error.message);
+      console.error(
+        "Error fetching states:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   const getDistrict = async (state_id) => {
     try {
       const response = await Api.get(`district/districtById/${state_id}`);
       console.log("District API Response:", response.data);
       setDistrictList(response.data.data);
     } catch (error) {
-      console.error("Error fetching districts:", error.response?.status, error.message);
+      console.error(
+        "Error fetching districts:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   const getCity = async (districtId) => {
     try {
       const response = await Api.get(`city/cityById/${districtId}`);
       console.log("City API Response:", response.data);
       setCityList(response.data.data);
     } catch (error) {
-      console.error("Error fetching cities:", error.response?.status, error.message);
+      console.error(
+        "Error fetching cities:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   useEffect(() => {
     getCountry();
     getState();
@@ -248,33 +240,35 @@ const LoanDetails = ({ collapsed }) => {
       getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
     }
   }, [watch("state")]);
-  
+
   useEffect(() => {
     if (watch("district")) {
       getCity(districtList.find((d) => d.name === watch("district"))?.id);
     }
   }, [watch("district")]);
   const getbyLeadId = async () => {
-    await Api.get(`http://localhost:5000/loanform/getby/${record._id}`).then((res) => {
-      const data = res.data;
-      setAssignValue(data);
-      reset({
-        employeeType: data?.employeeType || "LoanEmployee",
-        employeeId: data?.employeeId || "",
-        employeeCategory: data?.employeeCategory || "",
-        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-        description: data?.description || "",
-        Branch: data?.Branch || "",
-        state: data?.statename || "",
-        district: data?.districtname || "",
-        report_Manager: data?.report_Manager || "",
-        report_ManagerName: data?.report_ManagerName || "",
-        sale_Manager: data?.sale_Manager || "",
-        sale_ManagerName: data.sale_ManagerName || "",
-      });
-      setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
-    });
+    await Api.get(`http://localhost:5000/loanform/getby/${record._id}`).then(
+      (res) => {
+        const data = res.data;
+        setAssignValue(data);
+        reset({
+          employeeType: data?.employeeType || "LoanEmployee",
+          employeeId: data?.employeeId || "",
+          employeeCategory: data?.employeeCategory || "",
+          startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+          endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+          description: data?.description || "",
+          Branch: data?.Branch || "",
+          state: data?.statename || "",
+          district: data?.districtname || "",
+          report_Manager: data?.report_Manager || "",
+          report_ManagerName: data?.report_ManagerName || "",
+          sale_Manager: data?.sale_Manager || "",
+          sale_ManagerName: data.sale_ManagerName || "",
+        });
+        setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
+      }
+    );
   };
 
   const updateStatus = async (id, action, reason = "") => {
@@ -921,9 +915,7 @@ const LoanDetails = ({ collapsed }) => {
             </Row>
             {record.employeeId && (
               <Row style={{ textAlign: "-webkit-center" }}>
-                <h5>
-                  {/* <b>Task Details:</b> */}
-                </h5>
+                <h5>{/* <b>Task Details:</b> */}</h5>
                 <Col lg={12} md={12}>
                   <Card
                     className="loandetail-custom-card"
@@ -1175,7 +1167,7 @@ const LoanDetails = ({ collapsed }) => {
                           )}
                         </Col>
 
-                        {!selectedServices.includes("SalesManager") && (
+                        {/* {!selectedServices.includes("SalesManager") && (
                           <Col lg={4} md={6} sm={12}>
                             <label htmlFor="sale_Manager">Sales Manager:</label>
                             <Controller
@@ -1213,7 +1205,7 @@ const LoanDetails = ({ collapsed }) => {
                               </p>
                             )}
                           </Col>
-                        )}
+                        )} */}
                       </>
                     )}
                     {/* Employee Type */}
@@ -1267,9 +1259,12 @@ const LoanDetails = ({ collapsed }) => {
                           // <option key={employee._id} value={employee._id}>
                           //   {employee.firstname} {employee.lastname}
                           // </option>
-                          <option key={employee._id} value={`${employee.firstname} ${employee.lastname}`}>
-                       {employee.firstname} {employee.lastname}
-                     </option>
+                          <option
+                            key={employee._id}
+                            value={`${employee.firstname} ${employee.lastname}`}
+                          >
+                            {employee.firstname} {employee.lastname}
+                          </option>
                         ))}
                       </select>
                       {errors.employeeId && (

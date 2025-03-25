@@ -96,7 +96,9 @@ function TaskManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(`http://localhost:5000/signup/getbyUserType/${employeeType}`);
+        const response = await Api.get(
+          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+        );
         setEmployeeList(response.data);
         console.log("responseemployee", response.data);
       } catch (error) {
@@ -195,30 +197,42 @@ function TaskManagementDetails({ collapsed }) {
       console.log("State API Response:", response.data);
       setStateList(response.data.data);
     } catch (error) {
-      console.error("Error fetching states:", error.response?.status, error.message);
+      console.error(
+        "Error fetching states:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   const getDistrict = async (state_id) => {
     try {
       const response = await Api.get(`district/districtById/${state_id}`);
       console.log("District API Response:", response.data);
       setDistrictList(response.data.data);
     } catch (error) {
-      console.error("Error fetching districts:", error.response?.status, error.message);
+      console.error(
+        "Error fetching districts:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   const getCity = async (districtId) => {
     try {
       const response = await Api.get(`city/cityById/${districtId}`);
       console.log("City API Response:", response.data);
       setCityList(response.data.data);
     } catch (error) {
-      console.error("Error fetching cities:", error.response?.status, error.message);
+      console.error(
+        "Error fetching cities:",
+        error.response?.status,
+        error.message
+      );
     }
   };
-  
+
   useEffect(() => {
     getCountry();
     getState();
@@ -229,7 +243,9 @@ function TaskManagementDetails({ collapsed }) {
     const fetchEmployeeList = async () => {
       const employeeid = record.employeeId;
       try {
-        const response = await Api.get(`http://localhost:5000/signup/getby/${employeeid}`);
+        const response = await Api.get(
+          `http://localhost:5000/signup/getby/${employeeid}`
+        );
         if (
           response.data &&
           response.data.firstname &&
@@ -255,7 +271,7 @@ function TaskManagementDetails({ collapsed }) {
       getDistrict(stateList.find((s) => s.name === watch("state"))?.id);
     }
   }, [watch("state")]);
-  
+
   useEffect(() => {
     if (watch("district")) {
       getCity(districtList.find((d) => d.name === watch("district"))?.id);
@@ -263,7 +279,9 @@ function TaskManagementDetails({ collapsed }) {
   }, [watch("district")]);
 
   const getbyLeadId = async () => {
-    await Api.get(`http://localhost:5000/taxManagement/getByTaxId/${record?._id}`).then((res) => {
+    await Api.get(
+      `http://localhost:5000/taxManagement/getByTaxId/${record?._id}`
+    ).then((res) => {
       const data = res.data.data[0];
       setAssignValue(data);
       reset({
@@ -603,9 +621,7 @@ function TaskManagementDetails({ collapsed }) {
           {record.employeeId && (
             <Row className="px-2 py-2">
               <center>
-                <h5>
-                  {/* <b>Task Details:</b> */}
-                </h5>
+                <h5>{/* <b>Task Details:</b> */}</h5>
               </center>
               <Col lg={12} md={12}>
                 <Card
@@ -848,7 +864,7 @@ function TaskManagementDetails({ collapsed }) {
                         <Controller
                           name="report_Manager"
                           control={control}
-                          defaultValue={record?.report_Manager || ""}
+                          defaultValue=""
                           rules={{ required: true }}
                           render={({ field }) => (
                             <Select
@@ -856,19 +872,10 @@ function TaskManagementDetails({ collapsed }) {
                               className="inputcolumn_drp"
                               style={{ width: "100%" }}
                               placeholder="Select Reporting Manager"
-                              value={
-                                field.value
-                                  ? {
-                                      value: field.value,
-                                      label: getValues("report_ManagerName"),
-                                    }
-                                  : undefined
-                              }
-                              labelInValue
-                              onChange={(option) => {
-                                field.onChange(option.value);
-                                setValue("report_Manager", option.value);
-                                setValue("report_ManagerName", option.label);
+                              onChange={(value, option) => {
+                                field.onChange(value);
+                                setValue("report_Manager", value);
+                                setValue("report_ManagerName", option?.label);
                               }}
                             >
                               {filteredManagers?.map((employee) => (
@@ -890,38 +897,10 @@ function TaskManagementDetails({ collapsed }) {
                         )}
                       </Col>
 
-                      {!selectedServices.includes("SalesManager") && (
+                      {/* {!selectedServices.includes("SalesManager") && (
                         <Col lg={4} md={6} sm={12}>
                           <label htmlFor="sale_Manager">Sales Manager:</label>
-                          {/* <Controller
-                            name="sale_Manager"
-                            control={control}
-                            defaultValue=""
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                              <Select
-                                {...field}
-                                className="inputcolumn_drp"
-                                style={{ width: "100%" }}
-                                placeholder="Select Sales Manager"
-                                onChange={(value, option) => {
-                                  field.onChange(value);
-                                  setValue("sale_Manager", value);
-                                  setValue("sale_ManagerName", option?.label);
-                                }}
-                              >
-                                {filteredSalesManagers?.map((employee) => (
-                                  <Select.Option
-                                    key={employee._id}
-                                    value={employee._id}
-                                    label={`${employee.firstname} ${employee.lastname}`}
-                                  >
-                                    {employee.firstname} {employee.lastname}
-                                  </Select.Option>
-                                ))}
-                              </Select>
-                            )}
-                          /> */}
+                     
 
                           <Controller
                             name="sale_Manager"
@@ -969,7 +948,7 @@ function TaskManagementDetails({ collapsed }) {
                             </p>
                           )}
                         </Col>
-                      )}
+                      )} */}
                     </>
                   )}
                   <Col xs={12} md={6} lg={4}>
@@ -1016,9 +995,12 @@ function TaskManagementDetails({ collapsed }) {
                         // <option key={employee._id} value={employee._id}>
                         //   {employee.firstname} {employee.lastname}
                         // </option>
-                        <option key={employee._id} value={`${employee.firstname} ${employee.lastname}`}>
-                       {employee.firstname} {employee.lastname}
-                     </option>
+                        <option
+                          key={employee._id}
+                          value={`${employee.firstname} ${employee.lastname}`}
+                        >
+                          {employee.firstname} {employee.lastname}
+                        </option>
                       ))}
                     </select>
                     {errors.employeeId && (
