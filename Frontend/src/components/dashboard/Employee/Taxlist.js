@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import Api from "../../../Api";
 
 const TaxList = ({ collapsed }) => {
- const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -21,14 +21,14 @@ const TaxList = ({ collapsed }) => {
   const userid = localStorage.getItem("id");
 
   useEffect(() => {
-     fetchLeads();
-   }, []);
+    fetchLeads();
+  }, []);
 
   const fetchLeads = async () => {
     setLoading(true);
     try {
       const response = await Api.get(
-        `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
+        `taxManagement/getByIdTaxManagement/${userid}`
       );
       console.log("Fetched Data:", response.data);
       setTax(response.data);
@@ -50,7 +50,6 @@ const TaxList = ({ collapsed }) => {
   const handleAddTax = () => {
     navigate(`/employee/createtax`);
   };
-
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -161,7 +160,7 @@ const TaxList = ({ collapsed }) => {
             placeholder="Search"
             value={searchText}
             onChange={handleSearch}
-            style={{ width: 200,marginLeft:"40px "}}
+            style={{ width: 200, marginLeft: "40px " }}
             prefix={<SearchOutlined />}
           />
           {/* <Button

@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../LoanAdmin/Loansidebar";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
+import Api from "../../../../Api";
 
 const AddLoanEmployee = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -17,10 +18,10 @@ const AddLoanEmployee = ({ setAuth }) => {
     Manager: "",
     Branch: "",
     dateOfJoining: "",
-    employeeCategory: "", 
+    employeeCategory: "",
   });
 
-  const empCreatedBy = localStorage.getItem("id")
+  const empCreatedBy = localStorage.getItem("id");
 
   const {
     empno,
@@ -44,7 +45,7 @@ const AddLoanEmployee = ({ setAuth }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/signup/register", {
+      const response = await Api.post("signup/register", {
         empno,
         userType,
         empCreatedBy,
@@ -57,13 +58,14 @@ const AddLoanEmployee = ({ setAuth }) => {
         dateOfJoining,
         employeeCategory,
       });
-  
-        toast.success("Employee added successfully!");
-        // reset(); 
-      
+
+      toast.success("Employee added successfully!");
+      // reset();
     } catch (error) {
       console.error("Error submitting the form:", error);
-      toast.error("An error occurred while submitting the form. Please try again.");
+      toast.error(
+        "An error occurred while submitting the form. Please try again."
+      );
     }
   };
 
@@ -119,7 +121,7 @@ const AddLoanEmployee = ({ setAuth }) => {
                 </Col>
 
                 <Col lg={6} md={6}>
-                  <label >Services:</label>
+                  <label>Services:</label>
                   <select
                     name="userType"
                     className="block border border-grey-500 w-full p-3 rounded mb-4"
@@ -129,7 +131,6 @@ const AddLoanEmployee = ({ setAuth }) => {
                     disabled
                     required
                   >
-                   
                     <option value="LoanEmployee">Loan Employee</option>
                     <option value="TaxEmployee">Tax Employee</option>
                     <option value="InsuranceEmployee">
@@ -140,24 +141,22 @@ const AddLoanEmployee = ({ setAuth }) => {
                 </Col>
 
                 {/* Conditional Loan Type Dropdown */}
-                  <Col lg={6} md={6}>
-                    <label htmlFor="employeeCategory">Loan Type:</label>
-                    <select
-                      name="employeeCategory"
-                      className="block border border-grey-500 w-full p-3 rounded mb-4"
-                      value={employeeCategory}
-                      onChange={onChange}
-                      required
-                    >
-                      <option value="" >
-                        Select Loan Type
-                      </option>
-                      <option value="Home Loan">Home Loan</option>
-                      <option value="Vehicle Loan">Vehicle Loan</option>
-                      <option value="Business Loan">Business Loan</option>
-                      <option value="Personal Loan">Personal Loan</option>
-                    </select>
-                  </Col>
+                <Col lg={6} md={6}>
+                  <label htmlFor="employeeCategory">Loan Type:</label>
+                  <select
+                    name="employeeCategory"
+                    className="block border border-grey-500 w-full p-3 rounded mb-4"
+                    value={employeeCategory}
+                    onChange={onChange}
+                    required
+                  >
+                    <option value="">Select Loan Type</option>
+                    <option value="Home Loan">Home Loan</option>
+                    <option value="Vehicle Loan">Vehicle Loan</option>
+                    <option value="Business Loan">Business Loan</option>
+                    <option value="Personal Loan">Personal Loan</option>
+                  </select>
+                </Col>
 
                 <Col lg={6} md={6}>
                   <label htmlFor="firstname">First Name:</label>

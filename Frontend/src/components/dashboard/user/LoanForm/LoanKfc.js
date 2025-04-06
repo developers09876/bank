@@ -88,8 +88,8 @@ function Kycvendor() {
     console.log("Details", Details);
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplications/${record._id}`,
+      const response = await Api.put(
+        `loanform/updateloanapplications/${record._id}`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");

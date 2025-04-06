@@ -56,6 +56,7 @@ import { NavLink } from "react-router-dom";
 import { Menu, Modal, Avatar } from "antd";
 import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
+import Api from "../../../Api";
 
 function Sidebar({ collapsed }) {
   const [firstname, setFirstname] = useState("");
@@ -65,9 +66,7 @@ function Sidebar({ collapsed }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${id}`
-        );
+        const response = await Api.get(`signup/getby/${id}`);
         setFirstname(response.data.firstname);
       } catch (error) {
         console.error("Error fetching user data", error);
@@ -79,7 +78,6 @@ function Sidebar({ collapsed }) {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userType");
-
   };
 
   return (
@@ -133,9 +131,15 @@ function Sidebar({ collapsed }) {
           Feedback
         </NavLink>
         <div className="logoutbutton-sidebar">
-        {token && (<NavLink to="/login" className="main-nav-style" onClick={handleLogout}>
-          Logout
-        </NavLink>)}
+          {token && (
+            <NavLink
+              to="/login"
+              className="main-nav-style"
+              onClick={handleLogout}
+            >
+              Logout
+            </NavLink>
+          )}
         </div>
       </Menu>
     </div>

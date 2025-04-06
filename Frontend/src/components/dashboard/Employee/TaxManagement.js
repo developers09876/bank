@@ -64,7 +64,7 @@ const Tax = ({ collapsed }) => {
     setLoading(true);
     try {
       const response = await Api.get(
-        `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
+        `taxManagement/getByIdTaxManagement/${userid}`
       );
       console.log("Fetched Data:", response.data);
       setTax(response.data);

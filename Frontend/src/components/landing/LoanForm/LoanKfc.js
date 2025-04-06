@@ -7,6 +7,7 @@ import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Api from "../../../Api";
 // import Api from "../../Api";
 
 function Kycvendor() {
@@ -32,9 +33,7 @@ function Kycvendor() {
     const fetchUserKYCDetails = async () => {
       try {
         if (userType === "user") {
-          const response = await axios.get(
-            `http://localhost:5000/signup/getby/${userid}`
-          );
+          const response = await Api.get(`signup/getby/${userid}`);
           setUserKYCDetail(response.data);
           const fetchedData = response.data;
           reset(fetchedData);
@@ -93,8 +92,8 @@ function Kycvendor() {
     console.log("Details", Details);
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplications/${loanApplicationId}`,
+      const response = await Api.put(
+        `loanform/updateloanapplications/${loanApplicationId}`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");

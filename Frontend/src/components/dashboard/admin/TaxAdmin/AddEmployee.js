@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import Api from "../../../../Api";
 
 const { Option } = Select;
 
@@ -22,9 +23,9 @@ function CreateLead() {
   //   const userType = localStorage.getItem("userType");
   const category = watch("employeeCategory");
 
-//   const onSubmit = (data) => {
-//     console.log("Form Data:", data);
-//   };
+  //   const onSubmit = (data) => {
+  //     console.log("Form Data:", data);
+  //   };
   //   const [category, setCategory] = useState(""); // State for Employee Category
   //   const [subCategory, setSubCategory] = useState(""); // State for Sub-category
 
@@ -42,35 +43,38 @@ function CreateLead() {
     dateOfJoining: "",
   });
 
-  const empCreatedBy = localStorage.getItem("id")
+  const empCreatedBy = localStorage.getItem("id");
 
-const onSubmit = async (data) => {
-  const formData = {
-    empno: data.empno,
-    firstname: data.firstname,
-    lastname: data.lastname,
-    contactNumber: data.contactNumber,
-    email: data.email,
-    dateOfJoining: data.dateOfJoining,
-    manager: data.manager,
-    branch: data.branch,
-    userType: data.userType,
-    employeeCategory: data.employeeCategory,
-    subCategory: data.subCategory, 
-  };
+  const onSubmit = async (data) => {
+    const formData = {
+      empno: data.empno,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      contactNumber: data.contactNumber,
+      email: data.email,
+      dateOfJoining: data.dateOfJoining,
+      manager: data.manager,
+      branch: data.branch,
+      userType: data.userType,
+      employeeCategory: data.employeeCategory,
+      subCategory: data.subCategory,
+    };
 
-  try {
-    const response = await axios.post("http://localhost:5000/signup/register", {...formData, empCreatedBy});
+    try {
+      const response = await Api.post("signup/register", {
+        ...formData,
+        empCreatedBy,
+      });
 
-    
       toast.success("Employee added successfully!");
-      reset(); 
-    
-  } catch (error) {
-    console.error("Error submitting the form:", error);
-    toast.error("An error occurred while submitting the form. Please try again.");
-  }
-};
+      reset();
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      toast.error(
+        "An error occurred while submitting the form. Please try again."
+      );
+    }
+  };
 
   return (
     <div>
@@ -101,11 +105,7 @@ const onSubmit = async (data) => {
                   defaultValue="TaxEmployee"
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <Select
-                     {...field} 
-                     disabled
-                      className="inputcolumn_drp"
-                      >
+                    <Select {...field} disabled className="inputcolumn_drp">
                       <Option value="LoanEmployee">Loan Employee</Option>
                       <Option value="TaxEmployee">Tax Employee</Option>
                       <Option value="InsuranceEmployee">
@@ -133,14 +133,14 @@ const onSubmit = async (data) => {
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
-                     {...field}
+                      {...field}
                       className="inputcolumn_drp"
                       placeholder="Select Employee Category"
-                      onChange={(value) => {    
+                      onChange={(value) => {
                         field.onChange(value);
                         setValue("employeeCategory", value);
                       }}
-                      >
+                    >
                       <Option value="IncomeTax">Income Tax</Option>
                       <Option value="Tds&TcsServices">
                         {" "}

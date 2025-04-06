@@ -88,10 +88,7 @@ function LeadDetails({ collapsed }) {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/lead/updatelead/${record._id}`,
-        details
-      );
+      await Api.put(`lead/updatelead/${record._id}`, details);
       // toast.success("Form submitted successfully");
       toast.success("Remark added successfully!");
     } catch (error) {
@@ -107,9 +104,7 @@ function LeadDetails({ collapsed }) {
   const fetchLead = async () => {
     setLoading(true);
     try {
-      const response = await Api.get(
-        `http://localhost:5000/lead/getByleaddetails/${id}`
-      );
+      const response = await Api.get(`lead/getByleaddetails/${id}`);
       setFetchedData(response.data.data[0]);
       console.log("Fetched Lead Data:", response.data);
     } catch (error) {

@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
 import Footer from "../../Layout/Footer";
 import axios from "axios";
+import Api from "../../../Api";
 // import Api from "../../Api";
 
 function TaxFormKyc() {
@@ -29,9 +30,7 @@ function TaxFormKyc() {
   useEffect(() => {
     const fetchUserKYCDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
+        const response = await Api.get(`signup/getby/${userid}`);
         setUserKYCDetail(response.data);
         const fetchedData = response.data;
         reset(fetchedData);
@@ -89,8 +88,8 @@ function TaxFormKyc() {
     console.log("Details", Details);
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplications/${loanApplicationId}`,
+      const response = await Api.put(
+        `loanform/updateloanapplications/${loanApplicationId}`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");

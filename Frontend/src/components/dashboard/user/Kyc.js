@@ -5,6 +5,7 @@ import "./MyProfile.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import Api from "../../../Api";
 // import Api from "../../Api";
 
 function Kycvendor() {
@@ -27,9 +28,7 @@ function Kycvendor() {
   useEffect(() => {
     const fetchUserKYCDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
+        const response = await Api.get(`signup/getby/${userid}`);
         setUserKYCDetail(response.data);
         const fetchedData = response.data;
         reset(fetchedData);
@@ -83,10 +82,7 @@ function Kycvendor() {
     console.log("Details", Details);
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/signup/updateKYC/${userid}`,
-        Details
-      );
+      const response = await Api.put(`signup/updateKYC/${userid}`, Details);
       console.log(response.data.data, "Form submitted successfully");
       toast.success("Form submitted successfully");
     } catch (error) {

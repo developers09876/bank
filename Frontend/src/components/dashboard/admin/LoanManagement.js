@@ -27,7 +27,7 @@ const LoanManagement = ({ collapsed }) => {
 
   console.log("selectedRecord", selectedRecord);
   const [loan, setLoan] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAll();
@@ -35,12 +35,12 @@ const LoanManagement = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/loanform/getall`, {
+      const response = await fetch(`http://vilu.in:5000/loanform/getall`, {
         method: "GET",
         headers: { Authorization: localStorage.getItem("token") },
       });
       const loans = await response.json();
-      console.log('getAllloans', loans)
+      console.log("getAllloans", loans);
       setLoan(loans);
     } catch (error) {
       console.log(error);
@@ -51,10 +51,6 @@ const LoanManagement = ({ collapsed }) => {
     navigate(`/admin/loandetails/${record._id}`, { state: { record } });
   };
 
-
-
-
-  
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchText(searchTerm);
@@ -74,7 +70,6 @@ const LoanManagement = ({ collapsed }) => {
   const handleAddLoan = () => {
     navigate(`/admin/createloan`);
   };
-
 
   const columns = [
     {
@@ -148,32 +143,35 @@ const LoanManagement = ({ collapsed }) => {
       <div
         className={collapsed === true ? "main-content.open" : "main-content"}
       >
-         <Space style={{
-                  marginBottom: 16,
-                  display: "flex",
-                  justifyContent: "space-between",
-                }} className="filter-actions" >
-                <Input
-                  placeholder="Search"
-                  value={searchText}
-                  onChange={handleSearch}
-                  style={{ width: 200 }}
-                  prefix={<SearchOutlined />}
-                />
-                  <Button
-                            type="primary"
-                            onClick={handleAddLoan}
-                            style={{
-                              display: "inline",
-                              float: "right",
-                              marginRight: "100px",
-                              backgroundColor: "#00397f",
-                            }}
-                          >
-                            <FaPlus style={{ display: "inline", color: "white" }} />
-                            Add New
-                          </Button>
-              </Space>
+        <Space
+          style={{
+            marginBottom: 16,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+          className="filter-actions"
+        >
+          <Input
+            placeholder="Search"
+            value={searchText}
+            onChange={handleSearch}
+            style={{ width: 200 }}
+            prefix={<SearchOutlined />}
+          />
+          <Button
+            type="primary"
+            onClick={handleAddLoan}
+            style={{
+              display: "inline",
+              float: "right",
+              marginRight: "100px",
+              backgroundColor: "#00397f",
+            }}
+          >
+            <FaPlus style={{ display: "inline", color: "white" }} />
+            Add New
+          </Button>
+        </Space>
 
         <Table
           dataSource={getPaginatedData()}
@@ -193,8 +191,6 @@ const LoanManagement = ({ collapsed }) => {
           }}
           className="pagination-control"
         />
-
-       
       </div>
     </div>
   );

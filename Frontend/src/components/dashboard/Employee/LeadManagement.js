@@ -44,9 +44,7 @@ function LeadManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/lead/getById/${userId}`
-      );
+      const response = await Api.get(`lead/getById/${userId}`);
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
@@ -115,7 +113,7 @@ function LeadManagement() {
         );
       },
     },
-    
+
     {
       title: "Action",
       dataIndex: "action",

@@ -59,9 +59,7 @@ function TabsVendor() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
+        const response = await Api.get(`signup/getby/${userid}`);
         setUserDetail(response.data);
         console.log("getresponse", response.data);
         const fetchedData = response.data;
@@ -136,10 +134,7 @@ function TabsVendor() {
     console.log("Details", Details);
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/signup/update/${userid}`,
-        Details
-      );
+      const response = await Api.put(`signup/update/${userid}`, Details);
       console.log(response.data.data, "Form submitted successfully");
       toast.success("Form submitted successfully");
     } catch (error) {

@@ -10,15 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
 
 function Login() {
-
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
-    
     setShowPassword(!showPassword);
   };
 
@@ -26,7 +23,7 @@ function Login() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/admin/adminlogin", { email, password })
+      .post("http://vilu.in:5000/admin/adminlogin", { email, password })
       .then((response) => {
         console.log("response", response);
         if (response.data.message) {

@@ -52,9 +52,7 @@ function LoanTaskViewDetails() {
 
   const fetchUpdatedRecord = async () => {
     try {
-      const response = await Api.get(
-        `http://localhost:5000/loanform/getbyEmployeeid/${userId}`
-      );
+      const response = await Api.get(`loanform/getbyEmployeeid/${userId}`);
       console.log("responseget.data", response.data);
       const update = response.data;
       console.log("update", update);
@@ -74,7 +72,7 @@ function LoanTaskViewDetails() {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+        `loanform/updateloanapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -104,9 +102,7 @@ function LoanTaskViewDetails() {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${record.employeeId}`
-        );
+        const response = await axios.get(`signup/getby/${record.employeeId}`);
         console.log("response employee data", response);
         setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
       } catch (error) {
@@ -203,10 +199,7 @@ function LoanTaskViewDetails() {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/loanform/updateloanremarks/${record._id}`,
-        details
-      );
+      await Api.put(`loanform/updateloanremarks/${record._id}`, details);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);

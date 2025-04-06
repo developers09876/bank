@@ -8,24 +8,24 @@ import { FaPlus } from "react-icons/fa";
 import Api from "../../../Api";
 
 const InsuranceList = ({ collapsed }) => {
-   const [searchText, setSearchText] = useState("");
-   const [filteredData, setFilteredData] = useState([]);
-   const [currentPage, setCurrentPage] = useState(1);
-   const [pageSize, setPageSize] = useState(5);
-   const [insurance, setInsurance] = useState([]);
-   const [loading, setLoading] = useState(false);
-   const [data, setData] = useState([]);
-   const [isModalVisible, setIsModalVisible] = useState(false);
-   const [selectedRecord, setSelectedRecord] = useState(null);
- 
-   const navigate = useNavigate();
-   const userid = localStorage.getItem("id");
+  const [searchText, setSearchText] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [insurance, setInsurance] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
+  const navigate = useNavigate();
+  const userid = localStorage.getItem("id");
 
   const fetchLeads = async () => {
     setLoading(true);
     try {
       const response = await Api.get(
-        `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
+        `insuranceManagement/getByIdInsuranceManagement/${userid}`
       );
       setInsurance(response.data);
       setFilteredData(response.data);
@@ -163,7 +163,7 @@ const InsuranceList = ({ collapsed }) => {
             placeholder="Search"
             value={searchText}
             onChange={handleSearch}
-            style={{ width: 200 ,marginLeft:"40px "}}
+            style={{ width: 200, marginLeft: "40px " }}
             prefix={<SearchOutlined />}
           />
           {/* <Button

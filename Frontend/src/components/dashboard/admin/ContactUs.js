@@ -24,9 +24,7 @@ function ContactUs() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:5000/contactus/getallcontactus"
-      );
+      const response = await Api.get("contactus/getallcontactus");
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
@@ -39,9 +37,7 @@ function ContactUs() {
   useEffect(() => {
     const fetchContactUsData = async () => {
       try {
-        const response = await Api.get(
-          `http://localhost:5000/contactus/getallcontactus`
-        );
+        const response = await Api.get(`contactus/getallcontactus`);
         console.log("Response:", response);
         setContactUsData(response.data.data);
       } catch (error) {

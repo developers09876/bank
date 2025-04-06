@@ -22,6 +22,7 @@ import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
 import OtpInput from "react-otp-input";
 import { MdVerified } from "react-icons/md";
+import Api from "../../Api";
 
 const ReferalLogin = () => {
   const [email, setEmail] = useState("");
@@ -72,12 +73,9 @@ const ReferalLogin = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/nodemailer/forgetpassword",
-        {
-          email,
-        }
-      );
+      const response = await Api.post("nodemailer/forgetpassword", {
+        email,
+      });
 
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
@@ -113,10 +111,10 @@ const ReferalLogin = () => {
 
   const onSubmit1 = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/nodemailer/checkverification",
-        { email, code: otp }
-      );
+      const response = await Api.post("nodemailer/checkverification", {
+        email,
+        code: otp,
+      });
 
       const { token, checkEmail } = response.data.data;
 
@@ -221,7 +219,7 @@ const ReferalLogin = () => {
                     error={!!errors.email}
                     helperText={errors.email}
                   /> */}
-                   <TextField
+                  <TextField
                     label="Email"
                     variant="outlined"
                     fullWidth
@@ -236,9 +234,12 @@ const ReferalLogin = () => {
                     onBlur={() => {
                       const emailRegex =
                         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                  
+
                       if (!emailRegex.test(email)) {
-                        setErrors({ ...errors, email: "Enter a valid email address" });
+                        setErrors({
+                          ...errors,
+                          email: "Enter a valid email address",
+                        });
                       } else {
                         setErrors({ ...errors, email: "" }); // Clear error if valid
                       }
@@ -246,8 +247,7 @@ const ReferalLogin = () => {
                     error={!!errors.email}
                     helperText={errors.email}
                   />
-                  
-                  
+
                   <Divider>Or</Divider>
 
                   <TextField

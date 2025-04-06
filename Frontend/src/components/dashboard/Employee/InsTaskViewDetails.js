@@ -11,6 +11,7 @@ import {
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
+import Api from "../../../Api";
 
 const InsuranceTaskViewDetails = ({ collapsed }) => {
   const {
@@ -77,8 +78,8 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/insuranceManagement/updateInsuranceremarks/${record._id}`,
+      await Api.put(
+        `insuranceManagement/updateInsuranceremarks/${record._id}`,
         details
       );
       toast.success("Form submitted successfully");
@@ -91,9 +92,7 @@ const InsuranceTaskViewDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${record.employeeId}`
-        );
+        const response = await Api.get(`signup/getby/${record.employeeId}`);
         console.log("response employee data", response);
         setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
       } catch (error) {

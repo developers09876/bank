@@ -4,6 +4,7 @@ import { Row, Col, Button } from "antd";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Api from "../../../../Api";
 
 function LeadTaskDetails() {
   const location = useLocation();
@@ -81,10 +82,7 @@ function LeadTaskDetails() {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/lead/updatelead/${record._id}`,
-        details
-      );
+      await Api.put(`lead/updatelead/${record._id}`, details);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);

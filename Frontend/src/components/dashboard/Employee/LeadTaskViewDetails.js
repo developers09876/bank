@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import "../user/LoanDetails.css";
+import Api from "../../../Api";
 
 function LeadTaskDetails({ collapsed }) {
   const location = useLocation();
   const navigate = useNavigate();
   //   const { record } = location.state || {};
   const [remarksFields, setRemarksFields] = useState([]);
-  console.log('remarksFields', remarksFields)
+  console.log("remarksFields", remarksFields);
 
   const { state } = useLocation();
   const record = state?.record;
@@ -30,7 +31,15 @@ function LeadTaskDetails({ collapsed }) {
     if (details) {
       const initialRemarks = details.addremarks?.length
         ? details.addremarks.map((field) => ({ ...field, prefilled: true }))
-        : [{ date: "", remarks: "", status: "", notiFicatioinStauts: "" , prefilled: false }];
+        : [
+            {
+              date: "",
+              remarks: "",
+              status: "",
+              notiFicatioinStauts: "",
+              prefilled: false,
+            },
+          ];
 
       setRemarksFields(initialRemarks);
 
@@ -38,7 +47,7 @@ function LeadTaskDetails({ collapsed }) {
         acc[`date_${index}`] = field.date;
         acc[`remarks_${index}`] = field.remarks;
         acc[`status_${index}`] = field.status;
-      acc[`notiFicatioinStauts_${index}`] = field.notiFicatioinStauts;
+        acc[`notiFicatioinStauts_${index}`] = field.notiFicatioinStauts;
 
         return acc;
       }, {});
@@ -50,7 +59,13 @@ function LeadTaskDetails({ collapsed }) {
   const addRemarkField = () => {
     setRemarksFields([
       ...remarksFields,
-      { date: "", remarks: "", status: "", notiFicatioinStauts: "" , prefilled: false },
+      {
+        date: "",
+        remarks: "",
+        status: "",
+        notiFicatioinStauts: "",
+        prefilled: false,
+      },
     ]);
   };
 
@@ -73,9 +88,7 @@ function LeadTaskDetails({ collapsed }) {
   }, []);
   const getlead = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/lead/getByLeadId/${record._id}`
-      );
+      const response = await Api.get(`lead/getByLeadId/${record._id}`);
       setDetails(response.data.data[0]);
     } catch (error) {
       console.error("Error:", error.message);
@@ -83,7 +96,7 @@ function LeadTaskDetails({ collapsed }) {
   };
   const handleApprove = async () => {
     try {
-      await axios.put(`http://localhost:5000/lead/updatelead/${record._id}`, {
+      await Api.put(`lead/updatelead/${record._id}`, {
         ...record,
         isApproved: true,
       });
@@ -102,9 +115,7 @@ function LeadTaskDetails({ collapsed }) {
 
   const deleteRemark = async (remarkId) => {
     try {
-      await axios.delete(
-        `http://localhost:5000/lead/delete/${record._id}/remark/${remarkId}`
-      );
+      await Api.delete(`lead/delete/${record._id}/remark/${remarkId}`);
       setRemarksFields(
         remarksFields.filter((remark) => remark._id !== remarkId)
       );
@@ -121,16 +132,15 @@ function LeadTaskDetails({ collapsed }) {
         date: data[`date_${index}`],
         remarks: data[`remarks_${index}`],
         status: data[`status_${index}`],
-        notiFicatioinStauts: data[`notiFicatioinStauts_${index}`], 
+        notiFicatioinStauts: data[`notiFicatioinStauts_${index}`],
       };
-  
+
       if (index === remarksFields.length - 1) {
-        updatedRemark.notiFicatioinStauts = "false"; 
+        updatedRemark.notiFicatioinStauts = "false";
       }
-  
+
       return updatedRemark;
     });
-  
 
     const details = {
       firstname: record.firstname,
@@ -147,10 +157,7 @@ function LeadTaskDetails({ collapsed }) {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/lead/updatelead/${record._id}`,
-        details
-      );
+      await Api.put(`lead/updatelead/${record._id}`, details);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);

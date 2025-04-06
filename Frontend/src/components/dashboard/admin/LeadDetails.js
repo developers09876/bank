@@ -102,9 +102,7 @@ function LeadDetails({ collapsed }) {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -184,7 +182,7 @@ function LeadDetails({ collapsed }) {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
+          `signup/getbyUserType/${employeeType}`
         );
 
         // Extract unique employeeCategory values (case-insensitive)
@@ -296,7 +294,7 @@ function LeadDetails({ collapsed }) {
 
     try {
       const response = await Api.put(
-        `http://localhost:5000/lead/updateleadassign/${record._id}`,
+        `lead/updateleadassign/${record._id}`,
         updateDetails
       );
       toast.success("Task Assigned successfully");

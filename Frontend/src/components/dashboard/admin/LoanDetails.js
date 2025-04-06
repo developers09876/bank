@@ -93,9 +93,7 @@ const LoanDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         setEmployeeList(response.data);
         console.log("responseemployee", response.data);
       } catch (error) {
@@ -116,9 +114,7 @@ const LoanDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -247,35 +243,33 @@ const LoanDetails = ({ collapsed }) => {
     }
   }, [watch("district")]);
   const getbyLeadId = async () => {
-    await Api.get(`http://localhost:5000/loanform/getby/${record._id}`).then(
-      (res) => {
-        const data = res.data;
-        setAssignValue(data);
-        reset({
-          employeeType: data?.employeeType || "LoanEmployee",
-          employeeId: data?.employeeId || "",
-          employeeCategory: data?.employeeCategory || "",
-          startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-          endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-          description: data?.description || "",
-          Branch: data?.Branch || "",
-          state: data?.statename || "",
-          district: data?.districtname || "",
-          report_Manager: data?.report_Manager || "",
-          report_ManagerName: data?.report_ManagerName || "",
-          sale_Manager: data?.sale_Manager || "",
-          sale_ManagerName: data.sale_ManagerName || "",
-        });
-        setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
-      }
-    );
+    await Api.get(`loanform/getby/${record._id}`).then((res) => {
+      const data = res.data;
+      setAssignValue(data);
+      reset({
+        employeeType: data?.employeeType || "LoanEmployee",
+        employeeId: data?.employeeId || "",
+        employeeCategory: data?.employeeCategory || "",
+        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+        description: data?.description || "",
+        Branch: data?.Branch || "",
+        state: data?.statename || "",
+        district: data?.districtname || "",
+        report_Manager: data?.report_Manager || "",
+        report_ManagerName: data?.report_ManagerName || "",
+        sale_Manager: data?.sale_Manager || "",
+        sale_ManagerName: data.sale_ManagerName || "",
+      });
+      setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
+    });
   };
 
   const updateStatus = async (id, action, reason = "") => {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+        `loanform/updateloanapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -344,9 +338,7 @@ const LoanDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${record.employeeId}`
-        );
+        const response = await Api.get(`signup/getby/${record.employeeId}`);
         console.log("response employee data", response);
         setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
       } catch (error) {
@@ -379,7 +371,7 @@ const LoanDetails = ({ collapsed }) => {
 
     try {
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloan/${record._id}`,
+        `loanform/updateloan/${record._id}`,
         updateDetails
       );
       toast.success("Task Assigned successfully");

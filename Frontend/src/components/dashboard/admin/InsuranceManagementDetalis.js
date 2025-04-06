@@ -96,9 +96,7 @@ function InsuranceManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -241,39 +239,37 @@ function InsuranceManagementDetails({ collapsed }) {
     }
   }, [watch("district")]);
   const getbyLeadId = async () => {
-    await Api.get(
-      `http://localhost:5000/insuranceManagement/getByInsurance/${record?._id}`
-    ).then((res) => {
-      const data = res.data.data[0];
-      console.log("lead insu data", data);
-      setAssignValue(data);
-      reset({
-        employeeType: data?.employeeType || "InsuranceEmployee",
-        employeeId: data?.employeeId || "",
-        loanType: data?.loanType || "",
-        startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-        endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-        description: data?.description || "",
-        Branch: data?.Branch || "",
-        state: data?.state || "",
-        district: data?.district || "",
-        employeeCategory: data?.employeeCategory || "",
-        report_Manager: data?.report_Manager || "",
-        report_ManagerName: data?.report_ManagerName || "",
-        sale_Manager: data?.sale_Manager || "",
-        sale_ManagerName: data?.sale_ManagerName || "",
-      });
-      setRecord(data);
+    await Api.get(`insuranceManagement/getByInsurance/${record?._id}`).then(
+      (res) => {
+        const data = res.data.data[0];
+        console.log("lead insu data", data);
+        setAssignValue(data);
+        reset({
+          employeeType: data?.employeeType || "InsuranceEmployee",
+          employeeId: data?.employeeId || "",
+          loanType: data?.loanType || "",
+          startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+          endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+          description: data?.description || "",
+          Branch: data?.Branch || "",
+          state: data?.state || "",
+          district: data?.district || "",
+          employeeCategory: data?.employeeCategory || "",
+          report_Manager: data?.report_Manager || "",
+          report_ManagerName: data?.report_ManagerName || "",
+          sale_Manager: data?.sale_Manager || "",
+          sale_ManagerName: data?.sale_ManagerName || "",
+        });
+        setRecord(data);
 
-      setSelectedEmployeeType(data?.employeeType || "InsuranceEmployee");
-    });
+        setSelectedEmployeeType(data?.employeeType || "InsuranceEmployee");
+      }
+    );
   };
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("InsuranceEmployee")
         );
@@ -291,9 +287,7 @@ function InsuranceManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${record.employeeId}`
-        );
+        const response = await axios.get(`signup/getby/${record.employeeId}`);
         console.log("response employee data", response);
         setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
       } catch (error) {
@@ -340,7 +334,7 @@ function InsuranceManagementDetails({ collapsed }) {
 
     try {
       await Api.put(
-        `http://localhost:5000/insuranceManagement/updateInsuranceManagement/${record._id}`,
+        `insuranceManagement/updateInsuranceManagement/${record._id}`,
         details
       );
       toast.success("Task Assigned successfully");
@@ -357,7 +351,7 @@ function InsuranceManagementDetails({ collapsed }) {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/insuranceManagement/updateInsapplicationsStaus/${id}`,
+        `insuranceManagement/updateInsapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);

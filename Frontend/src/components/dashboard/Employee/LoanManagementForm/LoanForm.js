@@ -124,8 +124,8 @@ function LoanForm() {
     };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`,
+      const response = await Api.post(
+        `loanform/createloanapplications`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");

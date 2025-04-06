@@ -14,6 +14,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
 import { useForm } from "react-hook-form";
+import Api from "../../Api";
 
 function Carrier() {
   const [showForm, setShowForm] = useState(false);
@@ -32,7 +33,7 @@ function Carrier() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/job/getall");
+        const response = await Api.get("job/getall");
         setJobListings(response?.data);
       } catch (error) {
         console.error("Error fetching job listings:", error);
@@ -97,10 +98,7 @@ function Carrier() {
       }
       data.jobTitle = selectedJob?.jobTitle;
 
-      const response = await axios.post(
-        "http://localhost:5000/jobrequest/createjobrequest",
-        details
-      );
+      const response = await Api.post("jobrequest/createjobrequest", details);
 
       if (response.status === 201) {
         toast.success("Job Applied successfully");
@@ -260,15 +258,15 @@ function Carrier() {
         >
           Current Job Openings
         </h3>
-        <Row> 
+        <Row>
           {jobListings.map((job, index) => (
-            <Col key={index} lg={12} className="px-3" style={{ width: "100%"}}>
+            <Col key={index} lg={12} className="px-3" style={{ width: "100%" }}>
               <Card className=" jobcards">
                 <h5>
                   <strong>{job.jobTitle}</strong>
                 </h5>
                 <b>{job.company}</b>
-                <p  className="job-role"style={{ paddingTop: "5px" }}>
+                <p className="job-role" style={{ paddingTop: "5px" }}>
                   <ImLocation style={{ display: "inline", color: "#1a2a41" }} />
                   <span>{job.location}</span>
                 </p>

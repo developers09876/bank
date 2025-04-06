@@ -100,7 +100,7 @@
 //               dataSource={employees}
 //               rowKey="_id"
 //               pagination={{ pageSize: 5 }}
-//               scroll={{ x: "max-content" }} 
+//               scroll={{ x: "max-content" }}
 //             />
 //           </div>
 //         </div>
@@ -115,38 +115,37 @@ import { Table, Input, Space, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined, EyeOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
+import Api from "../../../Api";
 
 const LoanList = ({ collapsed }) => {
-    const [searchText, setSearchText] = useState("");
-    const [filteredData, setFilteredData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedRecord, setSelectedRecord] = useState(null);
-  
-    const navigate = useNavigate();
-  
-    console.log("selectedRecord", selectedRecord);
-    const [loan, setLoan] = useState([]);
-    const userId = localStorage.getItem("id");
-  
-    useEffect(() => {
-      getAll();
-    }, [selectedRecord]);
-  
-    const getAll = async () => {
-      try {
-        console.log("userId", userId);
-        const response = await axios.get(
-          `http://localhost:5000/loanform/getbyid/${userId}`
-        );
-        const loans = response.data;
-        setLoan(loans);
-        console.log("responseget", loans);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const [searchText, setSearchText] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
+  const navigate = useNavigate();
+
+  console.log("selectedRecord", selectedRecord);
+  const [loan, setLoan] = useState([]);
+  const userId = localStorage.getItem("id");
+
+  useEffect(() => {
+    getAll();
+  }, [selectedRecord]);
+
+  const getAll = async () => {
+    try {
+      console.log("userId", userId);
+      const response = await Api.get(`loanform/getbyid/${userId}`);
+      const loans = response.data;
+      setLoan(loans);
+      console.log("responseget", loans);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleViewDetails = (record) => {
     navigate(`/employee/loandetails/${record._id}`, { state: { record } });
@@ -189,7 +188,8 @@ const LoanList = ({ collapsed }) => {
     {
       title: "Customer Name",
       key: "fullName",
-      render: (_, record) => `${record.firstname || ""} ${record.lastname || ""}`,
+      render: (_, record) =>
+        `${record.firstname || ""} ${record.lastname || ""}`,
     },
     {
       title: "Phone Number",
@@ -202,8 +202,8 @@ const LoanList = ({ collapsed }) => {
       key: "status",
       render: (status) => {
         const statusColors = {
-          "1": { text: "Approved", color: "green" },
-          "2": { text: "Rejected", color: "red" },
+          1: { text: "Approved", color: "green" },
+          2: { text: "Rejected", color: "red" },
         };
         return (
           <span style={{ color: statusColors[status]?.color || "orange" }}>
@@ -218,7 +218,12 @@ const LoanList = ({ collapsed }) => {
       render: (_, record) => (
         <>
           <EyeOutlined
-            style={{ fontSize: "18px", color: "#4096ff", cursor: "pointer", marginRight: "15px" }}
+            style={{
+              fontSize: "18px",
+              color: "#4096ff",
+              cursor: "pointer",
+              marginRight: "15px",
+            }}
             onClick={() => handleViewDetails(record)}
           />
           <EditOutlined
@@ -232,7 +237,15 @@ const LoanList = ({ collapsed }) => {
 
   return (
     <div className={collapsed ? "main-content open" : "main-content"}>
-      <h4 style={{ textAlign: "center", fontWeight: "bold", marginBottom: "20px" }}>Loan List</h4>
+      <h4
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: "20px",
+        }}
+      >
+        Loan List
+      </h4>
       <Space
         style={{
           marginBottom: 16,

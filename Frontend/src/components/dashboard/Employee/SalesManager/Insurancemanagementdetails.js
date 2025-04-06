@@ -95,9 +95,7 @@ function InsuranceManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -242,9 +240,7 @@ function InsuranceManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${record.employeeId}`
-        );
+        const response = await Api.get(`signup/getby/${record.employeeId}`);
         console.log("response employee data", response);
         setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
       } catch (error) {
@@ -289,7 +285,7 @@ function InsuranceManagementDetails({ collapsed }) {
 
     try {
       await Api.put(
-        `http://localhost:5000/insuranceManagement/updateInsuranceManagement/${record._id}`,
+        `insuranceManagement/updateInsuranceManagement/${record._id}`,
         details
       );
       toast.success("Task Assigned successfully");
@@ -306,7 +302,7 @@ function InsuranceManagementDetails({ collapsed }) {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/insuranceManagement/updateInsapplicationsStaus/${id}`,
+        `insuranceManagement/updateInsapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -651,8 +647,6 @@ function InsuranceManagementDetails({ collapsed }) {
               </Card>
             </Col>
           </Row>
-
-          
 
           {/* <Card className="loandetail-custom-card" title="Task Details"> */}
           {/* <Descriptions column={{ xl: 2, lg: 2, xs: 1, md: 1, sm: 1 }}>

@@ -7,8 +7,8 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Api from "../../../../../Api";
 function Kycvendor() {
-     const { state } = useLocation();
-      const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
   const [userKYCDetail, setUserKYCDetail] = useState();
   const {
     register,
@@ -24,7 +24,6 @@ function Kycvendor() {
   const id = localStorage.getItem("vendor_id");
   const loanApplicationId = localStorage.getItem("loanApplicationId");
 
-
   console.log("userKYCDetail", userKYCDetail);
 
   useEffect(() => {
@@ -32,17 +31,17 @@ function Kycvendor() {
       try {
         const response = await Api.get(`/loanform/getby/${record._id}`);
         const OneApplication = response.data;
-        console.log('Applicationresponse', OneApplication);
-        
+        console.log("Applicationresponse", OneApplication);
+
         if (OneApplication) {
-          reset(OneApplication); 
+          reset(OneApplication);
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
-  }, [ record._id, reset]);
+  }, [record._id, reset]);
 
   const handleFormSubmit = async (data) => {
     const uploadFile = async (file) => {
@@ -68,7 +67,7 @@ function Kycvendor() {
     const panUploadUrl = data.panUpload?.[0]
       ? await uploadFile(data.panUpload[0])
       : null;
-      const AdharUploadUrl = data.AdharUpload?.[0]
+    const AdharUploadUrl = data.AdharUpload?.[0]
       ? await uploadFile(data.AdharUpload[0])
       : null;
     const voterIdUploadUrl = data.voterIdUpload?.[0]
@@ -77,7 +76,7 @@ function Kycvendor() {
 
     const Details = {
       panCardNumber: data.panCardNumber,
-      aadhaarNumber:data.aadhaarNumber,
+      aadhaarNumber: data.aadhaarNumber,
       GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
@@ -90,8 +89,8 @@ function Kycvendor() {
     console.log("Details", Details);
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplications/${loanApplicationId}`,
+      const response = await Api.put(
+        `loanform/updateloanapplications/${loanApplicationId}`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");
@@ -229,10 +228,9 @@ function Kycvendor() {
                   }}
                 />
 
-                {!userKYCDetail?.panOrAdharUpload &&
-                  errors.panUpload && (
-                    <p className="text-danger">Pan is required</p>
-                  )}
+                {!userKYCDetail?.panOrAdharUpload && errors.panUpload && (
+                  <p className="text-danger">Pan is required</p>
+                )}
               </Col>
 
               <Col sm={10} md={4} lg={4}>

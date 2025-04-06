@@ -96,9 +96,7 @@ function TaskManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchEmployeeList = async () => {
       try {
-        const response = await Api.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         setEmployeeList(response.data);
         console.log("responseemployee", response.data);
       } catch (error) {
@@ -118,9 +116,7 @@ function TaskManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data?.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -243,9 +239,7 @@ function TaskManagementDetails({ collapsed }) {
     const fetchEmployeeList = async () => {
       const employeeid = record.employeeId;
       try {
-        const response = await Api.get(
-          `http://localhost:5000/signup/getby/${employeeid}`
-        );
+        const response = await Api.get(`signup/getby/${employeeid}`);
         if (
           response.data &&
           response.data.firstname &&
@@ -279,9 +273,7 @@ function TaskManagementDetails({ collapsed }) {
   }, [watch("district")]);
 
   const getbyLeadId = async () => {
-    await Api.get(
-      `http://localhost:5000/taxManagement/getByTaxId/${record?._id}`
-    ).then((res) => {
+    await Api.get(`taxManagement/getByTaxId/${record?._id}`).then((res) => {
       const data = res.data.data[0];
       setAssignValue(data);
       reset({
@@ -339,10 +331,7 @@ function TaskManagementDetails({ collapsed }) {
     };
 
     try {
-      await Api.put(
-        `http://localhost:5000/taxManagement/updateTaxManagement/${record._id}`,
-        details
-      );
+      await Api.put(`taxManagement/updateTaxManagement/${record._id}`, details);
       toast.success("Task Assigned successfully");
     } catch (error) {
       console.error("Error:", error);
@@ -357,7 +346,7 @@ function TaskManagementDetails({ collapsed }) {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/taxManagement/updateTaxapplicationsStaus/${id}`,
+        `taxManagement/updateTaxapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);

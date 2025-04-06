@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from "antd";
 import { useParams } from "react-router-dom";
+import Api from "../../../../Api";
 
 const ClientStatisticsTable = () => {
-  const { status, category} = useParams();
+  const { status, category } = useParams();
   const [loans, setLoans] = useState([]);
   const [insurances, setInsurances] = useState([]);
   const [taxes, setTaxes] = useState([]);
@@ -13,14 +14,11 @@ const ClientStatisticsTable = () => {
   console.log("URL Params - Status:", status);
   console.log("URL Params - Category:", category);
 
-
   useEffect(() => {
     const fetchLoans = async () => {
       try {
         if (category === "loan") {
-          const response = await axios.get(
-           ` http://localhost:5000/loanform/getbyEmployeeid/${userId}`
-          );
+          const response = await Api.get(` loanform/getbyEmployeeid/${userId}`);
           let filteredLoans = response.data;
           console.log("API Response (All Loans):", response.data);
 
@@ -46,26 +44,30 @@ const ClientStatisticsTable = () => {
     fetchLoans();
   }, [status, category, userId]);
 
-
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
         if (category === "insurance") {
-          const response = await axios.get(
-            `http://localhost:5000/insuranceManagement/getbyEmployeeid/${userId}`
+          const response = await Api.get(
+            `insuranceManagement/getbyEmployeeid/${userId}`
           );
           let filteredInsurances = response.data;
           console.log("API Response (Insurances):", response.data);
-  
-          
+
           if (status === "completed") {
-            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "1");
+            filteredInsurances = filteredInsurances.filter(
+              (insurance) => insurance.status === "1"
+            );
           } else if (status === "rejected") {
-            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "2");
+            filteredInsurances = filteredInsurances.filter(
+              (insurance) => insurance.status === "2"
+            );
           } else if (status === "pending") {
-            filteredInsurances = filteredInsurances.filter((insurance) => insurance.status === "Pending");
+            filteredInsurances = filteredInsurances.filter(
+              (insurance) => insurance.status === "Pending"
+            );
           }
-  
+
           console.log("Filtered Insurances:", filteredInsurances);
           setInsurances(filteredInsurances);
         }
@@ -73,29 +75,30 @@ const ClientStatisticsTable = () => {
         console.error("Error fetching insurances:", error);
       }
     };
-  
+
     fetchInsurances();
   }, [status, category, userId]);
-  
+
   useEffect(() => {
     const fetchTaxes = async () => {
       try {
         if (category === "tax") {
-          const response = await axios.get(
-            `http://localhost:5000/taxManagement/getbyEmployeeid/${userId}`
+          const response = await Api.get(
+            `taxManagement/getbyEmployeeid/${userId}`
           );
           let filteredTaxes = response.data;
           console.log("API Response (Taxes):", response.data);
-  
-          
+
           if (status === "completed") {
             filteredTaxes = filteredTaxes.filter((tax) => tax.status === "1");
           } else if (status === "rejected") {
             filteredTaxes = filteredTaxes.filter((tax) => tax.status === "2");
           } else if (status === "pending") {
-            filteredTaxes = filteredTaxes.filter((tax) => tax.status === "Pending");
+            filteredTaxes = filteredTaxes.filter(
+              (tax) => tax.status === "Pending"
+            );
           }
-  
+
           console.log("Filtered Taxes:", filteredTaxes);
           setTaxes(filteredTaxes);
         }
@@ -103,7 +106,7 @@ const ClientStatisticsTable = () => {
         console.error("Error fetching taxes:", error);
       }
     };
-  
+
     fetchTaxes();
   }, [status, category, userId]);
 

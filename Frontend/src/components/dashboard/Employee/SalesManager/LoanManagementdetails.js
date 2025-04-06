@@ -19,7 +19,7 @@ import {
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
-import "../SalesManager/Details.css"
+import "../SalesManager/Details.css";
 import { Col, Row } from "react-bootstrap";
 import { BorderRight } from "@mui/icons-material";
 import Api from "../../../../Api";
@@ -47,17 +47,17 @@ const LoanManagementDetails = ({ collapsed }) => {
     useState("LoanEmployee");
   const [isEditing, setIsEditing] = useState(false);
   const [assignValue, setAssignValue] = useState([]);
-   const [countryList, setCountryList] = useState([]);
-      const [stateList, setStateList] = useState([]);
-      const [districtList, setDistrictList] = useState([]);
-      const [cityList, setCityList] = useState([]);
-      const [reportingManagerList, setReportingManagerList] = useState();
-      const [salesManagerList, setSalesManagerList] = useState();
-      const [districtName, setDistrictName] = useState("");
-      const [BranchName, setBranchName] = useState("");
-          const [selectedServices, setSelectedServices] = useState([]);
-        const [filteredManagers, setFilteredManagers] = useState([]);
-        const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [districtList, setDistrictList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  const [reportingManagerList, setReportingManagerList] = useState();
+  const [salesManagerList, setSalesManagerList] = useState();
+  const [districtName, setDistrictName] = useState("");
+  const [BranchName, setBranchName] = useState("");
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [filteredManagers, setFilteredManagers] = useState([]);
+  const [filteredSalesManagers, setFilteredSalesManagers] = useState([]);
   console.log("assignValue", assignValue);
   const {
     control,
@@ -103,18 +103,17 @@ const LoanManagementDetails = ({ collapsed }) => {
     fetchEmployeeList();
   }, [employeeType]);
   const filteredEmployeeList = employeeList.filter((employee) => {
-    const matchesBranch = employee.Branch === BranchName;  
-    const matchesEmployeeType = employee.services.includes(selectedEmployeeType);  
-  
+    const matchesBranch = employee.Branch === BranchName;
+    const matchesEmployeeType =
+      employee.services.includes(selectedEmployeeType);
+
     return matchesBranch && matchesEmployeeType;
   });
 
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -197,36 +196,36 @@ const LoanManagementDetails = ({ collapsed }) => {
   const handleModalCancel = () => {
     setSelectedRecord(null);
   };
-//   useEffect(() => {
-//     getbyLeadId();
-//   }, []);
+  //   useEffect(() => {
+  //     getbyLeadId();
+  //   }, []);
 
-//   const getbyLeadId = async () => {
-//     await Api.get(`/loanform/getby/${record._id}`).then((res) => {
-//       const data = res.data;
-//       setAssignValue(data);
-//       reset({
-//         employeeType: data?.employeeType || "LoanEmployee",
-//         employeeId: data?.employeeId || "",
-//         employeeCategory: data?.employeeCategory || "",
-//         startDate: data?.startDate ? data.startDate.split("T")[0] : "",
-//         endDate: data?.endDate ? data.endDate.split("T")[0] : "",
-//         description: data?.description || "",
-//         Branch: data?.Branch || "",
-//         state: data?.statename || "",
-//         district: data?.districtname || "",
-//         report_Manager: data?.report_Manager || "",
-//         sale_Manager: data?.sale_Manager || "",
-//       });
-//       setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
-//     });
-//   };
+  //   const getbyLeadId = async () => {
+  //     await Api.get(`/loanform/getby/${record._id}`).then((res) => {
+  //       const data = res.data;
+  //       setAssignValue(data);
+  //       reset({
+  //         employeeType: data?.employeeType || "LoanEmployee",
+  //         employeeId: data?.employeeId || "",
+  //         employeeCategory: data?.employeeCategory || "",
+  //         startDate: data?.startDate ? data.startDate.split("T")[0] : "",
+  //         endDate: data?.endDate ? data.endDate.split("T")[0] : "",
+  //         description: data?.description || "",
+  //         Branch: data?.Branch || "",
+  //         state: data?.statename || "",
+  //         district: data?.districtname || "",
+  //         report_Manager: data?.report_Manager || "",
+  //         sale_Manager: data?.sale_Manager || "",
+  //       });
+  //       setSelectedEmployeeType(data?.employeeType || "LoanEmployee");
+  //     });
+  //   };
 
   const updateStatus = async (id, action, reason = "") => {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+        `loanform/updateloanapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -295,9 +294,7 @@ const LoanManagementDetails = ({ collapsed }) => {
   useEffect(() => {
     const fetchEmployeeDetail = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${record.employeeId}`
-        );
+        const response = await Api.get(`signup/getby/${record.employeeId}`);
         console.log("response employee data", response);
         setEmployeeName(`${response.data.firstname} ${response.data.lastname}`);
       } catch (error) {
@@ -323,12 +320,12 @@ const LoanManagementDetails = ({ collapsed }) => {
       districtname: data.district,
       Branch: data.Branch,
       report_Manager: data.report_Manager,
-      sale_Manager:data.sale_Manager,
+      sale_Manager: data.sale_Manager,
     };
 
     try {
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloan/${record._id}`,
+        `loanform/updateloan/${record._id}`,
         updateDetails
       );
       toast.success("Task Assigned successfully");
@@ -928,7 +925,6 @@ const LoanManagementDetails = ({ collapsed }) => {
                 </Card>
               </Col>
             </Row>
-           
 
             <Row className="px-4 py-4" style={{ justifySelf: "center" }}>
               <Space>

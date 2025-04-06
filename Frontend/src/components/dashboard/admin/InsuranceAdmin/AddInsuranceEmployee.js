@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "../InsuranceAdmin/InsuranceSidebar";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
+import Api from "../../../../Api";
 
 const AddInsuranceEmployee = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -21,7 +22,7 @@ const AddInsuranceEmployee = ({ setAuth }) => {
     employeeCategory: "",
   });
 
-  const empCreatedBy = localStorage.getItem("id")
+  const empCreatedBy = localStorage.getItem("id");
 
   const {
     empno,
@@ -33,7 +34,7 @@ const AddInsuranceEmployee = ({ setAuth }) => {
     Manager,
     Branch,
     dateOfJoining,
-    employeeCategory, 
+    employeeCategory,
   } = inputs;
 
   const onChange = (e) => {
@@ -42,12 +43,11 @@ const AddInsuranceEmployee = ({ setAuth }) => {
 
   const navigate = useNavigate();
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await axios.post("http://localhost:5000/signup/register", {
+      const response = await Api.post("signup/register", {
         empno,
         userType,
         empCreatedBy,
@@ -60,13 +60,14 @@ const AddInsuranceEmployee = ({ setAuth }) => {
         dateOfJoining,
         employeeCategory,
       });
-  
-        toast.success("Employee added successfully!");
-        // reset(); 
-      
+
+      toast.success("Employee added successfully!");
+      // reset();
     } catch (error) {
       console.error("Error submitting the form:", error);
-      toast.error("An error occurred while submitting the form. Please try again.");
+      toast.error(
+        "An error occurred while submitting the form. Please try again."
+      );
     }
   };
 
@@ -133,9 +134,7 @@ const AddInsuranceEmployee = ({ setAuth }) => {
                     disabled
                     required
                   >
-                    <option value="" >
-                      Select Services
-                    </option>
+                    <option value="">Select Services</option>
                     <option value="LoanEmployee">Loan Employee</option>
                     <option value="TaxEmployee">Tax Employee</option>
                     <option value="InsuranceEmployee">
@@ -153,13 +152,13 @@ const AddInsuranceEmployee = ({ setAuth }) => {
                     onChange={onChange}
                     required
                   >
-                    <option value="">
-                      Select Insurance Type
-                    </option>
+                    <option value="">Select Insurance Type</option>
                     <option value="Health Insurance">Health Insurance</option>
                     <option value="Life Insurance">Life Insurance</option>
                     <option value="Vehicle Insurance">Vehicle Insurance</option>
-                    <option value="Property Insurance">Property Insurance</option>
+                    <option value="Property Insurance">
+                      Property Insurance
+                    </option>
                   </select>
                 </Col>
                 <Col lg={6} md={6}>

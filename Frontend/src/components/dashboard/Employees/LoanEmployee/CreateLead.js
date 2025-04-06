@@ -4,6 +4,7 @@ import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import Api from "../../../../Api";
 
 const { Option } = Select;
 
@@ -43,14 +44,8 @@ function CreateLead() {
       email: data.email,
     };
     try {
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
-      const response = await axios.post(
-        `http://localhost:5000/lead/createlead`,
-        details
-      );
+      const res = await Api.post(`signup/register`, detail);
+      const response = await Api.post(`lead/createlead`, details);
 
       toast.success("Form submitted successfully");
     } catch (error) {

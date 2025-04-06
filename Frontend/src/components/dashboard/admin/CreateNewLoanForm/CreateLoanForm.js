@@ -118,8 +118,8 @@ function CreateLoanForm() {
     };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/loanform/createloanapplications`,
+      const response = await Api.post(
+        `loanform/createloanapplications`,
         Details
       );
       console.log(response.data.data, "Form submitted successfully");
@@ -140,9 +140,7 @@ function CreateLoanForm() {
 
       try {
         console.log("Fetching loan application with userID:", userid);
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
+        const response = await Api.get(`signup/getby/${userid}`);
         console.log("Response received:", response);
         setLoanApplicationData(response.data.data);
       } catch (error) {
@@ -157,9 +155,7 @@ function CreateLoanForm() {
     const fetchUserDetails = async () => {
       try {
         if (userType === "user") {
-          const response = await axios.get(
-            `http://localhost:5000/signup/getby/${userid}`
-          );
+          const response = await Api.get(`signup/getby/${userid}`);
           setUserDetail(response.data);
           console.log("getresponse", response.data);
 

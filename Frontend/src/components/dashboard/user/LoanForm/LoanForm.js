@@ -123,8 +123,8 @@ function LoanForm() {
     };
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
+      const response = await Api.put(
+        `loanform/updateloanapplication/${record._id}`,
         Details
       );
       console.log(response, "Form updated successfully");
@@ -157,9 +157,7 @@ function LoanForm() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${userid}`
-        );
+        const response = await Api.get(`signup/getby/${userid}`);
         setUserDetail(response.data);
         console.log("getresponse", response.data);
 

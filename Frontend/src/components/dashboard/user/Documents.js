@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Documents.css";
+import Api from "../../../Api";
 
 const Documents = () => {
   const [hovered, setHovered] = useState(null);
@@ -29,14 +30,10 @@ const Documents = () => {
     const fetchData = async () => {
       try {
         const [userRes, loanRes, insuranceRes, taxRes] = await Promise.all([
-          axios.get(`http://localhost:5000/signup/getby/${userid}`),
-          axios.get(`http://localhost:5000/loanform/getbyid/${userid}`),
-          axios.get(
-            `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
-          ),
-          axios.get(
-            `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
-          ),
+          Api.get(`signup/getby/${userid}`),
+          Api.get(`loanform/getbyid/${userid}`),
+          Api.get(`insuranceManagement/getByIdInsuranceManagement/${userid}`),
+          Api.get(`taxManagement/getByIdTaxManagement/${userid}`),
         ]);
         setData(userRes.data || {});
         setLoanData(loanRes.data || []);

@@ -21,13 +21,13 @@ function LoanForm() {
     control,
     formState: { errors },
   } = useForm();
-  
+
   const userid = localStorage.getItem("id");
   const userType = localStorage.getItem("userType");
   console.log("userid", userid);
 
-const { state } = useLocation();
-    const record = state?.record;
+  const { state } = useLocation();
+  const record = state?.record;
 
   const [countryList, setCountryList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -136,8 +136,8 @@ const { state } = useLocation();
     //   toast.error("An error occurred while submitting the form");
     // }
     try {
-      const response = await axios.put(
-        `http://localhost:5000/loanform/updateloanapplication/${record._id}`,
+      const response = await Api.put(
+        `loanform/updateloanapplication/${record._id}`,
         Details
       );
       console.log(response, "Form updated successfully");
@@ -153,22 +153,19 @@ const { state } = useLocation();
       try {
         const response = await Api.get(`/loanform/getby/${record._id}`);
         const OneApplication = response.data;
-        console.log('Applicationresponse', OneApplication);
+        console.log("Applicationresponse", OneApplication);
         const formattedDob = OneApplication.dob
-            ? new Date(OneApplication.dob).toISOString().split("T")[0]
-            : "";
+          ? new Date(OneApplication.dob).toISOString().split("T")[0]
+          : "";
         if (OneApplication) {
-          reset({...OneApplication,
-            dob: formattedDob
-          }); 
+          reset({ ...OneApplication, dob: formattedDob });
         }
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
+    };
     fetchLoanApplicationData();
   }, [userid, record._id, reset]);
-
 
   const loanAmount = watch("totalChildren");
 

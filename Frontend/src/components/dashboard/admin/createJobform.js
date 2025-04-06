@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Col, Row, Container } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
+import Api from "../../../Api";
 
 const CreateJobForm = () => {
   const {
@@ -24,10 +25,7 @@ const CreateJobForm = () => {
       salary: data.salary,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:5000/job/createjob",
-        details
-      );
+      const response = await Api.post("job/createjob", details);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);

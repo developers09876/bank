@@ -77,10 +77,7 @@ const TaxTaskViewDetails = ({ collapsed }) => {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/taxManagement/updateTaxremarks/${record._id}`,
-        details
-      );
+      await Api.put(`taxManagement/updateTaxremarks/${record._id}`, details);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);

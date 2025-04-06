@@ -52,8 +52,8 @@ function InsuranceEditDetails() {
     };
 
     try {
-      const response = await axios.put(
-        `http://localhost:5000/insuranceManagement/updateInsurancedetails/${record._id}`,
+      const response = await Api.put(
+        `insuranceManagement/updateInsurancedetails/${record._id}`,
         updateDetails,
         {
           headers: {

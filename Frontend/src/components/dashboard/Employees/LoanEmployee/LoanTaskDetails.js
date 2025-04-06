@@ -42,9 +42,7 @@ function LoanTaskDetails() {
 
   const fetchUpdatedRecord = async () => {
     try {
-      const response = await Api.get(
-        `http://localhost:5000/loanform/getbyEmployeeid/${userId}`
-      );
+      const response = await Api.get(`loanform/getbyEmployeeid/${userId}`);
       console.log("responseget.data", response.data);
       const update = response.data;
       console.log("update", update);
@@ -64,7 +62,7 @@ function LoanTaskDetails() {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplicationsStaus/${id}`,
+        `loanform/updateloanapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);

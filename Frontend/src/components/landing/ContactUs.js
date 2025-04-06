@@ -38,10 +38,7 @@ const ContactUs = () => {
     };
 
     try {
-      const response = await Api.post(
-        "http://localhost:5000/contactus/create",
-        contactusDetails
-      );
+      const response = await Api.post("contactus/create", contactusDetails);
       toast.success("ContactUs submitted successfully");
       reset();
     } catch (error) {
@@ -52,9 +49,7 @@ const ContactUs = () => {
   useEffect(() => {
     const fetchContactUsData = async () => {
       try {
-        const response = await Api.get(
-          `http://localhost:5000/contactus/getallcontactus`
-        );
+        const response = await Api.get(`contactus/getallcontactus`);
         console.log("Response:", response);
         setContactUsData(response.data.data);
       } catch (error) {

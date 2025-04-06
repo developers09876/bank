@@ -5,139 +5,139 @@ import { FaPlus } from "react-icons/fa6";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Api from "../../../../Api";
 
 function EmployeeList() {
   const userId = localStorage.getItem("id");
   const navigate = useNavigate();
   const [fetchedData, setFetchedData] = useState();
   const [loading, setLoading] = useState(false);
-//   const [data, setData] = useState([]);
-//   const [filteredData, setFilteredData] = useState([]);
-//   const [searchText, setSearchText] = useState("");
-//   const [isModalVisible, setIsModalVisible] = useState(false);
-//   const [selectedRecord, setSelectedRecord] = useState(null);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [pageSize, setPageSize] = useState(5);
+  //   const [data, setData] = useState([]);
+  //   const [filteredData, setFilteredData] = useState([]);
+  //   const [searchText, setSearchText] = useState("");
+  //   const [isModalVisible, setIsModalVisible] = useState(false);
+  //   const [selectedRecord, setSelectedRecord] = useState(null);
+  //   const [currentPage, setCurrentPage] = useState(1);
+  //   const [pageSize, setPageSize] = useState(5);
 
-//   useEffect(() => {
-//     fetchLeads();
-//   }, []);
+  //   useEffect(() => {
+  //     fetchLeads();
+  //   }, []);
 
-//   useEffect(() => {
-//     const filtered = data.filter((item) => {
-//       const firstname = item.firstname || "";
-//       const lastname = item.lastname || "";
-//       const email = item.email || "";
-//       const contactNumber = item.contactNumber || "";
-//       const purpose = item.purpose || "";
+  //   useEffect(() => {
+  //     const filtered = data.filter((item) => {
+  //       const firstname = item.firstname || "";
+  //       const lastname = item.lastname || "";
+  //       const email = item.email || "";
+  //       const contactNumber = item.contactNumber || "";
+  //       const purpose = item.purpose || "";
 
-//       return (
-//         firstname.toLowerCase().includes(searchText.toLowerCase()) ||
-//         lastname.toLowerCase().includes(searchText.toLowerCase()) ||
-//         email.toLowerCase().includes(searchText.toLowerCase()) ||
-//         contactNumber.toLowerCase().includes(searchText.toLowerCase()) ||
-//         purpose.toLowerCase().includes(searchText.toLowerCase())
-//       );
-//     });
-//     setFilteredData(filtered);
-//   }, [searchText, data]);
+  //       return (
+  //         firstname.toLowerCase().includes(searchText.toLowerCase()) ||
+  //         lastname.toLowerCase().includes(searchText.toLowerCase()) ||
+  //         email.toLowerCase().includes(searchText.toLowerCase()) ||
+  //         contactNumber.toLowerCase().includes(searchText.toLowerCase()) ||
+  //         purpose.toLowerCase().includes(searchText.toLowerCase())
+  //       );
+  //     });
+  //     setFilteredData(filtered);
+  //   }, [searchText, data]);
 
-//   const fetchLeads = async () => {
-//     setLoading(true);
-//     try {
-//       const response = await axios.get(
-//         `http://localhost:5000/lead/getById/${userId}`
-//       );
-//       setData(response.data.data);
-//       setFilteredData(response.data.data);
-//     } catch (error) {
-//       console.error("Error fetching leads:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+  //   const fetchLeads = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:5000/lead/getById/${userId}`
+  //       );
+  //       setData(response.data.data);
+  //       setFilteredData(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching leads:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-useEffect(() => {
-  const getEmployees =  async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`http://localhost:5000/signup/getCreatedbyId/${userId}`)
-      setFetchedData(response.data)
-      console.log('getresponse', response.data)
-    } catch (error) {
-      console.log('error', error)
-    } finally {
-         setLoading(false);
-             }
-  }
-  getEmployees();
-},[userId])
+  useEffect(() => {
+    const getEmployees = async () => {
+      setLoading(true);
+      try {
+        const response = await Api.get(`signup/getCreatedbyId/${userId}`);
+        setFetchedData(response.data);
+        console.log("getresponse", response.data);
+      } catch (error) {
+        console.log("error", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getEmployees();
+  }, [userId]);
 
-//   const handleSearch = (e) => {
-//     setSearchText(e.target.value);
-//   };
+  //   const handleSearch = (e) => {
+  //     setSearchText(e.target.value);
+  //   };
 
-//   const handleTableChange = (pagination) => {
-//     setCurrentPage(pagination.current);
-//     setPageSize(pagination.pageSize);
-//   };
+  //   const handleTableChange = (pagination) => {
+  //     setCurrentPage(pagination.current);
+  //     setPageSize(pagination.pageSize);
+  //   };
 
-//   const paginatedData = filteredData.slice(
-//     (currentPage - 1) * pageSize,
-//     currentPage * pageSize
-//   );
+  //   const paginatedData = filteredData.slice(
+  //     (currentPage - 1) * pageSize,
+  //     currentPage * pageSize
+  //   );
 
-//   const handleViewDetails = (record) => {
-//     navigate("/employeeTax/employeedetails", { state: { record } });
-//   };
-  
+  //   const handleViewDetails = (record) => {
+  //     navigate("/employeeTax/employeedetails", { state: { record } });
+  //   };
 
-//   const handleModalOk = () => {
-//     setIsModalVisible(false);
-//     setSelectedRecord(null);
-//   };
+  //   const handleModalOk = () => {
+  //     setIsModalVisible(false);
+  //     setSelectedRecord(null);
+  //   };
 
-//   const handleModalCancel = () => {
-//     setIsModalVisible(false);
-//     setSelectedRecord(null);
-//   };
+  //   const handleModalCancel = () => {
+  //     setIsModalVisible(false);
+  //     setSelectedRecord(null);
+  //   };
 
   const columns = [
     {
-      title: 'Emp No',
-      dataIndex: 'empno',
-      key: 'empno',
+      title: "Emp No",
+      dataIndex: "empno",
+      key: "empno",
     },
     {
-      title: 'Full Name',
-      dataIndex: 'fullname',
-      key: 'fullname',
+      title: "Full Name",
+      dataIndex: "fullname",
+      key: "fullname",
       render: (_, employee) => `${employee.firstname} ${employee.lastname}`,
     },
     {
-      title: 'Designation',
-      dataIndex: 'employeeCategory',
-      key: 'employeeCategory',
+      title: "Designation",
+      dataIndex: "employeeCategory",
+      key: "employeeCategory",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Date Of Joining',
-      dataIndex: 'dateOfJoining',
-      key: 'dateOfJoining',
+      title: "Date Of Joining",
+      dataIndex: "dateOfJoining",
+      key: "dateOfJoining",
     },
     {
-      title: 'Action',
-      dataIndex:'Action',
-      key: 'Action',
+      title: "Action",
+      dataIndex: "Action",
+      key: "Action",
       render: (_, employee) => (
         <div>
           <Button
             type="primary"
-            style={{color:'black'}}
+            style={{ color: "black" }}
             onClick={() => console.log(`Viewing employee: ${employee._id}`)}
           >
             View
@@ -201,7 +201,6 @@ useEffect(() => {
           />
         </div>
       </Container>
-      
     </div>
   );
 }

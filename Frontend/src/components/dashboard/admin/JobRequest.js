@@ -8,7 +8,7 @@ import {
   Modal,
   Descriptions,
 } from "antd";
-import { SearchOutlined,EyeOutlined, DeleteOutlined  } from "@ant-design/icons";
+import { SearchOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import Api from "../../../Api";
 const { confirm } = Modal;
 const JobRequest = ({ collapsed }) => {
@@ -26,7 +26,7 @@ const JobRequest = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/jobrequest/getall`, {
+      const response = await fetch(`http://vilu.in:5000/jobrequest/getall`, {
         method: "GET",
         headers: { Authorization: localStorage.getItem("token") },
       });
@@ -44,7 +44,11 @@ const JobRequest = ({ collapsed }) => {
   const showDeleteConfirm = (id) => {
     confirm({
       title: "Are you sure you want to delete this job request?",
-      icon: < DeleteOutlined style={{ fontSize: "18px", color: "#ff4d4f",marginTop:"2px"}}/>,
+      icon: (
+        <DeleteOutlined
+          style={{ fontSize: "18px", color: "#ff4d4f", marginTop: "2px" }}
+        />
+      ),
       okText: "Delete",
       okType: "danger",
       cancelText: "Cancel",
@@ -55,7 +59,7 @@ const JobRequest = ({ collapsed }) => {
   };
   const handleDelete = async (id) => {
     try {
-      await Api.delete(`http://localhost:5000/jobrequest/delete/${id}`);
+      await Api.delete(`jobrequest/delete/${id}`);
       getAll();
     } catch (error) {
       console.error("Error deleting record:", error);
@@ -82,10 +86,7 @@ const JobRequest = ({ collapsed }) => {
         resume: selectedRecord.resume,
         status: action,
       };
-      const response = await Api.put(
-        `http://localhost:5000/jobrequest/update/${id}`,
-        details
-      );
+      const response = await Api.put(`jobrequest/update/${id}`, details);
       console.log("Response data:", response.data);
     } catch (error) {
       console.error("Error updating status:", error);
@@ -94,19 +95,19 @@ const JobRequest = ({ collapsed }) => {
 
   const handleApprove = () => {
     if (selectedRecord) {
-      updateStatus(selectedRecord._id, "Approved"); 
+      updateStatus(selectedRecord._id, "Approved");
       handleModalOk();
     }
   };
   const handleHold = () => {
     if (selectedRecord) {
-      updateStatus(selectedRecord._id, "Hold"); 
+      updateStatus(selectedRecord._id, "Hold");
       setIsModalVisible(false);
     }
   };
   const handleReject = () => {
     if (selectedRecord) {
-      updateStatus(selectedRecord._id, "Rejected"); 
+      updateStatus(selectedRecord._id, "Rejected");
       handleModalOk();
     }
   };
@@ -179,7 +180,12 @@ const JobRequest = ({ collapsed }) => {
       render: (_, record) => (
         <>
           <EyeOutlined
-            style={{ fontSize: "18px", color: "#4096ff", cursor: "pointer", marginRight: "15px" }}
+            style={{
+              fontSize: "18px",
+              color: "#4096ff",
+              cursor: "pointer",
+              marginRight: "15px",
+            }}
             onClick={() => handleViewDetails(record)}
           />
           <DeleteOutlined

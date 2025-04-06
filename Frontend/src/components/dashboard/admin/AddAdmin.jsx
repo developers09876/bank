@@ -68,9 +68,7 @@ const AddAdmin = ({ setAuth }) => {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -150,7 +148,7 @@ const AddAdmin = ({ setAuth }) => {
     try {
       const body = { ...data, userType: "employee" };
 
-      const response = await fetch("http://localhost:5000/signup/register", {
+      const response = await fetch("http://vilu.in:5000/signup/register", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(body),

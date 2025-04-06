@@ -3,6 +3,7 @@ import { Table, Tag, Button } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { EyeOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
+import Api from "../../../Api";
 
 const LoanStatusTable = ({ collapsed }) => {
   const [loans, setLoans] = useState([]);
@@ -13,9 +14,7 @@ const LoanStatusTable = ({ collapsed }) => {
   useEffect(() => {
     const getUserLoan = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/loanform/getbyid/${userId}`
-        );
+        const response = await Api.get(`loanform/getbyid/${userId}`);
         const loan = response.data;
         console.log("loan", loan);
         setLoans(loan);

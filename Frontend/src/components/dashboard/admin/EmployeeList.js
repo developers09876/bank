@@ -140,7 +140,7 @@ const EmployeeList = ({ setAuth }) => {
 
   const getEmployees = async () => {
     try {
-      const response = await fetch("http://localhost:5000/signup/getall", {
+      const response = await fetch("http://vilu.in:5000/signup/getall", {
         method: "GET",
         headers: { Authorization: localStorage.getItem("token") },
       });

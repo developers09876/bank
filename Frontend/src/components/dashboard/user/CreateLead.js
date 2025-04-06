@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import Api from "../../../Api";
 
 const { Option } = Select;
 
@@ -23,9 +24,7 @@ function CreateLead() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getby/${id}`
-        );
+        const response = await Api.get(`signup/getby/${id}`);
         console.log("responseget", response.data);
         setUserDetail(response.data);
         const fetchedData = response.data;
@@ -53,10 +52,7 @@ function CreateLead() {
       panCardNumber: data.panCardNumber,
     };
     try {
-      const response = await axios.post(
-        `http://localhost:5000/lead/createlead`,
-        details
-      );
+      const response = await Api.post(`lead/createlead`, details);
 
       toast.success("Form submitted successfully");
     } catch (error) {

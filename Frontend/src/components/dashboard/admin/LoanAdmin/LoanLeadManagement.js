@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa6";
 import { SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Api from "../../../../Api";
 
 function LoanLeadManagement() {
   const userId = localStorage.getItem("id");
@@ -44,9 +45,7 @@ function LoanLeadManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/lead/getById/${userId}`
-      );
+      const response = await Api.get(`lead/getById/${userId}`);
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {
@@ -73,7 +72,6 @@ function LoanLeadManagement() {
   const handleViewDetails = (record) => {
     navigate("/adminLoan/leaddetails", { state: { record } });
   };
-  
 
   const handleModalOk = () => {
     setIsModalVisible(false);

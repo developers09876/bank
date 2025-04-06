@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
+import Api from "../../../Api";
 
 function LoanLeadManagement() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function LoanLeadManagement() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/lead/getall");
+      const response = await Api.get("/lead/getall");
       console.log("response", response.data.purpose);
       setData(response.data);
       setFilteredData(response.data);
@@ -108,7 +109,7 @@ function LoanLeadManagement() {
       key: "employeeType",
       render: (employeeType) => {
         return employeeType ? (
-          <span style={{ color: "green"  }}>Task Assigned</span>
+          <span style={{ color: "green" }}>Task Assigned</span>
         ) : (
           <span style={{ color: "red" }}>Task Not Assigned</span>
         );

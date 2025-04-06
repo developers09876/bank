@@ -4,6 +4,7 @@ import { Row, Col, Button } from "antd";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Api from "../../../../Api";
 
 function LoanLeadDetails() {
   const location = useLocation();
@@ -77,10 +78,7 @@ function LoanLeadDetails() {
     };
 
     try {
-      await axios.put(
-        `http://localhost:5000/lead/updatelead/${record._id}`,
-        details
-      );
+      await Api.put(`lead/updatelead/${record._id}`, details);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);
@@ -153,8 +151,6 @@ function LoanLeadDetails() {
           </Col>
           <Col span={18}>{record.previouslyapplied}</Col>
         </Row>
-        
-       
 
         <Button
           type="primary"

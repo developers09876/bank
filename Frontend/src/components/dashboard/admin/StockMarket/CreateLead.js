@@ -4,6 +4,7 @@ import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import Api from "../../../../Api";
 
 const { Option } = Select;
 
@@ -43,14 +44,8 @@ function CreateLead() {
       email: data.email,
     };
     try {
-      const response = await axios.post(
-        `http://localhost:5000/lead/createlead`,
-        details
-      );
-      const res = await axios.post(
-        `http://localhost:5000/signup/register`,
-        detail
-      );
+      const response = await Api.post(`lead/createlead`, details);
+      const res = await Api.post(`signup/register`, detail);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);
@@ -228,15 +223,15 @@ function CreateLead() {
                       placeholder="Select Loan Amount"
                     >
                       <Option value="">Select Loan Amount</Option>
-                          <Option value="0-5Lakhs">0-5Lakhs</Option>
-                          <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
-                          <Option value="10-15Lakhs">10 - 15Lakhs</Option>
-                          <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
-                          <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
-                          <Option value="25-50Lakhs">25 - 50 Lakhs</Option>
-                          <Option value="50-75Lakhs">50 - 75 Lakhs</Option>
-                          <Option value="75-1Crore">75 Lakhs - 1 Crore</Option>
-                          <Option value="above1Crore">Above 1 Crore</Option>
+                      <Option value="0-5Lakhs">0-5Lakhs</Option>
+                      <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
+                      <Option value="10-15Lakhs">10 - 15Lakhs</Option>
+                      <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
+                      <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
+                      <Option value="25-50Lakhs">25 - 50 Lakhs</Option>
+                      <Option value="50-75Lakhs">50 - 75 Lakhs</Option>
+                      <Option value="75-1Crore">75 Lakhs - 1 Crore</Option>
+                      <Option value="above1Crore">Above 1 Crore</Option>
                     </Select>
                   )}
                 />

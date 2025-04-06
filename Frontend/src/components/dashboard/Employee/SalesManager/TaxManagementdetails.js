@@ -114,9 +114,7 @@ function TaxManagementDetails({ collapsed }) {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getbyUserType/${employeeType}`
-        );
+        const response = await Api.get(`signup/getbyUserType/${employeeType}`);
         console.log("Employee response.data", response.data);
         const filteredEmployees = response.data?.filter((employee) =>
           employee.services.includes("ReportingManager")
@@ -290,7 +288,7 @@ function TaxManagementDetails({ collapsed }) {
     try {
       const details = { action, reason };
       const response = await Api.put(
-        `http://localhost:5000/taxManagement/updateTaxapplicationsStaus/${id}`,
+        `taxManagement/updateTaxapplicationsStaus/${id}`,
         details
       );
       console.log("Response data:", response.data);
@@ -614,8 +612,6 @@ function TaxManagementDetails({ collapsed }) {
               </Card>
             </Col>
           </Row>
-
-          
 
           <Row className="py-4" style={{ justifySelf: "center" }}>
             <Space>

@@ -33,7 +33,7 @@ const Insurance = ({ collapsed }) => {
     setLoading(true);
     try {
       const response = await Api.get(
-        `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
+        `insuranceManagement/getByIdInsuranceManagement/${userid}`
       );
       setInsurance(response.data);
       setFilteredData(response.data);

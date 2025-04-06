@@ -21,6 +21,7 @@ import {
   Legend,
 } from "chart.js";
 import axios from "axios";
+import Api from "../../../Api";
 
 ChartJS.register(
   CategoryScale,
@@ -65,9 +66,7 @@ const UserDashboard = () => {
   const userid = localStorage.getItem("id");
   const fetchLoans = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/loanform/getbyid/${userId}`
-      );
+      const response = await Api.get(`loanform/getbyid/${userId}`);
       setLoan(response.data);
       setLoans(response.data.length);
       const statusCounts = { pending: 0, rejected: 0, completed: 0 };
@@ -87,8 +86,8 @@ const UserDashboard = () => {
   }, []);
   const fetchInsurances = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/insuranceManagement/getByIdInsuranceManagement/${userid}`
+      const response = await Api.get(
+        `insuranceManagement/getByIdInsuranceManagement/${userid}`
       );
       setInsurances(response.data.length);
       const statusCounts = { pending: 0, rejected: 0, approved: 0 };
@@ -109,8 +108,8 @@ const UserDashboard = () => {
   }, []);
   const fetchTaxs = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/taxManagement/getByIdTaxManagement/${userid}`
+      const response = await Api.get(
+        `taxManagement/getByIdTaxManagement/${userid}`
       );
       console.log("response.data", response.data);
       setTaxs(response.data.length);

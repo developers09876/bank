@@ -21,7 +21,7 @@ const LoanStatus = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/loanform/getall`, {
+      const response = await fetch(`http://vilu.in:5000/loanform/getall`, {
         method: "GET",
         headers: { Authorization: localStorage.getItem("token") },
       });
@@ -36,12 +36,13 @@ const LoanStatus = ({ collapsed }) => {
 
   useEffect(() => {
     if (loan && state) {
-      const filterData = loan.filter((res) => String(res.status) === String(state));
+      const filterData = loan.filter(
+        (res) => String(res.status) === String(state)
+      );
       console.log("filterData", filterData);
       setData(filterData);
     }
-  }, [state,loan])
-  
+  }, [state, loan]);
 
   const handleViewDetails = (record) => {
     setSelectedRecord(record);
@@ -62,7 +63,7 @@ const LoanStatus = ({ collapsed }) => {
     try {
       const details = { action };
       const response = await Api.put(
-        `http://localhost:5000/loanform/updateloanapplications/${id}`,
+        `loanform/updateloanapplications/${id}`,
         details
       );
       console.log("Response data:", response.data);

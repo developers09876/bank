@@ -20,6 +20,7 @@ import {
   Legend,
 } from "chart.js";
 import axios from "axios";
+import Api from "../../../Api";
 
 ChartJS.register(
   CategoryScale,
@@ -59,9 +60,7 @@ const AdminDashboard = () => {
   const user = "user";
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/signup/getbyUserType/${user}`
-      );
+      const response = await Api.get(`signup/getbyUserType/${user}`);
       // console.log("response.data", response.data);
       setUsers(response.data.length);
       // console.log("users", response.data.length);
@@ -74,7 +73,7 @@ const AdminDashboard = () => {
   }, []);
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/signup/getall");
+      const response = await Api.get("signup/getall");
       const filteredemployees = response.data.filter(
         (employees) => employees.userType !== "user"
       );
@@ -89,7 +88,7 @@ const AdminDashboard = () => {
   }, []);
   const fetchLoans = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/loanform/getall`);
+      const response = await Api.get(`loanform/getall`);
       // console.log("response.data", response.data);
       setLoan(response.data);
       setLoans(response.data.length);
@@ -111,8 +110,8 @@ const AdminDashboard = () => {
   }, []);
   const fetchInsurances = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/insuranceManagement/getAllInsuranceManagement`
+      const response = await Api.get(
+        `insuranceManagement/getAllInsuranceManagement`
       );
       // console.log("response.data", response.data);
       setInsurances(response.data.length);
@@ -135,9 +134,7 @@ const AdminDashboard = () => {
   }, []);
   const fetchTaxs = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/taxManagement/getAllTaxManagement`
-      );
+      const response = await Api.get(`taxManagement/getAllTaxManagement`);
       console.log("response.data", response.data);
       setTaxs(response.data.length);
       console.log("taxes", response.data.length);

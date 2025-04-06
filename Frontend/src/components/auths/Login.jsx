@@ -22,6 +22,7 @@ import Header from "../Layout/Header";
 import { useForm } from "react-hook-form";
 import OtpInput from "react-otp-input";
 import { MdVerified } from "react-icons/md";
+import Api from "../../Api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -73,12 +74,9 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/nodemailer/forgetpassword",
-        {
-          email,
-        }
-      );
+      const response = await Api.post("nodemailer/forgetpassword", {
+        email,
+      });
 
       localStorage.setItem("userType", response.data.data.userType);
       localStorage.setItem("id", response.data.data._id);
@@ -116,13 +114,10 @@ const LoginPage = () => {
     console.log("OTP", otp);
     const code = otp;
     try {
-      const response = await axios.post(
-        "http://localhost:5000/nodemailer/checkverification",
-        {
-          email,
-          code,
-        }
-      );
+      const response = await Api.post("nodemailer/checkverification", {
+        email,
+        code,
+      });
       console.log("response", response);
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem("token", response.data.data.token);
