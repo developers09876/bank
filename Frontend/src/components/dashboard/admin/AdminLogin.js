@@ -39,7 +39,7 @@ function Login() {
         }
       })
       .catch((error) => {
-        console.error("There was an error!", error);
+        console.error("There was an error !!", error);
         toast.error(error.response.data.message); // Handle error
       });
   };
