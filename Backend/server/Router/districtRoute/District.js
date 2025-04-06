@@ -7,7 +7,7 @@ import {
   updateDistrict,
   deleteDistrict,
   getDistrictById,
-} from "../../controller/districtController/District.js";
+} from "../../Controller/districtController/District.js";
 
 router.route("/createdistrict").post(createDistrict);
 router.route("/getalldistrict").get(getAllDistrict);

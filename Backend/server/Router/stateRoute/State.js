@@ -7,7 +7,7 @@ import {
   updateState,
   deleteState,
   getStateById,
-} from "../../controller/stateController/State.js";
+} from "../../Controller/stateController/State.js";
 
 router.route("/createstate").post(createState);
 router.route("/getallstate").get(getAllState);
