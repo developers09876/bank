@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Table, Button } from "antd";
 import Sidebar from "../InsuranceAdmin/InsuranceSidebar";
 import axios from "axios";
+import Api from "../../../../Api";
 
 const InsuranceEmployeeList = ({ setAuth }) => {
   const userId = localStorage.getItem("id");
@@ -14,9 +15,7 @@ const InsuranceEmployeeList = ({ setAuth }) => {
     const getEmployees = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `http://localhost:5000/signup/getCreatedbyId/${userId}`
-        );
+        const response = await Api.get(`signup/getCreatedbyId/${userId}`);
         setFetchedData(response.data);
         console.log("getresponse", response.data);
       } catch (error) {
