@@ -13,8 +13,6 @@ import { IoNotifications } from "react-icons/io5";
 import Api from "../../Api";
 import Imageh1 from "../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 import "./Header.css";
-import { generateToken, messaging } from "../notification/fireBase";
-import { onMessage } from "firebase/messaging";
 
 const menuItems = [
   { path: "/", label: "Home", icon: <FaHome /> },
@@ -28,12 +26,7 @@ const menuItems = [
 const ReferalHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  useEffect(() => {
-    generateToken();
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-    });
-  }, []);
+
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

@@ -18,8 +18,6 @@ import { IoClose, IoNotifications, IoPersonCircleSharp } from "react-icons/io5";
 import Api from "../../Api";
 import Imageh1 from "../Images/WhatsApp Image 2024-10-05 at 15.28.34_a0e3c4a5.jpg";
 import "./Header.css";
-import { generateToken, messaging } from "../notification/fireBase";
-import { onMessage } from "firebase/messaging";
 
 const menuItems = [
   { path: "/", label: "Home", icon: <FaHome /> },
@@ -33,12 +31,7 @@ const menuItems = [
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  useEffect(() => {
-    generateToken();
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-    });
-  }, []);
+
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -542,8 +535,7 @@ const NotificationModal = ({ isOpen, setIsOpen, setNotificationCount }) => {
 
       // Filter notifications: Include only those with no `notiFicatioinStauts` or where it is "false"
       const unreadNotifications = remarks.filter(
-        (remark) =>
-           remark.notiFicatioinStauts === "false"
+        (remark) => remark.notiFicatioinStauts === "false"
       );
 
       setNotifications(remarks);

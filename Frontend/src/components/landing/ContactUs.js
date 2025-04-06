@@ -162,7 +162,6 @@ const ContactUs = () => {
                         control={control}
                         // defaultValue="InsuranceEmployee"
                         value={serviceType}
-                         
                         rules={{ required: true }}
                         render={({ field }) => (
                           <Select
@@ -170,9 +169,9 @@ const ContactUs = () => {
                             className="inputcolumn_drp"
                             placeholder="Select Service Type"
                             style={{
-                              width: "100%", 
-                              padding: "2px", 
-                              height: "50px", 
+                              width: "100%",
+                              padding: "2px",
+                              height: "50px",
                             }}
                           >
                             <Option value="Loan">Loan </Option>
@@ -229,23 +228,3 @@ const ContactUs = () => {
 };
 
 export default ContactUs;
-
-// import React, { useEffect } from "react";
-// import { generateToken, messaging } from "../notification/fireBase";
-// import { onMessage } from "firebase/messaging";
-// const App = () => {
-//   useEffect(() => {
-//     generateToken();
-//     onMessage(messaging, (payload) => {
-//       console.log(payload);
-//     });
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>React Firebase Cloud Messaging</h1>
-//     </div>
-//   );
-// };
-
-// export default App;
