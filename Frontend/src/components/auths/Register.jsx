@@ -19,8 +19,16 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const details = {
+      userType: "user",
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      contactNumber: data.contactNumber,
+    };
+
     try {
-      await Api.post("signup/register", data);
+      await Api.post("signup/register", details);
       toast.success("Registration successful!", { autoClose: 2000 });
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {

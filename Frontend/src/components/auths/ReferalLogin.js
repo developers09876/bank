@@ -7,7 +7,6 @@ import {
   Button,
   Checkbox,
   Typography,
-  Link,
   Divider,
 } from "@mui/material";
 import { Google as GoogleIcon } from "@mui/icons-material";
@@ -15,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Header from "../Layout/Header";
@@ -300,7 +299,7 @@ const ReferalLogin = () => {
                   <Box mt={2}>
                     <Typography variant="body2">
                       Don't have an account?{" "}
-                      <Link href="/register">Register here</Link>
+                      <Link to="/register">Register here</Link>
                     </Typography>
                   </Box>
                 </form>
