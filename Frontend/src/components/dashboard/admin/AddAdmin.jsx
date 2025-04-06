@@ -251,7 +251,7 @@ const AddAdmin = ({ setAuth }) => {
                   )}
                 </Col> */}
                 <Col lg={4} md={6} sm={12}>
-                  <label htmlFor="services">Employee Designation:</label>
+                  <label htmlFor="services">Select Services :</label>
                   <Controller
                     name="services"
                     control={control}

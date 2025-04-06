@@ -6,7 +6,7 @@ import {
   getAllCountry,
   updateCountry,
   deleteCountry,
-} from "../../controller/countryController/Country.js";
+} from "../../Controller/countryController/Country.js";
 
 router.route("/createcountry").post(createCountry);
 router.route("/getallcountry").get(getAllCountry);
