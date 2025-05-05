@@ -23,8 +23,8 @@ function LeadDetails({ collapsed }) {
   const [stateList, setStateList] = useState([]);
   const [districtList, setDistrictList] = useState([]);
   const [cityList, setCityList] = useState([]);
-  const [reportingManagerList, setReportingManagerList] = useState();
-  const [salesManagerList, setSalesManagerList] = useState();
+  const [reportingManagerList, setReportingManagerList] = useState([]);
+  const [salesManagerList, setSalesManagerList] = useState([]);
   const [districtName, setDistrictName] = useState("");
   const [BranchName, setBranchName] = useState("");
 
@@ -123,22 +123,30 @@ function LeadDetails({ collapsed }) {
   }, [employeeType]);
 
   useEffect(() => {
-    if (districtName) {
+    const district = districtName || assignValue?.district;
+  
+    if (district && Array.isArray(reportingManagerList)) {
       const filtered = reportingManagerList.filter(
-        (manager) => manager.district === districtName
+        (manager) => manager.district === district
       );
       setFilteredManagers(filtered);
     }
-  }, [districtName, reportingManagerList]);
+    
+  }, [districtName, assignValue?.district, reportingManagerList]);
+  
 
   useEffect(() => {
-    if (BranchName) {
+    const branch = BranchName || assignValue?.Branch;
+  
+    if (branch && Array.isArray(salesManagerList)) {
       const filtered = salesManagerList.filter(
-        (manager) => manager.Branch === BranchName
+        (manager) => manager.Branch === branch
       );
       setFilteredSalesManagers(filtered);
     }
-  }, [BranchName, salesManagerList]);
+    
+  }, [BranchName, assignValue?.Branch, salesManagerList]);
+  
 
   const getCountry = async () => {
     try {
@@ -177,7 +185,44 @@ function LeadDetails({ collapsed }) {
     getState();
     // getDistrict();
   }, []);
+  useEffect(() => {
+    if (isEditing && assignValue.state) {
+      const selectedState = stateList.find((s) => s.name === assignValue.state);
+      if (selectedState) {
+        getDistrict(selectedState.id);
+      }
+    }
+  }, [isEditing, assignValue.state, stateList]);
+  useEffect(() => {
+    if (isEditing && assignValue.district) {
+      const selectedDistrict = districtList.find(
+        (d) => d.name === assignValue.district
+      );
+      if (selectedDistrict) {
+        getCity(selectedDistrict.id);
+      }
+    }
+  }, [isEditing, assignValue.district, districtList]);
+  useEffect(() => {
+    if (isEditing && record) {
+      if (filteredManagers.length > 0) {
+        setValue("report_Manager", record.report_Manager || "");
+      }
+  
+      if (filteredSalesManagers.length > 0) {
+        setValue("sale_Manager", record.sale_Manager || "");
+      }
+    }
+  }, [filteredManagers, filteredSalesManagers, isEditing, record]);
 
+  useEffect(() => {
+    if (!BranchName && assignValue?.Branch) {
+      setBranchName(assignValue.Branch);
+    }
+  }, [assignValue, BranchName]);
+  
+  
+    
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -550,7 +595,6 @@ function LeadDetails({ collapsed }) {
                               optionFilterProp="childer"
                               onChange={(value, option) => {
                                 field.onChange(value);
-                                setValue("state", value);
                                 getDistrict(option.key);
                               }}
                               filterOption={(input, option) =>
@@ -590,7 +634,6 @@ function LeadDetails({ collapsed }) {
                               style={{ width: "100%" }}
                               onChange={(value, option) => {
                                 field.onChange(value);
-                                setValue("district", value);
                                 setDistrictName(value);
                                 getCity(option.key);
                               }}
@@ -631,7 +674,6 @@ function LeadDetails({ collapsed }) {
                               placeholder="Select Branch"
                               onChange={(value) => {
                                 field.onChange(value);
-                                setValue("city", value);
                                 setBranchName(value);
                               }}
                             >
@@ -665,6 +707,7 @@ function LeadDetails({ collapsed }) {
                                 className="inputcolumn_drp"
                                 style={{ width: "100%" }}
                                 placeholder="Select Reporting Manager"
+                                value={field.value || ""}
                                 onChange={(value) => {
                                   field.onChange(value);
                                   setValue("report_Manager", value);
