@@ -3,6 +3,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Table, Button } from "antd";
 import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
+import Api from "../../../Api";
 
 const UserList = ({ setAuth }) => {
   const [employees, setEmployees] = useState([]);
@@ -10,13 +11,14 @@ const UserList = ({ setAuth }) => {
   // Function to fetch all users and filter for employees
   const getEmployees = async () => {
     try {
-      const response = await fetch("http://vilu.in:5000/signup/getall", {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("token") },
+      const response = await Api.get("/signup/getall", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       });
 
-      const users = await response.json();
-
+      const users = response.data;
+      console.log("users", users);
       // Filter only users with userType 'user'
       const employeeUsers = users.filter((user) => user.userType === "user");
       setEmployees(employeeUsers);
