@@ -94,6 +94,7 @@ function LoanTaskViewDetails() {
       setLoan(updatedLoans);
 
       await fetchUpdatedRecord();
+      // setRecord()
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -199,7 +200,12 @@ function LoanTaskViewDetails() {
     };
 
     try {
-      await Api.put(`loanform/updateloanremarks/${record._id}`, details);
+      const response = await Api.put(
+        `loanform/updateloanremarks/${record._id}`,
+        details
+      );
+      console.log("response.data", response.data);
+      setRecord(response.data.data);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Error:", error.message);
