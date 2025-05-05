@@ -140,7 +140,7 @@ const Landing = () => {
       title: "TRAVEL INSURANCE",
       description: "Ensure a worry-free journey with travel insurance plans.",
       buttonText: "Explore Options",
-      link: "/insurancepolicy",
+      link: "/insuranceForms",
       icon: "fas fa-plane",
     },
   ];
