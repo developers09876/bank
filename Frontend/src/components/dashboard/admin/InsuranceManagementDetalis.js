@@ -333,10 +333,12 @@ function InsuranceManagementDetails({ collapsed }) {
     };
 
     try {
-      await Api.put(
+      const response = await Api.put(
         `insuranceManagement/updateInsuranceManagement/${record._id}`,
         details
       );
+      console.log("response.data", response.data.data);
+      setRecord(response.data.data);
       toast.success("Task Assigned successfully");
     } catch (error) {
       console.error("Error:", error);
