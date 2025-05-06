@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../../Layout/Header";
+import Api from "../../../Api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -22,8 +23,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://vilu.in:5000/admin/adminlogin", { email, password })
+    Api.post("/admin/adminlogin", { email, password })
       .then((response) => {
         console.log("response", response);
         if (response.data.message) {
