@@ -173,17 +173,17 @@ function Sidebar({ collapsed }) {
   const taskMenuItems = [
     {
       serviceName: "LoanEmployee",
-      label: "Loan Task",
+      label: "Loan Services",
       path: "/employee/loantaskmanagement",
     },
     {
       serviceName: "InsuranceEmployee",
-      label: "Insurance Task",
+      label: "Insurance Services",
       path: "/employee/insurancetaskmanagement",
     },
     {
       serviceName: "TaxEmployee",
-      label: "Tax Task",
+      label: "Tax Services",
       path: "/employee/taxtaskmanagement",
     },
     {
@@ -195,17 +195,17 @@ function Sidebar({ collapsed }) {
   const managementMenuItems = [
     {
       serviceName: "ReportingManager",
-      label: "Loan Task",
+      label: "Loan Services",
       path: "/employee/salesloanmangement",
     },
     {
       serviceName: "ReportingManager",
-      label: "Insurance Task",
+      label: "Insurance Services",
       path: "/employee/salesinsurancenmangement",
     },
     {
       serviceName: "ReportingManager",
-      label: "Tax Task",
+      label: "Tax Services",
       path: "/employee/salestaxmangement",
     },
     // {
