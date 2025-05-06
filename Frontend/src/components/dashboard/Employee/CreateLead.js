@@ -62,7 +62,7 @@ function CreateLead() {
     };
     try {
       const res = await Api.post(`signup/register`, detail);
-      const response = await axios.post(`lead/createlead`, details);
+      const response = await Api.post(`lead/createlead`, details);
 
       toast.success("Form submitted successfully");
       setTimeout(() => navigate(-1), 3000);
