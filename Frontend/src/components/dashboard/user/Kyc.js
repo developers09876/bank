@@ -312,7 +312,7 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>PAN Card Number: </label>
+                <label>PAN Card: </label>
                 <input
                   {...register("panCardNumber", {
                     pattern: {
@@ -390,13 +390,13 @@ function Kycvendor() {
             {documents.map((doc, index) => (
               <Row key={doc.id} className="px-3">
                 <Col sm={12} md={6} lg={6}>
-                  <label>{doc.proofType} Number: </label>
+                  <label>{doc.proofType}: </label>
                   <input
                     {...register(`proofNumber_${doc.id}`, {
                       ...getValidationRules(doc.proofType),
                     })}
                     className="inputcolumn-ourProfile"
-                    placeholder={`Ex. Enter ${doc.proofType} number`}
+                    placeholder={`Enter ${doc.proofType} number`}
                   />
                   {errors[`proofNumber_${doc.id}`] && (
                     <p className="text-danger">
@@ -405,8 +405,8 @@ function Kycvendor() {
                   )}
                 </Col>
                 <Col sm={12} md={6} lg={6}>
-                  <label>{doc.proofType} Upload: </label>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <label>Upload {doc.proofType}: </label>
+                  <div style={{ display: "flex", alignItems: "flex-start" }}>
                     <input
                       className="inputcolumn-ourProfile"
                       style={{ outline: "none", height: "50px", flex: 1 }}
