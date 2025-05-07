@@ -136,19 +136,20 @@ function Sidebar({ collapsed }) {
     // },
     {
       serviceName: "ReportingManager",
-      label: "Loan Management",
+      label: "Loan Application",
       path: "/employee/loanmanagement",
     },
     {
       serviceName: "ReportingManager",
-      label: "Insurance Management",
+      label: "Insurance Application",
       path: "/employee/insurancemanagement",
     },
     {
       serviceName: "ReportingManager",
-      label: "Tax Management",
+      label: "Tax Application",
       path: "/employee/taxmanagement",
     },
+    
   ];
 
   // const salesMangerItems = [
@@ -173,17 +174,17 @@ function Sidebar({ collapsed }) {
   const taskMenuItems = [
     {
       serviceName: "LoanEmployee",
-      label: "Loan Task",
+      label: "Loan Services",
       path: "/employee/loantaskmanagement",
     },
     {
       serviceName: "InsuranceEmployee",
-      label: "Insurance Task",
+      label: "Insurance Services",
       path: "/employee/insurancetaskmanagement",
     },
     {
       serviceName: "TaxEmployee",
-      label: "Tax Task",
+      label: "Tax Services",
       path: "/employee/taxtaskmanagement",
     },
     {
@@ -195,17 +196,17 @@ function Sidebar({ collapsed }) {
   const managementMenuItems = [
     {
       serviceName: "ReportingManager",
-      label: "Loan Task",
+      label: "Loan Services",
       path: "/employee/salesloanmangement",
     },
     {
       serviceName: "ReportingManager",
-      label: "Insurance Task",
+      label: "Insurance Services",
       path: "/employee/salesinsurancenmangement",
     },
     {
       serviceName: "ReportingManager",
-      label: "Tax Task",
+      label: "Tax Services",
       path: "/employee/salestaxmangement",
     },
     // {
@@ -263,6 +264,9 @@ function Sidebar({ collapsed }) {
         <NavLink to="/employee/myprofile" ClassName="main-nav-style">
           My Profile
         </NavLink>
+        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
+          My Leads 
+        </NavLink>
         {/* 
         {salesMangerItems
           .filter((item) => service.includes(item.serviceName))
@@ -273,7 +277,7 @@ function Sidebar({ collapsed }) {
           ))} */}
 
         {hasManagement && (
-          <SubMenu title="Task Management" className="main-nav-style">
+          <SubMenu title="My Tasks" className="main-nav-style">
             {managementMenuItems
               .filter((task) => service.includes(task.serviceName))
               .map((task) => (
@@ -281,8 +285,12 @@ function Sidebar({ collapsed }) {
                 <NavLink to={task.path}>{task.label}</NavLink>
                 //  </Menu.Item>
               ))}
+               <NavLink to="/employee/leadtaskmanagement" ClassName="main-nav-style">
+          Lead Task
+        </NavLink>
           </SubMenu>
         )}
+         <SubMenu title="My Applications" className="main-nav-style">
         {ReportingManagerItems.filter((item) =>
           service.includes(item.serviceName)
         ).map((item) => (
@@ -290,6 +298,7 @@ function Sidebar({ collapsed }) {
             {item.label}
           </NavLink>
         ))}
+        </SubMenu>
         {/* Conditionally render Task Management submenu */}
         {hasTasks && (
           <SubMenu title="Task Management" className="main-nav-style">
@@ -302,14 +311,11 @@ function Sidebar({ collapsed }) {
               ))}
           </SubMenu>
         )}
-        <NavLink to="/employee/leadmanagement" ClassName="main-nav-style">
-          Lead Generation
-        </NavLink>
-        <NavLink to="/employee/leadtaskmanagement" ClassName="main-nav-style">
-          Lead Task Management
-        </NavLink>
+       
+       
 
         {/* Render dynamic menu items based on assigned services */}
+        
         {menuItems
           .filter((item) => service.includes(item.serviceName))
           .map((item) => (
