@@ -26,8 +26,8 @@ const LoanStatus = ({ collapsed }) => {
           Authorization: localStorage.getItem("token"),
         },
       });
-  
-      const loans = response.data; // Axios automatically parses JSON
+
+      const loans = response.data;
       setLoan(loans);
     } catch (error) {
       console.log(error);
