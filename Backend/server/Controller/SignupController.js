@@ -376,13 +376,19 @@ export async function updateKYCDetails(req, res, next) {
     const updatedKYCDetails = {
       panCardNumber: data.panCardNumber,
       aadhaarNumber: data.aadhaarNumber,
-      GSTNumber: data.GSTNumber,
       accountNumber: data.accountNumber,
       IFSCCode: data.IFSCCode,
       bankName: data.bankName,
       bankBranch: data.bankBranch,
-      panOrAdharUpload: data.panOrAdharUpload,
-      voterIdUpload: data.voterIdUpload,
+      panUpload: data.panUpload,
+      aadhaarUpload: data.aadhaarUpload,
+      documents: Array.isArray(data.documents)
+        ? data.documents.map((doc) => ({
+            proofType: doc.proofType,
+            proofNumber: doc.proofNumber,
+            proofUpload: doc.proofUpload,
+          }))
+        : [],
     };
 
     const updatedKYCApplication = await User.findByIdAndUpdate(
