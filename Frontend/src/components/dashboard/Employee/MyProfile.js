@@ -675,6 +675,7 @@ function TabsVendor() {
                           Phone Number
                         </label>
                         <input
+                        disabled
                           className="inputcolumn-ourProfile"
                           type="text"
                           name="contactNumber"
