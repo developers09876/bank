@@ -245,7 +245,9 @@ function Kycvendor() {
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="px-3">
               <Col sm={12} md={6} lg={6}>
-                <label>Bank Name: </label>
+                <label>
+                  Bank Name: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("bankName", {
                     required: "Bank name is required",
@@ -262,7 +264,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Branch: </label>
+                <label>
+                  Branch: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("bankBranch", {
                     required: "Branch name is required",
@@ -279,7 +283,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Account Number: </label>
+                <label>
+                  Account Number: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   type="number"
                   {...register("accountNumber", {
@@ -297,7 +303,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>IFSC Code: </label>
+                <label>
+                  IFSC Code: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("IFSCCode", {
                     required: "IFSC code is required",
@@ -315,7 +323,9 @@ function Kycvendor() {
               </Col>
 
               <Col sm={12} md={6} lg={6}>
-                <label>Aadhaar Card Number: </label>
+                <label>
+                  Aadhaar Card : <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("aadhaarNumber", {
                     required: "Aadhaar number is required",
@@ -332,7 +342,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Aadhaar Upload: </label>
+                <label>
+                  Upload Aadhaar: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   className="inputcolumn-ourProfile"
                   style={{ outline: "none" }}
