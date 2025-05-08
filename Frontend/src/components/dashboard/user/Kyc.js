@@ -27,25 +27,60 @@ function Kycvendor() {
     const fetchUserKYCDetails = async () => {
       try {
         const response = await Api.get(`signup/getby/${userid}`);
-        setUserKYCDetail(response.data);
         const fetchedData = response.data;
-        if (fetchedData.documents) {
+        console.log("fetchedData for KYC", fetchedData);
+        setUserKYCDetail(fetchedData);
+
+        // Prefill basic fields
+        setValue("bankName", fetchedData.bankName || "");
+        setValue("bankBranch", fetchedData.bankBranch || "");
+        setValue("accountNumber", fetchedData.accountNumber || "");
+        setValue("IFSCCode", fetchedData.IFSCCode || "");
+        setValue("aadhaarNumber", fetchedData.aadhaarNumber || "");
+        setValue("panCardNumber", fetchedData.panCardNumber || "");
+
+        // Prefill file previews
+        if (fetchedData.aadhaarUpload) {
+          setValue("aadhaarPreview", fetchedData.aadhaarUpload);
+          setValue("aadhaarFileName", "Aadhaar Card");
+        }
+        if (fetchedData.panUpload) {
+          setValue("panPreview", fetchedData.panUpload);
+          setValue("panFileName", "PAN Card");
+        }
+
+        // Prefill documents
+        if (fetchedData.documents && fetchedData.documents.length > 0) {
           const fetchedDocs = fetchedData.documents.map((doc, index) => ({
             id: Date.now() + index,
             proofType: doc.proofType,
+            proofNumber: doc.proofNumber,
+            proofUpload: doc.proofUpload,
           }));
+          console.log("fetchedDocs", fetchedDocs);
           setDocuments(fetchedDocs);
           setSelectedDocTypes(
             fetchedDocs.map((doc) => doc.proofType).filter(Boolean)
           );
+
+          // Set form values for each document
+          fetchedDocs.forEach((doc) => {
+            setValue(`proofType_${doc.id}`, doc.proofType);
+            setValue(`proofNumber_${doc.id}`, doc.proofNumber);
+            if (doc.proofUpload) {
+              setValue(`proofPreview_${doc.id}`, doc.proofUpload);
+              setValue(`proofFileName_${doc.id}`, doc.proofType);
+            }
+          });
         }
       } catch (error) {
         console.error("Failed to fetch user details:", error);
+        toast.error("Failed to load KYC details. Please try again.");
       }
     };
 
     fetchUserKYCDetails();
-  }, [userid]);
+  }, [userid, setValue]);
 
   const addDocument = () => {
     if (currentDocType) {
@@ -84,19 +119,27 @@ function Kycvendor() {
       }
     };
 
+    // Preserve existing Aadhaar upload if no new file is provided
     const aadhaarUploadUrl = data.aadhaarUpload?.[0]
       ? await uploadFile(data.aadhaarUpload[0])
-      : null;
+      : userKYCDetail?.aadhaarUpload || null;
+
+    // Preserve existing PAN upload if no new file is provided
     const panUploadUrl = data.panUpload?.[0]
       ? await uploadFile(data.panUpload[0])
-      : null;
+      : userKYCDetail?.panUpload || null;
 
+    // Process document details, preserving existing uploads if no new file is provided
     const documentDetails = await Promise.all(
       documents.map(async (doc, index) => {
         if (data[`proofType_${doc.id}`]) {
           const uploadUrl = data[`proofUpload_${doc.id}`]?.[0]
             ? await uploadFile(data[`proofUpload_${doc.id}`][0])
-            : null;
+            : doc.proofUpload ||
+              userKYCDetail?.documents?.find(
+                (d) => d.proofType === doc.proofType
+              )?.proofUpload ||
+              null;
           return {
             proofType: data[`proofType_${doc.id}`],
             proofNumber: data[`proofNumber_${doc.id}`],
@@ -123,6 +166,7 @@ function Kycvendor() {
 
     try {
       const response = await Api.put(`signup/updateKYC/${userid}`, Details);
+      console.log("saved KYC response", response);
       toast.success("Form submitted successfully");
     } catch (error) {
       console.error("Form submission failed", error);
@@ -201,7 +245,9 @@ function Kycvendor() {
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <Row className="px-3">
               <Col sm={12} md={6} lg={6}>
-                <label>Bank Name: </label>
+                <label>
+                  Bank Name: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("bankName", {
                     required: "Bank name is required",
@@ -218,7 +264,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Branch: </label>
+                <label>
+                  Branch: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("bankBranch", {
                     required: "Branch name is required",
@@ -235,7 +283,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Account Number: </label>
+                <label>
+                  Account Number: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   type="number"
                   {...register("accountNumber", {
@@ -253,7 +303,9 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>IFSC Code: </label>
+                <label>
+                  IFSC Code: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("IFSCCode", {
                     required: "IFSC code is required",
@@ -271,7 +323,9 @@ function Kycvendor() {
               </Col>
 
               <Col sm={12} md={6} lg={6}>
-                <label>Aadhaar Card Number: </label>
+                <label>
+                  Aadhaar Card : <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   {...register("aadhaarNumber", {
                     required: "Aadhaar number is required",
@@ -288,10 +342,12 @@ function Kycvendor() {
                 )}
               </Col>
               <Col sm={12} md={6} lg={6}>
-                <label>Aadhaar Upload: </label>
+                <label>
+                  Upload Aadhaar: <span style={{ color: "red" }}>*</span>
+                </label>
                 <input
                   className="inputcolumn-ourProfile"
-                  style={{ outline: "none", height: "50px" }}
+                  style={{ outline: "none" }}
                   type="file"
                   accept=".pdf,.jpg,.jpeg,.png"
                   {...register("aadhaarUpload", {
@@ -331,7 +387,7 @@ function Kycvendor() {
                 <label>PAN Card Upload: </label>
                 <input
                   className="inputcolumn-ourProfile"
-                  style={{ outline: "none", height: "50px" }}
+                  style={{ outline: "none" }}
                   type="file"
                   accept=".pdf,.jpg,.jpeg,.png"
                   {...register("panUpload")}
@@ -409,7 +465,7 @@ function Kycvendor() {
                   <div style={{ display: "flex", alignItems: "flex-start" }}>
                     <input
                       className="inputcolumn-ourProfile"
-                      style={{ outline: "none", height: "50px", flex: 1 }}
+                      style={{ outline: "none", flex: 1 }}
                       type="file"
                       accept=".pdf,.jpg,.jpeg,.png"
                       {...register(`proofUpload_${doc.id}`)}
