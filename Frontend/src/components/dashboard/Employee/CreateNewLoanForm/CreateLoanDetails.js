@@ -21,12 +21,13 @@ function CreateLoanDetails() {
     control,
     formState: { errors },
   } = useForm();
-
+  const selectedSource = watch("source");
   const [employmentStatus, setEmploymentStatus] = useState("");
-  const [salaryPersonDoc, setSalaryPersonDoc] = useState(null);
-  const [businessOwnerDoc, setBusinessOwnerDoc] = useState(null);
+  const [salaryPersonDoc, setSalaryPersonDoc] = useState({});
+  const [businessOwnerDoc, setBusinessOwnerDoc] = useState({});
   const [showVehicleOptions, setShowVehicleOptions] = useState(false);
   const [showHomeLoanOptions, setShowHomeLoanOptions] = useState(false);
+  
   const handleSalaryPersonFileUpload = (event) => {
     setSalaryPersonDoc(event.target.files[0]);
   };
@@ -34,7 +35,27 @@ function CreateLoanDetails() {
   const handleBusinessOwnerFileUpload = (event) => {
     setBusinessOwnerDoc(event.target.files[0]);
   };
+  const MAX_FILE_SIZE_MB = 10;
 
+  const handleFileUpload = (fieldName) => (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileSizeMB = file.size / (1024 * 1024); // Convert bytes to MB
+  
+      if (fileSizeMB > MAX_FILE_SIZE_MB) {
+        alert(`File size should not exceed ${MAX_FILE_SIZE_MB} MB`);
+        event.target.value = ""; // Reset the file input
+        return;
+      }
+  
+      if (employmentStatus === "Salary Person") {
+        setSalaryPersonDoc(prev => ({ ...prev, [fieldName]: file }));
+      } else if (employmentStatus === "Business Owner") {
+        setBusinessOwnerDoc(prev => ({ ...prev, [fieldName]: file }));
+      }
+    }
+  };
+  
   const loanApplicationId = localStorage.getItem("loanApplicationId");
   const userType = localStorage.getItem("userType");
   const referCode = localStorage.getItem("referCode");
@@ -162,43 +183,82 @@ function CreateLoanDetails() {
                         <Col xs={12} md={6} lg={4}>
                           <div>
                             <label className="vendorpage_labelCss">
-                              loan Agent Name
+                              Source
                             </label>
-                            <br />
-                            <input
-                              className="inputcolumn-ourProfile"
-                              type="text"
-                              {...register("loanAgentName", { required: true })}
-                              placeholder="loan Agent Name"
+                            <Controller
+                              name="source"
+                              control={control}
+                              defaultValue=""
+                              rules={{ required: true }}
+                              render={({ field }) => (
+                                <Select
+                                  {...field}
+                                  className="inputcolumn_drp"
+                                  placeholder="Select Status"
+                                  onChange={(value) => {
+                                    field.onChange(value);
+                                  }}
+                                >
+                                  <Option value="Direct">Direct</Option>
+                                  <Option value="Financial Advisor">
+                                    Financial Advisor
+                                  </Option>
+                                </Select>
+                              )}
                             />
-                            {errors.Name && (
-                              <p className="text-danger">
-                                loan Agent Name are required
-                              </p>
+                            {errors.source && (
+                              <p className="text-danger">Source is required</p>
                             )}
                           </div>
                         </Col>
-                        <Col xs={12} md={6} lg={4}>
-                          <div>
-                            <label className="vendorpage_labelCss">
-                              loan Agent Contact Number
-                            </label>
-                            <br />
-                            <input
-                              className="inputcolumn-ourProfile"
-                              type="text"
-                              {...register("loanAgentContactNumber", {
-                                required: true,
-                              })}
-                              placeholder="loan Agent Contact Number"
-                            />
-                            {errors.loanAgentContactNumber && (
-                              <p className="text-danger">
-                                loanAgent Contact Number are required
-                              </p>
-                            )}
-                          </div>
-                        </Col>
+
+                        {selectedSource === "Financial Advisor" && (
+                          <>
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Financial Advisor Name
+                                </label>
+                                <br />
+                                <input
+                                  className="inputcolumn-ourProfile"
+                                  type="text"
+                                  {...register("loanAgentName", {
+                                    required: true,
+                                  })}
+                                  placeholder="Financial Advisor Name"
+                                />
+                                {errors.loanAgentName && (
+                                  <p className="text-danger">
+                                    Financial Advisor Name is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+
+                            <Col xs={12} md={6} lg={4}>
+                              <div>
+                                <label className="vendorpage_labelCss">
+                                  Financial Advisor Contact Number
+                                </label>
+                                <br />
+                                <input
+                                  className="inputcolumn-ourProfile"
+                                  type="number"
+                                  {...register("loanAgentContactNumber", {
+                                    required: true,
+                                  })}
+                                  placeholder="Financial Advisor Contact Number"
+                                />
+                                {errors.loanAgentContactNumber && (
+                                  <p className="text-danger">
+                                    Financial Advisor Contact Number is required
+                                  </p>
+                                )}
+                              </div>
+                            </Col>
+                          </>
+                        )}
                       </>
                     )}
 
@@ -240,51 +300,194 @@ function CreateLoanDetails() {
                         )}
                       </div>
                     </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                        Annual Income
+                        </label>
+                        <Controller
+                          name="annualIncome"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Annual Income"
+                            >
+                              <Option value="">Select Annual Income</Option>
+                              <Option value="0-5Lakhs">0-5Lakhs</Option>
+                              <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
+                              <Option value="10-15Lakhs">10 - 15Lakhs</Option>
+                              <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
+                              <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
+                              <Option value="25-50Lakhs">25 - 50 Lakhs</Option>
+                              <Option value="50-75Lakhs">50 - 75 Lakhs</Option>
+                              <Option value="75-1Crore">
+                                75 Lakhs - 1 Crore
+                              </Option>
+                              <Option value="above1Crore">Above 1 Crore</Option>
+                            </Select>
+                          )}
+                        />
+                        {errors.annualIncome && (
+                          <p className="text-danger">Select Loan Amount</p>
+                        )}
+                      </div>
+                    </Col>
 
                     {employmentStatus === "Salary Person" && (
-                      <Col xs={12} md={6} lg={4}>
-                        <div className="upload-section">
+                      <>
+                        <Col xs={12} md={6} lg={4}>
                           <label className="vendorpage_labelCss">
-                            Upload Your Last 5 Months Payslip Document
+                            Offer or Appointment Letter
                           </label>
                           <input
                             type="file"
                             accept="application/pdf"
                             className="inputcolumn-ourProfile"
-                            onChange={handleSalaryPersonFileUpload}
+                            onChange={handleFileUpload("offerLetter")}
                           />
-                        </div>
-                        {/* {salaryPersonDoc && (
-                          <div>
-                            <h5>Uploaded Document:</h5>
-                            <p>{salaryPersonDoc.name}</p>
-                          </div>
-                        )} */}
-                      </Col>
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            Company ID
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("companyId")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            Last 6 Months Payslips
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("payslips")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            One Year Bank Statement
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("bankStatement")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            Form 16 (Last 3 Years)
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("form16")}
+                          />
+                        </Col>
+                      </>
                     )}
 
                     {/* Conditional Rendering for Business Owner Document Upload */}
                     {employmentStatus === "Business Owner" && (
-                      <Col xs={12} md={6} lg={4}>
-                        <div className="upload-section">
+                      <>
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">License</label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("license")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
                           <label className="vendorpage_labelCss">
-                            Upload Your Last 1 Year Statement Document
+                            MSME Certificate
                           </label>
                           <input
                             type="file"
                             accept="application/pdf"
                             className="inputcolumn-ourProfile"
-                            onChange={handleBusinessOwnerFileUpload}
+                            onChange={handleFileUpload("msme")}
                           />
-                        </div>
-                        {/* {businessOwnerDoc && (
-                          <div>
-                            <h5>Uploaded Document:</h5>
-                            <p>{businessOwnerDoc.name}</p>
-                          </div>
-                        )} */}
-                      </Col>
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            ITR (Last 3 Years)
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("itr")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            One Year Bank Statement (Savings or Current)
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("businessBankStatement")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            GST Certificate
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("gstCertificate")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            One Year GST Returns
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("gstReturns")}
+                          />
+                        </Col>
+
+                        <Col xs={12} md={6} lg={4}>
+                          <label className="vendorpage_labelCss">
+                            Latest 6 Months Sales & Purchase List
+                          </label>
+                          <input
+                            type="file"
+                            accept="application/pdf"
+                            className="inputcolumn-ourProfile"
+                            onChange={handleFileUpload("salesPurchase")}
+                          />
+                        </Col>
+                      </>
                     )}
+
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
@@ -325,54 +528,20 @@ function CreateLoanDetails() {
                       </div>
                     </Col>
 
+                  
+                   
+                    
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Income Details
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="text"
-                          {...register("incomeDetails", { required: true })}
-                          placeholder="Salary, Business Income, Other Sources"
-                        />
-                        {errors.incomeDetails && (
-                          <p className="text-danger">
-                            Income Details are required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Annual Income
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("annualIncome", { required: true })}
-                          placeholder="Annual Income"
-                        />
-                        {errors.annualIncome && (
-                          <p className="text-danger">
-                            Annual Income is required
-                          </p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Nominee Name
+                          Reference Name
                         </label>
                         <input
                           className="inputcolumn-ourProfile"
                           type="text"
                           name="nomineeName"
                           {...register("nomineeName", { required: true })}
-                          placeholder="Nominee"
+                          placeholder="Reference"
                         />
                         {errors.nomineeName && (
                           <p className="text-danger">Nominee is required</p>
@@ -383,7 +552,7 @@ function CreateLoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Nominee Relationship
+                          Reference Relationship
                         </label>
                         <input
                           className="inputcolumn-ourProfile"
@@ -392,7 +561,7 @@ function CreateLoanDetails() {
                           {...register("nomineeRelationship", {
                             required: true,
                           })}
-                          placeholder="Nominee Relationship"
+                          placeholder="Reference Relationship"
                         />
                         {errors.nomineeRelationship && (
                           <p className="text-danger">Nominee is required</p>
@@ -402,17 +571,38 @@ function CreateLoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Nominee Address
+                          Reference Address
                         </label>
                         <textarea
                           className="inputcolumn-ourProfile"
                           style={{ height: "60px" }}
                           name="nomineeAddress"
                           {...register("nomineeAddress", { required: true })}
-                          placeholder="Residential Address"
+                          placeholder="Reference Address"
                         />
                         {errors.nomineeAddress && (
                           <p className="text-danger">Address is required</p>
+                        )}
+                      </div>
+                    </Col>
+                    <Col xs={12} md={6} lg={4}>
+                      <div>
+                        <label className="vendorpage_labelCss">
+                          Reference Contact Number
+                        </label>
+                        <br />
+                        <input
+                          className="inputcolumn-ourProfile"
+                          type="number"
+                          {...register("referenceContactNumber", {
+                            required: true,
+                          })}
+                          placeholder="Reference Contact Number"
+                        />
+                        {errors.loanAgentContactNumber && (
+                          <p className="text-danger">
+                            Reference Contact Number is required
+                          </p>
                         )}
                       </div>
                     </Col>
@@ -514,24 +704,20 @@ function CreateLoanDetails() {
                               }}
                             >
                               <Option value="Home Loan">
-                                Home Loan( TopUp )
+                                Home Loan
                               </Option>
                               <Option value="Vehicle Loan">Vehicle Loan</Option>
                               <Option value="Business Loan">
-                                Business Loan( TopUp )
+                                Business Loan
                               </Option>
                               <Option value="Loan Transfer">
                                 Loan Transfer( BT TopUp )
                               </Option>
-                              <Option value="LAP">
-                                LAP( Loan against to property )
-                              </Option>
+                             
                               <Option value="Personal Loan">
                                 Personal Loan
                               </Option>
-                              <Option value="Construction Loan">
-                                Construction Loan
-                              </Option>
+                             
                             </Select>
                           )}
                         />
@@ -602,12 +788,28 @@ function CreateLoanDetails() {
                                 <Option value="Home Purchase">
                                   Home Purchase
                                 </Option>
-                                <Option value="Home Construction">
+                                <Option value="Self Construction">
                                   {" "}
-                                  Home Construction
+                                  Self Construction on ownland
                                 </Option>
-                                <Option value="Home Renovation">
-                                  Home Renovation
+                                <Option value="Plot Purchase">
+                                  Plot Purchase
+                                </Option>
+                                <Option value="Home Extension">
+                                  Home Extension
+                                </Option>
+                                <Option value="Plot Purchase">
+                                  Plot Loan
+                                </Option>
+                                
+                                <Option value="Home Impovement">
+                                  Home Impovement
+                                </Option>
+                                <Option value="Home Loan Balance Transfer">
+                                  Home Loan Balance Transfer
+                                </Option>
+                                <Option value="Home Loan Balance Transfer & Purchase">
+                                  Home Loan Balance Transfer & Purchase
                                 </Option>
                               </Select>
                             )}
@@ -624,18 +826,36 @@ function CreateLoanDetails() {
                     <Col xs={12} md={6} lg={4}>
                       <div>
                         <label className="vendorpage_labelCss">
-                          Loan Amount Requested
+                          Loan Amount
                         </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="number"
-                          {...register("loanAmount", { required: true })}
-                          placeholder="Loan Amount Requested"
+                        <Controller
+                          name="loanAmount"
+                          control={control}
+                          defaultValue=""
+                          rules={{ required: true }}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              className="inputcolumn_drp"
+                              placeholder="Select Loan Amount"
+                            >
+                              <Option value="">Select Loan Amount</Option>
+                              <Option value="0-5Lakhs">0-5Lakhs</Option>
+                              <Option value="5-10Lakhs">5 - 10 Lakhs</Option>
+                              <Option value="10-15Lakhs">10 - 15Lakhs</Option>
+                              <Option value="15-20Lakhs">15 - 20 Lakhs</Option>
+                              <Option value="20-25Lakhs">20 - 25 Lakhs</Option>
+                              <Option value="25-50Lakhs">25 - 50 Lakhs</Option>
+                              <Option value="50-75Lakhs">50 - 75 Lakhs</Option>
+                              <Option value="75-1Crore">
+                                75 Lakhs - 1 Crore
+                              </Option>
+                              <Option value="above1Crore">Above 1 Crore</Option>
+                            </Select>
+                          )}
                         />
                         {errors.loanAmount && (
-                          <p className="text-danger">
-                            Loan Amount Requested is required
-                          </p>
+                          <p className="text-danger">Select Loan Amount</p>
                         )}
                       </div>
                     </Col>
@@ -691,21 +911,6 @@ function CreateLoanDetails() {
                           accept=".pdf,.jpg,.jpeg,.png"
                           {...register("financialProof")}
                           placeholder="Optional"
-                        />
-                      </div>
-                    </Col>
-
-                    <Col xs={12} md={6} lg={4}>
-                      <div>
-                        <label className="vendorpage_labelCss">
-                          Documentation for Nominee
-                        </label>
-                        <input
-                          className="inputcolumn-ourProfile"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          {...register("nomineeDocs")}
-                          placeholder="If applicable"
                         />
                       </div>
                     </Col>
