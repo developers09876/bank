@@ -294,6 +294,7 @@ const LoanDetails = ({ collapsed }) => {
     } catch (error) {
       console.error("Error updating status:", error);
     }
+    await getbyLeadId();
   };
 
   const handleApprove = () => {
@@ -1251,10 +1252,7 @@ const LoanDetails = ({ collapsed }) => {
                           // <option key={employee._id} value={employee._id}>
                           //   {employee.firstname} {employee.lastname}
                           // </option>
-                          <option
-                            key={employee._id}
-                            value={`${employee.firstname} ${employee.lastname}`}
-                          >
+                          <option key={employee._id} value={employee._id}>
                             {employee.firstname} {employee.lastname}
                           </option>
                         ))}

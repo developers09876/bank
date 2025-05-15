@@ -463,6 +463,7 @@ const UserDropdown = ({
   handleLogout,
   dropdownVisible,
   setDropdownVisible,
+  userDetail,
 }) => {
   useEffect(() => {
     if (dropdownVisible) {
@@ -481,10 +482,15 @@ const UserDropdown = ({
         // onMouseLeave={() => setDropdownVisible(false)}
       >
         <img
-          src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
+          src={
+            userDetail && userDetail.photographs
+              ? userDetail.photographs
+              : "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=612x612&w=0&k=20&c=CncNUTbw6mzGsbojks2Vt0kV85N_pQaI3zaSkBQJFTc="
+          }
           alt="User Avatar"
           className="avatar"
         />
+
         <div className="live-badge">100%</div>
         {dropdownVisible && (
           <div className="absolute right-0 w-40 mt-2 bg-white shadow-lg rounded">

@@ -132,6 +132,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Table, Button, Input } from "antd";
 import Sidebar from "./Sidebar";
+import Api from "../../../Api";
 
 const EmployeeList = ({ setAuth }) => {
   const [employees, setEmployees] = useState([]);
@@ -140,12 +141,12 @@ const EmployeeList = ({ setAuth }) => {
 
   const getEmployees = async () => {
     try {
-      const response = await fetch("http://vilu.in:5000/signup/getall", {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("token") },
+      const response = await Api.get("/signup/getall", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       });
-
-      const users = await response.json();
+      const users = response.data;
       // Filter only users with userType 'employee'
       const employeeUsers = users.filter((user) => user.userType !== "user");
       setEmployees(employeeUsers);

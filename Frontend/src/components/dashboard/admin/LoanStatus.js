@@ -21,12 +21,14 @@ const LoanStatus = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://vilu.in:5000/loanform/getall`, {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("token") },
+      const response = await Api.get("/loanform/getall", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       });
-      const loans = await response.json();
-      setLoan(loans); // Ensure backend provides status for each loan
+
+      const loans = response.data;
+      setLoan(loans);
     } catch (error) {
       console.log(error);
     }

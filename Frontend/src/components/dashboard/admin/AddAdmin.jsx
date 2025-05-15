@@ -148,24 +148,20 @@ const AddAdmin = ({ setAuth }) => {
     try {
       const body = { ...data, userType: "employee" };
 
-      const response = await fetch("http://vilu.in:5000/signup/register", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(body),
+      const response = await Api.post("/signup/register", body, {
+        headers: { "Content-Type": "application/json" },
       });
 
-      const parseRes = await response.json();
-
-      if (response.ok) {
-        toast.success("Added Successfully!");
-        setTimeout(() => navigate(-1), 3000);
-      } else {
-        toast.error(parseRes.message || "Failed to add admin!");
-      }
+      toast.success("Added Successfully!");
+      setTimeout(() => navigate(-1), 3000);
     } catch (error) {
       console.error("Error:", error.message);
-      toast.error("Failed to add admin!");
+      toast.error(error?.response?.data?.message || "Failed to add admin!");
     }
+    // } catch (error) {
+    //   console.error("Error:", error.message);
+    //   toast.error("Failed to add admin!");
+    // }
   };
 
   return (

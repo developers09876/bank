@@ -35,13 +35,9 @@ const LoanManagement = ({ collapsed }) => {
 
   const getAll = async () => {
     try {
-      const response = await fetch(`http://vilu.in:5000/loanform/getall`, {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("token") },
-      });
-      const loans = await response.json();
-      console.log("getAllloans", loans);
-      setLoan(loans);
+      const response = await Api.get (`/loanform/getall`,);
+      console.log("getAllloans", response.data);
+      setLoan(response.data);
     } catch (error) {
       console.log(error);
     }

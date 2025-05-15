@@ -738,19 +738,10 @@
 }
 
 @media (max-width: 320px) {
-  .container {
-    width: 100% !important;
-    padding: 10px;
-  }
+ 
 
   /* Ensure form elements are stacked one by one */
-  .row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin:5px;
-  }
+ 
 
   // .px-2,
   // .py-3,
