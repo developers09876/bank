@@ -1,6 +1,55 @@
 import insuranceManagementDb from "../model/InsuranceManagementModel.js";
 
-export async function createInsuranceManagementDb(req, res, next) {
+// export async function createInsuranceManagementDb(req, res, next) {
+//   try {
+//     const data = req.body;
+//     const details = {
+//       userId: data.userId,
+//       userType: data.userType,
+//       firstname: data.firstname,
+//       lastname: data.lastname,
+//       contactNumber: data.contactNumber,
+//       email: data.email,
+//       aadhar: data.aadhar,
+//       panno: data.panno,
+//       gst: data.gst,
+//       policyTerm: data.policyTerm,
+//       PolicyType: data.PolicyType,
+//       VehicleType: data.VehicleType,
+//       policyAmount: data.policyAmount,
+//       annualIncome: data.annualIncome,
+//       sumAssured: data.sumAssured,
+//       referCode: data.referCode,
+//     };
+//     const taxManagement = await insuranceManagementDb.create(details);
+//     if (taxManagement) {
+//       res.status(201).json({
+//         message: "Insurance Management Created Successfully",
+//         data: taxManagement,
+//       });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     next();
+//   }
+// }
+export const getInsuranceManagementUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    console.log("Fetching insurance for userId:", userId);
+    const insuranceManagement = await insuranceManagementDb.find({ userId });
+    if (!insuranceManagement || insuranceManagement.length === 0) {
+      return res.status(404).json({ message: "Insurance records not found for user" });
+    }
+    res.status(200).json(insuranceManagement);
+  } catch (error) {
+    console.error("Error fetching insurance data:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const createInsuranceManagementDb = async (req, res, next) => {
   try {
     const data = req.body;
     const details = {
@@ -21,19 +70,16 @@ export async function createInsuranceManagementDb(req, res, next) {
       sumAssured: data.sumAssured,
       referCode: data.referCode,
     };
-    const taxManagement = await insuranceManagementDb.create(details);
-    if (taxManagement) {
-      res.status(201).json({
-        message: "Insurance Management Created Successfully",
-        data: taxManagement,
-      });
-    }
+    const insuranceManagement = await insuranceManagementDb.create(details);
+    res.status(201).json({
+      message: "Insurance Management Created Successfully",
+      data: insuranceManagement,
+    });
   } catch (err) {
-    console.log(err);
-    next();
+    console.error("Error creating insurance record:", err);
+    res.status(500).json({ message: err.message });
   }
-}
-
+};
 export async function updateInsuranceManagementDb(req, res, next) {
   try {
     const { id } = req.params;
@@ -94,20 +140,20 @@ export async function getallInsuranceManagement(req, res, next) {
   }
 }
 
-export const getInsuranceManagementUserId = async (req, res) => {
-  try {
-    const { userId } = req.params;
+// export const getInsuranceManagementUserId = async (req, res) => {
+//   try {
+//     const { userId } = req.params;
 
-    console.log("object", userId);
-    const taxManagement = await insuranceManagementDb.find({ userId });
-    if (!taxManagement) {
-      return res.status(404).json({ message: "User id not found" });
-    }
-    res.status(200).json(taxManagement);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+//     console.log("object", userId);
+//     const taxManagement = await insuranceManagementDb.find({ userId });
+//     if (!taxManagement) {
+//       return res.status(404).json({ message: "User id not found" });
+//     }
+//     res.status(200).json(taxManagement);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 export const getSalesManagerId = async (req, res) => {
   try {
     const { report_Manager } = req.params;
